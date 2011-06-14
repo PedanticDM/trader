@@ -9,12 +9,7 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  Star Traders is a simple game of interstellar trading, where the object
-  of the game is to create companies, buy and sell shares, borrow and
-  repay money, in order to become the wealthiest player (the winner).
-
-  This file, trader.h, contains default game values and certain other
-  definitions for Star Traders.
+  This file, trader.h, contains various definitions for Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -32,8 +27,8 @@
 */
 
 
-#ifndef __TRADER_H__
-#define __TRADER_H__
+#ifndef included_TRADER_H
+#define included_TRADER_H
 
 
-#endif /* __TRADER_H__ */
+#endif /* included_TRADER_H */
