@@ -28,7 +28,7 @@
 
 
 #ifndef included_TRADER_H
-#define included_TRADER_H
+#define included_TRADER_H 1
 
 
 #endif /* included_TRADER_H */
