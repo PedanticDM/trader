@@ -28,5 +28,19 @@ dnl
 dnl You should have received a copy of the GNU General Public License
 dnl along with this program.  If not, see http://www.gnu.org/licenses/.
 
-AC_INIT([Star Traders], [7.0], [J.Zaitseff@zap.org.au],, [http://www.zap.org.au/software/trader/])
+
+AC_INIT([Star Traders], [7.0], [J.Zaitseff@zap.org.au], , [http://www.zap.org.au/software/trader/])
+
+AC_CONFIG_AUX_DIR([build-aux])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AC_PREREQ(2.60)
+
+AC_PROG_CC
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_FILES([
+	Makefile
+	src/Makefile
+	lib/Makefile
+	doc/Makefile
+])
 AC_OUTPUT
