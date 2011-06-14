@@ -16,7 +16,7 @@
   of the game is to create companies, buy and sell shares, borrow and
   repay money, in order to become the wealthiest player (the winner).
 
-  This file, "trader.c", contains the main program for Star Traders.
+  This file, trader.c, contains the main program for Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it

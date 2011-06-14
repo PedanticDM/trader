@@ -16,7 +16,7 @@
   of the game is to create companies, buy and sell shares, borrow and
   repay money, in order to become the wealthiest player (the winner).
 
-  This file, "trader.h", contains default game values and certain other
+  This file, trader.h, contains default game values and certain other
   definitions for Star Traders.
 
 
