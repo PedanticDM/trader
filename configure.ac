@@ -5,10 +5,7 @@ dnl *              Copyright (C) 1990-2011, John Zaitseff               *
 dnl *                                                                   *
 dnl *********************************************************************
 dnl
-dnl Author:  John Zaitseff <J.Zaitseff@zap.org.au>
-dnl Date:    14th June, 2011
-dnl Version: 7.0
-dnl
+dnl Author: John Zaitseff <J.Zaitseff@zap.org.au>
 dnl $Id$
 dnl
 dnl This file, configure.ac, contains information required by autoconf to

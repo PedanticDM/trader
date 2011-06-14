@@ -6,10 +6,7 @@
 ************************************************************************/
 
 /*
-  Author:  John Zaitseff <J.Zaitseff@zap.org.au>
-  Date:    14th June, 2011
-  Version: 7.0
-
+  Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
   Star Traders is a simple game of interstellar trading, where the object

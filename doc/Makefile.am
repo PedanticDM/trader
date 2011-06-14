@@ -5,10 +5,7 @@
 #                                                                       #
 #########################################################################
 
-# Author:  John Zaitseff <J.Zaitseff@zap.org.au>
-# Date:    14th June, 2011
-# Version: 7.0
-#
+# Author: John Zaitseff <J.Zaitseff@zap.org.au>
 # $Id$
 #
 # This file, doc/Makefile.am, contains the documentation directory
