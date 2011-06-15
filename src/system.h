@@ -9,11 +9,8 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  Star Traders is a simple game of interstellar trading, where the object
-  of the game is to create companies, buy and sell shares, borrow and
-  repay money, in order to become the wealthiest player (the winner).
-
-  This file, trader.c, contains the main program for Star Traders.
+  This file, system.h, contains system #include directives for Star
+  Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -31,21 +28,26 @@
 */
 
 
-#include "trader.h"
+#ifndef included_SYSTEM_H
+#define included_SYSTEM_H 1
 
 
 /************************************************************************
-*                             Main program                              *
+*                        Portability definitions                        *
 ************************************************************************/
 
-int main (int argc, char *argv[])
-{
-    init_program_name(argv);
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
 
-    // Testing...
-    printf("program_name:   %s\n", program_name());
-    printf("home_directory: %s\n", home_directory());
-    printf("data_directory: %s\n", data_directory());
 
-    return EXIT_SUCCESS;
-}
+/************************************************************************
+*                          System header files                          *
+************************************************************************/
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+
+#endif /* included_SYSTEM_H */

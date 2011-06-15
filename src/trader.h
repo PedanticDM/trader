@@ -9,7 +9,7 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, trader.h, contains various definitions for Star Traders.
+  This file, trader.h, contains overall definitions for Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -31,7 +31,20 @@
 #define included_TRADER_H 1
 
 
+/************************************************************************
+*                          Global definitions                           *
+************************************************************************/
+
+#define GAME_FILE_API_VERSION "7.0"	/* For game loads and saves */
+
+
+/************************************************************************
+*                     Program-specific header files                     *
+************************************************************************/
+
+#include "system.h"
 #include "globals.h"
+#include "utils.h"
 
 
 #endif /* included_TRADER_H */

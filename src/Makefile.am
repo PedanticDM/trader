@@ -27,5 +27,11 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-bin_PROGRAMS = trader
-trader_SOURCES = trader.c trader.h globals.c globals.h
+bin_PROGRAMS	= trader
+
+trader_SOURCES	= \
+	trader.c	trader.h	\
+	globals.c	globals.h	\
+	utils.c		utils.h		\
+			system.h
+trader_LDADD	= @CURSES_LIB@
