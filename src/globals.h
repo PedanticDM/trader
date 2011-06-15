@@ -97,7 +97,8 @@ typedef enum map_val {
     MAP_EMPTY	= '.',			// Empty space
     MAP_OUTPOST	= '+',			// Unowned outpost
     MAP_STAR	= '*',			// Star
-    MAP_A	= 'A'			// Company A, etc
+    MAP_A	= 'A',			// Company A, etc
+    MAP_LAST	= MAP_A + MAX_COMPANIES - 1
 } map_val_t;
 
 
