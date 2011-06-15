@@ -52,10 +52,10 @@ const char *company_names[MAX_COMPANIES] = {
 *                      Global variable definitions                      *
 ************************************************************************/
 
-company_info_t	company[MAX_COMPANIES];	// Array of companies
-player_info_t	player[MAX_PLAYERS];	// Array of players
-map_val_t	map[MAX_X][MAX_Y];	// Map of the galaxy
-move_rec_t	move[NUMBER_MOVES];	// Current moves
+company_info_t	company[MAX_COMPANIES];		// Array of companies
+player_info_t	player[MAX_PLAYERS];		// Array of players
+map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
+move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
 double	interest_rate;			// Current interest rate
 double	credit_limit;			// Credit limit of current player

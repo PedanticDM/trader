@@ -116,10 +116,10 @@ extern const char *company_names[MAX_COMPANIES];
 *                     Global variable declarations                      *
 ************************************************************************/
 
-extern company_info_t	company[MAX_COMPANIES];	// Array of companies
-extern player_info_t	player[MAX_PLAYERS];	// Array of players
-extern map_val_t	map[MAX_X][MAX_Y];	// Map of the galaxy
-extern move_rec_t	move[NUMBER_MOVES];	// Current moves
+extern company_info_t	company[MAX_COMPANIES];		// Array of companies
+extern player_info_t	player[MAX_PLAYERS];		// Array of players
+extern map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
+extern move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
 extern double	interest_rate;		// Current interest rate
 extern double	credit_limit;		// Credit limit of current player
