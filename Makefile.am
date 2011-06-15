@@ -27,4 +27,8 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
+# Find various M4 macro snippets
+ACLOCAL_AMFLAGS = -I m4
+
+# Subdirectories to recurse into
 SUBDIRS = lib src doc
