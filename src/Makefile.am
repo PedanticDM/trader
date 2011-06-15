@@ -28,4 +28,4 @@
 
 
 bin_PROGRAMS = trader
-trader_SOURCES = trader.c trader.h
+trader_SOURCES = trader.c trader.h globals.c globals.h

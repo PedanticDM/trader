@@ -31,4 +31,7 @@
 #define included_TRADER_H 1
 
 
+#include "globals.h"
+
+
 #endif /* included_TRADER_H */
