@@ -8,8 +8,8 @@
 # Author: John Zaitseff <J.Zaitseff@zap.org.au>
 # $Id$
 #
-# This file, Makefile.am, contains the top-level Makefile for Star
-# Traders.  It needs to be processed by automake to produce the
+# This file, m4/Makefile.am, contains the m4 macro directory Makefile for
+# Star Traders.  It needs to be processed by automake to produce the
 # corresponding Makefile.in.
 #
 #
@@ -25,10 +25,3 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see http://www.gnu.org/licenses/.
-
-
-# Find various M4 macro snippets
-ACLOCAL_AMFLAGS = -I m4
-
-# Subdirectories to recurse into
-SUBDIRS = lib src doc m4
