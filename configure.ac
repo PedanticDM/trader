@@ -27,17 +27,23 @@ dnl along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
 AC_INIT([Star Traders], [7.0], [J.Zaitseff@zap.org.au], [trader], [http://www.zap.org.au/software/trader/])
+AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 
+AC_PREREQ([2.67])
+AC_CONFIG_SRCDIR([src/trader.c])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-AC_PREREQ(2.60)
+AM_INIT_AUTOMAKE([1.11 -Wall -Werror foreign dist-bzip2])
+AC_CONFIG_LIBOBJ_DIR([lib])
 
 AC_PROG_CC
+AC_PROG_CC_STDC
+AX_CFLAGS_WARN_ALL
+
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
 	Makefile
-	src/Makefile
 	lib/Makefile
+	src/Makefile
 	doc/Makefile
 	m4/Makefile
 ])
