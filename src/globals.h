@@ -41,7 +41,7 @@
 #define STAR_RATIO		(0.10)	/* 10% of map should be stars */
 
 #define NUMBER_MOVES		(20)	/* Number of choices on map per turn */
-#define MAX_TURN		(50)	/* Max. number of turns per game */
+#define DEFAULT_MAX_TURN	(50)	/* Default number of turns per game */
 
 #define MAX_PLAYERS		(8)	    /* Maximum number of players */
 #define INITIAL_CASH		(6000.00)   /* Initial cash per player */
@@ -126,10 +126,13 @@ extern double	interest_rate;		// Current interest rate
 extern double	credit_limit;		// Credit limit of current player
 extern int	bid_used;		// True if bid used for player
 
+extern int	max_turn;		// Max. number of turns in game
 extern int	turn_number;
 extern int	current_player;
 extern int	number_players;
 extern int	first_player;		// Who WAS the first player to go?
 
+extern int	game_loaded;		// True if game was loaded from disk
+extern char	*game_filename;		// Game file filename
 
 #endif /* included_GLOBALS_H */
