@@ -49,6 +49,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <locale.h>
 
@@ -75,15 +76,6 @@
 #endif
 #ifndef N_
 #  define N_(x) (x)
-#endif
-
-
-// Boolean values
-#ifndef FALSE
-#  define FALSE (0)
-#endif
-#ifndef TRUE
-#  define TRUE (1)
 #endif
 
 

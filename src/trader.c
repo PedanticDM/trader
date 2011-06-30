@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
     initscr();
     noecho();
     timeout(-1);
-    keypad(stdscr, TRUE);
+    keypad(stdscr, true);
     raw();
 
     printw(_("Program name:   %s\n"), program_name());
@@ -127,8 +127,8 @@ static void process_cmdline (int argc, char *argv[])
     int c;
 
     // Process arguments starting with "-" or "--"
-    opterr = TRUE;
-    while (TRUE) {
+    opterr = true;
+    while (true) {
 	c = getopt_long(argc, argv, options_short, options_long, NULL);
 	if (c == EOF)
 	    break;

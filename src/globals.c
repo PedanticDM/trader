@@ -59,7 +59,7 @@ move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
 double	interest_rate;			// Current interest rate
 double	credit_limit;			// Credit limit of current player
-int	bid_used;			// True if bid used for player
+bool	bid_used;			// True if bid used for player
 
 int	max_turn;			// Max. number of turns in game
 int	turn_number;
@@ -67,5 +67,5 @@ int	current_player;
 int	number_players;
 int	first_player;			// Who WAS the first player to go?
 
-int	game_loaded;			// True if game was loaded from disk
+bool	game_loaded;			// True if game was loaded from disk
 char	*game_filename;			// Game file filename

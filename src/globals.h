@@ -32,6 +32,9 @@
 #define included_GLOBALS_H 1
 
 
+#include <stdbool.h>
+
+
 /************************************************************************
 *                    Constants and type declarations                    *
 ************************************************************************/
@@ -78,7 +81,7 @@ typedef struct company_info {
     double	share_return;		// Return per share
     long	stock_issued;		// Total stock sold to players
     long	max_stock;		// Max. stock that company has
-    int		on_map;			// True if company on map
+    bool	on_map;			// True if company on map
 } company_info_t;
 
 
@@ -88,7 +91,7 @@ typedef struct player_info {
     double	cash;			// Cash available
     double	debt;			// Amount of debt
     long	stock_owned[MAX_COMPANIES];	// How much stock is owned
-    int		in_game;		// True if still in the game
+    bool	in_game;		// True if still in the game
 } player_info_t;
 
 
@@ -124,7 +127,7 @@ extern move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
 extern double	interest_rate;		// Current interest rate
 extern double	credit_limit;		// Credit limit of current player
-extern int	bid_used;		// True if bid used for player
+extern bool	bid_used;		// True if bid used for player
 
 extern int	max_turn;		// Max. number of turns in game
 extern int	turn_number;
@@ -132,7 +135,7 @@ extern int	current_player;
 extern int	number_players;
 extern int	first_player;		// Who WAS the first player to go?
 
-extern int	game_loaded;		// True if game was loaded from disk
+extern bool	game_loaded;		// True if game was loaded from disk
 extern char	*game_filename;		// Game file filename
 
 #endif /* included_GLOBALS_H */
