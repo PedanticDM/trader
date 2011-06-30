@@ -45,10 +45,24 @@
 *                          System header files                          *
 ************************************************************************/
 
+#define _GNU_SOURCE 1
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
+
 #include <getopt.h>
+
+#if defined(HAVE_NCURSESW) && defined(HAVE_NCURSESW_H)
+#  include <ncursesw/curses.h>
+#elif defined(HAVE_NCURSES_H)
+#  include <ncurses.h>
+#elif defined(HAVE_CURSES_H)
+#  include <curses.h>
+#else
+#  error SysV-compatible curses library required
+#endif
 
 
 /************************************************************************

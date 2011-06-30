@@ -52,15 +52,43 @@ int main (int argc, char *argv[])
 {
     init_program_name(argv);
 
+    // Initialise the locale (and ignore any errors)
+    setlocale(LC_ALL, "");
+
     // Process command line arguments
     process_cmdline(argc, argv);
 
 
     // Testing...
-    printf(_("Program name:   %s\n"), program_name());
-    printf(_("Home directory: %s\n"), home_directory());
-    printf(_("Data directory: %s\n"), data_directory());
-    printf(_("Game filename:  %s\n"), game_filename);
+    initscr();
+    noecho();
+    timeout(-1);
+    keypad(stdscr, TRUE);
+    raw();
+
+    printw(_("Program name:   %s\n"), program_name());
+    printw(_("Home directory: %s\n"), home_directory());
+    printw(_("Data directory: %s\n"), data_directory());
+    printw(_("Game filename:  %s\n"), game_filename);
+
+    printw(_("Cols x Lines:   %d x %d\n"), COLS, LINES);
+    printw(_("Colours, pairs: %d, %d\n"), COLORS, COLOR_PAIRS);
+
+    printw(_("Type some keys (^C to exit):\n\n"));
+
+    int c = 0;
+    while ((c = getch()) != 3) {
+	if ((c >= 0) && (c < 32)) {
+	    printw("0%03o ^%c ", c, c + '@');
+	} else if ((c >= 32) && (c <= 127)) {
+	    printw("0%03o %c  ", c, c);
+	} else {
+	    printw("0%05o  ", c);
+	}
+	refresh();
+    }
+
+    endwin();
 
     return EXIT_SUCCESS;
 }

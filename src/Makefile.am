@@ -34,3 +34,5 @@ trader_SOURCES	= \
 	globals.c	globals.h	\
 	utils.c		utils.h		\
 			system.h
+
+trader_LDADD	= @CURSES_LIB@
