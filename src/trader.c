@@ -40,8 +40,8 @@
 
 int main (int argc, char *argv[]);
 static void process_cmdline (int argc, char *argv[]);
-static void show_version (void);
-static void show_usage (int status);
+static void __attribute__((noreturn)) show_version (void);
+static void __attribute__((noreturn)) show_usage (int status);
 
 
 /************************************************************************
@@ -149,7 +149,7 @@ static void process_cmdline (int argc, char *argv[])
   terminates.
 */
 
-static void show_version (void)
+static void __attribute__((noreturn)) show_version (void)
 {
     printf(_("\
 " PACKAGE_NAME " (%s) %s\n\
@@ -178,7 +178,7 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
   error, then terminates.
 */
 
-static void show_usage (int status)
+static void __attribute__((noreturn)) show_usage (int status)
 {
     if (status != EXIT_SUCCESS) {
 	fprintf(stderr, _("%s: Try `%s --help' for more information.\n"),

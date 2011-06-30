@@ -73,4 +73,10 @@
 #endif
 
 
+// Compiler __attributes__ for less-capable compilers
+#ifndef HAVE___ATTRIBUTE__
+#  define __attribute__(x)
+#endif
+
+
 #endif /* included_SYSTEM_H */
