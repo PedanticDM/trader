@@ -70,6 +70,13 @@
 *                       Miscellaneous definitions                       *
 ************************************************************************/
 
+// Visibility of the cursor in Curses
+#define CURS_INVISIBLE   (0)
+#define CURS_NORMAL      (1)
+#define CURS_VISIBLE     (1)
+#define CURS_VERYVISIBLE (2)
+
+
 // For future use in internationalisation
 #ifndef _
 #  define _(x) (x)

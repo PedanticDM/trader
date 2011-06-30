@@ -62,6 +62,7 @@ int main (int argc, char *argv[])
     // Testing...
     initscr();
     noecho();
+    curs_set(CURS_INVISIBLE);
     timeout(-1);
     keypad(stdscr, true);
     raw();
@@ -75,6 +76,8 @@ int main (int argc, char *argv[])
     printw(_("Colours, pairs: %d, %d\n"), COLORS, COLOR_PAIRS);
 
     printw(_("Type some keys (^C to exit):\n\n"));
+
+    curs_set(CURS_VERYVISIBLE);
 
     int c = 0;
     while ((c = getch()) != 3) {

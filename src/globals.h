@@ -39,6 +39,9 @@
 *                    Constants and type declarations                    *
 ************************************************************************/
 
+#define MIN_COLUMNS		(80)	/* Minimum number of columns in terminal */
+#define MIN_LINES		(24)	/* Minimum number of lines in terminal */
+
 #define MAX_X			(38)	/* Map dimensions MAP_X x MAP_Y */
 #define MAX_Y			(12)
 #define STAR_RATIO		(0.10)	/* 10% of map should be stars */
