@@ -60,6 +60,7 @@ int main (int argc, char *argv[])
     printf(_("Program name:   %s\n"), program_name());
     printf(_("Home directory: %s\n"), home_directory());
     printf(_("Data directory: %s\n"), data_directory());
+    printf(_("Game filename:  %s\n"), game_filename);
 
     return EXIT_SUCCESS;
 }
@@ -71,9 +72,9 @@ int main (int argc, char *argv[])
 
 /* Constants for command line options */
 
-static const char options_short[] = "hV?";
-    /* -h, -?   --help
-       -V       --version
+static const char options_short[] = "hV";
+    /* -h   --help
+       -V   --version
     */
 
 static struct option const options_long[] = {
@@ -106,8 +107,7 @@ static void process_cmdline (int argc, char *argv[])
 
 	switch (c) {
 	case 'h':
-	case '?':
-	    /* -h, -?, --help: show help */
+	    /* -h, --help: show help */
 	    show_usage(EXIT_SUCCESS);
 
 	case 'V':
@@ -122,6 +122,20 @@ static void process_cmdline (int argc, char *argv[])
     // Process remaining arguments
 
     if ((optind < argc) && (argv[optind] != NULL)) {
+	if (argv[optind][0] == '-') {
+	    fprintf(stderr, _("%s: invalid operand `%s'\n"), program_name(),
+		    argv[optind]);
+	    show_usage(EXIT_FAILURE);
+	}
+
+	game_filename = strto_game_filename(argv[optind]);
+	optind++;
+    }
+
+    if ((optind < argc) && (argv[optind] != NULL)) {
+	fprintf(stderr, _("%s: extra operand `%s'\n"), program_name(),
+		argv[optind]);
+	show_usage(EXIT_FAILURE);
     }
 }
 
@@ -167,8 +181,8 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
 static void show_usage (int status)
 {
     if (status != EXIT_SUCCESS) {
-	fprintf(stderr, _("Try `%s --help' for more information.\n"),
-		program_name());
+	fprintf(stderr, _("%s: Try `%s --help' for more information.\n"),
+		program_name(), program_name());
     } else {
 	printf(_("Usage: %s [OPTION ...] [GAME]\n"), program_name());
 	printf(_("\

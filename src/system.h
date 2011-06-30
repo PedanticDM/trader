@@ -48,6 +48,29 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <getopt.h>
+
+
+/************************************************************************
+*                       Miscellaneous definitions                       *
+************************************************************************/
+
+// For future use in internationalisation
+#ifndef _
+#  define _(x) (x)
+#endif
+#ifndef N_
+#  define N_(x) (x)
+#endif
+
+
+// Boolean values
+#ifndef FALSE
+#  define FALSE (0)
+#endif
+#ifndef TRUE
+#  define TRUE (1)
+#endif
 
 
 #endif /* included_SYSTEM_H */

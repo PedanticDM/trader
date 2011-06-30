@@ -148,3 +148,77 @@ const char *data_directory (void)
 
     return data_directory_str;
 }
+
+
+/*-----------------------------------------------------------------------
+  Function:   strto_game_filename  - Convert a string to a game filename
+  Arguments:  game_num             - Game number (1-9) as a string
+  Returns:    char *               - Pointer to game filename string
+
+  This function returns the full game filename as a malloc()ed string.
+  If game_num is a string between "1" and "9" inclusive, the string
+  returned is in the form data_directory() + "/" + GAME_FILENAME(game_num),
+  eg, "/home/test/.trader/game7".  If game_num is any other string, that
+  string is returned as the game filename.  If game_num is NULL, NULL is
+  returned.
+*/
+
+char *strto_game_filename (const char *game_num)
+{
+    if (game_num == NULL) {
+	return NULL;
+    }
+
+    if ((strlen(game_num) == 1) &&
+	(game_num[0] >= '1') && (game_num[0] <= '9')) {
+	return intto_game_filename(game_num[0] - '0');
+    } else {
+	char *p = malloc(strlen(game_num) + 1);
+	if (p != NULL) {
+	    strcpy(p, game_num);
+	}
+	return p;
+    }
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   intto_game_filename  - Convert an integer to a game filename
+  Arguments:  game_num             - Game number (1-9) as an integer
+  Returns:    char *               - Pointer to game filename string
+
+  This function returns the full game filename as a malloc()ed string.
+  If game_num is between 1 and 9 inclusive, the string returned is in the
+  form data_directory() + "/" + GAME_FILENAME(game_num).  If game_num is
+  any other integer, NULL is returned.
+*/
+
+char *intto_game_filename (const int game_num)
+{
+    char buf[GAME_FILENAME_BUFSIZE];		// Buffer for part of filename
+    const char *dd;				// Data directory
+
+
+    if ((game_num < 1) || (game_num > 9)) {
+	return NULL;
+    }
+
+    dd = data_directory();
+    snprintf(buf, GAME_FILENAME_BUFSIZE, GAME_FILENAME_PROTO, game_num);
+
+    if (dd == NULL) {
+	char *p = malloc(strlen(buf) + 1);
+	if (p != NULL) {
+	    strcpy(p, buf);
+	}
+	return p;
+    } else {
+	char *p = malloc(strlen(dd) + strlen(buf) + 2);
+	if (p != NULL) {
+	    strcpy(p, dd);
+	    strcat(p, "/");
+	    strcat(p, buf);
+	}
+	return p;
+    }
+}

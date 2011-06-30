@@ -33,6 +33,14 @@
 
 
 /************************************************************************
+*                    Constants and type declarations                    *
+************************************************************************/
+
+#define GAME_FILENAME_PROTO	"game%d"
+#define GAME_FILENAME_BUFSIZE	(16)
+
+
+/************************************************************************
 *                     Utility function declarations                     *
 ************************************************************************/
 
@@ -41,6 +49,9 @@ extern const char *program_name (void);
 
 extern const char *home_directory (void);
 extern const char *data_directory (void);
+
+extern char *strto_game_filename (const char *game_num);
+extern char *intto_game_filename (const int game_num);
 
 
 #endif /* included_UTILS_H */
