@@ -67,6 +67,15 @@ int main (int argc, char *argv[])
     keypad(stdscr, true);
     raw();
 
+    if (has_colors() == true) {
+	start_color();
+	init_pair(1, COLOR_WHITE, COLOR_BLACK);
+	init_pair(2, COLOR_WHITE, COLOR_BLUE);
+	bkgd(COLOR_PAIR(1));
+    }
+    clear();
+    move(0, 0);
+
     printw(_("Program name:   %s\n"), program_name());
     printw(_("Home directory: %s\n"), home_directory());
     printw(_("Data directory: %s\n"), data_directory());
@@ -75,22 +84,44 @@ int main (int argc, char *argv[])
     printw(_("Cols x Lines:   %d x %d\n"), COLS, LINES);
     printw(_("Colours, pairs: %d, %d\n"), COLORS, COLOR_PAIRS);
 
-    printw(_("Type some keys (^C to exit):\n\n"));
+    refresh();
 
     curs_set(CURS_VERYVISIBLE);
 
+    WINDOW *w1, *w2;
+
+    w1 = newwin(0, 0, 7, 0);
+    wbkgd(w1, COLOR_PAIR(2));
+    box(w1, 0, 0);
+    wrefresh(w1);
+
+    w2 = newwin(LINES - 9, COLS - 8, 8, 4);
+    wbkgd(w2, COLOR_PAIR(2));
+
+    mvwprintw(w2, 0, 0, _("Type some keys (^C to exit):\n\n"));
+    wrefresh(w2);
+
+    keypad(w2, true);
+    meta(w2, true);
+    wtimeout(w2, -1);
+
     int c = 0;
-    while ((c = getch()) != 3) {
+    while ((c = wgetch(w2)) != 3) {
 	if ((c >= 0) && (c < 32)) {
-	    printw("0%03o ^%c ", c, c + '@');
-	} else if ((c >= 32) && (c <= 127)) {
-	    printw("0%03o %c  ", c, c);
+	    wprintw(w2, "0%03o ^%c ", c, c + '@');
+	} else if ((c >= 32) && (c < 127)) {
+	    wprintw(w2, "0%03o %c  ", c, c);
 	} else {
-	    printw("0%05o  ", c);
+	    wprintw(w2, "0%05o  ", c);
 	}
-	refresh();
+	wrefresh(w2);
     }
 
+    delwin(w2);
+    delwin(w1);
+
+    clear();
+    refresh();
     endwin();
 
     return EXIT_SUCCESS;
@@ -160,6 +191,13 @@ static void process_cmdline (int argc, char *argv[])
 	}
 
 	game_filename = strto_game_filename(argv[optind]);
+
+	if (game_filename == NULL) {
+	    fprintf(stderr, _("%s: invalid game number `%s'\n"),
+		    program_name(), argv[optind]);
+	    show_usage(EXIT_FAILURE);
+	}
+
 	optind++;
     }
 

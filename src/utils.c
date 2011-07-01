@@ -158,9 +158,7 @@ const char *data_directory (void)
   This function returns the full game filename as a malloc()ed string.
   If game_num is a string between "1" and "9" inclusive, the string
   returned is in the form data_directory() + "/" + GAME_FILENAME(game_num),
-  eg, "/home/test/.trader/game7".  If game_num is any other string, that
-  string is returned as the game filename.  If game_num is NULL, NULL is
-  returned.
+  eg, "/home/test/.trader/game7".  Otherwise, NULL is returned.
 */
 
 char *strto_game_filename (const char *game_num)
@@ -169,15 +167,10 @@ char *strto_game_filename (const char *game_num)
 	return NULL;
     }
 
-    if ((strlen(game_num) == 1) &&
-	(game_num[0] >= '1') && (game_num[0] <= '9')) {
+    if ((strlen(game_num) == 1) && isdigit(game_num[0])) {
 	return intto_game_filename(game_num[0] - '0');
     } else {
-	char *p = malloc(strlen(game_num) + 1);
-	if (p != NULL) {
-	    strcpy(p, game_num);
-	}
-	return p;
+	return NULL;
     }
 }
 
