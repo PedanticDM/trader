@@ -50,9 +50,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdarg.h>
 #include <ctype.h>
 #include <string.h>
 #include <locale.h>
+#include <errno.h>
 
 #include <getopt.h>
 

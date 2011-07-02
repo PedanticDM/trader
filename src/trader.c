@@ -52,8 +52,10 @@ int main (int argc, char *argv[])
 {
     init_program_name(argv);
 
-    // Initialise the locale (and ignore any errors)
-    setlocale(LC_ALL, "");
+    // Initialise the locale
+    if (setlocale(LC_ALL, "") == NULL) {
+	err_exit("could not set locale (check LANG, LC_ALL and LANGUAGE in environment)");
+    }
 
     // Process command line arguments
     process_cmdline(argc, argv);
@@ -114,11 +116,13 @@ int main (int argc, char *argv[])
 	} else {
 	    wprintw(w2, "0%05o  ", c);
 	}
+
+	if (c == 0x1C) {
+	    err_exit("You pressed ^%c!", c + '@');
+	}
+
 	wrefresh(w2);
     }
-
-    delwin(w2);
-    delwin(w1);
 
     clear();
     refresh();

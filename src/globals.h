@@ -141,4 +141,5 @@ extern int	first_player;		// Who WAS the first player to go?
 extern bool	game_loaded;		// True if game was loaded from disk
 extern char	*game_filename;		// Game file filename
 
+
 #endif /* included_GLOBALS_H */

@@ -53,5 +53,10 @@ extern const char *data_directory (void);
 extern char *strto_game_filename (const char *game_num);
 extern char *intto_game_filename (const int game_num);
 
+extern void err_exit   (const char *format, ...)
+    __attribute__((noreturn, format (printf, 1, 2)));
+extern void errno_exit (const char *format, ...)
+    __attribute__((noreturn, format (printf, 1, 2)));
+
 
 #endif /* included_UTILS_H */

@@ -215,3 +215,76 @@ char *intto_game_filename (const int game_num)
 	return p;
     }
 }
+
+
+/*-----------------------------------------------------------------------
+  Function:   err_exit   - Print an error and exit
+  Arguments:  format     - printf()-like format of error message
+              ...        - printf()-like arguments
+  Returns:    (does not return)
+
+  This function closes all curses windows, prints the name of the program
+  and the error message to stderr (using format and following arguments
+  as if passed to printf()) and exits with error code EXIT_FAILURE.  The
+  format supplied does NOT need to supply the program name nor the
+  trailing end-line character.  The format should not be NULL; user-
+  supplied strings should ALWAYS be printed using "%s" as the format (and
+  with the user string as a second argument), NOT passed in as the format
+  itself.
+*/
+
+void err_exit (const char *format, ...)
+{
+    va_list args;
+
+
+    clear();
+    refresh();
+    endwin();
+
+    fprintf(stderr, "%s: ", program_name());
+    va_start(args, format);
+    vfprintf(stderr, format, args);
+    va_end(args);
+    fputs("\n", stderr);
+
+    exit(EXIT_FAILURE);
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   errno_exit   - Print an error (using errno) and exit
+  Arguments:  format       - printf()-like format of error message
+              ...          - printf()-like arguments
+  Returns:    (does not return)
+
+  This function closes all curses windows, prints the name of the
+  program, the error message (using format and following arguments as if
+  passed to printf()) and the string corresponding to errno to stderr,
+  then exits with error code EXIT_FAILURE.  The format supplied does NOT
+  need to supply the program name, any colons nor the trailing end-line
+  character.  The format may be NULL if no intermediate message is
+  needed.
+*/
+
+void errno_exit (const char *format, ...)
+{
+    va_list args;
+    int saved_errno = errno;
+
+
+    clear();
+    refresh();
+    endwin();
+
+    fprintf(stderr, "%s: ", program_name());
+    if (format != NULL) {
+	va_start(args, format);
+	vfprintf(stderr, format, args);
+	va_end(args);
+	fputs(": ", stderr);
+    }
+    fprintf(stderr, "%s\n", strerror(saved_errno));
+
+    exit(EXIT_FAILURE);
+}
