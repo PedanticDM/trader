@@ -78,15 +78,6 @@
 #define CURS_VERYVISIBLE (2)
 
 
-// For future use in internationalisation
-#ifndef _
-#  define _(x) (x)
-#endif
-#ifndef N_
-#  define N_(x) (x)
-#endif
-
-
 // Compiler __attributes__ for less-capable compilers
 #ifndef HAVE___ATTRIBUTE__
 #  define __attribute__(x)

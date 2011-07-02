@@ -76,13 +76,13 @@ int main (int argc, char *argv[])
     clear();
     move(0, 0);
 
-    printw(_("Program name:   %s\n"), program_name());
-    printw(_("Home directory: %s\n"), home_directory());
-    printw(_("Data directory: %s\n"), data_directory());
-    printw(_("Game filename:  %s\n"), game_filename);
+    printw("Program name:   %s\n", program_name());
+    printw("Home directory: %s\n", home_directory());
+    printw("Data directory: %s\n", data_directory());
+    printw("Game filename:  %s\n", game_filename);
 
-    printw(_("Cols x Lines:   %d x %d\n"), COLS, LINES);
-    printw(_("Colours, pairs: %d, %d\n"), COLORS, COLOR_PAIRS);
+    printw("Cols x Lines:   %d x %d\n", COLS, LINES);
+    printw("Colours, pairs: %d, %d\n", COLORS, COLOR_PAIRS);
 
     refresh();
 
@@ -98,7 +98,7 @@ int main (int argc, char *argv[])
     w2 = newwin(LINES - 9, COLS - 8, 8, 4);
     wbkgd(w2, COLOR_PAIR(2));
 
-    mvwprintw(w2, 0, 0, _("Type some keys (^C to exit):\n\n"));
+    mvwprintw(w2, 0, 0, "Type some keys (^C to exit):\n\n");
     wrefresh(w2);
 
     keypad(w2, true);
@@ -185,7 +185,7 @@ static void process_cmdline (int argc, char *argv[])
 
     if ((optind < argc) && (argv[optind] != NULL)) {
 	if (argv[optind][0] == '-') {
-	    fprintf(stderr, _("%s: invalid operand `%s'\n"), program_name(),
+	    fprintf(stderr, "%s: invalid operand `%s'\n", program_name(),
 		    argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
@@ -193,7 +193,7 @@ static void process_cmdline (int argc, char *argv[])
 	game_filename = strto_game_filename(argv[optind]);
 
 	if (game_filename == NULL) {
-	    fprintf(stderr, _("%s: invalid game number `%s'\n"),
+	    fprintf(stderr, "%s: invalid game number `%s'\n",
 		    program_name(), argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
@@ -202,7 +202,7 @@ static void process_cmdline (int argc, char *argv[])
     }
 
     if ((optind < argc) && (argv[optind] != NULL)) {
-	fprintf(stderr, _("%s: extra operand `%s'\n"), program_name(),
+	fprintf(stderr, "%s: extra operand `%s'\n", program_name(),
 		argv[optind]);
 	show_usage(EXIT_FAILURE);
     }
@@ -220,7 +220,7 @@ static void process_cmdline (int argc, char *argv[])
 
 static void __attribute__((noreturn)) show_version (void)
 {
-    printf(_("\
+    printf("\
 " PACKAGE_NAME " (%s) %s\n\
 Copyright (C) %s, John Zaitseff.\n\
 \n\
@@ -232,7 +232,7 @@ This program is free software that is distributed under the terms of the\n\
 GNU General Public License, version 3 or later.  You are welcome to\n\
 modify and/or distribute it under certain conditions.  This program has\n\
 NO WARRANTY, to the extent permitted by law; see the License for details.\n\
-"), program_name(), PACKAGE_VERSION, "1990-2011");
+", program_name(), PACKAGE_VERSION, "1990-2011");
 
     exit(EXIT_SUCCESS);
 }
@@ -249,34 +249,36 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
 
 static void __attribute__((noreturn)) show_usage (int status)
 {
+    const char *pn = program_name();
+
     if (status != EXIT_SUCCESS) {
-	fprintf(stderr, _("%s: Try `%s --help' for more information.\n"),
-		program_name(), program_name());
+	fprintf(stderr, "%s: Try `%s --help' for more information.\n",
+		pn, pn);
     } else {
-	printf(_("Usage: %s [OPTION ...] [GAME]\n"), program_name());
-	printf(_("\
+	printf("Usage: %s [OPTION ...] [GAME]\n", pn);
+	printf("\
 Play Star Traders, a simple game of interstellar trading.\n\n\
-"));
-	printf(_("\
+");
+	printf("\
 Options:\n\
   -V, --version   output version information and exit\n\
   -h, --help      display this help and exit\n\n\
-"));
-	printf(_("\
+");
+	printf("\
 If GAME is specified as a number between 1 and 9, load and continue\n\
 playing that game.  If GAME is not specified, start a new game.\n\n\
-"));
+");
 
 #ifdef PACKAGE_AUTHOR
-	printf(_("Report bugs to %s <%s>.\n"), PACKAGE_AUTHOR, PACKAGE_BUGREPORT);
+	printf("Report bugs to %s <%s>.\n", PACKAGE_AUTHOR, PACKAGE_BUGREPORT);
 #else
-	printf(_("Report bugs to <%s>.\n"), PACKAGE_BUGREPORT);
+	printf("Report bugs to <%s>.\n", PACKAGE_BUGREPORT);
 #endif
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
-	printf(_("Report %s bugs to <%s>.\n"), PACKAGE_PACKAGER, PACKAGE_PACKAGER_BUG_REPORTS);
+	printf("Report %s bugs to <%s>.\n", PACKAGE_PACKAGER, PACKAGE_PACKAGER_BUG_REPORTS);
 #endif
 #ifdef PACKAGE_URL
-	printf(_("Star Traders home page: <%s>.\n"), PACKAGE_URL);
+	printf("Star Traders home page: <%s>.\n", PACKAGE_URL);
 #endif
     }
 
