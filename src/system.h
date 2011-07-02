@@ -72,10 +72,12 @@
 ************************************************************************/
 
 // Visibility of the cursor in Curses
-#define CURS_INVISIBLE   (0)
-#define CURS_NORMAL      (1)
-#define CURS_VISIBLE     (1)
-#define CURS_VERYVISIBLE (2)
+typedef enum curs_type {
+    CURS_INVISIBLE	= 0,
+    CURS_NORMAL		= 1,
+    CURS_VISIBLE	= 1,
+    CURS_VERYVISIBLE	= 2
+} curs_type_t;
 
 
 // Compiler __attributes__ for less-capable compilers
