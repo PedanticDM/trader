@@ -36,3 +36,5 @@ trader_SOURCES	= \
 			system.h
 
 trader_LDADD	= @CURSES_LIB@
+
+EXTRA_DIST	= README

@@ -1,0 +1,9 @@
+**************************************************************************
+*                                                                        *
+*              Star Traders: A Game of Interstellar Trading              *
+*                 Copyright (C) 1990-2011, John Zaitseff                 *
+*                                                                        *
+**************************************************************************
+
+This directory, "doc", contains documentation related to Star Traders.  In
+particular, the Unix manual page for the game is in the file "trader.6".

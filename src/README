@@ -1,0 +1,17 @@
+**************************************************************************
+*                                                                        *
+*              Star Traders: A Game of Interstellar Trading              *
+*                 Copyright (C) 1990-2011, John Zaitseff                 *
+*                                                                        *
+**************************************************************************
+
+This directory, "src", contains the main source code to Star Traders.  The
+source code is split up among the following files:
+
+    trader.h     - Main program header file
+    trader.c     - Main program, command-line interface
+    system.h     - All system header files are included here
+    globals.h    - Global game constants and variables
+    globals.c    - Global game variables
+    utils.h      - Utility functions header file
+    utils.c      - Utility functions needed by Star Traders
