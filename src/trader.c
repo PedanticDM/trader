@@ -40,8 +40,8 @@
 
 int main (int argc, char *argv[]);
 static void process_cmdline (int argc, char *argv[]);
-static void __attribute__((noreturn)) show_version (void);
-static void __attribute__((noreturn)) show_usage (int status);
+static void show_version (void) __attribute__((noreturn));
+static void show_usage (int status) __attribute__((noreturn));
 
 
 /************************************************************************
@@ -218,7 +218,7 @@ static void process_cmdline (int argc, char *argv[])
   terminates.
 */
 
-static void __attribute__((noreturn)) show_version (void)
+static void show_version (void)
 {
     printf("\
 " PACKAGE_NAME " (%s) %s\n\
@@ -247,7 +247,7 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
   error, then terminates.
 */
 
-static void __attribute__((noreturn)) show_usage (int status)
+static void show_usage (int status)
 {
     const char *pn = program_name();
 
