@@ -30,6 +30,7 @@
 
 #include "system.h"
 #include "utils.h"
+#include "intf.h"
 
 
 /************************************************************************
@@ -218,9 +219,9 @@ char *intto_game_filename (const int game_num)
 
 
 /*-----------------------------------------------------------------------
-  Function:   err_exit   - Print an error and exit
-  Arguments:  format     - printf()-like format of error message
-              ...        - printf()-like arguments
+  Function:   err_exit  - Print an error and exit
+  Arguments:  format    - printf()-like format of error message
+              ...       - printf()-like arguments
   Returns:    (does not return)
 
   This function closes all curses windows, prints the name of the program
@@ -238,9 +239,7 @@ void err_exit (const char *format, ...)
     va_list args;
 
 
-    clear();
-    refresh();
-    endwin();
+    end_screen();
 
     fprintf(stderr, "%s: ", program_name());
     va_start(args, format);
@@ -253,9 +252,9 @@ void err_exit (const char *format, ...)
 
 
 /*-----------------------------------------------------------------------
-  Function:   errno_exit   - Print an error (using errno) and exit
-  Arguments:  format       - printf()-like format of error message
-              ...          - printf()-like arguments
+  Function:   errno_exit  - Print an error (using errno) and exit
+  Arguments:  format      - printf()-like format of error message
+              ...         - printf()-like arguments
   Returns:    (does not return)
 
   This function closes all curses windows, prints the name of the
@@ -273,9 +272,7 @@ void errno_exit (const char *format, ...)
     int saved_errno = errno;
 
 
-    clear();
-    refresh();
-    endwin();
+    end_screen();
 
     fprintf(stderr, "%s: ", program_name());
     if (format != NULL) {

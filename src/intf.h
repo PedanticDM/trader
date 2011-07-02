@@ -32,12 +32,39 @@
 #define included_INTF_H 1
 
 
+#include "system.h"
+
+
 /************************************************************************
 *                    Constants and type declarations                    *
 ************************************************************************/
 
 #define MIN_COLUMNS	(80)	/* Minimum number of columns in terminal */
 #define MIN_LINES	(24)	/* Minimum number of lines in terminal */
+
+#define OUTBUFSIZE	(1024)	/* Output string buffer size */
+
+
+// Colour pairs used in Star Traders
+enum color_pairs {
+    DEFAULT_COLORS = 0,
+    WHITE_ON_BLACK,
+    WHITE_ON_BLUE,
+    WHITE_ON_RED,
+    YELLOW_ON_CYAN,
+    BLACK_ON_WHITE,
+};
+
+
+/************************************************************************
+*             Basic text input/output function declarations             *
+************************************************************************/
+
+extern void init_screen (void);
+extern void end_screen (void);
+
+extern int center (WINDOW *win, const bool clrline, const char *format, ...)
+    __attribute__((format (printf, 3, 4)));
 
 
 #endif /* included_INTF_H */

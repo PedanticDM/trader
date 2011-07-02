@@ -62,21 +62,7 @@ int main (int argc, char *argv[])
 
 
     // Testing...
-    initscr();
-    noecho();
-    curs_set(CURS_INVISIBLE);
-    timeout(-1);
-    keypad(stdscr, true);
-    raw();
-
-    if (has_colors() == true) {
-	start_color();
-	init_pair(1, COLOR_WHITE, COLOR_BLACK);
-	init_pair(2, COLOR_WHITE, COLOR_BLUE);
-	bkgd(COLOR_PAIR(1));
-    }
-    clear();
-    move(0, 0);
+    init_screen();
 
     printw("Program name:   %s\n", program_name());
     printw("Home directory: %s\n", home_directory());
@@ -93,16 +79,20 @@ int main (int argc, char *argv[])
     WINDOW *w1, *w2;
 
     w1 = newwin(0, 0, 7, 0);
-    wbkgd(w1, COLOR_PAIR(2));
+    wbkgd(w1, COLOR_PAIR(WHITE_ON_BLUE));
     box(w1, 0, 0);
     wrefresh(w1);
 
     w2 = newwin(LINES - 9, COLS - 8, 8, 4);
-    wbkgd(w2, COLOR_PAIR(2));
+    wbkgd(w2, COLOR_PAIR(WHITE_ON_BLUE));
 
-    mvwprintw(w2, 0, 0, "Type some keys (^C to exit):\n\n");
+    wattrset(w2, has_colors() ? COLOR_PAIR(WHITE_ON_RED) | A_BOLD : A_REVERSE | A_BOLD);
+    center(w2, true, "Type some keys (^C to exit):");
+    wattrset(w2, A_NORMAL);
+
     wrefresh(w2);
 
+    scrollok(w2, true);
     keypad(w2, true);
     meta(w2, true);
     wtimeout(w2, -1);
@@ -124,9 +114,7 @@ int main (int argc, char *argv[])
 	wrefresh(w2);
     }
 
-    clear();
-    refresh();
-    endwin();
+    end_screen();
 
     return EXIT_SUCCESS;
 }

@@ -45,6 +45,7 @@
 
 #include "system.h"
 #include "globals.h"
+#include "intf.h"
 #include "utils.h"
 
 

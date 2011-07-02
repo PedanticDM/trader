@@ -32,6 +32,7 @@ bin_PROGRAMS	= trader
 trader_SOURCES	= \
 	trader.c	trader.h	\
 	globals.c	globals.h	\
+	intf.c		intf.h		\
 	utils.c		utils.h		\
 			system.h
 
