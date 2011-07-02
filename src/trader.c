@@ -78,12 +78,12 @@ int main (int argc, char *argv[])
 
     WINDOW *w1, *w2;
 
-    w1 = newwin(0, 0, 7, 0);
+    w1 = newwin(WIN_LINES - 7, WIN_COLS, LINE_OFFSET + 7, COL_OFFSET + 0);
     wbkgd(w1, COLOR_PAIR(WHITE_ON_BLUE));
     box(w1, 0, 0);
     wrefresh(w1);
 
-    w2 = newwin(LINES - 9, COLS - 8, 8, 4);
+    w2 = newwin(WIN_LINES - 9, WIN_COLS - 8, LINE_OFFSET + 8, COL_OFFSET + 4);
     wbkgd(w2, COLOR_PAIR(WHITE_ON_BLUE));
 
     wattrset(w2, has_colors() ? COLOR_PAIR(WHITE_ON_RED) | A_BOLD : A_REVERSE | A_BOLD);

@@ -51,9 +51,9 @@ void init_screen (void)
 {
     initscr();
 
-    if ((COLS < MIN_COLUMNS) || (LINES < MIN_LINES)) {
+    if ((COLS < MIN_COLS) || (LINES < MIN_LINES)) {
 	err_exit("terminal size is too small (%d x %d required)",
-		 MIN_COLUMNS, MIN_LINES);
+		 MIN_COLS, MIN_LINES);
     }
 
     noecho();

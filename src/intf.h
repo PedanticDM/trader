@@ -39,8 +39,20 @@
 *                    Constants and type declarations                    *
 ************************************************************************/
 
-#define MIN_COLUMNS	(80)	/* Minimum number of columns in terminal */
+#define MIN_COLS	(80)	/* Minimum number of columns in terminal */
 #define MIN_LINES	(24)	/* Minimum number of lines in terminal */
+
+/*
+  This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
+  terminal window.  COL_OFFSET and LINE_OFFSET define offsets that should
+  be added to each newwin() call to position the window correctly.
+*/
+
+#define WIN_COLS	MIN_COLS	/* Number of columns in main windows */
+#define WIN_LINES	MIN_LINES	/* Number of lines in main windows */
+
+#define COL_OFFSET	((COLS - MIN_COLS) / 2)		/* Window offsets */
+#define LINE_OFFSET	(0)
 
 #define OUTBUFSIZE	(1024)	/* Output string buffer size */
 
