@@ -13,6 +13,8 @@ source code is split up among the following files:
     system.h     - All system header files are included here
     globals.h    - Global game constants and variables
     globals.c    - Global game variables
+    help.h       - Help text routines header file
+    help.c       - Help text routines: how to play Star Traders
     intf.h       - Basic text input/output header file
     intf.c       - Basic text input/output routines
     utils.h      - Utility functions header file
