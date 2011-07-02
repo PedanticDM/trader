@@ -35,7 +35,7 @@
 *                          Global definitions                           *
 ************************************************************************/
 
-#define GAME_FILE_HEADER	"Star Traders Saved Game"
+#define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
 #define GAME_FILE_API_VERSION	"7.0"	/* For game loads and saves */
 
 
