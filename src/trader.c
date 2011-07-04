@@ -64,55 +64,59 @@ int main (int argc, char *argv[])
     // Testing...
     init_screen();
 
-    printw("Program name:   %s\n", program_name());
-    printw("Home directory: %s\n", home_directory());
-    printw("Data directory: %s\n", data_directory());
-    printw("Game filename:  %s (%d)\n", game_filename(game_num), game_num);
+    wprintw(curwin, "Program name:   %s\n", program_name());
+    wprintw(curwin, "Home directory: %s\n", home_directory());
+    wprintw(curwin, "Data directory: %s\n", data_directory());
+    wprintw(curwin, "Game filename:  %s (%d)\n", game_filename(game_num), game_num);
 
-    printw("Cols x Lines:   %d x %d\n", COLS, LINES);
-    printw("Colours, pairs: %d, %d\n", COLORS, COLOR_PAIRS);
+    wprintw(curwin, "Cols x Lines:   %d x %d\n", COLS, LINES);
+    wprintw(curwin, "Colours, pairs: %d, %d\n", COLORS, COLOR_PAIRS);
 
-    refresh();
+    wrefresh(curwin);
 
     curs_set(CURS_VERYVISIBLE);
 
-    WINDOW *w1, *w2;
+    newtxwin(WIN_LINES - 7, WIN_COLS, LINE_OFFSET + 7, COL_OFFSET + 0);
+    wbkgd(curwin, COLOR_PAIR(WHITE_ON_BLUE));
+    box(curwin, 0, 0);
+    wrefresh(curwin);
 
-    w1 = newwin(WIN_LINES - 7, WIN_COLS, LINE_OFFSET + 7, COL_OFFSET + 0);
-    wbkgd(w1, COLOR_PAIR(WHITE_ON_BLUE));
-    box(w1, 0, 0);
-    wrefresh(w1);
+    newtxwin(WIN_LINES - 9, WIN_COLS - 8, LINE_OFFSET + 8, COL_OFFSET + 4);
+    wbkgd(curwin, COLOR_PAIR(WHITE_ON_BLUE));
 
-    w2 = newwin(WIN_LINES - 9, WIN_COLS - 8, LINE_OFFSET + 8, COL_OFFSET + 4);
-    wbkgd(w2, COLOR_PAIR(WHITE_ON_BLUE));
+    wattrset(curwin, has_colors() ? COLOR_PAIR(WHITE_ON_RED) | A_BOLD : A_REVERSE | A_BOLD);
+    center(curwin, true, "Type some keys (^C to exit):");
+    wattrset(curwin, A_NORMAL);
 
-    wattrset(w2, has_colors() ? COLOR_PAIR(WHITE_ON_RED) | A_BOLD : A_REVERSE | A_BOLD);
-    center(w2, true, "Type some keys (^C to exit):");
-    wattrset(w2, A_NORMAL);
+    wrefresh(curwin);
 
-    wrefresh(w2);
-
-    scrollok(w2, true);
-    keypad(w2, true);
-    meta(w2, true);
-    wtimeout(w2, -1);
+    scrollok(curwin, true);
+    keypad(curwin, true);
+    meta(curwin, true);
+    wtimeout(curwin, -1);
 
     int c = 0;
-    while ((c = wgetch(w2)) != 3) {
+    while ((c = wgetch(curwin)) != 3) {
 	if ((c >= 0) && (c < 32)) {
-	    wprintw(w2, "0%03o ^%c ", c, c + '@');
+	    wprintw(curwin, "0%03o ^%c ", c, c + '@');
 	} else if ((c >= 32) && (c < 127)) {
-	    wprintw(w2, "0%03o %c  ", c, c);
+	    wprintw(curwin, "0%03o %c  ", c, c);
 	} else {
-	    wprintw(w2, "0%05o  ", c);
+	    wprintw(curwin, "0%05o  ", c);
 	}
 
 	if (c == 0x1C) {
 	    err_exit("You pressed ^%c!", c + '@');
 	}
 
-	wrefresh(w2);
+	wrefresh(curwin);
     }
+
+    deltxwin();
+    txrefresh();
+
+    mvwprintw(curwin, 1, 2, "All OK: ");
+    wgetch(curwin);
 
     end_screen();
 

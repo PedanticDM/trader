@@ -34,6 +34,35 @@
 
 
 /************************************************************************
+*                Module constants and type declarations                 *
+************************************************************************/
+
+#define OUTBUFSIZE	(1024)	/* Output string buffer size */
+
+
+typedef struct txwin {
+    WINDOW		*win;		// Pointer to window structure
+    struct txwin	*next;		// Next window in stack
+    struct txwin	*prev;		// Previous window in stack
+} txwin_t;
+
+
+/************************************************************************
+*                      Global variable definitions                      *
+************************************************************************/
+
+WINDOW *curwin = NULL;		// Top-most (current) window
+
+
+/************************************************************************
+*                           Module variables                            *
+************************************************************************/
+
+txwin_t *topwin   = NULL;	// Top-most txwin structure
+txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
+
+
+/************************************************************************
 *             Basic text input/output function definitions              *
 ************************************************************************/
 
@@ -55,6 +84,10 @@ void init_screen (void)
 	err_exit("terminal size is too small (%d x %d required)",
 		 MIN_COLS, MIN_LINES);
     }
+
+    curwin = stdscr;
+    topwin = NULL;
+    firstwin = NULL;
 
     noecho();
     curs_set(CURS_INVISIBLE);
@@ -95,9 +128,153 @@ void init_screen (void)
 
 void end_screen (void)
 {
+    delalltxwin();
+
     clear();
     refresh();
     endwin();
+
+    curwin = NULL;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   newtxwin  - Create a new window, inserted into window stack
+  Arguments:  nlines    - Number of lines in new window
+              ncols     - Number of columns in new window
+              begin_y   - Starting line number (global coordinates)
+              begin_x   - Starting column number (global coordinates)
+  Returns:    WINDOW *  - Pointer to new window structure
+
+  This function creates a window (using the Curses newwin() function) and
+  places it top-most in the stack of windows managed by this module.  A
+  pointer to the new window is returned; the global variable "curwin"
+  also points to this new window.  Please note that wrefresh() is NOT
+  called on the new window.
+*/
+
+WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x)
+{
+    WINDOW	*win;
+    txwin_t	*nw;
+
+
+    win = newwin(nlines, ncols, begin_y, begin_x);
+    if (win == NULL) {
+	return NULL;
+    }
+
+    nw = malloc(sizeof(txwin_t));
+    if (nw == NULL) {
+	delwin(win);
+	return NULL;
+    }
+
+    nw->win = win;
+    nw->next = NULL;
+    nw->prev = topwin;
+
+    if (topwin != NULL) {
+	topwin->next = nw;
+    }
+
+    topwin = nw;
+    curwin = win;
+
+    if (firstwin == NULL) {
+	firstwin = nw;
+    }
+
+    return win;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   deltxwin  - Delete the top-most window in window stack
+  Arguments:  (none)
+  Returns:    int       - OK if all well, ERR if not
+
+  This function deletes the top-most window in the stack of windows
+  managed by this module.  ERR is returned if there is no such window, or
+  if delwin() fails.  Please note that the actual screen is NOT
+  refreshed: a call to txrefresh() should follow this one.  This allows
+  multiple windows to be deleted without screen flashing.
+*/
+
+int deltxwin (void)
+{
+    txwin_t	*cur, *prev;
+    int		r;
+
+
+    if (topwin == NULL) {
+	return ERR;
+    }
+
+    cur = topwin;
+    prev = topwin->prev;
+    topwin = prev;
+
+    if (prev != NULL) {
+	prev->next = NULL;
+	curwin = prev->win;
+    } else {
+	firstwin = NULL;
+	curwin = stdscr;
+    }
+
+    r = delwin(cur->win);
+    free(cur);
+
+    return r;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   delalltxwin  - Delete all windows in the window stack
+  Arguments:  (none)
+  Returns:    int          - OK is always returned
+
+  This function deletes all windows in the stack of windows managed by
+  this module.  After calling this function, the global variable "curwin"
+  points to "stdscr", the only window for which output is now permitted.
+  Please note that the screen is NOT refreshed; a call to txrefresh()
+  should follow this one if appropriate.
+*/
+
+int delalltxwin (void)
+{
+    while (topwin != NULL) {
+	deltxwin();
+    }
+
+    return OK;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   txrefresh  - Redraw all windows in the window stack
+  Arguments:  (none)
+  Returns:    int        - OK if all well, ERR if not
+
+  This function redraws (refreshes) all windows in the stack of windows
+  managed by this module.  Windows are refreshed from bottom (first) to
+  top (last).  The result of doupdate() is returned.
+*/
+
+int txrefresh (void)
+{
+    txwin_t *p;
+
+    touchwin(stdscr);
+    wnoutrefresh(stdscr);
+
+    for (p = firstwin; p != NULL; p = p->next) {
+	touchwin(p->win);
+	wnoutrefresh(p->win);
+    }
+
+    return doupdate();
 }
 
 

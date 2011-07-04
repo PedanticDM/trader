@@ -54,8 +54,6 @@
 #define COL_OFFSET	((COLS - MIN_COLS) / 2)		/* Window offsets */
 #define LINE_OFFSET	(0)
 
-#define OUTBUFSIZE	(1024)	/* Output string buffer size */
-
 
 // Colour pairs used in Star Traders
 enum color_pairs {
@@ -69,11 +67,24 @@ enum color_pairs {
 
 
 /************************************************************************
+*                     Global variable declarations                      *
+************************************************************************/
+
+extern WINDOW *curwin;			// Top-most (current) window
+
+
+/************************************************************************
 *             Basic text input/output function declarations             *
 ************************************************************************/
 
 extern void init_screen (void);
 extern void end_screen (void);
+
+// Simplified panel-like window functions
+extern WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x);
+extern int deltxwin (void);
+extern int delalltxwin (void);
+extern int txrefresh (void);
 
 extern int center (WINDOW *win, const bool clrline, const char *format, ...)
     __attribute__((format (printf, 3, 4)));
