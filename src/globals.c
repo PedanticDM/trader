@@ -69,3 +69,5 @@ int	first_player;			// Who WAS the first player to go?
 
 bool	game_loaded = false;		// True if game was loaded from disk
 int	game_num    = 0;		// Game number (1-9)
+
+bool	quit_selected;			// Is a player trying to quit the game?

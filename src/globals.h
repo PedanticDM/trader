@@ -140,5 +140,7 @@ extern int	first_player;		// Who WAS the first player to go?
 extern bool	game_loaded;		// True if game was loaded from disk
 extern int	game_num;		// Game number (1-9)
 
+extern bool	quit_selected;		// Is a player trying to quit the game?
+
 
 #endif /* included_GLOBALS_H */
