@@ -66,7 +66,6 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
 *             Basic text input/output function definitions              *
 ************************************************************************/
 
-
 /*-----------------------------------------------------------------------
   Function:   init_screen  - Initialise the screen (terminal)
   Arguments:  (none)
@@ -90,17 +89,19 @@ void init_screen (void)
     firstwin = NULL;
 
     noecho();
-    curs_set(CURS_INVISIBLE);
+    curs_set(CURS_OFF);
     raw();
 
     if (has_colors()) {
 	start_color();
 
-	init_pair(WHITE_ON_BLACK, COLOR_WHITE,  COLOR_BLACK);
-	init_pair(WHITE_ON_BLUE,  COLOR_WHITE,  COLOR_BLUE);
-	init_pair(YELLOW_ON_CYAN, COLOR_YELLOW, COLOR_CYAN);
-	init_pair(WHITE_ON_RED,   COLOR_WHITE,  COLOR_RED);
-	init_pair(BLACK_ON_WHITE, COLOR_BLACK,  COLOR_WHITE);
+	init_pair(WHITE_ON_BLACK,  COLOR_WHITE,  COLOR_BLACK);
+	init_pair(WHITE_ON_BLUE,   COLOR_WHITE,  COLOR_BLUE);
+	init_pair(WHITE_ON_RED,    COLOR_WHITE,  COLOR_RED);
+	init_pair(YELLOW_ON_BLACK, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(YELLOW_ON_BLUE,  COLOR_YELLOW, COLOR_BLUE);
+	init_pair(YELLOW_ON_CYAN,  COLOR_YELLOW, COLOR_CYAN);
+	init_pair(BLACK_ON_WHITE,  COLOR_BLACK,  COLOR_WHITE);
 
 	bkgd(COLOR_PAIR(WHITE_ON_BLACK));
     }
@@ -135,6 +136,10 @@ void end_screen (void)
     curwin = NULL;
 }
 
+
+/************************************************************************
+*                Simplified panel-like window functions                 *
+************************************************************************/
 
 /*-----------------------------------------------------------------------
   Function:   newtxwin  - Create a new window, inserted into window stack
@@ -277,6 +282,10 @@ int txrefresh (void)
 }
 
 
+/************************************************************************
+*                            Output routines                            *
+************************************************************************/
+
 /*-----------------------------------------------------------------------
   Function:   center   - Centre a string on the current line
   Arguments:  win      - Window to use
@@ -369,4 +378,72 @@ int attrpr (WINDOW *win, int attr_start, int attr_end, const char *format, ...)
     wattrset(win, attr_end);
 
     return ret;
+}
+
+
+/************************************************************************
+*                            Input routines                             *
+************************************************************************/
+
+/*-----------------------------------------------------------------------
+  Function:   gettxchar  - Read a keyboard character
+  Arguments:  win        - Window to use
+  Returns:    int        - Keyboard character
+
+  This function reads a single character from the keyboard.  The key is
+  NOT echoed to the screen and the cursor visibility is NOT affected.
+*/
+
+int gettxchar (WINDOW *win)
+{
+    keypad(win, true);
+    meta(win, true);
+    wtimeout(win, -1);
+
+    return wgetch(win);
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   getanswer  - Read a Yes/No answer and return true/false
+  Arguments:  win        - Window to use
+  Returns:    bool       - true if Yes ("Y") was selected, else false
+
+  This function waits for either "Y" or "N" to be pressed on the
+  keyboard.  If "Y" was pressed, "Yes." is printed and true is returned.
+  If "N" was pressed, "No." is printed and false is returned.  Note that
+  the cursor becomes invisible after this function.
+*/
+
+bool getanswer (WINDOW *win)
+{
+    int key;
+    bool ok;
+
+
+    keypad(win, true);
+    meta(win, true);
+    wtimeout(win, -1);
+
+    curs_set(CURS_ON);
+
+    do {
+	key = toupper(wgetch(win));
+	ok = ((key == 'Y') || (key == 'N'));
+
+	if (! ok) {
+	    beep();
+	}
+    } while (! ok);
+
+    curs_set(CURS_OFF);
+
+    if (key == 'Y') {
+	wprintw(win, "Yes.");
+    } else {
+	wprintw(win, "No.");
+    }
+
+    wrefresh(win);
+    return (key == 'Y');
 }

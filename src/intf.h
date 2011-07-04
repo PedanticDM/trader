@@ -46,6 +46,15 @@ typedef enum curs_type {
     CURS_VISIBLE	= 2
 } curs_type_t;
 
+#define CURS_OFF	(CURS_INVISIBLE)
+#define CURS_ON		(CURS_VISIBLE)
+
+
+// Keycodes
+#define KEY_TAB		(011)
+#define KEY_RETURN	(012)
+#define KEY_ESC		(033)
+
 
 /*
   This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
@@ -74,6 +83,8 @@ enum color_pairs {
     WHITE_ON_BLACK,
     WHITE_ON_BLUE,
     WHITE_ON_RED,
+    YELLOW_ON_BLACK,
+    YELLOW_ON_BLUE,
     YELLOW_ON_CYAN,
     BLACK_ON_WHITE,
 };
@@ -109,6 +120,11 @@ extern int center (WINDOW *win, int y, const bool clrline,
 extern int attrpr (WINDOW *win, int attr_start, int attr_end,
 		   const char *format, ...)
     __attribute__((format (printf, 4, 5)));
+
+// Input routines
+
+extern int gettxchar (WINDOW *win);
+extern bool getanswer (WINDOW *win);
 
 
 #endif /* included_INTF_H */
