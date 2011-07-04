@@ -94,12 +94,19 @@ extern void init_screen (void);
 extern void end_screen (void);
 
 // Simplified panel-like window functions
+
 extern WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x);
 extern int deltxwin (void);
 extern int delalltxwin (void);
 extern int txrefresh (void);
 
+// Output routines
+
 extern int center (WINDOW *win, int y, const bool clrline,
+		   const char *format, ...)
+    __attribute__((format (printf, 4, 5)));
+
+extern int attrpr (WINDOW *win, int attr_start, int attr_end,
 		   const char *format, ...)
     __attribute__((format (printf, 4, 5)));
 

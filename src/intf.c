@@ -153,8 +153,8 @@ void end_screen (void)
 
 WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x)
 {
-    WINDOW	*win;
-    txwin_t	*nw;
+    WINDOW *win;
+    txwin_t *nw;
 
 
     win = newwin(nlines, ncols, begin_y, begin_x);
@@ -201,8 +201,8 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x)
 
 int deltxwin (void)
 {
-    txwin_t	*cur, *prev;
-    int		r;
+    txwin_t *cur, *prev;
+    int ret;
 
 
     if (topwin == NULL) {
@@ -221,10 +221,10 @@ int deltxwin (void)
 	curwin = stdscr;
     }
 
-    r = delwin(cur->win);
+    ret = delwin(cur->win);
     free(cur);
 
-    return r;
+    return ret;
 }
 
 
@@ -264,6 +264,7 @@ int txrefresh (void)
 {
     txwin_t *p;
 
+
     touchwin(stdscr);
     wnoutrefresh(stdscr);
 
@@ -301,13 +302,17 @@ int center (WINDOW *win, int y, const bool clrline, const char *format, ...)
     int maxy, maxx;
     int fill;
 
-    char *buf = malloc(OUTBUFSIZE);
+    char *buf;
+
+
+    buf = malloc(OUTBUFSIZE);
     if (buf == NULL) {
 	err_exit("out of memory");
     }
 
     va_start(args, format);
     len = vsnprintf(buf, OUTBUFSIZE, format, args);
+    va_end(args);
     if (len < 0) {
 	return ERR;
     }
@@ -332,5 +337,36 @@ int center (WINDOW *win, int y, const bool clrline, const char *format, ...)
     }
 
     free(buf);
+    return ret;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   attrpr      - Print a string with special attributes
+  Arguments:  win         - Window to use
+              attr_start  - Attribute to set at the start of wprintw()
+	      attr_end    - Attribute to set at the end of wprintw()
+              format      - printf()-like format string
+              ...         - printf()-like arguments
+  Returns:    int         - Return code from wprintw()
+
+  This function sets the window attribute to attr_start, then prints the
+  given string (using wprintw()), then sets the attribute to attr_end.
+*/
+
+int attrpr (WINDOW *win, int attr_start, int attr_end, const char *format, ...)
+{
+    va_list args;
+    int ret;
+
+
+    wattrset(win, attr_start);
+
+    va_start(args, format);
+    ret = vwprintw(win, format, args);
+    va_end(args);
+
+    wattrset(win, attr_end);
+
     return ret;
 }
