@@ -36,7 +36,7 @@
 ************************************************************************/
 
 // Company names
-const char *company_names[MAX_COMPANIES] = {
+const char *company_name[MAX_COMPANIES] = {
     "Altair Starways",
     "Betelgeuse, Ltd",
     "Capella Freight Co",

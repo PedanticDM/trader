@@ -76,7 +76,7 @@
 
 // Information about each company
 typedef struct company_info {
-    char	*name;			// Company name
+    const char	*name;			// Company name
     double	share_price;		// Share price
     double	share_return;		// Return per share
     long	stock_issued;		// Total stock sold to players
@@ -87,7 +87,7 @@ typedef struct company_info {
 
 // Information about each player
 typedef struct player_info {
-    char	*name;			// Player name
+    const char	*name;			// Player name
     double	cash;			// Cash available
     double	debt;			// Amount of debt
     long	stock_owned[MAX_COMPANIES];	// How much stock is owned
@@ -115,7 +115,7 @@ typedef struct move_rec {
 
 
 // Company names
-extern const char *company_names[MAX_COMPANIES];
+extern const char *company_name[MAX_COMPANIES];
 
 
 /************************************************************************
