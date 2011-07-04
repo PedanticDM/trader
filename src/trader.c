@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
     printw("Program name:   %s\n", program_name());
     printw("Home directory: %s\n", home_directory());
     printw("Data directory: %s\n", data_directory());
-    printw("Game filename:  %s\n", game_filename);
+    printw("Game filename:  %s (%d)\n", game_filename(game_num), game_num);
 
     printw("Cols x Lines:   %d x %d\n", COLS, LINES);
     printw("Colours, pairs: %d, %d\n", COLORS, COLOR_PAIRS);
@@ -182,9 +182,9 @@ static void process_cmdline (int argc, char *argv[])
 	    show_usage(EXIT_FAILURE);
 	}
 
-	game_filename = strto_game_filename(argv[optind]);
-
-	if (game_filename == NULL) {
+	if ((strlen(argv[optind]) == 1) && isdigit(*argv[optind])) {
+	    game_num = *argv[optind] - '0';
+	} else {
 	    fprintf(stderr, "%s: invalid game number `%s'\n",
 		    program_name(), argv[optind]);
 	    show_usage(EXIT_FAILURE);

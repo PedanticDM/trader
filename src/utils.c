@@ -152,34 +152,9 @@ const char *data_directory (void)
 
 
 /*-----------------------------------------------------------------------
-  Function:   strto_game_filename  - Convert a string to a game filename
-  Arguments:  game_num             - Game number (1-9) as a string
-  Returns:    char *               - Pointer to game filename string
-
-  This function returns the full game filename as a malloc()ed string.
-  If game_num is a string between "1" and "9" inclusive, the string
-  returned is in the form data_directory() + "/" + GAME_FILENAME(game_num),
-  eg, "/home/test/.trader/game7".  Otherwise, NULL is returned.
-*/
-
-char *strto_game_filename (const char *game_num)
-{
-    if (game_num == NULL) {
-	return NULL;
-    }
-
-    if ((strlen(game_num) == 1) && isdigit(game_num[0])) {
-	return intto_game_filename(game_num[0] - '0');
-    } else {
-	return NULL;
-    }
-}
-
-
-/*-----------------------------------------------------------------------
-  Function:   intto_game_filename  - Convert an integer to a game filename
-  Arguments:  game_num             - Game number (1-9) as an integer
-  Returns:    char *               - Pointer to game filename string
+  Function:   game_filename  - Convert an integer to a game filename
+  Arguments:  game_num       - Game number (1-9) as an integer
+  Returns:    char *         - Pointer to game filename string
 
   This function returns the full game filename as a malloc()ed string.
   If game_num is between 1 and 9 inclusive, the string returned is in the
@@ -187,7 +162,7 @@ char *strto_game_filename (const char *game_num)
   any other integer, NULL is returned.
 */
 
-char *intto_game_filename (const int game_num)
+char *game_filename (const int game_num)
 {
     char buf[GAME_FILENAME_BUFSIZE];		// Buffer for part of filename
     const char *dd;				// Data directory

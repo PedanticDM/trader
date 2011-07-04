@@ -50,8 +50,7 @@ extern const char *program_name (void);
 extern const char *home_directory (void);
 extern const char *data_directory (void);
 
-extern char *strto_game_filename (const char *game_num);
-extern char *intto_game_filename (const int game_num);
+extern char *game_filename (const int game_num);
 
 extern void err_exit   (const char *format, ...)
     __attribute__((noreturn, format (printf, 1, 2)));

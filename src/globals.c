@@ -67,5 +67,5 @@ int	current_player;
 int	number_players;
 int	first_player;			// Who WAS the first player to go?
 
-bool	game_loaded;			// True if game was loaded from disk
-char	*game_filename;			// Game file filename
+bool	game_loaded = false;		// True if game was loaded from disk
+int	game_num    = 0;		// Game number (1-9)
