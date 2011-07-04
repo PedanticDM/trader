@@ -39,14 +39,22 @@
 *                    Constants and type declarations                    *
 ************************************************************************/
 
-#define MIN_LINES	(24)	/* Minimum number of lines in terminal */
-#define MIN_COLS	(80)	/* Minimum number of columns in terminal */
+// Visibility of the cursor in Curses
+typedef enum curs_type {
+    CURS_INVISIBLE	= 0,
+    CURS_NORMAL		= 1,
+    CURS_VISIBLE	= 2
+} curs_type_t;
+
 
 /*
   This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
   terminal window.  COL_OFFSET and LINE_OFFSET define offsets that should
   be added to each newwin() call to position the window correctly.
 */
+
+#define MIN_LINES	(24)	/* Minimum number of lines in terminal */
+#define MIN_COLS	(80)	/* Minimum number of columns in terminal */
 
 #define WIN_LINES	MIN_LINES	/* Number of lines in main windows */
 #define WIN_COLS	MIN_COLS	/* Number of columns in main windows */

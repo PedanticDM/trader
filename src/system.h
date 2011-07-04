@@ -75,15 +75,6 @@
 *                       Miscellaneous definitions                       *
 ************************************************************************/
 
-// Visibility of the cursor in Curses
-typedef enum curs_type {
-    CURS_INVISIBLE	= 0,
-    CURS_NORMAL		= 1,
-    CURS_VISIBLE	= 1,
-    CURS_VERYVISIBLE	= 2
-} curs_type_t;
-
-
 // Compiler __attributes__ for less-capable compilers
 #ifndef HAVE___ATTRIBUTE__
 #  define __attribute__(x)
