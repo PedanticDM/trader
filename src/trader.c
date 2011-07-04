@@ -262,11 +262,8 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
 
 void init_program (void)
 {
-    time_t curtime = time(NULL);    // NB: time_t may be larger than long int
-
-
     // Initialise the random number generator
-    srand48((long int) curtime);
+    init_rand();
 
     // Initialise the terminal display
     init_screen();

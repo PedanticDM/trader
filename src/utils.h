@@ -44,6 +44,8 @@
 *                     Utility function declarations                     *
 ************************************************************************/
 
+// Initialisation and environment functions
+
 extern void init_program_name (char *argv[]);
 extern const char *program_name (void);
 
@@ -52,10 +54,18 @@ extern const char *data_directory (void);
 
 extern char *game_filename (const int game_num);
 
+// Error-reporting functions
+
 extern void err_exit   (const char *format, ...)
     __attribute__((noreturn, format (printf, 1, 2)));
 extern void errno_exit (const char *format, ...)
     __attribute__((noreturn, format (printf, 1, 2)));
+
+// Random number functions
+
+extern void init_rand (void);
+extern double randf (void);
+extern int randi (int limit);
 
 
 #endif /* included_UTILS_H */

@@ -260,3 +260,48 @@ void errno_exit (const char *format, ...)
 
     exit(EXIT_FAILURE);
 }
+
+
+/*-----------------------------------------------------------------------
+  Function:   init_rand  - Initialise the random number generator
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function initialises the pseudo-random number generator.
+*/
+
+void init_rand (void)
+{
+    time_t curtime = time(NULL);    // NB: time_t may be larger than long int
+    srand48((long int) curtime);
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   randf   - Return a random number between 0.0 and 1.0
+  Arguments:  (none)
+  Returns:    double  - The random number
+
+  This function returns a pseudo-random number between 0.0 (inclusive)
+  and 1.0 (not inclusive) as a floating-point number.
+*/
+
+extern double randf (void)
+{
+    return drand48();
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   randi  - Return a random number between 0 and limit
+  Arguments:  limit  - Upper limit of random number
+  Returns:    int    - The random number
+
+  This function returns a pseudo-random number between 0 (inclusive) and
+  limit (not inclusive) as an integer.
+*/
+
+extern int randi (int limit)
+{
+    return randf() * (double) limit;
+}
