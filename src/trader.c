@@ -39,9 +39,13 @@
 ************************************************************************/
 
 int main (int argc, char *argv[]);
-static void process_cmdline (int argc, char *argv[]);
-static void show_version (void) __attribute__((noreturn));
-static void show_usage (int status) __attribute__((noreturn));
+
+void process_cmdline (int argc, char *argv[]);
+void show_version (void) __attribute__((noreturn));
+void show_usage (int status) __attribute__((noreturn));
+
+void init_program (void);
+void end_program (void);
 
 
 /************************************************************************
@@ -60,66 +64,25 @@ int main (int argc, char *argv[])
     // Process command line arguments
     process_cmdline(argc, argv);
 
+    // Set up the display, internal low-level routines, etc.
+    init_program();
 
-    // Testing...
-    init_screen();
+    // Play the actual game
 
-    wprintw(curwin, "Program name:   %s\n", program_name());
-    wprintw(curwin, "Home directory: %s\n", home_directory());
-    wprintw(curwin, "Data directory: %s\n", data_directory());
-    wprintw(curwin, "Game filename:  %s (%d)\n", game_filename(game_num), game_num);
-
-    wprintw(curwin, "Cols x Lines:   %d x %d\n", COLS, LINES);
-    wprintw(curwin, "Colours, pairs: %d, %d\n", COLORS, COLOR_PAIRS);
-
-    wrefresh(curwin);
-
-    curs_set(CURS_VERYVISIBLE);
-
-    newtxwin(WIN_LINES - 7, WIN_COLS, LINE_OFFSET + 7, COL_OFFSET + 0);
-    wbkgd(curwin, COLOR_PAIR(WHITE_ON_BLUE));
-    box(curwin, 0, 0);
-    wrefresh(curwin);
-
-    newtxwin(WIN_LINES - 9, WIN_COLS - 8, LINE_OFFSET + 8, COL_OFFSET + 4);
-    wbkgd(curwin, COLOR_PAIR(WHITE_ON_BLUE));
-
-    wattrset(curwin, has_colors() ? COLOR_PAIR(WHITE_ON_RED) | A_BOLD : A_REVERSE | A_BOLD);
-    center(curwin, true, "Type some keys (^C to exit):");
-    wattrset(curwin, A_NORMAL);
-
-    wrefresh(curwin);
-
-    scrollok(curwin, true);
-    keypad(curwin, true);
-    meta(curwin, true);
-    wtimeout(curwin, -1);
-
-    int c = 0;
-    while ((c = wgetch(curwin)) != 3) {
-	if ((c >= 0) && (c < 32)) {
-	    wprintw(curwin, "0%03o ^%c ", c, c + '@');
-	} else if ((c >= 32) && (c < 127)) {
-	    wprintw(curwin, "0%03o %c  ", c, c);
-	} else {
-	    wprintw(curwin, "0%05o  ", c);
-	}
-
-	if (c == 0x1C) {
-	    err_exit("You pressed ^%c!", c + '@');
-	}
-
-	wrefresh(curwin);
+/* @@@ to be completed
+    init_game();
+    while ((! quit_selected) && (turn_number <= max_turn)) {
+	select_moves();
+	get_move();
+	process_move();
+	exchange_stock();
+	next_player();
     }
+    end_game();
+*/
 
-    deltxwin();
-    txrefresh();
-
-    mvwprintw(curwin, 1, 2, "All OK: ");
-    wgetch(curwin);
-
-    end_screen();
-
+    // Finish up...
+    end_program();
     return EXIT_SUCCESS;
 }
 
@@ -152,7 +115,7 @@ static struct option const options_long[] = {
   and argv, setting global variables as appropriate.
 */
 
-static void process_cmdline (int argc, char *argv[])
+void process_cmdline (int argc, char *argv[])
 {
     int c;
 
@@ -186,7 +149,8 @@ static void process_cmdline (int argc, char *argv[])
 	    show_usage(EXIT_FAILURE);
 	}
 
-	if ((strlen(argv[optind]) == 1) && isdigit(*argv[optind])) {
+	if ((strlen(argv[optind]) == 1) &&
+	    (*argv[optind] >= '1') && (*argv[optind] <= '9')) {
 	    game_num = *argv[optind] - '0';
 	} else {
 	    fprintf(stderr, "%s: invalid game number `%s'\n",
@@ -214,7 +178,7 @@ static void process_cmdline (int argc, char *argv[])
   terminates.
 */
 
-static void show_version (void)
+void show_version (void)
 {
     printf("\
 " PACKAGE_NAME " (%s) %s\n\
@@ -243,7 +207,7 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
   error, then terminates.
 */
 
-static void show_usage (int status)
+void show_usage (int status)
 {
     const char *pn = program_name();
 
@@ -279,4 +243,49 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
     }
 
     exit(status);
+}
+
+
+/************************************************************************
+*       Initialisation and deinitialisation function definitions        *
+************************************************************************/
+
+
+/*-----------------------------------------------------------------------
+  Function:   init_program  - Initialise program-wide functions
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function initialises the terminal display, internal low-level
+  routines, etc.
+*/
+
+void init_program (void)
+{
+    time_t curtime = time(NULL);    // NB: time_t may be larger than long int
+
+
+    // Initialise the random number generator
+    srand48((long int) curtime);
+
+    // Initialise the terminal display
+    init_screen();
+
+    // Initialise signal-handling functions
+    // @@@ to be completed
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   end_program  - Deinitialise program-wide functions
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function finalises the terminal display, internal low-level
+  routines, etc.
+*/
+
+void end_program (void)
+{
+    end_screen();
 }

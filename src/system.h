@@ -54,6 +54,8 @@
 #include <ctype.h>
 #include <string.h>
 #include <locale.h>
+#include <time.h>
+#include <signal.h>
 #include <errno.h>
 
 #include <getopt.h>
