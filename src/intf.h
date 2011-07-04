@@ -39,8 +39,8 @@
 *                    Constants and type declarations                    *
 ************************************************************************/
 
-#define MIN_COLS	(80)	/* Minimum number of columns in terminal */
 #define MIN_LINES	(24)	/* Minimum number of lines in terminal */
+#define MIN_COLS	(80)	/* Minimum number of columns in terminal */
 
 /*
   This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
@@ -48,11 +48,12 @@
   be added to each newwin() call to position the window correctly.
 */
 
-#define WIN_COLS	MIN_COLS	/* Number of columns in main windows */
 #define WIN_LINES	MIN_LINES	/* Number of lines in main windows */
+#define WIN_COLS	MIN_COLS	/* Number of columns in main windows */
 
-#define COL_OFFSET	((COLS - MIN_COLS) / 2)		/* Window offsets */
-#define LINE_OFFSET	(0)
+#define LINE_OFFSET	(0)				/* Window offsets */
+#define COL_OFFSET	((COLS - WIN_COLS) / 2)
+#define COL_CENTER(x)	((COLS - (x)) / 2)
 
 
 // Colour pairs used in Star Traders
@@ -86,8 +87,9 @@ extern int deltxwin (void);
 extern int delalltxwin (void);
 extern int txrefresh (void);
 
-extern int center (WINDOW *win, const bool clrline, const char *format, ...)
-    __attribute__((format (printf, 3, 4)));
+extern int center (WINDOW *win, int y, const bool clrline,
+		   const char *format, ...)
+    __attribute__((format (printf, 4, 5)));
 
 
 #endif /* included_INTF_H */

@@ -106,11 +106,10 @@ void init_screen (void)
     }
 
     clear();
-    move(0, 0);
 
     attrset(has_colors() ? COLOR_PAIR(YELLOW_ON_CYAN) | A_BOLD :
 	    A_REVERSE | A_BOLD);
-    center(stdscr, true, PACKAGE_NAME);
+    center(stdscr, 0, true, PACKAGE_NAME);
     attrset(A_NORMAL);
 
     refresh();
@@ -281,25 +280,26 @@ int txrefresh (void)
 /*-----------------------------------------------------------------------
   Function:   center   - Centre a string on the current line
   Arguments:  win      - Window to use
+              y        - Line on which to centre the string
               clrline  - True to print spaces on both sides of line
               format   - printf()-like format string
               ...      - printf()-like arguments
   Returns:    int      - Return code from wprintw()
 
   This function prints a string (formated with wprintw(format, ...)) in
-  the centre of the current line in the window win.  If clrline is TRUE,
-  spaces are printed before and after the line to make sure the current
-  attributes are set.  The cursor is then moved to the start of the next
-  line, or the start of the current line (if already on the last line of
-  the screen).  Please note that wrefresh() is NOT called.
+  the centre of line y in the window win.  If clrline is TRUE, spaces are
+  printed before and after the line to make sure the current attributes
+  are set; in this case, the cursor is also moved to the start of the
+  next line (or the start of the current line if already on the last line
+  of the window).  Please note that wrefresh() is NOT called.
 */
 
-int center (WINDOW *win, const bool clrline, const char *format, ...)
+int center (WINDOW *win, int y, const bool clrline, const char *format, ...)
 {
     va_list args;
 
     int len, ret;
-    int y, x, maxy, maxx;
+    int maxy, maxx;
     int fill;
 
     char *buf = malloc(OUTBUFSIZE);
@@ -313,13 +313,12 @@ int center (WINDOW *win, const bool clrline, const char *format, ...)
 	return ERR;
     }
 
-    getyx(win, y, x);
     getmaxyx(win, maxy, maxx);
-
     fill = (maxx - len) / 2;
 
     if (clrline) {
 	wmove(win, y, 0);
+
 	if (fill > 0) {
 	    wprintw(win, "%*c", fill, ' ');
 	}
@@ -327,11 +326,11 @@ int center (WINDOW *win, const bool clrline, const char *format, ...)
 	if (maxx - len - fill > 0) {
 	    wprintw(win, "%*c", maxx - len - fill, ' ');
 	}
+
+	wmove(win, (y + 1 >= maxy ? y : y + 1), 0);
     } else {
 	ret = mvwprintw(win, y, fill > 0 ? fill : 0, "%s", buf);
     }
-
-    wmove(win, (y + 1 >= maxy ? y : y + 1), 0);
 
     free(buf);
     return ret;
