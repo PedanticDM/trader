@@ -56,6 +56,10 @@
 #define COL_CENTER(x)	((COLS - (x)) / 2)
 
 
+// Colour and non-colour attribute selection
+#define ATTR(color, nocolor) (has_colors() ? (color) : (nocolor))
+
+
 // Colour pairs used in Star Traders
 enum color_pairs {
     DEFAULT_COLORS = 0,

@@ -107,8 +107,7 @@ void init_screen (void)
 
     clear();
 
-    attrset(has_colors() ? COLOR_PAIR(YELLOW_ON_CYAN) | A_BOLD :
-	    A_REVERSE | A_BOLD);
+    attrset(ATTR(COLOR_PAIR(YELLOW_ON_CYAN) | A_BOLD, A_REVERSE | A_BOLD));
     center(stdscr, 0, true, PACKAGE_NAME);
     attrset(A_NORMAL);
 
