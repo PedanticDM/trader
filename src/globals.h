@@ -40,7 +40,7 @@
 ************************************************************************/
 
 #define MAX_X			(38)	/* Map dimensions MAP_X x MAP_Y */
-#define MAX_Y			(12)
+#define MAX_Y			(14)
 #define STAR_RATIO		(0.10)	/* 10% of map should be stars */
 
 #define NUMBER_MOVES		(20)	/* Number of choices on map per turn */
