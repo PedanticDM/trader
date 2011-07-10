@@ -351,31 +351,32 @@ int center (WINDOW *win, int y, const bool clrline, const char *format, ...)
 
 
 /*-----------------------------------------------------------------------
-  Function:   attrpr      - Print a string with special attributes
-  Arguments:  win         - Window to use
-              attr_start  - Attribute to set at the start of wprintw()
-	      attr_end    - Attribute to set at the end of wprintw()
-              format      - printf()-like format string
-              ...         - printf()-like arguments
-  Returns:    int         - Return code from wprintw()
+  Function:   attrpr  - Print a string with special attributes
+  Arguments:  win     - Window to use
+              attr    - Attribute to use for the string
+              format  - printf()-like format string
+              ...     - printf()-like arguments
+  Returns:    int     - Return code from wprintw()
 
-  This function sets the window attribute to attr_start, then prints the
-  given string (using wprintw()), then sets the attribute to attr_end.
+  This function sets the window attributes to attr, then prints the given
+  string (using wprintw()), then restores the previous window attributes.
 */
 
-int attrpr (WINDOW *win, int attr_start, int attr_end, const char *format, ...)
+int attrpr (WINDOW *win, int attr, const char *format, ...)
 {
     va_list args;
+    int oldattr;
     int ret;
 
 
-    wattrset(win, attr_start);
+    oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wattrset(win, attr);
 
     va_start(args, format);
     ret = vwprintw(win, format, args);
     va_end(args);
 
-    wattrset(win, attr_end);
+    wattrset(win, oldattr);
 
     return ret;
 }

@@ -117,9 +117,8 @@ extern int center (WINDOW *win, int y, const bool clrline,
 		   const char *format, ...)
     __attribute__((format (printf, 4, 5)));
 
-extern int attrpr (WINDOW *win, int attr_start, int attr_end,
-		   const char *format, ...)
-    __attribute__((format (printf, 4, 5)));
+extern int attrpr (WINDOW *win, int attr, const char *format, ...)
+    __attribute__((format (printf, 3, 4)));
 
 // Input routines
 
