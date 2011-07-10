@@ -440,9 +440,9 @@ bool getanswer (WINDOW *win)
     curs_set(CURS_OFF);
 
     if (key == 'Y') {
-	wprintw(win, "Yes.");
+	waddstr(win, "Yes.");
     } else {
-	wprintw(win, "No.");
+	waddstr(win, "No.");
     }
 
     wrefresh(win);
