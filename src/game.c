@@ -32,6 +32,13 @@
 
 
 /************************************************************************
+*                           Module constants                            *
+************************************************************************/
+
+#define GAME_BUFSIZE	(1024)		/* Buffer size for game save/load */
+
+
+/************************************************************************
 *                       Game function definitions                       *
 ************************************************************************/
 
@@ -119,7 +126,7 @@ void init_game (void)
 	    } else {
 
 		// Ask which game to load
-		newtxwin(5, 49, LINE_OFFSET + 6, COL_CENTER(49));
+		newtxwin(5, 50, LINE_OFFSET + 6, COL_CENTER(50));
 		wbkgd(curwin, ATTR_NORMAL_WINDOW);
 		box(curwin, 0, 0);
 
@@ -405,7 +412,58 @@ void end_game (void)
 
 bool load_game (int num)
 {
+    char *buf, *filename;
+    FILE *file;
+    int saved_errno;
+
+
     assert((num >= 1) && (num <= 9));
+
+
+    buf = malloc(GAME_BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    filename = game_filename(num);
+    assert(filename != NULL);
+
+    file = fopen(filename, "r");
+    if (file == NULL) {
+	// File could not be opened
+
+	if (errno == ENOENT) {
+	    // File not found
+	    newtxwin(7, 40, LINE_OFFSET + 9, COL_CENTER(40));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game not found  ");
+	    center(curwin, 3, ATTR_ERROR_STR,
+		   "Game %d has not been saved to disk", num);
+
+	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    deltxwin();
+	} else {
+	    // Some other file error
+	    saved_errno = errno;
+
+	    newtxwin(9, 70, LINE_OFFSET + 9, COL_CENTER(70));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game not loaded  ");
+	    center(curwin, 3, ATTR_ERROR_STR,
+		   "Game %d could not be loaded from disk", num);
+	    center(curwin, 5, ATTR_ERROR_WINDOW, "File %s: %s", filename,
+		   strerror(saved_errno));
+
+	    wait_for_key(curwin, 7, ATTR_WAITERROR_STR);
+	    deltxwin();
+	}
+
+	return false;
+    }
 
     // @@@ To be written
     return false;
