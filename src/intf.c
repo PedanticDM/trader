@@ -468,6 +468,7 @@ bool getanswer (WINDOW *win)
 	      y, x        - Start of field (line, col)
 	      fieldsize   - Size of field in characters
 	      attr        - Curses attribute to use for the field
+	      modified    - Pointer to modified status
   Returns:    int         - Status code: OK, ERR or key code
 
   This low-level function draws an input field fieldsize characters long
@@ -493,6 +494,9 @@ bool getanswer (WINDOW *win)
   appropriate.  As with CANCEL etc., emptyval is NOT used, nor are
   leading and trailing spaces stripped.
 
+  In all of these cases, the boolean variable pointed to by modified (if
+  not NULL) is set to true if the user actually modified the input line.
+
   If KEY_DEFAULTVAL is pressed when the input line is empty, the string
   pointed to by defaultval (if not NULL) is placed in the buffer as if
   typed by the user.  Editing is NOT terminated in this case.
@@ -507,11 +511,11 @@ bool getanswer (WINDOW *win)
 int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 	       int maxlen, const char *emptyval, const char *defaultval,
 	       const char *allowed, bool stripspc, int y, int x,
-	       int fieldsize, int attr)
+	       int fieldsize, int attr, bool *modified)
 {
     int i, len, pos, cpos, nb;
     int oldattr;
-    bool done, redraw, first;
+    bool done, redraw, first, mod;
     char c;
     int key, key2, ret;
 
@@ -536,6 +540,8 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
     cpos = MIN(len, fieldsize - 1);
     redraw = true;
     done = false;
+    mod = false;
+    ret = OK;
 
     while (! done) {
 	if (redraw) {
@@ -572,6 +578,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 	    len = strlen(buf);
 	    pos = len;
 	    cpos = MIN(len, fieldsize - 1);
+	    mod = true;
 	    redraw = true;
 	} else if ((key < 0400) && (! iscntrl(key))) {
 	    if ((len >= maxlen) ||
@@ -587,6 +594,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		if (cpos < fieldsize - 1) {
 		    cpos++;
 		}
+		mod = true;
 		redraw = true;
 	    }
 	} else {
@@ -605,21 +613,28 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    while ((i < len) && isspace(buf[i])) {
 			i++;
 		    }
-		    memmove(buf, buf + i, len - i + 1);
-		    len -= i;
+		    if (i > 0) {
+			memmove(buf, buf + i, len - i + 1);
+			len -= i;
+			mod = true;
+		    }
 
 		    // Strip trailing spaces
 		    i = len;
 		    while ((i > 0) && isspace(buf[i - 1])) {
 			i--;
 		    }
-		    buf[i] = '\0';
-		    len = i;
+		    if (i < len) {
+			buf[i] = '\0';
+			len = i;
+			mod = true;
+		    }
 		}
 
 		if ((emptyval != NULL) && (len == 0)) {
 		    strncpy(buf, emptyval, bufsize - 1);
 		    buf[bufsize - 1] = '\0';
+		    mod = true;
 		}
 
 		ret = OK;
@@ -754,6 +769,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    if (cpos > 0) {
 			cpos--;
 		    }
+		    mod = true;
 		    redraw = true;
 		}
 		break;
@@ -767,6 +783,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    memmove(buf + pos, buf + pos + 1, len - pos);
 		    len--;
 		    // pos and cpos stay the same
+		    mod = true;
 		    redraw = true;
 		}
 		break;
@@ -777,6 +794,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		len = 0;
 		pos = 0;
 		cpos = 0;
+		mod = true;
 		redraw = true;
 		break;
 
@@ -789,6 +807,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    len -= pos;
 		    pos = 0;
 		    cpos = 0;
+		    mod = true;
 		    redraw = true;
 		}
 		break;
@@ -801,6 +820,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    buf[pos] = '\0';
 		    len = pos;
 		    // pos and cpos stay the same
+		    mod = true;
 		    redraw = true;
 		}
 		break;
@@ -833,6 +853,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    memmove(buf + i, buf + pos, len - pos + 1);
 		    len -= (pos - i);
 		    pos = i;
+		    mod = true;
 		    redraw = true;
 		}
 		break;
@@ -847,6 +868,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    c = buf[pos - 1];
 		    buf[pos - 1] = buf[pos - 2];
 		    buf[pos - 2] = c;
+		    mod = true;
 		    redraw = true;
 		} else {
 		    c = buf[pos];
@@ -857,6 +879,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    if (cpos < fieldsize - 1) {
 			cpos++;
 		    }
+		    mod = true;
 		    redraw = true;
 		}
 		break;
@@ -945,6 +968,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 			memmove(buf + i, buf + pos, len - pos + 1);
 			len -= (pos - i);
 			pos = i;
+			mod = true;
 			redraw = true;
 			break;
 
@@ -962,6 +986,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 			memmove(buf + pos, buf + i, len - i + 1);
 			len -= (i - pos);
 			// pos and cpos stay the same
+			mod = true;
 			redraw = true;
 			break;
 
@@ -998,6 +1023,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 			    }
 			}
 
+			mod = true;
 			redraw = true;
 
 			break;
@@ -1020,6 +1046,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 				cpos++;
 			    }
 			}
+			mod = true;
 			redraw = true;
 			break;
 
@@ -1039,6 +1066,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 				cpos++;
 			    }
 			}
+			mod = true;
 			redraw = true;
 			break;
 
@@ -1065,6 +1093,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 				cpos++;
 			    }
 			}
+			mod = true;
 			redraw = true;
 			break;
 
@@ -1106,5 +1135,8 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
     wattrset(win, oldattr);
     wrefresh(win);
 
-    return OK;
+    if (modified != NULL) {
+	*modified = mod;
+    }
+    return ret;
 }
