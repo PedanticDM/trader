@@ -32,4 +32,24 @@
 #define included_GAME_H 1
 
 
+#include <stdbool.h>
+
+
+/************************************************************************
+*                      Game function declarations                       *
+************************************************************************/
+
+void init_game (void);
+void end_game (void);
+
+bool load_game (int num);
+bool save_game (int num);
+
+void select_moves (void);
+void get_move (void);
+void process_move (void);
+void exchange_stock (void);
+void next_player (void);
+
+
 #endif /* included_GAME_H */

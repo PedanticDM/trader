@@ -69,7 +69,6 @@ int main (int argc, char *argv[])
 
     // Play the actual game
 
-/* @@@ to be completed
     init_game();
     while ((! quit_selected) && (turn_number <= max_turn)) {
 	select_moves();
@@ -79,7 +78,6 @@ int main (int argc, char *argv[])
 	next_player();
     }
     end_game();
-*/
 
     // Finish up...
     end_program();
@@ -269,7 +267,7 @@ void init_program (void)
     init_screen();
 
     // Initialise signal-handling functions
-    // @@@ to be completed
+    // @@@ To be completed
 }
 
 

@@ -87,7 +87,7 @@ typedef struct company_info {
 
 // Information about each player
 typedef struct player_info {
-    const char	*name;			// Player name
+    char	*name;			// Player name
     double	cash;			// Cash available
     double	debt;			// Amount of debt
     long	stock_owned[MAX_COMPANIES];	// How much stock is owned
