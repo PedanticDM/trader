@@ -57,15 +57,15 @@ player_info_t	player[MAX_PLAYERS];		// Array of players
 map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
+int	max_turn;			// Max. number of turns in game
+int	turn_number;
+int	number_players;
+int	current_player;
+int	first_player;			// Who WAS the first player to go?
+
 double	interest_rate;			// Current interest rate
 double	credit_limit;			// Credit limit of current player
 bool	bid_used;			// True if bid used for player
-
-int	max_turn;			// Max. number of turns in game
-int	turn_number;
-int	current_player;
-int	number_players;
-int	first_player;			// Who WAS the first player to go?
 
 bool	game_loaded = false;		// True if game was loaded from disk
 int	game_num    = 0;		// Game number (1-9)
