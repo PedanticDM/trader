@@ -110,11 +110,10 @@ void init_screen (void)
 	bkgd(ATTR_ROOT_WINDOW);
     }
 
+    attrset(ATTR_ROOT_WINDOW);
     clear();
 
-    attrset(ATTR_GAME_TITLE);
-    center(stdscr, 0, true, PACKAGE_NAME);
-    attrset(ATTR_ROOT_WINDOW);
+    center(stdscr, 0, ATTR_GAME_TITLE, true, PACKAGE_NAME);
 
     refresh();
 }
@@ -294,23 +293,27 @@ int txrefresh (void)
   Function:   center   - Centre a string on the current line
   Arguments:  win      - Window to use
               y        - Line on which to centre the string
+              attr     - Window attributes to use for string
               clrline  - True to print spaces on both sides of line
               format   - printf()-like format string
               ...      - printf()-like arguments
   Returns:    int      - Return code from wprintw()
 
   This function prints a string (formated with wprintw(format, ...)) in
-  the centre of line y in the window win.  If clrline is TRUE, spaces are
-  printed before and after the line to make sure the current attributes
-  are set; in this case, the cursor is also moved to the start of the
-  next line (or the start of the current line if already on the last line
-  of the window).  Please note that wrefresh() is NOT called.
+  the centre of line y in the window win and using window attributes in
+  attr.  If clrline is TRUE, spaces are printed before and after the line
+  to make sure the current attributes are set; in this case, the cursor
+  is also moved to the start of the next line (or the start of the
+  current line if already on the last line of the window).  Please note
+  that wrefresh() is NOT called.
+
 */
 
-int center (WINDOW *win, int y, const bool clrline, const char *format, ...)
+int center (WINDOW *win, int y, int attr, bool clrline, const char *format, ...)
 {
     va_list args;
 
+    int oldattr;
     int len, ret;
     int maxy, maxx;
     int fill;
@@ -322,6 +325,9 @@ int center (WINDOW *win, int y, const bool clrline, const char *format, ...)
     if (buf == NULL) {
 	err_exit("out of memory");
     }
+
+    oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wattrset(win, attr);
 
     va_start(args, format);
     len = vsnprintf(buf, BUFSIZE, format, args);
@@ -348,6 +354,8 @@ int center (WINDOW *win, int y, const bool clrline, const char *format, ...)
     } else {
 	ret = mvwprintw(win, y, fill > 0 ? fill : 0, "%s", buf);
     }
+
+    wattrset(win, oldattr);
 
     free(buf);
     return ret;
@@ -1199,21 +1207,17 @@ bool answer_yesno (WINDOW *win)
 
 void wait_for_key (WINDOW *win, int y)
 {
-    int key, oldattr;
+    int key;
 
 
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
 
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
     curs_set(CURS_OFF);
-    wattrset(win, ATTR_WAITFORKEY_STR);
-
-    center(win, y, false, "[ Press <SPACE> to continue ] ");
+    center(win, y, ATTR_WAITFORKEY_STR, false,
+	   "[ Press <SPACE> to continue ] ");
     wrefresh(win);
 
     key = wgetch(win);
-
-    wattrset(win, oldattr);
 }

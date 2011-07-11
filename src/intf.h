@@ -151,9 +151,9 @@ extern int txrefresh (void);
 
 // Output routines
 
-extern int center (WINDOW *win, int y, const bool clrline,
+extern int center (WINDOW *win, int y, int attr, bool clrline,
 		   const char *format, ...)
-    __attribute__((format (printf, 4, 5)));
+    __attribute__((format (printf, 5, 6)));
 
 extern int attrpr (WINDOW *win, int attr, const char *format, ...)
     __attribute__((format (printf, 3, 4)));
