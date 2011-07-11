@@ -51,9 +51,33 @@ typedef enum curs_type {
 
 
 // Keycodes
-#define KEY_TAB		(011)
-#define KEY_RETURN	(012)
-#define KEY_ESC		(033)
+#define KEY_BS		(0010)
+#define KEY_TAB		(0011)
+#define KEY_RETURN	(0012)
+#define KEY_ESC		(0033)
+#define KEY_DEL		(0177)
+
+#define KEY_CTRL(x)	(x - 0100)
+
+// Control-arrow key combinations
+#ifndef KEY_CDOWN
+#  define KEY_CDOWN	(01007)
+#endif
+#ifndef KEY_CUP
+#  define KEY_CUP	(01060)
+#endif
+#ifndef KEY_CLEFT
+#  define KEY_CLEFT	(01033)
+#endif
+#ifndef KEY_CRIGHT
+#  define KEY_CRIGHT	(01052)
+#endif
+
+// Keycode for inserting the default value
+#define KEY_DEFAULTVAL	'='
+
+// Timeout value (in ms) for Meta-X-style keyboard input
+#define META_TIMEOUT	(1000)
 
 
 /*
@@ -124,6 +148,10 @@ extern int attrpr (WINDOW *win, int attr, const char *format, ...)
 
 extern int gettxchar (WINDOW *win);
 extern bool getanswer (WINDOW *win);
+extern int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
+		      int maxlen, const char *emptyval, const char *defaultval,
+		      const char *allowed, bool stripspc, int y, int x,
+		      int fieldsize, int attr);
 
 
 #endif /* included_INTF_H */
