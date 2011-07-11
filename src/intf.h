@@ -157,8 +157,8 @@ extern int attrpr (WINDOW *win, int attr, const char *format, ...)
 
 // Input routines
 
+extern bool get_yn_answer (WINDOW *win);
 extern int gettxchar (WINDOW *win);
-extern bool getanswer (WINDOW *win);
 extern int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		      int maxlen, const char *emptyval, const char *defaultval,
 		      const char *allowed, bool stripspc, int y, int x,

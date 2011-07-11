@@ -390,28 +390,9 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
 ************************************************************************/
 
 /*-----------------------------------------------------------------------
-  Function:   gettxchar  - Read a keyboard character
-  Arguments:  win        - Window to use
-  Returns:    int        - Keyboard character
-
-  This function reads a single character from the keyboard.  The key is
-  NOT echoed to the screen and the cursor visibility is NOT affected.
-*/
-
-int gettxchar (WINDOW *win)
-{
-    keypad(win, true);
-    meta(win, true);
-    wtimeout(win, -1);
-
-    return wgetch(win);
-}
-
-
-/*-----------------------------------------------------------------------
-  Function:   getanswer  - Read a Yes/No answer and return true/false
-  Arguments:  win        - Window to use
-  Returns:    bool       - true if Yes ("Y") was selected, else false
+  Function:   get_yn_answer  - Read a Yes/No answer and return true/false
+  Arguments:  win            - Window to use
+  Returns:    bool           - true if Yes ("Y") was selected, else false
 
   This function waits for either "Y" or "N" to be pressed on the
   keyboard.  If "Y" was pressed, "Yes." is printed and true is returned.
@@ -419,7 +400,7 @@ int gettxchar (WINDOW *win)
   the cursor becomes invisible after this function.
 */
 
-bool getanswer (WINDOW *win)
+bool get_yn_answer (WINDOW *win)
 {
     int key;
     bool ok;
@@ -450,6 +431,25 @@ bool getanswer (WINDOW *win)
 
     wrefresh(win);
     return (key == 'Y');
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   gettxchar  - Read a keyboard character
+  Arguments:  win        - Window to use
+  Returns:    int        - Keyboard character
+
+  This function reads a single character from the keyboard.  The key is
+  NOT echoed to the screen and the cursor visibility is NOT affected.
+*/
+
+int gettxchar (WINDOW *win)
+{
+    keypad(win, true);
+    meta(win, true);
+    wtimeout(win, -1);
+
+    return wgetch(win);
 }
 
 
