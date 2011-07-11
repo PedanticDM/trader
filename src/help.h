@@ -32,4 +32,11 @@
 #define included_HELP_H 1
 
 
+/************************************************************************
+*                    Help text function declarations                    *
+************************************************************************/
+
+extern void show_help (void);
+
+
 #endif /* included_HELP_H */

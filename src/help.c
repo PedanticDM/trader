@@ -28,5 +28,14 @@
 */
 
 
-#include "system.h"
-#include "help.h"
+#include "trader.h"
+
+
+/************************************************************************
+*                    Help text function definitions                     *
+************************************************************************/
+
+void show_help (void)
+{
+    // @@@ To be written
+}
