@@ -368,7 +368,7 @@ void init_game (void)
 		center(curwin, 3, ATTR_HIGHLIGHT_STR, "%1.46s",
 		       player[first_player].name);
 
-		wait_for_key(curwin, 5);
+		wait_for_key(curwin, 5, ATTR_WAITNORMAL_STR);
 		deltxwin();
 		txrefresh();
 	    }

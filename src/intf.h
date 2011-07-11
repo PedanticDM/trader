@@ -124,7 +124,7 @@ enum color_pairs {
 #define ATTR_INPUT_FIELD	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_BOLD | '_')
 #define ATTR_KEYCODE_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
 #define ATTR_HIGHLIGHT_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD, A_BOLD)
-#define ATTR_WAITFORKEY_STR	ATTR(COLOR_PAIR(CYAN_ON_BLUE),             A_NORMAL)
+#define ATTR_WAITNORMAL_STR	ATTR(COLOR_PAIR(CYAN_ON_BLUE),             A_NORMAL)
 
 
 /************************************************************************
@@ -168,7 +168,7 @@ extern int gettxstring (WINDOW *win, char **bufptr, bool multifield,
 			int y, int x, int fieldsize, int attr, bool *modified);
 
 extern bool answer_yesno (WINDOW *win);
-extern void wait_for_key (WINDOW *win, int y);
+extern void wait_for_key (WINDOW *win, int y, int attr);
 
 
 #endif /* included_INTF_H */

@@ -327,6 +327,7 @@ int center (WINDOW *win, int y, int attr, const char *format, ...)
     }
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wbkgdset(win, A_NORMAL);
     wattrset(win, attr);
 
     va_start(args, format);
@@ -342,6 +343,7 @@ int center (WINDOW *win, int y, int attr, const char *format, ...)
     ret = mvwprintw(win, y, fill > 0 ? fill : 0, "%s", buf);
 
     wattrset(win, oldattr);
+    wbkgdset(win, oldattr);
 
     free(buf);
     return ret;
@@ -368,6 +370,7 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
 
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wbkgdset(win, A_NORMAL);
     wattrset(win, attr);
 
     va_start(args, format);
@@ -375,6 +378,7 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
     va_end(args);
 
     wattrset(win, oldattr);
+    wbkgdset(win, oldattr);
 
     return ret;
 }
@@ -482,6 +486,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
     wtimeout(win, -1);
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wbkgdset(win, A_NORMAL);
     wattrset(win, attr & ~A_CHARTEXT);
     curs_set(CURS_ON);
 
@@ -1083,6 +1088,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
     wattron(win, A_BOLD);
     mvwprintw(win, y, x, "%-*.*s", fieldsize, fieldsize, buf);
     wattrset(win, oldattr);
+    wbkgdset(win, oldattr);
     wrefresh(win);
 
     if (modified != NULL) {
@@ -1156,6 +1162,7 @@ bool answer_yesno (WINDOW *win)
     wtimeout(win, -1);
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wbkgdset(win, A_NORMAL);
     wattron(win, A_BOLD);
     curs_set(CURS_ON);
 
@@ -1177,6 +1184,7 @@ bool answer_yesno (WINDOW *win)
     }
 
     wattrset(win, oldattr);
+    wbkgdset(win, oldattr);
     wrefresh(win);
     return (key == 'Y');
 }
@@ -1186,12 +1194,13 @@ bool answer_yesno (WINDOW *win)
   Function:   wait_for_key  - Print a message and wait for any key
   Arguments:  win           - Window to use
               y             - Line on which to print message
+              attr          - Window attributes to use for message
   Returns:    (nothing)
 
   This function prints a message, then waits for any key to be pressed.
 */
 
-void wait_for_key (WINDOW *win, int y)
+void wait_for_key (WINDOW *win, int y, int attr)
 {
     int key;
 
@@ -1201,7 +1210,7 @@ void wait_for_key (WINDOW *win, int y)
     wtimeout(win, -1);
 
     curs_set(CURS_OFF);
-    center(win, y, ATTR_WAITFORKEY_STR, "[ Press <SPACE> to continue ] ");
+    center(win, y, attr, "[ Press <SPACE> to continue ] ");
     wrefresh(win);
 
     key = wgetch(win);
