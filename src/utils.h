@@ -77,5 +77,10 @@ extern void init_rand (void);
 extern double randf (void);
 extern int randi (int limit);
 
+// Encryption and decryption functions to stop casual cheating!
+
+extern char *scramble (int key, char *buf, int bufsize);
+extern char *unscramble (int key, char *buf, int bufsize);
+
 
 #endif /* included_UTILS_H */

@@ -46,7 +46,6 @@ static char *data_directory_str = NULL;		// Writable data dir pathname
 *                     Utility function definitions                      *
 ************************************************************************/
 
-
 /*-----------------------------------------------------------------------
   Function:   init_program_name  - Make the program name "canonical"
   Arguments:  argv               - Same as passed to main()
@@ -304,4 +303,78 @@ extern double randf (void)
 extern int randi (int limit)
 {
     return randf() * (double) limit;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   scramble  - Scramble (encrypt) the buffer
+  Arguments:  key       - Encryption/decryption key
+              buf       - Pointer to buffer to encrypt
+              bufsize   - Size of buffer
+  Returns:    char *    - Pointer to buffer
+
+  This function scrambles (encrypts) the buffer pointed to by buf using a
+  trivial in-place encryption algorithm.  If key is zero, no encryption
+  takes place.  The buffer buf must contain a string terminated by '\0'.
+  The characters '\r', '\n' and '\0' are guaranteed to remain the same
+  after encryption.  At most bufsize characters are encrypted; buf is
+  returned as the result.
+*/
+
+char *scramble (int key, char *buf, int bufsize)
+{
+    int i;
+    char c, e;
+
+
+    if (key != 0) {
+	key = (~ key) & 0xFF;
+	for (i = 0; (i < bufsize) && (buf[i] != '\0'); i++) {
+	    c = buf[i];
+	    e = c ^ key;	// Simple encryption: XOR!
+	    if ((c != '\r') && (c != '\n')
+		&& (e != '\r') && (e != '\n') && (e != '\0')) {
+		buf[i] = e;
+	    }
+	}
+    }
+
+    return buf;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   unscramble  - Unscramble (decrypt) the buffer
+  Arguments:  key         - Encryption/decryption key
+              buf         - Pointer to buffer to decrypt
+              bufsize     - Size of buffer
+  Returns:    char *      - Pointer to buffer
+
+  This function unscrambles (decrypts) the buffer pointed to by buf using
+  a trivial in-place decryption algorithm.  If key is zero, no decryption
+  takes place.  The buffer buf must contain a string terminated by '\0'.
+  The characters '\r', '\n' and '\0' are guaranteed to remain the same
+  after decryption.  At most bufsize characters are decrypted; buf is
+  returned as the result.
+*/
+
+char *unscramble (int key, char *buf, int bufsize)
+{
+    int i;
+    char c, d;
+
+
+    if (key != 0) {
+	key = (~ key) & 0xFF;
+	for (i = 0; (i < bufsize) && (buf[i] != '\0'); i++) {
+	    c = buf[i];
+	    d = c ^ key;	// Simple decryption: XOR!
+	    if ((c != '\r') && (c != '\n')
+		&& (d != '\r') && (d != '\n') && (d != '\0')) {
+		buf[i] = d;
+	    }
+	}
+    }
+
+    return buf;
 }
