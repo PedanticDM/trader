@@ -1140,3 +1140,45 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
     }
     return ret;
 }
+
+
+/*-----------------------------------------------------------------------
+  Function:   gettxstring  - Read a string from the keyboard
+  Arguments:  win          - Window to use
+              bufptr       - Address of pointer to buffer
+              multifield   - Allow <TAB>, etc, to move between fields
+	      y, x         - Start of field (line, col)
+	      fieldsize    - Size of field in characters
+	      attr         - Curses attribute to use for the field
+	      modified     - Pointer to modified status
+  Returns:    int          - Status code: OK, ERR or key code
+
+  This function calls gettxline() to allow the user to input a string.
+  Empty strings are specified as the default and the empty values, all
+  characters are allowed, leading and trailing spaces are automatically
+  stripped.  On entry, the pointer to buffer must either be NULL or
+  previously allocated with a call to gettxstring().  If *bufptr is NULL,
+  a buffer of BUFSIZE is automatically allocated using malloc(); this
+  buffer is used to store the input line.  The same exit codes are
+  returned as returned by gettxline().
+*/
+
+int gettxstring (WINDOW *win, char **bufptr, bool multifield, int y, int x,
+		 int fieldsize, int attr, bool *modified)
+{
+    assert(bufptr != NULL);
+
+
+    // Allocate the result buffer if needed
+    if (*bufptr == NULL) {
+	*bufptr = malloc(BUFSIZE);
+	if (*bufptr == NULL) {
+	    err_exit("out of memory");
+	}
+
+	**bufptr = '\0';
+    }
+
+    return gettxline(win, *bufptr, BUFSIZE, multifield, BUFSIZE - 1, "", "",
+		     NULL, true, y, x, fieldsize, attr, modified);
+}

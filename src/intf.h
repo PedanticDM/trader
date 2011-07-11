@@ -163,5 +163,7 @@ extern int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		      int maxlen, const char *emptyval, const char *defaultval,
 		      const char *allowed, bool stripspc, int y, int x,
 		      int fieldsize, int attr, bool *modified);
+extern int gettxstring (WINDOW *win, char **bufptr, bool multifield,
+			int y, int x, int fieldsize, int attr, bool *modified);
 
 #endif /* included_INTF_H */
