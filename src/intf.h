@@ -98,7 +98,7 @@ typedef enum curs_type {
 
 
 // Colour and non-colour attribute selection
-#define ATTR(color, nocolor) (has_colors() ? (color) : (nocolor))
+#define ATTR(color, nocolor) (use_color ? (color) : (nocolor))
 
 
 // Colour pairs used in Star Traders
@@ -114,11 +114,22 @@ enum color_pairs {
 };
 
 
+// Window attributes used in Star Traders
+#define ATTR_GAME_TITLE		ATTR(COLOR_PAIR(YELLOW_ON_CYAN)  | A_BOLD, A_REVERSE | A_BOLD)
+#define ATTR_ROOT_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_NORMAL)
+#define ATTR_NORMAL_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLUE),            A_NORMAL)
+#define ATTR_STATUS_WINDOW	ATTR(COLOR_PAIR(BLACK_ON_WHITE),           A_REVERSE)
+#define ATTR_WINDOW_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
+#define ATTR_KEYCODE_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
+#define ATTR_INPUT_FIELD	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_BOLD | '_')
+
+
 /************************************************************************
 *                     Global variable declarations                      *
 ************************************************************************/
 
 extern WINDOW *curwin;			// Top-most (current) window
+extern bool use_color;			// True to use colour in Star Traders
 
 
 /************************************************************************

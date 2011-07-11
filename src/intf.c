@@ -52,6 +52,7 @@ typedef struct txwin {
 ************************************************************************/
 
 WINDOW *curwin = NULL;		// Top-most (current) window
+bool use_color = false;		// True to use colour in Star Traders
 
 
 /************************************************************************
@@ -84,6 +85,8 @@ void init_screen (void)
 		 MIN_COLS, MIN_LINES);
     }
 
+    use_color = has_colors();
+
     curwin = stdscr;
     topwin = NULL;
     firstwin = NULL;
@@ -92,7 +95,7 @@ void init_screen (void)
     curs_set(CURS_OFF);
     raw();
 
-    if (has_colors()) {
+    if (use_color) {
 	start_color();
 
 	init_pair(WHITE_ON_BLACK,  COLOR_WHITE,  COLOR_BLACK);
@@ -103,14 +106,14 @@ void init_screen (void)
 	init_pair(YELLOW_ON_CYAN,  COLOR_YELLOW, COLOR_CYAN);
 	init_pair(BLACK_ON_WHITE,  COLOR_BLACK,  COLOR_WHITE);
 
-	bkgd(COLOR_PAIR(WHITE_ON_BLACK));
+	bkgd(ATTR_ROOT_WINDOW);
     }
 
     clear();
 
-    attrset(ATTR(COLOR_PAIR(YELLOW_ON_CYAN) | A_BOLD, A_REVERSE | A_BOLD));
+    attrset(ATTR_GAME_TITLE);
     center(stdscr, 0, true, PACKAGE_NAME);
-    attrset(A_NORMAL);
+    attrset(ATTR_ROOT_WINDOW);
 
     refresh();
 }
