@@ -390,9 +390,9 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
 ************************************************************************/
 
 /*-----------------------------------------------------------------------
-  Function:   get_yn_answer  - Read a Yes/No answer and return true/false
-  Arguments:  win            - Window to use
-  Returns:    bool           - true if Yes ("Y") was selected, else false
+  Function:   answer_yesno  - Read a Yes/No answer and return true/false
+  Arguments:  win           - Window to use
+  Returns:    bool          - true if Yes ("Y") was selected, else false
 
   This function waits for either "Y" or "N" to be pressed on the
   keyboard.  If "Y" was pressed, "Yes." is printed and true is returned.
@@ -400,7 +400,7 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
   the cursor becomes invisible after this function.
 */
 
-bool get_yn_answer (WINDOW *win)
+bool answer_yesno (WINDOW *win)
 {
     int key, oldattr;
     bool ok;
