@@ -402,7 +402,7 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
 
 bool get_yn_answer (WINDOW *win)
 {
-    int key;
+    int key, oldattr;
     bool ok;
 
 
@@ -410,6 +410,8 @@ bool get_yn_answer (WINDOW *win)
     meta(win, true);
     wtimeout(win, -1);
 
+    oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wattron(win, A_BOLD);
     curs_set(CURS_ON);
 
     do {
@@ -424,11 +426,12 @@ bool get_yn_answer (WINDOW *win)
     curs_set(CURS_OFF);
 
     if (key == 'Y') {
-	waddstr(win, "Yes.");
+	waddstr(win, "Yes");
     } else {
-	waddstr(win, "No.");
+	waddstr(win, "No");
     }
 
+    wattrset(win, oldattr);
     wrefresh(win);
     return (key == 'Y');
 }
