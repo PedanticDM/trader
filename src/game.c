@@ -48,7 +48,9 @@
 
   On entry to this function, the "game_num" global variable determines
   whether an old game is loaded (if possible).  On exit, all global
-  variables in globals.h are initialised, apart from game_move[].
+  variables in globals.h are initialised, apart from game_move[].  If the
+  user aborts entering the necessary information, quit_selected is set to
+  true and number_players is 0.
 */
 
 void init_game (void)
@@ -98,6 +100,11 @@ void init_game (void)
 	    do {
 		key = toupper(gettxchar(curwin));
 		done = ((key >= '1') && (key <= (MAX_PLAYERS + '0'))) || (key == 'C');
+
+		if ((key == KEY_ESC) || (key == KEY_CTRL('C')) || (key == KEY_CTRL('\\'))) {
+		    quit_selected = true;
+		    return;
+		}
 
 		if (! done) {
 		    beep();
