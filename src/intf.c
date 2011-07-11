@@ -104,6 +104,7 @@ void init_screen (void)
 	init_pair(YELLOW_ON_BLACK, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(YELLOW_ON_BLUE,  COLOR_YELLOW, COLOR_BLUE);
 	init_pair(YELLOW_ON_CYAN,  COLOR_YELLOW, COLOR_CYAN);
+	init_pair(CYAN_ON_BLUE,    COLOR_CYAN,   COLOR_BLUE);
 	init_pair(BLACK_ON_WHITE,  COLOR_BLACK,  COLOR_WHITE);
 
 	bkgd(ATTR_ROOT_WINDOW);
@@ -388,54 +389,6 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
 /************************************************************************
 *                            Input routines                             *
 ************************************************************************/
-
-/*-----------------------------------------------------------------------
-  Function:   answer_yesno  - Read a Yes/No answer and return true/false
-  Arguments:  win           - Window to use
-  Returns:    bool          - true if Yes ("Y") was selected, else false
-
-  This function waits for either "Y" or "N" to be pressed on the
-  keyboard.  If "Y" was pressed, "Yes." is printed and true is returned.
-  If "N" was pressed, "No." is printed and false is returned.  Note that
-  the cursor becomes invisible after this function.
-*/
-
-bool answer_yesno (WINDOW *win)
-{
-    int key, oldattr;
-    bool ok;
-
-
-    keypad(win, true);
-    meta(win, true);
-    wtimeout(win, -1);
-
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wattron(win, A_BOLD);
-    curs_set(CURS_ON);
-
-    do {
-	key = toupper(wgetch(win));
-	ok = ((key == 'Y') || (key == 'N'));
-
-	if (! ok) {
-	    beep();
-	}
-    } while (! ok);
-
-    curs_set(CURS_OFF);
-
-    if (key == 'Y') {
-	waddstr(win, "Yes");
-    } else {
-	waddstr(win, "No");
-    }
-
-    wattrset(win, oldattr);
-    wrefresh(win);
-    return (key == 'Y');
-}
-
 
 /*-----------------------------------------------------------------------
   Function:   gettxchar  - Read a keyboard character
@@ -1184,4 +1137,83 @@ int gettxstring (WINDOW *win, char **bufptr, bool multifield, int y, int x,
 
     return gettxline(win, *bufptr, BUFSIZE, multifield, BUFSIZE - 1, "", "",
 		     NULL, true, y, x, fieldsize, attr, modified);
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   answer_yesno  - Read a Yes/No answer and return true/false
+  Arguments:  win           - Window to use
+  Returns:    bool          - true if Yes ("Y") was selected, else false
+
+  This function waits for either "Y" or "N" to be pressed on the
+  keyboard.  If "Y" was pressed, "Yes." is printed and true is returned.
+  If "N" was pressed, "No." is printed and false is returned.  Note that
+  the cursor becomes invisible after this function.
+*/
+
+bool answer_yesno (WINDOW *win)
+{
+    int key, oldattr;
+    bool ok;
+
+
+    keypad(win, true);
+    meta(win, true);
+    wtimeout(win, -1);
+
+    oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wattron(win, A_BOLD);
+    curs_set(CURS_ON);
+
+    do {
+	key = toupper(wgetch(win));
+	ok = ((key == 'Y') || (key == 'N'));
+
+	if (! ok) {
+	    beep();
+	}
+    } while (! ok);
+
+    curs_set(CURS_OFF);
+
+    if (key == 'Y') {
+	waddstr(win, "Yes");
+    } else {
+	waddstr(win, "No");
+    }
+
+    wattrset(win, oldattr);
+    wrefresh(win);
+    return (key == 'Y');
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   wait_for_key  - Print a message and wait for any key
+  Arguments:  win           - Window to use
+              y             - Line on which to print message
+  Returns:    (nothing)
+
+  This function prints a message, then waits for any key to be pressed.
+*/
+
+void wait_for_key (WINDOW *win, int y)
+{
+    int key, oldattr;
+
+
+    keypad(win, true);
+    meta(win, true);
+    wtimeout(win, -1);
+
+    oldattr = getbkgd(win) & ~A_CHARTEXT;
+    curs_set(CURS_OFF);
+    wattrset(win, ATTR_WAITFORKEY_STR);
+
+    center(win, y, false, "[ Press <SPACE> to continue ] ");
+    wrefresh(win);
+
+    key = wgetch(win);
+
+    wattrset(win, oldattr);
 }

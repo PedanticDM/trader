@@ -110,6 +110,7 @@ enum color_pairs {
     YELLOW_ON_BLACK,
     YELLOW_ON_BLUE,
     YELLOW_ON_CYAN,
+    CYAN_ON_BLUE,
     BLACK_ON_WHITE,
 };
 
@@ -120,8 +121,10 @@ enum color_pairs {
 #define ATTR_NORMAL_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLUE),            A_NORMAL)
 #define ATTR_STATUS_WINDOW	ATTR(COLOR_PAIR(BLACK_ON_WHITE),           A_REVERSE)
 #define ATTR_WINDOW_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
-#define ATTR_KEYCODE_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
 #define ATTR_INPUT_FIELD	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_BOLD | '_')
+#define ATTR_KEYCODE_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
+#define ATTR_HIGHLIGHT_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD, A_BOLD)
+#define ATTR_WAITFORKEY_STR	ATTR(COLOR_PAIR(CYAN_ON_BLUE),             A_NORMAL)
 
 
 /************************************************************************
@@ -157,7 +160,6 @@ extern int attrpr (WINDOW *win, int attr, const char *format, ...)
 
 // Input routines
 
-extern bool answer_yesno (WINDOW *win);
 extern int gettxchar (WINDOW *win);
 extern int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		      int maxlen, const char *emptyval, const char *defaultval,
@@ -165,5 +167,9 @@ extern int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		      int fieldsize, int attr, bool *modified);
 extern int gettxstring (WINDOW *win, char **bufptr, bool multifield,
 			int y, int x, int fieldsize, int attr, bool *modified);
+
+extern bool answer_yesno (WINDOW *win);
+extern void wait_for_key (WINDOW *win, int y);
+
 
 #endif /* included_INTF_H */
