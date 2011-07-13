@@ -73,6 +73,7 @@
 #define load_game_read_string(_var)					\
     {									\
 	char *s;							\
+	int len;							\
 									\
 	if (fgets(buf, GAME_BUFSIZE, file) == NULL) {			\
 	    err_exit("%s: missing field on line %d", filename, lineno);	\
@@ -86,6 +87,13 @@
 	if (s == NULL) {						\
 	    err_exit("out of memory");					\
 	}								\
+									\
+	strcpy(s, buf);							\
+	len = strlen(s);						\
+	if ((len > 0) && (s[len - 1] == '\n')) {			\
+	    s[len - 1] = '\0';						\
+	}								\
+									\
 	(_var) = s;							\
     }
 
