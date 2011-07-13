@@ -98,6 +98,27 @@
     }
 
 
+// Macros used in save_game()
+
+#define save_game_printf(_fmt, _var)					\
+    {									\
+	snprintf(buf, GAME_BUFSIZE, _fmt "\n", _var);			\
+	scramble(GAME_FILE_CRYPT_KEY, buf, GAME_BUFSIZE);		\
+	fprintf(file, "%s", buf);					\
+    }
+
+#define save_game_write_int(_var)					\
+    save_game_printf("%d", _var)
+#define save_game_write_long(_var)					\
+    save_game_printf("%ld", _var)
+#define save_game_write_double(_var)					\
+    save_game_printf("%2.20e", _var)
+#define save_game_write_bool(_var)					\
+    save_game_printf("%d", (int) _var)
+#define save_game_write_string(_var)					\
+    save_game_printf("%s", _var)
+
+
 /************************************************************************
 *                       Game function definitions                       *
 ************************************************************************/
@@ -488,7 +509,6 @@ bool load_game (int num)
 
     assert((num >= 1) && (num <= 9));
 
-
     buf = malloc(GAME_BUFSIZE);
     if (buf == NULL) {
 	err_exit("out of memory");
@@ -635,9 +655,134 @@ bool load_game (int num)
 
 bool save_game (int num)
 {
+    const char *data_dir;
+    char *buf, *filename;
+    FILE *file;
+    int saved_errno;
+    struct stat statbuf;
+    int i, j, x, y;
+    char *p;
+
+
     assert((num >= 1) && (num <= 9));
 
-    // @@@ To be written
+    buf = malloc(GAME_BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    // Create the data directory, if needed
+    data_dir = data_directory();
+    if (data_dir != NULL) {
+	if (mkdir(data_dir, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
+	    saved_errno = errno;
+	    if ((saved_errno == EEXIST) && (stat(data_dir, &statbuf) == 0)
+		&& S_ISDIR(statbuf.st_mode)) {
+		;	// Do nothing: directory already exists
+	    } else {
+		// Data directory could not be created
+
+		newtxwin(9, 70, LINE_OFFSET + 9, COL_CENTER(70));
+		wbkgd(curwin, ATTR_ERROR_WINDOW);
+		box(curwin, 0, 0);
+
+		center(curwin, 1, ATTR_ERROR_TITLE, "  Game not saved  ");
+		center(curwin, 3, ATTR_ERROR_STR,
+		       "Game %d could not be saved to disk", num);
+		center(curwin, 5, ATTR_ERROR_WINDOW, "Directory %s: %s",
+		       data_dir, strerror(saved_errno));
+
+		wait_for_key(curwin, 7, ATTR_WAITERROR_STR);
+		deltxwin();
+
+		free(buf);
+		return false;
+	    }
+	}
+    }
+
+    filename = game_filename(num);
+    assert(filename != NULL);
+
+    file = fopen(filename, "w");
+    if (file == NULL) {
+	// File could not be opened for writing
+	saved_errno = errno;
+
+	newtxwin(9, 70, LINE_OFFSET + 9, COL_CENTER(70));
+	wbkgd(curwin, ATTR_ERROR_WINDOW);
+	box(curwin, 0, 0);
+
+	center(curwin, 1, ATTR_ERROR_TITLE, "  Game not saved  ");
+	center(curwin, 3, ATTR_ERROR_STR,
+	       "Game %d could not be saved to disk", num);
+	center(curwin, 5, ATTR_ERROR_WINDOW, "File %s: %s", filename,
+	       strerror(saved_errno));
+
+	wait_for_key(curwin, 7, ATTR_WAITERROR_STR);
+	deltxwin();
+
+	free(buf);
+	return false;
+    }
+
+    // Write out the game file header and encryption key
+    fprintf(file, "%s\n" "%s\n", GAME_FILE_HEADER, GAME_FILE_API_VERSION);
+    fprintf(file, "%d\n", GAME_FILE_CRYPT_KEY);
+
+    // Write out various game variables
+    save_game_write_int(MAX_X);
+    save_game_write_int(MAX_Y);
+    save_game_write_int(max_turn);
+    save_game_write_int(turn_number);
+    save_game_write_int(number_players);
+    save_game_write_int(current_player);
+    save_game_write_int(first_player);
+    save_game_write_int(MAX_COMPANIES);
+    save_game_write_double(interest_rate);
+
+    // Write out player data
+    for (i = 0; i < number_players; i++) {
+	save_game_write_string(player[i].name);
+	save_game_write_double(player[i].cash);
+	save_game_write_double(player[i].debt);
+	save_game_write_bool(player[i].in_game);
+
+	for (j = 0; j < MAX_COMPANIES; j++) {
+	    save_game_write_long(player[i].stock_owned[j]);
+	}
+    }
+
+    // Write out company data
+    for (i = 0; i < MAX_COMPANIES; i++) {
+	save_game_write_double(company[i].share_price);
+	save_game_write_double(company[i].share_return);
+	save_game_write_long(company[i].stock_issued);
+	save_game_write_long(company[i].max_stock);
+	save_game_write_bool(company[i].on_map);
+    }
+
+    // Write out galaxy map
+    for (x = 0; x < MAX_X; x++) {
+	memset(buf, 0, MAX_Y + 2);
+	for (p = buf, y = 0; y < MAX_Y; p++, y++) {
+	    *p = (char) galaxy_map[x][y];
+	}
+	*p++ = '\n';
+	*p = '\0';
+
+	scramble(GAME_FILE_CRYPT_KEY, buf, GAME_BUFSIZE);
+	fprintf(file, "%s", buf);
+    }
+
+    // Write out a dummy sentinal value
+    save_game_write_int(GAME_FILE_SENTINEL);
+
+    if (fclose(file) == EOF) {
+	errno_exit("%s", filename);
+    }
+
+    free(buf);
     return true;
 }
 

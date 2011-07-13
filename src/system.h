@@ -59,6 +59,8 @@
 #include <time.h>
 #include <signal.h>
 #include <errno.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 #include <getopt.h>
 
