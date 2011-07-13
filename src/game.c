@@ -552,6 +552,7 @@ bool load_game (int num)
 	}
 
 	free(buf);
+	free(filename);
 	return false;
     }
 
@@ -640,6 +641,7 @@ bool load_game (int num)
     }
 
     free(buf);
+    free(filename);
     return true;
 }
 
@@ -723,6 +725,7 @@ bool save_game (int num)
 	deltxwin();
 
 	free(buf);
+	free(filename);
 	return false;
     }
 
@@ -783,6 +786,7 @@ bool save_game (int num)
     }
 
     free(buf);
+    free(filename);
     return true;
 }
 
