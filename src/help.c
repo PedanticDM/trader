@@ -32,10 +32,249 @@
 
 
 /************************************************************************
+*                         Help text definition                          *
+************************************************************************/
+
+#define HELP_TEXT_PAGES (3)
+const char *help_text[HELP_TEXT_PAGES] = {
+    "^BStar Traders^N help text, page 1."
+    ,
+
+    "Page 2.  Test of ^B~~^N constants and ^B^^^N attributes.\n"
+    "MAX_X            = ~x\n"
+    "MAX_Y            = ~y\n"
+    "NUMBER_MOVES     = ~m (~1, ~2, ~3, ~4, ~5, ~6, ~7, ~8, ~9, ... ~M)\n"
+    "MAX_COMPANIES    = ~c\n"
+    "DEFAULT_MAX_TURN = ~t\n"
+    "\n"
+    "^BBold text^N\n"
+    "^HHighlight text^N\n"
+    "^KKeycode string^N, for example, \"Press ^K<ESC>^N to quit\".\n"
+    "Map: ^eempty space^N as in ^e . ^N\n"
+    "Map: ^ooutpost^N     as in ^o + ^N\n"
+    "Map: ^sstar^N        as in ^s * ^N\n"
+    "Map: ^ccompany^N     as in ^c ~A ~B ~C ~D ~E ~F ~G ~H ^N\n"
+    "Map: ^kkey choice^N  as in ^k~1^N, ^k~2^N, ^k~3^N, up to ^k~M^N.\n"
+    ,
+
+    "Page 3.  Test map\n"
+    "\n"
+    "    ^c~A^e . . ^o+^e ^o+^e . ^s*^e .^N\n"
+    "    ^c~A^e ^s*^e ^s*^e . . . . .^N\n"
+    "    ^c~A^e ^c~A^e . . . ^s*^e ^c~C^e .^N\n"
+    "    ^e. . ^k~2^e ^s*^e . . ^k~3^e .^N\n"
+    "    ^e. ^k~1^e . ^c~B^e ^c~B^e . . .^N\n"
+    ,
+};
+
+
+/************************************************************************
 *                    Help text function definitions                     *
 ************************************************************************/
 
 void show_help (void)
 {
-    // @@@ To be written
+    int curpage = 0;
+    bool done = false;
+
+
+    newtxwin(23, 80, LINE_OFFSET+1, COL_CENTER(80));
+
+    while (! done) {
+	// Display a page of instructions
+
+	werase(curwin);
+	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	box(curwin, 0, 0);
+	center(curwin, 1, ATTR_WINDOW_TITLE, "  How to Play  ");
+	center(curwin, 2, ATTR_NORMAL_WINDOW, "Page %d of %d",
+	       curpage + 1, HELP_TEXT_PAGES);
+	wmove(curwin, 4, 2);
+
+	// Process the help text string
+
+	const char *s = help_text[curpage];
+	int curattr = ATTR_NORMAL_WINDOW;
+
+	while (*s != '\0') {
+	    switch (*s) {
+	    case '\n':
+		// Start a new line, suitably indented
+		wmove(curwin, getcury(curwin) + 1, 2);
+		break;
+
+	    case '^':
+		// Set the current attribute
+		s++;
+		switch (*s) {
+		case '^':
+		    waddch(curwin, *s | curattr);
+		    break;
+
+		case 'N':
+		    curattr = ATTR_NORMAL_WINDOW;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 'B':
+		    curattr = ATTR_NORMAL_WINDOW | A_BOLD;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 'H':
+		    curattr = ATTR_HIGHLIGHT_STR;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 'K':
+		    curattr = ATTR_KEYCODE_STR;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 'e':
+		    curattr = ATTR_MAP_EMPTY;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 'o':
+		    curattr = ATTR_MAP_OUTPOST;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 's':
+		    curattr = ATTR_MAP_STAR;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 'c':
+		    curattr = ATTR_MAP_COMPANY;
+		    wattrset(curwin, curattr);
+		    break;
+
+		case 'k':
+		    curattr = ATTR_MAP_CHOICE;
+		    wattrset(curwin, curattr);
+		    break;
+
+		default:
+		    waddch(curwin, '^' | curattr);
+		    waddch(curwin, *s  | curattr);
+		    break;
+		}
+
+		break;
+
+	    case '~':
+		// Print a global constant
+		s++;
+		switch (*s) {
+		case '~':
+		    waddch(curwin, *s | curattr);
+		    break;
+
+		case 'x':
+		    wprintw(curwin, "%2d", MAX_X);
+		    break;
+
+		case 'y':
+		    wprintw(curwin, "%2d", MAX_Y);
+		    break;
+
+		case 'm':
+		    wprintw(curwin, "%2d", NUMBER_MOVES);
+		    break;
+
+		case 'c':
+		    wprintw(curwin, "%d", MAX_COMPANIES);
+		    break;
+
+		case 't':
+		    wprintw(curwin, "%2d", DEFAULT_MAX_TURN);
+		    break;
+
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+		    // N-th choice of move, as a key press
+		    wprintw(curwin, "%c", MOVE_TO_KEY(*s - '1'));
+		    break;
+
+		case 'M':
+		    // Last choice of move, as a key press
+		    wprintw(curwin, "%c", MOVE_TO_KEY(NUMBER_MOVES - 1));
+		    break;
+
+		case 'A':
+		case 'B':
+		case 'C':
+		case 'D':
+		case 'E':
+		case 'F':
+		case 'G':
+		case 'H':
+		    // Map representation of company
+		    wprintw(curwin, "%c",
+			    PRINTABLE_MAP_VAL(MAP_COMPANY(*s - 'A')));
+		    break;
+
+		default:
+		    waddch(curwin, '~' | curattr);
+		    waddch(curwin, *s  | curattr);
+		    break;
+		}
+
+		break;
+
+	    default:
+		// Print the character
+		waddch(curwin, *s | curattr);
+		break;
+	    }
+
+	    s++;
+	}
+
+	center(curwin, 21, ATTR_WAITNORMAL_STR, (curpage == 0) ?
+	       "[ Press <SPACE> to continue ] " :
+	       "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] ");
+
+	wrefresh(curwin);
+
+	int key = gettxchar(curwin);
+
+	switch (key) {
+	case KEY_BS:
+	case KEY_BACKSPACE:
+	case KEY_DEL:
+	case KEY_PPAGE:
+	case KEY_UP:
+	case KEY_LEFT:
+	case KEY_BTAB:
+	    if (curpage == 0) {
+		beep();
+	    } else {
+		curpage--;
+	    }
+	    break;
+
+	case KEY_CANCEL:
+	case KEY_CTRL('G'):
+	case KEY_ESC:
+	    done = true;
+	    break;
+
+	default:
+	    curpage++;
+	    done = (curpage == HELP_TEXT_PAGES);
+	}
+    }
+
+    deltxwin();
+    txrefresh();
 }

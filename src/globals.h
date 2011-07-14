@@ -104,7 +104,9 @@ typedef enum map_val {
     MAP_LAST	= MAP_A + MAX_COMPANIES - 1
 } map_val_t;
 
-#define MAP_COMPANY(x) (MAP_A + x)
+#define MAP_COMPANY(x)		(MAP_A + (x))
+#define MAP_ISCOMPANY(x)	((x) >= MAP_A && (x) <= MAP_LAST)
+#define PRINTABLE_MAP_VAL(x)	((char) (x))
 
 
 // Information about a move
@@ -112,6 +114,11 @@ typedef struct move_rec {
     int x;
     int y;
 } move_rec_t;
+
+#define MOVE_TO_KEY(m)	((m) + 'a')
+#define KEY_TO_MOVE(k)							\
+    ((tolower(k) < 'a' || tolower(k) >= MOVE_TO_KEY(NUMBER_MOVES)) ?	\
+	ERR : (tolower(k) - 'a'));
 
 
 // Company names
