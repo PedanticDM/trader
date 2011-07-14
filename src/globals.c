@@ -72,3 +72,5 @@ int	game_num    = 0;		// Game number (1-9)
 
 bool	quit_selected;			// Is a player trying to quit the game?
 bool	abort_game;			// Abort game without declaring winner?
+
+bool	option_no_color = false;	// True if --no-color was specified

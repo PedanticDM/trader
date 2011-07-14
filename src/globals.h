@@ -150,5 +150,7 @@ extern int	game_num;		// Game number (1-9)
 extern bool	quit_selected;		// Is a player trying to quit the game?
 extern bool	abort_game;		// Abort game without declaring winner?
 
+extern bool	option_no_color;	// True if --no-color was specified
+
 
 #endif /* included_GLOBALS_H */

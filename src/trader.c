@@ -68,7 +68,6 @@ int main (int argc, char *argv[])
     init_program();
 
     // Play the actual game
-
     init_game();
     while (! quit_selected && ! abort_game && turn_number <= max_turn) {
 	select_moves();
@@ -91,15 +90,21 @@ int main (int argc, char *argv[])
 
 /* Constants for command line options */
 
+enum options_char {
+    OPTION_NO_COLOR = 1,
+};
+
 static const char options_short[] = "hV";
     /* -h   --help
        -V   --version
     */
 
 static struct option const options_long[] = {
-    { "help",    no_argument, NULL, 'h' },
-    { "version", no_argument, NULL, 'V' },
-    { NULL,      0,           NULL, 0 }
+    { "help",      no_argument, NULL, 'h' },
+    { "version",   no_argument, NULL, 'V' },
+    { "no-color",  no_argument, NULL, OPTION_NO_COLOR },
+    { "no-colour", no_argument, NULL, OPTION_NO_COLOR },
+    { NULL,        0,           NULL, 0 }
 };
 
 
@@ -126,12 +131,19 @@ void process_cmdline (int argc, char *argv[])
 
 	switch (c) {
 	case 'h':
-	    /* -h, --help: show help */
+	    // -h, --help: show help
 	    show_usage(EXIT_SUCCESS);
+	    break;
 
 	case 'V':
-	    /* -V, --version: show version information */
+	    // -V, --version: show version information
 	    show_version();
+	    break;
+
+	case OPTION_NO_COLOR:
+	    // --no-color, --no-colour: don't use colour
+	    option_no_color = true;
+	    break;
 
 	default:
 	    show_usage(EXIT_FAILURE);
@@ -219,8 +231,9 @@ Play Star Traders, a simple game of interstellar trading.\n\n\
 ");
 	printf("\
 Options:\n\
-  -V, --version   output version information and exit\n\
-  -h, --help      display this help and exit\n\n\
+  -V, --version    output version information and exit\n\
+  -h, --help       display this help and exit\n\
+      --no-color   don't use colour for displaying text\n\n\
 ");
 	printf("\
 If GAME is specified as a number between 1 and 9, load and continue\n\

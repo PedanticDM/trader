@@ -29,8 +29,7 @@
 
 
 #include "system.h"
-#include "intf.h"
-#include "utils.h"
+#include "trader.h"
 
 
 /************************************************************************
@@ -88,7 +87,7 @@ void init_screen (void)
 		 MIN_COLS, MIN_LINES);
     }
 
-    use_color = has_colors();
+    use_color = ! option_no_color && has_colors();
 
     curwin = stdscr;
     topwin = NULL;
