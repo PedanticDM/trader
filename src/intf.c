@@ -101,14 +101,17 @@ void init_screen (void)
     if (use_color) {
 	start_color();
 
-	init_pair(WHITE_ON_BLACK,  COLOR_WHITE,  COLOR_BLACK);
-	init_pair(WHITE_ON_BLUE,   COLOR_WHITE,  COLOR_BLUE);
-	init_pair(WHITE_ON_RED,    COLOR_WHITE,  COLOR_RED);
+	init_pair(BLACK_ON_WHITE,  COLOR_BLACK,  COLOR_WHITE);
+	init_pair(RED_ON_BLACK,    COLOR_RED,    COLOR_BLACK);
+	init_pair(CYAN_ON_BLUE,    COLOR_CYAN,   COLOR_BLUE);
 	init_pair(YELLOW_ON_BLACK, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(YELLOW_ON_BLUE,  COLOR_YELLOW, COLOR_BLUE);
 	init_pair(YELLOW_ON_CYAN,  COLOR_YELLOW, COLOR_CYAN);
-	init_pair(CYAN_ON_BLUE,    COLOR_CYAN,   COLOR_BLUE);
-	init_pair(BLACK_ON_WHITE,  COLOR_BLACK,  COLOR_WHITE);
+	init_pair(GREEN_ON_BLACK,  COLOR_GREEN,  COLOR_BLACK);
+	init_pair(BLUE_ON_BLACK,   COLOR_BLUE,   COLOR_BLACK);
+	init_pair(WHITE_ON_BLACK,  COLOR_WHITE,  COLOR_BLACK);
+	init_pair(WHITE_ON_RED,    COLOR_WHITE,  COLOR_RED);
+	init_pair(WHITE_ON_BLUE,   COLOR_WHITE,  COLOR_BLUE);
 
 	bkgd(ATTR_ROOT_WINDOW);
     }
@@ -327,7 +330,7 @@ int center (WINDOW *win, int y, int attr, const char *format, ...)
     }
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL);
+    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
     wattrset(win, attr);
 
     va_start(args, format);
@@ -370,7 +373,7 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
 
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL);
+    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
     wattrset(win, attr);
 
     va_start(args, format);
@@ -486,7 +489,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
     wtimeout(win, -1);
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL);
+    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
     wattrset(win, attr & ~A_CHARTEXT);
     curs_set(CURS_ON);
 
@@ -1162,7 +1165,7 @@ bool answer_yesno (WINDOW *win)
     wtimeout(win, -1);
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL);
+    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
     wattron(win, A_BOLD);
     curs_set(CURS_ON);
 
@@ -1209,7 +1212,6 @@ void wait_for_key (WINDOW *win, int y, int attr)
     meta(win, true);
     wtimeout(win, -1);
 
-    curs_set(CURS_OFF);
     center(win, y, attr, "[ Press <SPACE> to continue ] ");
     wrefresh(win);
 
