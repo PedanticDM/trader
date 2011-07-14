@@ -35,7 +35,18 @@
 *                      Module constants and macros                      *
 ************************************************************************/
 
-#define GAME_BUFSIZE	(1024)		/* Buffer size for game save/load */
+// Game loading and saving constants
+
+#define GAME_BUFSIZE	(1024)
+
+static const int game_file_crypt_key[] = {
+    0x50, 0x52, 0x55, 0x59, 0x5A, 0x5C, 0x5F,
+    0x90, 0x92, 0x95, 0x99, 0x9A, 0x9C, 0x9F,
+    0xA0, 0xA2, 0xA5, 0xA9, 0xAA, 0xAC, 0xAF,
+    0xD0, 0xD2, 0xD5, 0xD9, 0xDA, 0xDC, 0xDF
+};
+
+#define GAME_FILE_CRYPT_KEY_SIZE (sizeof(game_file_crypt_key) / sizeof(int))
 
 
 // Macros used in load_game()
@@ -103,7 +114,7 @@
 #define save_game_printf(_fmt, _var)					\
     {									\
 	snprintf(buf, GAME_BUFSIZE, _fmt "\n", _var);			\
-	scramble(GAME_FILE_CRYPT_KEY, buf, GAME_BUFSIZE);		\
+	scramble(crypt_key, buf, GAME_BUFSIZE);				\
 	fprintf(file, "%s", buf);					\
     }
 
@@ -484,6 +495,7 @@ void end_game (void)
     }
 
     // @@@ To be written
+    save_game(2);
 }
 
 
@@ -662,6 +674,7 @@ bool save_game (int num)
     FILE *file;
     int saved_errno;
     struct stat statbuf;
+    int crypt_key;
     int i, j, x, y;
     char *p;
 
@@ -672,6 +685,8 @@ bool save_game (int num)
     if (buf == NULL) {
 	err_exit("out of memory");
     }
+
+    crypt_key = game_file_crypt_key[randi(GAME_FILE_CRYPT_KEY_SIZE)];
 
     // Create the data directory, if needed
     data_dir = data_directory();
@@ -731,7 +746,7 @@ bool save_game (int num)
 
     // Write out the game file header and encryption key
     fprintf(file, "%s\n" "%s\n", GAME_FILE_HEADER, GAME_FILE_API_VERSION);
-    fprintf(file, "%d\n", GAME_FILE_CRYPT_KEY);
+    fprintf(file, "%d\n", crypt_key);
 
     // Write out various game variables
     save_game_write_int(MAX_X);
@@ -774,7 +789,7 @@ bool save_game (int num)
 	*p++ = '\n';
 	*p = '\0';
 
-	scramble(GAME_FILE_CRYPT_KEY, buf, GAME_BUFSIZE);
+	scramble(crypt_key, buf, GAME_BUFSIZE);
 	fprintf(file, "%s", buf);
     }
 

@@ -323,18 +323,18 @@ extern int randi (int limit)
 
 char *scramble (int key, char *buf, int bufsize)
 {
-    int i;
-    char c, e;
+    if ((buf != NULL) && (key != 0)) {
+	char *p = buf;
+	unsigned char k = ~key;
+	int i;
 
+	for (i = 0; (i < bufsize) && (*p != '\0'); i++, k++, p++) {
+	    char c = *p;
+	    char r = c ^ k;	// Simple encryption: XOR on a moving key
 
-    if (key != 0) {
-	key = (~ key) & 0xFF;
-	for (i = 0; (i < bufsize) && (buf[i] != '\0'); i++) {
-	    c = buf[i];
-	    e = c ^ key;	// Simple encryption: XOR!
-	    if ((c != '\r') && (c != '\n')
-		&& (e != '\r') && (e != '\n') && (e != '\0')) {
-		buf[i] = e;
+	    if ((c != '\r') && (c != '\n') &&
+		(r != '\r') && (r != '\n') && (r != '\0')) {
+		*p = r;
 	    }
 	}
     }
@@ -360,21 +360,5 @@ char *scramble (int key, char *buf, int bufsize)
 
 char *unscramble (int key, char *buf, int bufsize)
 {
-    int i;
-    char c, d;
-
-
-    if (key != 0) {
-	key = (~ key) & 0xFF;
-	for (i = 0; (i < bufsize) && (buf[i] != '\0'); i++) {
-	    c = buf[i];
-	    d = c ^ key;	// Simple decryption: XOR!
-	    if ((c != '\r') && (c != '\n')
-		&& (d != '\r') && (d != '\n') && (d != '\0')) {
-		buf[i] = d;
-	    }
-	}
-    }
-
-    return buf;
+    return scramble(key, buf, bufsize);
 }

@@ -38,7 +38,6 @@
 #define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
 #define GAME_FILE_API_VERSION	"7.0"	/* For game loads and saves */
 #define GAME_FILE_SENTINEL	(42)
-#define GAME_FILE_CRYPT_KEY	(0xAA)
 
 
 /************************************************************************
