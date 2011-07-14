@@ -148,8 +148,8 @@ static const int game_file_crypt_key[] = {
   On entry to this function, the "game_num" global variable determines
   whether an old game is loaded (if possible).  On exit, all global
   variables in globals.h are initialised, apart from game_move[].  If the
-  user aborts entering the necessary information, quit_selected is set to
-  true and number_players is 0.
+  user aborts entering the necessary information, abort_game is set to
+  true.
 */
 
 void init_game (void)
@@ -201,7 +201,7 @@ void init_game (void)
 		done = ((key >= '1') && (key <= (MAX_PLAYERS + '0'))) || (key == 'C');
 
 		if ((key == KEY_ESC) || (key == KEY_CTRL('C')) || (key == KEY_CTRL('\\'))) {
-		    quit_selected = true;
+		    abort_game = true;
 		    return;
 		}
 
@@ -475,6 +475,7 @@ void init_game (void)
     }
 
     quit_selected = false;
+    abort_game = false;
 }
 
 
@@ -489,13 +490,12 @@ void init_game (void)
 
 void end_game (void)
 {
-    if (quit_selected && (number_players == 0)) {
+    if (abort_game) {
 	// init_game() was cancelled by user
 	return;
     }
 
     // @@@ To be written
-    save_game(2);
 }
 
 

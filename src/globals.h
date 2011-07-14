@@ -141,6 +141,7 @@ extern bool	game_loaded;		// True if game was loaded from disk
 extern int	game_num;		// Game number (1-9)
 
 extern bool	quit_selected;		// Is a player trying to quit the game?
+extern bool	abort_game;		// Abort game without declaring winner?
 
 
 #endif /* included_GLOBALS_H */
