@@ -131,6 +131,13 @@ static const int game_file_crypt_key[] = {
 
 
 /************************************************************************
+*                    Internal function declarations                     *
+************************************************************************/
+
+int cmp_game_move (const void *a, const void *b);
+
+
+/************************************************************************
 *                       Game function definitions                       *
 ************************************************************************/
 
@@ -806,9 +813,65 @@ bool save_game (int num)
 }
 
 
+/*-----------------------------------------------------------------------
+  Function:   select_moves  - Select NUMBER_MOVES random moves
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function selects NUMBER_MOVES random moves and stores them in the
+  game_move[] array.  If there are less than NUMBER_MOVES empty spaces in
+  the galaxy map, the game is automatically finished by setting
+  quit_selected to true.
+*/
+
 void select_moves (void)
 {
-    // @@@ To be written
+    int count;
+    int x, y, i, j;
+    int tx, ty;
+    bool unique;
+
+
+    // How many empty spaces are there in the galaxy map?
+    count = 0;
+    for (x = 0; x < MAX_X; x++) {
+	for (y = 0; y < MAX_Y; y++) {
+	    if (galaxy_map[x][y] == MAP_EMPTY) {
+		count++;
+	    }
+	}
+    }
+
+    if (count < NUMBER_MOVES) {
+	quit_selected = true;
+	return;
+    }
+
+    // Generate unique random moves
+    for (i = 0; i < NUMBER_MOVES; i++) {
+	do {
+	    do {
+		tx = randi(MAX_X);
+		ty = randi(MAX_Y);
+	    } while (galaxy_map[tx][ty] != MAP_EMPTY);
+
+	    unique = true;
+	    for (j = i - 1; j >= 0; j--) {
+		if (tx == game_move[j].x && ty == game_move[j].y) {
+		    unique = false;
+		    break;
+		}
+	    }
+	} while (! unique);
+
+	game_move[i].x = tx;
+	game_move[i].y = ty;
+    }
+
+    // Sort moves from left to right
+    qsort(game_move, NUMBER_MOVES, sizeof(move_rec_t), cmp_game_move);
+
+    quit_selected = false;
 }
 
 void get_move (void)
@@ -830,4 +893,35 @@ void next_player (void)
 {
     // @@@ To be written
     quit_selected = true;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   cmp_game_move  - Compare two game_move elements
+  Arguments:  a, b           - Elements to compare
+  Returns:    int            - Comparison of a and b
+
+  This function compares two game_move elements (of type move_rec_t) and
+  returns -1 if a < b, 0 if a == b and 1 if a > b.
+*/
+
+int cmp_game_move (const void *a, const void *b)
+{
+    const move_rec_t *aa = (const move_rec_t *) a;
+    const move_rec_t *bb = (const move_rec_t *) b;
+
+
+    if (aa->x < bb->x) {
+	return -1;
+    } else if (aa->x > bb->x) {
+	return 1;
+    } else {
+	if (aa->y < bb->y) {
+	    return -1;
+	} else if (aa->y > bb->y) {
+	    return 1;
+	} else {
+	    return 0;
+	}
+    }
 }

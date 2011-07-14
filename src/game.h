@@ -39,17 +39,17 @@
 *                      Game function declarations                       *
 ************************************************************************/
 
-void init_game (void);
-void end_game (void);
+extern void init_game (void);
+extern void end_game (void);
 
-bool load_game (int num);
-bool save_game (int num);
+extern bool load_game (int num);
+extern bool save_game (int num);
 
-void select_moves (void);
-void get_move (void);
-void process_move (void);
-void exchange_stock (void);
-void next_player (void);
+extern void select_moves (void);
+extern void get_move (void);
+extern void process_move (void);
+extern void exchange_stock (void);
+extern void next_player (void);
 
 
 #endif /* included_GAME_H */
