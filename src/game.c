@@ -473,7 +473,7 @@ void init_game (void)
 
 		center(curwin, 2, ATTR_NORMAL_WINDOW,
 		       "The first player to go is");
-		center(curwin, 3, ATTR_HIGHLIGHT_STR, "%1.46s",
+		center(curwin, 3, ATTR_HIGHLIGHT_STR, "%s",
 		       player[first_player].name);
 
 		wait_for_key(curwin, 5, ATTR_WAITNORMAL_STR);
@@ -913,7 +913,7 @@ void next_player (void)
 
 void show_map (bool closewin)
 {
-    int x, y;
+    int n, x, y;
 
 
     newtxwin(MAX_Y + 4, WIN_COLS, LINE_OFFSET + 1, COL_CENTER(WIN_COLS));
@@ -926,24 +926,41 @@ void show_map (bool closewin)
     mvwaddch(curwin, 2, getmaxx(curwin) - 1, ACS_RTEE);
 
     // Display current player and turn number
+    wattrset(curwin, ATTR_MAP_TITLE);
+    mvwaddstr(curwin, 1, 2, "  ");
+    waddstr(curwin, "Player: ");
+    n = getmaxx(curwin) - getcurx(curwin) - 4;
+    wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
+    wprintw(curwin, "%-*.*s", n, n, player[current_player].name);
+    wattrset(curwin, ATTR_MAP_TITLE);
+    waddstr(curwin, "  ");
+
     if (turn_number != max_turn) {
-	wattrset(curwin, ATTR_MAP_TITLE);
-	mvwaddstr(curwin, 1, 2, "  Current Player: ");
+	const char *initial = "Turn: ";
+
+	char *buf = malloc(GAME_BUFSIZE);
+	if (buf == NULL) {
+	    err_exit("out of memory");
+	}
+
+	int len1 = strlen(initial);
+	int len2 = snprintf(buf, GAME_BUFSIZE, "%d", turn_number);
+
+	mvwaddstr(curwin, 1, getmaxx(curwin) - (len1 + len2) - 6, "  ");
+	waddstr(curwin, initial);
 	wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
-	wprintw(curwin, "%-46.46s", player[current_player].name);
-	wattrset(curwin, ATTR_MAP_TITLE);
-	waddstr(curwin, "  Turn: ");
-	wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
-	wprintw(curwin, "%-4d", turn_number);
-    } else {
-	wattrset(curwin, ATTR_MAP_TITLE);
-	mvwaddstr(curwin, 1, 2, "  Current Player: ");
-	wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
-	wprintw(curwin, "%-37.37s", player[current_player].name);
+	waddstr(curwin, buf);
 	wattrset(curwin, ATTR_MAP_TITLE);
 	waddstr(curwin, "  ");
+
+	free(buf);
+    } else {
+	const char *buf = "*** Last Turn ***";
+	int len = strlen(buf);
+
+	mvwaddstr(curwin, 1, getmaxx(curwin) - len - 6, "  ");
 	wattrset(curwin, ATTR_MAP_T_STANDOUT);
-	waddstr(curwin, "*** Last Turn ***");
+	waddstr(curwin, buf);
 	wattrset(curwin, ATTR_MAP_TITLE);
 	waddstr(curwin, "  ");
     }
@@ -1011,7 +1028,8 @@ void show_status (int playernum)
   Returns:    int            - Comparison of a and b
 
   This function compares two game_move elements (of type move_rec_t) and
-  returns -1 if a < b, 0 if a == b and 1 if a > b.
+  returns -1 if a < b, 0 if a == b and 1 if a > b.  It is used for
+  sorting game moves into ascending order.
 */
 
 int cmp_game_move (const void *a, const void *b)
