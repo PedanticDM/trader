@@ -895,7 +895,7 @@ void get_move (void)
 
 
     if (quit_selected || abort_game) {
-	selection = SEL_QUIT_GAME;
+	selection = SEL_QUIT;
 	return;
     } else {
 	selection = SEL_NONE;
@@ -969,7 +969,7 @@ void get_move (void)
 		    break;
 
 		case '2':
-		    selection = SEL_MAKE_BANKRUPT;
+		    selection = SEL_BANKRUPT;
 
 		    curs_set(CURS_OFF);
 		    wattron(curwin, A_BOLD);
@@ -979,7 +979,7 @@ void get_move (void)
 		    break;
 
 		case '3':
-		    selection = SEL_SAVE_GAME;
+		    selection = SEL_SAVE;
 
 		    curs_set(CURS_OFF);
 		    wattron(curwin, A_BOLD);
@@ -991,7 +991,7 @@ void get_move (void)
 		case KEY_ESC:
 		case KEY_CTRL('C'):
 		case KEY_CTRL('\\'):
-		    selection = SEL_QUIT_GAME;
+		    selection = SEL_QUIT;
 
 		    curs_set(CURS_OFF);
 		    wattron(curwin, A_BOLD);

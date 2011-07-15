@@ -128,9 +128,9 @@ typedef enum sel_val {
     SEL_MOVE_LAST		= NUMBER_MOVES - 1,
     SEL_MOVE_NUMBER_MOVES	= NUMBER_MOVES,
 
-    SEL_MAKE_BANKRUPT,			// Player wishes to give up
-    SEL_SAVE_GAME,			// Save and end the game
-    SEL_QUIT_GAME,			// Just end the game
+    SEL_BANKRUPT,			// Player wishes to give up
+    SEL_SAVE,				// Save and end the game
+    SEL_QUIT,				// Just end the game
     SEL_NONE			= -1	// Nothing yet selected
 } sel_val_t;
 
