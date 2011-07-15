@@ -52,7 +52,8 @@ extern void exchange_stock (void);
 extern void next_player (void);
 
 extern void show_map (bool show_moves);
-extern void show_status (int playernum);
+extern void show_status (int num);
+extern double total_value (int num);
 
 
 #endif /* included_GAME_H */

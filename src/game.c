@@ -880,6 +880,7 @@ void get_move (void)
 {
     // @@@ To be written
     show_map(true);
+    show_status(current_player);
 }
 
 void process_move (void)
@@ -1016,9 +1017,135 @@ void show_map (bool closewin)
     }
 }
 
-void show_status (int playernum)
+
+/*-----------------------------------------------------------------------
+  Function:   show_status  - Display the player's status
+  Arguments:  num          - Player number (0 to number_players - 1)
+  Returns:    (nothing)
+
+  This function displays the financial status of the player num.  It uses
+  the player[num] global variable.  The show status window is closed
+  before returning from this function.
+*/
+
+void show_status (int num)
 {
-    // @@@ To be written
+    double val;
+    int i, line;
+
+
+    assert(num >= 0 && num < number_players);
+
+    newtxwin(MAX_COMPANIES + 15, 80, LINE_OFFSET + 1, COL_CENTER(80));
+    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+    box(curwin, 0, 0);
+
+    center(curwin, 1, ATTR_WINDOW_TITLE, "  Stock Portfolio  ");
+    center2(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR, "Player: ",
+	    "%s", player[num].name);
+
+    val = total_value(num);
+    if (val == 0.0) {
+	center(curwin, 11, ATTR_STANDOUT_STR, "* * *   B A N K R U P T   * * *");
+    } else {
+	char *buf = malloc(GAME_BUFSIZE);
+	if (buf == NULL) {
+	    err_exit("out of memory");
+	}
+
+	// Check to see if any companies are on the map
+	bool none = true;
+	for (i = 0; i < MAX_COMPANIES; i++) {
+	    if (company[i].on_map) {
+		none = false;
+		break;
+	    }
+	}
+
+	if (none) {
+	    center(curwin, 8, ATTR_NORMAL_WINDOW, "No companies on the map");
+	} else {
+	    // Handle the locale's currency symbol
+	    struct lconv *lc = localeconv();
+	    assert(lc != NULL);
+	    snprintf(buf, GAME_BUFSIZE, "share (%s)", lc->currency_symbol);
+
+	    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
+	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
+		      "", "Price per", "", "Holdings", "Company");
+	    mvwprintw(curwin, 5, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
+		      "Company", buf, "Return (%)", "(shares)", "owner (%)");
+	    wattrset(curwin, ATTR_NORMAL_WINDOW);
+
+	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
+		if (company[i].on_map) {
+		    strfmon(buf, GAME_BUFSIZE, "%!12n", company[i].share_price);
+		    mvwprintw(curwin, line, 2,
+			      "  %-22s  %10s  %10.2f  %'10d  %10.2f  ",
+			      company[i].name, buf,
+			      company[i].share_return * 100.0,
+			      player[num].stock_owned[i],
+			      (company[i].stock_issued == 0) ? 0.0 :
+			      ((double) player[num].stock_owned[i] * 100.0) /
+			      company[i].stock_issued);
+		    line++;
+		}
+	    }
+	}
+
+	line = 15;
+	strfmon(buf, GAME_BUFSIZE, "%18n", player[num].cash);
+	center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+		"Current cash:  ", " %s ", buf);
+	if (player[num].debt != 0.0) {
+	    strfmon(buf, GAME_BUFSIZE, "%18n", player[num].debt);
+	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+		    "Current debt:  ", " %s ", buf);
+	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+		    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
+	}
+
+	strfmon(buf, GAME_BUFSIZE, "%18n", val);
+	center2(curwin, line + 1, ATTR_HIGHLIGHT_STR, ATTR_WINDOW_TITLE,
+		"Total value:   ", " %s ", buf);
+
+	free(buf);
+    }
+
+    wait_for_key(curwin, 21, ATTR_WAITNORMAL_STR);
+    deltxwin();
+    txrefresh();
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   total_value  - Calculate a player's total worth
+  Arguments:  num          - Player number (0 to number_players - 1)
+  Returns:    (nothing)
+
+  This function calculates the total value (worth) of the player num.
+*/
+
+double total_value (int num)
+{
+    double val;
+    int i;
+
+
+    assert(num >= 0 && num < number_players);
+
+    val = player[num].cash - player[num].debt;
+    for (i = 0; i < MAX_COMPANIES; i++) {
+	if (company[i].on_map) {
+	    val += player[num].stock_owned[i] * company[i].share_price;
+	}
+    }
+
+    if (val < ROUNDING_AMOUNT) {
+	val = 0.0;
+    }
+
+    return val;
 }
 
 

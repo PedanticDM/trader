@@ -73,6 +73,8 @@
 #define INC_INTEREST_RATE	(0.30)	/* 30% chance of incr./decr. interest rate */
 #define MAX_INTEREST_RATE	(0.30)	/* Maximum interest rate */
 
+#define ROUNDING_AMOUNT		(0.01)	/* Round off smaller amounts to zero */
+
 
 // Information about each company
 typedef struct company_info {

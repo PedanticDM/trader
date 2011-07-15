@@ -61,6 +61,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <monetary.h>
 
 #include <getopt.h>
 
