@@ -94,6 +94,7 @@ typedef struct player_info {
     double	debt;			// Amount of debt
     long	stock_owned[MAX_COMPANIES];	// How much stock is owned
     bool	in_game;		// True if still in the game
+    double	sort_value;		// Total value (only used in end_game())
 } player_info_t;
 
 
@@ -137,6 +138,9 @@ typedef enum sel_val {
 
 // Company names
 extern const char *company_name[MAX_COMPANIES];
+
+// Ordinal strings
+extern const char *ordinal[MAX_PLAYERS + 1];
 
 
 /************************************************************************

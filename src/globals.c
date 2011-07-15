@@ -47,6 +47,19 @@ const char *company_name[MAX_COMPANIES] = {
     "Hercules and Co"
 };
 
+// Ordinal strings
+const char *ordinal[MAX_PLAYERS + 1] = {
+    "0th",
+    "1st",
+    "2nd",
+    "3rd",
+    "4th",
+    "5th",
+    "6th",
+    "7th",
+    "8th"
+};
+
 
 /************************************************************************
 *                      Global variable definitions                      *

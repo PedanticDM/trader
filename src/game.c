@@ -135,6 +135,7 @@ static const int game_file_crypt_key[] = {
 ************************************************************************/
 
 int cmp_game_move (const void *a, const void *b);
+int cmp_player (const void *a, const void *b);
 
 
 /************************************************************************
@@ -492,17 +493,98 @@ void init_game (void)
   Returns:    (nothing)
 
   This function displays every player's status before declaring the
-  winner of the game.
+  winner of the game.  Note that turn_number is used instead of max_turns
+  as select_moves() may terminate the game earlier.
 */
 
 void end_game (void)
 {
+    int i;
+    char *buf;
+
+
     if (abort_game) {
 	// init_game() was cancelled by user
 	return;
     }
 
-    // @@@ To be written
+    buf = malloc(BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    newtxwin(7, 40, LINE_OFFSET + 9, COL_CENTER(40));
+    wbkgd(curwin, ATTR_ERROR_WINDOW);
+    box(curwin, 0, 0);
+
+    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Over  ");
+    center(curwin, 3, ATTR_ERROR_STR, "The game is over after %d turns",
+	   turn_number - 1);
+
+    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+    deltxwin();
+
+    for (i = 0; i < number_players; i++) {
+	show_status(i);
+    }
+
+    if (number_players == 1) {
+	strfmon(buf, BUFSIZE, "%1n", total_value(0));
+
+	newtxwin(9, 60, LINE_OFFSET + 8, COL_CENTER(60));
+	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	box(curwin, 0, 0);
+
+	center(curwin, 1, ATTR_WINDOW_TITLE, "  Total Value  ");
+	center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+		"Your total value was ", "%s", buf);
+
+	wait_for_key(curwin, 7, ATTR_WAITNORMAL_STR);
+	deltxwin();
+    } else {
+	// Handle the locale's currency symbol
+	struct lconv *lc = localeconv();
+	assert(lc != NULL);
+
+	// Sort players on the basis of total value
+	for (i = 0; i < number_players; i++) {
+	    player[i].sort_value = total_value(i);
+	}
+	qsort(player, number_players, sizeof(player_info_t), cmp_player);
+
+	newtxwin(number_players + 10, 70, LINE_OFFSET + 3, COL_CENTER(70));
+	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	box(curwin, 0, 0);
+
+	center(curwin, 1, ATTR_WINDOW_TITLE, "  Game Winner  ");
+	center2(curwin, 3, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+		"The winner is ", "%s", player[0].name);
+	if (player[0].sort_value == 0.0) {
+	    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_STANDOUT_STR,
+		    "who is ", "%s", "*** BANKRUPT ***");
+	} else {
+	    strfmon(buf, BUFSIZE, "%1n", player[0].sort_value);
+	    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+		    "with a value of ", "%s", buf);
+	}
+
+	snprintf(buf, BUFSIZE, "Total Value (%s)", lc->currency_symbol);
+
+	wattrset(curwin, ATTR_WINDOW_SUBTITLE);
+	mvwprintw(curwin, 6, 2, "%5s  %-37.37s  %18s  ", "", "Player", buf);
+	wattrset(curwin, ATTR_NORMAL_WINDOW);
+
+	for (i = 0; i < number_players; i++) {
+	    strfmon(buf, BUFSIZE, "%!18n", player[i].sort_value);
+	    mvwprintw(curwin, i + 7, 2, "%5s  %-37.37s  %18s  ",
+		      ordinal[i + 1], player[i].name, buf);
+	}
+
+	wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITNORMAL_STR);
+	deltxwin();
+    }
+
+    free(buf);
 }
 
 
@@ -1336,12 +1418,12 @@ double total_value (int num)
 
 
 /*-----------------------------------------------------------------------
-  Function:   cmp_game_move  - Compare two game_move elements
+  Function:   cmp_game_move  - Compare two game_move[] elements
   Arguments:  a, b           - Elements to compare
   Returns:    int            - Comparison of a and b
 
-  This function compares two game_move elements (of type move_rec_t) and
-  returns -1 if a < b, 0 if a == b and 1 if a > b.  It is used for
+  This function compares two game_move[] elements (of type move_rec_t)
+  and returns -1 if a < b, 0 if a == b and 1 if a > b.  It is used for
   sorting game moves into ascending order.
 */
 
@@ -1363,5 +1445,34 @@ int cmp_game_move (const void *a, const void *b)
 	} else {
 	    return 0;
 	}
+    }
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   cmp_player  - Compare two player[] elements
+  Arguments:  a, b        - Elements to compare
+  Returns:    int         - Comparison of a and b
+
+  This function compares two player[] elements (of type player_info_t) on
+  the basis of total value, and returns -1 if a > b, 0 if a == b and 1 if
+  a < b (note the change from the usual order!).  It is used for sorting
+  players into descending total value order.  Note that the sort_value
+  field MUST be computed before calling qsort()!
+*/
+
+
+int cmp_player (const void *a, const void *b)
+{
+    const player_info_t *aa = (const player_info_t *) a;
+    const player_info_t *bb = (const player_info_t *) b;
+
+
+    if (aa->sort_value > bb->sort_value) {
+	return -1;
+    } else if (aa->sort_value < bb->sort_value) {
+	return 1;
+    } else {
+	return 0;
     }
 }
