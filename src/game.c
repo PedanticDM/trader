@@ -50,7 +50,7 @@ static const int game_file_crypt_key[] = {
 // Macros used in load_game()
 
 #define load_game_scanf(_fmt, _var, _cond)				\
-    {									\
+    do {								\
 	if (fgets(buf, BUFSIZE, file) == NULL) {			\
 	    err_exit("%s: missing field on line %d", filename, lineno);	\
 	}								\
@@ -64,7 +64,7 @@ static const int game_file_crypt_key[] = {
 		     filename, lineno, buf);				\
 	}								\
 	lineno++;							\
-    }
+    } while (0)
 
 #define load_game_read_int(_var, _cond)					\
     load_game_scanf("%d", _var, _cond)
@@ -74,15 +74,15 @@ static const int game_file_crypt_key[] = {
     load_game_scanf("%lf", _var, _cond)
 
 #define load_game_read_bool(_var)					\
-    {									\
+    do {								\
 	int b;								\
 									\
 	load_game_scanf("%d", b, (b == false) || (b == true));		\
 	(_var) = b;							\
-    }
+    } while (0)
 
 #define load_game_read_string(_var)					\
-    {									\
+    do {								\
 	char *s;							\
 	int len;							\
 									\
@@ -101,22 +101,22 @@ static const int game_file_crypt_key[] = {
 									\
 	strcpy(s, buf);							\
 	len = strlen(s);						\
-	if ((len > 0) && (s[len - 1] == '\n')) {			\
+	if (len > 0 && s[len - 1] == '\n') {				\
 	    s[len - 1] = '\0';						\
 	}								\
 									\
 	(_var) = s;							\
-    }
+    } while (0)
 
 
 // Macros used in save_game()
 
 #define save_game_printf(_fmt, _var)					\
-    {									\
+    do {								\
 	snprintf(buf, BUFSIZE, _fmt "\n", _var);			\
 	scramble(crypt_key, buf, BUFSIZE);				\
 	fprintf(file, "%s", buf);					\
-    }
+    } while (0)
 
 #define save_game_write_int(_var)					\
     save_game_printf("%d", _var)
