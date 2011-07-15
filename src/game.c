@@ -885,7 +885,8 @@ void select_moves (void)
   points to the current player; quit_selected and/or abort_game may be
   true (if so, get_move() justs returns without waiting for the player to
   select a move).  On exit, selection contains the choice made by the
-  player.
+  player.  Note that two windows (the "Select move" window and the galaxy
+  map window) are left on the screen: they are closed in process_move().
 */
 
 void get_move (void)
@@ -1027,10 +1028,6 @@ void get_move (void)
 	    selection = SEL_NONE;
 	}
     }
-
-    deltxwin();			// "Select move" window
-    deltxwin();			// Galaxy map window
-    txrefresh();
 }
 
 void process_move (void)
@@ -1039,6 +1036,10 @@ void process_move (void)
     if (selection == SEL_QUIT) {
 	quit_selected = true;
     }
+
+    deltxwin();			// "Select move" window
+    deltxwin();			// Galaxy map window
+    txrefresh();
 }
 
 void exchange_stock (void)
