@@ -1036,6 +1036,9 @@ void get_move (void)
 void process_move (void)
 {
     // @@@ To be written
+    if (selection == SEL_QUIT) {
+	quit_selected = true;
+    }
 }
 
 void exchange_stock (void)
@@ -1043,10 +1046,44 @@ void exchange_stock (void)
     // @@@ To be written
 }
 
+
+/*-----------------------------------------------------------------------
+  Function:   next_player  - Get the next player
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function sets the global variable current_player to the next
+  eligible player.  If no player is still in the game, quit_selected is
+  set to true.  The variable turn_number is also incremented if required.
+*/
+
 void next_player (void)
 {
-    // @@@ To be written
-    quit_selected = true;
+    int i;
+    bool all_out;
+
+
+    all_out = true;
+    for (i = 0; i < number_players; i++) {
+	if (player[i].in_game) {
+	    all_out = false;
+	    break;
+	}
+    }
+
+    if (all_out) {
+	quit_selected = true;
+    } else {
+	do {
+	    current_player++;
+	    if (current_player == number_players) {
+		current_player = 0;
+	    }
+	    if (current_player == first_player) {
+		turn_number++;
+	    }
+	} while (! player[current_player].in_game);
+    }
 }
 
 
