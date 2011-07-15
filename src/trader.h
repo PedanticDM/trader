@@ -36,8 +36,10 @@
 ************************************************************************/
 
 #define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
-#define GAME_FILE_API_VERSION	"7.0"	/* For game loads and saves */
-#define GAME_FILE_SENTINEL	(42)
+#define GAME_FILE_API_VERSION	"7.0"	// For game loads and saves
+#define GAME_FILE_SENTINEL	(42)	// End of game file sentinel
+
+#define BUFSIZE			(1024)	// For various string buffers
 
 
 /************************************************************************
@@ -45,6 +47,7 @@
 ************************************************************************/
 
 #include "system.h"
+
 #include "globals.h"
 #include "game.h"
 #include "help.h"

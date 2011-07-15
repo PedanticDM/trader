@@ -28,16 +28,12 @@
 */
 
 
-#include "system.h"
 #include "trader.h"
 
 
 /************************************************************************
 *                Module constants and type declarations                 *
 ************************************************************************/
-
-#define BUFSIZE		(1024)		/* Size of various string buffers */
-
 
 typedef struct txwin {
     WINDOW		*win;		// Pointer to window structure

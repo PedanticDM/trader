@@ -37,8 +37,6 @@
 
 // Game loading and saving constants
 
-#define GAME_BUFSIZE	(1024)
-
 static const int game_file_crypt_key[] = {
     0x50, 0x52, 0x55, 0x59, 0x5A, 0x5C, 0x5F,
     0x90, 0x92, 0x95, 0x99, 0x9A, 0x9C, 0x9F,
@@ -53,10 +51,10 @@ static const int game_file_crypt_key[] = {
 
 #define load_game_scanf(_fmt, _var, _cond)				\
     {									\
-	if (fgets(buf, GAME_BUFSIZE, file) == NULL) {			\
+	if (fgets(buf, BUFSIZE, file) == NULL) {			\
 	    err_exit("%s: missing field on line %d", filename, lineno);	\
 	}								\
-	if (sscanf(unscramble(crypt_key, buf, GAME_BUFSIZE), _fmt "\n",	\
+	if (sscanf(unscramble(crypt_key, buf, BUFSIZE), _fmt "\n",	\
 		   &(_var)) != 1) {					\
 	    err_exit("%s: illegal field on line %d: `%s'",		\
 		     filename, lineno, buf);				\
@@ -88,10 +86,10 @@ static const int game_file_crypt_key[] = {
 	char *s;							\
 	int len;							\
 									\
-	if (fgets(buf, GAME_BUFSIZE, file) == NULL) {			\
+	if (fgets(buf, BUFSIZE, file) == NULL) {			\
 	    err_exit("%s: missing field on line %d", filename, lineno);	\
 	}								\
-	if (strlen(unscramble(crypt_key, buf, GAME_BUFSIZE)) == 0) {	\
+	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) == 0) {		\
 	    err_exit("%s: illegal value on line %d", filename, lineno);	\
 	}								\
 	lineno++;							\
@@ -115,8 +113,8 @@ static const int game_file_crypt_key[] = {
 
 #define save_game_printf(_fmt, _var)					\
     {									\
-	snprintf(buf, GAME_BUFSIZE, _fmt "\n", _var);			\
-	scramble(crypt_key, buf, GAME_BUFSIZE);				\
+	snprintf(buf, BUFSIZE, _fmt "\n", _var);			\
+	scramble(crypt_key, buf, BUFSIZE);				\
 	fprintf(file, "%s", buf);					\
     }
 
@@ -530,7 +528,7 @@ bool load_game (int num)
 
     assert((num >= 1) && (num <= 9));
 
-    buf = malloc(GAME_BUFSIZE);
+    buf = malloc(BUFSIZE);
     if (buf == NULL) {
 	err_exit("out of memory");
     }
@@ -578,13 +576,13 @@ bool load_game (int num)
     }
 
     // Read the game file header
-    if (fgets(buf, GAME_BUFSIZE, file) == NULL) {
+    if (fgets(buf, BUFSIZE, file) == NULL) {
 	err_exit("%s: missing header in game file", filename);
     }
     if (strcmp(buf, GAME_FILE_HEADER "\n") != 0) {
 	err_exit("%s: not a valid game file", filename);
     }
-    if (fgets(buf, GAME_BUFSIZE, file) == NULL) {
+    if (fgets(buf, BUFSIZE, file) == NULL) {
 	err_exit("%s: missing subheader in game file", filename);
     }
     if (strcmp(buf, GAME_FILE_API_VERSION "\n") != 0) {
@@ -635,10 +633,10 @@ bool load_game (int num)
 
     // Read in galaxy map
     for (x = 0; x < MAX_X; x++) {
-	if (fgets(buf, GAME_BUFSIZE, file) == NULL) {
+	if (fgets(buf, BUFSIZE, file) == NULL) {
 	    err_exit("%s: missing field on line %d", filename, lineno);
 	}
-	if (strlen(unscramble(crypt_key, buf, GAME_BUFSIZE)) != (MAX_Y + 1)) {
+	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) != (MAX_Y + 1)) {
 	    err_exit("%s: illegal field on line %d", filename, lineno);
 	}
 	lineno++;
@@ -690,7 +688,7 @@ bool save_game (int num)
 
     assert((num >= 1) && (num <= 9));
 
-    buf = malloc(GAME_BUFSIZE);
+    buf = malloc(BUFSIZE);
     if (buf == NULL) {
 	err_exit("out of memory");
     }
@@ -798,7 +796,7 @@ bool save_game (int num)
 	*p++ = '\n';
 	*p = '\0';
 
-	scramble(crypt_key, buf, GAME_BUFSIZE);
+	scramble(crypt_key, buf, BUFSIZE);
 	fprintf(file, "%s", buf);
     }
 
@@ -939,13 +937,13 @@ void show_map (bool closewin)
     if (turn_number != max_turn) {
 	const char *initial = "Turn: ";
 
-	char *buf = malloc(GAME_BUFSIZE);
+	char *buf = malloc(BUFSIZE);
 	if (buf == NULL) {
 	    err_exit("out of memory");
 	}
 
 	int len1 = strlen(initial);
-	int len2 = snprintf(buf, GAME_BUFSIZE, "%d", turn_number);
+	int len2 = snprintf(buf, BUFSIZE, "%d", turn_number);
 
 	mvwaddstr(curwin, 1, getmaxx(curwin) - (len1 + len2) - 6, "  ");
 	waddstr(curwin, initial);
@@ -1048,7 +1046,7 @@ void show_status (int num)
     if (val == 0.0) {
 	center(curwin, 11, ATTR_STANDOUT_STR, "* * *   B A N K R U P T   * * *");
     } else {
-	char *buf = malloc(GAME_BUFSIZE);
+	char *buf = malloc(BUFSIZE);
 	if (buf == NULL) {
 	    err_exit("out of memory");
 	}
@@ -1068,7 +1066,7 @@ void show_status (int num)
 	    // Handle the locale's currency symbol
 	    struct lconv *lc = localeconv();
 	    assert(lc != NULL);
-	    snprintf(buf, GAME_BUFSIZE, "share (%s)", lc->currency_symbol);
+	    snprintf(buf, BUFSIZE, "share (%s)", lc->currency_symbol);
 
 	    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
 	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
@@ -1079,7 +1077,7 @@ void show_status (int num)
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
-		    strfmon(buf, GAME_BUFSIZE, "%!12n", company[i].share_price);
+		    strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
 		    mvwprintw(curwin, line, 2,
 			      "  %-22s  %10s  %10.2f  %'10d  %10.2f  ",
 			      company[i].name, buf,
@@ -1094,18 +1092,18 @@ void show_status (int num)
 	}
 
 	line = 15;
-	strfmon(buf, GAME_BUFSIZE, "%18n", player[num].cash);
+	strfmon(buf, BUFSIZE, "%18n", player[num].cash);
 	center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 		"Current cash:  ", " %s ", buf);
 	if (player[num].debt != 0.0) {
-	    strfmon(buf, GAME_BUFSIZE, "%18n", player[num].debt);
+	    strfmon(buf, BUFSIZE, "%18n", player[num].debt);
 	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 		    "Current debt:  ", " %s ", buf);
 	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 		    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
 	}
 
-	strfmon(buf, GAME_BUFSIZE, "%18n", val);
+	strfmon(buf, BUFSIZE, "%18n", val);
 	center2(curwin, line + 1, ATTR_HIGHLIGHT_STR, ATTR_WINDOW_TITLE,
 		"Total value:   ", " %s ", buf);
 
