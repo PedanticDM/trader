@@ -58,10 +58,12 @@ static const int game_file_crypt_key[] = {
 	}								\
 	if (sscanf(unscramble(crypt_key, buf, GAME_BUFSIZE), _fmt "\n",	\
 		   &(_var)) != 1) {					\
-	    err_exit("%s: illegal field on line %d", filename, lineno);	\
+	    err_exit("%s: illegal field on line %d: `%s'",		\
+		     filename, lineno, buf);				\
 	}								\
 	if (! (_cond)) {						\
-	    err_exit("%s: illegal value on line %d", filename, lineno);	\
+	    err_exit("%s: illegal value on line %d: `%s'",		\
+		     filename, lineno, buf);				\
 	}								\
 	lineno++;							\
     }
@@ -877,6 +879,9 @@ void select_moves (void)
 void get_move (void)
 {
     // @@@ To be written
+    show_map(true);
+
+    gettxchar(curwin);				/* @@@ */
 }
 
 void process_move (void)
@@ -893,6 +898,100 @@ void next_player (void)
 {
     // @@@ To be written
     quit_selected = true;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   show_map    - Display the galaxy map on the screen
+  Arguments:  show_moves  - True to display the game moves
+  Returns:    (nothing)
+
+  This function displays the galaxy map on the screen.  It uses the
+  galaxy_map[][] global variable and (if show_moves is true) the
+  game_move[] global variable.  Note that this function opens a new text
+  window (using newtxwin()) that will need to be closed by the caller.
+*/
+
+void show_map (bool show_moves)
+{
+    int x, y, i;
+
+
+    newtxwin(MAX_Y + 4, 80, LINE_OFFSET + 1, COL_CENTER(80));
+    wbkgd(curwin, ATTR_MAP_WINDOW);
+
+    // Draw various borders
+    box(curwin, 0, 0);
+    mvwaddch(curwin, 2, 0, ACS_LTEE);
+    whline(curwin, ACS_HLINE, getmaxx(curwin) - 2);
+    mvwaddch(curwin, 2, getmaxx(curwin) - 1, ACS_RTEE);
+
+    // Display current player and turn number
+    if (turn_number != max_turn) {
+	wattrset(curwin, ATTR_MAP_TITLE);
+	mvwaddstr(curwin, 1, 2, "  Current Player: ");
+	wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
+	wprintw(curwin, "%-46.46s", player[current_player].name);
+	wattrset(curwin, ATTR_MAP_TITLE);
+	waddstr(curwin, "  Turn: ");
+	wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
+	wprintw(curwin, "%-4d", turn_number);
+    } else {
+	wattrset(curwin, ATTR_MAP_TITLE);
+	mvwaddstr(curwin, 1, 2, "  Current Player: ");
+	wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
+	wprintw(curwin, "%-37.37s", player[current_player].name);
+	wattrset(curwin, ATTR_MAP_TITLE);
+	waddstr(curwin, "  ");
+	wattrset(curwin, ATTR_MAP_T_STANDOUT);
+	waddstr(curwin, "*** Last Turn ***");
+	wattrset(curwin, ATTR_MAP_TITLE);
+	waddstr(curwin, "  ");
+    }
+
+    wattrset(curwin, ATTR_MAP_WINDOW);
+
+    // Display the actual map
+    for (y = 0; y < MAX_Y; y++) {
+	wmove(curwin, y + 3, 2);
+	for (x = 0; x < MAX_X; x++) {
+	    map_val_t m = galaxy_map[x][y];
+
+	    switch (m) {
+	    case MAP_EMPTY:
+		waddch(curwin, PRINTABLE_MAP_VAL(m) | ATTR_MAP_EMPTY);
+		break;
+
+	    case MAP_OUTPOST:
+		waddch(curwin, PRINTABLE_MAP_VAL(m) | ATTR_MAP_OUTPOST);
+		break;
+
+	    case MAP_STAR:
+		waddch(curwin, PRINTABLE_MAP_VAL(m) | ATTR_MAP_STAR);
+		break;
+
+	    default:
+		waddch(curwin, PRINTABLE_MAP_VAL(m) | ATTR_MAP_COMPANY);
+		break;
+	    }
+	    waddch(curwin, ' ' | ATTR_MAP_EMPTY);
+	}
+    }
+
+    // Display current move choices, if required
+    if (show_moves) {
+	for (i = 0; i < NUMBER_MOVES; i++) {
+	    mvwaddch(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
+		     MOVE_TO_KEY(i) | ATTR_MAP_CHOICE);
+	}
+    }
+
+    wrefresh(curwin);
+}
+
+void show_status (int playernum)
+{
+    // @@@ To be written
 }
 
 
