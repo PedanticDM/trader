@@ -989,7 +989,9 @@ void get_move (void)
 		    break;
 
 		case KEY_ESC:
+		case KEY_CANCEL:
 		case KEY_CTRL('C'):
+		case KEY_CTRL('G'):
 		case KEY_CTRL('\\'):
 		    selection = SEL_QUIT;
 
