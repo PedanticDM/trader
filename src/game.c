@@ -325,7 +325,7 @@ void init_game (void)
 		wbkgd(curwin, ATTR_NORMAL_WINDOW);
 		box(curwin, 0, 0);
 
-		center(curwin, 1, ATTR_WINDOW_TITLE, "  Enter player names  ");
+		center(curwin, 1, ATTR_WINDOW_TITLE, "  Enter Player Names  ");
 
 		for (i = 0; i < number_players; i++) {
 		    player[i].name = NULL;
@@ -546,7 +546,7 @@ bool load_game (int num)
 	    wbkgd(curwin, ATTR_ERROR_WINDOW);
 	    box(curwin, 0, 0);
 
-	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game not found  ");
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Found  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
 		   "Game %d has not been saved to disk", num);
 
@@ -560,7 +560,7 @@ bool load_game (int num)
 	    wbkgd(curwin, ATTR_ERROR_WINDOW);
 	    box(curwin, 0, 0);
 
-	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game not loaded  ");
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Loaded  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
 		   "Game %d could not be loaded from disk", num);
 	    center(curwin, 5, ATTR_ERROR_WINDOW, "File %s: %s", filename,
@@ -710,7 +710,7 @@ bool save_game (int num)
 		wbkgd(curwin, ATTR_ERROR_WINDOW);
 		box(curwin, 0, 0);
 
-		center(curwin, 1, ATTR_ERROR_TITLE, "  Game not saved  ");
+		center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
 		center(curwin, 3, ATTR_ERROR_STR,
 		       "Game %d could not be saved to disk", num);
 		center(curwin, 5, ATTR_ERROR_WINDOW, "Directory %s: %s",
@@ -737,7 +737,7 @@ bool save_game (int num)
 	wbkgd(curwin, ATTR_ERROR_WINDOW);
 	box(curwin, 0, 0);
 
-	center(curwin, 1, ATTR_ERROR_TITLE, "  Game not saved  ");
+	center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
 	center(curwin, 3, ATTR_ERROR_STR,
 	       "Game %d could not be saved to disk", num);
 	center(curwin, 5, ATTR_ERROR_WINDOW, "File %s: %s", filename,
