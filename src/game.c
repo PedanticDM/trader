@@ -1139,10 +1139,6 @@ double total_value (int num)
 	}
     }
 
-    if (val < ROUNDING_AMOUNT) {
-	val = 0.0;
-    }
-
     return val;
 }
 
