@@ -47,7 +47,7 @@ typedef enum curs_type {
 } curs_type_t;
 
 #define CURS_OFF	(CURS_INVISIBLE)
-#define CURS_ON		(CURS_VISIBLE)
+#define CURS_ON		(CURS_NORMAL)
 
 
 // Keycodes
