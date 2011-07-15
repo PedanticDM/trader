@@ -9,7 +9,8 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, trader.h, contains overall definitions for Star Traders.
+  This file, fileio.h, contains declarations for the load and save game
+  functions used in Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -27,33 +28,16 @@
 */
 
 
-#ifndef included_TRADER_H
-#define included_TRADER_H 1
+#ifndef included_FILEIO_H
+#define included_FILEIO_H 1
 
 
 /************************************************************************
-*                          Global definitions                           *
+*               Game load and save function declarations                *
 ************************************************************************/
 
-#define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
-#define GAME_FILE_API_VERSION	"7.0"	// For game loads and saves
-#define GAME_FILE_SENTINEL	(42)	// End of game file sentinel
-
-#define BUFSIZE			(1024)	// For various string buffers
+extern bool load_game (int num);
+extern bool save_game (int num);
 
 
-/************************************************************************
-*                     Program-specific header files                     *
-************************************************************************/
-
-#include "system.h"
-
-#include "globals.h"
-#include "game.h"
-#include "fileio.h"
-#include "help.h"
-#include "intf.h"
-#include "utils.h"
-
-
-#endif /* included_TRADER_H */
+#endif /* included_FILEIO_H */

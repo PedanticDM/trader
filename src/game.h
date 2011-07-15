@@ -9,8 +9,8 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, game.h, contains declarations for the main game functions
-  used in Star Traders.
+  This file, game.h, contains declarations for the starting and ending
+  game functions used in Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -41,9 +41,6 @@
 
 extern void init_game (void);
 extern void end_game (void);
-
-extern bool load_game (int num);
-extern bool save_game (int num);
 
 extern void select_moves (void);
 extern void get_move (void);
