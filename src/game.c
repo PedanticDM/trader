@@ -874,11 +874,163 @@ void select_moves (void)
     quit_selected = false;
 }
 
+
+/*-----------------------------------------------------------------------
+  Function:   get_move  - Wait for the player to enter their move
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function displays the galaxy map and the current moves, then waits
+  for the player to select one of the moves.  On entry, current_player
+  points to the current player; quit_selected and/or abort_game may be
+  true (if so, get_move() justs returns without waiting for the player to
+  select a move).  On exit, selection contains the choice made by the
+  player.
+*/
+
 void get_move (void)
 {
-    // @@@ To be written
-    show_map(true);
-    show_status(current_player);
+    int i, x, y;
+
+
+    if (quit_selected || abort_game) {
+	selection = SEL_QUIT_GAME;
+	return;
+    } else {
+	selection = SEL_NONE;
+    }
+
+    // Display map without closing window
+    show_map(false);
+
+    // Display current move choices on the galaxy map
+    for (i = 0; i < NUMBER_MOVES; i++) {
+	mvwaddch(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
+		 MOVE_TO_KEY(i) | ATTR_MAP_CHOICE);
+    }
+    wrefresh(curwin);
+
+    // Show menu of choices for the player
+    newtxwin(5, 80, LINE_OFFSET + 19, COL_CENTER(80));
+    while (selection == SEL_NONE) {
+	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	werase(curwin);
+	box(curwin, 0, 0);
+
+	wmove(curwin, 2, 2);
+	attrpr(curwin, ATTR_KEYCODE_STR, "<1>");
+	waddstr(curwin, " Display stock portfolio");
+
+	wmove(curwin, 3, 2);
+	attrpr(curwin, ATTR_KEYCODE_STR, "<2>");
+	waddstr(curwin, " Declare bankruptcy");
+
+	wmove(curwin, 2, 41);
+	attrpr(curwin, ATTR_KEYCODE_STR, "<3>");
+	waddstr(curwin, "  Save and end the game");
+
+	wmove(curwin, 3, 40);
+	attrpr(curwin, ATTR_KEYCODE_STR, "<ESC>");
+	waddstr(curwin, " Quit the game");
+
+	mvwaddstr(curwin, 1, 2, "          Select move ");
+	waddstr(curwin, "[");
+	attrpr(curwin, ATTR_MAP_CHOICE, "%c", MOVE_TO_KEY(0));
+	waddstr(curwin, "-");
+	attrpr(curwin, ATTR_MAP_CHOICE, "%c", MOVE_TO_KEY(NUMBER_MOVES - 1));
+	waddstr(curwin, "/");
+	attrpr(curwin, ATTR_KEYCODE_STR, "1");
+	waddstr(curwin, "-");
+	attrpr(curwin, ATTR_KEYCODE_STR, "3");
+	waddstr(curwin, "/");
+	attrpr(curwin, ATTR_KEYCODE_STR, "<ESC>");
+	waddstr(curwin, "]: ");
+
+	curs_set(CURS_ON);
+	wrefresh(curwin);
+
+	// Get the actual selection made by the player
+	while (selection == SEL_NONE) {
+	    int key = tolower(gettxchar(curwin));
+
+	    if (IS_MOVE_KEY(key)) {
+		selection = KEY_TO_MOVE(key);
+
+		curs_set(CURS_OFF);
+		waddstr(curwin, "Move ");
+		attrpr(curwin, ATTR_MAP_CHOICE, "%c", key);
+	    } else {
+		switch (key) {
+		case '1':
+		    curs_set(CURS_OFF);
+		    show_status(current_player);
+		    curs_set(CURS_ON);
+		    break;
+
+		case '2':
+		    selection = SEL_MAKE_BANKRUPT;
+
+		    curs_set(CURS_OFF);
+		    wattron(curwin, A_BOLD);
+		    waddstr(curwin, "<2>");
+		    wattroff(curwin, A_BOLD);
+		    waddstr(curwin, " (Declare bankruptcy)");
+		    break;
+
+		case '3':
+		    selection = SEL_SAVE_GAME;
+
+		    curs_set(CURS_OFF);
+		    wattron(curwin, A_BOLD);
+		    waddstr(curwin, "<3>");
+		    wattroff(curwin, A_BOLD);
+		    waddstr(curwin, " (Save and end the game)");
+		    break;
+
+		case KEY_ESC:
+		case KEY_CTRL('C'):
+		case KEY_CTRL('\\'):
+		    selection = SEL_QUIT_GAME;
+
+		    curs_set(CURS_OFF);
+		    wattron(curwin, A_BOLD);
+		    waddstr(curwin, "<ESC>");
+		    wattroff(curwin, A_BOLD);
+		    waddstr(curwin, " (Quit the game)");
+		    break;
+
+		default:
+		    beep();
+		}
+	    }
+	}
+
+	// Clear the menu choices
+	wattrset(curwin, ATTR_NORMAL_WINDOW);
+	for (y = 2; y < 4; y++) {
+	    wmove(curwin, y, 2);
+	    for (x = 2; x < getmaxx(curwin) - 2; x++) {
+		waddch(curwin, ' ' | ATTR_NORMAL_WINDOW);
+	    }
+	}
+	wrefresh(curwin);
+
+	// Ask the player to confirm their choice
+	mvwaddstr(curwin, 2, 2, "                   Are you sure? ");
+	waddstr(curwin, "[");
+	attrpr(curwin, ATTR_KEYCODE_STR, "Y");
+	waddstr(curwin, "/");
+	attrpr(curwin, ATTR_KEYCODE_STR, "N");
+	waddstr(curwin, "] ");
+
+	if (! answer_yesno(curwin)) {
+	    selection = SEL_NONE;
+	}
+    }
+
+    deltxwin();			// "Select move" window
+    deltxwin();			// Galaxy map window
+    txrefresh();
 }
 
 void process_move (void)

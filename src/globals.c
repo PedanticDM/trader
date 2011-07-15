@@ -57,6 +57,8 @@ player_info_t	player[MAX_PLAYERS];		// Array of players
 map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
+sel_val_t	selection;		// Move selected by current player
+
 int	max_turn;			// Max. number of turns in game
 int	turn_number;
 int	number_players;

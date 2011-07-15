@@ -118,9 +118,21 @@ typedef struct move_rec {
 } move_rec_t;
 
 #define MOVE_TO_KEY(m)	((m) + 'a')
-#define KEY_TO_MOVE(k)							\
-    ((tolower(k) < 'a' || tolower(k) >= MOVE_TO_KEY(NUMBER_MOVES)) ?	\
-	ERR : (tolower(k) - 'a'));
+#define KEY_TO_MOVE(k)	((k) - 'a')
+#define IS_MOVE_KEY(k)	((k) >= 'a' && (k) < MOVE_TO_KEY(NUMBER_MOVES))
+
+
+// Player moves / selection values
+typedef enum sel_val {
+    SEL_MOVE_FIRST		= 0,
+    SEL_MOVE_LAST		= NUMBER_MOVES - 1,
+    SEL_MOVE_NUMBER_MOVES	= NUMBER_MOVES,
+
+    SEL_MAKE_BANKRUPT,			// Player wishes to give up
+    SEL_SAVE_GAME,			// Save and end the game
+    SEL_QUIT_GAME,			// Just end the game
+    SEL_NONE			= -1	// Nothing yet selected
+} sel_val_t;
 
 
 // Company names
@@ -135,6 +147,8 @@ extern company_info_t	company[MAX_COMPANIES];		// Array of companies
 extern player_info_t	player[MAX_PLAYERS];		// Array of players
 extern map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 extern move_rec_t	game_move[NUMBER_MOVES];	// Current moves
+
+extern sel_val_t	selection;	// Move selected by current player
 
 extern int	max_turn;		// Max. number of turns in game
 extern int	turn_number;
