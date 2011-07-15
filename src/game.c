@@ -880,8 +880,6 @@ void get_move (void)
 {
     // @@@ To be written
     show_map(true);
-
-    gettxchar(curwin);				/* @@@ */
 }
 
 void process_move (void)
@@ -902,22 +900,23 @@ void next_player (void)
 
 
 /*-----------------------------------------------------------------------
-  Function:   show_map    - Display the galaxy map on the screen
-  Arguments:  show_moves  - True to display the game moves
+  Function:   show_map   - Display the galaxy map on the screen
+  Arguments:  closewin   - Wait for user, then close window if true
   Returns:    (nothing)
 
   This function displays the galaxy map on the screen.  It uses the
-  galaxy_map[][] global variable and (if show_moves is true) the
-  game_move[] global variable.  Note that this function opens a new text
-  window (using newtxwin()) that will need to be closed by the caller.
+  galaxy_map[][] global variable.  If closewin is true, a prompt is shown
+  for the user to press any key; the map window is then closed.  If
+  closewin is false, no prompt is shown and the text window must be
+  closed by the caller.
 */
 
-void show_map (bool show_moves)
+void show_map (bool closewin)
 {
-    int x, y, i;
+    int x, y;
 
 
-    newtxwin(MAX_Y + 4, 80, LINE_OFFSET + 1, COL_CENTER(80));
+    newtxwin(MAX_Y + 4, WIN_COLS, LINE_OFFSET + 1, COL_CENTER(WIN_COLS));
     wbkgd(curwin, ATTR_MAP_WINDOW);
 
     // Draw various borders
@@ -978,15 +977,26 @@ void show_map (bool show_moves)
 	}
     }
 
-    // Display current move choices, if required
-    if (show_moves) {
-	for (i = 0; i < NUMBER_MOVES; i++) {
-	    mvwaddch(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
-		     MOVE_TO_KEY(i) | ATTR_MAP_CHOICE);
-	}
-    }
+    if (closewin) {
+	// Wait for the user to press any key
 
-    wrefresh(curwin);
+	wrefresh(curwin);
+
+	newtxwin(WIN_LINES - MAX_Y - 5, WIN_COLS,
+		 LINE_OFFSET + MAX_Y + 5, COL_CENTER(WIN_COLS));
+	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	box(curwin, 0, 0);
+
+	wait_for_key(curwin, 2, ATTR_WAITNORMAL_STR);
+
+	deltxwin();			// Wait for key window
+	deltxwin();			// Galaxy map window
+	txrefresh();
+    } else {
+	// Window must be closed by the caller
+
+	wrefresh(curwin);
+    }
 }
 
 void show_status (int playernum)
