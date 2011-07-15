@@ -127,8 +127,8 @@ enum color_pairs {
 #define ATTR_ERROR_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_RED),             A_REVERSE)
 #define ATTR_WINDOW_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
 #define ATTR_MAP_TITLE		ATTR(COLOR_PAIR(WHITE_ON_BLUE),            A_NORMAL)
-#define ATTR_MAP_T_HIGHLIGHT	ATTR(COLOR_PAIR(WHITE_ON_BLUE)   | A_BOLD, A_BOLD)
-#define ATTR_MAP_T_STANDOUT	ATTR(COLOR_PAIR(WHITE_ON_BLUE)   | A_BOLD | A_BLINK, A_BOLD | A_BLINK)
+#define ATTR_MAP_T_HIGHLIGHT	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD, A_BOLD)
+#define ATTR_MAP_T_STANDOUT	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD | A_BLINK, A_BOLD | A_BLINK)
 #define ATTR_ERROR_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_BOLD)
 #define ATTR_INPUT_FIELD	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_BOLD | '_')
 #define ATTR_KEYCODE_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
@@ -169,6 +169,10 @@ extern int txrefresh (void);
 
 extern int center (WINDOW *win, int y, int attr, const char *format, ...)
     __attribute__((format (printf, 4, 5)));
+
+extern int center2 (WINDOW *win, int y, int attr_initial, int attr_string,
+		    const char *initial, const char *format, ...)
+    __attribute__((format (printf, 6, 7)));
 
 extern int attrpr (WINDOW *win, int attr, const char *format, ...)
     __attribute__((format (printf, 3, 4)));

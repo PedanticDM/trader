@@ -316,10 +316,7 @@ int center (WINDOW *win, int y, int attr, const char *format, ...)
     va_list args;
 
     int oldattr;
-    int len, ret;
-    int maxy, maxx;
-    int fill;
-
+    int len, ret, x;
     char *buf;
 
 
@@ -336,13 +333,72 @@ int center (WINDOW *win, int y, int attr, const char *format, ...)
     len = vsnprintf(buf, BUFSIZE, format, args);
     va_end(args);
     if (len < 0) {
+	free(buf);
 	return ERR;
     }
 
-    getmaxyx(win, maxy, maxx);
-    fill = (maxx - len) / 2;
+    x = (getmaxx(win) - len) / 2;
+    ret = mvwprintw(win, y, MAX(x, 2), "%1.*s", getmaxx(win) - 4, buf);
 
-    ret = mvwprintw(win, y, fill > 0 ? fill : 0, "%s", buf);
+    wattrset(win, oldattr);
+    wbkgdset(win, oldattr);
+
+    free(buf);
+    return ret;
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   center2       - Centre two strings on the current line
+  Arguments:  win           - Window to use
+              y             - Line on which to centre the string
+              attr_initial  - Window attribute to use for initial string
+	      attr_string   - Window attribute to use for main string
+	      initial       - Fixed initial string
+              format        - printf()-like format string
+              ...           - printf()-like arguments
+  Returns:    int           - Return code from wprintw()
+
+  This function prints two strings in the centre of line y in the window
+  win.  The initial string is printed using the window attributes in
+  attr_initial; the main string uses attr_string.  No spaces appear
+  between the two strings.  Please note that wrefresh() is NOT called.
+*/
+
+int center2 (WINDOW *win, int y, int attr_initial, int attr_string,
+		    const char *initial, const char *format, ...)
+{
+    va_list args;
+
+    int oldattr;
+    int len1, len2;
+    int ret, x;
+    char *buf;
+
+
+    buf = malloc(BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    oldattr = getbkgd(win) & ~A_CHARTEXT;
+    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
+
+    len1 = strlen(initial);
+
+    va_start(args, format);
+    len2 = vsnprintf(buf, BUFSIZE, format, args);
+    va_end(args);
+    if (len2 < 0) {
+	free(buf);
+	return ERR;
+    }
+
+    x = (getmaxx(win) - (len1 + len2)) / 2;
+    wattrset(win, attr_initial);
+    mvwprintw(win, y, MAX(x, 2), "%s", initial);
+    wattrset(win, attr_string);
+    ret = wprintw(win, "%1.*s", getmaxx(win) - len1 - 4, buf);
 
     wattrset(win, oldattr);
     wbkgdset(win, oldattr);
