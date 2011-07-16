@@ -55,15 +55,19 @@
 #define INITIAL_SHARE_PRICE	(60.00)	    /* Initial share price */
 #define SHARE_PRICE_INC		(60.00)	    /* Share price incr. for increase in shipping */
 #define SHARE_PRICE_INC_OUTPOST	(70.00)	    /* Incr. for adding an outpost */
+#define SHARE_PRICE_INC_OUTSTAR	(70.00)     /* Extra incr. for adding outpost next to star */
 #define SHARE_PRICE_INC_STAR	(300.00)    /* Incr. for adding next to star */
+#define SHARE_PRICE_INC_EXTRA	(0.50)	    /* Extra factor when incr. share price */
 #define INC_SHARE_PRICE		(0.30)	    /* 30% chance for increasing share price */
 #define DEC_SHARE_PRICE		(0.65)	    /* 65% x 30% chance of decrementing same */
 #define INITIAL_RETURN		(0.05)	    /* Initial return per share: 5% */
 #define PROB_INC_RETURN		(0.25)	    /* Chance of incr. return when company grows */
+#define PROB_INC_RETURN_INC	(0.60)	    /* 60% chance such incr. will increase return */
 #define INC_COMPANY_RETURN	(0.40)	    /* Chance of randomly incrementing return */
 #define MAX_COMPANY_RETURN	(0.40)	    /* Maximum return per share */
 #define INITIAL_STOCK_ISSUED	(5)	    /* Initial number of shares issued out */
 #define INITIAL_MAX_STOCK	(50)	    /* Initial max. number of shares available */
+#define MERGE_STOCK_RATIO	(0.50)	    /* 50% of old shares are credited to new company */
 #define COMPANY_BANKRUPTCY	(0.01)	    /* 1% chance of company bankruptcy */
 #define ALL_ASSETS_TAKEN	(0.20)	    /* 20% chance of assets taken of same */
 #define BID_CHANCE		(0.75)	    /* 75% chance of successful bidding */
@@ -107,9 +111,10 @@ typedef enum map_val {
     MAP_LAST	= MAP_A + MAX_COMPANIES - 1
 } map_val_t;
 
-#define MAP_COMPANY(x)		(MAP_A + (x))
-#define MAP_ISCOMPANY(x)	((x) >= MAP_A && (x) <= MAP_LAST)
-#define PRINTABLE_MAP_VAL(x)	((char) (x))
+#define COMPANY_TO_MAP(i)	((i) + MAP_A)
+#define MAP_TO_COMPANY(m)	((m) - MAP_A)
+#define IS_MAP_COMPANY(m)	((m) >= MAP_A && (m) <= MAP_LAST)
+#define PRINTABLE_MAP_VAL(m)	((char) (m))
 
 
 // Information about a move

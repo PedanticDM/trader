@@ -40,10 +40,23 @@
 #define GALAXY_MAP_UP(x, y)	(((y) <= 0)     ? MAP_EMPTY : galaxy_map[(x)][(y) - 1])
 #define GALAXY_MAP_DOWN(x, y)	(((y) >= MAX_Y) ? MAP_EMPTY : galaxy_map[(x)][(y) + 1])
 
+#define assign_vals(x, y, left, right, up, down)			\
+    do {								\
+	(left)  = GALAXY_MAP_LEFT((x), (y));				\
+	(right) = GALAXY_MAP_RIGHT((x), (y));				\
+	(up)    = GALAXY_MAP_UP((x), (y));				\
+	(down)  = GALAXY_MAP_DOWN((x), (y));				\
+    } while (0)
+
 
 /************************************************************************
 *                    Internal function declarations                     *
 ************************************************************************/
+
+void try_start_new_company (int x, int y);
+void merge_companies (map_val_t a, map_val_t b);
+void include_outpost (int num, int x, int y);
+void inc_share_price (int num, double inc);
 
 int cmp_game_move (const void *a, const void *b);
 
@@ -388,6 +401,7 @@ void process_move (void)
     if (! quit_selected && ! abort_game) {
 	switch(selection) {
 	case SEL_QUIT:
+	    // The players want to end the game
 	    quit_selected = true;
 	    break;
 
@@ -411,7 +425,7 @@ void process_move (void)
 			   player[current_player].name);
 		}
 
-		wait_for_key(curwin, getmaxx(curwin) - 1, ATTR_WAITERROR_STR);
+		wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITERROR_STR);
 
 		deltxwin();
 		txrefresh();
@@ -445,8 +459,120 @@ void process_move (void)
 	    break;
 
 	default:
-	    assert(selection >= SEL_MOVE_FIRST && selection <= SEL_MOVE_LAST);
-	    /* @@@ */
+	    // Process a selection from game_move[]
+	    {
+		assert(selection >= SEL_MOVE_FIRST && selection <= SEL_MOVE_LAST);
+
+		map_val_t left, right, up, down;
+		map_val_t nearby, cur;
+
+		int x = game_move[selection].x;
+		int y = game_move[selection].y;
+
+
+		assign_vals(x, y, left, right, up, down);
+
+		if (left == MAP_EMPTY && right == MAP_EMPTY &&
+		    up   == MAP_EMPTY && down  == MAP_EMPTY) {
+		    // The position is out in the middle of nowhere...
+		    galaxy_map[x][y] = MAP_OUTPOST;
+
+		} else if (! IS_MAP_COMPANY(left) && ! IS_MAP_COMPANY(right) &&
+			   ! IS_MAP_COMPANY(up)   && ! IS_MAP_COMPANY(down)) {
+		    // See if a company can be established
+		    try_start_new_company(x, y);
+
+		} else {
+		    // See if two (or more!) companies can be merged
+
+		    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(right) &&
+			left != right) {
+			galaxy_map[x][y] = left;
+			merge_companies(left, right);
+			assign_vals(x, y, left, right, up, down);
+		    }
+
+		    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(up) &&
+			left != up) {
+			galaxy_map[x][y] = left;
+			merge_companies(left, up);
+			assign_vals(x, y, left, right, up, down);
+		    }
+
+		    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(down) &&
+			left != down) {
+			galaxy_map[x][y] = left;
+			merge_companies(left, down);
+			assign_vals(x, y, left, right, up, down);
+		    }
+
+		    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(up) &&
+			right != up) {
+			galaxy_map[x][y] = right;
+			merge_companies(right, up);
+			assign_vals(x, y, left, right, up, down);
+		    }
+
+		    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(down) &&
+			right != down) {
+			galaxy_map[x][y] = right;
+			merge_companies(right, down);
+			assign_vals(x, y, left, right, up, down);
+		    }
+
+		    if (IS_MAP_COMPANY(up) && IS_MAP_COMPANY(down) &&
+			up != down) {
+			galaxy_map[x][y] = up;
+			merge_companies(up, down);
+			assign_vals(x, y, left, right, up, down);
+		    }
+		}
+
+		// See if an existing company can be expanded
+		nearby = (IS_MAP_COMPANY(left)    ? left :
+			  (IS_MAP_COMPANY(right)  ? right :
+			   (IS_MAP_COMPANY(up)    ? up :
+			    (IS_MAP_COMPANY(down) ? down :
+			     MAP_EMPTY))));
+		if (nearby != MAP_EMPTY) {
+		    galaxy_map[x][y] = nearby;
+		    inc_share_price(MAP_TO_COMPANY(nearby), SHARE_PRICE_INC);
+		}
+
+		// If a company expanded (or merged or formed), see if
+		// share price should be incremented
+		cur = galaxy_map[x][y];
+		if (IS_MAP_COMPANY(cur)) {
+
+		    // Is a star nearby?
+		    if (left == MAP_STAR) {
+			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+		    }
+		    if (right == MAP_STAR) {
+			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+		    }
+		    if (up == MAP_STAR) {
+			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+		    }
+		    if (down == MAP_STAR) {
+			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+		    }
+
+		    // Is an outpost nearby?
+		    if (left == MAP_OUTPOST) {
+			include_outpost(MAP_TO_COMPANY(cur), x - 1, y);
+		    }
+		    if (right == MAP_OUTPOST) {
+			include_outpost(MAP_TO_COMPANY(cur), x + 1, y);
+		    }
+		    if (up == MAP_OUTPOST) {
+			include_outpost(MAP_TO_COMPANY(cur), x, y - 1);
+		    }
+		    if (down == MAP_OUTPOST) {
+			include_outpost(MAP_TO_COMPANY(cur), x, y + 1);
+		    }
+		}
+	    }
 	    break;
 	}
     }
@@ -493,6 +619,271 @@ void next_player (void)
 		turn_number++;
 	    }
 	} while (! player[current_player].in_game);
+    }
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   try_start_new_company  - See if a new company can be started
+  Arguments:  x, y                   - Coordinates of position on map
+  Returns:    (nothing)
+
+  This function attempts to establish a new company if the position (x,y)
+  is in a suitable location and if no more than MAX_COMPANIES are already
+  present.
+*/
+
+void try_start_new_company (int x, int y)
+{
+    bool all_on_map;
+    map_val_t left, right, up, down;
+    int i, j;
+
+
+    assign_vals(x, y, left, right, up, down);
+
+    if (left  != MAP_OUTPOST && left  != MAP_STAR &&
+	right != MAP_OUTPOST && right != MAP_STAR &&
+	up    != MAP_OUTPOST && up    != MAP_STAR &&
+	down  != MAP_OUTPOST && down  != MAP_STAR) {
+	return;
+    }
+
+    all_on_map = true;
+    for (i = 0; i < MAX_COMPANIES; i++) {
+	if (! company[i].on_map) {
+	    all_on_map = false;
+	    break;
+	}
+    }
+
+    if (all_on_map) {
+	// The galaxy cannot support any more companies
+	galaxy_map[x][y] = MAP_OUTPOST;
+    } else {
+	// Create the new company
+
+	newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	box(curwin, 0, 0);
+
+	center(curwin, 1, ATTR_WINDOW_TITLE, "  New Company  ");
+	center(curwin, 3, ATTR_NORMAL_WINDOW, "A new company has been formed!");
+	center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+		"Its name is ", "%s", company[i].name);
+
+	wait_for_key(curwin, 6, ATTR_WAITNORMAL_STR);
+
+	deltxwin();
+	txrefresh();
+
+	galaxy_map[x][y] = COMPANY_TO_MAP(i);
+
+	company[i].share_price = INITIAL_SHARE_PRICE;
+	company[i].share_return = INITIAL_RETURN;
+	company[i].stock_issued = INITIAL_STOCK_ISSUED;
+	company[i].max_stock = INITIAL_MAX_STOCK;
+	company[i].on_map = true;
+
+	for (j = 0; j < number_players; j++) {
+	    player[j].stock_owned[i] = 0;
+	}
+
+	player[current_player].stock_owned[i] = INITIAL_STOCK_ISSUED;
+    }
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   merge_companies  - Merge two companies together
+  Arguments:  a, b             - Companies to merge
+  Returns:    (nothing)
+
+  This function merges two companies on the galaxy map; the one with the
+  highest value takes over.  The parameters a and b are actual values
+  from the galaxy map.
+*/
+
+void merge_companies (map_val_t a, map_val_t b)
+{
+    int aa = MAP_TO_COMPANY(a);
+    int bb = MAP_TO_COMPANY(b);
+
+    double val_aa = company[aa].share_price * company[aa].stock_issued *
+	company[aa].share_return;
+    double val_bb = company[bb].share_price * company[bb].stock_issued *
+	company[bb].share_return;
+
+    int x, y, i, line;
+    long old_stock, new_stock, total_new;
+    double bonus;
+
+
+    char *buf = malloc(BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+
+    if (val_aa < val_bb) {
+	// Make sure aa is the dominant company
+	map_val_t t;
+	int tt;
+
+	t  = a;  a  = b;  b  = t;
+	tt = aa; aa = bb; bb = tt;
+    }
+
+    // Display information about the merger
+
+    newtxwin(number_players + 14, 76, LINE_OFFSET + (9 - number_players),
+	     COL_CENTER(76));
+    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+    box(curwin, 0, 0);
+
+    center(curwin, 1, ATTR_WINDOW_TITLE, "  Company Merger  ");
+    center3(curwin, 3, ATTR_HIGHLIGHT_STR, ATTR_HIGHLIGHT_STR, ATTR_NORMAL_WINDOW,
+	    company[bb].name, company[aa].name, " has just merged into ");
+
+    center(curwin, 5, ATTR_NORMAL_WINDOW, "Please note the following transactions:");
+
+    center2(curwin, 7, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR, " Old stock: ",
+	    "%-20s", company[bb].name);
+    center2(curwin, 8, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR, " New stock: ",
+	    "%-20s", company[aa].name);
+
+    // Handle the locale's currency symbol
+    struct lconv *lc = localeconv();
+    assert(lc != NULL);
+
+    snprintf(buf, BUFSIZE, "Bonus (%s)", lc->currency_symbol);
+
+    int w = getmaxx(curwin) - 52;
+    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
+    mvwprintw(curwin, 10, 2, "  %-*.*s  %8s  %8s  %8s  %12s  ", w, w,
+	      "Player", "Old", "New", "Total", buf);
+    wattrset(curwin, ATTR_NORMAL_WINDOW);
+
+    total_new = 0;
+    for (line = 11, i = 0; i < number_players; i++) {
+	if (player[i].in_game) {
+	    // Calculate new stock and any bonus
+	    old_stock = player[i].stock_owned[bb];
+	    new_stock = (double) old_stock * MERGE_STOCK_RATIO;
+	    total_new += new_stock;
+
+	    bonus = (company[bb].stock_issued == 0) ? 0.0 :
+		10.0 * ((double) player[i].stock_owned[bb] /
+			company[bb].stock_issued) * company[bb].share_price;
+
+	    player[i].stock_owned[aa] += new_stock;
+	    player[i].stock_owned[bb] = 0;
+	    player[i].cash += bonus;
+
+	    strfmon(buf, BUFSIZE, "%!12n", bonus);
+	    mvwprintw(curwin, line, 2, "  %-*.*s  %'8ld  %'8ld  %'8ld  %12s  ",
+		      w, w, player[i].name, old_stock, new_stock,
+		      player[i].stock_owned[aa], buf);
+	    line++;
+	}
+    }
+
+    // Adjust the company records appropriately
+    company[aa].stock_issued += total_new;
+    company[aa].max_stock    += total_new;
+    company[aa].share_price  += company[bb].share_price / (randf() + 1.5);
+
+    company[bb].stock_issued = 0;
+    company[bb].max_stock    = 0;
+    company[bb].on_map       = false;
+
+    // Adjust the galaxy map appropriately
+    for (x = 0; x < MAX_X; x++) {
+	for (y = 0; y < MAX_Y; y++) {
+	    if (galaxy_map[x][y] == b) {
+		galaxy_map[x][y] = a;
+	    }
+	}
+    }
+
+    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITNORMAL_STR);
+
+    deltxwin();			// "Company merger" window
+    txrefresh();
+
+    free(buf);
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   include_outpost  - Include any outposts into the company
+  Arguments:  num              - Company on which to operate
+              x, y             - Coordinates of position on map
+  Returns:    (nothing)
+
+  This function includes the outpost at (x,y) into company num.  It also
+  checks surrounding locations for further outposts.
+*/
+
+void include_outpost (int num, int x, int y)
+{
+    map_val_t left, right, up, down;
+
+
+    assert(num >= 0 && num < MAX_COMPANIES);
+    assert(x >= 0 && x < MAX_X);
+    assert(y >= 0 && y < MAX_Y);
+
+    assign_vals(x, y, left, right, up, down);
+
+    galaxy_map[x][y] = COMPANY_TO_MAP(num);
+    inc_share_price(num, SHARE_PRICE_INC_OUTPOST);
+
+    // Outposts next to stars are more valuable: increment again
+    if (left == MAP_STAR) {
+	inc_share_price(num, SHARE_PRICE_INC_OUTSTAR);
+    }
+    if (right == MAP_STAR) {
+	inc_share_price(num, SHARE_PRICE_INC_OUTSTAR);
+    }
+    if (up == MAP_STAR) {
+	inc_share_price(num, SHARE_PRICE_INC_OUTSTAR);
+    }
+    if (down == MAP_STAR) {
+	inc_share_price(num, SHARE_PRICE_INC_OUTSTAR);
+    }
+
+    if (left == MAP_OUTPOST) {
+	include_outpost(num, x - 1, y);
+    }
+    if (right == MAP_OUTPOST) {
+	include_outpost(num, x + 1, y);
+    }
+    if (up == MAP_OUTPOST) {
+	include_outpost(num, x, y - 1);
+    }
+    if (down == MAP_OUTPOST) {
+	include_outpost(num, x, y + 1);
+    }
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   inc_share_price  - Increase the share price of a company
+  Arguments:  num              - Company on which to operate
+              inc              - Base increment for the share price
+  Returns:    (nothing)
+
+  This function increments the share price, maximum stock available and
+  the share return of company num, using inc as the basis for doing so.
+*/
+
+void inc_share_price (int num, double inc)
+{
+    company[num].share_price += inc * (1.0 + randf() * SHARE_PRICE_INC_EXTRA);
+    company[num].max_stock   += inc / (randf() * 10.0 + 5.0);
+    if (randf() < PROB_INC_RETURN) {
+	company[num].share_return *= randf() + PROB_INC_RETURN_INC;
     }
 }
 

@@ -306,7 +306,7 @@ void show_help (void)
 		case 'H':
 		    // Map representation of company
 		    wprintw(curwin, "%c",
-			    PRINTABLE_MAP_VAL(MAP_COMPANY(*s - 'A')));
+			    PRINTABLE_MAP_VAL(COMPANY_TO_MAP(*s - 'A')));
 		    break;
 
 		default:
