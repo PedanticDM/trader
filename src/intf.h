@@ -176,6 +176,11 @@ extern int center2 (WINDOW *win, int y, int attr_initial, int attr_string,
 		    const char *initial, const char *format, ...)
     __attribute__((format (printf, 6, 7)));
 
+extern int center3 (WINDOW *win, int y, int attr_initial, int attr_final,
+		    int attr_string, const char *initial, const char *final,
+		    const char *format, ...)
+    __attribute__((format (printf, 8, 9)));
+
 extern int attrpr (WINDOW *win, int attr, const char *format, ...)
     __attribute__((format (printf, 3, 4)));
 
