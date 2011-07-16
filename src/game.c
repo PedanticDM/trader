@@ -108,9 +108,18 @@ void init_game (void)
 		key = toupper(gettxchar(curwin));
 		done = ((key >= '1') && (key <= (MAX_PLAYERS + '0'))) || (key == 'C');
 
-		if ((key == KEY_ESC) || (key == KEY_CTRL('C')) || (key == KEY_CTRL('\\'))) {
+		switch (key) {
+		case KEY_ESC:
+		case KEY_CANCEL:
+		case KEY_CTRL('C'):
+		case KEY_CTRL('G'):
+		case KEY_CTRL('\\'):
 		    abort_game = true;
 		    return;
+
+		default:
+		    // Do nothing
+		    break;
 		}
 
 		if (! done) {
@@ -144,8 +153,23 @@ void init_game (void)
 		wrefresh(curwin);
 
 		do {
-		    key = toupper(gettxchar(curwin));
-		    done = ((key >= '1') && (key <= '9')) || (key == KEY_ESC);
+		    key = gettxchar(curwin);
+		    done = (key >= '1' && key <= '9');
+
+		    switch (key) {
+		    case KEY_ESC:
+		    case KEY_CANCEL:
+		    case KEY_CTRL('C'):
+		    case KEY_CTRL('G'):
+		    case KEY_CTRL('\\'):
+			key = KEY_ESC;
+			done = true;
+			break;
+
+		    default:
+			// Do nothing
+			break;
+		    }
 
 		    if (! done) {
 			beep();
