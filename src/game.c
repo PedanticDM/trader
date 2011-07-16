@@ -476,7 +476,7 @@ void end_game (void)
 	}
 	qsort(player, number_players, sizeof(player_info_t), cmp_player);
 
-	newtxwin(number_players + 10, 70, LINE_OFFSET + 3, COL_CENTER(70));
+	newtxwin(number_players + 10, 76, LINE_OFFSET + 3, COL_CENTER(76));
 	wbkgd(curwin, ATTR_NORMAL_WINDOW);
 	box(curwin, 0, 0);
 
@@ -494,14 +494,15 @@ void end_game (void)
 
 	snprintf(buf, BUFSIZE, "Total Value (%s)", lc->currency_symbol);
 
+	int w = getmaxx(curwin) - 33;
 	wattrset(curwin, ATTR_WINDOW_SUBTITLE);
-	mvwprintw(curwin, 6, 2, "%5s  %-37.37s  %18s  ", "", "Player", buf);
+	mvwprintw(curwin, 6, 2, "%5s  %-*.*s  %18s  ", "", w, w, "Player", buf);
 	wattrset(curwin, ATTR_NORMAL_WINDOW);
 
 	for (i = 0; i < number_players; i++) {
 	    strfmon(buf, BUFSIZE, "%!18n", player[i].sort_value);
-	    mvwprintw(curwin, i + 7, 2, "%5s  %-37.37s  %18s  ",
-		      ordinal[i + 1], player[i].name, buf);
+	    mvwprintw(curwin, i + 7, 2, "%5s  %-*.*s  %18s  ",
+		      ordinal[i + 1], w, w, player[i].name, buf);
 	}
 
 	wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITNORMAL_STR);
@@ -693,7 +694,7 @@ void show_status (int num)
 		if (company[i].on_map) {
 		    strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
 		    mvwprintw(curwin, line, 2,
-			      "  %-22s  %10s  %10.2f  %'10d  %10.2f  ",
+			      "  %-22s  %10s  %10.2f  %'10ld  %10.2f  ",
 			      company[i].name, buf,
 			      company[i].share_return * 100.0,
 			      player[num].stock_owned[i],
