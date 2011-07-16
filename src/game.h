@@ -42,8 +42,6 @@
 extern void init_game (void);
 extern void end_game (void);
 
-extern void exchange_stock (void);
-
 extern void show_map (bool show_moves);
 extern void show_status (int num);
 extern double total_value (int num);

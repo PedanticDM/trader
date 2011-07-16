@@ -487,11 +487,6 @@ void end_game (void)
     free(buf);
 }
 
-void exchange_stock (void)
-{
-    // @@@ To be written
-}
-
 
 /*-----------------------------------------------------------------------
   Function:   show_map   - Display the galaxy map on the screen

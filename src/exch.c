@@ -9,7 +9,9 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, trader.h, contains overall definitions for Star Traders.
+  This file, exch.c, contains the implementation of functions dealing
+  with the Interstellar Stock Exchange and Trading Bank as used in Star
+  Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -27,35 +29,14 @@
 */
 
 
-#ifndef included_TRADER_H
-#define included_TRADER_H 1
+#include "trader.h"
 
 
 /************************************************************************
-*                          Global definitions                           *
+*                  Stock Exchange function definitions                  *
 ************************************************************************/
 
-#define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
-#define GAME_FILE_API_VERSION	"7.0"	// For game loads and saves
-#define GAME_FILE_SENTINEL	(42)	// End of game file sentinel
-
-#define BUFSIZE			(1024)	// For various string buffers
-
-
-/************************************************************************
-*                     Program-specific header files                     *
-************************************************************************/
-
-#include "system.h"
-
-#include "globals.h"
-#include "game.h"
-#include "move.h"
-#include "exch.h"
-#include "fileio.h"
-#include "help.h"
-#include "intf.h"
-#include "utils.h"
-
-
-#endif /* included_TRADER_H */
+void exchange_stock (void)
+{
+    // @@@ To be written
+}

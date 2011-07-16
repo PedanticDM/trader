@@ -34,6 +34,7 @@ trader_SOURCES	= \
 	globals.c	globals.h	\
 	game.c		game.h		\
 	move.c		move.h		\
+	exch.c		exch.h		\
 	fileio.c	fileio.h	\
 	help.c		help.h		\
 	intf.c		intf.h		\
