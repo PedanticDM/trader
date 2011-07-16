@@ -334,7 +334,7 @@ bool save_game (int num)
 	    } else {
 		// Data directory could not be created
 
-		newtxwin(9, 70, LINE_OFFSET + 9, COL_CENTER(70));
+		newtxwin(9, 70, LINE_OFFSET + 7, COL_CENTER(70));
 		wbkgd(curwin, ATTR_ERROR_WINDOW);
 		box(curwin, 0, 0);
 
@@ -361,7 +361,7 @@ bool save_game (int num)
 	// File could not be opened for writing
 	saved_errno = errno;
 
-	newtxwin(9, 70, LINE_OFFSET + 9, COL_CENTER(70));
+	newtxwin(9, 70, LINE_OFFSET + 7, COL_CENTER(70));
 	wbkgd(curwin, ATTR_ERROR_WINDOW);
 	box(curwin, 0, 0);
 

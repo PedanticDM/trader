@@ -32,6 +32,16 @@
 
 
 /************************************************************************
+*                      Module constants and macros                      *
+************************************************************************/
+
+#define GALAXY_MAP_LEFT(x, y)	(((x) <= 0)     ? MAP_EMPTY : galaxy_map[(x) - 1][(y)])
+#define GALAXY_MAP_RIGHT(x, y)	(((x) >= MAX_X) ? MAP_EMPTY : galaxy_map[(x) + 1][(y)])
+#define GALAXY_MAP_UP(x, y)	(((y) <= 0)     ? MAP_EMPTY : galaxy_map[(x)][(y) - 1])
+#define GALAXY_MAP_DOWN(x, y)	(((y) >= MAX_Y) ? MAP_EMPTY : galaxy_map[(x)][(y) + 1])
+
+
+/************************************************************************
 *                    Internal function declarations                     *
 ************************************************************************/
 
@@ -258,14 +268,138 @@ void get_move (void)
 	if (! answer_yesno(curwin)) {
 	    selection = SEL_NONE;
 	}
+
+	// Save the game if required
+	if (selection == SEL_SAVE) {
+	    bool saved = false;
+
+	    if (game_loaded) {
+		// Save the game to the same game number
+		newtxwin(5, 30, LINE_OFFSET + 7, COL_CENTER(30));
+		wbkgd(curwin, ATTR_STATUS_WINDOW);
+		box(curwin, 0, 0);
+		center(curwin, 2, ATTR_STATUS_WINDOW,
+		       "Saving game %d... ", game_num);
+		wrefresh(curwin);
+
+		saved = save_game(game_num);
+
+		deltxwin();
+		txrefresh();
+	    }
+
+	    if (! saved) {
+		int key;
+		bool done;
+
+		// Ask which game to save
+		newtxwin(6, 50, LINE_OFFSET + 8, COL_CENTER(50));
+		wbkgd(curwin, ATTR_NORMAL_WINDOW);
+		box(curwin, 0, 0);
+
+		center(curwin, 1, ATTR_WINDOW_TITLE, "  Save Game  ");
+		mvwaddstr(curwin, 3, 2, "Enter game number ");
+		waddstr(curwin, "[");
+		attrpr(curwin, ATTR_KEYCODE_STR, "1");
+		waddstr(curwin, "-");
+		attrpr(curwin, ATTR_KEYCODE_STR, "9");
+		waddstr(curwin, "]");
+		waddstr(curwin, " or ");
+		attrpr(curwin, ATTR_KEYCODE_STR, "<ESC>");
+		waddstr(curwin, " to cancel: ");
+
+		curs_set(CURS_ON);
+		wrefresh(curwin);
+
+		do {
+		    key = gettxchar(curwin);
+		    done = (key >= '1' && key <= '9');
+
+		    switch (key) {
+		    case KEY_ESC:
+		    case KEY_CANCEL:
+		    case KEY_CTRL('C'):
+		    case KEY_CTRL('G'):
+		    case KEY_CTRL('\\'):
+			key = KEY_ESC;
+			done = true;
+			break;
+
+		    default:
+			// Do nothing
+			break;
+		    }
+
+		    if (! done) {
+			beep();
+		    }
+		} while (! done);
+
+		curs_set(CURS_OFF);
+
+		if (key != KEY_ESC) {
+		    game_num = key - '0';
+
+		    wechochar(curwin, key | A_BOLD);
+
+		    // Try to save the game, if possible
+		    newtxwin(5, 30, LINE_OFFSET + 7, COL_CENTER(30));
+		    wbkgd(curwin, ATTR_STATUS_WINDOW);
+		    box(curwin, 0, 0);
+		    center(curwin, 2, ATTR_STATUS_WINDOW,
+			   "Saving game %d... ", game_num);
+		    wrefresh(curwin);
+
+		    saved = save_game(game_num);
+
+		    deltxwin();
+		    txrefresh();
+		}
+
+		deltxwin();		// "Enter game number" window
+		txrefresh();
+	    }
+
+	    if (saved) {
+		selection = SEL_QUIT;
+	    } else {
+		// Make the next try at saving ask the player for a game number
+		game_loaded = false;
+		game_num = 0;
+
+		selection = SEL_NONE;
+	    }
+	}
     }
 }
 
+
+/*-----------------------------------------------------------------------
+  Function:   process_move  - Process the move selected by the player
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function processes the move in the global variable selection.  It
+  assumes the "Select move" and galaxy map windows are still open.
+*/
+
 void process_move (void)
 {
-    // @@@ To be written
-    if (selection == SEL_QUIT) {
-	quit_selected = true;
+    if (! quit_selected && ! abort_game) {
+	switch(selection) {
+	case SEL_QUIT:
+	    quit_selected = true;
+	    break;
+
+	case SEL_BANKRUPT:
+	    /* @@@ */
+	    break;
+
+	default:
+	    assert(selection >= SEL_MOVE_FIRST && selection <= SEL_MOVE_LAST);
+	    /* @@@ */
+	    break;
+	}
     }
 
     deltxwin();			// "Select move" window
