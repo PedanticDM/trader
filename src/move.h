@@ -9,8 +9,8 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, game.h, contains declarations for the starting and ending
-  game functions used in Star Traders.
+  This file, move.h, contains declarations for functions that make and
+  process a game move in Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -28,25 +28,19 @@
 */
 
 
-#ifndef included_GAME_H
-#define included_GAME_H 1
-
-
-#include <stdbool.h>
+#ifndef included_MOVE_H
+#define included_MOVE_H 1
 
 
 /************************************************************************
-*                      Game function declarations                       *
+*                    Game move function declarations                    *
 ************************************************************************/
 
-extern void init_game (void);
-extern void end_game (void);
+extern void select_moves (void);
+extern void get_move (void);
+extern void process_move (void);
 
-extern void exchange_stock (void);
-
-extern void show_map (bool show_moves);
-extern void show_status (int num);
-extern double total_value (int num);
+extern void next_player (void);
 
 
-#endif /* included_GAME_H */
+#endif /* included_MOVE_H */

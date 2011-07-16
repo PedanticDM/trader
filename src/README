@@ -11,6 +11,7 @@ source code is split up among the following files:
     trader.c    trader.h    - Main program, command-line interface
     globals.c   globals.h   - Global game constants and variables
     game.c      game.h      - Game start and end routines
+    move.c      move.h      - Routines for making and processing a move
     fileio.c    fileio.h    - Load and save game file routines
     help.c      help.h      - Help text routines: how to play Star Traders
     intf.c      intf.h      - Basic text input/output routines

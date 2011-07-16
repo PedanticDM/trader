@@ -50,6 +50,7 @@
 
 #include "globals.h"
 #include "game.h"
+#include "move.h"
 #include "fileio.h"
 #include "help.h"
 #include "intf.h"
