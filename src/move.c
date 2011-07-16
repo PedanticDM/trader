@@ -392,7 +392,56 @@ void process_move (void)
 	    break;
 
 	case SEL_BANKRUPT:
-	    /* @@@ */
+	    // A player wants to give up: make them bankrupt
+	    {
+		int i;
+		int longname = (strlen(player[current_player].name) > 20);
+
+		newtxwin((longname ? 8 : 7), 50, LINE_OFFSET + 7, COL_CENTER(50));
+		wbkgd(curwin, ATTR_ERROR_WINDOW);
+		box(curwin, 0, 0);
+
+		center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
+		if (longname) {
+		    center(curwin, 3, ATTR_ERROR_STR, "%s",
+			   player[current_player].name);
+		    center(curwin, 4, ATTR_ERROR_STR, "has declared bankruptcy");
+		} else {
+		    center(curwin, 3, ATTR_ERROR_STR, "%s has declared bankruptcy",
+			   player[current_player].name);
+		}
+
+		wait_for_key(curwin, getmaxx(curwin) - 1, ATTR_WAITERROR_STR);
+
+		deltxwin();
+		txrefresh();
+
+		show_status(current_player);
+
+		// Confiscate all assets belonging to player
+		player[current_player].in_game = false;
+		for (i = 0; i < MAX_COMPANIES; i++) {
+		    int stock = player[current_player].stock_owned[i];
+		    company[i].max_stock += stock;
+		    company[i].stock_issued -= stock;
+		    player[current_player].stock_owned[i] = 0;
+		}
+		player[current_player].cash = 0.0;
+		player[current_player].debt = 0.0;
+
+		// Is anyone still left in the game?
+		bool all_out = true;
+		for (i = 0; i < number_players; i++) {
+		    if (player[i].in_game) {
+			all_out = false;
+			break;
+		    }
+		}
+
+		if (all_out) {
+		    quit_selected = true;
+		}
+	    }
 	    break;
 
 	default:
