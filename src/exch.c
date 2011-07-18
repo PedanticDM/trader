@@ -146,7 +146,7 @@ void exchange_stock (void)
 	attrpr(curwin, ATTR_KEYCODE_STR, "<4>");
 	waddstr(curwin, " Exit the Stock Exchange");
 
-	mvwaddstr(curwin, 1, 2, "                Enter selection ");
+	mvwaddstr(curwin, 1, 18, "Enter selection ");
 	waddstr(curwin, "[");
 	attrpr(curwin, ATTR_HIGHLIGHT_STR, "Company letter");
 	waddstr(curwin, "/");
@@ -230,7 +230,215 @@ void exchange_stock (void)
 
 void visit_bank (void)
 {
-    // @@@ To be written
+    double credit_limit;
+    int key;
+    bool done;
+    double val, max;
+    char *buf;
+
+    struct lconv *lc = localeconv();
+    assert(lc != NULL);
+
+
+    buf = malloc(BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    credit_limit = (total_value(current_player) - player[current_player].debt)
+	* CREDIT_LIMIT_RATE;
+    if (credit_limit < 0.0) {
+	credit_limit = 0.0;
+    }
+
+    // Show the informational part of the Bank
+    newtxwin(10, 76, LINE_OFFSET + 5, COL_CENTER(76));
+    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+    box(curwin, 0, 0);
+
+    center(curwin, 1, ATTR_WINDOW_TITLE, "  Interstellar Trading Bank  ");
+
+    strfmon(buf, BUFSIZE, "%18n", player[current_player].cash);
+    center2(curwin, 3, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+	    "Current cash:  ", " %s ", buf);
+
+    strfmon(buf, BUFSIZE, "%18n", player[current_player].debt);
+    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+	    "Current debt:  ", " %s ", buf);
+
+    center2(curwin, 5, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+	    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
+
+    strfmon(buf, BUFSIZE, "%18n", credit_limit);
+    center2(curwin, 7, ATTR_HIGHLIGHT_STR, ATTR_WINDOW_TITLE,
+	    "Credit limit:  ", " %s ", buf);
+
+    wrefresh(curwin);
+
+    // Show menu of choices for the player
+    newtxwin(7, 76, LINE_OFFSET + 15, COL_CENTER(76));
+    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+    box(curwin, 0, 0);
+
+    center2(curwin, 3, ATTR_KEYCODE_STR, ATTR_NORMAL_WINDOW,
+	    "<1>", " Borrow money      ");
+    center2(curwin, 4, ATTR_KEYCODE_STR, ATTR_NORMAL_WINDOW,
+	    "<2>", " Repay debt        ");
+    center2(curwin, 5, ATTR_KEYCODE_STR, ATTR_NORMAL_WINDOW,
+	    "<3>", " Exit from the Bank");
+
+    mvwaddstr(curwin, 1, 24, "Enter selection ");
+    waddstr(curwin, "[");
+    attrpr(curwin, ATTR_KEYCODE_STR, "1");
+    waddstr(curwin, "-");
+    attrpr(curwin, ATTR_KEYCODE_STR, "3");
+    waddstr(curwin, "]: ");
+
+    curs_set(CURS_ON);
+    wrefresh(curwin);
+
+    do {
+	key = gettxchar(curwin);
+	done = (key == '1' || key == '2' || key == '3' || key == ' ');
+
+	if (! done) {
+	    beep();
+	}
+    } while (! done);
+
+    curs_set(CURS_OFF);
+    wechochar(curwin, key | A_BOLD);
+
+    switch (key) {
+    case '1':
+	// Borrow money from the Bank
+	if (credit_limit == 0.0) {
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  Insufficient Credit Limit  ");
+	    center(curwin, 3, ATTR_ERROR_STR,
+		   "The Bank will not lend you any more money");
+
+	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    deltxwin();
+	} else {
+	    int x, y, n;
+	    int ret;
+
+
+	    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	    werase(curwin);
+	    box(curwin, 0, 0);
+
+	    mvwprintw(curwin, 3, 10, "How much do you wish to borrow? ");
+
+	    wattron(curwin, A_BOLD);
+	    if (lc->p_cs_precedes == 1) {
+		wprintw(curwin, "%s%s", lc->currency_symbol,
+			(lc->p_sep_by_space == 1) ? " " : "");
+		n = 10;
+	    } else {
+		getyx(curwin, y, x);
+		n = strlen(lc->currency_symbol) + 10 + (lc->p_sep_by_space == 1);
+		mvwprintw(curwin, y, getmaxx(curwin) - n, "%s%s",
+			  (lc->p_sep_by_space == 1) ? " " : "",
+			  lc->currency_symbol);
+		wmove(curwin, y, x);
+	    }
+	    wattroff(curwin, A_BOLD);
+	    x = getcurx(curwin);
+
+	    ret = gettxdouble(curwin, &val, 0.0, credit_limit +
+			      ROUNDING_AMOUNT, 0.0, credit_limit, 3, x,
+			      getmaxx(curwin) - x - n, ATTR_INPUT_FIELD);
+
+	    if (ret == OK) {
+		player[current_player].cash += val;
+		player[current_player].debt += val * (interest_rate + 1.0);
+	    }
+	}
+	break;
+
+    case '2':
+	// Repay a debt
+	if (player[current_player].debt == 0.0) {
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Debt  ");
+	    center(curwin, 3, ATTR_ERROR_STR, "You have no debt to repay");
+
+	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    deltxwin();
+	} else if (player[current_player].cash == 0.0) {
+	    newtxwin(7, 60, LINE_OFFSET + 8, COL_CENTER(60));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Cash  ");
+	    center(curwin, 3, ATTR_ERROR_STR, "You have no cash with which to repay the debt!");
+
+	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    deltxwin();
+	} else {
+	    int x, y, n;
+	    int ret;
+
+
+	    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	    werase(curwin);
+	    box(curwin, 0, 0);
+
+	    mvwprintw(curwin, 3, 10, "How much do you wish to repay? ");
+
+	    wattron(curwin, A_BOLD);
+	    if (lc->p_cs_precedes == 1) {
+		wprintw(curwin, "%s%s", lc->currency_symbol,
+			(lc->p_sep_by_space == 1) ? " " : "");
+		n = 10;
+	    } else {
+		getyx(curwin, y, x);
+		n = strlen(lc->currency_symbol) + 10 + (lc->p_sep_by_space == 1);
+		mvwprintw(curwin, y, getmaxx(curwin) - n, "%s%s",
+			  (lc->p_sep_by_space == 1) ? " " : "",
+			  lc->currency_symbol);
+		wmove(curwin, y, x);
+	    }
+	    wattroff(curwin, A_BOLD);
+	    x = getcurx(curwin);
+
+	    max = MIN(player[current_player].cash + ROUNDING_AMOUNT,
+		      player[current_player].debt + ROUNDING_AMOUNT);
+
+	    ret = gettxdouble(curwin, &val, 0.0, max, 0.0, max, 3, x,
+			      getmaxx(curwin) - x - n, ATTR_INPUT_FIELD);
+
+	    if (ret == OK) {
+		player[current_player].cash -= val;
+		player[current_player].debt -= val;
+
+		if (player[current_player].cash < ROUNDING_AMOUNT) {
+		    player[current_player].cash = 0.0;
+		}
+		if (player[current_player].debt < ROUNDING_AMOUNT) {
+		    player[current_player].debt = 0.0;
+		}
+	    }
+	}
+	break;
+
+    default:
+	break;
+    }
+
+    deltxwin();			// "Enter selection" window
+    deltxwin();			// Trading Bank window
+    txrefresh();
+
+    free(buf);
 }
 
 

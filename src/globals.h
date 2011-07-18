@@ -82,6 +82,7 @@
 #define INTEREST_RATE_INC	(0.65)	/* 65% chance of above being an increment */
 #define MAX_INTEREST_RATE	(0.30)	/* Maximum interest rate */
 #define INTEREST_RATE_DIVIDER	(1.5)	/* Min. amount by which to divide if interest is too high */
+#define CREDIT_LIMIT_RATE	(2.0)	/* Multiplier for credit limit */
 
 #define ROUNDING_AMOUNT		(0.01)	/* Round off smaller amounts to zero */
 
