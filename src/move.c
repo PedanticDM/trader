@@ -1076,12 +1076,16 @@ void adjust_values (void)
 
     // Check if a player's debt is too large
     if (total_value(current_player) <= -MAX_OVERDRAFT) {
+	double impounded;
 	char *buf;
 
 	buf = malloc(BUFSIZE);
 	if (buf == NULL) {
 	    err_exit("out of memory");
 	}
+
+	impounded = MIN(player[current_player].cash,
+			player[current_player].debt);
 
 	newtxwin(8, 60, LINE_OFFSET + 7, COL_CENTER(60));
 	wbkgd(curwin, ATTR_ERROR_WINDOW);
@@ -1092,7 +1096,7 @@ void adjust_values (void)
 	strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);
 	center(curwin, 3, ATTR_ERROR_STR, "Your debt has amounted to %s", buf);
 
-	strfmon(buf, BUFSIZE, "%1n", player[current_player].cash);
+	strfmon(buf, BUFSIZE, "%1n", impounded);
 	center3(curwin, 4, ATTR_ERROR_WINDOW, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
 		"The Bank has impounded ", " from your cash", "%s", buf);
 
@@ -1100,9 +1104,11 @@ void adjust_values (void)
 	deltxwin();
 	txrefresh();
 
-	player[current_player].debt /= interest_rate + 1.0;
-	player[current_player].debt -= player[current_player].cash;
-	player[current_player].cash = 0.0;
+	player[current_player].cash -= impounded;
+	player[current_player].debt -= impounded;
+	if (player[current_player].cash < ROUNDING_AMOUNT) {
+	    player[current_player].cash = 0.0;
+	}
 	if (player[current_player].debt < ROUNDING_AMOUNT) {
 	    player[current_player].debt = 0.0;
 	}
