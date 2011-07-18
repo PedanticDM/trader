@@ -60,11 +60,15 @@
 #define SHARE_PRICE_INC_EXTRA	(0.50)	    /* Extra factor when incr. share price */
 #define INC_SHARE_PRICE		(0.30)	    /* 30% chance for increasing share price */
 #define DEC_SHARE_PRICE		(0.65)	    /* 65% x 30% chance of decrementing same */
+#define PRICE_CHANGE_RATE	(0.25)	    /* Up to 25% of share price is used to incr./decr. */
 #define INITIAL_RETURN		(0.05)	    /* Initial return per share: 5% */
-#define PROB_INC_RETURN		(0.25)	    /* Chance of incr. return when company grows */
-#define PROB_INC_RETURN_INC	(0.60)	    /* 60% chance such incr. will increase return */
-#define INC_COMPANY_RETURN	(0.40)	    /* Chance of randomly incrementing return */
+#define PROB_CHANGE_RETURN	(0.25)	    /* Chance of changing return when company grows */
+#define CHANGE_RETURN_INC	(0.60)	    /* 60% chance such change will increase return */
+#define CHANGE_COMPANY_RETURN	(0.40)	    /* Chance of randomly changing return */
+#define COMPANY_RETURN_INC	(0.75)	    /* 75% chance such change will increase return */
 #define MAX_COMPANY_RETURN	(0.40)	    /* Maximum return per share */
+#define RETURN_DIVIDER		(1.5)	    /* Min. amount by which to divide if return is too large */
+#define OWNERSHIP_BONUS		(2.0)	    /* Bonus amount based on percentage ownership */
 #define INITIAL_STOCK_ISSUED	(5)	    /* Initial number of shares issued out */
 #define INITIAL_MAX_STOCK	(50)	    /* Initial max. number of shares available */
 #define MERGE_STOCK_RATIO	(0.50)	    /* 50% of old shares are credited to new company */
@@ -74,8 +78,10 @@
 #define MAX_SHARES_BIDDED	(200)	    /* Max. number of shares issued */
 
 #define INITIAL_INTEREST_RATE	(0.10)	/* Initial bank interest rate: 10% */
-#define INC_INTEREST_RATE	(0.30)	/* 30% chance of incr./decr. interest rate */
+#define CHANGE_INTEREST_RATE	(0.30)	/* 30% chance of changing interest rate */
+#define INTEREST_RATE_INC	(0.65)	/* 65% chance of above being an increment */
 #define MAX_INTEREST_RATE	(0.30)	/* Maximum interest rate */
+#define INTEREST_RATE_DIVIDER	(1.5)	/* Min. amount by which to divide if interest is too high */
 
 #define ROUNDING_AMOUNT		(0.01)	/* Round off smaller amounts to zero */
 

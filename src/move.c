@@ -58,6 +58,8 @@ void merge_companies (map_val_t a, map_val_t b);
 void include_outpost (int num, int x, int y);
 void inc_share_price (int num, double inc);
 
+void adjust_values (void);
+
 int cmp_game_move (const void *a, const void *b);
 
 
@@ -575,6 +577,10 @@ void process_move (void)
 	    }
 	    break;
 	}
+
+	if (! quit_selected) {
+	    adjust_values();
+	}
     }
 
     deltxwin();			// "Select move" window
@@ -663,7 +669,7 @@ void try_start_new_company (int x, int y)
     } else {
 	// Create the new company
 
-	newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	newtxwin(8, 50, LINE_OFFSET + 7, COL_CENTER(50));
 	wbkgd(curwin, ATTR_NORMAL_WINDOW);
 	box(curwin, 0, 0);
 
@@ -882,9 +888,163 @@ void inc_share_price (int num, double inc)
 {
     company[num].share_price += inc * (1.0 + randf() * SHARE_PRICE_INC_EXTRA);
     company[num].max_stock   += inc / (randf() * 10.0 + 5.0);
-    if (randf() < PROB_INC_RETURN) {
-	company[num].share_return *= randf() + PROB_INC_RETURN_INC;
+    if (randf() < PROB_CHANGE_RETURN) {
+	company[num].share_return *= randf() + CHANGE_RETURN_INC;
     }
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   adjust_values  - Adjust various company-related values
+  Arguments:  (none)
+  Returns:    (nothing)
+
+  This function adjusts the cost of shares for companies on the galaxy
+  map, their return, the Bank interest rate, etc.
+*/
+
+void adjust_values (void)
+{
+    int i, x, y;
+    int which;
+
+    // Declare a company bankrupt!
+    if (randf() < COMPANY_BANKRUPTCY) {
+	which = randi(MAX_COMPANIES);
+
+	if (company[which].on_map) {
+	    if (randf() < ALL_ASSETS_TAKEN) {
+		newtxwin(10, 60, LINE_OFFSET + 6, COL_CENTER(60));
+		wbkgd(curwin, ATTR_ERROR_WINDOW);
+		box(curwin, 0, 0);
+
+		center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
+		center(curwin, 3, ATTR_ERROR_STR, "%s has been declared",
+			company[which].name);
+		center(curwin, 4, ATTR_ERROR_STR,
+		       "bankrupt by the Interstellar Trading Bank.");
+
+		center(curwin, 6, ATTR_ERROR_WINDOW,
+		       "All assets have been taken to repay outstanding loans.");
+
+		wait_for_key(curwin, 8, ATTR_WAITERROR_STR);
+		deltxwin();
+		txrefresh();
+
+	    } else {
+		double rate = randf();
+		char *buf;
+
+		buf = malloc(BUFSIZE);
+		if (buf == NULL) {
+		    err_exit("out of memory");
+		}
+
+		for (i = 0; i < number_players; i++) {
+		    if (player[i].in_game) {
+			player[i].cash += player[i].stock_owned[which] * rate;
+		    }
+		}
+
+		newtxwin(14, 60, LINE_OFFSET + 4, COL_CENTER(60));
+		wbkgd(curwin, ATTR_ERROR_WINDOW);
+		box(curwin, 0, 0);
+
+		center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
+		center(curwin, 3, ATTR_ERROR_STR, "%s has been declared",
+			company[which].name);
+		center(curwin, 4, ATTR_ERROR_STR,
+		       "bankrupt by the Interstellar Trading Bank.");
+
+		center2(curwin, 6, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
+			"The Bank has agreed to pay stock holders ",
+			"%4.2f%%", rate * 100.0);
+		center(curwin, 7, ATTR_ERROR_WINDOW,
+		       "of the share value on each share owned.");
+
+		strfmon(buf, BUFSIZE, "%12n", company[which].share_price);
+		center2(curwin, 9, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
+			"Old share value:       ", "%s", buf);
+
+		strfmon(buf, BUFSIZE, "%12n", company[which].share_price * rate);
+		center2(curwin, 10, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
+			"Amount paid per share: ", "%s", buf);
+
+		wait_for_key(curwin, 12, ATTR_WAITERROR_STR);
+		deltxwin();
+		txrefresh();
+
+		free(buf);
+	    }
+
+	    for (i = 0; i < number_players; i++) {
+		player[i].stock_owned[which] = 0;
+	    }
+
+	    company[which].share_price  = 0.0;
+	    company[which].share_return = 0.0;
+	    company[which].stock_issued = 0;
+	    company[which].max_stock    = 0;
+	    company[which].on_map       = false;
+
+	    for (x = 0; x < MAX_X; x++) {
+		for (y = 0; y < MAX_Y; y++) {
+		    if (galaxy_map[x][y] == COMPANY_TO_MAP(which)) {
+			galaxy_map[x][y] = MAP_EMPTY;
+		    }
+		}
+	    }
+	}
+    }
+
+    // Increase or decrease company return
+    if (randf() < CHANGE_COMPANY_RETURN) {
+	which = randi(MAX_COMPANIES);
+	if (company[which].on_map) {
+	    company[which].share_return *= randf() + COMPANY_RETURN_INC;
+	}
+    }
+
+    // Make sure that a company's return is not too large
+    for (i = 0; i < MAX_COMPANIES; i++) {
+	if (company[i].on_map && company[i].share_return > MAX_COMPANY_RETURN) {
+	    company[i].share_return /= randf() + RETURN_DIVIDER;
+	}
+    }
+
+    // Increase or decrease share price
+    if (randf() < INC_SHARE_PRICE) {
+	which = randi(MAX_COMPANIES);
+	if (company[which].on_map) {
+	    double change = randf() * company[which].share_price * PRICE_CHANGE_RATE;
+	    if (randf() < DEC_SHARE_PRICE) {
+		change = -change;
+	    }
+	    company[which].share_price += change;
+	}
+    }
+
+    // Give the current player the companies' dividends
+    for (i = 0; i < MAX_COMPANIES; i++) {
+	if (company[i].on_map && company[i].stock_issued != 0) {
+	    player[current_player].cash += player[current_player].stock_owned[i] *
+		company[i].share_price * company[i].share_return +
+		((double) player[current_player].stock_owned[i] /
+		 company[i].stock_issued) * company[i].share_price *
+		OWNERSHIP_BONUS;
+	}
+    }
+
+    // Change the interest rate
+    if (randf() < CHANGE_INTEREST_RATE) {
+	interest_rate *= randf() + INTEREST_RATE_INC;
+    }
+    if (interest_rate > MAX_INTEREST_RATE) {
+	interest_rate /= randf() + INTEREST_RATE_DIVIDER;
+    }
+
+    // Calculate current player's debt
+    player[current_player].debt *= interest_rate + 1.0;
 }
 
 
