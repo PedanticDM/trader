@@ -70,9 +70,11 @@ int main (int argc, char *argv[])
     // Play the actual game
     init_game();
     while (! quit_selected && ! abort_game && turn_number <= max_turn) {
+	sel_val_t selection;
+
 	select_moves();
-	get_move();
-	process_move();
+	selection = get_move();
+	process_move(selection);
 	exchange_stock();
 	next_player();
     }

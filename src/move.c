@@ -130,29 +130,28 @@ void select_moves (void)
 
 
 /*-----------------------------------------------------------------------
-  Function:   get_move  - Wait for the player to enter their move
+  Function:   get_move   - Wait for the player to enter their move
   Arguments:  (none)
-  Returns:    (nothing)
+  Returns:    sel_val_t  - Choice selected by player
 
   This function displays the galaxy map and the current moves, then waits
   for the player to select one of the moves.  On entry, current_player
   points to the current player; quit_selected and/or abort_game may be
   true (if so, get_move() justs returns without waiting for the player to
-  select a move).  On exit, selection contains the choice made by the
-  player.  Note that two windows (the "Select move" window and the galaxy
-  map window) are left on the screen: they are closed in process_move().
+  select a move).  The return value is the choice made by the player.
+
+  Note that two windows (the "Select move" window and the galaxy map
+  window) are left on the screen: they are closed in process_move().
 */
 
-void get_move (void)
+sel_val_t get_move (void)
 {
     int i, x, y;
+    sel_val_t selection = SEL_NONE;
 
 
     if (quit_selected || abort_game) {
-	selection = SEL_QUIT;
-	return;
-    } else {
-	selection = SEL_NONE;
+	return SEL_QUIT;
     }
 
     // Display map without closing window
@@ -386,19 +385,21 @@ void get_move (void)
 	    }
 	}
     }
+
+    return selection;
 }
 
 
 /*-----------------------------------------------------------------------
   Function:   process_move  - Process the move selected by the player
-  Arguments:  (none)
+  Arguments:  selection     - Selection made by current player
   Returns:    (nothing)
 
-  This function processes the move in the global variable selection.  It
-  assumes the "Select move" and galaxy map windows are still open.
+  This function processes the move in selection.  It assumes the "Select
+  move" and galaxy map windows are still open.
 */
 
-void process_move (void)
+void process_move (sel_val_t selection)
 {
     if (! quit_selected && ! abort_game) {
 	switch(selection) {

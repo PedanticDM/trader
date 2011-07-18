@@ -163,8 +163,6 @@ extern player_info_t	player[MAX_PLAYERS];		// Array of players
 extern map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 extern move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
-extern sel_val_t	selection;	// Move selected by current player
-
 extern int	max_turn;		// Max. number of turns in game
 extern int	turn_number;
 extern int	number_players;
@@ -172,8 +170,6 @@ extern int	current_player;
 extern int	first_player;		// Who WAS the first player to go?
 
 extern double	interest_rate;		// Current interest rate
-extern double	credit_limit;		// Credit limit of current player
-extern bool	bid_used;		// True if bid used for player
 
 extern bool	game_loaded;		// True if game was loaded from disk
 extern int	game_num;		// Game number (1-9)
