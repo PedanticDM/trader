@@ -521,8 +521,8 @@ void end_game (void)
   This function displays the galaxy map on the screen.  It uses the
   galaxy_map[][] global variable.  If closewin is true, a prompt is shown
   for the user to press any key; the map window is then closed.  If
-  closewin is false, no prompt is shown and the text window must be
-  closed by the caller.
+  closewin is false, no prompt is shown, wrefresh() is NOT called and the
+  text window must be closed by the caller.
 */
 
 void show_map (bool closewin)
@@ -623,10 +623,6 @@ void show_map (bool closewin)
 	deltxwin();			// Wait for key window
 	deltxwin();			// Galaxy map window
 	txrefresh();
-    } else {
-	// Window must be closed by the caller
-
-	wrefresh(curwin);
     }
 }
 
