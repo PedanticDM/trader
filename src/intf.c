@@ -1262,6 +1262,143 @@ int gettxstring (WINDOW *win, char **bufptr, bool multifield, int y, int x,
 
 
 /*-----------------------------------------------------------------------
+  Function:   gettxdouble  - Read a number from the keyboard
+  Arguments:  win          - Window to use
+              result       - Pointer to result
+              min          - Minimum value allowed
+              max          - Maximum value allowed
+              emptyval     - Value to use for empty input
+              defaultval   - Value to use as a default
+	      y, x         - Start of field (line, col)
+	      fieldsize    - Size of field in characters
+	      attr         - Curses attribute to use for the field
+  Returns:    int          - Status code: OK, ERR or key code
+
+  This function calls gettxline() to allow the user to input a valid
+  floating point number.  If gettxline() returns OK, the entered number
+  is stored in *result if it valid.  Otherwise, gettxline() is called
+  again.  Any other result is returned to the caller of this function.
+*/
+
+int gettxdouble (WINDOW *win, double *result, double min, double max,
+		 double emptyval, double defaultval, int y, int x,
+		 int fieldsize, int attr)
+{
+    char *buf, *buf_copy;
+    char *allowed, *emptystr, *defaultstr;
+    struct lconv *lc = localeconv();
+    double val;
+    bool done;
+    int ret;
+
+
+    assert(result != NULL);
+    assert(lc != NULL);
+
+    if (max < min) {
+	double n = max;
+	max = min;
+	min = n;
+    }
+
+    buf = malloc(BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    buf_copy = malloc(BUFSIZE);
+    if (buf_copy == NULL) {
+	err_exit("out of memory");
+    }
+
+    allowed = malloc(BUFSIZE);
+    if (allowed == NULL) {
+	err_exit("out of memory");
+    }
+
+    emptystr = malloc(BUFSIZE);
+    if (emptystr == NULL) {
+	err_exit("out of memory");
+    }
+
+    defaultstr = malloc(BUFSIZE);
+    if (defaultstr == NULL) {
+	err_exit("out of memory");
+    }
+
+    *buf = '\0';
+
+    strcpy(allowed, "0123456789+-Ee");
+    strncat(allowed, lc->decimal_point,     BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->mon_decimal_point, BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
+
+    snprintf(emptystr,   BUFSIZE, "%'1.*f", lc->frac_digits, emptyval);
+    snprintf(defaultstr, BUFSIZE, "%'1.*f", lc->frac_digits, defaultval);
+
+    done = false;
+    while (! done) {
+	ret = gettxline(win, buf, BUFSIZE, false, BUFSIZE - 1, emptystr,
+			defaultstr, allowed, true, y, x, fieldsize, attr, NULL);
+
+	if (ret == OK) {
+	    char *p;
+
+	    strncpy(buf_copy, buf, BUFSIZE - 1);
+	    buf_copy[BUFSIZE - 1] = '\0';
+
+	    // Replace mon_decimal_point with decimal_point
+	    if (strcmp(lc->mon_decimal_point, lc->decimal_point) != 0) {
+		while ((p = strstr(buf_copy, lc->mon_decimal_point)) != NULL) {
+		    char *pn;
+		    int len1 = strlen(lc->mon_decimal_point);
+		    int len2 = strlen(lc->decimal_point);
+
+		    // Make space for lc->decimal_point, if needed
+		    memmove(p + len2, p + len1, strlen(p) - (len2 - len1) + 1);
+
+		    // Copy lc->decimal_point over p WITHOUT copying ending NUL
+		    for (pn = lc->decimal_point; *pn != '\0'; pn++, p++) {
+			*p = *pn;
+		    }
+		}
+	    }
+
+	    // Remove thousands separators
+	    while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
+		int len = strlen(lc->thousands_sep);
+		memmove(p, p + len, strlen(p) - len + 1);
+	    }
+	    while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
+		int len = strlen(lc->thousands_sep);
+		memmove(p, p + len, strlen(p) - len + 1);
+	    }
+
+	    val = strtod(buf_copy, &p);
+
+	    if (*p == '\0' && val >= min && val <= max) {
+		*result = val;
+		done = true;
+	    } else {
+		beep();
+	    }
+	} else {
+	    done = true;
+	}
+    }
+
+    free(defaultstr);
+    free(emptystr);
+    free(allowed);
+    free(buf_copy);
+    free(buf);
+
+    return ret;
+}
+
+
+/*-----------------------------------------------------------------------
   Function:   answer_yesno  - Read a Yes/No answer and return true/false
   Arguments:  win           - Window to use
   Returns:    bool          - true if Yes ("Y") was selected, else false
