@@ -53,11 +53,11 @@
 *                    Internal function declarations                     *
 ************************************************************************/
 
+void bankrupt_player (bool forced);
 void try_start_new_company (int x, int y);
 void merge_companies (map_val_t a, map_val_t b);
 void include_outpost (int num, int x, int y);
 void inc_share_price (int num, double inc);
-
 void adjust_values (void);
 
 int cmp_game_move (const void *a, const void *b);
@@ -409,53 +409,7 @@ void process_move (void)
 
 	case SEL_BANKRUPT:
 	    // A player wants to give up: make them bankrupt
-	    {
-		int i;
-		int longname = (strlen(player[current_player].name) > 20);
-
-		newtxwin((longname ? 8 : 7), 50, LINE_OFFSET + 7, COL_CENTER(50));
-		wbkgd(curwin, ATTR_ERROR_WINDOW);
-		box(curwin, 0, 0);
-
-		center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
-		if (longname) {
-		    center(curwin, 3, ATTR_ERROR_STR, "%s",
-			   player[current_player].name);
-		    center(curwin, 4, ATTR_ERROR_STR, "has declared bankruptcy");
-		} else {
-		    center(curwin, 3, ATTR_ERROR_STR, "%s has declared bankruptcy",
-			   player[current_player].name);
-		}
-
-		wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITERROR_STR);
-
-		deltxwin();
-		txrefresh();
-
-		show_status(current_player);
-
-		// Confiscate all assets belonging to player
-		player[current_player].in_game = false;
-		for (i = 0; i < MAX_COMPANIES; i++) {
-		    company[i].stock_issued -= player[current_player].stock_owned[i];
-		    player[current_player].stock_owned[i] = 0;
-		}
-		player[current_player].cash = 0.0;
-		player[current_player].debt = 0.0;
-
-		// Is anyone still left in the game?
-		bool all_out = true;
-		for (i = 0; i < number_players; i++) {
-		    if (player[i].in_game) {
-			all_out = false;
-			break;
-		    }
-		}
-
-		if (all_out) {
-		    quit_selected = true;
-		}
-	    }
+	    bankrupt_player(false);
 	    break;
 
 	default:
@@ -623,6 +577,80 @@ void next_player (void)
 		turn_number++;
 	    }
 	} while (! player[current_player].in_game);
+    }
+}
+
+
+/*-----------------------------------------------------------------------
+  Function:   bankrupt_player  - Make the current player bankrupt
+  Arguments:  forced           - True if bankruptcy is forced by Bank
+  Returns:    (nothing)
+
+  This function makes the current player bankrupt, whether by their own
+  choice or as a result of action by the Interstellar Trading Bank.
+  On exit, quit_selected is true if all players are bankrupt.
+*/
+
+void bankrupt_player (bool forced)
+{
+    int i;
+    int longname = (strlen(player[current_player].name) > 20);
+
+    if (forced) {
+	newtxwin((longname ? 9 : 8), 54, LINE_OFFSET + 7, COL_CENTER(54));
+    } else {
+	newtxwin((longname ? 8 : 7), 50, LINE_OFFSET + 7, COL_CENTER(50));
+    }
+    wbkgd(curwin, ATTR_ERROR_WINDOW);
+    box(curwin, 0, 0);
+
+    center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
+
+    if (forced) {
+	if (longname) {
+	    center(curwin, 3, ATTR_ERROR_STR, "%s", player[current_player].name);
+	    center(curwin, 4, ATTR_ERROR_STR, "has been declared bankrupt by the");
+	    center(curwin, 5, ATTR_ERROR_STR, "Interstellar Trading Bank");
+	} else {
+	    center(curwin, 3, ATTR_ERROR_STR, "%s has been declared bankrupt",
+		   player[current_player].name);
+	    center(curwin, 4, ATTR_ERROR_STR, "by the Interstellar Trading Bank");
+	}
+    } else {
+	if (longname) {
+	    center(curwin, 3, ATTR_ERROR_STR, "%s", player[current_player].name);
+	    center(curwin, 4, ATTR_ERROR_STR, "has declared bankruptcy");
+	} else {
+	    center(curwin, 3, ATTR_ERROR_STR, "%s has declared bankruptcy",
+		   player[current_player].name);
+	}
+    }
+
+    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITERROR_STR);
+
+    deltxwin();
+    txrefresh();
+
+    // Confiscate all assets belonging to player
+    player[current_player].in_game = false;
+    for (i = 0; i < MAX_COMPANIES; i++) {
+	company[i].stock_issued -= player[current_player].stock_owned[i];
+	player[current_player].stock_owned[i] = 0;
+    }
+    player[current_player].cash = 0.0;
+    player[current_player].debt = 0.0;
+
+    // Is anyone still left in the game?
+    bool all_out = true;
+    for (i = 0; i < number_players; i++) {
+	if (player[i].in_game) {
+	    all_out = false;
+	    break;
+	}
+    }
+
+    if (all_out) {
+	quit_selected = true;
     }
 }
 
@@ -1077,41 +1105,9 @@ void adjust_values (void)
 	    player[current_player].debt = 0.0;
 	}
 
+	// Shall we declare them bankrupt?
 	if (total_value(current_player) <= 0.0 && randf() < PROB_BANKRUPTCY) {
-	    newtxwin(8, 50, LINE_OFFSET + 7, COL_CENTER(50));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
-
-	    center(curwin, 1, ATTR_ERROR_TITLE, "  Interstellar Trading Bank  ");
-
-	    center(curwin, 3, ATTR_ERROR_STR, "You have been declared bankrupt by the");
-	    center(curwin, 4, ATTR_ERROR_STR, "Interstellar Trading Bank");
-
-	    wait_for_key(curwin, 6, ATTR_WAITERROR_STR);
-	    deltxwin();
-	    txrefresh();
-
-	    player[current_player].in_game = false;
-	    for (i = 0; i < MAX_COMPANIES; i++) {
-		company[i].stock_issued -= player[current_player].stock_owned[i];
-		player[current_player].stock_owned[i] = 0;
-	    }
-	    player[current_player].cash = 0.0;
-	    player[current_player].debt = 0.0;
-
-
-	    // Is anyone still left in the game?
-	    bool all_out = true;
-	    for (i = 0; i < number_players; i++) {
-		if (player[i].in_game) {
-		    all_out = false;
-		    break;
-		}
-	    }
-
-	    if (all_out) {
-		quit_selected = true;
-	    }
+	    bankrupt_player(true);
 	}
     }
 }
