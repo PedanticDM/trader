@@ -437,9 +437,7 @@ void process_move (void)
 		// Confiscate all assets belonging to player
 		player[current_player].in_game = false;
 		for (i = 0; i < MAX_COMPANIES; i++) {
-		    int stock = player[current_player].stock_owned[i];
-		    company[i].max_stock += stock;
-		    company[i].stock_issued -= stock;
+		    company[i].stock_issued -= player[current_player].stock_owned[i];
 		    player[current_player].stock_owned[i] = 0;
 		}
 		player[current_player].cash = 0.0;
@@ -1045,6 +1043,77 @@ void adjust_values (void)
 
     // Calculate current player's debt
     player[current_player].debt *= interest_rate + 1.0;
+
+    // Check if a player's debt is too large
+    if (total_value(current_player) <= -MAX_OVERDRAFT) {
+	char *buf;
+
+	buf = malloc(BUFSIZE);
+	if (buf == NULL) {
+	    err_exit("out of memory");
+	}
+
+	newtxwin(8, 60, LINE_OFFSET + 7, COL_CENTER(60));
+	wbkgd(curwin, ATTR_ERROR_WINDOW);
+	box(curwin, 0, 0);
+
+	center(curwin, 1, ATTR_ERROR_TITLE, "  Interstellar Trading Bank  ");
+
+	strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);
+	center(curwin, 3, ATTR_ERROR_STR, "Your debt has amounted to %s", buf);
+
+	strfmon(buf, BUFSIZE, "%1n", player[current_player].cash);
+	center3(curwin, 4, ATTR_ERROR_WINDOW, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
+		"The Bank has impounded ", " from your cash", "%s", buf);
+
+	wait_for_key(curwin, 6, ATTR_WAITERROR_STR);
+	deltxwin();
+	txrefresh();
+
+	player[current_player].debt /= interest_rate + 1.0;
+	player[current_player].debt -= player[current_player].cash;
+	player[current_player].cash = 0.0;
+	if (player[current_player].debt < ROUNDING_AMOUNT) {
+	    player[current_player].debt = 0.0;
+	}
+
+	if (total_value(current_player) <= 0.0 && randf() < PROB_BANKRUPTCY) {
+	    newtxwin(8, 50, LINE_OFFSET + 7, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  Interstellar Trading Bank  ");
+
+	    center(curwin, 3, ATTR_ERROR_STR, "You have been declared bankrupt by the");
+	    center(curwin, 4, ATTR_ERROR_STR, "Interstellar Trading Bank");
+
+	    wait_for_key(curwin, 6, ATTR_WAITERROR_STR);
+	    deltxwin();
+	    txrefresh();
+
+	    player[current_player].in_game = false;
+	    for (i = 0; i < MAX_COMPANIES; i++) {
+		company[i].stock_issued -= player[current_player].stock_owned[i];
+		player[current_player].stock_owned[i] = 0;
+	    }
+	    player[current_player].cash = 0.0;
+	    player[current_player].debt = 0.0;
+
+
+	    // Is anyone still left in the game?
+	    bool all_out = true;
+	    for (i = 0; i < number_players; i++) {
+		if (player[i].in_game) {
+		    all_out = false;
+		    break;
+		}
+	    }
+
+	    if (all_out) {
+		quit_selected = true;
+	    }
+	}
+    }
 }
 
 
