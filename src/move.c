@@ -130,9 +130,9 @@ void select_moves (void)
 
 
 /*-----------------------------------------------------------------------
-  Function:   get_move   - Wait for the player to enter their move
+  Function:   get_move     - Wait for the player to enter their move
   Arguments:  (none)
-  Returns:    sel_val_t  - Choice selected by player
+  Returns:    selection_t  - Choice selected by player
 
   This function displays the galaxy map and the current moves, then waits
   for the player to select one of the moves.  On entry, current_player
@@ -144,10 +144,10 @@ void select_moves (void)
   window) are left on the screen: they are closed in process_move().
 */
 
-sel_val_t get_move (void)
+selection_t get_move (void)
 {
     int i, x, y;
-    sel_val_t selection = SEL_NONE;
+    selection_t selection = SEL_NONE;
 
 
     if (quit_selected || abort_game) {
@@ -257,6 +257,7 @@ sel_val_t get_move (void)
 
 		default:
 		    beep();
+		    break;
 		}
 	    }
 	}
@@ -399,7 +400,7 @@ sel_val_t get_move (void)
   move" and galaxy map windows are still open.
 */
 
-void process_move (sel_val_t selection)
+void process_move (selection_t selection)
 {
     if (! quit_selected && ! abort_game) {
 	switch(selection) {
@@ -936,7 +937,7 @@ void adjust_values (void)
     int which;
 
     // Declare a company bankrupt!
-    if (randf() < COMPANY_BANKRUPTCY) {
+    if (randf() > (1.0 - COMPANY_BANKRUPTCY)) {
 	which = randi(MAX_COMPANIES);
 
 	if (company[which].on_map) {

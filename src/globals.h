@@ -122,6 +122,10 @@ typedef enum map_val {
 #define IS_MAP_COMPANY(m)	((m) >= MAP_A && (m) <= MAP_LAST)
 #define PRINTABLE_MAP_VAL(m)	((char) (m))
 
+#define COMPANY_TO_KEY(i)	((i) + 'A')
+#define KEY_TO_COMPANY(k)	((k) - 'A')
+#define IS_COMPANY_KEY(k)	((k) >= 'A' && (k) < COMPANY_TO_KEY(MAX_COMPANIES))
+
 
 // Information about a move
 typedef struct move_rec {
@@ -135,16 +139,22 @@ typedef struct move_rec {
 
 
 // Player moves / selection values
-typedef enum sel_val {
+typedef enum selection {
+    SEL_COMPANY_FIRST		= 0,
+    SEL_COMPANY_LAST		= MAX_COMPANIES - 1,
+
     SEL_MOVE_FIRST		= 0,
     SEL_MOVE_LAST		= NUMBER_MOVES - 1,
-    SEL_MOVE_NUMBER_MOVES	= NUMBER_MOVES,
 
     SEL_BANKRUPT,			// Player wishes to give up
     SEL_SAVE,				// Save and end the game
     SEL_QUIT,				// Just end the game
+
+    SEL_BANK,				// Visit the Trading Bank
+    SEL_EXIT,				// Exit the Stock Exchange
+
     SEL_NONE			= -1	// Nothing yet selected
-} sel_val_t;
+} selection_t;
 
 
 // Company names

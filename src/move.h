@@ -37,8 +37,8 @@
 ************************************************************************/
 
 extern void select_moves (void);
-extern sel_val_t get_move (void);
-extern void process_move (sel_val_t selection);
+extern selection_t get_move (void);
+extern void process_move (selection_t selection);
 
 extern void next_player (void);
 
