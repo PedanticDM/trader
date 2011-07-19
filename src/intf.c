@@ -1365,14 +1365,18 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
 		}
 	    }
 
-	    // Remove thousands separators
-	    while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
-		int len = strlen(lc->thousands_sep);
-		memmove(p, p + len, strlen(p) - len + 1);
+	    // Remove thousands separators if required
+	    if (strcmp(lc->thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
+		    int len = strlen(lc->thousands_sep);
+		    memmove(p, p + len, strlen(p) - len + 1);
+		}
 	    }
-	    while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
-		int len = strlen(lc->thousands_sep);
-		memmove(p, p + len, strlen(p) - len + 1);
+	    if (strcmp(lc->mon_thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
+		    int len = strlen(lc->thousands_sep);
+		    memmove(p, p + len, strlen(p) - len + 1);
+		}
 	    }
 
 	    val = strtod(buf_copy, &p);
@@ -1482,14 +1486,18 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
 	    strncpy(buf_copy, buf, BUFSIZE - 1);
 	    buf_copy[BUFSIZE - 1] = '\0';
 
-	    // Remove thousands separators
-	    while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
-		int len = strlen(lc->thousands_sep);
-		memmove(p, p + len, strlen(p) - len + 1);
+	    // Remove thousands separators if required
+	    if (strcmp(lc->thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
+		    int len = strlen(lc->thousands_sep);
+		    memmove(p, p + len, strlen(p) - len + 1);
+		}
 	    }
-	    while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
-		int len = strlen(lc->thousands_sep);
-		memmove(p, p + len, strlen(p) - len + 1);
+	    if (strcmp(lc->mon_thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
+		    int len = strlen(lc->thousands_sep);
+		    memmove(p, p + len, strlen(p) - len + 1);
+		}
 	    }
 
 	    val = strtol(buf_copy, &p, 10);
