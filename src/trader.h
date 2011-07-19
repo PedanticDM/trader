@@ -10,6 +10,7 @@
   $Id$
 
   This file, trader.h, contains overall definitions for Star Traders.
+  This allows source files to include just one file: this one.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -32,18 +33,7 @@
 
 
 /************************************************************************
-*                          Global definitions                           *
-************************************************************************/
-
-#define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
-#define GAME_FILE_API_VERSION	"7.0"	// For game loads and saves
-#define GAME_FILE_SENTINEL	(42)	// End of game file sentinel
-
-#define BUFSIZE			(1024)	// For various string buffers
-
-
-/************************************************************************
-*                     Program-specific header files                     *
+*                         Included header files                         *
 ************************************************************************/
 
 #include "system.h"
@@ -56,6 +46,17 @@
 #include "help.h"
 #include "intf.h"
 #include "utils.h"
+
+
+/************************************************************************
+*                          Global definitions                           *
+************************************************************************/
+
+#define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
+#define GAME_FILE_API_VERSION	"7.0"	// For game loads and saves
+#define GAME_FILE_SENTINEL	(42)	// End of game file sentinel
+
+#define BUFSIZE			(1024)	// For various string buffers
 
 
 #endif /* included_TRADER_H */

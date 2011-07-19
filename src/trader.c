@@ -278,11 +278,11 @@ void init_program (void)
     // Initialise the random number generator
     init_rand();
 
-    // Initialise the terminal display
-    init_screen();
-
     // Initialise signal-handling functions
     // @@@ To be completed
+
+    // Initialise the terminal display
+    init_screen();
 }
 
 

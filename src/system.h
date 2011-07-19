@@ -9,8 +9,8 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, system.h, contains system #include directives for Star
-  Traders.
+  This file, system.h, contains system-specific definitions and #include
+  directives for Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -72,7 +72,7 @@
 #elif defined(HAVE_CURSES_H)
 #  include <curses.h>
 #else
-#  error SysV-compatible curses library required
+#  error "X/Open-compatible curses library required"
 #endif
 
 
