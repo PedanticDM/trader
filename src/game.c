@@ -136,7 +136,7 @@ void init_game (void)
 	    } else {
 
 		// Ask which game to load
-		newtxwin(5, 50, LINE_OFFSET + 6, COL_CENTER(50));
+		newtxwin(5, 54, LINE_OFFSET + 6, COL_CENTER(54));
 		wbkgd(curwin, ATTR_NORMAL_WINDOW);
 		box(curwin, 0, 0);
 
@@ -147,7 +147,7 @@ void init_game (void)
 		attrpr(curwin, ATTR_KEYCODE_STR, "9");
 		waddstr(curwin, "]");
 		waddstr(curwin, " or ");
-		attrpr(curwin, ATTR_KEYCODE_STR, "<ESC>");
+		attrpr(curwin, ATTR_KEYCODE_STR, "<CTRL><C>");
 		waddstr(curwin, " to cancel: ");
 
 		curs_set(CURS_ON);
@@ -164,7 +164,7 @@ void init_game (void)
 		    case KEY_CTRL('C'):
 		    case KEY_CTRL('G'):
 		    case KEY_CTRL('\\'):
-			key = KEY_ESC;
+			key = KEY_CANCEL;
 			done = true;
 			break;
 
@@ -180,7 +180,7 @@ void init_game (void)
 
 		curs_set(CURS_OFF);
 
-		if (key != KEY_ESC) {
+		if (key != KEY_CANCEL) {
 		    game_num = key - '0';
 
 		    wechochar(curwin, key | A_BOLD);

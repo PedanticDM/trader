@@ -179,15 +179,15 @@ selection_t get_move (void)
 	attrpr(curwin, ATTR_KEYCODE_STR, "<2>");
 	waddstr(curwin, " Declare bankruptcy");
 
-	wmove(curwin, 2, 41);
+	wmove(curwin, 2, 42);
 	attrpr(curwin, ATTR_KEYCODE_STR, "<3>");
-	waddstr(curwin, "  Save and end the game");
+	waddstr(curwin, " Save and end the game");
 
-	wmove(curwin, 3, 40);
-	attrpr(curwin, ATTR_KEYCODE_STR, "<ESC>");
+	wmove(curwin, 3, 42);
+	attrpr(curwin, ATTR_KEYCODE_STR, "<CTRL><C>");
 	waddstr(curwin, " Quit the game");
 
-	mvwaddstr(curwin, 1, 2, "          Select move ");
+	mvwaddstr(curwin, 1, 8, " Select move ");
 	waddstr(curwin, "[");
 	attrpr(curwin, ATTR_MAP_CHOICE, "%c", MOVE_TO_KEY(0));
 	waddstr(curwin, "-");
@@ -197,7 +197,7 @@ selection_t get_move (void)
 	waddstr(curwin, "-");
 	attrpr(curwin, ATTR_KEYCODE_STR, "3");
 	waddstr(curwin, "/");
-	attrpr(curwin, ATTR_KEYCODE_STR, "<ESC>");
+	attrpr(curwin, ATTR_KEYCODE_STR, "<CTRL><C>");
 	waddstr(curwin, "]: ");
 
 	curs_set(CURS_ON);
@@ -251,7 +251,7 @@ selection_t get_move (void)
 
 		    curs_set(CURS_OFF);
 		    wattron(curwin, A_BOLD);
-		    waddstr(curwin, "<ESC>");
+		    waddstr(curwin, "<CTRL><C>");
 		    wattroff(curwin, A_BOLD);
 		    waddstr(curwin, " (Quit the game)");
 		    break;
@@ -274,7 +274,7 @@ selection_t get_move (void)
 	wrefresh(curwin);
 
 	// Ask the player to confirm their choice
-	mvwaddstr(curwin, 2, 2, "                   Are you sure? ");
+	mvwaddstr(curwin, 2, 22, "Are you sure? ");
 	waddstr(curwin, "[");
 	attrpr(curwin, ATTR_KEYCODE_STR, "Y");
 	waddstr(curwin, "/");
@@ -309,7 +309,7 @@ selection_t get_move (void)
 		bool done;
 
 		// Ask which game to save
-		newtxwin(6, 50, LINE_OFFSET + 8, COL_CENTER(50));
+		newtxwin(6, 54, LINE_OFFSET + 8, COL_CENTER(54));
 		wbkgd(curwin, ATTR_NORMAL_WINDOW);
 		box(curwin, 0, 0);
 
@@ -321,7 +321,7 @@ selection_t get_move (void)
 		attrpr(curwin, ATTR_KEYCODE_STR, "9");
 		waddstr(curwin, "]");
 		waddstr(curwin, " or ");
-		attrpr(curwin, ATTR_KEYCODE_STR, "<ESC>");
+		attrpr(curwin, ATTR_KEYCODE_STR, "<CTRL><C>");
 		waddstr(curwin, " to cancel: ");
 
 		curs_set(CURS_ON);
@@ -338,7 +338,7 @@ selection_t get_move (void)
 		    case KEY_CTRL('C'):
 		    case KEY_CTRL('G'):
 		    case KEY_CTRL('\\'):
-			key = KEY_ESC;
+			key = KEY_CANCEL;
 			done = true;
 			break;
 
@@ -354,7 +354,7 @@ selection_t get_move (void)
 
 		curs_set(CURS_OFF);
 
-		if (key != KEY_ESC) {
+		if (key != KEY_CANCEL) {
 		    game_num = key - '0';
 
 		    wechochar(curwin, key | A_BOLD);
