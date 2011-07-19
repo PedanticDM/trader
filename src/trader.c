@@ -43,6 +43,7 @@
 
 enum options_char {
     OPTION_NO_COLOR = 1,
+    OPTION_MAX_TURN
 };
 
 static const char options_short[] = "hV";
@@ -50,11 +51,12 @@ static const char options_short[] = "hV";
     // -V, --version
 
 static struct option const options_long[] = {
-    { "help",      no_argument, NULL, 'h' },
-    { "version",   no_argument, NULL, 'V' },
-    { "no-color",  no_argument, NULL, OPTION_NO_COLOR },
-    { "no-colour", no_argument, NULL, OPTION_NO_COLOR },
-    { NULL,        0,           NULL, 0 }
+    { "help",      no_argument,       NULL, 'h' },
+    { "version",   no_argument,       NULL, 'V' },
+    { "no-color",  no_argument,       NULL, OPTION_NO_COLOR },
+    { "no-colour", no_argument,       NULL, OPTION_NO_COLOR },
+    { "max-turn",  required_argument, NULL, OPTION_MAX_TURN },
+    { NULL,        0,                 NULL, 0 }
 };
 
 
@@ -187,6 +189,8 @@ int main (int argc, char *argv[])
 void process_cmdline (int argc, char *argv[])
 {
     int c;
+    char *p;
+
 
     // Process arguments starting with "-" or "--"
     opterr = true;
@@ -209,6 +213,17 @@ void process_cmdline (int argc, char *argv[])
 	case OPTION_NO_COLOR:
 	    // --no-color, --no-colour: don't use colour
 	    option_no_color = true;
+	    break;
+
+	case OPTION_MAX_TURN:
+	    // --max-turn: specify the maximum turn number
+	    option_max_turn = strtol(optarg, &p, 10);
+
+	    if (option_max_turn < MIN_MAX_TURN || p == NULL || *p != '\0') {
+		fprintf(stderr, "%s: invalid value for --max-turn: `%s'\n",
+			program_name(), optarg);
+		show_usage(EXIT_FAILURE);
+	    }
 	    break;
 
 	default:

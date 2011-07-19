@@ -45,6 +45,7 @@
 
 #define NUMBER_MOVES		20	// Number of choices on map per turn
 #define DEFAULT_MAX_TURN	50	// Default number of turns per game
+#define MIN_MAX_TURN		10	// Minimum that can be specified for max_turn
 
 #define MAX_PLAYERS		8	// Maximum number of players
 #define INITIAL_CASH		6000.00	// Initial cash per player
@@ -197,6 +198,7 @@ extern bool	quit_selected;		// Is a player trying to quit the game?
 extern bool	abort_game;		// Abort game without declaring winner?
 
 extern bool	option_no_color;	// True if --no-color was specified
+extern int	option_max_turn;	// Max. turns if --max-turn was specified
 
 
 #endif /* included_GLOBALS_H */

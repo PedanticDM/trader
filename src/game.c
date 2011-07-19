@@ -381,7 +381,7 @@ void init_game (void)
 
 	    // Miscellaneous initialisation
 	    interest_rate = INITIAL_INTEREST_RATE;
-	    max_turn = DEFAULT_MAX_TURN;
+	    max_turn = option_max_turn ? option_max_turn : DEFAULT_MAX_TURN;
 	    turn_number = 1;
 
 	    // Select who is to go first
