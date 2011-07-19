@@ -318,7 +318,7 @@ int center (WINDOW *win, int y, int attr, const char *format, ...)
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
@@ -374,7 +374,7 @@ int center2 (WINDOW *win, int y, int attr_initial, int attr_string,
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
@@ -438,7 +438,7 @@ int center3 (WINDOW *win, int y, int attr_initial, int attr_final,
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     oldattr = getbkgd(win) & ~A_CHARTEXT;
@@ -1250,7 +1250,7 @@ int gettxstring (WINDOW *win, char **bufptr, bool multifield, int y, int x,
     if (*bufptr == NULL) {
 	*bufptr = malloc(BUFSIZE);
 	if (*bufptr == NULL) {
-	    err_exit("out of memory");
+	    err_exit_nomem();
 	}
 
 	**bufptr = '\0';
@@ -1303,27 +1303,27 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     buf_copy = malloc(BUFSIZE);
     if (buf_copy == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     allowed = malloc(BUFSIZE);
     if (allowed == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     emptystr = malloc(BUFSIZE);
     if (emptystr == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     defaultstr = malloc(BUFSIZE);
     if (defaultstr == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     *buf = '\0';
@@ -1443,27 +1443,27 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     buf_copy = malloc(BUFSIZE);
     if (buf_copy == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     allowed = malloc(BUFSIZE);
     if (allowed == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     emptystr = malloc(BUFSIZE);
     if (emptystr == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     defaultstr = malloc(BUFSIZE);
     if (defaultstr == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     *buf = '\0';

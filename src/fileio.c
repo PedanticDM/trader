@@ -96,7 +96,7 @@ static const int game_file_crypt_key[] = {
 									\
 	s = malloc(strlen(buf) + 1);					\
 	if (s == NULL) {						\
-	    err_exit("out of memory");					\
+	    err_exit_nomem();						\
 	}								\
 									\
 	strcpy(s, buf);							\
@@ -159,7 +159,7 @@ bool load_game (int num)
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     filename = game_filename(num);
@@ -326,7 +326,7 @@ bool save_game (int num)
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     crypt_key = game_file_crypt_key[randi(GAME_FILE_CRYPT_KEY_SIZE)];

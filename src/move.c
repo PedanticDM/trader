@@ -755,7 +755,7 @@ void merge_companies (map_val_t a, map_val_t b)
 
     char *buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
 
@@ -965,7 +965,7 @@ void adjust_values (void)
 
 		buf = malloc(BUFSIZE);
 		if (buf == NULL) {
-		    err_exit("out of memory");
+		    err_exit_nomem();
 		}
 
 		for (i = 0; i < number_players; i++) {
@@ -1081,7 +1081,7 @@ void adjust_values (void)
 
 	buf = malloc(BUFSIZE);
 	if (buf == NULL) {
-	    err_exit("out of memory");
+	    err_exit_nomem();
 	}
 
 	impounded = MIN(player[current_player].cash,

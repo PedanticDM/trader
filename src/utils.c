@@ -262,6 +262,20 @@ void errno_exit (const char *format, ...)
 
 
 /*-----------------------------------------------------------------------
+  Function:   err_exit_nomem  - Print an "out of memory" error and exit
+  Arguments:  (none)
+  Returns:    (does not return)
+
+  This function calls err_exit with an "out of memory" error message.
+*/
+
+void err_exit_nomem (void)
+{
+    err_exit("out of memory");
+}
+
+
+/*-----------------------------------------------------------------------
   Function:   init_rand  - Initialise the random number generator
   Arguments:  (none)
   Returns:    (nothing)

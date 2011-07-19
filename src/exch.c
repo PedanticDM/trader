@@ -92,7 +92,7 @@ void exchange_stock (void)
 	} else {
 	    char *buf = malloc(BUFSIZE);
 	    if (buf == NULL) {
-		err_exit("out of memory");
+		err_exit_nomem();
 	    }
 
 	    // Handle the locale's currency symbol
@@ -245,7 +245,7 @@ void visit_bank (void)
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     credit_limit = (total_value(current_player) - player[current_player].debt)
@@ -481,7 +481,7 @@ void trade_shares (int num, bool *bid_used)
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     ownership = (company[num].stock_issued == 0) ? 0.0 :

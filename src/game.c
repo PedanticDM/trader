@@ -434,7 +434,7 @@ void end_game (void)
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
-	err_exit("out of memory");
+	err_exit_nomem();
     }
 
     newtxwin(7, 40, LINE_OFFSET + 9, COL_CENTER(40));
@@ -554,7 +554,7 @@ void show_map (bool closewin)
 
 	char *buf = malloc(BUFSIZE);
 	if (buf == NULL) {
-	    err_exit("out of memory");
+	    err_exit_nomem();
 	}
 
 	int len1 = strlen(initial);
@@ -659,7 +659,7 @@ void show_status (int num)
     } else {
 	char *buf = malloc(BUFSIZE);
 	if (buf == NULL) {
-	    err_exit("out of memory");
+	    err_exit_nomem();
 	}
 
 	// Check to see if any companies are on the map

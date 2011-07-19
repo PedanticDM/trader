@@ -70,6 +70,8 @@ extern void err_exit   (const char *format, ...)
     __attribute__((noreturn, format (printf, 1, 2)));
 extern void errno_exit (const char *format, ...)
     __attribute__((noreturn, format (printf, 1, 2)));
+extern void err_exit_nomem (void)
+    __attribute__((noreturn));
 
 // Random number functions
 
