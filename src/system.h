@@ -45,7 +45,11 @@
 *                          System header files                          *
 ************************************************************************/
 
-#define _GNU_SOURCE 1
+#define _XOPEN_SOURCE	700		// Use SUSv4 where possible
+#define _GNU_SOURCE	1		// Use GNU extensions as well
+
+
+// Headers defined by ISO/IEC 9899:1999 (C99)
 
 #include <assert.h>
 
@@ -53,17 +57,26 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include <locale.h>
 #include <ctype.h>
 #include <string.h>
-#include <locale.h>
 #include <time.h>
-#include <signal.h>
 #include <errno.h>
+
+
+// Headers defined by X/Open Single Unix Specification v4
+
 #include <unistd.h>
 #include <sys/stat.h>
 #include <monetary.h>
 
+
+// Headers defined by the GNU C Library
+
 #include <getopt.h>
+
+
+// X/Open-compatible Curses library
 
 #if defined(HAVE_NCURSESW) && defined(HAVE_NCURSESW_H)
 #  include <ncursesw/curses.h>
@@ -72,7 +85,7 @@
 #elif defined(HAVE_CURSES_H)
 #  include <curses.h>
 #else
-#  error "X/Open-compatible curses library required"
+#  error "X/Open-compatible Curses library required"
 #endif
 
 
