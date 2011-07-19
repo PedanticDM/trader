@@ -364,11 +364,11 @@ void visit_bank (void)
 	    wattroff(curwin, A_BOLD);
 	    x = getcurx(curwin);
 
-	    ret = gettxdouble(curwin, &val, 0.0, credit_limit +
-			      ROUNDING_AMOUNT, 0.0, credit_limit, 3, x,
-			      getmaxx(curwin) - x - n, ATTR_INPUT_FIELD);
+	    ret = gettxdouble(curwin, &val, 0.0, credit_limit, 0.0,
+			      credit_limit, 3, x, getmaxx(curwin) - x - n,
+			      ATTR_INPUT_FIELD);
 
-	    if (ret == OK) {
+	    if (ret == OK && val > ROUNDING_AMOUNT) {
 		player[current_player].cash += val;
 		player[current_player].debt += val * (interest_rate + 1.0);
 	    }
@@ -424,8 +424,7 @@ void visit_bank (void)
 	    wattroff(curwin, A_BOLD);
 	    x = getcurx(curwin);
 
-	    max = MIN(player[current_player].cash + ROUNDING_AMOUNT,
-		      player[current_player].debt + ROUNDING_AMOUNT);
+	    max = MIN(player[current_player].cash, player[current_player].debt);
 
 	    ret = gettxdouble(curwin, &val, 0.0, max, 0.0, max, 3, x,
 			      getmaxx(curwin) - x - n, ATTR_INPUT_FIELD);
@@ -469,7 +468,252 @@ void visit_bank (void)
 
 void trade_shares (int num, bool *bid_used)
 {
+    bool done;
+    int key, ret, x;
+    long maxshares, val;
+    double ownership;
+    char *buf;
+
+
     assert(num >= 0 && num < MAX_COMPANIES);
 
-    // @@@ To be written
+    buf = malloc(BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    ownership = (company[num].stock_issued == 0) ? 0.0 :
+	((double) player[current_player].stock_owned[num] /
+	 company[num].stock_issued);
+
+    // Show the informational part of the trade window
+    newtxwin(9, 76, LINE_OFFSET + 5, COL_CENTER(76));
+    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+    box(curwin, 0, 0);
+
+    center(curwin, 1, ATTR_WINDOW_TITLE, "  Stock Transaction in %s  ",
+	   company[num].name);
+
+    mvwaddstr(curwin, 3, 2, "Shares issued:   ");
+    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%'12ld", company[num].stock_issued);
+
+    mvwaddstr(curwin, 4, 2, "Shares left:     ");
+    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%'12ld",
+	   company[num].max_stock - company[num].stock_issued);
+
+    mvwaddstr(curwin, 5, 2, "Price per share: ");
+    strfmon(buf, BUFSIZE, "%12n", company[num].share_price);
+    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%12s", buf);
+
+    mvwaddstr(curwin, 6, 2, "Return:          ");
+    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%11.2f%%",
+	   company[num].share_return * 100.0);
+
+    mvwaddstr(curwin, 3, 38, "Current holdings: ");
+    attrpr(curwin, ATTR_HIGHLIGHT_STR, " %'16ld ",
+	   player[current_player].stock_owned[num]);
+
+    mvwaddstr(curwin, 4, 38, "Percentage owned: ");
+    attrpr(curwin, ATTR_HIGHLIGHT_STR, " %'15.2f%% ", ownership * 100.0);
+
+    wmove(curwin, 6, 38);
+    attrpr(curwin, ATTR_HIGHLIGHT_STR, "Current cash:     ");
+    strfmon(buf, BUFSIZE, "%16n", player[current_player].cash);
+    attrpr(curwin, ATTR_WINDOW_TITLE, " %16s ", buf);
+
+    wrefresh(curwin);
+
+    // Show menu of choices for the player
+    newtxwin(7, 76, LINE_OFFSET + 14, COL_CENTER(76));
+    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+    box(curwin, 0, 0);
+
+    wmove(curwin, 3, 2);
+    attrpr(curwin, ATTR_KEYCODE_STR, "<1>");
+    waddstr(curwin, " Buy stock from company");
+
+    wmove(curwin, 4, 2);
+    attrpr(curwin, ATTR_KEYCODE_STR, "<2>");
+    waddstr(curwin, " Sell stock back to company");
+
+    wmove(curwin, 3, 38);
+    attrpr(curwin, ATTR_KEYCODE_STR, "<3>");
+    waddstr(curwin, " Bid company to issue more shares");
+
+    wmove(curwin, 4, 38);
+    attrpr(curwin, ATTR_KEYCODE_STR, "<4>");
+    waddstr(curwin, " Exit to the Stock Exchange");
+
+    mvwaddstr(curwin, 1, 24, "Enter selection ");
+    waddstr(curwin, "[");
+    attrpr(curwin, ATTR_KEYCODE_STR, "1");
+    waddstr(curwin, "-");
+    attrpr(curwin, ATTR_KEYCODE_STR, "4");
+    waddstr(curwin, "]: ");
+
+    curs_set(CURS_ON);
+    wrefresh(curwin);
+
+    do {
+	key = gettxchar(curwin);
+
+	switch (key) {
+	case '1':
+	case '2':
+	case '3':
+	case '4':
+	case ' ':
+	case KEY_CTRL('C'):
+	case KEY_CTRL('G'):
+	case KEY_CTRL('\\'):
+	    done = true;
+	    break;
+
+	default:
+	    beep();
+	    break;
+	}
+    } while (! done);
+
+    curs_set(CURS_OFF);
+    wechochar(curwin, key | A_BOLD);
+
+    switch (key) {
+    case '1':
+	// Buy stock in company
+	maxshares = player[current_player].cash / company[num].share_price;
+
+	if (company[num].max_stock - company[num].stock_issued == 0) {
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares Available  ");
+	    center(curwin, 3, ATTR_ERROR_STR,
+		   "No more shares are available for purchase");
+
+	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    deltxwin();
+
+	} else if (maxshares <= 0) {
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  Insufficient Cash  ");
+	    center(curwin, 3, ATTR_ERROR_STR,
+		   "Not enough cash to purchase shares");
+
+	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    deltxwin();
+
+	} else {
+	    maxshares = MIN(maxshares, company[num].max_stock -
+			    company[num].stock_issued);
+
+	    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	    werase(curwin);
+	    box(curwin, 0, 0);
+
+	    center3(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_NORMAL_WINDOW,
+		    ATTR_HIGHLIGHT_STR, "You can purchase up to ", " shares.",
+		    "%'ld", maxshares);
+
+	    mvwprintw(curwin, 4, 10, "How many shares do you wish to purchase? ");
+	    x = getcurx(curwin);
+
+	    ret = gettxlong(curwin, &val, 0, maxshares, 0, maxshares, 4, x,
+			    getmaxx(curwin) - x - 10, ATTR_INPUT_FIELD);
+
+	    if (ret == OK) {
+		player[current_player].cash -= val * company[num].share_price;
+		player[current_player].stock_owned[num] += val;
+		company[num].stock_issued += val;
+	    }
+	}
+	break;
+
+    case '2':
+	// Sell stock back to company
+	maxshares = player[current_player].stock_owned[num];
+	if (maxshares == 0) {
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares  ");
+	    center(curwin, 3, ATTR_ERROR_STR,
+		   "You do not have any shares to sell");
+
+	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    deltxwin();
+
+	} else {
+	    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	    werase(curwin);
+	    box(curwin, 0, 0);
+
+	    center3(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_NORMAL_WINDOW,
+		    ATTR_HIGHLIGHT_STR, "You can sell up to ", " shares.",
+		    "%'ld", maxshares);
+
+	    mvwprintw(curwin, 4, 10, "How many shares do you wish to sell? ");
+	    x = getcurx(curwin);
+
+	    ret = gettxlong(curwin, &val, 0, maxshares, 0, maxshares, 4, x,
+			    getmaxx(curwin) - x - 10, ATTR_INPUT_FIELD);
+
+	    if (ret == OK) {
+		company[num].stock_issued -= val;
+		player[current_player].stock_owned[num] -= val;
+		player[current_player].cash += val * company[num].share_price;
+	    }
+	}
+	break;
+
+    case '3':
+	// Bid company to issue more shares
+	maxshares = 0;
+	if (! *bid_used && randf() < ownership && randf() < BID_CHANCE) {
+	    maxshares = randf() * ownership * MAX_SHARES_BIDDED;
+	    company[num].max_stock += maxshares;
+	}
+
+	*bid_used = true;
+
+	if (maxshares == 0) {
+	    newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_ERROR_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares Issued  ");
+	    center(curwin, 3, ATTR_ERROR_STR, "%s", company[num].name);
+	    center(curwin, 4, ATTR_ERROR_STR, "has refused to issue more shares");
+
+	    wait_for_key(curwin, 6, ATTR_WAITERROR_STR);
+	    deltxwin();
+	} else {
+	    newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	    box(curwin, 0, 0);
+
+	    center(curwin, 1, ATTR_WINDOW_TITLE, "  Shares Issued  ");
+	    center(curwin, 3, ATTR_HIGHLIGHT_STR, "%s", company[num].name);
+	    center(curwin, 4, ATTR_HIGHLIGHT_STR, "has issued %'ld more shares",
+		maxshares);
+
+	    wait_for_key(curwin, 6, ATTR_WAITNORMAL_STR);
+	    deltxwin();
+	}
+	break;
+
+    default:
+	break;
+    }
+
+    deltxwin();			// "Enter selection" window
+    deltxwin();			// Stock Transaction window
+    txrefresh();
+
+    free(buf);
 }
