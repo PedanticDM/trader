@@ -256,7 +256,7 @@ bool load_game (int num)
     // Read in company data
     for (i = 0; i < MAX_COMPANIES; i++) {
 	company[i].name = company_name[i];
-	load_game_read_double(company[i].share_price, company[i].share_price > 0.0);
+	load_game_read_double(company[i].share_price, company[i].share_price >= 0.0);
 	load_game_read_double(company[i].share_return, true);
 	load_game_read_long(company[i].stock_issued, company[i].stock_issued >= 0);
 	load_game_read_long(company[i].max_stock, company[i].max_stock >= 0);
