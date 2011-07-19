@@ -33,7 +33,7 @@
 
 
 /************************************************************************
-*                 Stock Exchange function declarations                  *
+*                  Stock Exchange function prototypes                   *
 ************************************************************************/
 
 extern void exchange_stock (void);

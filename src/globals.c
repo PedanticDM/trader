@@ -47,6 +47,7 @@ const char *company_name[MAX_COMPANIES] = {
     "Hercules and Co"
 };
 
+
 // Ordinal strings
 const char *ordinal[MAX_PLAYERS + 1] = {
     "0th",
@@ -71,17 +72,17 @@ map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
 int	max_turn;			// Max. number of turns in game
-int	turn_number;
-int	number_players;
-int	current_player;
+int	turn_number;			// Current turn (1 to max_turn)
+int	number_players;			// Number of players
+int	current_player;			// Current player (0 to number_players-1)
 int	first_player;			// Who WAS the first player to go?
 
 double	interest_rate;			// Current interest rate
 
-bool	game_loaded = false;		// True if game was loaded from disk
-int	game_num    = 0;		// Game number (1-9)
+bool	game_loaded	= false;	// True if game was loaded from disk
+int	game_num	= 0;		// Game number (1-9)
 
-bool	quit_selected;			// Is a player trying to quit the game?
-bool	abort_game;			// Abort game without declaring winner?
+bool	quit_selected	= false;	// Is a player trying to quit the game?
+bool	abort_game	= false;	// Abort game without declaring winner?
 
 bool	option_no_color = false;	// True if --no-color was specified

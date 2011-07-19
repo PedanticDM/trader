@@ -37,7 +37,7 @@
 ************************************************************************/
 
 #define GAME_FILENAME_PROTO	"game%d"
-#define GAME_FILENAME_BUFSIZE	(16)
+#define GAME_FILENAME_BUFSIZE	16
 
 
 /************************************************************************
@@ -51,7 +51,7 @@
 
 
 /************************************************************************
-*                     Utility function declarations                     *
+*                      Utility function prototypes                      *
 ************************************************************************/
 
 // Initialisation and environment functions

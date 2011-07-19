@@ -33,7 +33,7 @@
 
 
 /************************************************************************
-*                    Game move function declarations                    *
+*                     Game move function prototypes                     *
 ************************************************************************/
 
 extern void select_moves (void);

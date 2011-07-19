@@ -36,16 +36,16 @@
 *                         Included header files                         *
 ************************************************************************/
 
-#include "system.h"
+#include "system.h"		// System header files
 
-#include "globals.h"
-#include "game.h"
-#include "move.h"
-#include "exch.h"
-#include "fileio.h"
-#include "help.h"
-#include "intf.h"
-#include "utils.h"
+#include "globals.h"		// Global game constants and variables
+#include "game.h"		// Game start, end and display functions
+#include "move.h"		// Making and processing a move
+#include "exch.h"		// Stock Exchange and Bank functions
+#include "fileio.h"		// Load and save game file functions
+#include "help.h"		// Help text functions: how to play
+#include "intf.h"		// Basic text input/output functions
+#include "utils.h"		// Utility functions needed by Star Traders
 
 
 /************************************************************************
@@ -54,9 +54,9 @@
 
 #define GAME_FILE_HEADER	PACKAGE_NAME " Saved Game"
 #define GAME_FILE_API_VERSION	"7.0"	// For game loads and saves
-#define GAME_FILE_SENTINEL	(42)	// End of game file sentinel
+#define GAME_FILE_SENTINEL	42	// End of game file sentinel
 
-#define BUFSIZE			(1024)	// For various string buffers
+#define BUFSIZE			1024	// For various string buffers
 
 
 #endif /* included_TRADER_H */

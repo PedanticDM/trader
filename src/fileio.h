@@ -33,7 +33,7 @@
 
 
 /************************************************************************
-*               Game load and save function declarations                *
+*                Game load and save function prototypes                 *
 ************************************************************************/
 
 extern bool load_game (int num);

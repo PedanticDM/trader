@@ -10,11 +10,11 @@ source code is split up among the following files:
 
     trader.c    trader.h    - Main program, command-line interface
     globals.c   globals.h   - Global game constants and variables
-    game.c      game.h      - Game start and end routines
-    move.c      move.h      - Routines for making and processing a move
-    exch.c      exch.h      - Stock Exchange and Bank routines
-    fileio.c    fileio.h    - Load and save game file routines
-    help.c      help.h      - Help text routines: how to play Star Traders
-    intf.c      intf.h      - Basic text input/output routines
+    game.c      game.h      - Game start, end and (some) display functions
+    move.c      move.h      - Functions for making and processing a move
+    exch.c      exch.h      - Stock Exchange and Bank functions
+    fileio.c    fileio.h    - Load and save game file functions
+    help.c      help.h      - Help text functions: how to play the game
+    intf.c      intf.h      - Basic text input/output functions
     utils.c     utils.h     - Utility functions needed by Star Traders
     system.h                - All system header files are included here

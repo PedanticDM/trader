@@ -33,7 +33,7 @@
 
 
 /************************************************************************
-*                    Help text function declarations                    *
+*                     Help text function prototypes                     *
 ************************************************************************/
 
 extern void show_help (void);

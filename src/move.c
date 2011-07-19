@@ -918,8 +918,8 @@ void inc_share_price (int num, double inc)
 {
     company[num].share_price += inc * (1.0 + randf() * SHARE_PRICE_INC_EXTRA);
     company[num].max_stock   += inc / (randf() * 10.0 + 5.0);
-    if (randf() < PROB_CHANGE_RETURN) {
-	company[num].share_return *= randf() + CHANGE_RETURN_INC;
+    if (randf() < GROWING_RETURN_CHANGE) {
+	company[num].share_return *= randf() + GROWING_RETURN_INC;
     }
 }
 

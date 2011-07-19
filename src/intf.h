@@ -9,8 +9,9 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, intf.h, contains function declarations for basic text input/
-  output routines for Star Traders.
+  This file, intf.h, contains declarations for basic text input/output
+  functions used in Star Traders.  It uses the X/Open Curses library to
+  provide terminal-independent functionality.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -154,7 +155,7 @@ extern bool use_color;			// True to use colour in Star Traders
 
 
 /************************************************************************
-*             Basic text input/output function declarations             *
+*              Basic text input/output function prototypes              *
 ************************************************************************/
 
 extern void init_screen (void);
