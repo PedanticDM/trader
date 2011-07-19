@@ -9,7 +9,7 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, help.c, contains the actual implementation of help routines
+  This file, help.c, contains the actual implementation of help functions
   as used in Star Traders.
 
 
@@ -35,7 +35,7 @@
 *                         Help text definition                          *
 ************************************************************************/
 
-const char *help_text[] = {
+static const char *help_text[] = {
     "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
     "game is to amass  the greatest amount  of wealth  possible.  This is done by\n"
     "creating interstellar  shipping lanes, expanding them  and buying shares  in\n"
@@ -149,6 +149,10 @@ const char *help_text[] = {
 *                    Help text function definitions                     *
 ************************************************************************/
 
+// This function is documented in the file "help.h"
+
+
+/***********************************************************************/
 void show_help (void)
 {
     int curpage = 0;
@@ -156,15 +160,15 @@ void show_help (void)
     bool done = false;
 
 
+    // Count how many pages appear in the help text
     for (numpages = 0; help_text[numpages] != NULL; numpages++) {
 	;
     }
 
-    if (numpages == 0) {
+    if (numpages == 0)
 	return;
-    }
 
-    newtxwin(23, 80, LINE_OFFSET+1, COL_CENTER(80));
+    newtxwin(WIN_LINES - 1, WIN_COLS, LINE_OFFSET + 1, COL_CENTER(WIN_COLS));
 
     while (! done) {
 	// Display a page of instructions
@@ -247,7 +251,6 @@ void show_help (void)
 		    waddch(curwin, *s  | curattr);
 		    break;
 		}
-
 		break;
 
 	    case '~':
@@ -314,7 +317,6 @@ void show_help (void)
 		    waddch(curwin, *s  | curattr);
 		    break;
 		}
-
 		break;
 
 	    default:

@@ -9,8 +9,8 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, help.h, contains declarations for help text routines as used
-  in Star Traders.
+  This file, help.h, contains declarations for help functions as used in
+  Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -36,6 +36,15 @@
 *                     Help text function prototypes                     *
 ************************************************************************/
 
+/*
+  Function:   show_help - Show instructions on how to play the game
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function displays instructions on how to play Star Traders in a
+  Curses window.  It does not depend on any global game variable.  On
+  exit, the previous screen is restored and refreshed.
+*/
 extern void show_help (void);
 
 
