@@ -365,8 +365,8 @@ void visit_bank (void)
 	    wattroff(curwin, A_BOLD);
 	    x = getcurx(curwin);
 
-	    ret = gettxdouble(curwin, &val, 0.0, credit_limit, 0.0,
-			      credit_limit, 3, x, getmaxx(curwin) - x - n,
+	    ret = gettxdouble(curwin, &val, 0.0, credit_limit + ROUNDING_AMOUNT,
+			      0.0, credit_limit, 3, x, getmaxx(curwin) - x - n,
 			      ATTR_INPUT_FIELD);
 
 	    if (ret == OK && val > ROUNDING_AMOUNT) {
@@ -427,8 +427,9 @@ void visit_bank (void)
 
 	    max = MIN(player[current_player].cash, player[current_player].debt);
 
-	    ret = gettxdouble(curwin, &val, 0.0, max, 0.0, max, 3, x,
-			      getmaxx(curwin) - x - n, ATTR_INPUT_FIELD);
+	    ret = gettxdouble(curwin, &val, 0.0, max + ROUNDING_AMOUNT, 0.0,
+			      max, 3, x, getmaxx(curwin) - x - n,
+			      ATTR_INPUT_FIELD);
 
 	    if (ret == OK) {
 		player[current_player].cash -= val;
