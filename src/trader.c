@@ -13,7 +13,8 @@
   of the game is to create companies, buy and sell shares, borrow and
   repay money, in order to become the wealthiest player (the winner).
 
-  This file, trader.c, contains the main program for Star Traders.
+  This file, trader.c, contains the main program and command-line
+  interface for Star Traders.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -35,16 +36,103 @@
 
 
 /************************************************************************
-*                    Internal function declarations                     *
+*                 Module-specific constant definitions                  *
 ************************************************************************/
 
+// Constants for command line options
+
+enum options_char {
+    OPTION_NO_COLOR = 1,
+};
+
+static const char options_short[] = "hV";
+    // -h, --help
+    // -V, --version
+
+static struct option const options_long[] = {
+    { "help",      no_argument, NULL, 'h' },
+    { "version",   no_argument, NULL, 'V' },
+    { "no-color",  no_argument, NULL, OPTION_NO_COLOR },
+    { "no-colour", no_argument, NULL, OPTION_NO_COLOR },
+    { NULL,        0,           NULL, 0 }
+};
+
+
+/************************************************************************
+*                  Module-specific function prototypes                  *
+************************************************************************/
+
+/*
+  Function:   main - Main program implementing Star Traders
+  Parameters: argc - Command-line argument count
+              argv - Command-line argument vector
+  Returns:    int  - Operating system return code: 0 if all well, 1 if not.
+
+  The main() function is, of course, where all the action starts in a C
+  program.  This function contains the main game loop, a series of game
+  functions that are called in sequence.
+*/
 int main (int argc, char *argv[]);
 
+
+/*
+  Function:   process_cmdline - Process command line arguments
+  Parameters: argc            - Same as passed to main()
+              argv            - Same as passed to main()
+  Returns:    (nothing)
+
+  This function processes the command line arguments passed through argc
+  and argv.  If required, it shows the program version number and/or
+  command-line help.  It also sets global variables starting with option_
+  to appropriate values.
+*/
 void process_cmdline (int argc, char *argv[]);
+
+
+/*
+  Function:   show_version - Show program version information
+  Parameters: (none)
+  Returns:    (does not return)
+
+  This function displays version information about this program, then
+  terminates with exit code EXIT_SUCCESS.
+*/
 void show_version (void) __attribute__((noreturn));
+
+
+/*
+  Function:   show_usage - Show command line usage information
+  Parameters: status     - Exit status
+  Returns:    (does not return)
+
+  This function displays usage information for this program.  If status
+  is zero, a detailed explanation is sent to stdout; otherwise, a brief
+  message is sent to stderr.  It exits to the operating system with
+  status as the exit code.
+*/
 void show_usage (int status) __attribute__((noreturn));
 
+
+/*
+  Function:   init_program - Initialise program-wide functions
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function initialises the terminal display, internal low-level
+  routines, etc.  It should be called before the game starts.
+*/
 void init_program (void);
+
+
+/*
+  Function:   end_program - Deinitialise program-wide functions
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function finalises the terminal display, internal low-level
+  routines, etc.  It should be the last function called in the ordinary
+  course of program execution.
+*/
 void end_program (void);
 
 
@@ -54,11 +142,13 @@ void end_program (void);
 
 int main (int argc, char *argv[])
 {
+    // Strip off leading pathname components from program name
     init_program_name(argv);
 
     // Initialise the locale
     if (setlocale(LC_ALL, "") == NULL) {
-	err_exit("could not set locale (check LANG, LC_ALL and LANGUAGE in environment)");
+	err_exit("could not set locale "
+		 "(check LANG, LC_ALL and LANGUAGE in environment)");
     }
 
     // Process command line arguments
@@ -90,36 +180,10 @@ int main (int argc, char *argv[])
 *                        Command line processing                        *
 ************************************************************************/
 
-/* Constants for command line options */
-
-enum options_char {
-    OPTION_NO_COLOR = 1,
-};
-
-static const char options_short[] = "hV";
-    /* -h   --help
-       -V   --version
-    */
-
-static struct option const options_long[] = {
-    { "help",      no_argument, NULL, 'h' },
-    { "version",   no_argument, NULL, 'V' },
-    { "no-color",  no_argument, NULL, OPTION_NO_COLOR },
-    { "no-colour", no_argument, NULL, OPTION_NO_COLOR },
-    { NULL,        0,           NULL, 0 }
-};
+// These functions are documented at the start of this file
 
 
-/*-----------------------------------------------------------------------
-  Function:   process_cmdline  - Process command line arguments
-  Arguments:  argc             - Same as passed to main()
-              argv             - Same as passed to main()
-  Returns:    (nothing)
-
-  This function processes the command line arguments passed through argc
-  and argv, setting global variables as appropriate.
-*/
-
+/***********************************************************************/
 void process_cmdline (int argc, char *argv[])
 {
     int c;
@@ -154,15 +218,15 @@ void process_cmdline (int argc, char *argv[])
 
     // Process remaining arguments
 
-    if ((optind < argc) && (argv[optind] != NULL)) {
-	if (argv[optind][0] == '-') {
+    if (optind < argc && argv[optind] != NULL) {
+	if (*argv[optind] == '-') {
 	    fprintf(stderr, "%s: invalid operand `%s'\n", program_name(),
 		    argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
 
-	if ((strlen(argv[optind]) == 1) &&
-	    (*argv[optind] >= '1') && (*argv[optind] <= '9')) {
+	if (strlen(argv[optind]) == 1
+	    && *argv[optind] >= '1' && *argv[optind] <= '9') {
 	    game_num = *argv[optind] - '0';
 	} else {
 	    fprintf(stderr, "%s: invalid game number `%s'\n",
@@ -173,7 +237,7 @@ void process_cmdline (int argc, char *argv[])
 	optind++;
     }
 
-    if ((optind < argc) && (argv[optind] != NULL)) {
+    if (optind < argc && argv[optind] != NULL) {
 	fprintf(stderr, "%s: extra operand `%s'\n", program_name(),
 		argv[optind]);
 	show_usage(EXIT_FAILURE);
@@ -181,15 +245,7 @@ void process_cmdline (int argc, char *argv[])
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   show_version  - Show program version information
-  Arguments:  (none)
-  Returns:    (nothing)
-
-  This function displays version information about this program, then
-  terminates.
-*/
-
+/***********************************************************************/
 void show_version (void)
 {
     printf("\
@@ -210,18 +266,11 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   show_usage  - Show command line usage information
-  Arguments:  status      - Exit status
-  Returns:    (nothing)
-
-  This function displays usage information to standard output or standard
-  error, then terminates.
-*/
-
+/***********************************************************************/
 void show_usage (int status)
 {
     const char *pn = program_name();
+
 
     if (status != EXIT_SUCCESS) {
 	fprintf(stderr, "%s: Try `%s --help' for more information.\n",
@@ -263,16 +312,10 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
 *       Initialisation and deinitialisation function definitions        *
 ************************************************************************/
 
+// These functions are documented at the start of this file
 
-/*-----------------------------------------------------------------------
-  Function:   init_program  - Initialise program-wide functions
-  Arguments:  (none)
-  Returns:    (nothing)
 
-  This function initialises the terminal display, internal low-level
-  routines, etc.
-*/
-
+/***********************************************************************/
 void init_program (void)
 {
     // Initialise the random number generator
@@ -286,15 +329,7 @@ void init_program (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   end_program  - Deinitialise program-wide functions
-  Arguments:  (none)
-  Returns:    (nothing)
-
-  This function finalises the terminal display, internal low-level
-  routines, etc.
-*/
-
+/***********************************************************************/
 void end_program (void)
 {
     end_screen();
