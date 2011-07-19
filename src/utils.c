@@ -32,7 +32,7 @@
 
 
 /************************************************************************
-*                       Module-specific constants                       *
+*          Module-specific constants and variable definitions           *
 ************************************************************************/
 
 #define GAME_FILENAME_PROTO	"game%d"
@@ -40,7 +40,7 @@
 
 
 /************************************************************************
-*                           Module variables                            *
+*                       Module-specific variables                       *
 ************************************************************************/
 
 static char *program_name_str   = NULL;		// Canonical program name
