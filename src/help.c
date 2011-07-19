@@ -71,7 +71,7 @@ static const char *help_text[] = {
     "selected on the above map, a ^o + ^N would be placed at that position.\n"
     ,
 
-    "If, on the other hand, a position  next to a star  (or another outpost)  was\n"
+    "If, on the other hand, a position  next to  a star  (or another outpost)  is\n"
     "selected, a ^Bcompany^N would be formed and its first letter would appear on the\n"
     "map.  As a reward  for creating the company, you are granted  the first five\n"
     "shares.  Up to ^B~c^N companies can be created in this way.\n"
@@ -126,7 +126,7 @@ static const char *help_text[] = {
     "Once you select your move, you enter  the ^BInterstellar Stock Exchange^N.  Here\n"
     "you can  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
     "some of your debt (if applicable).  Note that each company  issues a limited\n"
-    "amount  of shares --- you cannot  go on buying for ever!  You can,  however,\n"
+    "number  of shares --- you cannot  go on buying for ever!  You can,  however,\n"
     "bid for more shares to be issued.  You have a better chance of succeeding if\n"
     "you own a larger proportion of the company.\n"
     "\n"
