@@ -495,7 +495,7 @@ int attrpr (WINDOW *win, int attr, const char *format, ...)
     wattrset(win, attr);
 
     va_start(args, format);
-    ret = vwprintw(win, format, args);
+    ret = vw_printw(win, format, args);
     va_end(args);
 
     wattrset(win, oldattr);
