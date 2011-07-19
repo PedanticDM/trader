@@ -243,6 +243,7 @@ selection_t get_move (void)
 
 		case KEY_ESC:
 		case KEY_CANCEL:
+		case KEY_EXIT:
 		case KEY_CTRL('C'):
 		case KEY_CTRL('G'):
 		case KEY_CTRL('\\'):
@@ -333,6 +334,7 @@ selection_t get_move (void)
 		    switch (key) {
 		    case KEY_ESC:
 		    case KEY_CANCEL:
+		    case KEY_EXIT:
 		    case KEY_CTRL('C'):
 		    case KEY_CTRL('G'):
 		    case KEY_CTRL('\\'):

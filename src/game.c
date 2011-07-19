@@ -111,6 +111,7 @@ void init_game (void)
 		switch (key) {
 		case KEY_ESC:
 		case KEY_CANCEL:
+		case KEY_EXIT:
 		case KEY_CTRL('C'):
 		case KEY_CTRL('G'):
 		case KEY_CTRL('\\'):
@@ -159,6 +160,7 @@ void init_game (void)
 		    switch (key) {
 		    case KEY_ESC:
 		    case KEY_CANCEL:
+		    case KEY_EXIT:
 		    case KEY_CTRL('C'):
 		    case KEY_CTRL('G'):
 		    case KEY_CTRL('\\'):

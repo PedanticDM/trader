@@ -718,9 +718,10 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		break;
 
 	    case KEY_CANCEL:
+	    case KEY_EXIT:
 	    case KEY_CTRL('G'):
-	    // case KEY_CTRL('C'):
-	    // case KEY_CTRL('\\'):
+	    case KEY_CTRL('C'):
+	    case KEY_CTRL('\\'):
 		// Cancel entering the string
 		ret = ERR;
 		done = true;

@@ -188,6 +188,8 @@ void exchange_stock (void)
 
 		case '4':
 		case ' ':
+		case KEY_CANCEL:
+		case KEY_EXIT:
 		case KEY_CTRL('C'):
 		case KEY_CTRL('G'):
 		case KEY_CTRL('\\'):
@@ -309,6 +311,8 @@ void visit_bank (void)
 	case '2':
 	case '3':
 	case ' ':
+	case KEY_CANCEL:
+	case KEY_EXIT:
 	case KEY_CTRL('C'):
 	case KEY_CTRL('G'):
 	case KEY_CTRL('\\'):
@@ -566,6 +570,8 @@ void trade_shares (int num, bool *bid_used)
 	case '3':
 	case '4':
 	case ' ':
+	case KEY_CANCEL:
+	case KEY_EXIT:
 	case KEY_CTRL('C'):
 	case KEY_CTRL('G'):
 	case KEY_CTRL('\\'):
