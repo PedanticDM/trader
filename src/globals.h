@@ -198,6 +198,7 @@ extern bool	quit_selected;		// Is a player trying to quit the game?
 extern bool	abort_game;		// Abort game without declaring winner?
 
 extern bool	option_no_color;	// True if --no-color was specified
+extern bool	option_no_encrypt;	// True if --no-encrypt was specified
 extern int	option_max_turn;	// Max. turns if --max-turn was specified
 
 

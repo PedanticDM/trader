@@ -43,6 +43,7 @@
 
 enum options_char {
     OPTION_NO_COLOR = 1,
+    OPTION_NO_ENCRYPT,
     OPTION_MAX_TURN
 };
 
@@ -51,12 +52,13 @@ static const char options_short[] = "hV";
     // -V, --version
 
 static struct option const options_long[] = {
-    { "help",      no_argument,       NULL, 'h' },
-    { "version",   no_argument,       NULL, 'V' },
-    { "no-color",  no_argument,       NULL, OPTION_NO_COLOR },
-    { "no-colour", no_argument,       NULL, OPTION_NO_COLOR },
-    { "max-turn",  required_argument, NULL, OPTION_MAX_TURN },
-    { NULL,        0,                 NULL, 0 }
+    { "help",       no_argument,       NULL, 'h' },
+    { "version",    no_argument,       NULL, 'V' },
+    { "no-color",   no_argument,       NULL, OPTION_NO_COLOR },
+    { "no-colour",  no_argument,       NULL, OPTION_NO_COLOR },
+    { "no-encrypt", no_argument,       NULL, OPTION_NO_ENCRYPT },
+    { "max-turn",   required_argument, NULL, OPTION_MAX_TURN },
+    { NULL,         0,                 NULL, 0 }
 };
 
 
@@ -213,6 +215,11 @@ void process_cmdline (int argc, char *argv[])
 	case OPTION_NO_COLOR:
 	    // --no-color, --no-colour: don't use colour
 	    option_no_color = true;
+	    break;
+
+	case OPTION_NO_ENCRYPT:
+	    // --no-encrypt: don't encrypt game files
+	    option_no_encrypt = true;
 	    break;
 
 	case OPTION_MAX_TURN:
