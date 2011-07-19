@@ -196,6 +196,9 @@ extern int gettxstring (WINDOW *win, char **bufptr, bool multifield,
 extern int gettxdouble (WINDOW *win, double *result, double min, double max,
 			double emptyval, double defaultval, int y, int x,
 			int fieldsize, int attr);
+extern int gettxlong (WINDOW *win, long *result, long min, long max,
+		      long emptyval, long defaultval, int y, int x,
+		      int fieldsize, int attr);
 
 extern bool answer_yesno (WINDOW *win);
 extern void wait_for_key (WINDOW *win, int y, int attr);

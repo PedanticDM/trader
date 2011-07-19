@@ -1399,6 +1399,123 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
 
 
 /*-----------------------------------------------------------------------
+  Function:   gettxlong   - Read an integer number from the keyboard
+  Arguments:  win         - Window to use
+              result      - Pointer to result
+              min         - Minimum value allowed
+              max         - Maximum value allowed
+              emptyval    - Value to use for empty input
+              defaultval  - Value to use as a default
+	      y, x        - Start of field (line, col)
+	      fieldsize   - Size of field in characters
+	      attr        - Curses attribute to use for the field
+  Returns:    int         - Status code: OK, ERR or key code
+
+  This function calls gettxline() to allow the user to input a valid
+  integer number.  If gettxline() returns OK, the entered number
+  is stored in *result if it valid.  Otherwise, gettxline() is called
+  again.  Any other result is returned to the caller of this function.
+*/
+
+int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
+	       long defaultval, int y, int x, int fieldsize, int attr)
+{
+    char *buf, *buf_copy;
+    char *allowed, *emptystr, *defaultstr;
+    struct lconv *lc = localeconv();
+    long val;
+    bool done;
+    int ret;
+
+
+    assert(result != NULL);
+    assert(lc != NULL);
+
+    if (max < min) {
+	long n = max;
+	max = min;
+	min = n;
+    }
+
+    buf = malloc(BUFSIZE);
+    if (buf == NULL) {
+	err_exit("out of memory");
+    }
+
+    buf_copy = malloc(BUFSIZE);
+    if (buf_copy == NULL) {
+	err_exit("out of memory");
+    }
+
+    allowed = malloc(BUFSIZE);
+    if (allowed == NULL) {
+	err_exit("out of memory");
+    }
+
+    emptystr = malloc(BUFSIZE);
+    if (emptystr == NULL) {
+	err_exit("out of memory");
+    }
+
+    defaultstr = malloc(BUFSIZE);
+    if (defaultstr == NULL) {
+	err_exit("out of memory");
+    }
+
+    *buf = '\0';
+
+    strcpy(allowed, "0123456789+-");
+    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
+
+    snprintf(emptystr,   BUFSIZE, "%'1ld", emptyval);
+    snprintf(defaultstr, BUFSIZE, "%'1ld", defaultval);
+
+    done = false;
+    while (! done) {
+	ret = gettxline(win, buf, BUFSIZE, false, BUFSIZE - 1, emptystr,
+			defaultstr, allowed, true, y, x, fieldsize, attr, NULL);
+
+	if (ret == OK) {
+	    char *p;
+
+	    strncpy(buf_copy, buf, BUFSIZE - 1);
+	    buf_copy[BUFSIZE - 1] = '\0';
+
+	    // Remove thousands separators
+	    while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
+		int len = strlen(lc->thousands_sep);
+		memmove(p, p + len, strlen(p) - len + 1);
+	    }
+	    while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
+		int len = strlen(lc->thousands_sep);
+		memmove(p, p + len, strlen(p) - len + 1);
+	    }
+
+	    val = strtol(buf_copy, &p, 10);
+
+	    if (*p == '\0' && val >= min && val <= max) {
+		*result = val;
+		done = true;
+	    } else {
+		beep();
+	    }
+	} else {
+	    done = true;
+	}
+    }
+
+    free(defaultstr);
+    free(emptystr);
+    free(allowed);
+    free(buf_copy);
+    free(buf);
+
+    return ret;
+}
+
+
+/*-----------------------------------------------------------------------
   Function:   answer_yesno  - Read a Yes/No answer and return true/false
   Arguments:  win           - Window to use
   Returns:    bool          - true if Yes ("Y") was selected, else false
