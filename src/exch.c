@@ -101,10 +101,10 @@ void exchange_stock (void)
 	    snprintf(buf, BUFSIZE, "share (%s)", lc->currency_symbol);
 
 	    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
-	    mvwprintw(curwin, 4, 2, "  %-22s  %10s  %10s  %12s  %10s  ",
-		      "", "Shares", "Shares", "Price per", "");
-	    mvwprintw(curwin, 5, 2, "  %-22s  %10s  %10s  %12s  %10s  ",
-		      "Company", "issued", "left", buf, "Return (%)");
+	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
+		      "", "Price per", "", "Shares", "Shares");
+	    mvwprintw(curwin, 5, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
+		      "Company", buf, "Return (%)", "issued", "left");
 	    wattrset(curwin, ATTR_NORMAL_WINDOW);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
@@ -112,10 +112,10 @@ void exchange_stock (void)
 		    mvwaddch(curwin, line, 2, PRINTABLE_MAP_VAL(COMPANY_TO_MAP(i)) |
 			     ATTR_MAP_CHOICE);
 		    strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
-		    mvwprintw(curwin, line, 4, "%-22s  %'10ld  %'10ld  %12s  %10.2f  ",
-			      company[i].name, company[i].stock_issued,
-			      company[i].max_stock - company[i].stock_issued,
-			      buf, company[i].share_return * 100.0);
+		    mvwprintw(curwin, line, 4, "%-22s  %12s  %10.2f  %'10ld  %'10ld  ",
+			      company[i].name, buf, company[i].share_return
+			      * 100.0, company[i].stock_issued,
+			      company[i].max_stock - company[i].stock_issued);
 		    line++;
 		}
 	    }
@@ -188,6 +188,9 @@ void exchange_stock (void)
 
 		case '4':
 		case ' ':
+		case KEY_CTRL('C'):
+		case KEY_CTRL('G'):
+		case KEY_CTRL('\\'):
 		    selection = SEL_EXIT;
 		    break;
 
@@ -299,10 +302,21 @@ void visit_bank (void)
 
     do {
 	key = gettxchar(curwin);
-	done = (key == '1' || key == '2' || key == '3' || key == ' ');
 
-	if (! done) {
+	switch (key) {
+	case '1':
+	case '2':
+	case '3':
+	case ' ':
+	case KEY_CTRL('C'):
+	case KEY_CTRL('G'):
+	case KEY_CTRL('\\'):
+	    done = true;
+	    break;
+
+	default:
 	    beep();
+	    break;
 	}
     } while (! done);
 
