@@ -300,7 +300,8 @@ void visit_bank (void)
     curs_set(CURS_ON);
     wrefresh(curwin);
 
-    do {
+    done = false;
+    while (! done) {
 	key = gettxchar(curwin);
 
 	switch (key) {
@@ -318,7 +319,7 @@ void visit_bank (void)
 	    beep();
 	    break;
 	}
-    } while (! done);
+    }
 
     curs_set(CURS_OFF);
     wechochar(curwin, key | A_BOLD);
@@ -554,7 +555,8 @@ void trade_shares (int num, bool *bid_used)
     curs_set(CURS_ON);
     wrefresh(curwin);
 
-    do {
+    done = false;
+    while (! done) {
 	key = gettxchar(curwin);
 
 	switch (key) {
@@ -573,7 +575,7 @@ void trade_shares (int num, bool *bid_used)
 	    beep();
 	    break;
 	}
-    } while (! done);
+    }
 
     curs_set(CURS_OFF);
     wechochar(curwin, key | A_BOLD);
