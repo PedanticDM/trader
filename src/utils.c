@@ -199,7 +199,7 @@ char *game_filename (int gamenum)
 /***********************************************************************/
 // err_exit: Print an error and exit
 
-void err_exit (const char *format, ...)
+void err_exit (const char *restrict format, ...)
 {
     va_list args;
 
@@ -219,7 +219,7 @@ void err_exit (const char *format, ...)
 /***********************************************************************/
 // errno_exit: Print an error message (using errno) and exit
 
-void errno_exit (const char *format, ...)
+void errno_exit (const char *restrict format, ...)
 {
     va_list args;
     int saved_errno = errno;
@@ -399,7 +399,7 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 /***********************************************************************/
 // scramble: Scramble (encrypt) the buffer
 
-char *scramble (int key, char *buf, int bufsize)
+char *scramble (int key, char *restrict buf, int bufsize)
 {
     /* The algorithm used here is reversable: scramble(scramble(...))
        will (or, at least, should!) return the same as the original
@@ -410,9 +410,8 @@ char *scramble (int key, char *buf, int bufsize)
     if (buf != NULL && key != 0) {
 	char *p = buf;
 	unsigned char k = ~key;
-	int i;
 
-	for (i = 0; i < bufsize && *p != '\0'; i++, k++, p++) {
+	for (int i = 0; i < bufsize && *p != '\0'; i++, k++, p++) {
 	    char c = *p;
 	    char r = c ^ k;	// Simple encryption: XOR on a moving key
 
@@ -430,7 +429,7 @@ char *scramble (int key, char *buf, int bufsize)
 /***********************************************************************/
 // unscramble: Unscramble (decrypt) the buffer
 
-char *unscramble (int key, char *buf, int bufsize)
+char *unscramble (int key, char *restrict buf, int bufsize)
 {
     return scramble(key, buf, bufsize);
 }

@@ -142,7 +142,7 @@ extern char *game_filename (int gamenum);
   with the user string as a second argument), NOT passed in as the format
   itself.
 */
-extern void err_exit (const char *format, ...)
+extern void err_exit (const char *restrict format, ...)
     __attribute__((noreturn, format (printf, 1, 2)));
 
 
@@ -161,7 +161,7 @@ extern void err_exit (const char *format, ...)
   colons nor the trailing end-line character.  The format may be NULL if
   no intermediate message is needed.
 */
-extern void errno_exit (const char *format, ...)
+extern void errno_exit (const char *restrict format, ...)
     __attribute__((noreturn, format (printf, 1, 2)));
 
 
@@ -278,7 +278,7 @@ extern ssize_t l_strfmon (char *restrict s, size_t maxsize,
   and after encryption.  At most bufsize bytes are encrypted; buf is
   returned as the result.
 */
-extern char *scramble (int key, char *buf, int bufsize);
+extern char *scramble (int key, char *restrict buf, int bufsize);
 
 
 /*
@@ -297,7 +297,7 @@ extern char *scramble (int key, char *buf, int bufsize);
   will any encrypted character map back to these values).  At most
   bufsize bytes are decrypted; buf is returned as the result.
 */
-extern char *unscramble (int key, char *buf, int bufsize);
+extern char *unscramble (int key, char *restrict buf, int bufsize);
 
 
 #endif /* included_UTILS_H */
