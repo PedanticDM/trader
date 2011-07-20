@@ -93,9 +93,7 @@ typedef enum curs_type {
 #define WIN_LINES	MIN_LINES	/* Number of lines in main windows */
 #define WIN_COLS	MIN_COLS	/* Number of columns in main windows */
 
-#define LINE_OFFSET	(0)				/* Window offsets */
-#define COL_OFFSET	((COLS - WIN_COLS) / 2)
-#define COL_CENTER(x)	((COLS - (x)) / 2)
+#define WCENTER(x)	((COLS - (x)) / 2)
 
 
 // Colour and non-colour attribute selection
