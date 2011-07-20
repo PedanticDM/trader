@@ -1601,9 +1601,6 @@ bool answer_yesno (WINDOW *win)
 
 void wait_for_key (WINDOW *win, int y, int attr)
 {
-    int key;
-
-
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
@@ -1611,5 +1608,5 @@ void wait_for_key (WINDOW *win, int y, int attr)
     center(win, y, attr, "[ Press <SPACE> to continue ] ");
     wrefresh(win);
 
-    key = wgetch(win);
+    (void) wgetch(win);
 }
