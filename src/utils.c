@@ -262,13 +262,17 @@ void err_exit_nomem (void)
 void init_rand (void)
 {
     /* Ideally, initialisation of the random number generator should be
-       made using seed48() and lcong48().  However, we can only be
-       assured of no more than 32 bits of "randomness" by using time(),
-       available on all POSIX systems.  If time_t is larger than long
-       int, we throw away the top bits. */
+       made using seed48() and lcong48().  However, since this is "only a
+       game", 32 bits of "randomness" as returned by gettimeofday() is
+       probably more than enough... */
 
-    time_t curtime = time(NULL);    // NB: time_t may be larger than long int
-    srand48((long int) curtime);
+    struct timeval tv;
+    unsigned long int seed;
+
+    gettimeofday(&tv, NULL);		// If this fails, tv is random enough!
+    seed = tv.tv_sec * tv.tv_usec;
+
+    srand48(seed);
 }
 
 

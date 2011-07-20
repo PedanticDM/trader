@@ -60,7 +60,6 @@
 #include <locale.h>
 #include <ctype.h>
 #include <string.h>
-#include <time.h>
 #include <errno.h>
 
 
@@ -68,6 +67,7 @@
 
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <monetary.h>
 
 
