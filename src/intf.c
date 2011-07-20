@@ -32,7 +32,7 @@
 
 
 /************************************************************************
-*                Module constants and type declarations                 *
+*            Module-specific constants and type declarations            *
 ************************************************************************/
 
 typedef struct txwin {
@@ -51,7 +51,7 @@ bool use_color = false;		// True to use colour in Star Traders
 
 
 /************************************************************************
-*                           Module variables                            *
+*                       Module-specific variables                       *
 ************************************************************************/
 
 txwin_t *topwin   = NULL;	// Top-most txwin structure
@@ -62,29 +62,24 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
 *             Basic text input/output function definitions              *
 ************************************************************************/
 
-/*-----------------------------------------------------------------------
-  Function:   init_screen  - Initialise the screen (terminal)
-  Arguments:  (none)
-  Returns:    (nothing)
+// These functions are documented in the file "intf.h"
 
-  This function initialises the input (keyboard) and output (screen)
-  using the Curses library.
-*/
+
+/***********************************************************************/
+// init_screen: Initialise the screen (terminal display)
 
 void init_screen (void)
 {
-    int i;
-
-
     initscr();
 
-    if ((COLS < MIN_COLS) || (LINES < MIN_LINES)) {
+    if (COLS < MIN_COLS || LINES < MIN_LINES) {
 	err_exit("terminal size is too small (%d x %d required)",
 		 MIN_COLS, MIN_LINES);
     }
 
     use_color = ! option_no_color && has_colors();
 
+    // Initialise variables controlling the stack of windows
     curwin = stdscr;
     topwin = NULL;
     firstwin = NULL;
@@ -93,6 +88,7 @@ void init_screen (void)
     curs_set(CURS_OFF);
     raw();
 
+    // Initialise all colour pairs used; see intf.h for more comments
     if (use_color) {
 	start_color();
 
@@ -113,9 +109,11 @@ void init_screen (void)
 
     clear();
 
-    for (i = 0; i < COLS; i++) {
-	mvwaddch(stdscr, 0, i, ATTR_GAME_TITLE | ' ');
+    move(0, 0);
+    for (int i = 0; i < COLS; i++) {
+	addch(ATTR_GAME_TITLE | ' ');
     }
+
     center(stdscr, 0, ATTR_GAME_TITLE, PACKAGE_NAME);
 
     attrset(ATTR_ROOT_WINDOW);
@@ -123,14 +121,8 @@ void init_screen (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   end_screen  - End using the screen (terminal)
-  Arguments:  (none)
-  Returns:    (nothing)
-
-  This function closes the input (keyboard) and output (screen) using the
-  Curses library.  It makes sure the screen is cleared before doing so.
-*/
+/***********************************************************************/
+// end_screen: Deinitialise the screen (terminal display)
 
 void end_screen (void)
 {
@@ -141,47 +133,34 @@ void end_screen (void)
     endwin();
 
     curwin = NULL;
+    topwin = NULL;
+    firstwin = NULL;
 }
 
 
-/************************************************************************
-*                Simplified panel-like window functions                 *
-************************************************************************/
-
-/*-----------------------------------------------------------------------
-  Function:   newtxwin      - Create a new window, inserted into window stack
-  Arguments:  nlines        - Number of lines in new window
-              ncols         - Number of columns in new window
-              begin_y       - Starting line number (global coordinates)
-              begin_x       - Starting column number (global coordinates)
-              draw_bkgd_box - True to draw background and box frame
-              bkgd_attr     - Background attribute
-  Returns:    WINDOW *      - Pointer to new window structure
-
-  This function creates a window (using the Curses newwin() function) and
-  places it top-most in the stack of windows managed by this module.  A
-  pointer to the new window is returned; the global variable "curwin"
-  also points to this new window.  Please note that wrefresh() is NOT
-  called on the new window.
-*/
+/***********************************************************************/
+// newtxwin: Create a new window, inserted into window stack
 
 WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
-		  bool draw_bkgd_box, chtype bkgd_attr)
+		  bool dofill, chtype bkgd_attr)
 {
     WINDOW *win;
     txwin_t *nw;
 
 
+    // Create the new window
+
     win = newwin(nlines, ncols, begin_y, begin_x);
     if (win == NULL) {
-	return NULL;
+	err_exit_nomem();
     }
 
     nw = malloc(sizeof(txwin_t));
     if (nw == NULL) {
-	delwin(win);
-	return NULL;
+	err_exit_nomem();
     }
+
+    // Insert the new window into the txwin stack
 
     nw->win = win;
     nw->next = NULL;
@@ -198,7 +177,9 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
 	firstwin = nw;
     }
 
-    if (draw_bkgd_box) {
+    // Paint the background and border, if required
+
+    if (dofill) {
 	wbkgd(win, bkgd_attr);
 	box(win, 0, 0);
     }
@@ -207,17 +188,8 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   deltxwin  - Delete the top-most window in window stack
-  Arguments:  (none)
-  Returns:    int       - OK if all well, ERR if not
-
-  This function deletes the top-most window in the stack of windows
-  managed by this module.  ERR is returned if there is no such window, or
-  if delwin() fails.  Please note that the actual screen is NOT
-  refreshed: a call to txrefresh() should follow this one.  This allows
-  multiple windows to be deleted without screen flashing.
-*/
+/***********************************************************************/
+// deltxwin: Delete the top-most window in the window stack
 
 int deltxwin (void)
 {
@@ -228,6 +200,8 @@ int deltxwin (void)
     if (topwin == NULL) {
 	return ERR;
     }
+
+    // Remove window from the txwin stack
 
     cur = topwin;
     prev = topwin->prev;
@@ -248,17 +222,8 @@ int deltxwin (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   delalltxwin  - Delete all windows in the window stack
-  Arguments:  (none)
-  Returns:    int          - OK is always returned
-
-  This function deletes all windows in the stack of windows managed by
-  this module.  After calling this function, the global variable "curwin"
-  points to "stdscr", the only window for which output is now permitted.
-  Please note that the screen is NOT refreshed; a call to txrefresh()
-  should follow this one if appropriate.
-*/
+/***********************************************************************/
+// delalltxwin: Delete all windows in the window stack
 
 int delalltxwin (void)
 {
@@ -270,25 +235,15 @@ int delalltxwin (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   txrefresh  - Redraw all windows in the window stack
-  Arguments:  (none)
-  Returns:    int        - OK if all well, ERR if not
-
-  This function redraws (refreshes) all windows in the stack of windows
-  managed by this module.  Windows are refreshed from bottom (first) to
-  top (last).  The result of doupdate() is returned.
-*/
+/***********************************************************************/
+// txrefresh: Redraw all windows in the window stack
 
 int txrefresh (void)
 {
-    txwin_t *p;
-
-
     touchwin(stdscr);
     wnoutrefresh(stdscr);
 
-    for (p = firstwin; p != NULL; p = p->next) {
+    for (txwin_t *p = firstwin; p != NULL; p = p->next) {
 	touchwin(p->win);
 	wnoutrefresh(p->win);
     }

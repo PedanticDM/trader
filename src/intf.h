@@ -183,16 +183,108 @@ extern bool use_color;			// True to use colour in Star Traders
 *              Basic text input/output function prototypes              *
 ************************************************************************/
 
+/*
+  The functions in this interface create and manage a "stack of windows"
+  that can overlap.  It is similar in spirit to the panels library, but
+  does not allow windows to be raised or lowered.  In spite of this
+  limitation, these functions are ample for the needs of this program.
+*/
+
+/*
+  Function:   init_screen - Initialise the screen (terminal display)
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function initialises the input keyboard and output terminal
+  display using the Curses library.  It also draws an overall title at
+  the top with the name of the game.  This function must be called before
+  calling any other functions in this header file.
+*/
 extern void init_screen (void);
+
+
+/*
+  Function:   end_screen - Deinitialise the screen (terminal display)
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function closes the input keyboard and output terminal display.
+  It makes sure the screen is cleared before doing so.
+*/
 extern void end_screen (void);
 
-// Simplified panel-like window functions
 
+/*
+  Function:   newtxwin  - Create a new window, inserted into window stack
+  Parameters: nlines    - Number of lines in new window
+              ncols     - Number of columns in new window
+              begin_y   - Starting line number (0 to LINES-1)
+              begin_x   - Starting column number (0 to COLS-1)
+              dofill    - True to draw background and box frame
+              bkgd_attr - Background attribute
+  Returns:    WINDOW *  - Pointer to new window
+
+  This function creates a window using the Curses newwin() function and
+  places it top-most in the stack of windows managed by this module.  A
+  pointer to this new window is returned; the global variable curwin also
+  points to this new window.  Note that begin_y and begin_x are zero-
+  based global coordinates.  If dofill is true, bkgd_attr is used to fill
+  the background and box(curwin, 0, 0) is called.  Note that wrefresh()
+  is NOT called on the new window.
+
+  If newtxwin() fails to create a new window due to insufficient memory,
+  this function does NOT return: it terminates the program with an "out
+  of memory" error message.
+*/
 extern WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
-			 bool draw_bkgd_box, chtype bkgd_attr);
+			 bool dofill, chtype bkgd_attr);
+
+
+/*
+  Function:   deltxwin - Delete the top-most window in the window stack
+  Parameters: (none)
+  Returns:    int      - ERR on failure, OK otherwise
+
+  This function removes the top-most window from the Curses screen and
+  from the stack managed by this module.  ERR is returned if there is no
+  such window or if the Curses delwin() function fails.
+
+  Note that the actual terminal screen is NOT refreshed: a call to
+  txrefresh() should follow this one.  This allows multiple windows to be
+  deleted without any annoying screen flashes.
+*/
 extern int deltxwin (void);
+
+
+/*
+  Function:   delalltxwin - Delete all windows in the window stack
+  Parameters: (none)
+  Returns:    int         - OK is always returned
+
+  This function deletes all windows in the stack of windows managed by
+  this module.  After calling this function, the global variable curwin
+  will point to stdscr.  Note that the actual terminal screen is NOT
+  refreshed: a call to txrefresh() should follow this one if appropriate.
+*/
 extern int delalltxwin (void);
+
+
+/*
+  Function:   txrefresh - Redraw all windows in the window stack
+  Parameters: (none)
+  Returns:    int       - Return code from doupdate(): either OK or ERR
+
+  This function redraws (refreshes) all windows in the stack of windows
+  managed by this module.  Windows are refreshed from bottom (first) to
+  top (last).  The result of doupdate() is returned.
+
+  Normal window output does not require calling txrefresh(): a call to
+  wrefresh(curwin) is sufficient.  However, once a window has been
+  deleted with deltxwin() (or all windows with delalltxwin()), windows
+  under that one will need refreshing by calling txrefresh().
+*/
 extern int txrefresh (void);
+
 
 // Output routines
 
