@@ -42,7 +42,7 @@ AX_C___ATTRIBUTE__
 
 AX_WITH_CURSES
 AS_IF([test "x$ax_cv_curses" != "xyes"],
-	AC_MSG_ERROR([requires a SysV-compatible curses library.]),
+	AC_MSG_ERROR([requires an X/Open-compatible Curses library.]),
 	AC_SUBST([CURSES_LIB]))
 
 AC_CONFIG_HEADERS([config.h])
