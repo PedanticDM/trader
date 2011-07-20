@@ -149,12 +149,14 @@ void end_screen (void)
 ************************************************************************/
 
 /*-----------------------------------------------------------------------
-  Function:   newtxwin  - Create a new window, inserted into window stack
-  Arguments:  nlines    - Number of lines in new window
-              ncols     - Number of columns in new window
-              begin_y   - Starting line number (global coordinates)
-              begin_x   - Starting column number (global coordinates)
-  Returns:    WINDOW *  - Pointer to new window structure
+  Function:   newtxwin      - Create a new window, inserted into window stack
+  Arguments:  nlines        - Number of lines in new window
+              ncols         - Number of columns in new window
+              begin_y       - Starting line number (global coordinates)
+              begin_x       - Starting column number (global coordinates)
+              draw_bkgd_box - True to draw background and box frame
+              bkgd_attr     - Background attribute
+  Returns:    WINDOW *      - Pointer to new window structure
 
   This function creates a window (using the Curses newwin() function) and
   places it top-most in the stack of windows managed by this module.  A
@@ -163,7 +165,8 @@ void end_screen (void)
   called on the new window.
 */
 
-WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x)
+WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
+		  bool draw_bkgd_box, chtype bkgd_attr)
 {
     WINDOW *win;
     txwin_t *nw;
@@ -193,6 +196,11 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x)
 
     if (firstwin == NULL) {
 	firstwin = nw;
+    }
+
+    if (draw_bkgd_box) {
+	wbkgd(win, bkgd_attr);
+	box(win, 0, 0);
     }
 
     return win;

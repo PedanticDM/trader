@@ -69,9 +69,7 @@ void init_game (void)
 
     // Try to load an old game, if possible
     if (game_num != 0) {
-	newtxwin(5, 30, LINE_OFFSET + 6, COL_CENTER(30));
-	wbkgd(curwin, ATTR_STATUS_WINDOW);
-	box(curwin, 0, 0);
+	newtxwin(5, 30, LINE_OFFSET + 6, COL_CENTER(30), true, ATTR_STATUS_WINDOW);
 	center(curwin, 2, ATTR_STATUS_WINDOW, "Loading game %d... ", game_num);
 	wrefresh(curwin);
 
@@ -87,9 +85,8 @@ void init_game (void)
 	while (number_players == 0) {
 
 	    // Ask for the number of players
-	    newtxwin(5, 62, LINE_OFFSET + 3, COL_CENTER(62));
-	    wbkgd(curwin, ATTR_NORMAL_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(5, 62, LINE_OFFSET + 3, COL_CENTER(62), true,
+		     ATTR_NORMAL_WINDOW);
 
 	    mvwaddstr(curwin, 2, 2, "Enter number of players ");
 	    waddstr(curwin, "[");
@@ -136,9 +133,8 @@ void init_game (void)
 	    } else {
 
 		// Ask which game to load
-		newtxwin(5, 54, LINE_OFFSET + 6, COL_CENTER(54));
-		wbkgd(curwin, ATTR_NORMAL_WINDOW);
-		box(curwin, 0, 0);
+		newtxwin(5, 54, LINE_OFFSET + 6, COL_CENTER(54), true,
+			 ATTR_NORMAL_WINDOW);
 
 		mvwaddstr(curwin, 2, 2, "Enter game number ");
 		waddstr(curwin, "[");
@@ -186,9 +182,8 @@ void init_game (void)
 		    wechochar(curwin, key | A_BOLD);
 
 		    // Try to load the game, if possible
-		    newtxwin(5, 30, LINE_OFFSET + 9, COL_CENTER(30));
-		    wbkgd(curwin, ATTR_STATUS_WINDOW);
-		    box(curwin, 0, 0);
+		    newtxwin(5, 30, LINE_OFFSET + 9, COL_CENTER(30), true,
+			     ATTR_STATUS_WINDOW);
 		    center(curwin, 2, ATTR_STATUS_WINDOW,
 			   "Loading game %d... ", game_num);
 		    wrefresh(curwin);
@@ -209,9 +204,8 @@ void init_game (void)
 	    if (number_players == 1) {
 		// Ask for the player name
 
-		newtxwin(5, 76, LINE_OFFSET + 9, COL_CENTER(76));
-		wbkgd(curwin, ATTR_NORMAL_WINDOW);
-		box(curwin, 0, 0);
+		newtxwin(5, 76, LINE_OFFSET + 9, COL_CENTER(76), true,
+			 ATTR_NORMAL_WINDOW);
 
 		mvwaddstr(curwin, 2, 2, "Please enter your name: ");
 
@@ -226,9 +220,8 @@ void init_game (void)
 		    }
 		} while (! done);
 
-		newtxwin(5, 44, LINE_OFFSET + 6, COL_CENTER(44));
-		wbkgd(curwin, ATTR_NORMAL_WINDOW);
-		box(curwin, 0, 0);
+		newtxwin(5, 44, LINE_OFFSET + 6, COL_CENTER(44), true,
+			 ATTR_NORMAL_WINDOW);
 
 		mvwaddstr(curwin, 2, 2, "Do you need any instructions? ");
 		waddstr(curwin, "[");
@@ -248,9 +241,8 @@ void init_game (void)
 	    } else {
 
 		// Ask for all of the player names
-		newtxwin(number_players + 5, 76, LINE_OFFSET + 9, COL_CENTER(76));
-		wbkgd(curwin, ATTR_NORMAL_WINDOW);
-		box(curwin, 0, 0);
+		newtxwin(number_players + 5, 76, LINE_OFFSET + 9,
+			 COL_CENTER(76), true, ATTR_NORMAL_WINDOW);
 
 		center(curwin, 1, ATTR_WINDOW_TITLE, "  Enter Player Names  ");
 
@@ -329,9 +321,8 @@ void init_game (void)
 		    }
 		}
 
-		newtxwin(5, 50, LINE_OFFSET + 6, COL_CENTER(50));
-		wbkgd(curwin, ATTR_NORMAL_WINDOW);
-		box(curwin, 0, 0);
+		newtxwin(5, 50, LINE_OFFSET + 6, COL_CENTER(50), true,
+			 ATTR_NORMAL_WINDOW);
 
 		mvwaddstr(curwin, 2, 2, "Does any player need instructions? ");
 		waddstr(curwin, "[");
@@ -392,9 +383,8 @@ void init_game (void)
 		first_player   = randi(number_players);
 		current_player = first_player;
 
-		newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
-		wbkgd(curwin, ATTR_NORMAL_WINDOW);
-		box(curwin, 0, 0);
+		newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+			 ATTR_NORMAL_WINDOW);
 
 		center(curwin, 2, ATTR_NORMAL_WINDOW,
 		       "The first player to go is");
@@ -439,9 +429,7 @@ void end_game (void)
 	err_exit_nomem();
     }
 
-    newtxwin(7, 40, LINE_OFFSET + 9, COL_CENTER(40));
-    wbkgd(curwin, ATTR_ERROR_WINDOW);
-    box(curwin, 0, 0);
+    newtxwin(7, 40, LINE_OFFSET + 9, COL_CENTER(40), true, ATTR_ERROR_WINDOW);
 
     center(curwin, 1, ATTR_ERROR_TITLE, "  Game Over  ");
     center(curwin, 3, ATTR_ERROR_STR, "The game is over after %d turns",
@@ -457,9 +445,8 @@ void end_game (void)
     if (number_players == 1) {
 	l_strfmon(buf, BUFSIZE, "%1n", total_value(0));
 
-	newtxwin(9, 60, LINE_OFFSET + 8, COL_CENTER(60));
-	wbkgd(curwin, ATTR_NORMAL_WINDOW);
-	box(curwin, 0, 0);
+	newtxwin(9, 60, LINE_OFFSET + 8, COL_CENTER(60), true,
+		 ATTR_NORMAL_WINDOW);
 
 	center(curwin, 1, ATTR_WINDOW_TITLE, "  Total Value  ");
 	center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
@@ -474,9 +461,8 @@ void end_game (void)
 	}
 	qsort(player, number_players, sizeof(player_info_t), cmp_player);
 
-	newtxwin(number_players + 10, 76, LINE_OFFSET + 3, COL_CENTER(76));
-	wbkgd(curwin, ATTR_NORMAL_WINDOW);
-	box(curwin, 0, 0);
+	newtxwin(number_players + 10, 76, LINE_OFFSET + 3, COL_CENTER(76),
+		 true, ATTR_NORMAL_WINDOW);
 
 	center(curwin, 1, ATTR_WINDOW_TITLE, "  Game Winner  ");
 	center2(curwin, 3, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
@@ -529,11 +515,11 @@ void show_map (bool closewin)
     int n, x, y;
 
 
-    newtxwin(MAX_Y + 4, WIN_COLS, LINE_OFFSET + 1, COL_CENTER(WIN_COLS));
-    wbkgd(curwin, ATTR_MAP_WINDOW);
+    newtxwin(MAX_Y + 4, WIN_COLS, LINE_OFFSET + 1, COL_CENTER(WIN_COLS),
+	     true, ATTR_MAP_WINDOW);
 
     // Draw various borders
-    box(curwin, 0, 0);
+
     mvwaddch(curwin, 2, 0, ACS_LTEE);
     whline(curwin, ACS_HLINE, getmaxx(curwin) - 2);
     mvwaddch(curwin, 2, getmaxx(curwin) - 1, ACS_RTEE);
@@ -612,10 +598,8 @@ void show_map (bool closewin)
 
 	wrefresh(curwin);
 
-	newtxwin(WIN_LINES - MAX_Y - 5, WIN_COLS,
-		 LINE_OFFSET + MAX_Y + 5, COL_CENTER(WIN_COLS));
-	wbkgd(curwin, ATTR_NORMAL_WINDOW);
-	box(curwin, 0, 0);
+	newtxwin(WIN_LINES - MAX_Y - 5, WIN_COLS, LINE_OFFSET + MAX_Y + 5,
+		 COL_CENTER(WIN_COLS), true, ATTR_NORMAL_WINDOW);
 
 	wait_for_key(curwin, 2, ATTR_WAITNORMAL_STR);
 
@@ -644,9 +628,8 @@ void show_status (int num)
 
     assert(num >= 0 && num < number_players);
 
-    newtxwin(MAX_COMPANIES + 15, 80, LINE_OFFSET + 1, COL_CENTER(80));
-    wbkgd(curwin, ATTR_NORMAL_WINDOW);
-    box(curwin, 0, 0);
+    newtxwin(MAX_COMPANIES + 15, 80, LINE_OFFSET + 1, COL_CENTER(80), true,
+	     ATTR_NORMAL_WINDOW);
 
     center(curwin, 1, ATTR_WINDOW_TITLE, "  Stock Portfolio  ");
     center2(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR, "Player: ",

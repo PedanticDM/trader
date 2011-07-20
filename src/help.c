@@ -170,7 +170,8 @@ void show_help (void)
     if (numpages == 0)
 	return;
 
-    newtxwin(WIN_LINES - 1, WIN_COLS, LINE_OFFSET + 1, COL_CENTER(WIN_COLS));
+    newtxwin(WIN_LINES - 1, WIN_COLS, LINE_OFFSET + 1, COL_CENTER(WIN_COLS),
+	     false, 0);
 
     while (! done) {
 	// Display a page of instructions

@@ -171,9 +171,8 @@ bool load_game (int num)
 
 	if (errno == ENOENT) {
 	    // File not found
-	    newtxwin(7, 40, LINE_OFFSET + 9, COL_CENTER(40));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(7, 40, LINE_OFFSET + 9, COL_CENTER(40), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Found  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
@@ -185,9 +184,8 @@ bool load_game (int num)
 	    // Some other file error
 	    saved_errno = errno;
 
-	    newtxwin(9, 70, LINE_OFFSET + 9, COL_CENTER(70));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(9, 70, LINE_OFFSET + 9, COL_CENTER(70), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Loaded  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
@@ -343,9 +341,8 @@ bool save_game (int num)
 	    } else {
 		// Data directory could not be created
 
-		newtxwin(9, 70, LINE_OFFSET + 7, COL_CENTER(70));
-		wbkgd(curwin, ATTR_ERROR_WINDOW);
-		box(curwin, 0, 0);
+		newtxwin(9, 70, LINE_OFFSET + 7, COL_CENTER(70), true,
+			 ATTR_ERROR_WINDOW);
 
 		center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
 		center(curwin, 3, ATTR_ERROR_STR,
@@ -370,9 +367,8 @@ bool save_game (int num)
 	// File could not be opened for writing
 	saved_errno = errno;
 
-	newtxwin(9, 70, LINE_OFFSET + 7, COL_CENTER(70));
-	wbkgd(curwin, ATTR_ERROR_WINDOW);
-	box(curwin, 0, 0);
+	newtxwin(9, 70, LINE_OFFSET + 7, COL_CENTER(70), true,
+		 ATTR_ERROR_WINDOW);
 
 	center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
 	center(curwin, 3, ATTR_ERROR_STR,

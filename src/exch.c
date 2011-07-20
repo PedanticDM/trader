@@ -65,7 +65,7 @@ void exchange_stock (void)
 	return;
     }
 
-    newtxwin(17, 80, LINE_OFFSET + 1, COL_CENTER(80));
+    newtxwin(17, 80, LINE_OFFSET + 1, COL_CENTER(80), false, 0);
 
     while (selection != SEL_EXIT) {
 	selection = SEL_NONE;
@@ -125,9 +125,8 @@ void exchange_stock (void)
 	wrefresh(curwin);
 
 	// Show menu of choices for the player
-	newtxwin(6, 80, LINE_OFFSET + 18, COL_CENTER(80));
-	wbkgd(curwin, ATTR_NORMAL_WINDOW);
-	box(curwin, 0, 0);
+	newtxwin(6, 80, LINE_OFFSET + 18, COL_CENTER(80), true,
+		 ATTR_NORMAL_WINDOW);
 
 	wmove(curwin, 3, 2);
 	attrpr(curwin, ATTR_KEYCODE_STR, "<1>");
@@ -253,9 +252,7 @@ void visit_bank (void)
     }
 
     // Show the informational part of the Bank
-    newtxwin(10, 76, LINE_OFFSET + 5, COL_CENTER(76));
-    wbkgd(curwin, ATTR_NORMAL_WINDOW);
-    box(curwin, 0, 0);
+    newtxwin(10, 76, LINE_OFFSET + 5, COL_CENTER(76), true, ATTR_NORMAL_WINDOW);
 
     center(curwin, 1, ATTR_WINDOW_TITLE, "  Interstellar Trading Bank  ");
 
@@ -277,9 +274,7 @@ void visit_bank (void)
     wrefresh(curwin);
 
     // Show menu of choices for the player
-    newtxwin(7, 76, LINE_OFFSET + 15, COL_CENTER(76));
-    wbkgd(curwin, ATTR_NORMAL_WINDOW);
-    box(curwin, 0, 0);
+    newtxwin(7, 76, LINE_OFFSET + 15, COL_CENTER(76), true, ATTR_NORMAL_WINDOW);
 
     center2(curwin, 3, ATTR_KEYCODE_STR, ATTR_NORMAL_WINDOW,
 	    "<1>", " Borrow money      ");
@@ -328,9 +323,8 @@ void visit_bank (void)
     case '1':
 	// Borrow money from the Bank
 	if (credit_limit == 0.0) {
-	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Insufficient Credit Limit  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
@@ -380,7 +374,9 @@ void visit_bank (void)
     case '2':
 	// Repay a debt
 	if (player[current_player].debt == 0.0) {
-	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+		     ATTR_ERROR_WINDOW);
+
 	    wbkgd(curwin, ATTR_ERROR_WINDOW);
 	    box(curwin, 0, 0);
 
@@ -390,9 +386,8 @@ void visit_bank (void)
 	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
 	    deltxwin();
 	} else if (player[current_player].cash == 0.0) {
-	    newtxwin(7, 60, LINE_OFFSET + 8, COL_CENTER(60));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(7, 60, LINE_OFFSET + 8, COL_CENTER(60), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Cash  ");
 	    center(curwin, 3, ATTR_ERROR_STR, "You have no cash with which to repay the debt!");
@@ -491,9 +486,7 @@ void trade_shares (int num, bool *bid_used)
 	 company[num].stock_issued);
 
     // Show the informational part of the trade window
-    newtxwin(9, 76, LINE_OFFSET + 5, COL_CENTER(76));
-    wbkgd(curwin, ATTR_NORMAL_WINDOW);
-    box(curwin, 0, 0);
+    newtxwin(9, 76, LINE_OFFSET + 5, COL_CENTER(76), true, ATTR_NORMAL_WINDOW);
 
     center(curwin, 1, ATTR_WINDOW_TITLE, "  Stock Transaction in %s  ",
 	   company[num].name);
@@ -528,9 +521,7 @@ void trade_shares (int num, bool *bid_used)
     wrefresh(curwin);
 
     // Show menu of choices for the player
-    newtxwin(7, 76, LINE_OFFSET + 14, COL_CENTER(76));
-    wbkgd(curwin, ATTR_NORMAL_WINDOW);
-    box(curwin, 0, 0);
+    newtxwin(7, 76, LINE_OFFSET + 14, COL_CENTER(76), true, ATTR_NORMAL_WINDOW);
 
     wmove(curwin, 3, 2);
     attrpr(curwin, ATTR_KEYCODE_STR, "<1>");
@@ -591,9 +582,8 @@ void trade_shares (int num, bool *bid_used)
 	maxshares = player[current_player].cash / company[num].share_price;
 
 	if (company[num].max_stock - company[num].stock_issued == 0) {
-	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares Available  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
@@ -603,9 +593,8 @@ void trade_shares (int num, bool *bid_used)
 	    deltxwin();
 
 	} else if (maxshares <= 0) {
-	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Insufficient Cash  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
@@ -644,9 +633,8 @@ void trade_shares (int num, bool *bid_used)
 	// Sell stock back to company
 	maxshares = player[current_player].stock_owned[num];
 	if (maxshares == 0) {
-	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(7, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares  ");
 	    center(curwin, 3, ATTR_ERROR_STR,
@@ -689,9 +677,8 @@ void trade_shares (int num, bool *bid_used)
 	*bid_used = true;
 
 	if (maxshares == 0) {
-	    newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50));
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+		     ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares Issued  ");
 	    center(curwin, 3, ATTR_ERROR_STR, "%s", company[num].name);
@@ -700,9 +687,8 @@ void trade_shares (int num, bool *bid_used)
 	    wait_for_key(curwin, 6, ATTR_WAITERROR_STR);
 	    deltxwin();
 	} else {
-	    newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50));
-	    wbkgd(curwin, ATTR_NORMAL_WINDOW);
-	    box(curwin, 0, 0);
+	    newtxwin(8, 50, LINE_OFFSET + 8, COL_CENTER(50), true,
+		     ATTR_NORMAL_WINDOW);
 
 	    center(curwin, 1, ATTR_WINDOW_TITLE, "  Shares Issued  ");
 	    center(curwin, 3, ATTR_HIGHLIGHT_STR, "%s", company[num].name);

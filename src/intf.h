@@ -163,7 +163,8 @@ extern void end_screen (void);
 
 // Simplified panel-like window functions
 
-extern WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x);
+extern WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
+			 bool draw_bkgd_box, chtype bkgd_attr);
 extern int deltxwin (void);
 extern int delalltxwin (void);
 extern int txrefresh (void);
