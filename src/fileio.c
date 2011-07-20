@@ -174,10 +174,10 @@ bool load_game (int num)
 	    newtxwin(7, 40, 9, WCENTER(40), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Found  ");
-	    center(curwin, 3, ATTR_ERROR_STR,
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "Game %d has not been saved to disk", num);
 
-	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	} else {
 	    // Some other file error
@@ -186,12 +186,12 @@ bool load_game (int num)
 	    newtxwin(9, 70, 9, WCENTER(70), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Loaded  ");
-	    center(curwin, 3, ATTR_ERROR_STR,
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "Game %d could not be loaded from disk", num);
-	    center(curwin, 5, ATTR_ERROR_WINDOW, "File %s: %s", filename,
+	    center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
 		   strerror(saved_errno));
 
-	    wait_for_key(curwin, 7, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	}
 
@@ -342,12 +342,12 @@ bool save_game (int num)
 		newtxwin(9, 70, 7, WCENTER(70), true, ATTR_ERROR_WINDOW);
 
 		center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
-		center(curwin, 3, ATTR_ERROR_STR,
+		center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		       "Game %d could not be saved to disk", num);
-		center(curwin, 5, ATTR_ERROR_WINDOW, "Directory %s: %s",
+		center(curwin, 5, ATTR_ERROR_NORMAL, "Directory %s: %s",
 		       data_dir, strerror(saved_errno));
 
-		wait_for_key(curwin, 7, ATTR_WAITERROR_STR);
+		wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
 		deltxwin();
 
 		free(buf);
@@ -367,12 +367,12 @@ bool save_game (int num)
 	newtxwin(9, 70, 7, WCENTER(70), true, ATTR_ERROR_WINDOW);
 
 	center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
-	center(curwin, 3, ATTR_ERROR_STR,
+	center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 	       "Game %d could not be saved to disk", num);
-	center(curwin, 5, ATTR_ERROR_WINDOW, "File %s: %s", filename,
+	center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
 	       strerror(saved_errno));
 
-	wait_for_key(curwin, 7, ATTR_WAITERROR_STR);
+	wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
 	deltxwin();
 
 	free(buf);

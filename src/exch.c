@@ -75,9 +75,9 @@ void exchange_stock (void)
 	werase(curwin);
 	box(curwin, 0, 0);
 
-	center(curwin, 1, ATTR_WINDOW_TITLE, "  Interstellar Stock Exchange  ");
-	center2(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR, "Player: ",
-		"%s", player[current_player].name);
+	center(curwin, 1, ATTR_TITLE, "  Interstellar Stock Exchange  ");
+	center2(curwin, 2, ATTR_NORMAL, ATTR_HIGHLIGHT, "Player: ", "%s",
+		player[current_player].name);
 
 	all_off_map = true;
 	for (i = 0; i < MAX_COMPANIES; i++) {
@@ -88,7 +88,7 @@ void exchange_stock (void)
 	}
 
 	if (all_off_map) {
-	    center(curwin, 8, ATTR_NORMAL_WINDOW, "No companies on the map");
+	    center(curwin, 8, ATTR_NORMAL, "No companies on the map");
 	} else {
 	    char *buf = malloc(BUFSIZE);
 	    if (buf == NULL) {
@@ -99,17 +99,17 @@ void exchange_stock (void)
 	    snprintf(buf, BUFSIZE, "share (%s)",
 		     localeconv_info.currency_symbol);
 
-	    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
+	    wattrset(curwin, ATTR_SUBTITLE);
 	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
 		      "", "Price per", "", "Shares", "Shares");
 	    mvwprintw(curwin, 5, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
 		      "Company", buf, "Return (%)", "issued", "left");
-	    wattrset(curwin, ATTR_NORMAL_WINDOW);
+	    wattrset(curwin, ATTR_NORMAL);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
-		    mvwaddch(curwin, line, 2, PRINTABLE_MAP_VAL(COMPANY_TO_MAP(i)) |
-			     ATTR_MAP_CHOICE);
+		    mvwaddch(curwin, line, 2, PRINTABLE_MAP_VAL(COMPANY_TO_MAP(i))
+			     | ATTR_CHOICE);
 		    l_strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
 		    mvwprintw(curwin, line, 4, "%-22s  %12s  %10.2f  %'10ld  %'10ld  ",
 			      company[i].name, buf, company[i].share_return
@@ -128,28 +128,28 @@ void exchange_stock (void)
 	newtxwin(6, WIN_COLS, 18, WCENTER(WIN_COLS), true, ATTR_NORMAL_WINDOW);
 
 	wmove(curwin, 3, 2);
-	attrpr(curwin, ATTR_KEYCODE_STR, "<1>");
+	attrpr(curwin, ATTR_KEYCODE, "<1>");
 	waddstr(curwin, " Display stock portfolio");
 
 	wmove(curwin, 4, 2);
-	attrpr(curwin, ATTR_KEYCODE_STR, "<2>");
+	attrpr(curwin, ATTR_KEYCODE, "<2>");
 	waddstr(curwin, " Display galaxy map");
 
 	wmove(curwin, 3, 40);
-	attrpr(curwin, ATTR_KEYCODE_STR, "<3>");
+	attrpr(curwin, ATTR_KEYCODE, "<3>");
 	waddstr(curwin, " Visit the Trading Bank");
 
 	wmove(curwin, 4, 40);
-	attrpr(curwin, ATTR_KEYCODE_STR, "<4>");
+	attrpr(curwin, ATTR_KEYCODE, "<4>");
 	waddstr(curwin, " Exit the Stock Exchange");
 
 	mvwaddstr(curwin, 1, 18, "Enter selection ");
 	waddstr(curwin, "[");
-	attrpr(curwin, ATTR_HIGHLIGHT_STR, "Company letter");
+	attrpr(curwin, ATTR_HIGHLIGHT, "Company letter");
 	waddstr(curwin, "/");
-	attrpr(curwin, ATTR_KEYCODE_STR, "1");
+	attrpr(curwin, ATTR_KEYCODE, "1");
 	waddstr(curwin, "-");
-	attrpr(curwin, ATTR_KEYCODE_STR, "4");
+	attrpr(curwin, ATTR_KEYCODE, "4");
 	waddstr(curwin, "]: ");
 
 	curs_set(CURS_ON);
@@ -254,22 +254,22 @@ void visit_bank (void)
     newtxwin(10, WIN_COLS - 4, 5, WCENTER(WIN_COLS - 4), true,
 	     ATTR_NORMAL_WINDOW);
 
-    center(curwin, 1, ATTR_WINDOW_TITLE, "  Interstellar Trading Bank  ");
+    center(curwin, 1, ATTR_TITLE, "  Interstellar Trading Bank  ");
 
     l_strfmon(buf, BUFSIZE, "%18n", player[current_player].cash);
-    center2(curwin, 3, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
-	    "Current cash:  ", " %s ", buf);
+    center2(curwin, 3, ATTR_NORMAL, ATTR_HIGHLIGHT, "Current cash:  ",
+	    " %s ", buf);
 
     l_strfmon(buf, BUFSIZE, "%18n", player[current_player].debt);
-    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
-	    "Current debt:  ", " %s ", buf);
+    center2(curwin, 4, ATTR_NORMAL, ATTR_HIGHLIGHT, "Current debt:  ",
+	    " %s ", buf);
 
-    center2(curwin, 5, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
-	    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
+    center2(curwin, 5, ATTR_NORMAL, ATTR_HIGHLIGHT, "Interest rate: ",
+	    " %17.2f%% ", interest_rate * 100.0);
 
     l_strfmon(buf, BUFSIZE, "%18n", credit_limit);
-    center2(curwin, 7, ATTR_HIGHLIGHT_STR, ATTR_WINDOW_TITLE,
-	    "Credit limit:  ", " %s ", buf);
+    center2(curwin, 7, ATTR_HIGHLIGHT, ATTR_TITLE, "Credit limit:  ",
+	    " %s ", buf);
 
     wrefresh(curwin);
 
@@ -277,18 +277,15 @@ void visit_bank (void)
     newtxwin(7, WIN_COLS - 4, 15, WCENTER(WIN_COLS - 4), true,
 	     ATTR_NORMAL_WINDOW);
 
-    center2(curwin, 3, ATTR_KEYCODE_STR, ATTR_NORMAL_WINDOW,
-	    "<1>", " Borrow money      ");
-    center2(curwin, 4, ATTR_KEYCODE_STR, ATTR_NORMAL_WINDOW,
-	    "<2>", " Repay debt        ");
-    center2(curwin, 5, ATTR_KEYCODE_STR, ATTR_NORMAL_WINDOW,
-	    "<3>", " Exit from the Bank");
+    center2(curwin, 3, ATTR_KEYCODE, ATTR_NORMAL, "<1>", " Borrow money      ");
+    center2(curwin, 4, ATTR_KEYCODE, ATTR_NORMAL, "<2>", " Repay debt        ");
+    center2(curwin, 5, ATTR_KEYCODE, ATTR_NORMAL, "<3>", " Exit from the Bank");
 
     mvwaddstr(curwin, 1, 24, "Enter selection ");
     waddstr(curwin, "[");
-    attrpr(curwin, ATTR_KEYCODE_STR, "1");
+    attrpr(curwin, ATTR_KEYCODE, "1");
     waddstr(curwin, "-");
-    attrpr(curwin, ATTR_KEYCODE_STR, "3");
+    attrpr(curwin, ATTR_KEYCODE, "3");
     waddstr(curwin, "]: ");
 
     curs_set(CURS_ON);
@@ -327,10 +324,10 @@ void visit_bank (void)
 	    newtxwin(7, 50, 8, WCENTER(50), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Insufficient Credit Limit  ");
-	    center(curwin, 3, ATTR_ERROR_STR,
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "The Bank will not lend you any more money");
 
-	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	} else {
 	    int x, y, n;
@@ -376,21 +373,20 @@ void visit_bank (void)
 	if (player[current_player].debt == 0.0) {
 	    newtxwin(7, 50, 8, WCENTER(50), true, ATTR_ERROR_WINDOW);
 
-	    wbkgd(curwin, ATTR_ERROR_WINDOW);
-	    box(curwin, 0, 0);
-
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Debt  ");
-	    center(curwin, 3, ATTR_ERROR_STR, "You have no debt to repay");
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+		   "You have no debt to repay");
 
-	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	} else if (player[current_player].cash == 0.0) {
 	    newtxwin(7, 60, 8, WCENTER(60), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Cash  ");
-	    center(curwin, 3, ATTR_ERROR_STR, "You have no cash with which to repay the debt!");
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+		   "You have no cash with which to repay the debt!");
 
-	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	} else {
 	    int x, y, n;
@@ -487,35 +483,35 @@ void trade_shares (int num, bool *bid_used)
     newtxwin(9, WIN_COLS - 4, 5, WCENTER(WIN_COLS - 4), true,
 	     ATTR_NORMAL_WINDOW);
 
-    center(curwin, 1, ATTR_WINDOW_TITLE, "  Stock Transaction in %s  ",
+    center(curwin, 1, ATTR_TITLE, "  Stock Transaction in %s  ",
 	   company[num].name);
 
     mvwaddstr(curwin, 3, 2, "Shares issued:   ");
-    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%'12ld", company[num].stock_issued);
+    attrpr(curwin, ATTR_HIGHLIGHT, "%'12ld", company[num].stock_issued);
 
     mvwaddstr(curwin, 4, 2, "Shares left:     ");
-    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%'12ld",
+    attrpr(curwin, ATTR_HIGHLIGHT, "%'12ld",
 	   company[num].max_stock - company[num].stock_issued);
 
     mvwaddstr(curwin, 5, 2, "Price per share: ");
     l_strfmon(buf, BUFSIZE, "%12n", company[num].share_price);
-    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%12s", buf);
+    attrpr(curwin, ATTR_HIGHLIGHT, "%12s", buf);
 
     mvwaddstr(curwin, 6, 2, "Return:          ");
-    attrpr(curwin, ATTR_HIGHLIGHT_STR, "%11.2f%%",
+    attrpr(curwin, ATTR_HIGHLIGHT, "%11.2f%%",
 	   company[num].share_return * 100.0);
 
     mvwaddstr(curwin, 3, 38, "Current holdings: ");
-    attrpr(curwin, ATTR_HIGHLIGHT_STR, " %'16ld ",
+    attrpr(curwin, ATTR_HIGHLIGHT, " %'16ld ",
 	   player[current_player].stock_owned[num]);
 
     mvwaddstr(curwin, 4, 38, "Percentage owned: ");
-    attrpr(curwin, ATTR_HIGHLIGHT_STR, " %'15.2f%% ", ownership * 100.0);
+    attrpr(curwin, ATTR_HIGHLIGHT, " %'15.2f%% ", ownership * 100.0);
 
     wmove(curwin, 6, 38);
-    attrpr(curwin, ATTR_HIGHLIGHT_STR, "Current cash:     ");
+    attrpr(curwin, ATTR_HIGHLIGHT, "Current cash:     ");
     l_strfmon(buf, BUFSIZE, "%16n", player[current_player].cash);
-    attrpr(curwin, ATTR_WINDOW_TITLE, " %16s ", buf);
+    attrpr(curwin, ATTR_TITLE, " %16s ", buf);
 
     wrefresh(curwin);
 
@@ -524,26 +520,26 @@ void trade_shares (int num, bool *bid_used)
 	     ATTR_NORMAL_WINDOW);
 
     wmove(curwin, 3, 2);
-    attrpr(curwin, ATTR_KEYCODE_STR, "<1>");
+    attrpr(curwin, ATTR_KEYCODE, "<1>");
     waddstr(curwin, " Buy stock from company");
 
     wmove(curwin, 4, 2);
-    attrpr(curwin, ATTR_KEYCODE_STR, "<2>");
+    attrpr(curwin, ATTR_KEYCODE, "<2>");
     waddstr(curwin, " Sell stock back to company");
 
     wmove(curwin, 3, 38);
-    attrpr(curwin, ATTR_KEYCODE_STR, "<3>");
+    attrpr(curwin, ATTR_KEYCODE, "<3>");
     waddstr(curwin, " Bid company to issue more shares");
 
     wmove(curwin, 4, 38);
-    attrpr(curwin, ATTR_KEYCODE_STR, "<4>");
+    attrpr(curwin, ATTR_KEYCODE, "<4>");
     waddstr(curwin, " Exit to the Stock Exchange");
 
     mvwaddstr(curwin, 1, 24, "Enter selection ");
     waddstr(curwin, "[");
-    attrpr(curwin, ATTR_KEYCODE_STR, "1");
+    attrpr(curwin, ATTR_KEYCODE, "1");
     waddstr(curwin, "-");
-    attrpr(curwin, ATTR_KEYCODE_STR, "4");
+    attrpr(curwin, ATTR_KEYCODE, "4");
     waddstr(curwin, "]: ");
 
     curs_set(CURS_ON);
@@ -585,20 +581,20 @@ void trade_shares (int num, bool *bid_used)
 	    newtxwin(7, 50, 8, WCENTER(50), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares Available  ");
-	    center(curwin, 3, ATTR_ERROR_STR,
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "No more shares are available for purchase");
 
-	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 
 	} else if (maxshares <= 0) {
 	    newtxwin(7, 50, 8, WCENTER(50), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  Insufficient Cash  ");
-	    center(curwin, 3, ATTR_ERROR_STR,
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "Not enough cash to purchase shares");
 
-	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 
 	} else {
@@ -609,9 +605,8 @@ void trade_shares (int num, bool *bid_used)
 	    werase(curwin);
 	    box(curwin, 0, 0);
 
-	    center3(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_NORMAL_WINDOW,
-		    ATTR_HIGHLIGHT_STR, "You can purchase up to ", " shares.",
-		    "%'ld", maxshares);
+	    center3(curwin, 2, ATTR_NORMAL, ATTR_NORMAL, ATTR_HIGHLIGHT,
+		    "You can purchase up to ", " shares.", "%'ld", maxshares);
 
 	    mvwprintw(curwin, 4, 10, "How many shares do you wish to purchase? ");
 	    x = getcurx(curwin);
@@ -634,10 +629,10 @@ void trade_shares (int num, bool *bid_used)
 	    newtxwin(7, 50, 8, WCENTER(50), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares  ");
-	    center(curwin, 3, ATTR_ERROR_STR,
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "You do not have any shares to sell");
 
-	    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 
 	} else {
@@ -645,9 +640,8 @@ void trade_shares (int num, bool *bid_used)
 	    werase(curwin);
 	    box(curwin, 0, 0);
 
-	    center3(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_NORMAL_WINDOW,
-		    ATTR_HIGHLIGHT_STR, "You can sell up to ", " shares.",
-		    "%'ld", maxshares);
+	    center3(curwin, 2, ATTR_NORMAL, ATTR_NORMAL, ATTR_HIGHLIGHT,
+		    "You can sell up to ", " shares.", "%'ld", maxshares);
 
 	    mvwprintw(curwin, 4, 10, "How many shares do you wish to sell? ");
 	    x = getcurx(curwin);
@@ -677,20 +671,21 @@ void trade_shares (int num, bool *bid_used)
 	    newtxwin(8, 50, 8, WCENTER(50), true, ATTR_ERROR_WINDOW);
 
 	    center(curwin, 1, ATTR_ERROR_TITLE, "  No Shares Issued  ");
-	    center(curwin, 3, ATTR_ERROR_STR, "%s", company[num].name);
-	    center(curwin, 4, ATTR_ERROR_STR, "has refused to issue more shares");
+	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT, "%s", company[num].name);
+	    center(curwin, 4, ATTR_ERROR_HIGHLIGHT,
+		   "has refused to issue more shares");
 
-	    wait_for_key(curwin, 6, ATTR_WAITERROR_STR);
+	    wait_for_key(curwin, 6, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	} else {
 	    newtxwin(8, 50, 8, WCENTER(50), true, ATTR_NORMAL_WINDOW);
 
-	    center(curwin, 1, ATTR_WINDOW_TITLE, "  Shares Issued  ");
-	    center(curwin, 3, ATTR_HIGHLIGHT_STR, "%s", company[num].name);
-	    center(curwin, 4, ATTR_HIGHLIGHT_STR, "has issued %'ld more shares",
+	    center(curwin, 1, ATTR_TITLE, "  Shares Issued  ");
+	    center(curwin, 3, ATTR_HIGHLIGHT, "%s", company[num].name);
+	    center(curwin, 4, ATTR_HIGHLIGHT, "has issued %'ld more shares",
 		maxshares);
 
-	    wait_for_key(curwin, 6, ATTR_WAITNORMAL_STR);
+	    wait_for_key(curwin, 6, ATTR_WAITFORKEY);
 	    deltxwin();
 	}
 	break;

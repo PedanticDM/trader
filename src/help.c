@@ -178,15 +178,14 @@ void show_help (void)
 	werase(curwin);
 	wbkgd(curwin, ATTR_NORMAL_WINDOW);
 	box(curwin, 0, 0);
-	center(curwin, 1, ATTR_WINDOW_TITLE, "  How to Play  ");
-	center(curwin, 2, ATTR_NORMAL_WINDOW, "Page %d of %d",
-	       curpage + 1, numpages);
+	center(curwin, 1, ATTR_TITLE, "  How to Play  ");
+	center(curwin, 2, ATTR_NORMAL, "Page %d of %d", curpage + 1, numpages);
 	wmove(curwin, 4, 2);
 
 	// Process the help text string
 
 	const char *s = help_text[curpage];
-	int curattr = ATTR_NORMAL_WINDOW;
+	int curattr = ATTR_NORMAL;
 
 	while (*s != '\0') {
 	    switch (*s) {
@@ -204,22 +203,22 @@ void show_help (void)
 		    break;
 
 		case 'N':
-		    curattr = ATTR_NORMAL_WINDOW;
+		    curattr = ATTR_NORMAL;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'B':
-		    curattr = ATTR_NORMAL_WINDOW | A_BOLD;
+		    curattr = ATTR_NORMAL | A_BOLD;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'H':
-		    curattr = ATTR_HIGHLIGHT_STR;
+		    curattr = ATTR_HIGHLIGHT;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'K':
-		    curattr = ATTR_KEYCODE_STR;
+		    curattr = ATTR_KEYCODE;
 		    wattrset(curwin, curattr);
 		    break;
 
@@ -327,7 +326,7 @@ void show_help (void)
 	    s++;
 	}
 
-	center(curwin, 21, ATTR_WAITNORMAL_STR, (curpage == 0) ?
+	center(curwin, 21, ATTR_WAITFORKEY, (curpage == 0) ?
 	       "[ Press <SPACE> to continue ] " :
 	       "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] ");
 

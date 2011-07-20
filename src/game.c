@@ -89,12 +89,12 @@ void init_game (void)
 
 	    mvwaddstr(curwin, 2, 2, "Enter number of players ");
 	    waddstr(curwin, "[");
-	    attrpr(curwin, ATTR_KEYCODE_STR, "1");
+	    attrpr(curwin, ATTR_KEYCODE, "1");
 	    waddstr(curwin, "-");
-	    attrpr(curwin, ATTR_KEYCODE_STR, "%d", MAX_PLAYERS);
+	    attrpr(curwin, ATTR_KEYCODE, "%d", MAX_PLAYERS);
 	    waddstr(curwin, "]");
 	    waddstr(curwin, " or ");
-	    attrpr(curwin, ATTR_KEYCODE_STR, "<C>");
+	    attrpr(curwin, ATTR_KEYCODE, "<C>");
 	    waddstr(curwin, " to continue a game: ");
 
 	    curs_set(CURS_ON);
@@ -136,12 +136,12 @@ void init_game (void)
 
 		mvwaddstr(curwin, 2, 2, "Enter game number ");
 		waddstr(curwin, "[");
-		attrpr(curwin, ATTR_KEYCODE_STR, "1");
+		attrpr(curwin, ATTR_KEYCODE, "1");
 		waddstr(curwin, "-");
-		attrpr(curwin, ATTR_KEYCODE_STR, "9");
+		attrpr(curwin, ATTR_KEYCODE, "9");
 		waddstr(curwin, "]");
 		waddstr(curwin, " or ");
-		attrpr(curwin, ATTR_KEYCODE_STR, "<CTRL><C>");
+		attrpr(curwin, ATTR_KEYCODE, "<CTRL><C>");
 		waddstr(curwin, " to cancel: ");
 
 		curs_set(CURS_ON);
@@ -221,9 +221,9 @@ void init_game (void)
 
 		mvwaddstr(curwin, 2, 2, "Do you need any instructions? ");
 		waddstr(curwin, "[");
-		attrpr(curwin, ATTR_KEYCODE_STR, "Y");
+		attrpr(curwin, ATTR_KEYCODE, "Y");
 		waddstr(curwin, "/");
-		attrpr(curwin, ATTR_KEYCODE_STR, "N");
+		attrpr(curwin, ATTR_KEYCODE, "N");
 		waddstr(curwin, "] ");
 
 		if (answer_yesno(curwin)) {
@@ -240,7 +240,7 @@ void init_game (void)
 		newtxwin(number_players + 5, WIN_COLS - 4, 9,
 			 WCENTER(WIN_COLS - 4), true, ATTR_NORMAL_WINDOW);
 
-		center(curwin, 1, ATTR_WINDOW_TITLE, "  Enter Player Names  ");
+		center(curwin, 1, ATTR_TITLE, "  Enter Player Names  ");
 
 		for (i = 0; i < number_players; i++) {
 		    player[i].name = NULL;
@@ -321,9 +321,9 @@ void init_game (void)
 
 		mvwaddstr(curwin, 2, 2, "Does any player need instructions? ");
 		waddstr(curwin, "[");
-		attrpr(curwin, ATTR_KEYCODE_STR, "Y");
+		attrpr(curwin, ATTR_KEYCODE, "Y");
 		waddstr(curwin, "/");
-		attrpr(curwin, ATTR_KEYCODE_STR, "N");
+		attrpr(curwin, ATTR_KEYCODE, "N");
 		waddstr(curwin, "] ");
 
 		if (answer_yesno(curwin)) {
@@ -380,12 +380,11 @@ void init_game (void)
 
 		newtxwin(7, 50, 8, WCENTER(50), true, ATTR_NORMAL_WINDOW);
 
-		center(curwin, 2, ATTR_NORMAL_WINDOW,
-		       "The first player to go is");
-		center(curwin, 3, ATTR_HIGHLIGHT_STR, "%s",
+		center(curwin, 2, ATTR_NORMAL, "The first player to go is");
+		center(curwin, 3, ATTR_HIGHLIGHT, "%s",
 		       player[first_player].name);
 
-		wait_for_key(curwin, 5, ATTR_WAITNORMAL_STR);
+		wait_for_key(curwin, 5, ATTR_WAITFORKEY);
 		deltxwin();
 		txrefresh();
 	    }
@@ -426,10 +425,10 @@ void end_game (void)
     newtxwin(7, 40, 9, WCENTER(40), true, ATTR_ERROR_WINDOW);
 
     center(curwin, 1, ATTR_ERROR_TITLE, "  Game Over  ");
-    center(curwin, 3, ATTR_ERROR_STR, "The game is over after %d turns",
+    center(curwin, 3, ATTR_ERROR_HIGHLIGHT, "The game is over after %d turns",
 	   turn_number - 1);
 
-    wait_for_key(curwin, 5, ATTR_WAITERROR_STR);
+    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
     deltxwin();
 
     for (i = 0; i < number_players; i++) {
@@ -441,11 +440,11 @@ void end_game (void)
 
 	newtxwin(9, 60, 8, WCENTER(60), true, ATTR_NORMAL_WINDOW);
 
-	center(curwin, 1, ATTR_WINDOW_TITLE, "  Total Value  ");
-	center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+	center(curwin, 1, ATTR_TITLE, "  Total Value  ");
+	center2(curwin, 4, ATTR_NORMAL, ATTR_HIGHLIGHT,
 		"Your total value was ", "%s", buf);
 
-	wait_for_key(curwin, 7, ATTR_WAITNORMAL_STR);
+	wait_for_key(curwin, 7, ATTR_WAITFORKEY);
 	deltxwin();
     } else {
 	// Sort players on the basis of total value
@@ -457,15 +456,15 @@ void end_game (void)
 	newtxwin(number_players + 10, WIN_COLS - 4, 3, WCENTER(WIN_COLS - 4),
 		 true, ATTR_NORMAL_WINDOW);
 
-	center(curwin, 1, ATTR_WINDOW_TITLE, "  Game Winner  ");
-	center2(curwin, 3, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
-		"The winner is ", "%s", player[0].name);
+	center(curwin, 1, ATTR_TITLE, "  Game Winner  ");
+	center2(curwin, 3, ATTR_NORMAL, ATTR_HIGHLIGHT, "The winner is ",
+		"%s", player[0].name);
 	if (player[0].sort_value == 0.0) {
-	    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_STANDOUT_STR,
-		    "who is ", "%s", "*** BANKRUPT ***");
+	    center2(curwin, 4, ATTR_NORMAL, ATTR_BLINK, "who is ",
+		    "*** BANKRUPT ***");
 	} else {
 	    l_strfmon(buf, BUFSIZE, "%1n", player[0].sort_value);
-	    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+	    center2(curwin, 4, ATTR_NORMAL, ATTR_HIGHLIGHT,
 		    "with a value of ", "%s", buf);
 	}
 
@@ -473,9 +472,9 @@ void end_game (void)
 		 localeconv_info.currency_symbol);
 
 	int w = getmaxx(curwin) - 33;
-	wattrset(curwin, ATTR_WINDOW_SUBTITLE);
+	wattrset(curwin, ATTR_SUBTITLE);
 	mvwprintw(curwin, 6, 2, "%5s  %-*.*s  %18s  ", "", w, w, "Player", buf);
-	wattrset(curwin, ATTR_NORMAL_WINDOW);
+	wattrset(curwin, ATTR_NORMAL);
 
 	for (i = 0; i < number_players; i++) {
 	    l_strfmon(buf, BUFSIZE, "%!18n", player[i].sort_value);
@@ -483,7 +482,7 @@ void end_game (void)
 		      ordinal[i + 1], w, w, player[i].name, buf);
 	}
 
-	wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITNORMAL_STR);
+	wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITFORKEY);
 	deltxwin();
     }
 
@@ -517,13 +516,13 @@ void show_map (bool closewin)
     mvwaddch(curwin, 2, getmaxx(curwin) - 1, ACS_RTEE);
 
     // Display current player and turn number
-    wattrset(curwin, ATTR_MAP_TITLE);
+    wattrset(curwin, ATTR_MAPWIN_TITLE);
     mvwaddstr(curwin, 1, 2, "  ");
     waddstr(curwin, "Player: ");
     n = getmaxx(curwin) - getcurx(curwin) - 4;
-    wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
+    wattrset(curwin, ATTR_MAPWIN_HIGHLIGHT);
     wprintw(curwin, "%-*.*s", n, n, player[current_player].name);
-    wattrset(curwin, ATTR_MAP_TITLE);
+    wattrset(curwin, ATTR_MAPWIN_TITLE);
     waddstr(curwin, "  ");
 
     if (turn_number != max_turn) {
@@ -539,9 +538,9 @@ void show_map (bool closewin)
 
 	mvwaddstr(curwin, 1, getmaxx(curwin) - (len1 + len2) - 6, "  ");
 	waddstr(curwin, initial);
-	wattrset(curwin, ATTR_MAP_T_HIGHLIGHT);
+	wattrset(curwin, ATTR_MAPWIN_HIGHLIGHT);
 	waddstr(curwin, buf);
-	wattrset(curwin, ATTR_MAP_TITLE);
+	wattrset(curwin, ATTR_MAPWIN_TITLE);
 	waddstr(curwin, "  ");
 
 	free(buf);
@@ -550,9 +549,9 @@ void show_map (bool closewin)
 	int len = strlen(buf);
 
 	mvwaddstr(curwin, 1, getmaxx(curwin) - len - 6, "  ");
-	wattrset(curwin, ATTR_MAP_T_STANDOUT);
+	wattrset(curwin, ATTR_MAPWIN_BLINK);
 	waddstr(curwin, buf);
-	wattrset(curwin, ATTR_MAP_TITLE);
+	wattrset(curwin, ATTR_MAPWIN_TITLE);
 	waddstr(curwin, "  ");
     }
 
@@ -593,7 +592,7 @@ void show_map (bool closewin)
 	newtxwin(WIN_LINES - MAX_Y - 5, WIN_COLS, MAX_Y + 5, WCENTER(WIN_COLS),
 		 true, ATTR_NORMAL_WINDOW);
 
-	wait_for_key(curwin, 2, ATTR_WAITNORMAL_STR);
+	wait_for_key(curwin, 2, ATTR_WAITFORKEY);
 
 	deltxwin();			// Wait for key window
 	deltxwin();			// Galaxy map window
@@ -623,13 +622,13 @@ void show_status (int num)
     newtxwin(MAX_COMPANIES + 15, WIN_COLS, 1, WCENTER(WIN_COLS), true,
 	     ATTR_NORMAL_WINDOW);
 
-    center(curwin, 1, ATTR_WINDOW_TITLE, "  Stock Portfolio  ");
-    center2(curwin, 2, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR, "Player: ",
-	    "%s", player[num].name);
+    center(curwin, 1, ATTR_TITLE, "  Stock Portfolio  ");
+    center2(curwin, 2, ATTR_NORMAL, ATTR_HIGHLIGHT, "Player: ", "%s",
+	    player[num].name);
 
     val = total_value(num);
     if (val == 0.0) {
-	center(curwin, 11, ATTR_STANDOUT_STR, "* * *   B A N K R U P T   * * *");
+	center(curwin, 11, ATTR_BLINK, "* * *   B A N K R U P T   * * *");
     } else {
 	char *buf = malloc(BUFSIZE);
 	if (buf == NULL) {
@@ -646,18 +645,18 @@ void show_status (int num)
 	}
 
 	if (none) {
-	    center(curwin, 8, ATTR_NORMAL_WINDOW, "No companies on the map");
+	    center(curwin, 8, ATTR_NORMAL, "No companies on the map");
 	} else {
 	    // Handle the locale's currency symbol
 	    snprintf(buf, BUFSIZE, "share (%s)",
 		     localeconv_info.currency_symbol);
 
-	    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
+	    wattrset(curwin, ATTR_SUBTITLE);
 	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
 		      "", "Price per", "", "Holdings", "Company");
 	    mvwprintw(curwin, 5, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
 		      "Company", buf, "Return (%)", "(shares)", "owner (%)");
-	    wattrset(curwin, ATTR_NORMAL_WINDOW);
+	    wattrset(curwin, ATTR_NORMAL);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
@@ -677,24 +676,24 @@ void show_status (int num)
 
 	line = 15;
 	l_strfmon(buf, BUFSIZE, "%18n", player[num].cash);
-	center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
-		"Current cash:  ", " %s ", buf);
+	center2(curwin, line++, ATTR_NORMAL, ATTR_HIGHLIGHT, "Current cash:  ",
+		" %s ", buf);
 	if (player[num].debt != 0.0) {
 	    l_strfmon(buf, BUFSIZE, "%18n", player[num].debt);
-	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+	    center2(curwin, line++, ATTR_NORMAL, ATTR_HIGHLIGHT,
 		    "Current debt:  ", " %s ", buf);
-	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
+	    center2(curwin, line++, ATTR_NORMAL, ATTR_HIGHLIGHT,
 		    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
 	}
 
 	l_strfmon(buf, BUFSIZE, "%18n", val);
-	center2(curwin, line + 1, ATTR_HIGHLIGHT_STR, ATTR_WINDOW_TITLE,
+	center2(curwin, line + 1, ATTR_HIGHLIGHT, ATTR_TITLE,
 		"Total value:   ", " %s ", buf);
 
 	free(buf);
     }
 
-    wait_for_key(curwin, 21, ATTR_WAITNORMAL_STR);
+    wait_for_key(curwin, 21, ATTR_WAITFORKEY);
     deltxwin();
     txrefresh();
 }
