@@ -40,108 +40,126 @@
 *                    Constants and type declarations                    *
 ************************************************************************/
 
-// Visibility of the cursor in Curses
+/*
+  This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
+  terminal screen; this terminal must be at least MIN_COLS x MIN_LINES in
+  size; the newtxwin() function automatically places a new window in the
+  centre-top of the terminal screen.  The program does not yet handle
+  terminal resizing events.
+*/
+
+#define MIN_LINES	24	// Minimum number of lines in terminal
+#define MIN_COLS	80	// Minimum number of columns in terminal
+
+#define WIN_LINES	MIN_LINES	// Number of lines in main window
+#define WIN_COLS	MIN_COLS	// Number of columns in main window
+
+#define WCENTER(x)	((COLS - (x)) / 2)	// Centre the window
+
+
+// Visibility of the cursor in Curses (for curs_set())
 typedef enum curs_type {
     CURS_INVISIBLE	= 0,
     CURS_NORMAL		= 1,
     CURS_VISIBLE	= 2
 } curs_type_t;
 
-#define CURS_OFF	(CURS_INVISIBLE)
-#define CURS_ON		(CURS_NORMAL)
+#define CURS_OFF	CURS_INVISIBLE
+#define CURS_ON		CURS_NORMAL
 
 
-// Keycodes
-#define KEY_BS		(0010)
-#define KEY_TAB		(0011)
-#define KEY_RETURN	(0012)
-#define KEY_ESC		(0033)
-#define KEY_DEL		(0177)
+// Keycodes not defined by Curses
+#define KEY_BS		0010		// ASCII ^H backspace
+#define KEY_TAB		0011		// ASCII ^I character tabulation
+#define KEY_RETURN	0012		// ASCII ^J line feed
+#define KEY_ESC		0033		// ASCII ^[ escape
+#define KEY_DEL		0177		// ASCII    delete
 
-#define KEY_CTRL(x)	(x - 0100)
+#define KEY_CTRL(x)	((x) - 0100)	// ASCII control character
 
-// Control-arrow key combinations
-#ifndef KEY_CDOWN
-#  define KEY_CDOWN	(01007)
-#endif
-#ifndef KEY_CUP
-#  define KEY_CUP	(01060)
-#endif
-#ifndef KEY_CLEFT
-#  define KEY_CLEFT	(01033)
-#endif
-#ifndef KEY_CRIGHT
-#  define KEY_CRIGHT	(01052)
-#endif
+#define KEY_ILLEGAL	077777		// No key should ever return this!
 
-// Keycode for inserting the default value
+// Keycode for inserting the default value in input routines
 #define KEY_DEFAULTVAL	'='
 
+// Control-arrow key combinations, as returned by NCurses
+#ifndef KEY_CDOWN
+#  define KEY_CDOWN	01007		// CTRL + Down Arrow
+#  define KEY_CUP	01060		// CTRL + Up Arrow
+#  define KEY_CLEFT	01033		// CTRL + Left Arrow
+#  define KEY_CRIGHT	01052		// CTRL + Right Arrow
+#endif
+
+// Keycodes only defined by NCurses
+#ifndef KEY_RESIZE
+#  define KEY_RESIZE	KEY_ILLEGAL
+#endif
+#ifndef KEY_EVENT
+#  define KEY_EVENT	KEY_ILLEGAL
+#endif
+#ifndef KEY_MOUSE
+#  define KEY_MOUSE	KEY_ILLEGAL
+#endif
+
 // Timeout value (in ms) for Meta-X-style keyboard input
-#define META_TIMEOUT	(1000)
+#ifdef NCURSES_VERSION
+#  define META_TIMEOUT	ESCDELAY
+#else
+#  define META_TIMEOUT	1000
+#endif
 
 
 /*
-  This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
-  terminal window.  COL_OFFSET and LINE_OFFSET define offsets that should
-  be added to each newwin() call to position the window correctly.
+  Colour pairs used in Star Traders.  This list MUST be synchronised with
+  the initialisation of colour pairs in init_screen().
+
+  X/Open Curses only lists the following colours: black, blue, green,
+  cyan, red, magenta, yellow, white.  Most implementations allow these
+  colours plus bold versions (for the foreground).
 */
-
-#define MIN_LINES	(24)	/* Minimum number of lines in terminal */
-#define MIN_COLS	(80)	/* Minimum number of columns in terminal */
-
-#define WIN_LINES	MIN_LINES	/* Number of lines in main windows */
-#define WIN_COLS	MIN_COLS	/* Number of columns in main windows */
-
-#define WCENTER(x)	((COLS - (x)) / 2)
-
-
-// Colour and non-colour attribute selection
-#define ATTR(color, nocolor) (use_color ? (color) : (nocolor))
-
-
-// Colour pairs used in Star Traders
 enum color_pairs {
     DEFAULT_COLORS = 0,
     BLACK_ON_WHITE,
-    RED_ON_BLACK,
+    BLUE_ON_BLACK,
+    GREEN_ON_BLACK,
     CYAN_ON_BLUE,
+    RED_ON_BLACK,
     YELLOW_ON_BLACK,
     YELLOW_ON_BLUE,
     YELLOW_ON_CYAN,
-    GREEN_ON_BLACK,
-    BLUE_ON_BLACK,
     WHITE_ON_BLACK,
-    WHITE_ON_RED,
     WHITE_ON_BLUE,
+    WHITE_ON_RED
 };
 
+// Colour and non-colour character rendition selection
+#define ATTR(color, nocolor)	(use_color ? (color) : (nocolor))
 
-// Window attributes used in Star Traders
-#define ATTR_GAME_TITLE		ATTR(COLOR_PAIR(YELLOW_ON_CYAN)  | A_BOLD, A_REVERSE | A_BOLD)
-#define ATTR_ROOT_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_NORMAL)
-#define ATTR_NORMAL_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLUE),            A_NORMAL)
-#define ATTR_MAP_WINDOW		ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_NORMAL)
-#define ATTR_STATUS_WINDOW	ATTR(COLOR_PAIR(BLACK_ON_WHITE),           A_REVERSE)
-#define ATTR_ERROR_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_RED),             A_REVERSE)
-#define ATTR_WINDOW_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
-#define ATTR_WINDOW_SUBTITLE	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_REVERSE)
-#define ATTR_MAP_TITLE		ATTR(COLOR_PAIR(WHITE_ON_BLUE),            A_NORMAL)
-#define ATTR_MAP_T_HIGHLIGHT	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD, A_BOLD)
+// Character renditions (attributes) used in Star Traders
+#define ATTR_GAME_TITLE		ATTR(COLOR_PAIR(YELLOW_ON_CYAN)  | A_BOLD,           A_REVERSE | A_BOLD)
+#define ATTR_ROOT_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_NORMAL)
+#define ATTR_NORMAL_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLUE),                      A_NORMAL)
+#define ATTR_MAP_WINDOW		ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_NORMAL)
+#define ATTR_STATUS_WINDOW	ATTR(COLOR_PAIR(BLACK_ON_WHITE),                     A_REVERSE)
+#define ATTR_ERROR_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_RED),                       A_REVERSE)
+#define ATTR_WINDOW_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_REVERSE)
+#define ATTR_WINDOW_SUBTITLE	ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_REVERSE)
+#define ATTR_MAP_TITLE		ATTR(COLOR_PAIR(WHITE_ON_BLUE),                      A_NORMAL)
+#define ATTR_MAP_T_HIGHLIGHT	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD,           A_BOLD)
 #define ATTR_MAP_T_STANDOUT	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD | A_BLINK, A_BOLD | A_BLINK)
-#define ATTR_ERROR_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_BOLD)
-#define ATTR_INPUT_FIELD	ATTR(COLOR_PAIR(WHITE_ON_BLACK),           A_BOLD | '_')
-#define ATTR_KEYCODE_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_REVERSE)
-#define ATTR_HIGHLIGHT_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD, A_BOLD)
+#define ATTR_ERROR_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_BOLD)
+#define ATTR_INPUT_FIELD	ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_BOLD | '_')
+#define ATTR_KEYCODE_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_REVERSE)
+#define ATTR_HIGHLIGHT_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD,           A_BOLD)
 #define ATTR_STANDOUT_STR	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD | A_BLINK, A_BOLD | A_BLINK)
-#define ATTR_ERROR_STR		ATTR(COLOR_PAIR(WHITE_ON_RED)    | A_BOLD, A_REVERSE)
-#define ATTR_WAITNORMAL_STR	ATTR(COLOR_PAIR(CYAN_ON_BLUE),             A_NORMAL)
-#define ATTR_WAITERROR_STR	ATTR(COLOR_PAIR(WHITE_ON_RED),             A_REVERSE)
-#define ATTR_MAP_EMPTY		ATTR(COLOR_PAIR(BLUE_ON_BLACK)   | A_BOLD, A_NORMAL)
-#define ATTR_MAP_OUTPOST	ATTR(COLOR_PAIR(GREEN_ON_BLACK)  | A_BOLD, A_NORMAL)
-#define ATTR_MAP_STAR		ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD, A_BOLD)
-#define ATTR_MAP_COMPANY	ATTR(COLOR_PAIR(RED_ON_BLACK)    | A_BOLD, A_BOLD)
-#define ATTR_MAP_CHOICE		ATTR(COLOR_PAIR(WHITE_ON_RED)    | A_BOLD, A_REVERSE)
+#define ATTR_ERROR_STR		ATTR(COLOR_PAIR(WHITE_ON_RED)    | A_BOLD,           A_REVERSE)
+#define ATTR_WAITNORMAL_STR	ATTR(COLOR_PAIR(CYAN_ON_BLUE),                       A_NORMAL)
+#define ATTR_WAITERROR_STR	ATTR(COLOR_PAIR(WHITE_ON_RED),                       A_REVERSE)
+#define ATTR_MAP_EMPTY		ATTR(COLOR_PAIR(BLUE_ON_BLACK)   | A_BOLD,           A_NORMAL)
+#define ATTR_MAP_OUTPOST	ATTR(COLOR_PAIR(GREEN_ON_BLACK)  | A_BOLD,           A_NORMAL)
+#define ATTR_MAP_STAR		ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_BOLD)
+#define ATTR_MAP_COMPANY	ATTR(COLOR_PAIR(RED_ON_BLACK)    | A_BOLD,           A_BOLD)
+#define ATTR_MAP_CHOICE		ATTR(COLOR_PAIR(WHITE_ON_RED)    | A_BOLD,           A_REVERSE)
 
 
 /************************************************************************
