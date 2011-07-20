@@ -188,6 +188,8 @@ int main (int argc, char *argv[])
 
 
 /***********************************************************************/
+// process_cmdline: Process command line arguments
+
 void process_cmdline (int argc, char *argv[])
 {
     int c;
@@ -268,6 +270,8 @@ void process_cmdline (int argc, char *argv[])
 
 
 /***********************************************************************/
+// show_version: Show program version information
+
 void show_version (void)
 {
     printf("\
@@ -289,6 +293,8 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
 
 
 /***********************************************************************/
+// show_usage: Show command line usage information
+
 void show_usage (int status)
 {
     const char *pn = program_name();
@@ -338,6 +344,8 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
 
 
 /***********************************************************************/
+// init_program: Initialise program-wide functions
+
 void init_program (void)
 {
     // Initialise the random number generator
@@ -355,6 +363,8 @@ void init_program (void)
 
 
 /***********************************************************************/
+// end_program: Deinitialise program-wide functions
+
 void end_program (void)
 {
     end_screen();

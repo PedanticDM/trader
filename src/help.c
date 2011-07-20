@@ -146,13 +146,15 @@ static const char *help_text[] = {
 
 
 /************************************************************************
-*                    Help text function definitions                     *
+*                     Help text function definition                     *
 ************************************************************************/
 
 // This function is documented in the file "help.h"
 
 
 /***********************************************************************/
+// show_help: Show instructions on how to play the game
+
 void show_help (void)
 {
     int curpage = 0;
@@ -249,7 +251,6 @@ void show_help (void)
 		default:
 		    waddch(curwin, '^' | curattr);
 		    waddch(curwin, *s  | curattr);
-		    break;
 		}
 		break;
 
@@ -315,14 +316,12 @@ void show_help (void)
 		default:
 		    waddch(curwin, '~' | curattr);
 		    waddch(curwin, *s  | curattr);
-		    break;
 		}
 		break;
 
 	    default:
 		// Print the character
 		waddch(curwin, *s | curattr);
-		break;
 	    }
 
 	    s++;
