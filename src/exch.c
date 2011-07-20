@@ -96,9 +96,8 @@ void exchange_stock (void)
 	    }
 
 	    // Handle the locale's currency symbol
-	    struct lconv *lc = localeconv();
-	    assert(lc != NULL);
-	    snprintf(buf, BUFSIZE, "share (%s)", lc->currency_symbol);
+	    snprintf(buf, BUFSIZE, "share (%s)",
+		     localeconv_info.currency_symbol);
 
 	    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
 	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
@@ -111,7 +110,7 @@ void exchange_stock (void)
 		if (company[i].on_map) {
 		    mvwaddch(curwin, line, 2, PRINTABLE_MAP_VAL(COMPANY_TO_MAP(i)) |
 			     ATTR_MAP_CHOICE);
-		    strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
+		    l_strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
 		    mvwprintw(curwin, line, 4, "%-22s  %12s  %10.2f  %'10ld  %'10ld  ",
 			      company[i].name, buf, company[i].share_return
 			      * 100.0, company[i].stock_issued,
@@ -241,9 +240,6 @@ void visit_bank (void)
     double val, max;
     char *buf;
 
-    struct lconv *lc = localeconv();
-    assert(lc != NULL);
-
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -263,18 +259,18 @@ void visit_bank (void)
 
     center(curwin, 1, ATTR_WINDOW_TITLE, "  Interstellar Trading Bank  ");
 
-    strfmon(buf, BUFSIZE, "%18n", player[current_player].cash);
+    l_strfmon(buf, BUFSIZE, "%18n", player[current_player].cash);
     center2(curwin, 3, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 	    "Current cash:  ", " %s ", buf);
 
-    strfmon(buf, BUFSIZE, "%18n", player[current_player].debt);
+    l_strfmon(buf, BUFSIZE, "%18n", player[current_player].debt);
     center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 	    "Current debt:  ", " %s ", buf);
 
     center2(curwin, 5, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 	    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
 
-    strfmon(buf, BUFSIZE, "%18n", credit_limit);
+    l_strfmon(buf, BUFSIZE, "%18n", credit_limit);
     center2(curwin, 7, ATTR_HIGHLIGHT_STR, ATTR_WINDOW_TITLE,
 	    "Credit limit:  ", " %s ", buf);
 
@@ -354,16 +350,17 @@ void visit_bank (void)
 	    mvwprintw(curwin, 3, 10, "How much do you wish to borrow? ");
 
 	    wattron(curwin, A_BOLD);
-	    if (lc->p_cs_precedes == 1) {
-		wprintw(curwin, "%s%s", lc->currency_symbol,
-			(lc->p_sep_by_space == 1) ? " " : "");
+	    if (localeconv_info.p_cs_precedes == 1) {
+		wprintw(curwin, "%s%s", localeconv_info.currency_symbol,
+			(localeconv_info.p_sep_by_space == 1) ? " " : "");
 		n = 10;
 	    } else {
 		getyx(curwin, y, x);
-		n = strlen(lc->currency_symbol) + 10 + (lc->p_sep_by_space == 1);
+		n = strlen(localeconv_info.currency_symbol) + 10
+		    + (localeconv_info.p_sep_by_space == 1);
 		mvwprintw(curwin, y, getmaxx(curwin) - n, "%s%s",
-			  (lc->p_sep_by_space == 1) ? " " : "",
-			  lc->currency_symbol);
+			  (localeconv_info.p_sep_by_space == 1) ? " " : "",
+			  localeconv_info.currency_symbol);
 		wmove(curwin, y, x);
 	    }
 	    wattroff(curwin, A_BOLD);
@@ -414,16 +411,17 @@ void visit_bank (void)
 	    mvwprintw(curwin, 3, 10, "How much do you wish to repay? ");
 
 	    wattron(curwin, A_BOLD);
-	    if (lc->p_cs_precedes == 1) {
-		wprintw(curwin, "%s%s", lc->currency_symbol,
-			(lc->p_sep_by_space == 1) ? " " : "");
+	    if (localeconv_info.p_cs_precedes == 1) {
+		wprintw(curwin, "%s%s", localeconv_info.currency_symbol,
+			(localeconv_info.p_sep_by_space == 1) ? " " : "");
 		n = 10;
 	    } else {
 		getyx(curwin, y, x);
-		n = strlen(lc->currency_symbol) + 10 + (lc->p_sep_by_space == 1);
+		n = strlen(localeconv_info.currency_symbol) + 10
+		    + (localeconv_info.p_sep_by_space == 1);
 		mvwprintw(curwin, y, getmaxx(curwin) - n, "%s%s",
-			  (lc->p_sep_by_space == 1) ? " " : "",
-			  lc->currency_symbol);
+			  (localeconv_info.p_sep_by_space == 1) ? " " : "",
+			  localeconv_info.currency_symbol);
 		wmove(curwin, y, x);
 	    }
 	    wattroff(curwin, A_BOLD);
@@ -508,7 +506,7 @@ void trade_shares (int num, bool *bid_used)
 	   company[num].max_stock - company[num].stock_issued);
 
     mvwaddstr(curwin, 5, 2, "Price per share: ");
-    strfmon(buf, BUFSIZE, "%12n", company[num].share_price);
+    l_strfmon(buf, BUFSIZE, "%12n", company[num].share_price);
     attrpr(curwin, ATTR_HIGHLIGHT_STR, "%12s", buf);
 
     mvwaddstr(curwin, 6, 2, "Return:          ");
@@ -524,7 +522,7 @@ void trade_shares (int num, bool *bid_used)
 
     wmove(curwin, 6, 38);
     attrpr(curwin, ATTR_HIGHLIGHT_STR, "Current cash:     ");
-    strfmon(buf, BUFSIZE, "%16n", player[current_player].cash);
+    l_strfmon(buf, BUFSIZE, "%16n", player[current_player].cash);
     attrpr(curwin, ATTR_WINDOW_TITLE, " %16s ", buf);
 
     wrefresh(curwin);

@@ -343,6 +343,9 @@ void init_program (void)
     // Initialise the random number generator
     init_rand();
 
+    // Initialise locale-specific variables
+    init_locale();
+
     // Initialise signal-handling functions
     // @@@ To be completed
 

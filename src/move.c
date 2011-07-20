@@ -789,10 +789,7 @@ void merge_companies (map_val_t a, map_val_t b)
 	    "%-20s", company[aa].name);
 
     // Handle the locale's currency symbol
-    struct lconv *lc = localeconv();
-    assert(lc != NULL);
-
-    snprintf(buf, BUFSIZE, "Bonus (%s)", lc->currency_symbol);
+    snprintf(buf, BUFSIZE, "Bonus (%s)", localeconv_info.currency_symbol);
 
     int w = getmaxx(curwin) - 52;
     wattrset(curwin, ATTR_WINDOW_SUBTITLE);
@@ -816,7 +813,7 @@ void merge_companies (map_val_t a, map_val_t b)
 	    player[i].stock_owned[bb] = 0;
 	    player[i].cash += bonus;
 
-	    strfmon(buf, BUFSIZE, "%!12n", bonus);
+	    l_strfmon(buf, BUFSIZE, "%!12n", bonus);
 	    mvwprintw(curwin, line, 2, "  %-*.*s  %'8ld  %'8ld  %'8ld  %12s  ",
 		      w, w, player[i].name, old_stock, new_stock,
 		      player[i].stock_owned[aa], buf);
@@ -992,11 +989,11 @@ void adjust_values (void)
 		center(curwin, 7, ATTR_ERROR_WINDOW,
 		       "of the share value on each share owned.");
 
-		strfmon(buf, BUFSIZE, "%12n", company[which].share_price);
+		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price);
 		center2(curwin, 9, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
 			"Old share value:       ", "%s", buf);
 
-		strfmon(buf, BUFSIZE, "%12n", company[which].share_price * rate);
+		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price * rate);
 		center2(curwin, 10, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
 			"Amount paid per share: ", "%s", buf);
 
@@ -1095,10 +1092,10 @@ void adjust_values (void)
 
 	center(curwin, 1, ATTR_ERROR_TITLE, "  Interstellar Trading Bank  ");
 
-	strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);
+	l_strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);
 	center(curwin, 3, ATTR_ERROR_STR, "Your debt has amounted to %s", buf);
 
-	strfmon(buf, BUFSIZE, "%1n", impounded);
+	l_strfmon(buf, BUFSIZE, "%1n", impounded);
 	center3(curwin, 4, ATTR_ERROR_WINDOW, ATTR_ERROR_WINDOW, ATTR_ERROR_STR,
 		"The Bank has impounded ", " from your cash", "%s", buf);
 

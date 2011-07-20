@@ -32,11 +32,25 @@
 
 
 /************************************************************************
+*                      Global variable definitions                      *
+************************************************************************/
+
+// Global copy, suitably modified, of localeconv() information
+struct lconv localeconv_info;
+
+
+/************************************************************************
 *          Module-specific constants and variable definitions           *
 ************************************************************************/
 
 #define GAME_FILENAME_PROTO	"game%d"
 #define GAME_FILENAME_BUFSIZE	16
+
+// Default values used to override POSIX locale
+#define MOD_POSIX_CURRENCY_SYMBOL	"$"
+#define MOD_POSIX_FRAC_DIGITS		2
+#define MOD_POSIX_P_CS_PRECEDES		1
+#define MOD_POSIX_P_SEP_BY_SPACE	0
 
 
 /************************************************************************
@@ -47,6 +61,9 @@ static char *program_name_str   = NULL;		// Canonical program name
 static char *home_directory_str = NULL;		// Full pathname to home
 static char *data_directory_str = NULL;		// Writable data dir pathname
 
+static char *current_mon_locale;		// As returned by setlocale()
+static bool add_currency_symbol = false;	// Do we need to add "$"?
+
 
 /************************************************************************
 *          Initialisation and environment function definitions          *
@@ -56,6 +73,8 @@ static char *data_directory_str = NULL;		// Writable data dir pathname
 
 
 /***********************************************************************/
+// init_program_name: Make the program name "canonical"
+
 void init_program_name (char *argv[])
 {
     if (argv == NULL || argv[0] == NULL || *argv[0] == '\0') {
@@ -73,6 +92,8 @@ void init_program_name (char *argv[])
 
 
 /***********************************************************************/
+// program_name: Return the canonical program name
+
 const char *program_name (void)
 {
     if (program_name_str == NULL) {
@@ -84,6 +105,8 @@ const char *program_name (void)
 
 
 /***********************************************************************/
+// home_directory: Return home directory pathname
+
 const char *home_directory (void)
 {
     if (home_directory_str == NULL) {
@@ -100,6 +123,8 @@ const char *home_directory (void)
 
 
 /***********************************************************************/
+// data_directory: Return writable data directory pathname
+
 const char *data_directory (void)
 {
     /* This implementation assumes a POSIX environment by using "/" as
@@ -126,6 +151,8 @@ const char *data_directory (void)
 
 
 /***********************************************************************/
+// game_filename: Convert an integer to a game filename
+
 char *game_filename (int gamenum)
 {
     /* This implementation assumes a POSIX environment by using "/" as
@@ -170,6 +197,8 @@ char *game_filename (int gamenum)
 
 
 /***********************************************************************/
+// err_exit: Print an error and exit
+
 void err_exit (const char *format, ...)
 {
     va_list args;
@@ -188,6 +217,8 @@ void err_exit (const char *format, ...)
 
 
 /***********************************************************************/
+// errno_exit: Print an error message (using errno) and exit
+
 void errno_exit (const char *format, ...)
 {
     va_list args;
@@ -210,6 +241,8 @@ void errno_exit (const char *format, ...)
 
 
 /***********************************************************************/
+// err_exit_nomem: Print an "out of memory" error and exit
+
 void err_exit_nomem (void)
 {
     err_exit("out of memory");
@@ -224,6 +257,8 @@ void err_exit_nomem (void)
 
 
 /***********************************************************************/
+// init_rand: Initialise the random number generator
+
 void init_rand (void)
 {
     /* Ideally, initialisation of the random number generator should be
@@ -238,6 +273,8 @@ void init_rand (void)
 
 
 /***********************************************************************/
+// randf: Return a random number between 0.0 and 1.0
+
 extern double randf (void)
 {
     return drand48();
@@ -245,13 +282,119 @@ extern double randf (void)
 
 
 /***********************************************************************/
+// randi: Return a random number between 0 and limit
+
 extern int randi (int limit)
 {
     return drand48() * (double) limit;
 }
 
 
+/************************************************************************
+*                   Locale-aware function definitions                   *
+************************************************************************/
+
+// These functions are documented in the file "utils.h"
+
+
 /***********************************************************************/
+// init_locale: Initialise locale-specific variables
+
+void init_locale (void)
+{
+    struct lconv *lc;
+
+
+    current_mon_locale = setlocale(LC_MONETARY, NULL);
+    lc = localeconv();
+
+    assert(current_mon_locale != NULL);
+    assert(lc != NULL);
+
+    localeconv_info = *lc;
+
+    /* Are we in the POSIX locale?  This test may not be portable as the
+       string returned by setlocale() is supposed to be opaque. */
+    add_currency_symbol = false;
+    if (strcmp(current_mon_locale, "POSIX") == 0
+	|| strcmp(current_mon_locale, "C")  == 0) {
+
+	add_currency_symbol = true;
+	localeconv_info.currency_symbol = MOD_POSIX_CURRENCY_SYMBOL;
+	localeconv_info.frac_digits     = MOD_POSIX_FRAC_DIGITS;
+	localeconv_info.p_cs_precedes   = MOD_POSIX_P_CS_PRECEDES;
+	localeconv_info.p_sep_by_space  = MOD_POSIX_P_SEP_BY_SPACE;
+    }
+}
+
+
+/***********************************************************************/
+// l_strfmon: Convert monetary value to a string
+
+ssize_t l_strfmon (char *restrict s, size_t maxsize,
+		   const char *restrict format, double val)
+{
+    /* The current implementation assumes MOD_POSIX_P_CS_PRECEDES is 1
+       (currency symbol precedes value) and that MOD_POSIX_P_SEP_BY_SPACE
+       is 0 (no space separates currency symbol and value).  It does,
+       however, handle currency symbols of length > 1 */
+    assert(MOD_POSIX_P_CS_PRECEDES  == 1);
+    assert(MOD_POSIX_P_SEP_BY_SPACE == 0);
+
+    ssize_t ret = strfmon(s, maxsize, format, val);
+
+    if (ret > 0 && add_currency_symbol) {
+	if (strstr(format, "!") == NULL) {
+	    /* Insert localeconv_info.currency_symbol to s.
+
+	       NB: add_currecy_symbol == true assumes POSIX locale:
+	       single-byte strings are in effect, so strlen(), etc, work
+	       correctly. */
+	    const char *sym = localeconv_info.currency_symbol;
+	    int symlen = strlen(sym);
+	    char *p;
+	    int spc;
+
+	    // Count number of leading spaces
+	    for (p = s, spc = 0; *p == ' '; p++, spc++)
+		;
+
+	    if (symlen <= spc) {
+		/* Enough space for currency symbol: copy it WITHOUT
+		   copying terminating NUL character */
+		for (p -= symlen; *sym != '\0'; p++, sym++) {
+		    *p = *sym;
+		}
+	    } else {
+		// Make space for currency symbol, then copy it
+
+		memmove(s + symlen - spc, s, maxsize - (symlen - spc) + 1);
+		s[maxsize - 1] = '\0';
+
+		for ( ; *sym != '\0'; sym++, s++) {
+		    // Make sure terminating NUL character is NOT copied!
+		    *s = *sym;
+		}
+
+		ret = MIN(ret + symlen - spc, maxsize - 1);
+	    }
+	}
+    }
+
+    return ret;
+}
+
+
+/************************************************************************
+*                    Encryption function definitions                    *
+************************************************************************/
+
+// These functions are documented in the file "utils.h"
+
+
+/***********************************************************************/
+// scramble: Scramble (encrypt) the buffer
+
 char *scramble (int key, char *buf, int bufsize)
 {
     /* The algorithm used here is reversable: scramble(scramble(...))
@@ -281,6 +424,8 @@ char *scramble (int key, char *buf, int bufsize)
 
 
 /***********************************************************************/
+// unscramble: Unscramble (decrypt) the buffer
+
 char *unscramble (int key, char *buf, int bufsize)
 {
     return scramble(key, buf, bufsize);

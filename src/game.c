@@ -455,7 +455,7 @@ void end_game (void)
     }
 
     if (number_players == 1) {
-	strfmon(buf, BUFSIZE, "%1n", total_value(0));
+	l_strfmon(buf, BUFSIZE, "%1n", total_value(0));
 
 	newtxwin(9, 60, LINE_OFFSET + 8, COL_CENTER(60));
 	wbkgd(curwin, ATTR_NORMAL_WINDOW);
@@ -468,10 +468,6 @@ void end_game (void)
 	wait_for_key(curwin, 7, ATTR_WAITNORMAL_STR);
 	deltxwin();
     } else {
-	// Handle the locale's currency symbol
-	struct lconv *lc = localeconv();
-	assert(lc != NULL);
-
 	// Sort players on the basis of total value
 	for (i = 0; i < number_players; i++) {
 	    player[i].sort_value = total_value(i);
@@ -489,12 +485,13 @@ void end_game (void)
 	    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_STANDOUT_STR,
 		    "who is ", "%s", "*** BANKRUPT ***");
 	} else {
-	    strfmon(buf, BUFSIZE, "%1n", player[0].sort_value);
+	    l_strfmon(buf, BUFSIZE, "%1n", player[0].sort_value);
 	    center2(curwin, 4, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 		    "with a value of ", "%s", buf);
 	}
 
-	snprintf(buf, BUFSIZE, "Total Value (%s)", lc->currency_symbol);
+	snprintf(buf, BUFSIZE, "Total Value (%s)",
+		 localeconv_info.currency_symbol);
 
 	int w = getmaxx(curwin) - 33;
 	wattrset(curwin, ATTR_WINDOW_SUBTITLE);
@@ -502,7 +499,7 @@ void end_game (void)
 	wattrset(curwin, ATTR_NORMAL_WINDOW);
 
 	for (i = 0; i < number_players; i++) {
-	    strfmon(buf, BUFSIZE, "%!18n", player[i].sort_value);
+	    l_strfmon(buf, BUFSIZE, "%!18n", player[i].sort_value);
 	    mvwprintw(curwin, i + 7, 2, "%5s  %-*.*s  %18s  ",
 		      ordinal[i + 1], w, w, player[i].name, buf);
 	}
@@ -677,9 +674,8 @@ void show_status (int num)
 	    center(curwin, 8, ATTR_NORMAL_WINDOW, "No companies on the map");
 	} else {
 	    // Handle the locale's currency symbol
-	    struct lconv *lc = localeconv();
-	    assert(lc != NULL);
-	    snprintf(buf, BUFSIZE, "share (%s)", lc->currency_symbol);
+	    snprintf(buf, BUFSIZE, "share (%s)",
+		     localeconv_info.currency_symbol);
 
 	    wattrset(curwin, ATTR_WINDOW_SUBTITLE);
 	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
@@ -690,7 +686,7 @@ void show_status (int num)
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
-		    strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
+		    l_strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
 		    mvwprintw(curwin, line, 2,
 			      "  %-22s  %10s  %10.2f  %'10ld  %10.2f  ",
 			      company[i].name, buf,
@@ -705,18 +701,18 @@ void show_status (int num)
 	}
 
 	line = 15;
-	strfmon(buf, BUFSIZE, "%18n", player[num].cash);
+	l_strfmon(buf, BUFSIZE, "%18n", player[num].cash);
 	center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 		"Current cash:  ", " %s ", buf);
 	if (player[num].debt != 0.0) {
-	    strfmon(buf, BUFSIZE, "%18n", player[num].debt);
+	    l_strfmon(buf, BUFSIZE, "%18n", player[num].debt);
 	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 		    "Current debt:  ", " %s ", buf);
 	    center2(curwin, line++, ATTR_NORMAL_WINDOW, ATTR_HIGHLIGHT_STR,
 		    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
 	}
 
-	strfmon(buf, BUFSIZE, "%18n", val);
+	l_strfmon(buf, BUFSIZE, "%18n", val);
 	center2(curwin, line + 1, ATTR_HIGHLIGHT_STR, ATTR_WINDOW_TITLE,
 		"Total value:   ", " %s ", buf);
 

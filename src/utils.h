@@ -43,6 +43,14 @@
 
 
 /************************************************************************
+*                     Global variable declarations                      *
+************************************************************************/
+
+// Global copy, suitably modified, of localeconv() information
+extern struct lconv localeconv_info;
+
+
+/************************************************************************
 *          Initialisation and environment function prototypes           *
 ************************************************************************/
 
@@ -207,6 +215,42 @@ extern double randf (void);
   randf() to generate the random number.
 */
 extern int randi (int limit);
+
+
+/************************************************************************
+*                   Locale-aware function prototypes                    *
+************************************************************************/
+
+/*
+  Function:   init_locale - Initialise locale-specific variables
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function initialises the global variable localeconv_info with
+  values suitable for this program.  In particular, if the POSIX or C
+  locale is in effect, the currency_symbol and frac_digits members are
+  updated to be something reasonable.  This function must be called
+  before using localeconf_info.
+*/
+extern void init_locale (void);
+
+
+/*
+  Function:   l_strfmon - Convert monetary value to a string
+  Parameters: s         - Buffer to receive result
+              maxsize   - Maximum size of buffer
+              format    - strfmon() format to use
+	      val       - Monetary value to convert
+  Returns:    ssize_t   - Size of returned string
+
+  This function calls strfmon() to convert val to a suitable monetary
+  value string.  If the POSIX or C locale is in effect, and "!" does NOT
+  appear in the format, "$" is inserted into the resulting string.  This
+  function overcomes the limitation that the POSIX locale does not define
+  anything for localeconv()->currency_symbol.
+*/
+extern ssize_t l_strfmon (char *restrict s, size_t maxsize,
+			  const char *restrict format, double val);
 
 
 /************************************************************************

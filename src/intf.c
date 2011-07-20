@@ -1287,14 +1287,12 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
 {
     char *buf, *buf_copy;
     char *allowed, *emptystr, *defaultstr;
-    struct lconv *lc = localeconv();
     double val;
     bool done;
     int ret;
 
 
     assert(result != NULL);
-    assert(lc != NULL);
 
     if (max < min) {
 	double n = max;
@@ -1330,13 +1328,19 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
     *buf = '\0';
 
     strcpy(allowed, "0123456789+-Ee");
-    strncat(allowed, lc->decimal_point,     BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->mon_decimal_point, BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, localeconv_info.decimal_point,
+	    BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, localeconv_info.thousands_sep,
+	    BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, localeconv_info.mon_decimal_point,
+	    BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, localeconv_info.mon_thousands_sep,
+	    BUFSIZE - strlen(allowed) - 1);
 
-    snprintf(emptystr,   BUFSIZE, "%'1.*f", lc->frac_digits, emptyval);
-    snprintf(defaultstr, BUFSIZE, "%'1.*f", lc->frac_digits, defaultval);
+    snprintf(emptystr,   BUFSIZE, "%'1.*f", localeconv_info.frac_digits,
+	     emptyval);
+    snprintf(defaultstr, BUFSIZE, "%'1.*f", localeconv_info.frac_digits,
+	     defaultval);
 
     done = false;
     while (! done) {
@@ -1350,32 +1354,35 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
 	    buf_copy[BUFSIZE - 1] = '\0';
 
 	    // Replace mon_decimal_point with decimal_point
-	    if (strcmp(lc->mon_decimal_point, lc->decimal_point) != 0) {
-		while ((p = strstr(buf_copy, lc->mon_decimal_point)) != NULL) {
+	    if (strcmp(localeconv_info.mon_decimal_point, "") != 0
+		&& strcmp(localeconv_info.decimal_point, "") != 0
+		&& strcmp(localeconv_info.mon_decimal_point,
+			  localeconv_info.decimal_point) != 0) {
+		while ((p = strstr(buf_copy, localeconv_info.mon_decimal_point)) != NULL) {
 		    char *pn;
-		    int len1 = strlen(lc->mon_decimal_point);
-		    int len2 = strlen(lc->decimal_point);
+		    int len1 = strlen(localeconv_info.mon_decimal_point);
+		    int len2 = strlen(localeconv_info.decimal_point);
 
-		    // Make space for lc->decimal_point, if needed
+		    // Make space for localeconv_info.decimal_point, if needed
 		    memmove(p + len2, p + len1, strlen(p) - (len2 - len1) + 1);
 
-		    // Copy lc->decimal_point over p WITHOUT copying ending NUL
-		    for (pn = lc->decimal_point; *pn != '\0'; pn++, p++) {
+		    // Copy localeconv_info.decimal_point over p WITHOUT copying ending NUL
+		    for (pn = localeconv_info.decimal_point; *pn != '\0'; pn++, p++) {
 			*p = *pn;
 		    }
 		}
 	    }
 
 	    // Remove thousands separators if required
-	    if (strcmp(lc->thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
-		    int len = strlen(lc->thousands_sep);
+	    if (strcmp(localeconv_info.thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, localeconv_info.thousands_sep)) != NULL) {
+		    int len = strlen(localeconv_info.thousands_sep);
 		    memmove(p, p + len, strlen(p) - len + 1);
 		}
 	    }
-	    if (strcmp(lc->mon_thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
-		    int len = strlen(lc->thousands_sep);
+	    if (strcmp(localeconv_info.mon_thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, localeconv_info.mon_thousands_sep)) != NULL) {
+		    int len = strlen(localeconv_info.thousands_sep);
 		    memmove(p, p + len, strlen(p) - len + 1);
 		}
 	    }
@@ -1427,14 +1434,12 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
 {
     char *buf, *buf_copy;
     char *allowed, *emptystr, *defaultstr;
-    struct lconv *lc = localeconv();
     long val;
     bool done;
     int ret;
 
 
     assert(result != NULL);
-    assert(lc != NULL);
 
     if (max < min) {
 	long n = max;
@@ -1470,8 +1475,10 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
     *buf = '\0';
 
     strcpy(allowed, "0123456789+-");
-    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, localeconv_info.thousands_sep,
+	    BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, localeconv_info.mon_thousands_sep,
+	    BUFSIZE - strlen(allowed) - 1);
 
     snprintf(emptystr,   BUFSIZE, "%'1ld", emptyval);
     snprintf(defaultstr, BUFSIZE, "%'1ld", defaultval);
@@ -1488,15 +1495,15 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
 	    buf_copy[BUFSIZE - 1] = '\0';
 
 	    // Remove thousands separators if required
-	    if (strcmp(lc->thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, lc->thousands_sep)) != NULL) {
-		    int len = strlen(lc->thousands_sep);
+	    if (strcmp(localeconv_info.thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, localeconv_info.thousands_sep)) != NULL) {
+		    int len = strlen(localeconv_info.thousands_sep);
 		    memmove(p, p + len, strlen(p) - len + 1);
 		}
 	    }
-	    if (strcmp(lc->mon_thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, lc->mon_thousands_sep)) != NULL) {
-		    int len = strlen(lc->thousands_sep);
+	    if (strcmp(localeconv_info.mon_thousands_sep, "") != 0) {
+		while ((p = strstr(buf_copy, localeconv_info.mon_thousands_sep)) != NULL) {
+		    int len = strlen(localeconv_info.thousands_sep);
 		    memmove(p, p + len, strlen(p) - len + 1);
 		}
 	    }
