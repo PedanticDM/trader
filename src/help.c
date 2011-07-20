@@ -163,9 +163,8 @@ void show_help (void)
 
 
     // Count how many pages appear in the help text
-    for (numpages = 0; help_text[numpages] != NULL; numpages++) {
+    for (numpages = 0; help_text[numpages] != NULL; numpages++)
 	;
-    }
 
     if (numpages == 0)
 	return;
@@ -196,8 +195,7 @@ void show_help (void)
 
 	    case '^':
 		// Set the current attribute
-		s++;
-		switch (*s) {
+		switch (*++s) {
 		case '^':
 		    waddch(curwin, *s | curattr);
 		    break;
@@ -255,8 +253,7 @@ void show_help (void)
 
 	    case '~':
 		// Print a global constant
-		s++;
-		switch (*s) {
+		switch (*++s) {
 		case '~':
 		    waddch(curwin, *s | curattr);
 		    break;

@@ -192,14 +192,10 @@ int main (int argc, char *argv[])
 
 void process_cmdline (int argc, char *argv[])
 {
-    int c;
-    char *p;
-
-
     // Process arguments starting with "-" or "--"
     opterr = true;
     while (true) {
-	c = getopt_long(argc, argv, options_short, options_long, NULL);
+	int c = getopt_long(argc, argv, options_short, options_long, NULL);
 	if (c == EOF)
 	    break;
 
@@ -226,12 +222,16 @@ void process_cmdline (int argc, char *argv[])
 
 	case OPTION_MAX_TURN:
 	    // --max-turn: specify the maximum turn number
-	    option_max_turn = strtol(optarg, &p, 10);
+	    {
+		char *p;
 
-	    if (option_max_turn < MIN_MAX_TURN || p == NULL || *p != '\0') {
-		fprintf(stderr, "%s: invalid value for --max-turn: `%s'\n",
-			program_name(), optarg);
-		show_usage(EXIT_FAILURE);
+		option_max_turn = strtol(optarg, &p, 10);
+
+		if (option_max_turn < MIN_MAX_TURN || p == NULL || *p != '\0') {
+		    fprintf(stderr, "%s: invalid value for --max-turn: `%s'\n",
+			    program_name(), optarg);
+		    show_usage(EXIT_FAILURE);
+		}
 	    }
 	    break;
 
@@ -353,9 +353,6 @@ void init_program (void)
 
     // Initialise locale-specific variables
     init_locale();
-
-    // Initialise signal-handling functions
-    // @@@ To be completed
 
     // Initialise the terminal display
     init_screen();
