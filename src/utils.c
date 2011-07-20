@@ -359,6 +359,8 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 	    char *p;
 	    int spc;
 
+	    assert(maxsize > (unsigned int) symlen);
+
 	    // Count number of leading spaces
 	    for (p = s, spc = 0; *p == ' '; p++, spc++)
 		;
@@ -372,7 +374,7 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 	    } else {
 		// Make space for currency symbol, then copy it
 
-		memmove(s + symlen - spc, s, maxsize - (symlen - spc) + 1);
+		memmove(s + symlen - spc, s, maxsize - (symlen - spc));
 		s[maxsize - 1] = '\0';
 
 		for ( ; *sym != '\0'; sym++, s++) {
@@ -380,7 +382,7 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 		    *s = *sym;
 		}
 
-		ret = MIN(ret + symlen - spc, maxsize - 1);
+		ret = MIN((unsigned int) ret + symlen - spc, maxsize - 1);
 	    }
 	}
     }
