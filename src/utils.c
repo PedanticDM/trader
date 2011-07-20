@@ -270,7 +270,7 @@ void init_rand (void)
     unsigned long int seed;
 
     gettimeofday(&tv, NULL);		// If this fails, tv is random enough!
-    seed = tv.tv_sec * tv.tv_usec;
+    seed = tv.tv_sec + tv.tv_usec;
 
     srand48(seed);
 }
