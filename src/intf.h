@@ -401,18 +401,160 @@ extern int center3 (WINDOW *win, int y, chtype attr1, chtype attr3,
 extern int gettxchar (WINDOW *win);
 
 
-extern int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
-		      int maxlen, const char *emptyval, const char *defaultval,
+/*
+  Function:   gettxline  - Read a line from the keyboard (low-level)
+  Parameters: win        - Window to use (should be curwin)
+              buf        - Pointer to preallocated buffer
+              bufsize    - Size of buffer in bytes
+              modified   - Pointer to modified status (result)
+              multifield - Allow <TAB>, etc, to exit this function
+              emptyval   - String used if input line is empty
+              defaultval - String used if default key is pressed
+              allowed    - Characters allowed in the input line
+              stripspc   - True to strip leading/trailing spaces
+              y, x       - Start of the input field (line, column)
+              width      - Width of the input field
+              attr       - Character rendition to use for input field
+  Returns:    int        - Status code: OK, ERR or KEY_ keycode
+
+  This low-level function draws an input field width characters long
+  using attr as the character rendition, then reads a line of input from
+  the keyboard and places it into the preallocated buffer buf[] of size
+  bufsize.  On entry, buf[] must contain a valid C string; this string is
+  used as the initial contents of the input field.  On exit, buf[]
+  contains the final string as edited or input by the user.  This string
+  is printed in place of the input field using the original character
+  rendition (attributes) with A_BOLD added.  Many Emacs/Bash-style
+  keyboard editing shortcuts are understood.
+
+  If ENTER, RETURN, ^M or ^J is pressed, OK is returned.  In this case,
+  leading and trailing spaces are stripped if stripspc is true; if an
+  empty string is entered, the string pointed to by emptyval (if not
+  NULL) is stored in buf[].
+
+  If CANCEL, EXIT, ESC, ^C, ^\ or ^G is pressed, ERR is returned.  In
+  this case, buf[] contains the string as left by the user: emptyval is
+  NOT used, nor are leading and trailing spaces stripped.
+
+  If multifield is true, the UP and DOWN arrow keys, as well as TAB,
+  Shift-TAB, ^P (Previous) and ^N (Next) return KEY_UP or KEY_DOWN as
+  appropriate.  As with CANCEL etc., emptyval is NOT used, nor are
+  leading and trailing spaces stripped.
+
+  In all of these cases, the boolean variable *modified (if modified is
+  not NULL) is set to true if the input line was actually modified in any
+  way (including if the user made any changed, spaces were stripped or if
+  emptyval was copied into buf[]).
+
+  If KEY_DEFAULTVAL1 or KEY_DEFAULTVAL2 is pressed when the input line is
+  empty, the string pointed to by defaultval (if not NULL) is placed in
+  the buffer as if typed by the user.  Editing is NOT terminated in this
+  case.
+
+  If allowed is not NULL, only characters in that string are allowed to
+  be entered into the input line.  For example, if allowed points to
+  "0123456789abcdefABCDEF", only those characters would be allowed (in
+  this instance, allowing the user to type in a hexadecimal number).
+
+  Note that the character rendition (attributes) in attr may contain a
+  printing character.  For example, A_BOLD | '_' is a valid rendition
+  that causes the input field to be a series of "_" characters in bold.
+
+  This implementation does not handle multibyte characters correctly:
+  each part of the multibyte character most likely appears as a separate
+  keyboard press and is handled as a separate character, causing the
+  cursor position to be incorrect.  In addition, allowed is compared on a
+  byte-by-byte basis, not character-by-character.
+*/
+extern int gettxline (WINDOW *win, char *buf, int bufsize,
+		      bool *restrict modified, bool multifield,
+		      const char *emptyval, const char *defaultval,
 		      const char *allowed, bool stripspc, int y, int x,
-		      int fieldsize, int attr, bool *modified);
-extern int gettxstring (WINDOW *win, char **bufptr, bool multifield,
-			int y, int x, int fieldsize, int attr, bool *modified);
-extern int gettxdouble (WINDOW *win, double *result, double min, double max,
-			double emptyval, double defaultval, int y, int x,
-			int fieldsize, int attr);
-extern int gettxlong (WINDOW *win, long *result, long min, long max,
-		      long emptyval, long defaultval, int y, int x,
-		      int fieldsize, int attr);
+		      int width, chtype attr);
+
+
+/*
+  Function:   gettxstr   - Read a string from the keyboard
+  Parameters: win        - Window to use (should be curwin)
+              bufptr     - Address of pointer to buffer
+              modified   - Pointer to modified status (result)
+              multifield - Allow <TAB>, etc, to exit this function
+              y, x       - Start of the input field (line, column)
+              width      - Width of the input field
+              attr       - Character rendition to use for input field
+  Returns:    int        - Status code: OK, ERR or KEY_ keycode
+
+  This function calls gettxline() to allow the user to enter a string via
+  the keyboard.  On entry, bufptr must be the address of a char * pointer
+  variable; that pointer (*bufptr) must either be NULL or contain the
+  address of a buffer previously allocated with gettxstr().  If *bufptr
+  is NULL, a buffer of BUFSIZE is automatically allocated using malloc();
+  this buffer is used to store and return the input line.
+
+  Apart from bufptr, all parameters are as used for gettxline().  The
+  gettxline() parameters emptyval and defaultval are passed as "",
+  allowed is NULL and stripspc is true.
+*/
+extern int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
+		     bool multifield, int y, int x, int width, chtype attr);
+
+
+/*
+  Function:   gettxdouble - Read a floating-point number from the keyboard
+  Parameters: win         - Window to use (should be curwin)
+              result      - Pointer to result variable
+              min         - Minimum value allowed (may be -INFINITY)
+              max         - Maximum value allowed (may be INFINITY)
+              emptyval    - Value to use for empty input
+              defaultval  - Value to use for default input
+              y, x        - Start of the input field (line, column)
+              width       - Width of the input field
+              attr        - Character rendition to use for input field
+  Returns:    int         - Status code: OK, ERR or KEY_ keycode
+
+  This function calls gettxline() to allow the user to type in a valid
+  floating-point number between min and max (inclusive).  If gettxline()
+  returns OK, the entered number is checked for validity.  If it is
+  valid, it is stored in *result and the function returns OK.  If it is
+  not valid, the user is prompted to reenter the number.  Any other
+  result from gettxline() is passed back to the caller.  Note that the
+  low-level function gettxline() is called with multifield set to false.
+
+  This function is locale-aware, although multibyte strings are not
+  handled correctly.  In particular, the default value is formatted using
+  strfmon() and uses the locale monetary default decimal places
+  (frac_digits).  In addition, the user is allowed to use the locale's
+  radix character (decimal point) and the thousands separator, as well as
+  the monetary versions of these.
+*/
+extern int gettxdouble (WINDOW *win, double *restrict result, double min,
+			double max, double emptyval, double defaultval,
+			int y, int x, int width, chtype attr);
+
+
+/*
+  Function:   gettxlong  - Read an integer number from the keyboard
+  Parameters: win        - Window to use (should be curwin)
+              result     - Pointer to result variable
+              min        - Minimum value allowed
+              max        - Maximum value allowed
+              emptyval   - Value to use for empty input
+              defaultval - Value to use for default input
+              y, x       - Start of the input field (line, column)
+              width      - Width of the input field
+              attr       - Character rendition to use for input field
+  Returns:    int        - Status code: OK, ERR or KEY_ keycode
+
+  This function behaves almost exactly like gettxdouble(), except that
+  only integer numbers are allowed to be entered.
+
+  This function is locale-aware, although multibyte strings are not
+  handled correctly.  In particular, the user is allowed to use the
+  locale's thousands separator and the monetary thousands separator.
+*/
+extern int gettxlong (WINDOW *win, long int *restrict result, long int min,
+		      long int max, long int emptyval, long int defaultval,
+		      int y, int x, int width, chtype attr);
 
 
 /*

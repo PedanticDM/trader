@@ -208,8 +208,8 @@ void init_game (void)
 
 		player[0].name = NULL;
 		do {
-		    ret = gettxstring(curwin, &player[0].name, false, 2, 26,
-				      48, ATTR_INPUT_FIELD, NULL);
+		    ret = gettxstr(curwin, &player[0].name, NULL, false,
+				   2, 26, 48, ATTR_INPUT_FIELD);
 		    done = ((ret == OK) && (strlen(player[0].name) != 0));
 
 		    if (! done) {
@@ -245,8 +245,8 @@ void init_game (void)
 		i = 0;
 		done = false;
 		while (! done) {
-		    ret = gettxstring(curwin, &player[i].name, true, 3 + i, 12,
-				      62, ATTR_INPUT_FIELD, &modified);
+		    ret = gettxstr(curwin, &player[i].name, &modified, true,
+				   3 + i, 12, 62, ATTR_INPUT_FIELD);
 
 		    switch (ret) {
 		    case OK:

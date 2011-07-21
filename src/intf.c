@@ -59,6 +59,28 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
 
 
 /************************************************************************
+*                  Module-specific function prototypes                  *
+************************************************************************/
+
+/*
+  Function:   txinput_fixup - Copy strings with fixup
+  Parameters: dest          - Destination buffer of size BUFSIZE
+              src           - Source buffer of size BUFSIZE
+              isfloat       - True if src contains a floating point number
+
+  This helper function copies the string in src to dest, performing
+  certain fixups along the way.  In particular, thousands separators are
+  removed and (if isfloat is true) the monetary radix (decimal point) is
+  replaced by the normal one.
+
+  This function is used by gettxdouble() and gettxlong() to share some
+  common code.
+*/
+static void txinput_fixup (char *restrict dest, char *restrict src,
+			   bool isfloat);
+
+
+/************************************************************************
 *             Basic text input/output function definitions              *
 ************************************************************************/
 
@@ -260,9 +282,12 @@ int attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
     va_list args;
     int ret;
 
+
+    assert(win != NULL);
+    assert(format != NULL);
+
     chtype oldattr = getattrs(win);
     chtype oldbkgd = getbkgd(win);
-
 
     /* Note that wattrset() will override parts of wbkgdset() and vice
        versa: don't swap the order of these two lines! */
@@ -289,6 +314,9 @@ int center (WINDOW *win, int y, chtype attr, const char *restrict format, ...)
     int ret, len, x;
     char *buf;
 
+
+    assert(win != NULL);
+    assert(format != NULL);
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -333,6 +361,10 @@ int center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
     int ret, len1, len2, x;
     char *buf;
 
+
+    assert(win != NULL);
+    assert(initial != NULL);
+    assert(format != NULL);
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -382,6 +414,11 @@ int center3 (WINDOW *win, int y, chtype attr1, chtype attr3, chtype attr2,
     int ret, x;
     char *buf;
 
+
+    assert(win != NULL);
+    assert(initial != NULL);
+    assert(final != NULL);
+    assert(format != NULL);
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -435,92 +472,40 @@ int gettxchar (WINDOW *win)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   gettxline   - Read a line from the keyboard (generic)
-  Arguments:  win         - Window to use
-              buf         - Pointer to preallocated buffer
-	      bufsize     - Size of buffer
-              multifield  - Allow <TAB>, etc, to move between fields
-	      maxlen      - Maximum length of string
-              emptyval    - String used if an empty string is input
-	      defaultval  - Default string, used if KEY_DEFAULTVAL is
-                            pressed as the first character
-	      allowed     - Characters allowed in the string
-              stripspc    - Strip leading and trailing spaces from string
-	      y, x        - Start of field (line, col)
-	      fieldsize   - Size of field in characters
-	      attr        - Curses attribute to use for the field
-	      modified    - Pointer to modified status
-  Returns:    int         - Status code: OK, ERR or key code
+/***********************************************************************/
+// gettxline: Read a line from the keyboard (low-level)
 
-  This low-level function draws an input field fieldsize characters long
-  using attr as the window attribute, then reads a line of input from the
-  keyboard (of no more than maxlen characters) and places it into the
-  preallocated buffer buf[].  On entry, buf[] must contain the current
-  input string: this allows for resumed editing of an input line.  On
-  exit, buf[] will contain the input string; this string is printed using
-  the original window attributes with A_BOLD added.  Many EMACS/Bash-
-  style keyboard editing shortcuts are allowed.
-
-  If ENTER (or equivalent) is pressed, OK is returned.  In this case,
-  leading and trailing spaces are stripped if stripspc is true; if an
-  empty string is entered, the string pointed to by emptyval (if not
-  NULL) is stored in buf[].
-
-  If CANCEL, ESC or ^G is pressed, ERR is returned.  In this case, buf[]
-  contains the string as edited by the user: emptyval is NOT used, nor
-  are leading and trailing spaces stripped.
-
-  If multifield is true, the UP and DOWN arrow keys, as well as TAB,
-  Shift-TAB, ^P (Previous) and ^N (Next) return KEY_UP or KEY_DOWN as
-  appropriate.  As with CANCEL etc., emptyval is NOT used, nor are
-  leading and trailing spaces stripped.
-
-  In all of these cases, the boolean variable pointed to by modified (if
-  not NULL) is set to true if the user actually modified the input line.
-
-  If KEY_DEFAULTVAL is pressed when the input line is empty, the string
-  pointed to by defaultval (if not NULL) is placed in the buffer as if
-  typed by the user.  Editing is NOT terminated in this case.
-
-  If allowed points to a string (ie, is not NULL), only characters in
-  that string are allowed to be entered into the input line.  For
-  example, if allowed points to "0123456789abcdefABCDEF", only those
-  characters would be allowed (allowing a hexadecimal number to be
-  entered).
-*/
-
-int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
-	       int maxlen, const char *emptyval, const char *defaultval,
-	       const char *allowed, bool stripspc, int y, int x,
-	       int fieldsize, int attr, bool *modified)
+int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
+	       bool multifield, const char *emptyval, const char *defaultval,
+	       const char *allowed, bool stripspc, int y, int x, int width,
+	       chtype attr)
 {
-    int i, len, pos, cpos, nb;
-    int oldattr;
-    bool done, redraw, first, mod;
-    char c;
-    int key, key2, ret;
+    int len, pos, cpos, nb, ret;
+    bool done, redraw, mod;
+    int key, key2;
 
 
+    assert(win != NULL);
     assert(buf != NULL);
-    assert(bufsize > 1);
-    assert(maxlen > 0);
-    assert(maxlen < bufsize);
-    assert(fieldsize > 1);
-
+    assert(bufsize > 2);
+    assert(width > 1);
 
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
 
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
+    chtype oldattr = getattrs(win);
+    chtype oldbkgd = getbkgd(win);
+
+    /* Note that wattrset() will override parts of wbkgdset() and vice
+       versa: don't swap the order of these two lines! */
+    wbkgdset(win, (oldbkgd & A_COLOR) | A_NORMAL);
     wattrset(win, attr & ~A_CHARTEXT);
     curs_set(CURS_ON);
 
     len = strlen(buf);
-    pos = len;			// pos can be from 0 to strlen(buf)
-    cpos = MIN(len, fieldsize - 1);
+    pos = len;			// pos (string position) is from 0 to len
+    cpos = MIN(len, width - 1);	// cpos (cursor position) is from 0 to width-1
     redraw = true;
     done = false;
     mod = false;
@@ -533,15 +518,15 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 	      Blanks at the end of the input area are replaced with
 	      "attr", which may contain a '_' for non-colour mode.
 	    */
+	    mvwprintw(win, y, x, "%-*.*s", width, width, buf + pos - cpos);
 
-	    mvwprintw(win, y, x, "%-*.*s", fieldsize, fieldsize,
-		      buf + pos - cpos);
+	    // nb = number of blanks
+	    nb = (len - (pos - cpos) > width) ? 0 : width - (len - (pos - cpos));
+	    wmove(win, y, x + width - nb);
 
-	    nb = (len - (pos - cpos) > fieldsize) ?
-		0 : fieldsize - (len - (pos - cpos));
-	    wmove(win, y, x + fieldsize - nb);
-	    for (i = 0; i < nb; i++) {
-		waddch(win, ((attr & A_CHARTEXT) == 0) ? attr | ' ' : attr);
+	    chtype ch = ((attr & A_CHARTEXT) == 0) ? attr | ' ' : attr;
+	    for (int i = 0; i < nb; i++) {
+		waddch(win, ch);
 	    }
 
 	    wmove(win, y, x + cpos);
@@ -558,14 +543,15 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 
 	    strncpy(buf, defaultval, bufsize - 1);
 	    buf[bufsize - 1] = '\0';
+
 	    len = strlen(buf);
 	    pos = len;
-	    cpos = MIN(len, fieldsize - 1);
+	    cpos = MIN(len, width - 1);
 	    mod = true;
 	    redraw = true;
-	} else if ((key < 0400) && (! iscntrl(key))) {
-	    if ((len >= maxlen) ||
-		((allowed != NULL) && (strchr(allowed, key) == NULL))) {
+	} else if (key < 0400 && ! iscntrl(key)) {
+	    if (len >= bufsize - 1
+		|| (allowed != NULL && strchr(allowed, key) == NULL)) {
 		beep();
 	    } else {
 		// Process ordinary key press: insert it into the string
@@ -574,7 +560,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		buf[pos] = (char) key;
 		len++;
 		pos++;
-		if (cpos < fieldsize - 1) {
+		if (cpos < width - 1) {
 		    cpos++;
 		}
 		mod = true;
@@ -592,10 +578,10 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 
 		if (stripspc) {
 		    // Strip leading spaces
-		    i = 0;
-		    while ((i < len) && isspace(buf[i])) {
-			i++;
-		    }
+		    int i;
+
+		    for (i = 0; i < len && isspace(buf[i]); i++)
+			;
 		    if (i > 0) {
 			memmove(buf, buf + i, len - i + 1);
 			len -= i;
@@ -603,10 +589,8 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    }
 
 		    // Strip trailing spaces
-		    i = len;
-		    while ((i > 0) && isspace(buf[i - 1])) {
-			i--;
-		    }
+		    for (i = len; i > 0 && isspace(buf[i - 1]); i--)
+			;
 		    if (i < len) {
 			buf[i] = '\0';
 			len = i;
@@ -614,7 +598,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    }
 		}
 
-		if ((emptyval != NULL) && (len == 0)) {
+		if (emptyval != NULL && len == 0) {
 		    strncpy(buf, emptyval, bufsize - 1);
 		    buf[bufsize - 1] = '\0';
 		    mod = true;
@@ -681,7 +665,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    beep();
 		} else {
 		    pos++;
-		    if (cpos < fieldsize - 1) {
+		    if (cpos < width - 1) {
 			cpos++;
 		    }
 		    redraw = true;
@@ -700,19 +684,19 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 	    case KEY_CTRL('E'):
 		// Move cursor to end of string
 		pos = len;
-		cpos = MIN(pos, fieldsize - 1);
+		cpos = MIN(pos, width - 1);
 		redraw = true;
 		break;
 
 	    case KEY_CLEFT:
 		// Move cursor to start of current or previous word
-		while ((pos > 0) && (! isalnum(buf[pos - 1]))) {
+		while (pos > 0 && ! isalnum(buf[pos - 1])) {
 		    pos--;
 		    if (cpos > 0) {
 			cpos--;
 		    }
 		}
-		while ((pos > 0) && isalnum(buf[pos - 1])) {
+		while (pos > 0 && isalnum(buf[pos - 1])) {
 		    pos--;
 		    if (cpos > 0) {
 			cpos--;
@@ -723,15 +707,15 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 
 	    case KEY_CRIGHT:
 		// Move cursor to end of current or next word
-		while ((pos < len) && (! isalnum(buf[pos]))) {
+		while (pos < len && ! isalnum(buf[pos])) {
 		    pos++;
-		    if (cpos < fieldsize - 1) {
+		    if (cpos < width - 1) {
 			cpos++;
 		    }
 		}
-		while ((pos < len) && isalnum(buf[pos])) {
+		while (pos < len && isalnum(buf[pos])) {
 		    pos++;
-		    if (cpos < fieldsize - 1) {
+		    if (cpos < width - 1) {
 			cpos++;
 		    }
 		}
@@ -819,15 +803,14 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		      this makes ^W follow GNU Bash standards, which
 		      behaves differently from Meta-DEL.
 		    */
-
-		    i = pos;
-		    while ((i > 0) && isspace(buf[i - 1])) {
+		    int i = pos;
+		    while (i > 0 && isspace(buf[i - 1])) {
 			i--;
 			if (cpos > 0) {
 			    cpos--;
 			}
 		    }
-		    while ((i > 0) && (! isspace(buf[i - 1]))) {
+		    while (i > 0 && ! isspace(buf[i - 1])) {
 			i--;
 			if (cpos > 0) {
 			    cpos--;
@@ -835,7 +818,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    }
 
 		    memmove(buf + i, buf + pos, len - pos + 1);
-		    len -= (pos - i);
+		    len -= pos - i;
 		    pos = i;
 		    mod = true;
 		    redraw = true;
@@ -846,21 +829,21 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 
 	    case KEY_CTRL('T'):
 		// Transpose characters
-		if ((pos == 0) || (len <= 1)) {
+		if (pos == 0 || len <= 1) {
 		    beep();
 		} else if (pos == len) {
-		    c = buf[pos - 1];
+		    char c = buf[pos - 1];
 		    buf[pos - 1] = buf[pos - 2];
 		    buf[pos - 2] = c;
 		    mod = true;
 		    redraw = true;
 		} else {
-		    c = buf[pos];
+		    char c = buf[pos];
 		    buf[pos] = buf[pos - 1];
 		    buf[pos - 1] = c;
 
 		    pos++;
-		    if (cpos < fieldsize - 1) {
+		    if (cpos < width - 1) {
 			cpos++;
 		    }
 		    mod = true;
@@ -877,13 +860,14 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    // <ESC> by itself: cancel entering the string
 		    ret = ERR;
 		    done = true;
-		} else if ((key2 == 'O') || (key2 == '[')) {
+		} else if (key2 == 'O' || key2 == '[') {
 		    // Swallow any unknown VT100-style function keys
 		    key2 = wgetch(win);
-		    while ((key2 != ERR) && isascii(key2) &&
-			   (strchr("0123456789;", key2) != NULL) &&
-			   (strchr("~ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-				   "abcdefghijklmnopqrstuvwxyz", key2) == NULL)) {
+		    while (key2 != ERR && isascii(key2)
+			   && strchr("0123456789;", key2) != NULL
+			   && strchr("~ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+				     "abcdefghijklmnopqrstuvwxyz", key2)
+			   == NULL) {
 			key2 = wgetch(win);
 		    }
 		    beep();
@@ -896,13 +880,13 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    case 'B':
 		    case 'b':
 			// Move cursor to start of current or previous word
-			while ((pos > 0) && (! isalnum(buf[pos - 1]))) {
+			while (pos > 0 && ! isalnum(buf[pos - 1])) {
 			    pos--;
 			    if (cpos > 0) {
 				cpos--;
 			    }
 			}
-			while ((pos > 0) && isalnum(buf[pos - 1])) {
+			while (pos > 0 && isalnum(buf[pos - 1])) {
 			    pos--;
 			    if (cpos > 0) {
 				cpos--;
@@ -914,15 +898,15 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    case 'F':
 		    case 'f':
 			// Move cursor to end of current or next word
-			while ((pos < len) && (! isalnum(buf[pos]))) {
+			while (pos < len && ! isalnum(buf[pos])) {
 			    pos++;
-			    if (cpos < fieldsize - 1) {
+			    if (cpos < width - 1) {
 				cpos++;
 			    }
 			}
-			while ((pos < len) && isalnum(buf[pos])) {
+			while (pos < len && isalnum(buf[pos])) {
 			    pos++;
-			    if (cpos < fieldsize - 1) {
+			    if (cpos < width - 1) {
 				cpos++;
 			    }
 			}
@@ -935,81 +919,87 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    case KEY_BACKSPACE:
 		    case KEY_DEL:
 			// Delete the previous word (different from ^W)
-			i = pos;
-			while ((i > 0) && (! isalnum(buf[i - 1]))) {
-			    i--;
-			    if (cpos > 0) {
-				cpos--;
+			{
+			    int i = pos;
+			    while (i > 0 && ! isalnum(buf[i - 1])) {
+				i--;
+				if (cpos > 0) {
+				    cpos--;
+				}
 			    }
-			}
-			while ((i > 0) && isalnum(buf[i - 1])) {
-			    i--;
-			    if (cpos > 0) {
-				cpos--;
+			    while (i > 0 && isalnum(buf[i - 1])) {
+				i--;
+				if (cpos > 0) {
+				    cpos--;
+				}
 			    }
-			}
 
-			memmove(buf + i, buf + pos, len - pos + 1);
-			len -= (pos - i);
-			pos = i;
-			mod = true;
-			redraw = true;
+			    memmove(buf + i, buf + pos, len - pos + 1);
+			    len -= (pos - i);
+			    pos = i;
+			    mod = true;
+			    redraw = true;
+			}
 			break;
 
 		    case 'D':
 		    case 'd':
 			// Delete the next word
-			i = pos;
-			while ((i < len) && (! isalnum(buf[i]))) {
-			    i++;
-			}
-			while ((i < len) && isalnum(buf[i])) {
-			    i++;
-			}
+			{
+			    int i = pos;
+			    while (i < len && ! isalnum(buf[i])) {
+				i++;
+			    }
+			    while (i < len && isalnum(buf[i])) {
+				i++;
+			    }
 
-			memmove(buf + pos, buf + i, len - i + 1);
-			len -= (i - pos);
-			// pos and cpos stay the same
-			mod = true;
-			redraw = true;
+			    memmove(buf + pos, buf + i, len - i + 1);
+			    len -= (i - pos);
+			    // pos and cpos stay the same
+			    mod = true;
+			    redraw = true;
+			}
 			break;
 
 		    case '\\':
 		    case ' ':
 			// Delete all surrounding spaces; if key2 == ' ',
 			// also insert one space
-			i = pos;
-			while ((pos > 0) && isspace(buf[pos - 1])) {
-			    pos--;
-			    if (cpos > 0) {
-				cpos--;
-			    }
-			}
-			while ((i < len) && isspace(buf[i])) {
-			    i++;
-			}
-
-			memmove(buf + pos, buf + i, len - i + 1);
-			len -= (i - pos);
-
-			if (key2 == ' ') {
-			    if ((len >= maxlen) || ((allowed != NULL) &&
-				(strchr(allowed, key) == NULL))) {
-				beep();
-			    } else {
-				memmove(buf + pos + 1, buf + pos, len - pos + 1);
-				buf[pos] = ' ';
-				len++;
-				pos++;
-				if (cpos < fieldsize - 1) {
-				    cpos++;
+			{
+			    int i = pos;
+			    while (pos > 0 && isspace(buf[pos - 1])) {
+				pos--;
+				if (cpos > 0) {
+				    cpos--;
 				}
 			    }
+			    while (i < len && isspace(buf[i])) {
+				i++;
+			    }
+
+			    memmove(buf + pos, buf + i, len - i + 1);
+			    len -= (i - pos);
+
+			    if (key2 == ' ') {
+				if (len >= bufsize - 1 || (allowed != NULL
+				    && strchr(allowed, key) == NULL)) {
+				    beep();
+				} else {
+				    memmove(buf + pos + 1, buf + pos,
+					    len - pos + 1);
+				    buf[pos] = ' ';
+				    len++;
+				    pos++;
+				    if (cpos < width - 1) {
+					cpos++;
+				    }
+				}
+			    }
+
+			    mod = true;
+			    redraw = true;
 			}
-
-			mod = true;
-			redraw = true;
-
 			break;
 
 		    // Transformation keys
@@ -1017,16 +1007,16 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    case 'U':
 		    case 'u':
 			// Convert word (from cursor onwards) to upper case
-			while ((pos < len) && (! isalnum(buf[pos]))) {
+			while (pos < len && ! isalnum(buf[pos])) {
 			    pos++;
-			    if (cpos < fieldsize - 1) {
+			    if (cpos < width - 1) {
 				cpos++;
 			    }
 			}
-			while ((pos < len) && isalnum(buf[pos])) {
+			while (pos < len && isalnum(buf[pos])) {
 			    buf[pos] = toupper(buf[pos]);
 			    pos++;
-			    if (cpos < fieldsize - 1) {
+			    if (cpos < width - 1) {
 				cpos++;
 			    }
 			}
@@ -1037,16 +1027,16 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    case 'L':
 		    case 'l':
 			// Convert word (from cursor onwards) to lower case
-			while ((pos < len) && (! isalnum(buf[pos]))) {
+			while (pos < len && ! isalnum(buf[pos])) {
 			    pos++;
-			    if (cpos < fieldsize - 1) {
+			    if (cpos < width - 1) {
 				cpos++;
 			    }
 			}
-			while ((pos < len) && isalnum(buf[pos])) {
+			while (pos < len && isalnum(buf[pos])) {
 			    buf[pos] = tolower(buf[pos]);
 			    pos++;
-			    if (cpos < fieldsize - 1) {
+			    if (cpos < width - 1) {
 				cpos++;
 			    }
 			}
@@ -1058,27 +1048,29 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		    case 'c':
 			// Convert current letter to upper case, following
 			// letters to lower case
-			first = true;
-			while ((pos < len) && (! isalnum(buf[pos]))) {
-			    pos++;
-			    if (cpos < fieldsize - 1) {
-				cpos++;
+			{
+			    bool first = true;
+			    while (pos < len && ! isalnum(buf[pos])) {
+				pos++;
+				if (cpos < width - 1) {
+				    cpos++;
+				}
 			    }
+			    while (pos < len && isalnum(buf[pos])) {
+				if (first) {
+				    buf[pos] = toupper(buf[pos]);
+				    first = false;
+				} else {
+				    buf[pos] = tolower(buf[pos]);
+				}
+				pos++;
+				if (cpos < width - 1) {
+				    cpos++;
+				}
+			    }
+			    mod = true;
+			    redraw = true;
 			}
-			while ((pos < len) && isalnum(buf[pos])) {
-			    if (first) {
-				buf[pos] = toupper(buf[pos]);
-				first = false;
-			    } else {
-				buf[pos] = tolower(buf[pos]);
-			    }
-			    pos++;
-			    if (cpos < fieldsize - 1) {
-				cpos++;
-			    }
-			}
-			mod = true;
-			redraw = true;
 			break;
 
 		    // Miscellaneous keys and events
@@ -1091,7 +1083,6 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 
 		    default:
 			beep();
-			break;
 		    }
 		}
 
@@ -1106,18 +1097,17 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 
 	    default:
 		beep();
-		break;
 	    }
 	}
     }
 
-    wattrset(win, oldattr);
     curs_set(CURS_OFF);
 
-    wattron(win, A_BOLD);
-    mvwprintw(win, y, x, "%-*.*s", fieldsize, fieldsize, buf);
+    wattrset(win, oldattr | A_BOLD);
+    mvwprintw(win, y, x, "%-*.*s", width, width, buf);
+
+    wbkgdset(win, oldbkgd);
     wattrset(win, oldattr);
-    wbkgdset(win, oldattr);
     wrefresh(win);
 
     if (modified != NULL) {
@@ -1127,29 +1117,11 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   gettxstring  - Read a string from the keyboard
-  Arguments:  win          - Window to use
-              bufptr       - Address of pointer to buffer
-              multifield   - Allow <TAB>, etc, to move between fields
-	      y, x         - Start of field (line, col)
-	      fieldsize    - Size of field in characters
-	      attr         - Curses attribute to use for the field
-	      modified     - Pointer to modified status
-  Returns:    int          - Status code: OK, ERR or key code
+/***********************************************************************/
+// gettxstr: Read a string from the keyboard
 
-  This function calls gettxline() to allow the user to input a string.
-  Empty strings are specified as the default and the empty values, all
-  characters are allowed, leading and trailing spaces are automatically
-  stripped.  On entry, the pointer to buffer must either be NULL or
-  previously allocated with a call to gettxstring().  If *bufptr is NULL,
-  a buffer of BUFSIZE is automatically allocated using malloc(); this
-  buffer is used to store the input line.  The same exit codes are
-  returned as returned by gettxline().
-*/
-
-int gettxstring (WINDOW *win, char **bufptr, bool multifield, int y, int x,
-		 int fieldsize, int attr, bool *modified)
+int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
+	      bool multifield, int y, int x, int width, chtype attr)
 {
     assert(bufptr != NULL);
 
@@ -1164,35 +1136,73 @@ int gettxstring (WINDOW *win, char **bufptr, bool multifield, int y, int x,
 	**bufptr = '\0';
     }
 
-    return gettxline(win, *bufptr, BUFSIZE, multifield, BUFSIZE - 1, "", "",
-		     NULL, true, y, x, fieldsize, attr, modified);
+    return gettxline(win, *bufptr, BUFSIZE, modified, multifield, "", "",
+		     NULL, true, y, x, width, attr);
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   gettxdouble  - Read a number from the keyboard
-  Arguments:  win          - Window to use
-              result       - Pointer to result
-              min          - Minimum value allowed
-              max          - Maximum value allowed
-              emptyval     - Value to use for empty input
-              defaultval   - Value to use as a default
-	      y, x         - Start of field (line, col)
-	      fieldsize    - Size of field in characters
-	      attr         - Curses attribute to use for the field
-  Returns:    int          - Status code: OK, ERR or key code
+/***********************************************************************/
+// txinput_fixup: Copy strings with fixup
 
-  This function calls gettxline() to allow the user to input a valid
-  floating point number.  If gettxline() returns OK, the entered number
-  is stored in *result if it valid.  Otherwise, gettxline() is called
-  again.  Any other result is returned to the caller of this function.
-*/
-
-int gettxdouble (WINDOW *win, double *result, double min, double max,
-		 double emptyval, double defaultval, int y, int x,
-		 int fieldsize, int attr)
+void txinput_fixup (char *restrict dest, char *restrict src, bool isfloat)
 {
-    char *buf, *buf_copy;
+    struct lconv *lc = &localeconv_info;
+    char *p;
+
+
+    assert(src != NULL);
+    assert(dest != NULL);
+
+    strncpy(dest, src, BUFSIZE - 1);
+    dest[BUFSIZE - 1] = '\0';
+
+    // Replace mon_decimal_point with decimal_point if these are different
+    if (isfloat) {
+	if (strcmp(lc->mon_decimal_point, "") != 0
+	    && strcmp(lc->decimal_point, "") != 0
+	    && strcmp(lc->mon_decimal_point, lc->decimal_point) != 0) {
+	    while ((p = strstr(dest, lc->mon_decimal_point)) != NULL) {
+		char *pn;
+		int len1 = strlen(lc->mon_decimal_point);
+		int len2 = strlen(lc->decimal_point);
+
+		// Make space for lc->decimal_point, if needed
+		memmove(p + len2, p + len1, strlen(p) - (len2 - len1) + 1);
+
+		// Copy lc->decimal_point over p WITHOUT copying ending NUL
+		for (pn = lc->decimal_point; *pn != '\0'; pn++, p++) {
+		    *p = *pn;
+		}
+	    }
+	}
+    }
+
+    // Remove thousands separators if required
+    if (strcmp(lc->thousands_sep, "") != 0) {
+	while ((p = strstr(dest, lc->thousands_sep)) != NULL) {
+	    int len = strlen(lc->thousands_sep);
+	    memmove(p, p + len, strlen(p) - len + 1);
+	}
+    }
+    if (strcmp(lc->mon_thousands_sep, "") != 0) {
+	while ((p = strstr(dest, lc->mon_thousands_sep)) != NULL) {
+	    int len = strlen(lc->thousands_sep);
+	    memmove(p, p + len, strlen(p) - len + 1);
+	}
+    }
+}
+
+
+/***********************************************************************/
+// gettxdouble: Read a floating-point number from the keyboard
+
+int gettxdouble (WINDOW *win, double *restrict result, double min,
+		 double max, double emptyval, double defaultval,
+		 int y, int x, int width, chtype attr)
+{
+    struct lconv *lc = &localeconv_info;
+
+    char *buf, *bufcopy;
     char *allowed, *emptystr, *defaultstr;
     double val;
     bool done;
@@ -1200,101 +1210,40 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
 
 
     assert(result != NULL);
+    assert(min <= max);
 
-    if (max < min) {
-	double n = max;
-	max = min;
-	min = n;
-    }
-
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
-
-    buf_copy = malloc(BUFSIZE);
-    if (buf_copy == NULL) {
-	err_exit_nomem();
-    }
-
-    allowed = malloc(BUFSIZE);
-    if (allowed == NULL) {
-	err_exit_nomem();
-    }
-
-    emptystr = malloc(BUFSIZE);
-    if (emptystr == NULL) {
-	err_exit_nomem();
-    }
-
+    buf        = malloc(BUFSIZE);
+    bufcopy    = malloc(BUFSIZE);
+    allowed    = malloc(BUFSIZE);
+    emptystr   = malloc(BUFSIZE);
     defaultstr = malloc(BUFSIZE);
-    if (defaultstr == NULL) {
+
+    if (buf == NULL || bufcopy == NULL || allowed == NULL
+	|| emptystr == NULL || defaultstr == NULL) {
 	err_exit_nomem();
     }
 
     *buf = '\0';
 
-    strcpy(allowed, "0123456789+-Ee");
-    strncat(allowed, localeconv_info.decimal_point,
-	    BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, localeconv_info.thousands_sep,
-	    BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, localeconv_info.mon_decimal_point,
-	    BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, localeconv_info.mon_thousands_sep,
-	    BUFSIZE - strlen(allowed) - 1);
+    strcpy(allowed,  "0123456789+-Ee");
+    strncat(allowed, lc->decimal_point,     BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->mon_decimal_point, BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
 
-    snprintf(emptystr,   BUFSIZE, "%'1.*f", localeconv_info.frac_digits,
-	     emptyval);
-    snprintf(defaultstr, BUFSIZE, "%'1.*f", localeconv_info.frac_digits,
-	     defaultval);
+    snprintf(emptystr,   BUFSIZE, "%'1.*f", lc->frac_digits, emptyval);
+    snprintf(defaultstr, BUFSIZE, "%'1.*f", lc->frac_digits, defaultval);
 
     done = false;
     while (! done) {
-	ret = gettxline(win, buf, BUFSIZE, false, BUFSIZE - 1, emptystr,
-			defaultstr, allowed, true, y, x, fieldsize, attr, NULL);
+	ret = gettxline(win, buf, BUFSIZE, NULL, false, emptystr, defaultstr,
+			allowed, true, y, x, width, attr);
 
 	if (ret == OK) {
 	    char *p;
 
-	    strncpy(buf_copy, buf, BUFSIZE - 1);
-	    buf_copy[BUFSIZE - 1] = '\0';
-
-	    // Replace mon_decimal_point with decimal_point
-	    if (strcmp(localeconv_info.mon_decimal_point, "") != 0
-		&& strcmp(localeconv_info.decimal_point, "") != 0
-		&& strcmp(localeconv_info.mon_decimal_point,
-			  localeconv_info.decimal_point) != 0) {
-		while ((p = strstr(buf_copy, localeconv_info.mon_decimal_point)) != NULL) {
-		    char *pn;
-		    int len1 = strlen(localeconv_info.mon_decimal_point);
-		    int len2 = strlen(localeconv_info.decimal_point);
-
-		    // Make space for localeconv_info.decimal_point, if needed
-		    memmove(p + len2, p + len1, strlen(p) - (len2 - len1) + 1);
-
-		    // Copy localeconv_info.decimal_point over p WITHOUT copying ending NUL
-		    for (pn = localeconv_info.decimal_point; *pn != '\0'; pn++, p++) {
-			*p = *pn;
-		    }
-		}
-	    }
-
-	    // Remove thousands separators if required
-	    if (strcmp(localeconv_info.thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, localeconv_info.thousands_sep)) != NULL) {
-		    int len = strlen(localeconv_info.thousands_sep);
-		    memmove(p, p + len, strlen(p) - len + 1);
-		}
-	    }
-	    if (strcmp(localeconv_info.mon_thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, localeconv_info.mon_thousands_sep)) != NULL) {
-		    int len = strlen(localeconv_info.thousands_sep);
-		    memmove(p, p + len, strlen(p) - len + 1);
-		}
-	    }
-
-	    val = strtod(buf_copy, &p);
+	    txinput_fixup(bufcopy, buf, true);
+	    val = strtod(bufcopy, &p);
 
 	    if (*p == '\0' && val >= min && val <= max) {
 		*result = val;
@@ -1310,36 +1259,23 @@ int gettxdouble (WINDOW *win, double *result, double min, double max,
     free(defaultstr);
     free(emptystr);
     free(allowed);
-    free(buf_copy);
+    free(bufcopy);
     free(buf);
 
     return ret;
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   gettxlong   - Read an integer number from the keyboard
-  Arguments:  win         - Window to use
-              result      - Pointer to result
-              min         - Minimum value allowed
-              max         - Maximum value allowed
-              emptyval    - Value to use for empty input
-              defaultval  - Value to use as a default
-	      y, x        - Start of field (line, col)
-	      fieldsize   - Size of field in characters
-	      attr        - Curses attribute to use for the field
-  Returns:    int         - Status code: OK, ERR or key code
+/***********************************************************************/
+// gettxlong: Read an integer number from the keyboard
 
-  This function calls gettxline() to allow the user to input a valid
-  integer number.  If gettxline() returns OK, the entered number
-  is stored in *result if it valid.  Otherwise, gettxline() is called
-  again.  Any other result is returned to the caller of this function.
-*/
-
-int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
-	       long defaultval, int y, int x, int fieldsize, int attr)
+int gettxlong (WINDOW *win, long int *restrict result, long int min,
+	       long int max, long int emptyval, long int defaultval,
+	       int y, int x, int width, chtype attr)
 {
-    char *buf, *buf_copy;
+    struct lconv *lc = &localeconv_info;
+
+    char *buf, *bufcopy;
     char *allowed, *emptystr, *defaultstr;
     long val;
     bool done;
@@ -1347,75 +1283,38 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
 
 
     assert(result != NULL);
+    assert(min <= max);
 
-    if (max < min) {
-	long n = max;
-	max = min;
-	min = n;
-    }
-
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
-
-    buf_copy = malloc(BUFSIZE);
-    if (buf_copy == NULL) {
-	err_exit_nomem();
-    }
-
-    allowed = malloc(BUFSIZE);
-    if (allowed == NULL) {
-	err_exit_nomem();
-    }
-
-    emptystr = malloc(BUFSIZE);
-    if (emptystr == NULL) {
-	err_exit_nomem();
-    }
-
+    buf        = malloc(BUFSIZE);
+    bufcopy    = malloc(BUFSIZE);
+    allowed    = malloc(BUFSIZE);
+    emptystr   = malloc(BUFSIZE);
     defaultstr = malloc(BUFSIZE);
-    if (defaultstr == NULL) {
+
+    if (buf == NULL || bufcopy == NULL || allowed == NULL
+	|| emptystr == NULL || defaultstr == NULL) {
 	err_exit_nomem();
     }
 
     *buf = '\0';
 
     strcpy(allowed, "0123456789+-");
-    strncat(allowed, localeconv_info.thousands_sep,
-	    BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, localeconv_info.mon_thousands_sep,
-	    BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
+    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
 
     snprintf(emptystr,   BUFSIZE, "%'1ld", emptyval);
     snprintf(defaultstr, BUFSIZE, "%'1ld", defaultval);
 
     done = false;
     while (! done) {
-	ret = gettxline(win, buf, BUFSIZE, false, BUFSIZE - 1, emptystr,
-			defaultstr, allowed, true, y, x, fieldsize, attr, NULL);
+	ret = gettxline(win, buf, BUFSIZE, NULL, false, emptystr, defaultstr,
+			allowed, true, y, x, width, attr);
 
 	if (ret == OK) {
 	    char *p;
 
-	    strncpy(buf_copy, buf, BUFSIZE - 1);
-	    buf_copy[BUFSIZE - 1] = '\0';
-
-	    // Remove thousands separators if required
-	    if (strcmp(localeconv_info.thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, localeconv_info.thousands_sep)) != NULL) {
-		    int len = strlen(localeconv_info.thousands_sep);
-		    memmove(p, p + len, strlen(p) - len + 1);
-		}
-	    }
-	    if (strcmp(localeconv_info.mon_thousands_sep, "") != 0) {
-		while ((p = strstr(buf_copy, localeconv_info.mon_thousands_sep)) != NULL) {
-		    int len = strlen(localeconv_info.thousands_sep);
-		    memmove(p, p + len, strlen(p) - len + 1);
-		}
-	    }
-
-	    val = strtol(buf_copy, &p, 10);
+	    txinput_fixup(bufcopy, buf, false);
+	    val = strtol(bufcopy, &p, 10);
 
 	    if (*p == '\0' && val >= min && val <= max) {
 		*result = val;
@@ -1431,7 +1330,7 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
     free(defaultstr);
     free(emptystr);
     free(allowed);
-    free(buf_copy);
+    free(bufcopy);
     free(buf);
 
     return ret;
@@ -1504,3 +1403,7 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
 
     (void) wgetch(win);
 }
+
+
+/***********************************************************************/
+// End of file
