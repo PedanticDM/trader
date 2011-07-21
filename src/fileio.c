@@ -145,7 +145,6 @@ bool load_game (int num)
     char *buf, *filename;
     FILE *file;
     int saved_errno, lineno;
-    char *prev_locale;
 
     int crypt_key;
     int n, i, j;
@@ -197,7 +196,7 @@ bool load_game (int num)
     }
 
     // Change the formatting of numbers to the POSIX locale for consistency
-    prev_locale = setlocale(LC_NUMERIC, "C");
+    setlocale(LC_NUMERIC, "C");
 
     // Read the game file header
     if (fgets(buf, BUFSIZE, file) == NULL) {
@@ -284,8 +283,8 @@ bool load_game (int num)
 	errno_exit("%s", filename);
     }
 
-    // Change the formatting of numbers back to the user-supplied locale
-    setlocale(LC_NUMERIC, prev_locale);
+    // Restore the user-supplied locale
+    setlocale(LC_ALL, "");
 
     free(buf);
     free(filename);
@@ -302,7 +301,6 @@ bool save_game (int num)
     char *buf, *filename;
     FILE *file;
     int saved_errno;
-    char *prev_locale;
     struct stat statbuf;
     int crypt_key;
     int i, j, x, y;
@@ -371,7 +369,7 @@ bool save_game (int num)
     }
 
     // Change the formatting of numbers to the POSIX locale for consistency
-    prev_locale = setlocale(LC_NUMERIC, "C");
+    setlocale(LC_NUMERIC, "C");
 
     // Write out the game file header and encryption key
     fprintf(file, "%s\n" "%s\n", GAME_FILE_HEADER, GAME_FILE_API_VERSION);
@@ -431,8 +429,8 @@ bool save_game (int num)
 	errno_exit("%s", filename);
     }
 
-    // Change the formatting of numbers back to the user-supplied locale
-    setlocale(LC_NUMERIC, prev_locale);
+    // Restore the user-supplied locale
+    setlocale(LC_ALL, "");
 
     free(buf);
     free(filename);
