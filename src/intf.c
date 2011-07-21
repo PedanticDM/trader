@@ -552,8 +552,8 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 	if (key == ERR) {
 	    // Do nothing on ERR
 	    ;
-	} else if ((key == KEY_DEFAULTVAL) && (defaultval != NULL)
-		   && (len == 0)) {
+	} else if ((key == KEY_DEFAULTVAL1 || key == KEY_DEFAULTVAL2)
+		   && defaultval != NULL && len == 0) {
 	    // Initialise buffer with the default value
 
 	    strncpy(buf, defaultval, bufsize - 1);

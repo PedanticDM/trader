@@ -79,8 +79,9 @@ typedef enum curs_type {
 
 #define KEY_ILLEGAL	077777		// No key should ever return this!
 
-// Keycode for inserting the default value in input routines
-#define KEY_DEFAULTVAL	'='
+// Keycodes for inserting the default value in input routines
+#define KEY_DEFAULTVAL1	'='
+#define KEY_DEFAULTVAL2	';'
 
 // Control-arrow key combinations, as returned by NCurses
 #ifndef KEY_CDOWN
