@@ -252,30 +252,41 @@ int txrefresh (void)
 }
 
 
-/************************************************************************
-*                            Output routines                            *
-************************************************************************/
+/***********************************************************************/
+// attrpr: Print a string with a particular character rendition
 
-/*-----------------------------------------------------------------------
-  Function:   center   - Centre a string on the current line
-  Arguments:  win      - Window to use
-              y        - Line on which to centre the string
-              attr     - Window attributes to use for string
-              format   - printf()-like format string
-              ...      - printf()-like arguments
-  Returns:    int      - Return code from wprintw()
-
-  This function prints a string (formated with wprintw(format, ...)) in
-  the centre of line y in the window win, using the window attributes in
-  attr.  Please note that wrefresh() is NOT called.
-*/
-
-int center (WINDOW *win, int y, int attr, const char *format, ...)
+int attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
 {
     va_list args;
+    int ret;
 
-    int oldattr;
-    int len, ret, x;
+    chtype oldattr = getattrs(win);
+    chtype oldbkgd = getbkgd(win);
+
+
+    /* Note that wattrset() will override parts of wbkgdset() and vice
+       versa: don't swap the order of these two lines! */
+    wbkgdset(win, (oldbkgd & A_COLOR) | A_NORMAL);
+    wattrset(win, attr);
+
+    va_start(args, format);
+    ret = vw_printw(win, format, args);
+    va_end(args);
+
+    wbkgdset(win, oldbkgd);
+    wattrset(win, oldattr);
+
+    return ret;
+}
+
+
+/***********************************************************************/
+// center: Centre a string in a given window
+
+int center (WINDOW *win, int y, chtype attr, const char *restrict format, ...)
+{
+    va_list args;
+    int ret, len, x;
     char *buf;
 
 
@@ -284,54 +295,42 @@ int center (WINDOW *win, int y, int attr, const char *format, ...)
 	err_exit_nomem();
     }
 
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
+    chtype oldattr = getattrs(win);
+    chtype oldbkgd = getbkgd(win);
+
+    // Order is important: see attrpr()
+    wbkgdset(win, (oldbkgd & A_COLOR) | A_NORMAL);
     wattrset(win, attr);
 
     va_start(args, format);
     len = vsnprintf(buf, BUFSIZE, format, args);
     va_end(args);
+
     if (len < 0) {
-	free(buf);
-	return ERR;
+	ret = ERR;
+    } else if (len == 0) {
+	ret = OK;
+    } else {
+	x = (getmaxx(win) - len) / 2;
+	ret = mvwprintw(win, y, MAX(x, 2), "%1.*s", getmaxx(win) - 4, buf);
     }
 
-    x = (getmaxx(win) - len) / 2;
-    ret = mvwprintw(win, y, MAX(x, 2), "%1.*s", getmaxx(win) - 4, buf);
-
+    wbkgdset(win, oldbkgd);
     wattrset(win, oldattr);
-    wbkgdset(win, oldattr);
 
     free(buf);
     return ret;
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   center2       - Centre two strings on the current line
-  Arguments:  win           - Window to use
-              y             - Line on which to centre the string
-              attr_initial  - Window attribute to use for initial string
-	      attr_string   - Window attribute to use for main string
-	      initial       - Fixed initial string
-              format        - printf()-like format string
-              ...           - printf()-like arguments
-  Returns:    int           - Return code from wprintw()
+/***********************************************************************/
+// center2: Centre two strings in a given window
 
-  This function prints two strings in the centre of line y in the window
-  win.  The initial string is printed using the window attributes in
-  attr_initial; the main string uses attr_string.  No spaces appear
-  between the two strings.  Please note that wrefresh() is NOT called.
-*/
-
-int center2 (WINDOW *win, int y, int attr_initial, int attr_string,
-		    const char *initial, const char *format, ...)
+int center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
+	     const char *initial, const char *restrict format, ...)
 {
     va_list args;
-
-    int oldattr;
-    int len1, len2;
-    int ret, x;
+    int ret, len1, len2, x;
     char *buf;
 
 
@@ -340,60 +339,45 @@ int center2 (WINDOW *win, int y, int attr_initial, int attr_string,
 	err_exit_nomem();
     }
 
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
+    chtype oldattr = getattrs(win);
+    chtype oldbkgd = getbkgd(win);
+
+    wbkgdset(win, (oldbkgd & A_COLOR) | A_NORMAL);
 
     len1 = strlen(initial);
 
     va_start(args, format);
     len2 = vsnprintf(buf, BUFSIZE, format, args);
     va_end(args);
+
     if (len2 < 0) {
-	free(buf);
-	return ERR;
+	ret = ERR;
+    } else if (len1 + len2 == 0) {
+	ret = OK;
+    } else {
+	x = (getmaxx(win) - (len1 + len2)) / 2;
+	wattrset(win, attr1);
+	mvwprintw(win, y, MAX(x, 2), "%s", initial);
+	wattrset(win, attr2);
+	ret = wprintw(win, "%1.*s", getmaxx(win) - len1 - 4, buf);
     }
 
-    x = (getmaxx(win) - (len1 + len2)) / 2;
-    wattrset(win, attr_initial);
-    mvwprintw(win, y, MAX(x, 2), "%s", initial);
-    wattrset(win, attr_string);
-    ret = wprintw(win, "%1.*s", getmaxx(win) - len1 - 4, buf);
-
+    wbkgdset(win, oldbkgd);
     wattrset(win, oldattr);
-    wbkgdset(win, oldattr);
 
     free(buf);
     return ret;
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   center3       - Centre three strings on the current line
-  Arguments:  win           - Window to use
-              y             - Line on which to centre the string
-              attr_initial  - Window attribute to use for initial string
-              attr_final    - Window attribute to use for final string
-	      attr_string   - Window attribute to use for main string
-	      initial       - Fixed initial string
-	      final         - Fixed final string
-              format        - printf()-like format string
-              ...           - printf()-like arguments
-  Returns:    int           - Return code from wprintw()
+/***********************************************************************/
+// center3: Centre three strings in a given window
 
-  This function prints three strings in the centre of line y in the
-  window win.  The initial string is printed using the window attributes
-  in attr_initial, the main string uses attr_string and the final string
-  uses attr_final.  No spaces appear between the three strings.  Please
-  note that wrefresh() is NOT called.  Also note ordering of parameters!
-*/
-
-int center3 (WINDOW *win, int y, int attr_initial, int attr_final,
-	     int attr_string, const char *initial, const char *final,
-	     const char *format, ...)
+int center3 (WINDOW *win, int y, chtype attr1, chtype attr3, chtype attr2,
+	     const char *initial, const char *final,
+	     const char *restrict format, ...)
 {
     va_list args;
-
-    int oldattr;
     int len1, len2, len3;
     int ret, x;
     char *buf;
@@ -404,8 +388,10 @@ int center3 (WINDOW *win, int y, int attr_initial, int attr_final,
 	err_exit_nomem();
     }
 
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
+    chtype oldattr = getattrs(win);
+    chtype oldbkgd = getbkgd(win);
+
+    wbkgdset(win, (oldbkgd & A_COLOR) | A_NORMAL);
 
     len1 = strlen(initial);
     len3 = strlen(final);
@@ -413,57 +399,25 @@ int center3 (WINDOW *win, int y, int attr_initial, int attr_final,
     va_start(args, format);
     len2 = vsnprintf(buf, BUFSIZE, format, args);
     va_end(args);
+
     if (len2 < 0) {
-	free(buf);
-	return ERR;
+	ret = ERR;
+    } else if (len1 + len2 + len3 == 0) {
+	ret = OK;
+    } else {
+	x = (getmaxx(win) - (len1 + len2 + len3)) / 2;
+	wattrset(win, attr1);
+	mvwprintw(win, y, MAX(x, 2), "%s", initial);
+	wattrset(win, attr2);
+	ret = wprintw(win, "%1.*s", getmaxx(win) - len1 - len3 - 4, buf);
+	wattrset(win, attr3);
+	wprintw(win, "%s", final);
     }
 
-    x = (getmaxx(win) - (len1 + len2 + len3)) / 2;
-    wattrset(win, attr_initial);
-    mvwprintw(win, y, MAX(x, 2), "%s", initial);
-    wattrset(win, attr_string);
-    ret = wprintw(win, "%1.*s", getmaxx(win) - len1 - len3 - 4, buf);
-    wattrset(win, attr_final);
-    wprintw(win, "%s", final);
-
+    wbkgdset(win, oldbkgd);
     wattrset(win, oldattr);
-    wbkgdset(win, oldattr);
 
     free(buf);
-    return ret;
-}
-
-
-/*-----------------------------------------------------------------------
-  Function:   attrpr  - Print a string with special attributes
-  Arguments:  win     - Window to use
-              attr    - Attribute to use for the string
-              format  - printf()-like format string
-              ...     - printf()-like arguments
-  Returns:    int     - Return code from wprintw()
-
-  This function sets the window attributes to attr, then prints the given
-  string (using wprintw()), then restores the previous window attributes.
-*/
-
-int attrpr (WINDOW *win, int attr, const char *format, ...)
-{
-    va_list args;
-    int oldattr;
-    int ret;
-
-
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
-    wattrset(win, attr);
-
-    va_start(args, format);
-    ret = vw_printw(win, format, args);
-    va_end(args);
-
-    wattrset(win, oldattr);
-    wbkgdset(win, oldattr);
-
     return ret;
 }
 
