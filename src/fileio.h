@@ -36,7 +36,26 @@
 *                Game load and save function prototypes                 *
 ************************************************************************/
 
+/*
+  Function:   load_game - Load a previously-saved game from disk
+  Parameters: num       - Game number to load (1-9)
+  Returns:    bool      - True if game loaded successfully, else false
+
+  This function loads a previously-saved game from disk, initialising all
+  game global variables appropriately.  True is returned if this could be
+  done successfully.
+*/
 extern bool load_game (int num);
+
+
+/*
+  Function:   save_game - Save the current game to disk
+  Parameters: num       - Game number to use (1-9)
+  Returns:    bool      - True if game saved successfully, else false
+
+  This function saves the current game to disk.  True is returned if this
+  could be done successfully.
+*/
 extern bool save_game (int num);
 
 

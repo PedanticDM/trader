@@ -32,19 +32,19 @@
 
 
 /************************************************************************
-*                      Module constants and macros                      *
+*                 Module-specific constants and macros                  *
 ************************************************************************/
 
 // Game loading and saving constants
 
-static const int game_file_crypt_key[] = {
+static const unsigned char game_file_crypt_key[] = {
     0x50, 0x52, 0x55, 0x59, 0x5A, 0x5C, 0x5F,
     0x90, 0x92, 0x95, 0x99, 0x9A, 0x9C, 0x9F,
     0xA0, 0xA2, 0xA5, 0xA9, 0xAA, 0xAC, 0xAF,
     0xD0, 0xD2, 0xD5, 0xD9, 0xDA, 0xDC, 0xDF
 };
 
-#define GAME_FILE_CRYPT_KEY_SIZE (sizeof(game_file_crypt_key) / sizeof(int))
+#define GAME_FILE_CRYPT_KEY_SIZE (sizeof(game_file_crypt_key) / sizeof(game_file_crypt_key[0]))
 
 
 // Macros used in load_game()
@@ -77,7 +77,7 @@ static const int game_file_crypt_key[] = {
     do {								\
 	int b;								\
 									\
-	load_game_scanf("%d", b, (b == false) || (b == true));		\
+	load_game_scanf("%d", b, b == false || b == true);		\
 	(_var) = b;							\
     } while (0)
 
@@ -134,14 +134,11 @@ static const int game_file_crypt_key[] = {
 *                Game load and save function definitions                *
 ************************************************************************/
 
-/*-----------------------------------------------------------------------
-  Function:   load_game  - Load a saved game from disk
-  Arguments:  num        - Game number to load (1-9)
-  Returns:    bool       - True if game loaded successfully, else false
+// These functions are documented in the file "fileio.h"
 
-  This function loads a previously-saved game from disk.  True is
-  returned if this could be done successfully.
-*/
+
+/***********************************************************************/
+// load_game: Load a previously-saved game from disk
 
 bool load_game (int num)
 {
@@ -151,11 +148,10 @@ bool load_game (int num)
     char *prev_locale;
 
     int crypt_key;
-    int n, i, j, x, y;
-    char c;
+    int n, i, j;
 
 
-    assert((num >= 1) && (num <= 9));
+    assert(num >= 1 && num <= 9);
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -177,7 +173,7 @@ bool load_game (int num)
 	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "Game %d has not been saved to disk", num);
 
-	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
+	    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	} else {
 	    // Some other file error
@@ -191,7 +187,7 @@ bool load_game (int num)
 	    center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
 		   strerror(saved_errno));
 
-	    wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
+	    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	}
 
@@ -200,7 +196,7 @@ bool load_game (int num)
 	return false;
     }
 
-    // Change the formatting of numbers to the POSIX locale
+    // Change the formatting of numbers to the POSIX locale for consistency
     prev_locale = setlocale(LC_NUMERIC, "C");
 
     // Read the game file header
@@ -230,10 +226,10 @@ bool load_game (int num)
     load_game_read_int(n,                n == MAX_X);
     load_game_read_int(n,                n == MAX_Y);
     load_game_read_int(max_turn,         max_turn >= 1);
-    load_game_read_int(turn_number,      (turn_number >= 1) && (turn_number <= max_turn));
-    load_game_read_int(number_players,   (number_players >= 1) && (number_players < MAX_PLAYERS));
-    load_game_read_int(current_player,   (current_player >= 0) && (current_player < number_players));
-    load_game_read_int(first_player,     (first_player >= 0) && (first_player < number_players));
+    load_game_read_int(turn_number,      turn_number >= 1 && turn_number <= max_turn);
+    load_game_read_int(number_players,   number_players >= 1 && number_players < MAX_PLAYERS);
+    load_game_read_int(current_player,   current_player >= 0 && current_player < number_players);
+    load_game_read_int(first_player,     first_player >= 0 && first_player < number_players);
     load_game_read_int(n,                n == MAX_COMPANIES);
     load_game_read_double(interest_rate, interest_rate > 0.0);
 
@@ -252,32 +248,33 @@ bool load_game (int num)
     // Read in company data
     for (i = 0; i < MAX_COMPANIES; i++) {
 	company[i].name = company_name[i];
-	load_game_read_double(company[i].share_price, company[i].share_price >= 0.0);
+	load_game_read_double(company[i].share_price,  company[i].share_price >= 0.0);
 	load_game_read_double(company[i].share_return, true);
-	load_game_read_long(company[i].stock_issued, company[i].stock_issued >= 0);
-	load_game_read_long(company[i].max_stock, company[i].max_stock >= 0);
+	load_game_read_long(company[i].stock_issued,   company[i].stock_issued >= 0);
+	load_game_read_long(company[i].max_stock,      company[i].max_stock >= 0);
 	load_game_read_bool(company[i].on_map);
     }
 
     // Read in galaxy map
-    for (x = 0; x < MAX_X; x++) {
+    for (int x = 0; x < MAX_X; x++) {
 	if (fgets(buf, BUFSIZE, file) == NULL) {
 	    err_exit("%s: missing field on line %d", filename, lineno);
 	}
-	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) != (MAX_Y + 1)) {
+	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) != MAX_Y + 1) {
 	    err_exit("%s: illegal field on line %d", filename, lineno);
 	}
-	lineno++;
 
-	for (y = 0; y < MAX_Y; y++) {
-	    c = buf[y];
-	    if ((c == MAP_EMPTY) || (c == MAP_OUTPOST) || (c == MAP_STAR) ||
-		((c >= MAP_A) && (c <= MAP_LAST))) {
+	for (int y = 0; y < MAX_Y; y++) {
+	    char c = buf[y];
+	    if (c == MAP_EMPTY || c == MAP_OUTPOST || c == MAP_STAR
+		|| (c >= MAP_A && c <= MAP_LAST)) {
 		galaxy_map[x][y] = (map_val_t) c;
 	    } else {
-		err_exit("%s: illegal value on line %d", filename, lineno - 1);
+		err_exit("%s: illegal value on line %d", filename, lineno);
 	    }
 	}
+
+	lineno++;
     }
 
     // Read in a dummy sentinal value
@@ -296,14 +293,8 @@ bool load_game (int num)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   save_game  - Save the current game to disk
-  Arguments:  num        - Game number to use (1-9)
-  Returns:    bool       - True if game saved successfully, else false
-
-  This function saves the current game to disk.  True is returned if this
-  could be done successfully.
-*/
+/***********************************************************************/
+// save_game: Save the current game to disk
 
 bool save_game (int num)
 {
@@ -315,10 +306,9 @@ bool save_game (int num)
     struct stat statbuf;
     int crypt_key;
     int i, j, x, y;
-    char *p;
 
 
-    assert((num >= 1) && (num <= 9));
+    assert(num >= 1 && num <= 9);
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -333,7 +323,7 @@ bool save_game (int num)
     if (data_dir != NULL) {
 	if (mkdir(data_dir, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
 	    saved_errno = errno;
-	    if ((saved_errno == EEXIST) && (stat(data_dir, &statbuf) == 0)
+	    if (saved_errno == EEXIST && stat(data_dir, &statbuf) == 0
 		&& S_ISDIR(statbuf.st_mode)) {
 		;	// Do nothing: directory already exists
 	    } else {
@@ -347,7 +337,7 @@ bool save_game (int num)
 		center(curwin, 5, ATTR_ERROR_NORMAL, "Directory %s: %s",
 		       data_dir, strerror(saved_errno));
 
-		wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
+		wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
 		deltxwin();
 
 		free(buf);
@@ -372,7 +362,7 @@ bool save_game (int num)
 	center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
 	       strerror(saved_errno));
 
-	wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
+	wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
 	deltxwin();
 
 	free(buf);
@@ -380,7 +370,7 @@ bool save_game (int num)
 	return false;
     }
 
-    // Change the formatting of numbers to the POSIX locale
+    // Change the formatting of numbers to the POSIX locale for consistency
     prev_locale = setlocale(LC_NUMERIC, "C");
 
     // Write out the game file header and encryption key
@@ -421,6 +411,8 @@ bool save_game (int num)
 
     // Write out galaxy map
     for (x = 0; x < MAX_X; x++) {
+	char *p;
+
 	memset(buf, 0, MAX_Y + 2);
 	for (p = buf, y = 0; y < MAX_Y; p++, y++) {
 	    *p = (char) galaxy_map[x][y];
@@ -446,3 +438,7 @@ bool save_game (int num)
     free(filename);
     return true;
 }
+
+
+/***********************************************************************/
+// End of file
