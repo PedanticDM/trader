@@ -274,14 +274,8 @@ selection_t get_move (void)
 	wrefresh(curwin);
 
 	// Ask the player to confirm their choice
-	mvwaddstr(curwin, 2, 22, "Are you sure? ");
-	waddstr(curwin, "[");
-	attrpr(curwin, ATTR_KEYCODE, "Y");
-	waddstr(curwin, "/");
-	attrpr(curwin, ATTR_KEYCODE, "N");
-	waddstr(curwin, "] ");
-
-	if (! answer_yesno(curwin)) {
+	mvwaddstr(curwin, 2, 22, "Are you sure?");
+	if (! answer_yesno(curwin, ATTR_KEYCODE)) {
 	    selection = SEL_NONE;
 	}
 

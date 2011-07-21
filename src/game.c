@@ -219,14 +219,8 @@ void init_game (void)
 
 		newtxwin(5, 44, 6, WCENTER(44), true, ATTR_NORMAL_WINDOW);
 
-		mvwaddstr(curwin, 2, 2, "Do you need any instructions? ");
-		waddstr(curwin, "[");
-		attrpr(curwin, ATTR_KEYCODE, "Y");
-		waddstr(curwin, "/");
-		attrpr(curwin, ATTR_KEYCODE, "N");
-		waddstr(curwin, "] ");
-
-		if (answer_yesno(curwin)) {
+		mvwaddstr(curwin, 2, 2, "Do you need any instructions?");
+		if (answer_yesno(curwin, ATTR_KEYCODE)) {
 		    show_help();
 		}
 
@@ -319,14 +313,8 @@ void init_game (void)
 
 		newtxwin(5, 50, 6, WCENTER(50), true, ATTR_NORMAL_WINDOW);
 
-		mvwaddstr(curwin, 2, 2, "Does any player need instructions? ");
-		waddstr(curwin, "[");
-		attrpr(curwin, ATTR_KEYCODE, "Y");
-		waddstr(curwin, "/");
-		attrpr(curwin, ATTR_KEYCODE, "N");
-		waddstr(curwin, "] ");
-
-		if (answer_yesno(curwin)) {
+		mvwaddstr(curwin, 2, 2, "Does any player need instructions?");
+		if (answer_yesno(curwin, ATTR_KEYCODE)) {
 		    show_help();
 		}
 

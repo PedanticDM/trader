@@ -422,18 +422,8 @@ int center3 (WINDOW *win, int y, chtype attr1, chtype attr3, chtype attr2,
 }
 
 
-/************************************************************************
-*                            Input routines                             *
-************************************************************************/
-
-/*-----------------------------------------------------------------------
-  Function:   gettxchar  - Read a keyboard character
-  Arguments:  win        - Window to use
-  Returns:    int        - Keyboard character
-
-  This function reads a single character from the keyboard.  The key is
-  NOT echoed to the screen and the cursor visibility is NOT affected.
-*/
+/***********************************************************************/
+// gettxchar: Read a character from the keyboard
 
 int gettxchar (WINDOW *win)
 {
@@ -1448,42 +1438,43 @@ int gettxlong (WINDOW *win, long *result, long min, long max, long emptyval,
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   answer_yesno  - Read a Yes/No answer and return true/false
-  Arguments:  win           - Window to use
-  Returns:    bool          - true if Yes ("Y") was selected, else false
+/***********************************************************************/
+// answer_yesno: Wait for a Yes/No answer
 
-  This function waits for either "Y" or "N" to be pressed on the
-  keyboard.  If "Y" was pressed, "Yes." is printed and true is returned.
-  If "N" was pressed, "No." is printed and false is returned.  Note that
-  the cursor becomes invisible after this function.
-*/
-
-bool answer_yesno (WINDOW *win)
+bool answer_yesno (WINDOW *win, chtype attr_keys)
 {
-    int key, oldattr;
-    bool ok;
+    int key;
+    bool done;
+
+    chtype oldattr = getattrs(win);
+    chtype oldbkgd = getbkgd(win);
 
 
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
 
-    oldattr = getbkgd(win) & ~A_CHARTEXT;
-    wbkgdset(win, A_NORMAL | (oldattr & A_COLOR));
-    wattron(win, A_BOLD);
+    waddstr(curwin, " [");
+    attrpr(curwin, attr_keys, "Y");
+    waddstr(curwin, "/");
+    attrpr(curwin, attr_keys, "N");
+    waddstr(curwin, "] ");
+
     curs_set(CURS_ON);
 
-    do {
+    done = false;
+    while (! done) {
 	key = toupper(wgetch(win));
-	ok = ((key == 'Y') || (key == 'N'));
 
-	if (! ok) {
+	if (key == 'Y' || key == 'N') {
+	    done = true;
+	} else {
 	    beep();
 	}
-    } while (! ok);
+    }
 
     curs_set(CURS_OFF);
+    wattron(win, A_BOLD);
 
     if (key == 'Y') {
 	waddstr(win, "Yes");
@@ -1491,24 +1482,18 @@ bool answer_yesno (WINDOW *win)
 	waddstr(win, "No");
     }
 
+    wbkgdset(win, oldbkgd);
     wattrset(win, oldattr);
-    wbkgdset(win, oldattr);
+
     wrefresh(win);
     return (key == 'Y');
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   wait_for_key  - Print a message and wait for any key
-  Arguments:  win           - Window to use
-              y             - Line on which to print message
-              attr          - Window attributes to use for message
-  Returns:    (nothing)
+/***********************************************************************/
+// wait_for_key: Print a message and wait for any key
 
-  This function prints a message, then waits for any key to be pressed.
-*/
-
-void wait_for_key (WINDOW *win, int y, int attr)
+void wait_for_key (WINDOW *win, int y, chtype attr)
 {
     keypad(win, true);
     meta(win, true);

@@ -384,9 +384,22 @@ extern int center3 (WINDOW *win, int y, chtype attr1, chtype attr3,
     __attribute__((format (printf, 8, 9)));
 
 
-// Input routines
+/*
+  Function:   gettxchar - Read a character from the keyboard
+  Parameters: win       - Window to use (should be curwin)
+  Returns:    int       - The keyboard character
 
+  This function reads a single character from the keyboard.  The key is
+  NOT echoed to the terminal display, nor is the cursor visibility
+  affected.
+
+  This implementation does not handle multibyte characters correctly:
+  each part of the multibyte character most likely appears as a separate
+  keyboard press.
+*/
 extern int gettxchar (WINDOW *win);
+
+
 extern int gettxline (WINDOW *win, char *buf, int bufsize, bool multifield,
 		      int maxlen, const char *emptyval, const char *defaultval,
 		      const char *allowed, bool stripspc, int y, int x,
@@ -400,8 +413,41 @@ extern int gettxlong (WINDOW *win, long *result, long min, long max,
 		      long emptyval, long defaultval, int y, int x,
 		      int fieldsize, int attr);
 
-extern bool answer_yesno (WINDOW *win);
-extern void wait_for_key (WINDOW *win, int y, int attr);
+
+/*
+  Function:   answer_yesno - Wait for a Yes/No answer
+  Parameters: win          - Window to use (should be curwin)
+              attr_keys    - Window rendition to use for key choices
+  Returns:    bool         - True if Yes was selected, false if No
+
+  This function prompts the user by printing " [Y/N] " using appropriate
+  character renditions ("Y" and "N" in attr_keys, the rest in the current
+  rendition), then waits for the user to press either "Y" (for Yes) or
+  "N" (for No) on the keyboard, then prints the answer using A_BOLD.
+  True is returned if "Y" was selected, false if "N".  Note that the
+  cursor becomes invisible after calling this function.
+*/
+extern bool answer_yesno (WINDOW *win, chtype attr_keys);
+
+
+/*
+  Function:   wait_for_key - Print a message and wait for any key
+  Parameters: win          - Window to use (should be curwin)
+              y            - Line on which to print message
+              attr         - Character rendition to use for message
+  Returns:    (nothing)
+
+  This function displays the message "Press <SPACE> to continue" in the
+  centre of line y in window win, then waits for any key to be pressed.
+
+  The reason the user is not asked "Press any key to continue" is
+  historical: many, many people used to ask "where is the <ANY> key?" :-)
+
+  The current implementation does not handle multibyte characters
+  correctly: only the first byte of the character is consumed, with
+  further bytes left in the keyboard queue.
+*/
+extern void wait_for_key (WINDOW *win, int y, chtype attr);
 
 
 #endif /* included_INTF_H */
