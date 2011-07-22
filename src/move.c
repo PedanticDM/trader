@@ -1030,7 +1030,7 @@ void adjust_values (void)
 
 	    for (x = 0; x < MAX_X; x++) {
 		for (y = 0; y < MAX_Y; y++) {
-		    if (galaxy_map[x][y] == COMPANY_TO_MAP(which)) {
+		    if (galaxy_map[x][y] == COMPANY_TO_MAP((unsigned int) which)) {
 			galaxy_map[x][y] = MAP_EMPTY;
 		    }
 		}
