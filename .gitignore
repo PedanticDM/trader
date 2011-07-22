@@ -12,4 +12,8 @@ Makefile.in
 /configure
 /stamp-h1
 
+/build-aux/depcomp
+/build-aux/install-sh
+/build-aux/missing
+
 /src/trader
