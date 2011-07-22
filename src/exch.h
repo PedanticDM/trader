@@ -36,6 +36,16 @@
 *                  Stock Exchange function prototypes                   *
 ************************************************************************/
 
+/*
+  Function:   exchange_stock - Visit the Interstellar Stock Exchange
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function allows the current player (in current_player) to buy,
+  sell and bid for shares in companies that appear on the galaxy map.  If
+  either quit_selected or abort_game is true, or the current player is
+  not in the game, this function does nothing.
+*/
 extern void exchange_stock (void);
 
 

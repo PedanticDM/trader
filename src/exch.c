@@ -33,25 +33,43 @@
 
 
 /************************************************************************
-*                    Internal function declarations                     *
+*                  Module-specific function prototypes                  *
 ************************************************************************/
 
-void visit_bank (void);
-void trade_shares (int num, bool *bid_used);
+/*
+  Function:   visit_bank - Visit the Interstellar Trading Bank
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function allows the current player to borrow or repay money from
+  the Interstellar Trading Bank.
+*/
+static void visit_bank (void);
+
+
+/*
+  Function:   trade_shares - Buy and sell shares in a particular company
+  Parameters: num          - Company with which to trade
+              bid_used     - Has the player used up their bid?
+  Returns:    (nothing)
+
+  This function allows the current player to buy and sell shares in
+  company num.  The variable *bid_used is set to true if the player tries
+  to bid for more shares to be released by the company (whether or not
+  that bid was successful).
+*/
+static void trade_shares (int num, bool *bid_used);
 
 
 /************************************************************************
 *                  Stock Exchange function definitions                  *
 ************************************************************************/
 
-/*-----------------------------------------------------------------------
-  Function:   exchange_stock  - Visit the Interstellar Stock Exchange
-  Arguments:  (none)
-  Returns:    (nothing)
+// This function is documented in the file "exch.h"
 
-  This function allows the current player (in current_player) to buy,
-  sell and bid for shares in companies that appear on the galaxy map.
-*/
+
+/***********************************************************************/
+// exchange_stock: Visit the Interstellar Stock Exchange
 
 void exchange_stock (void)
 {
@@ -194,7 +212,6 @@ void exchange_stock (void)
 
 		default:
 		    beep();
-		    break;
 		}
 	    }
 	}
@@ -220,21 +237,22 @@ void exchange_stock (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   visit_bank  - Visit the Interstellar Trading Bank
-  Arguments:  (none)
-  Returns:    (nothing)
+/************************************************************************
+*                  Module-specific function prototypes                  *
+************************************************************************/
 
-  This function allows the current player to borrow or repay money from
-  the Interstellar Trading Bank.
-*/
+// These functions are documented at the start of this file
+
+
+/***********************************************************************/
+// visit_bank: Visit the Interstellar Trading Bank
 
 void visit_bank (void)
 {
     double credit_limit;
+    double val, max;
     int key;
     bool done;
-    double val, max;
     char *buf;
 
 
@@ -298,6 +316,10 @@ void visit_bank (void)
 	case '1':
 	case '2':
 	case '3':
+	    wechochar(curwin, key | A_BOLD);
+	    done = true;
+	    break;
+
 	case ' ':
 	case KEY_CANCEL:
 	case KEY_EXIT:
@@ -309,12 +331,10 @@ void visit_bank (void)
 
 	default:
 	    beep();
-	    break;
 	}
     }
 
     curs_set(CURS_OFF);
-    wechochar(curwin, key | A_BOLD);
 
     switch (key) {
     case '1':
@@ -328,6 +348,7 @@ void visit_bank (void)
 
 	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
+
 	} else {
 	    int x, y, n;
 	    int ret;
@@ -339,6 +360,7 @@ void visit_bank (void)
 
 	    mvwprintw(curwin, 3, 10, "How much do you wish to borrow? ");
 
+	    // Show the currency symbol before or after the input field
 	    wattron(curwin, A_BOLD);
 	    if (lconvinfo.p_cs_precedes == 1) {
 		wprintw(curwin, "%s%s", lconvinfo.currency_symbol,
@@ -378,6 +400,7 @@ void visit_bank (void)
 
 	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
+
 	} else if (player[current_player].cash == 0.0) {
 	    newtxwin(7, 60, 8, WCENTER(60), true, ATTR_ERROR_WINDOW);
 
@@ -387,6 +410,7 @@ void visit_bank (void)
 
 	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
+
 	} else {
 	    int x, y, n;
 	    int ret;
@@ -398,6 +422,7 @@ void visit_bank (void)
 
 	    mvwprintw(curwin, 3, 10, "How much do you wish to repay? ");
 
+	    // Show the currency symbol before or after the input field
 	    wattron(curwin, A_BOLD);
 	    if (lconvinfo.p_cs_precedes == 1) {
 		wprintw(curwin, "%s%s", lconvinfo.currency_symbol,
@@ -447,27 +472,20 @@ void visit_bank (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   trade_stock  - Trade stock in a particular company
-  Arguments:  num          - Company with which to trade
-              bid_used     - Has the player used up their bid?
-  Returns:    (nothing)
-
-  This function allows the current player to buy and sell stock in
-  company num.  The variable *bid_used is set to true if the player tries
-  to bid for more shares to be released by the company.
-*/
+/***********************************************************************/
+// trade_shares: Buy and sell shares in a particular company
 
 void trade_shares (int num, bool *bid_used)
 {
     bool done;
     int key, ret, x;
-    long maxshares, val;
+    long int maxshares, val;
     double ownership;
     char *buf;
 
 
     assert(num >= 0 && num < MAX_COMPANIES);
+    assert(company[num].on_map);
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -475,8 +493,8 @@ void trade_shares (int num, bool *bid_used)
     }
 
     ownership = (company[num].stock_issued == 0) ? 0.0 :
-	((double) player[current_player].stock_owned[num] /
-	 company[num].stock_issued);
+	((double) player[current_player].stock_owned[num]
+	 / company[num].stock_issued);
 
     // Show the informational part of the trade window
     newtxwin(9, WIN_COLS - 4, 5, WCENTER(WIN_COLS - 4), true,
@@ -553,6 +571,10 @@ void trade_shares (int num, bool *bid_used)
 	case '2':
 	case '3':
 	case '4':
+	    wechochar(curwin, key | A_BOLD);
+	    done = true;
+	    break;
+
 	case ' ':
 	case KEY_CANCEL:
 	case KEY_EXIT:
@@ -564,12 +586,10 @@ void trade_shares (int num, bool *bid_used)
 
 	default:
 	    beep();
-	    break;
 	}
     }
 
     curs_set(CURS_OFF);
-    wechochar(curwin, key | A_BOLD);
 
     switch (key) {
     case '1':
@@ -699,3 +719,7 @@ void trade_shares (int num, bool *bid_used)
 
     free(buf);
 }
+
+
+/***********************************************************************/
+// End of file
