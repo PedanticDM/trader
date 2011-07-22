@@ -19,10 +19,11 @@ Version 7.0 (not yet released)
 ------------------------------
 
 Released the first version of Star Traders for Unix-like operating systems
-such as Linux.  It requires a text console of at least 80x24 in size.  The
-code is written in the C programming language as a learning exercise for a
-number of  software tools  and libraries; the  algorithms in  the original
-Pascal and Visual Basic versions are reused for the game logic.
+such as Linux.  It requires a text  console or window of at least 80x24 in
+size.  The  code is written  in the C  programming language as  a learning
+exercise for a  number of software tools and  libraries; the algorithms in
+the  original Pascal and  Visual Basic  versions are  reused for  the game
+logic.
 
 
 Early history
