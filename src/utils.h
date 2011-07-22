@@ -47,7 +47,7 @@
 ************************************************************************/
 
 // Global copy, suitably modified, of localeconv() information
-extern struct lconv localeconv_info;
+extern struct lconv lconvinfo;
 
 
 /************************************************************************
@@ -226,11 +226,11 @@ extern int randi (int limit);
   Parameters: (none)
   Returns:    (nothing)
 
-  This function initialises the global variable localeconv_info with
-  values suitable for this program.  In particular, if the POSIX or C
-  locale is in effect, the currency_symbol and frac_digits members are
-  updated to be something reasonable.  This function must be called
-  before using localeconf_info.
+  This function initialises the global variable lconvinfo with values
+  suitable for this program.  In particular, if the POSIX or C locale is
+  in effect, the currency_symbol and frac_digits members are updated to
+  be something reasonable.  This function must be called before using
+  localeconf_info.
 */
 extern void init_locale (void);
 

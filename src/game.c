@@ -456,8 +456,7 @@ void end_game (void)
 		    "with a value of ", "%s", buf);
 	}
 
-	snprintf(buf, BUFSIZE, "Total Value (%s)",
-		 localeconv_info.currency_symbol);
+	snprintf(buf, BUFSIZE, "Total Value (%s)", lconvinfo.currency_symbol);
 
 	int w = getmaxx(curwin) - 33;
 	wattrset(curwin, ATTR_SUBTITLE);
@@ -636,8 +635,7 @@ void show_status (int num)
 	    center(curwin, 8, ATTR_NORMAL, "No companies on the map");
 	} else {
 	    // Handle the locale's currency symbol
-	    snprintf(buf, BUFSIZE, "share (%s)",
-		     localeconv_info.currency_symbol);
+	    snprintf(buf, BUFSIZE, "share (%s)", lconvinfo.currency_symbol);
 
 	    wattrset(curwin, ATTR_SUBTITLE);
 	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",

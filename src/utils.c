@@ -36,7 +36,7 @@
 ************************************************************************/
 
 // Global copy, suitably modified, of localeconv() information
-struct lconv localeconv_info;
+struct lconv lconvinfo;
 
 
 /************************************************************************
@@ -315,7 +315,7 @@ void init_locale (void)
     assert(current_mon_locale != NULL);
     assert(lc != NULL);
 
-    localeconv_info = *lc;
+    lconvinfo = *lc;
 
     /* Are we in the POSIX locale?  This test may not be portable as the
        string returned by setlocale() is supposed to be opaque. */
@@ -324,10 +324,10 @@ void init_locale (void)
 	|| strcmp(current_mon_locale, "C")  == 0) {
 
 	add_currency_symbol = true;
-	localeconv_info.currency_symbol = MOD_POSIX_CURRENCY_SYMBOL;
-	localeconv_info.frac_digits     = MOD_POSIX_FRAC_DIGITS;
-	localeconv_info.p_cs_precedes   = MOD_POSIX_P_CS_PRECEDES;
-	localeconv_info.p_sep_by_space  = MOD_POSIX_P_SEP_BY_SPACE;
+	lconvinfo.currency_symbol = MOD_POSIX_CURRENCY_SYMBOL;
+	lconvinfo.frac_digits     = MOD_POSIX_FRAC_DIGITS;
+	lconvinfo.p_cs_precedes   = MOD_POSIX_P_CS_PRECEDES;
+	lconvinfo.p_sep_by_space  = MOD_POSIX_P_SEP_BY_SPACE;
     }
 }
 
@@ -349,12 +349,12 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 
     if (ret > 0 && add_currency_symbol) {
 	if (strstr(format, "!") == NULL) {
-	    /* Insert localeconv_info.currency_symbol to s.
+	    /* Insert lconvinfo.currency_symbol to s.
 
 	       NB: add_currecy_symbol == true assumes POSIX locale:
 	       single-byte strings are in effect, so strlen(), etc, work
 	       correctly. */
-	    const char *sym = localeconv_info.currency_symbol;
+	    const char *sym = lconvinfo.currency_symbol;
 	    int symlen = strlen(sym);
 	    char *p;
 	    int spc;

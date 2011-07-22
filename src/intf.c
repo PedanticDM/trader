@@ -1146,7 +1146,7 @@ int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
 
 void txinput_fixup (char *restrict dest, char *restrict src, bool isfloat)
 {
-    struct lconv *lc = &localeconv_info;
+    struct lconv *lc = &lconvinfo;
     char *p;
 
 
@@ -1200,7 +1200,7 @@ int gettxdouble (WINDOW *win, double *restrict result, double min,
 		 double max, double emptyval, double defaultval,
 		 int y, int x, int width, chtype attr)
 {
-    struct lconv *lc = &localeconv_info;
+    struct lconv *lc = &lconvinfo;
 
     char *buf, *bufcopy;
     char *allowed, *emptystr, *defaultstr;
@@ -1273,7 +1273,7 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 	       long int max, long int emptyval, long int defaultval,
 	       int y, int x, int width, chtype attr)
 {
-    struct lconv *lc = &localeconv_info;
+    struct lconv *lc = &lconvinfo;
 
     char *buf, *bufcopy;
     char *allowed, *emptystr, *defaultstr;

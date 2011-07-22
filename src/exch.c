@@ -96,8 +96,7 @@ void exchange_stock (void)
 	    }
 
 	    // Handle the locale's currency symbol
-	    snprintf(buf, BUFSIZE, "share (%s)",
-		     localeconv_info.currency_symbol);
+	    snprintf(buf, BUFSIZE, "share (%s)", lconvinfo.currency_symbol);
 
 	    wattrset(curwin, ATTR_SUBTITLE);
 	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
@@ -341,17 +340,17 @@ void visit_bank (void)
 	    mvwprintw(curwin, 3, 10, "How much do you wish to borrow? ");
 
 	    wattron(curwin, A_BOLD);
-	    if (localeconv_info.p_cs_precedes == 1) {
-		wprintw(curwin, "%s%s", localeconv_info.currency_symbol,
-			(localeconv_info.p_sep_by_space == 1) ? " " : "");
+	    if (lconvinfo.p_cs_precedes == 1) {
+		wprintw(curwin, "%s%s", lconvinfo.currency_symbol,
+			(lconvinfo.p_sep_by_space == 1) ? " " : "");
 		n = 10;
 	    } else {
 		getyx(curwin, y, x);
-		n = strlen(localeconv_info.currency_symbol) + 10
-		    + (localeconv_info.p_sep_by_space == 1);
+		n = strlen(lconvinfo.currency_symbol) + 10
+		    + (lconvinfo.p_sep_by_space == 1);
 		mvwprintw(curwin, y, getmaxx(curwin) - n, "%s%s",
-			  (localeconv_info.p_sep_by_space == 1) ? " " : "",
-			  localeconv_info.currency_symbol);
+			  (lconvinfo.p_sep_by_space == 1) ? " " : "",
+			  lconvinfo.currency_symbol);
 		wmove(curwin, y, x);
 	    }
 	    wattroff(curwin, A_BOLD);
@@ -400,17 +399,17 @@ void visit_bank (void)
 	    mvwprintw(curwin, 3, 10, "How much do you wish to repay? ");
 
 	    wattron(curwin, A_BOLD);
-	    if (localeconv_info.p_cs_precedes == 1) {
-		wprintw(curwin, "%s%s", localeconv_info.currency_symbol,
-			(localeconv_info.p_sep_by_space == 1) ? " " : "");
+	    if (lconvinfo.p_cs_precedes == 1) {
+		wprintw(curwin, "%s%s", lconvinfo.currency_symbol,
+			(lconvinfo.p_sep_by_space == 1) ? " " : "");
 		n = 10;
 	    } else {
 		getyx(curwin, y, x);
-		n = strlen(localeconv_info.currency_symbol) + 10
-		    + (localeconv_info.p_sep_by_space == 1);
+		n = strlen(lconvinfo.currency_symbol) + 10
+		    + (lconvinfo.p_sep_by_space == 1);
 		mvwprintw(curwin, y, getmaxx(curwin) - n, "%s%s",
-			  (localeconv_info.p_sep_by_space == 1) ? " " : "",
-			  localeconv_info.currency_symbol);
+			  (lconvinfo.p_sep_by_space == 1) ? " " : "",
+			  lconvinfo.currency_symbol);
 		wmove(curwin, y, x);
 	    }
 	    wattroff(curwin, A_BOLD);

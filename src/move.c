@@ -779,7 +779,7 @@ void merge_companies (map_val_t a, map_val_t b)
 	    "%-20s", company[aa].name);
 
     // Handle the locale's currency symbol
-    snprintf(buf, BUFSIZE, "Bonus (%s)", localeconv_info.currency_symbol);
+    snprintf(buf, BUFSIZE, "Bonus (%s)", lconvinfo.currency_symbol);
 
     int w = getmaxx(curwin) - 52;
     wattrset(curwin, ATTR_SUBTITLE);
