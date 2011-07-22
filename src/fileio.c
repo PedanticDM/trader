@@ -320,7 +320,7 @@ bool save_game (int num)
 	err_exit_nomem();
     }
 
-    crypt_key = option_no_encrypt ? 0 :
+    crypt_key = option_dont_encrypt ? 0 :
 	game_file_crypt_key[randi(GAME_FILE_CRYPT_KEY_SIZE)];
 
     // Create the data directory, if needed
