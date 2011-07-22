@@ -173,7 +173,7 @@ bool load_game (int num)
 	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
 		   "Game %d has not been saved to disk", num);
 
-	    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
+	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	} else {
 	    // Some other file error
@@ -187,7 +187,7 @@ bool load_game (int num)
 	    center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
 		   strerror(saved_errno));
 
-	    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
+	    wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
 	    deltxwin();
 	}
 
@@ -342,7 +342,7 @@ bool save_game (int num)
 		center(curwin, 5, ATTR_ERROR_NORMAL, "Directory %s: %s",
 		       data_dir, strerror(saved_errno));
 
-		wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
+		wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
 		deltxwin();
 
 		free(buf);
@@ -367,7 +367,7 @@ bool save_game (int num)
 	center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
 	       strerror(saved_errno));
 
-	wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
+	wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
 	deltxwin();
 
 	free(buf);
