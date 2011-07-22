@@ -90,7 +90,7 @@ int main (int argc, char *argv[]);
   command-line help.  It also sets global variables starting with option_
   to appropriate values.
 */
-void process_cmdline (int argc, char *argv[]);
+static void process_cmdline (int argc, char *argv[]);
 
 
 /*
@@ -101,7 +101,7 @@ void process_cmdline (int argc, char *argv[]);
   This function displays version information about this program, then
   terminates with exit code EXIT_SUCCESS.
 */
-void show_version (void) __attribute__((noreturn));
+static void show_version (void) __attribute__((noreturn));
 
 
 /*
@@ -114,7 +114,7 @@ void show_version (void) __attribute__((noreturn));
   message is sent to stderr.  It exits to the operating system with
   status as the exit code.
 */
-void show_usage (int status) __attribute__((noreturn));
+static void show_usage (int status) __attribute__((noreturn));
 
 
 /*
@@ -125,7 +125,7 @@ void show_usage (int status) __attribute__((noreturn));
   This function initialises the terminal display, internal low-level
   routines, etc.  It should be called before the game starts.
 */
-void init_program (void);
+static void init_program (void);
 
 
 /*
@@ -137,7 +137,7 @@ void init_program (void);
   routines, etc.  It should be the last function called in the ordinary
   course of program execution.
 */
-void end_program (void);
+static void end_program (void);
 
 
 /************************************************************************
