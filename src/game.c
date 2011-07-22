@@ -10,7 +10,8 @@
   $Id$
 
   This file, game.c, contains the implementation of the starting and
-  ending game functions used in Star Traders.
+  ending game functions used in Star Traders, as well as the functions
+  for displaying the galaxy map and the player's status.
 
 
   This program is free software: you can redistribute it and/or modify it
@@ -32,41 +33,81 @@
 
 
 /************************************************************************
-*                    Internal function declarations                     *
+*                  Module-specific function prototypes                  *
 ************************************************************************/
 
-int cmp_player (const void *a, const void *b);
+/*
+  Function:   ask_number_players - Ask for the number of players
+  Parameters: (none)
+  Returns:    int    - Number of players, 0 to load game, ERR to cancel
+
+  This internal function asks the user how many people will play.  It
+  returns a number 1 to MAX_PLAYERS as a response, or 0 if a previous
+  game is to be loaded, or ERR if the user wishes to abort.
+
+  Please note that the window opened by this function is NOT closed!
+*/
+static int ask_number_players (void);
+
+
+/*
+  Function:   ask_game_number - Ask for the game number
+  Parameters: (none)
+  Returns:    int    - Game number (1-9) or ERR to cancel
+
+  This internal function asks the user which game number to load.  It
+  returns a number 1 to 9 as a response, or ERR if the user wishes to
+  cancel loading a game.
+
+  Please note that the window opened by this function is NOT closed!
+*/
+static int ask_game_number (void);
+
+
+/*
+  Function:   ask_player_names - Ask for each of the players' names
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This internal function asks each player to type in their name.  After
+  doing so, the players are asked whether they need instructions on
+  playing the game.
+
+  On entry, the global variable number_players is used to determine how
+  many people are playing.  On exit, each player[].name is set.  The
+  windows created by this function ARE closed, but not any other window.
+  Note also that txrefresh() is NOT called.
+*/
+static void ask_player_names (void);
+
+
+/*
+  Function:   cmp_player - Compare two player[] elements for sorting
+  Parameters: a, b       - Pointers to elements to compare
+  Returns:    int        - Comparison of a and b
+
+  This internal function compares two player[] elements (of type
+  player_info_t) on the basis of total value, and returns -1 if a > b, 0
+  if a == b and 1 if a < b (note the change from the usual order!).  It
+  is used for sorting players into descending total value order.  Note
+  that the sort_value field MUST be computed before calling qsort()!
+*/
+static int cmp_player (const void *a, const void *b);
 
 
 /************************************************************************
 *                       Game function definitions                       *
 ************************************************************************/
 
-/*-----------------------------------------------------------------------
-  Function:   init_game  - Initialise a new game or load an old one
-  Arguments:  (none)
-  Returns:    (nothing)
+/* These functions are documented either in the file "game.h" or in the
+   comments above. */
 
-  This function initialises all game variables and structures, either by
-  creating a new game or by loading an old one from disk.  In particular,
-  if a new game is to be created, it asks how many people will play, and
-  what their names are.  If needed, instructions on how to play the game
-  are also displayed.
 
-  On entry to this function, the "game_num" global variable determines
-  whether an old game is loaded (if possible).  On exit, all global
-  variables in globals.h are initialised, apart from game_move[].  If the
-  user aborts entering the necessary information, abort_game is set to
-  true.
-*/
+/***********************************************************************/
+// init_game: Initialise a new game or load an old one
 
 void init_game (void)
 {
-    int i, j, x, y;
-    int key, ret;
-    bool done, modified, entered[MAX_PLAYERS];
-
-
     // Try to load an old game, if possible
     if (game_num != 0) {
 	newtxwin(5, 30, 6, WCENTER(30), true, ATTR_STATUS_WINDOW);
@@ -83,101 +124,17 @@ void init_game (void)
     if (! game_loaded) {
 	number_players = 0;
 	while (number_players == 0) {
+	    int choice = ask_number_players();
 
-	    // Ask for the number of players
-	    newtxwin(5, 62, 3, WCENTER(62), true, ATTR_NORMAL_WINDOW);
+	    if (choice == ERR) {
+		abort_game = true;
+		return;
 
-	    mvwaddstr(curwin, 2, 2, "Enter number of players ");
-	    waddstr(curwin, "[");
-	    attrpr(curwin, ATTR_KEYCODE, "1");
-	    waddstr(curwin, "-");
-	    attrpr(curwin, ATTR_KEYCODE, "%d", MAX_PLAYERS);
-	    waddstr(curwin, "]");
-	    waddstr(curwin, " or ");
-	    attrpr(curwin, ATTR_KEYCODE, "<C>");
-	    waddstr(curwin, " to continue a game: ");
+	    } else if (choice == 0) {
+		choice = ask_game_number();
 
-	    curs_set(CURS_ON);
-	    wrefresh(curwin);
-
-	    do {
-		key = toupper(gettxchar(curwin));
-		done = ((key >= '1') && (key <= (MAX_PLAYERS + '0'))) || (key == 'C');
-
-		switch (key) {
-		case KEY_ESC:
-		case KEY_CANCEL:
-		case KEY_EXIT:
-		case KEY_CTRL('C'):
-		case KEY_CTRL('G'):
-		case KEY_CTRL('\\'):
-		    abort_game = true;
-		    return;
-
-		default:
-		    // Do nothing
-		    break;
-		}
-
-		if (! done) {
-		    beep();
-		}
-	    } while (! done);
-
-	    curs_set(CURS_OFF);
-	    wechochar(curwin, key | A_BOLD);
-
-	    if (key != 'C') {
-		number_players = key - '0';
-	    } else {
-
-		// Ask which game to load
-		newtxwin(5, 54, 6, WCENTER(54), true, ATTR_NORMAL_WINDOW);
-
-		mvwaddstr(curwin, 2, 2, "Enter game number ");
-		waddstr(curwin, "[");
-		attrpr(curwin, ATTR_KEYCODE, "1");
-		waddstr(curwin, "-");
-		attrpr(curwin, ATTR_KEYCODE, "9");
-		waddstr(curwin, "]");
-		waddstr(curwin, " or ");
-		attrpr(curwin, ATTR_KEYCODE, "<CTRL><C>");
-		waddstr(curwin, " to cancel: ");
-
-		curs_set(CURS_ON);
-		wrefresh(curwin);
-
-		do {
-		    key = gettxchar(curwin);
-		    done = (key >= '1' && key <= '9');
-
-		    switch (key) {
-		    case KEY_ESC:
-		    case KEY_CANCEL:
-		    case KEY_EXIT:
-		    case KEY_CTRL('C'):
-		    case KEY_CTRL('G'):
-		    case KEY_CTRL('\\'):
-			key = KEY_CANCEL;
-			done = true;
-			break;
-
-		    default:
-			// Do nothing
-			break;
-		    }
-
-		    if (! done) {
-			beep();
-		    }
-		} while (! done);
-
-		curs_set(CURS_OFF);
-
-		if (key != KEY_CANCEL) {
-		    game_num = key - '0';
-
-		    wechochar(curwin, key | A_BOLD);
+		if (choice != ERR) {
+		    game_num = choice;
 
 		    // Try to load the game, if possible
 		    newtxwin(5, 30, 9, WCENTER(30), true, ATTR_STATUS_WINDOW);
@@ -194,135 +151,19 @@ void init_game (void)
 		deltxwin();		// "Enter game number" window
 		deltxwin();		// "Number of players" window
 		txrefresh();
+
+	    } else {
+		number_players = choice;
 	    }
 	}
 
 	if (! game_loaded) {
-	    if (number_players == 1) {
-		// Ask for the player name
+	    int i, j, x, y;
 
-		newtxwin(5, WIN_COLS - 4, 9, WCENTER(WIN_COLS - 4), true,
-			 ATTR_NORMAL_WINDOW);
+	    ask_player_names();
 
-		mvwaddstr(curwin, 2, 2, "Please enter your name: ");
-
-		player[0].name = NULL;
-		do {
-		    ret = gettxstr(curwin, &player[0].name, NULL, false,
-				   2, 26, 48, ATTR_INPUT_FIELD);
-		    done = ((ret == OK) && (strlen(player[0].name) != 0));
-
-		    if (! done) {
-			beep();
-		    }
-		} while (! done);
-
-		newtxwin(5, 44, 6, WCENTER(44), true, ATTR_NORMAL_WINDOW);
-
-		mvwaddstr(curwin, 2, 2, "Do you need any instructions?");
-		if (answer_yesno(curwin, ATTR_KEYCODE)) {
-		    show_help();
-		}
-
-		deltxwin();		// "Do you need instructions?" window
-		deltxwin();		// "Enter your name" window
-		deltxwin();		// "Number of players" window
-		txrefresh();
-	    } else {
-
-		// Ask for all of the player names
-		newtxwin(number_players + 5, WIN_COLS - 4, 9,
-			 WCENTER(WIN_COLS - 4), true, ATTR_NORMAL_WINDOW);
-
-		center(curwin, 1, ATTR_TITLE, "  Enter Player Names  ");
-
-		for (i = 0; i < number_players; i++) {
-		    player[i].name = NULL;
-		    entered[i] = false;
-		    mvwprintw(curwin, i + 3, 2, "Player %d:", i + 1);
-		}
-
-		i = 0;
-		done = false;
-		while (! done) {
-		    ret = gettxstr(curwin, &player[i].name, &modified, true,
-				   3 + i, 12, 62, ATTR_INPUT_FIELD);
-
-		    switch (ret) {
-		    case OK:
-			// Make sure name is not an empty string
-			j = strlen(player[i].name);
-			entered[i] = (j != 0);
-			if (j == 0) {
-			    beep();
-			}
-
-			// Make sure name has not been entered already
-			for (j = 0; j < number_players; j++) {
-			    if ((i != j) && (player[j].name != NULL) &&
-				(strcmp(player[i].name, player[j].name) == 0)) {
-				entered[i] = false;
-				beep();
-				break;
-			    }
-			}
-
-			// Move to first name for which ENTER has not been pressed
-			done = true;
-			for (i = 0; i < number_players; i++) {
-			    if (! entered[i]) {
-				done = false;
-				break;
-			    }
-			}
-			break;
-
-		    case ERR:
-			beep();
-			break;
-
-		    case KEY_UP:
-			if (modified) {
-			    entered[i] = false;
-			}
-
-			if (i == 0) {
-			    i = number_players - 1;
-			} else {
-			    i--;
-			}
-			break;
-
-		    case KEY_DOWN:
-			if (modified) {
-			    entered[i] = false;
-			}
-
-			if (i == number_players - 1) {
-			    i = 0;
-			} else {
-			    i++;
-			}
-			break;
-
-		    default:
-			beep();
-			break;
-		    }
-		}
-
-		newtxwin(5, 50, 6, WCENTER(50), true, ATTR_NORMAL_WINDOW);
-
-		mvwaddstr(curwin, 2, 2, "Does any player need instructions?");
-		if (answer_yesno(curwin, ATTR_KEYCODE)) {
-		    show_help();
-		}
-
-		deltxwin();		// "Need instructions?" window
-		deltxwin();		// "Enter player names" window
-		deltxwin();		// "Number of players" window
-		txrefresh();
-	    }
+	    deltxwin();			// "Number of players" window
+	    txrefresh();
 
 	    // Initialise player data (other than names)
 	    for (i = 0; i < number_players; i++) {
@@ -384,15 +225,262 @@ void init_game (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   end_game  - Finish playing the current game
-  Arguments:  (none)
-  Returns:    (nothing)
+/***********************************************************************/
+// ask_number_players: Ask for the number of players
 
-  This function displays every player's status before declaring the
-  winner of the game.  Note that turn_number is used instead of max_turns
-  as select_moves() may terminate the game earlier.
-*/
+static int ask_number_players (void)
+{
+    int key, ret;
+    bool done;
+
+
+    // Ask for the number of players
+    newtxwin(5, 62, 3, WCENTER(62), true, ATTR_NORMAL_WINDOW);
+
+    mvwaddstr(curwin, 2, 2, "Enter number of players ");
+    waddstr(curwin, "[");
+    attrpr(curwin, ATTR_KEYCODE, "1");
+    waddstr(curwin, "-");
+    attrpr(curwin, ATTR_KEYCODE, "%d", MAX_PLAYERS);
+    waddstr(curwin, "]");
+    waddstr(curwin, " or ");
+    attrpr(curwin, ATTR_KEYCODE, "<C>");
+    waddstr(curwin, " to continue a game: ");
+
+    curs_set(CURS_ON);
+    wrefresh(curwin);
+
+    done = false;
+    while (! done) {
+	key = toupper(gettxchar(curwin));
+
+	if (key >= '1' && key <= MAX_PLAYERS + '0') {
+	    wechochar(curwin, key | A_BOLD);
+	    ret = key - '0';
+	    done = true;
+	} else {
+	    switch (key) {
+	    case KEY_ESC:
+	    case KEY_CANCEL:
+	    case KEY_EXIT:
+	    case KEY_CTRL('C'):
+	    case KEY_CTRL('G'):
+	    case KEY_CTRL('\\'):
+		ret = ERR;
+		done = true;
+		break;
+
+	    case 'C':
+		wechochar(curwin, key | A_BOLD);
+		ret = 0;
+		done = true;
+		break;
+
+	    default:
+		beep();
+	    }
+	}
+    }
+
+    curs_set(CURS_OFF);
+    return ret;
+}
+
+
+/***********************************************************************/
+// ask_game_number: Ask for the game number
+
+int ask_game_number (void)
+{
+    int key, ret;
+    bool done;
+
+
+    // Ask which game to load
+    newtxwin(5, 54, 6, WCENTER(54), true, ATTR_NORMAL_WINDOW);
+
+    mvwaddstr(curwin, 2, 2, "Enter game number ");
+    waddstr(curwin, "[");
+    attrpr(curwin, ATTR_KEYCODE, "1");
+    waddstr(curwin, "-");
+    attrpr(curwin, ATTR_KEYCODE, "9");
+    waddstr(curwin, "]");
+    waddstr(curwin, " or ");
+    attrpr(curwin, ATTR_KEYCODE, "<CTRL><C>");
+    waddstr(curwin, " to cancel: ");
+
+    curs_set(CURS_ON);
+    wrefresh(curwin);
+
+    done = false;
+    while (! done) {
+	key = gettxchar(curwin);
+
+	if (key >= '1' && key <= '9') {
+	    wechochar(curwin, key | A_BOLD);
+	    ret = key - '0';
+	    done = true;
+	} else {
+	    switch (key) {
+	    case KEY_ESC:
+	    case KEY_CANCEL:
+	    case KEY_EXIT:
+	    case KEY_CTRL('C'):
+	    case KEY_CTRL('G'):
+	    case KEY_CTRL('\\'):
+		ret = ERR;
+		done = true;
+		break;
+
+	    default:
+		beep();
+	    }
+	}
+    }
+
+    curs_set(CURS_OFF);
+    return ret;
+}
+
+
+/***********************************************************************/
+// ask_player_names: Ask for each of the players' names
+
+void ask_player_names (void)
+{
+    if (number_players == 1) {
+	// Ask for the player's name
+
+	newtxwin(5, WIN_COLS - 4, 9, WCENTER(WIN_COLS - 4), true,
+		 ATTR_NORMAL_WINDOW);
+
+	mvwaddstr(curwin, 2, 2, "Please enter your name: ");
+
+	int x = getcurx(curwin);
+	int w = getmaxx(curwin) - x - 2;
+
+	player[0].name = NULL;
+	while (true) {
+	    int ret = gettxstr(curwin, &player[0].name, NULL, false,
+			       2, x, w, ATTR_INPUT_FIELD);
+	    if (ret == OK && strlen(player[0].name) != 0) {
+		break;
+	    } else {
+		beep();
+	    }
+	}
+
+	newtxwin(5, 44, 6, WCENTER(44), true, ATTR_NORMAL_WINDOW);
+	mvwaddstr(curwin, 2, 2, "Do you need any instructions?");
+	if (answer_yesno(curwin, ATTR_KEYCODE)) {
+	    show_help();
+	}
+
+    } else {
+	// Ask for all of the player names
+
+	bool entered[MAX_PLAYERS];
+	bool done, modified;
+	int cur, len, i;
+
+	newtxwin(number_players + 5, WIN_COLS - 4, 9, WCENTER(WIN_COLS - 4),
+		 true, ATTR_NORMAL_WINDOW);
+
+	center(curwin, 1, ATTR_TITLE, "  Enter Player Names  ");
+
+	for (i = 0; i < number_players; i++) {
+	    player[i].name = NULL;
+	    entered[i] = false;
+	    mvwprintw(curwin, i + 3, 2, "Player %d:", i + 1);
+	}
+
+	int x = getcurx(curwin) + 1;
+	int w = getmaxx(curwin) - x - 2;
+
+	cur = 0;
+	done = false;
+	while (! done) {
+	    int ret = gettxstr(curwin, &player[cur].name, &modified, true,
+			       3 + cur, x, w, ATTR_INPUT_FIELD);
+
+	    switch (ret) {
+	    case OK:
+		// Make sure name is not an empty string
+		len = strlen(player[cur].name);
+		entered[cur] = (len != 0);
+		if (len == 0) {
+		    beep();
+		}
+
+		// Make sure name has not been entered already
+		for (i = 0; i < number_players; i++) {
+		    if (i != cur && player[i].name != NULL
+			&& strcmp(player[i].name, player[cur].name) == 0) {
+			entered[cur] = false;
+			beep();
+			break;
+		    }
+		}
+
+		// Move to first name for which ENTER has not been pressed
+		done = true;
+		for (cur = 0; cur < number_players; cur++) {
+		    if (! entered[cur]) {
+			done = false;
+			break;
+		    }
+		}
+		break;
+
+	    case ERR:
+		beep();
+		break;
+
+	    case KEY_UP:
+		// Scroll up to previous name (with wrap-around)
+		if (modified) {
+		    entered[cur] = false;
+		}
+
+		if (cur == 0) {
+		    cur = number_players - 1;
+		} else {
+		    cur--;
+		}
+		break;
+
+	    case KEY_DOWN:
+		// Scroll down to next name (with wrap-around)
+		if (modified) {
+		    entered[cur] = false;
+		}
+
+		if (cur == number_players - 1) {
+		    cur = 0;
+		} else {
+		    cur++;
+		}
+		break;
+
+	    default:
+		beep();
+	    }
+	}
+
+	newtxwin(5, 50, 6, WCENTER(50), true, ATTR_NORMAL_WINDOW);
+	mvwaddstr(curwin, 2, 2, "Does any player need instructions?");
+	if (answer_yesno(curwin, ATTR_KEYCODE)) {
+	    show_help();
+	}
+    }
+
+    deltxwin();				// "Need instructions?" window
+    deltxwin();				// "Enter player names" window
+}
+
+
+/***********************************************************************/
+// end_game: Finish playing the current game
 
 void end_game (void)
 {
@@ -456,10 +544,9 @@ void end_game (void)
 		    "with a value of ", "%s", buf);
 	}
 
-	snprintf(buf, BUFSIZE, "Total Value (%s)", lconvinfo.currency_symbol);
-
 	int w = getmaxx(curwin) - 33;
 	wattrset(curwin, ATTR_SUBTITLE);
+	snprintf(buf, BUFSIZE, "Total Value (%s)", lconvinfo.currency_symbol);
 	mvwprintw(curwin, 6, 2, "%5s  %-*.*s  %18s  ", "", w, w, "Player", buf);
 	wattrset(curwin, ATTR_NORMAL);
 
@@ -477,17 +564,8 @@ void end_game (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   show_map   - Display the galaxy map on the screen
-  Arguments:  closewin   - Wait for user, then close window if true
-  Returns:    (nothing)
-
-  This function displays the galaxy map on the screen.  It uses the
-  galaxy_map[][] global variable.  If closewin is true, a prompt is shown
-  for the user to press any key; the map window is then closed.  If
-  closewin is false, no prompt is shown, wrefresh() is NOT called and the
-  text window must be closed by the caller.
-*/
+/***********************************************************************/
+// show_map: Display the galaxy map on the screen
 
 void show_map (bool closewin)
 {
@@ -497,7 +575,6 @@ void show_map (bool closewin)
     newtxwin(MAX_Y + 4, WIN_COLS, 1, WCENTER(WIN_COLS), true, ATTR_MAP_WINDOW);
 
     // Draw various borders
-
     mvwaddch(curwin, 2, 0, ACS_LTEE);
     whline(curwin, ACS_HLINE, getmaxx(curwin) - 2);
     mvwaddch(curwin, 2, getmaxx(curwin) - 1, ACS_RTEE);
@@ -525,20 +602,17 @@ void show_map (bool closewin)
 
 	mvwaddstr(curwin, 1, getmaxx(curwin) - (len1 + len2) - 6, "  ");
 	waddstr(curwin, initial);
-	wattrset(curwin, ATTR_MAPWIN_HIGHLIGHT);
-	waddstr(curwin, buf);
-	wattrset(curwin, ATTR_MAPWIN_TITLE);
+	attrpr(curwin, ATTR_MAPWIN_HIGHLIGHT, "%s", buf);
 	waddstr(curwin, "  ");
 
 	free(buf);
+
     } else {
 	const char *buf = "*** Last Turn ***";
 	int len = strlen(buf);
 
 	mvwaddstr(curwin, 1, getmaxx(curwin) - len - 6, "  ");
-	wattrset(curwin, ATTR_MAPWIN_BLINK);
-	waddstr(curwin, buf);
-	wattrset(curwin, ATTR_MAPWIN_TITLE);
+	attrpr(curwin, ATTR_MAPWIN_BLINK, "%s", buf);
 	waddstr(curwin, "  ");
     }
 
@@ -588,15 +662,8 @@ void show_map (bool closewin)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   show_status  - Display the player's status
-  Arguments:  num          - Player number (0 to number_players - 1)
-  Returns:    (nothing)
-
-  This function displays the financial status of the player num.  It uses
-  the player[num] global variable.  The show status window is closed
-  before returning from this function.
-*/
+/***********************************************************************/
+// show_status: Display the player's status
 
 void show_status (int num)
 {
@@ -616,6 +683,7 @@ void show_status (int num)
     val = total_value(num);
     if (val == 0.0) {
 	center(curwin, 11, ATTR_BLINK, "* * *   B A N K R U P T   * * *");
+
     } else {
 	char *buf = malloc(BUFSIZE);
 	if (buf == NULL) {
@@ -653,8 +721,8 @@ void show_status (int num)
 			      company[i].share_return * 100.0,
 			      player[num].stock_owned[i],
 			      (company[i].stock_issued == 0) ? 0.0 :
-			      ((double) player[num].stock_owned[i] * 100.0) /
-			      company[i].stock_issued);
+			      ((double) player[num].stock_owned[i] * 100.0)
+			      / company[i].stock_issued);
 		    line++;
 		}
 	    }
@@ -679,19 +747,14 @@ void show_status (int num)
 	free(buf);
     }
 
-    wait_for_key(curwin, 21, ATTR_WAITFORKEY);
+    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITFORKEY);
     deltxwin();
     txrefresh();
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   total_value  - Calculate a player's total worth
-  Arguments:  num          - Player number (0 to number_players - 1)
-  Returns:    (nothing)
-
-  This function calculates the total value (worth) of the player num.
-*/
+/***********************************************************************/
+// total_value: Calculate a player's total financial worth
 
 double total_value (int num)
 {
@@ -712,21 +775,16 @@ double total_value (int num)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   cmp_player  - Compare two player[] elements
-  Arguments:  a, b        - Elements to compare
-  Returns:    int         - Comparison of a and b
-
-  This function compares two player[] elements (of type player_info_t) on
-  the basis of total value, and returns -1 if a > b, 0 if a == b and 1 if
-  a < b (note the change from the usual order!).  It is used for sorting
-  players into descending total value order.  Note that the sort_value
-  field MUST be computed before calling qsort()!
-*/
-
+/***********************************************************************/
+// cmp_player: Compare two player[] elements for sorting
 
 int cmp_player (const void *a, const void *b)
 {
+    /* This implementation assumes that each player[] element has already
+       had its sort_value set to the result of total_value().  Note also
+       that the function result is reversed from the normal order, so
+       that players are sorted into descending order  */
+
     const player_info_t *aa = (const player_info_t *) a;
     const player_info_t *bb = (const player_info_t *) b;
 
@@ -739,3 +797,7 @@ int cmp_player (const void *a, const void *b)
 	return 0;
     }
 }
+
+
+/***********************************************************************/
+// End of file
