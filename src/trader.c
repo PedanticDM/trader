@@ -310,9 +310,10 @@ Play Star Traders, a simple game of interstellar trading.\n\n\
 ");
 	printf("\
 Options:\n\
-  -V, --version    output version information and exit\n\
-  -h, --help       display this help and exit\n\
-      --no-color   don't use colour for displaying text\n\n\
+  -V, --version        output version information and exit\n\
+  -h, --help           display this help and exit\n\
+      --no-color       don't use colour for displaying text\n\
+      --max-turn=NUM   set the number of turns to NUM\n\n\
 ");
 	printf("\
 If GAME is specified as a number between 1 and 9, load and continue\n\
