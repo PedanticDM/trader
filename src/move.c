@@ -32,8 +32,10 @@
 
 
 /************************************************************************
-*                      Module constants and macros                      *
+*                        Module-specific macros                         *
 ************************************************************************/
+
+// Calculate positions near (x,y), taking the edge of the galaxy into account
 
 #define GALAXY_MAP_LEFT(x, y)	(((x) <= 0)     ? MAP_EMPTY : galaxy_map[(x) - 1][(y)])
 #define GALAXY_MAP_RIGHT(x, y)	(((x) >= MAX_X) ? MAP_EMPTY : galaxy_map[(x) + 1][(y)])
@@ -50,33 +52,104 @@
 
 
 /************************************************************************
-*                    Internal function declarations                     *
+*                  Module-specific function prototypes                  *
 ************************************************************************/
 
-void bankrupt_player (bool forced);
-void try_start_new_company (int x, int y);
-void merge_companies (map_val_t a, map_val_t b);
-void include_outpost (int num, int x, int y);
-void inc_share_price (int num, double inc);
-void adjust_values (void);
+/*
+  Function:   bankrupt_player - Make the current player bankrupt
+  Parameters: forced          - True if bankruptcy is forced by Bank
+  Returns:    (nothing)
 
-int cmp_game_move (const void *a, const void *b);
+  This function makes the current player bankrupt, whether by their own
+  choice or as a result of action by the Interstellar Trading Bank.  All
+  shares are returned to the appropriate companies, any debt is cancelled
+  and any cash is confiscated.  On exit, quit_selected is true if all
+  players are bankrupt.
+*/
+static void bankrupt_player (bool forced);
+
+
+/*
+  Function:   try_start_new_company - See if a new company can be started
+  Parameters: x, y                  - Coordinates of position on map
+  Returns:    (nothing)
+
+  This function attempts to establish a new company if the position (x,y)
+  is in a suitable location and if no more than MAX_COMPANIES are already
+  present.
+*/
+static void try_start_new_company (int x, int y);
+
+
+/*
+  Function:   merge_companies - Merge two companies together
+  Parameters: a, b            - Companies to merge
+  Returns:    (nothing)
+
+  This function merges two companies on the galaxy map; the one with the
+  highest value takes over.  The parameters a and b are actual values
+  from the galaxy map.
+*/
+static void merge_companies (map_val_t a, map_val_t b);
+
+
+/*
+  Function:   include_outpost - Include any outposts into the company
+  Parameters: num             - Company on which to operate
+              x, y            - Coordinates of position on map
+  Returns:    (nothing)
+
+  This function includes the outpost at (x,y) into company num,
+  increasing the share price by calling inc_share_price().  It also
+  checks surrounding locations for further outposts to include.
+*/
+static void include_outpost (int num, int x, int y);
+
+
+/*
+  Function:   inc_share_price - Increase the share price of a company
+  Parameters: num             - Company on which to operate
+              inc             - Base increment for the share price
+  Returns:    (nothing)
+
+  This function increments the share price, maximum stock available and
+  the share return of company num, using inc as the basis for doing so.
+*/
+static void inc_share_price (int num, double inc);
+
+
+/*
+  Function:   adjust_values - Adjust various company-related values
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function adjusts the cost of shares for companies on the galaxy
+  map, their return, the Bank interest rate, etc.
+*/
+static void adjust_values (void);
+
+
+/*
+  Function:   cmp_game_move - Compare two game_move[] elements for sorting
+  Parameters: a, b          - Elements to compare
+  Returns:    int           - Comparison of a and b
+
+  This internal function compares two game_move[] elements (of type
+  move_rec_t) and returns -1 if a < b, 0 if a == b and 1 if a > b.  It is
+  used for sorting game moves into ascending order.
+*/
+static int cmp_game_move (const void *a, const void *b);
 
 
 /************************************************************************
 *                    Game move function definitions                     *
 ************************************************************************/
 
-/*-----------------------------------------------------------------------
-  Function:   select_moves  - Select NUMBER_MOVES random moves
-  Arguments:  (none)
-  Returns:    (nothing)
+// These functions are documented in the file "move.h"
 
-  This function selects NUMBER_MOVES random moves and stores them in the
-  game_move[] array.  If there are less than NUMBER_MOVES empty spaces in
-  the galaxy map, the game is automatically finished by setting
-  quit_selected to true.
-*/
+
+/***********************************************************************/
+// select_moves: Select NUMBER_MOVES random moves
 
 void select_moves (void)
 {
@@ -129,20 +202,8 @@ void select_moves (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   get_move     - Wait for the player to enter their move
-  Arguments:  (none)
-  Returns:    selection_t  - Choice selected by player
-
-  This function displays the galaxy map and the current moves, then waits
-  for the player to select one of the moves.  On entry, current_player
-  points to the current player; quit_selected and/or abort_game may be
-  true (if so, get_move() justs returns without waiting for the player to
-  select a move).  The return value is the choice made by the player.
-
-  Note that two windows (the "Select move" window and the galaxy map
-  window) are left on the screen: they are closed in process_move().
-*/
+/***********************************************************************/
+// get_move: Wait for the player to enter their move
 
 selection_t get_move (void)
 {
@@ -187,7 +248,7 @@ selection_t get_move (void)
 	attrpr(curwin, ATTR_KEYCODE, "<CTRL><C>");
 	waddstr(curwin, " Quit the game");
 
-	mvwaddstr(curwin, 1, 8, " Select move ");
+	mvwaddstr(curwin, 1, 9, "Select move ");
 	waddstr(curwin, "[");
 	attrpr(curwin, ATTR_CHOICE, "%c", MOVE_TO_KEY(0));
 	waddstr(curwin, "-");
@@ -258,12 +319,11 @@ selection_t get_move (void)
 
 		default:
 		    beep();
-		    break;
 		}
 	    }
 	}
 
-	// Clear the menu choices
+	// Clear the menu choices (but not the prompt!)
 	wattrset(curwin, ATTR_NORMAL);
 	for (y = 2; y < 4; y++) {
 	    wmove(curwin, y, 2);
@@ -317,37 +377,35 @@ selection_t get_move (void)
 		curs_set(CURS_ON);
 		wrefresh(curwin);
 
-		do {
+		done = false;
+		while (! done) {
 		    key = gettxchar(curwin);
-		    done = (key >= '1' && key <= '9');
 
-		    switch (key) {
-		    case KEY_ESC:
-		    case KEY_CANCEL:
-		    case KEY_EXIT:
-		    case KEY_CTRL('C'):
-		    case KEY_CTRL('G'):
-		    case KEY_CTRL('\\'):
-			key = KEY_CANCEL;
+		    if (key >= '1' && key <= '9') {
+			wechochar(curwin, key | A_BOLD);
 			done = true;
-			break;
+		    } else {
+			switch (key) {
+			case KEY_ESC:
+			case KEY_CANCEL:
+			case KEY_EXIT:
+			case KEY_CTRL('C'):
+			case KEY_CTRL('G'):
+			case KEY_CTRL('\\'):
+			    key = KEY_CANCEL;
+			    done = true;
+			    break;
 
-		    default:
-			// Do nothing
-			break;
+			default:
+			    beep();
+			}
 		    }
-
-		    if (! done) {
-			beep();
-		    }
-		} while (! done);
+		}
 
 		curs_set(CURS_OFF);
 
 		if (key != KEY_CANCEL) {
 		    game_num = key - '0';
-
-		    wechochar(curwin, key | A_BOLD);
 
 		    // Try to save the game, if possible
 		    newtxwin(5, 30, 7, WCENTER(30), true, ATTR_STATUS_WINDOW);
@@ -381,150 +439,146 @@ selection_t get_move (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   process_move  - Process the move selected by the player
-  Arguments:  selection     - Selection made by current player
-  Returns:    (nothing)
-
-  This function processes the move in selection.  It assumes the "Select
-  move" and galaxy map windows are still open.
-*/
+/***********************************************************************/
+// process_move: Process the move selected by the player
 
 void process_move (selection_t selection)
 {
-    if (! quit_selected && ! abort_game) {
-	switch(selection) {
-	case SEL_QUIT:
-	    // The players want to end the game
-	    quit_selected = true;
-	    break;
+    if (selection == SEL_QUIT) {
+	// The players want to end the game
+	quit_selected = true;
+    }
 
-	case SEL_BANKRUPT:
-	    // A player wants to give up: make them bankrupt
-	    bankrupt_player(false);
-	    break;
+    if (quit_selected || abort_game) {
+	deltxwin();			// "Select move" window
+	deltxwin();			// Galaxy map window
+	txrefresh();
 
-	default:
-	    // Process a selection from game_move[]
-	    {
-		assert(selection >= SEL_MOVE_FIRST && selection <= SEL_MOVE_LAST);
+	return;
+    }
 
-		map_val_t left, right, up, down;
-		map_val_t nearby, cur;
+    if (selection == SEL_BANKRUPT) {
+	// A player wants to give up: make them bankrupt
+	bankrupt_player(false);
 
-		int x = game_move[selection].x;
-		int y = game_move[selection].y;
+    } else {
+	// Process a selection from game_move[]
+
+	assert(selection >= SEL_MOVE_FIRST && selection <= SEL_MOVE_LAST);
+
+	map_val_t left, right, up, down;
+	map_val_t nearby, cur;
+
+	int x = game_move[selection].x;
+	int y = game_move[selection].y;
 
 
+	assign_vals(x, y, left, right, up, down);
+
+	if (left == MAP_EMPTY && right == MAP_EMPTY &&
+	    up   == MAP_EMPTY && down  == MAP_EMPTY) {
+	    // The position is out in the middle of nowhere...
+	    galaxy_map[x][y] = MAP_OUTPOST;
+
+	} else if (! IS_MAP_COMPANY(left)  && ! IS_MAP_COMPANY(right)
+		   && ! IS_MAP_COMPANY(up) && ! IS_MAP_COMPANY(down)) {
+	    // See if a company can be established
+	    try_start_new_company(x, y);
+
+	} else {
+	    // See if two (or more!) companies can be merged
+
+	    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(right)
+		&& left != right) {
+		galaxy_map[x][y] = left;
+		merge_companies(left, right);
 		assign_vals(x, y, left, right, up, down);
-
-		if (left == MAP_EMPTY && right == MAP_EMPTY &&
-		    up   == MAP_EMPTY && down  == MAP_EMPTY) {
-		    // The position is out in the middle of nowhere...
-		    galaxy_map[x][y] = MAP_OUTPOST;
-
-		} else if (! IS_MAP_COMPANY(left) && ! IS_MAP_COMPANY(right) &&
-			   ! IS_MAP_COMPANY(up)   && ! IS_MAP_COMPANY(down)) {
-		    // See if a company can be established
-		    try_start_new_company(x, y);
-
-		} else {
-		    // See if two (or more!) companies can be merged
-
-		    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(right) &&
-			left != right) {
-			galaxy_map[x][y] = left;
-			merge_companies(left, right);
-			assign_vals(x, y, left, right, up, down);
-		    }
-
-		    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(up) &&
-			left != up) {
-			galaxy_map[x][y] = left;
-			merge_companies(left, up);
-			assign_vals(x, y, left, right, up, down);
-		    }
-
-		    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(down) &&
-			left != down) {
-			galaxy_map[x][y] = left;
-			merge_companies(left, down);
-			assign_vals(x, y, left, right, up, down);
-		    }
-
-		    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(up) &&
-			right != up) {
-			galaxy_map[x][y] = right;
-			merge_companies(right, up);
-			assign_vals(x, y, left, right, up, down);
-		    }
-
-		    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(down) &&
-			right != down) {
-			galaxy_map[x][y] = right;
-			merge_companies(right, down);
-			assign_vals(x, y, left, right, up, down);
-		    }
-
-		    if (IS_MAP_COMPANY(up) && IS_MAP_COMPANY(down) &&
-			up != down) {
-			galaxy_map[x][y] = up;
-			merge_companies(up, down);
-			assign_vals(x, y, left, right, up, down);
-		    }
-		}
-
-		// See if an existing company can be expanded
-		nearby = (IS_MAP_COMPANY(left)    ? left :
-			  (IS_MAP_COMPANY(right)  ? right :
-			   (IS_MAP_COMPANY(up)    ? up :
-			    (IS_MAP_COMPANY(down) ? down :
-			     MAP_EMPTY))));
-		if (nearby != MAP_EMPTY) {
-		    galaxy_map[x][y] = nearby;
-		    inc_share_price(MAP_TO_COMPANY(nearby), SHARE_PRICE_INC);
-		}
-
-		// If a company expanded (or merged or formed), see if
-		// share price should be incremented
-		cur = galaxy_map[x][y];
-		if (IS_MAP_COMPANY(cur)) {
-
-		    // Is a star nearby?
-		    if (left == MAP_STAR) {
-			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
-		    }
-		    if (right == MAP_STAR) {
-			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
-		    }
-		    if (up == MAP_STAR) {
-			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
-		    }
-		    if (down == MAP_STAR) {
-			inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
-		    }
-
-		    // Is an outpost nearby?
-		    if (left == MAP_OUTPOST) {
-			include_outpost(MAP_TO_COMPANY(cur), x - 1, y);
-		    }
-		    if (right == MAP_OUTPOST) {
-			include_outpost(MAP_TO_COMPANY(cur), x + 1, y);
-		    }
-		    if (up == MAP_OUTPOST) {
-			include_outpost(MAP_TO_COMPANY(cur), x, y - 1);
-		    }
-		    if (down == MAP_OUTPOST) {
-			include_outpost(MAP_TO_COMPANY(cur), x, y + 1);
-		    }
-		}
 	    }
-	    break;
+
+	    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(up)
+		&& left != up) {
+		galaxy_map[x][y] = left;
+		merge_companies(left, up);
+		assign_vals(x, y, left, right, up, down);
+	    }
+
+	    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(down)
+		&& left != down) {
+		galaxy_map[x][y] = left;
+		merge_companies(left, down);
+		assign_vals(x, y, left, right, up, down);
+	    }
+
+	    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(up)
+		&& right != up) {
+		galaxy_map[x][y] = right;
+		merge_companies(right, up);
+		assign_vals(x, y, left, right, up, down);
+	    }
+
+	    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(down)
+		&& right != down) {
+		galaxy_map[x][y] = right;
+		merge_companies(right, down);
+		assign_vals(x, y, left, right, up, down);
+	    }
+
+	    if (IS_MAP_COMPANY(up) && IS_MAP_COMPANY(down)
+		&& up != down) {
+		galaxy_map[x][y] = up;
+		merge_companies(up, down);
+		assign_vals(x, y, left, right, up, down);
+	    }
 	}
 
-	if (! quit_selected) {
-	    adjust_values();
+	// See if an existing company can be expanded
+	nearby = (IS_MAP_COMPANY(left)    ? left :
+		  (IS_MAP_COMPANY(right)  ? right :
+		   (IS_MAP_COMPANY(up)    ? up :
+		    (IS_MAP_COMPANY(down) ? down :
+		     MAP_EMPTY))));
+	if (nearby != MAP_EMPTY) {
+	    galaxy_map[x][y] = nearby;
+	    inc_share_price(MAP_TO_COMPANY(nearby), SHARE_PRICE_INC);
 	}
+
+	/* If a company expanded (or merged or formed), see if share
+	   price should be incremented */
+	cur = galaxy_map[x][y];
+	if (IS_MAP_COMPANY(cur)) {
+
+	    // Is a star nearby?
+	    if (left == MAP_STAR) {
+		inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+	    }
+	    if (right == MAP_STAR) {
+		inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+	    }
+	    if (up == MAP_STAR) {
+		inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+	    }
+	    if (down == MAP_STAR) {
+		inc_share_price(MAP_TO_COMPANY(cur), SHARE_PRICE_INC_STAR);
+	    }
+
+	    // Is an outpost nearby?
+	    if (left == MAP_OUTPOST) {
+		include_outpost(MAP_TO_COMPANY(cur), x - 1, y);
+	    }
+	    if (right == MAP_OUTPOST) {
+		include_outpost(MAP_TO_COMPANY(cur), x + 1, y);
+	    }
+	    if (up == MAP_OUTPOST) {
+		include_outpost(MAP_TO_COMPANY(cur), x, y - 1);
+	    }
+	    if (down == MAP_OUTPOST) {
+		include_outpost(MAP_TO_COMPANY(cur), x, y + 1);
+	    }
+	}
+    }
+
+    if (! quit_selected) {
+	adjust_values();
     }
 
     deltxwin();			// "Select move" window
@@ -533,15 +587,8 @@ void process_move (selection_t selection)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   next_player  - Get the next player
-  Arguments:  (none)
-  Returns:    (nothing)
-
-  This function sets the global variable current_player to the next
-  eligible player.  If no player is still in the game, quit_selected is
-  set to true.  The variable turn_number is also incremented if required.
-*/
+/***********************************************************************/
+// next_player: Get the next player
 
 void next_player (void)
 {
@@ -573,21 +620,26 @@ void next_player (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   bankrupt_player  - Make the current player bankrupt
-  Arguments:  forced           - True if bankruptcy is forced by Bank
-  Returns:    (nothing)
+/************************************************************************
+*                 Module-specific function definitions                  *
+************************************************************************/
 
-  This function makes the current player bankrupt, whether by their own
-  choice or as a result of action by the Interstellar Trading Bank.
-  On exit, quit_selected is true if all players are bankrupt.
-*/
+// These functions are documented at the start of this file
+
+
+/***********************************************************************/
+// bankrupt_player: Make the current player bankrupt
 
 void bankrupt_player (bool forced)
 {
+    bool longname;
     int i;
-    int longname = (strlen(player[current_player].name) > 20);
 
+
+    /* It would be nice if we had functions that would do word-wrapping
+       for us automatically! */
+
+    longname = (strlen(player[current_player].name) > 20);
     if (forced) {
 	newtxwin(longname ? 9 : 8, 54, 7, WCENTER(54), true, ATTR_ERROR_WINDOW);
     } else {
@@ -653,15 +705,8 @@ void bankrupt_player (bool forced)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   try_start_new_company  - See if a new company can be started
-  Arguments:  x, y                   - Coordinates of position on map
-  Returns:    (nothing)
-
-  This function attempts to establish a new company if the position (x,y)
-  is in a suitable location and if no more than MAX_COMPANIES are already
-  present.
-*/
+/***********************************************************************/
+// try_start_new_company: See it a new company can be started
 
 void try_start_new_company (int x, int y)
 {
@@ -670,12 +715,15 @@ void try_start_new_company (int x, int y)
     int i, j;
 
 
+    assert(x >= 0 && x < MAX_X);
+    assert(y >= 0 && y < MAX_Y);
+
     assign_vals(x, y, left, right, up, down);
 
-    if (left  != MAP_OUTPOST && left  != MAP_STAR &&
-	right != MAP_OUTPOST && right != MAP_STAR &&
-	up    != MAP_OUTPOST && up    != MAP_STAR &&
-	down  != MAP_OUTPOST && down  != MAP_STAR) {
+    if (   left  != MAP_OUTPOST && left  != MAP_STAR
+	&& right != MAP_OUTPOST && right != MAP_STAR
+	&& up    != MAP_OUTPOST && up    != MAP_STAR
+	&& down  != MAP_OUTPOST && down  != MAP_STAR) {
 	return;
     }
 
@@ -690,6 +738,7 @@ void try_start_new_company (int x, int y)
     if (all_on_map) {
 	// The galaxy cannot support any more companies
 	galaxy_map[x][y] = MAP_OUTPOST;
+
     } else {
 	// Create the new company
 
@@ -707,11 +756,11 @@ void try_start_new_company (int x, int y)
 
 	galaxy_map[x][y] = COMPANY_TO_MAP(i);
 
-	company[i].share_price = INITIAL_SHARE_PRICE;
+	company[i].share_price  = INITIAL_SHARE_PRICE;
 	company[i].share_return = INITIAL_RETURN;
 	company[i].stock_issued = INITIAL_STOCK_ISSUED;
-	company[i].max_stock = INITIAL_MAX_STOCK;
-	company[i].on_map = true;
+	company[i].max_stock    = INITIAL_MAX_STOCK;
+	company[i].on_map       = true;
 
 	for (j = 0; j < number_players; j++) {
 	    player[j].stock_owned[i] = 0;
@@ -722,15 +771,8 @@ void try_start_new_company (int x, int y)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   merge_companies  - Merge two companies together
-  Arguments:  a, b             - Companies to merge
-  Returns:    (nothing)
-
-  This function merges two companies on the galaxy map; the one with the
-  highest value takes over.  The parameters a and b are actual values
-  from the galaxy map.
-*/
+/***********************************************************************/
+// merge_companies: Merge two companies together
 
 void merge_companies (map_val_t a, map_val_t b)
 {
@@ -742,16 +784,16 @@ void merge_companies (map_val_t a, map_val_t b)
     double val_bb = company[bb].share_price * company[bb].stock_issued *
 	company[bb].share_return;
 
+    long int old_stock, new_stock, total_new;
     int x, y, i, line;
-    long old_stock, new_stock, total_new;
     double bonus;
+    char *buf;
 
 
-    char *buf = malloc(BUFSIZE);
+    buf = malloc(BUFSIZE);
     if (buf == NULL) {
 	err_exit_nomem();
     }
-
 
     if (val_aa < val_bb) {
 	// Make sure aa is the dominant company
@@ -796,8 +838,8 @@ void merge_companies (map_val_t a, map_val_t b)
 	    total_new += new_stock;
 
 	    bonus = (company[bb].stock_issued == 0) ? 0.0 :
-		10.0 * ((double) player[i].stock_owned[bb] /
-			company[bb].stock_issued) * company[bb].share_price;
+		10.0 * ((double) player[i].stock_owned[bb]
+			/ company[bb].stock_issued) * company[bb].share_price;
 
 	    player[i].stock_owned[aa] += new_stock;
 	    player[i].stock_owned[bb] = 0;
@@ -838,15 +880,8 @@ void merge_companies (map_val_t a, map_val_t b)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   include_outpost  - Include any outposts into the company
-  Arguments:  num              - Company on which to operate
-              x, y             - Coordinates of position on map
-  Returns:    (nothing)
-
-  This function includes the outpost at (x,y) into company num.  It also
-  checks surrounding locations for further outposts.
-*/
+/***********************************************************************/
+// include_outpost: Include any outposts into the company
 
 void include_outpost (int num, int x, int y)
 {
@@ -876,6 +911,7 @@ void include_outpost (int num, int x, int y)
 	inc_share_price(num, SHARE_PRICE_INC_OUTSTAR);
     }
 
+    // Include any nearby outposts
     if (left == MAP_OUTPOST) {
 	include_outpost(num, x - 1, y);
     }
@@ -891,39 +927,30 @@ void include_outpost (int num, int x, int y)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   inc_share_price  - Increase the share price of a company
-  Arguments:  num              - Company on which to operate
-              inc              - Base increment for the share price
-  Returns:    (nothing)
-
-  This function increments the share price, maximum stock available and
-  the share return of company num, using inc as the basis for doing so.
-*/
+/***********************************************************************/
+// inc_share_price: Increase the share price of a company
 
 void inc_share_price (int num, double inc)
 {
+    assert(num >= 0 && num < MAX_COMPANIES);
+
     company[num].share_price += inc * (1.0 + randf() * SHARE_PRICE_INC_EXTRA);
     company[num].max_stock   += inc / (randf() * 10.0 + 5.0);
+
     if (randf() < GROWING_RETURN_CHANGE) {
 	company[num].share_return *= randf() + GROWING_RETURN_INC;
     }
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   adjust_values  - Adjust various company-related values
-  Arguments:  (none)
-  Returns:    (nothing)
-
-  This function adjusts the cost of shares for companies on the galaxy
-  map, their return, the Bank interest rate, etc.
-*/
+/***********************************************************************/
+// adjust_values: Adjust various company-related values
 
 void adjust_values (void)
 {
     int i, x, y;
     int which;
+
 
     // Declare a company bankrupt!
     if (randf() > (1.0 - COMPANY_BANKRUPTCY)) {
@@ -979,7 +1006,8 @@ void adjust_values (void)
 		center2(curwin, 9, ATTR_ERROR_NORMAL, ATTR_ERROR_HIGHLIGHT,
 			"Old share value:       ", "%s", buf);
 
-		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price * rate);
+		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price
+			  * rate);
 		center2(curwin, 10, ATTR_ERROR_NORMAL, ATTR_ERROR_HIGHLIGHT,
 			"Amount paid per share: ", "%s", buf);
 
@@ -1029,7 +1057,8 @@ void adjust_values (void)
     if (randf() < INC_SHARE_PRICE) {
 	which = randi(MAX_COMPANIES);
 	if (company[which].on_map) {
-	    double change = randf() * company[which].share_price * PRICE_CHANGE_RATE;
+	    double change = randf() * company[which].share_price
+		* PRICE_CHANGE_RATE;
 	    if (randf() < DEC_SHARE_PRICE) {
 		change = -change;
 	    }
@@ -1040,11 +1069,11 @@ void adjust_values (void)
     // Give the current player the companies' dividends
     for (i = 0; i < MAX_COMPANIES; i++) {
 	if (company[i].on_map && company[i].stock_issued != 0) {
-	    player[current_player].cash += player[current_player].stock_owned[i] *
-		company[i].share_price * company[i].share_return +
-		((double) player[current_player].stock_owned[i] /
-		 company[i].stock_issued) * company[i].share_price *
-		OWNERSHIP_BONUS;
+	    player[current_player].cash += player[current_player].stock_owned[i]
+		* company[i].share_price * company[i].share_return
+		+ ((double) player[current_player].stock_owned[i]
+		   / company[i].stock_issued) * company[i].share_price
+		* OWNERSHIP_BONUS;
 	}
     }
 
@@ -1073,7 +1102,6 @@ void adjust_values (void)
 			player[current_player].debt);
 
 	newtxwin(8, 60, 7, WCENTER(60), true, ATTR_ERROR_WINDOW);
-
 	center(curwin, 1, ATTR_ERROR_TITLE, "  Interstellar Trading Bank  ");
 
 	l_strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);
@@ -1106,15 +1134,8 @@ void adjust_values (void)
 }
 
 
-/*-----------------------------------------------------------------------
-  Function:   cmp_game_move  - Compare two game_move[] elements
-  Arguments:  a, b           - Elements to compare
-  Returns:    int            - Comparison of a and b
-
-  This function compares two game_move[] elements (of type move_rec_t)
-  and returns -1 if a < b, 0 if a == b and 1 if a > b.  It is used for
-  sorting game moves into ascending order.
-*/
+/***********************************************************************/
+// cmp_game_move: Compare two game_move[] elements for sorting
 
 int cmp_game_move (const void *a, const void *b)
 {
@@ -1136,3 +1157,7 @@ int cmp_game_move (const void *a, const void *b)
 	}
     }
 }
+
+
+/***********************************************************************/
+// End of file

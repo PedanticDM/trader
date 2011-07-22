@@ -36,10 +36,59 @@
 *                     Game move function prototypes                     *
 ************************************************************************/
 
+/*
+  Function:   select_moves - Select NUMBER_MOVES random moves
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function selects NUMBER_MOVES random moves and stores them in the
+  game_move[] array.  If there are less than NUMBER_MOVES empty spaces in
+  the galaxy map, the game is automatically finished by setting
+  quit_selected to true.
+*/
 extern void select_moves (void);
+
+
+/*
+  Function:   get_move    - Wait for the player to enter their move
+  Parameters: (none)
+  Returns:    selection_t - Choice selected by player
+
+  This function displays the galaxy map and the current moves, then waits
+  for the player to select one of the moves.  On entry, current_player
+  contains the current player number; quit_selected and/or abort_game may
+  be true (if so, get_move() justs returns SEL_QUIT without waiting for
+  the player to select a move).  The return value is the choice made by
+  the player.
+
+  Note that two windows (the "Select move" window and the galaxy map
+  window) are left on the screen: they are closed in process_move().
+*/
 extern selection_t get_move (void);
+
+
+/*
+  Function:   process_move - Process the move selected by the player
+  Parameters: selection    - Selection made by current player
+  Returns:    (nothing)
+
+  This function processes the move in selection.  It assumes the "Select
+  move" and galaxy map windows are still open.
+
+
+*/
 extern void process_move (selection_t selection);
 
+
+/*
+  Function:   next_player - Get the next player
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function sets the global variable current_player to the next
+  eligible player.  If no player is still in the game, quit_selected is
+  set to true.  The variable turn_number is also incremented if required.
+*/
 extern void next_player (void);
 
 
