@@ -167,27 +167,27 @@ bool load_game (int num)
 
 	if (errno == ENOENT) {
 	    // File not found
-	    newtxwin(7, 40, 9, WCENTER(40), true, ATTR_ERROR_WINDOW);
+	    newtxwin(7, 40, 9, WCENTER(40), true, attr_error_window);
 
-	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Found  ");
-	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 1, attr_error_title, "  Game Not Found  ");
+	    center(curwin, 3, attr_error_highlight,
 		   "Game %d has not been saved to disk", num);
 
-	    wait_for_key(curwin, 5, ATTR_ERROR_WAITFORKEY);
+	    wait_for_key(curwin, 5, attr_error_waitforkey);
 	    deltxwin();
 	} else {
 	    // Some other file error
 	    saved_errno = errno;
 
-	    newtxwin(9, 70, 9, WCENTER(70), true, ATTR_ERROR_WINDOW);
+	    newtxwin(9, 70, 9, WCENTER(70), true, attr_error_window);
 
-	    center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Loaded  ");
-	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 1, attr_error_title, "  Game Not Loaded  ");
+	    center(curwin, 3, attr_error_highlight,
 		   "Game %d could not be loaded from disk", num);
-	    center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
+	    center(curwin, 5, attr_error_normal, "File %s: %s", filename,
 		   strerror(saved_errno));
 
-	    wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
+	    wait_for_key(curwin, 7, attr_error_waitforkey);
 	    deltxwin();
 	}
 
@@ -334,15 +334,15 @@ bool save_game (int num)
 	    } else {
 		// Data directory could not be created
 
-		newtxwin(9, 70, 7, WCENTER(70), true, ATTR_ERROR_WINDOW);
+		newtxwin(9, 70, 7, WCENTER(70), true, attr_error_window);
 
-		center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
-		center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+		center(curwin, 1, attr_error_title, "  Game Not Saved  ");
+		center(curwin, 3, attr_error_highlight,
 		       "Game %d could not be saved to disk", num);
-		center(curwin, 5, ATTR_ERROR_NORMAL, "Directory %s: %s",
+		center(curwin, 5, attr_error_normal, "Directory %s: %s",
 		       data_dir, strerror(saved_errno));
 
-		wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
+		wait_for_key(curwin, 7, attr_error_waitforkey);
 		deltxwin();
 
 		free(buf);
@@ -359,15 +359,15 @@ bool save_game (int num)
 	// File could not be opened for writing
 	saved_errno = errno;
 
-	newtxwin(9, 70, 7, WCENTER(70), true, ATTR_ERROR_WINDOW);
+	newtxwin(9, 70, 7, WCENTER(70), true, attr_error_window);
 
-	center(curwin, 1, ATTR_ERROR_TITLE, "  Game Not Saved  ");
-	center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+	center(curwin, 1, attr_error_title, "  Game Not Saved  ");
+	center(curwin, 3, attr_error_highlight,
 	       "Game %d could not be saved to disk", num);
-	center(curwin, 5, ATTR_ERROR_NORMAL, "File %s: %s", filename,
+	center(curwin, 5, attr_error_normal, "File %s: %s", filename,
 	       strerror(saved_errno));
 
-	wait_for_key(curwin, 7, ATTR_ERROR_WAITFORKEY);
+	wait_for_key(curwin, 7, attr_error_waitforkey);
 	deltxwin();
 
 	free(buf);

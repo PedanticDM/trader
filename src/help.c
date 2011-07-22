@@ -175,16 +175,16 @@ void show_help (void)
 	// Display a page of instructions
 
 	werase(curwin);
-	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	wbkgd(curwin, attr_normal_window);
 	box(curwin, 0, 0);
-	center(curwin, 1, ATTR_TITLE, "  How to Play  ");
-	center(curwin, 2, ATTR_NORMAL, "Page %d of %d", curpage + 1, numpages);
+	center(curwin, 1, attr_title, "  How to Play  ");
+	center(curwin, 2, attr_normal, "Page %d of %d", curpage + 1, numpages);
 	wmove(curwin, 4, 2);
 
 	// Process the help text string
 
 	const char *s = help_text[curpage];
-	int curattr = ATTR_NORMAL;
+	int curattr = attr_normal;
 
 	while (*s != '\0') {
 	    switch (*s) {
@@ -201,47 +201,47 @@ void show_help (void)
 		    break;
 
 		case 'N':
-		    curattr = ATTR_NORMAL;
+		    curattr = attr_normal;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'B':
-		    curattr = ATTR_NORMAL | A_BOLD;
+		    curattr = attr_normal | A_BOLD;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'H':
-		    curattr = ATTR_HIGHLIGHT;
+		    curattr = attr_highlight;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'K':
-		    curattr = ATTR_KEYCODE;
+		    curattr = attr_keycode;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'e':
-		    curattr = ATTR_MAP_EMPTY;
+		    curattr = attr_map_empty;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'o':
-		    curattr = ATTR_MAP_OUTPOST;
+		    curattr = attr_map_outpost;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 's':
-		    curattr = ATTR_MAP_STAR;
+		    curattr = attr_map_star;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'c':
-		    curattr = ATTR_MAP_COMPANY;
+		    curattr = attr_map_company;
 		    wattrset(curwin, curattr);
 		    break;
 
 		case 'k':
-		    curattr = ATTR_MAP_CHOICE;
+		    curattr = attr_map_choice;
 		    wattrset(curwin, curattr);
 		    break;
 
@@ -323,7 +323,7 @@ void show_help (void)
 	    s++;
 	}
 
-	center(curwin, 21, ATTR_WAITFORKEY, (curpage == 0) ?
+	center(curwin, 21, attr_waitforkey, (curpage == 0) ?
 	       "[ Press <SPACE> to continue ] " :
 	       "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] ");
 

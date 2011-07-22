@@ -221,44 +221,44 @@ selection_t get_move (void)
     // Display current move choices on the galaxy map
     for (i = 0; i < NUMBER_MOVES; i++) {
 	mvwaddch(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
-		 MOVE_TO_KEY(i) | ATTR_MAP_CHOICE);
+		 MOVE_TO_KEY(i) | attr_map_choice);
     }
     wrefresh(curwin);
 
     // Show menu of choices for the player
     newtxwin(5, WIN_COLS, 19, WCENTER(WIN_COLS), false, 0);
     while (selection == SEL_NONE) {
-	wbkgd(curwin, ATTR_NORMAL_WINDOW);
+	wbkgd(curwin, attr_normal_window);
 	werase(curwin);
 	box(curwin, 0, 0);
 
 	wmove(curwin, 2, 2);
-	attrpr(curwin, ATTR_KEYCODE, "<1>");
+	attrpr(curwin, attr_keycode, "<1>");
 	waddstr(curwin, " Display stock portfolio");
 
 	wmove(curwin, 3, 2);
-	attrpr(curwin, ATTR_KEYCODE, "<2>");
+	attrpr(curwin, attr_keycode, "<2>");
 	waddstr(curwin, " Declare bankruptcy");
 
 	wmove(curwin, 2, 42);
-	attrpr(curwin, ATTR_KEYCODE, "<3>");
+	attrpr(curwin, attr_keycode, "<3>");
 	waddstr(curwin, " Save and end the game");
 
 	wmove(curwin, 3, 42);
-	attrpr(curwin, ATTR_KEYCODE, "<CTRL><C>");
+	attrpr(curwin, attr_keycode, "<CTRL><C>");
 	waddstr(curwin, " Quit the game");
 
 	mvwaddstr(curwin, 1, 9, "Select move ");
 	waddstr(curwin, "[");
-	attrpr(curwin, ATTR_CHOICE, "%c", MOVE_TO_KEY(0));
+	attrpr(curwin, attr_choice, "%c", MOVE_TO_KEY(0));
 	waddstr(curwin, "-");
-	attrpr(curwin, ATTR_CHOICE, "%c", MOVE_TO_KEY(NUMBER_MOVES - 1));
+	attrpr(curwin, attr_choice, "%c", MOVE_TO_KEY(NUMBER_MOVES - 1));
 	waddstr(curwin, "/");
-	attrpr(curwin, ATTR_KEYCODE, "1");
+	attrpr(curwin, attr_keycode, "1");
 	waddstr(curwin, "-");
-	attrpr(curwin, ATTR_KEYCODE, "3");
+	attrpr(curwin, attr_keycode, "3");
 	waddstr(curwin, "/");
-	attrpr(curwin, ATTR_KEYCODE, "<CTRL><C>");
+	attrpr(curwin, attr_keycode, "<CTRL><C>");
 	waddstr(curwin, "]: ");
 
 	curs_set(CURS_ON);
@@ -273,7 +273,7 @@ selection_t get_move (void)
 
 		curs_set(CURS_OFF);
 		waddstr(curwin, "Move ");
-		attrpr(curwin, ATTR_CHOICE, "%c", key);
+		attrpr(curwin, attr_choice, "%c", key);
 	    } else {
 		switch (key) {
 		case '1':
@@ -324,18 +324,18 @@ selection_t get_move (void)
 	}
 
 	// Clear the menu choices (but not the prompt!)
-	wattrset(curwin, ATTR_NORMAL);
+	wattrset(curwin, attr_normal);
 	for (y = 2; y < 4; y++) {
 	    wmove(curwin, y, 2);
 	    for (x = 2; x < getmaxx(curwin) - 2; x++) {
-		waddch(curwin, ' ' | ATTR_NORMAL);
+		waddch(curwin, ' ' | attr_normal);
 	    }
 	}
 	wrefresh(curwin);
 
 	// Ask the player to confirm their choice
 	mvwaddstr(curwin, 2, 22, "Are you sure?");
-	if (! answer_yesno(curwin, ATTR_KEYCODE)) {
+	if (! answer_yesno(curwin, attr_keycode)) {
 	    selection = SEL_NONE;
 	}
 
@@ -345,8 +345,8 @@ selection_t get_move (void)
 
 	    if (game_loaded) {
 		// Save the game to the same game number
-		newtxwin(5, 30, 7, WCENTER(30), true, ATTR_STATUS_WINDOW);
-		center(curwin, 2, ATTR_STATUS_WINDOW,
+		newtxwin(5, 30, 7, WCENTER(30), true, attr_status_window);
+		center(curwin, 2, attr_status_window,
 		       "Saving game %d... ", game_num);
 		wrefresh(curwin);
 
@@ -361,17 +361,17 @@ selection_t get_move (void)
 		bool done;
 
 		// Ask which game to save
-		newtxwin(6, 54, 8, WCENTER(54), true, ATTR_NORMAL_WINDOW);
+		newtxwin(6, 54, 8, WCENTER(54), true, attr_normal_window);
 
-		center(curwin, 1, ATTR_TITLE, "  Save Game  ");
+		center(curwin, 1, attr_title, "  Save Game  ");
 		mvwaddstr(curwin, 3, 2, "Enter game number ");
 		waddstr(curwin, "[");
-		attrpr(curwin, ATTR_KEYCODE, "1");
+		attrpr(curwin, attr_keycode, "1");
 		waddstr(curwin, "-");
-		attrpr(curwin, ATTR_KEYCODE, "9");
+		attrpr(curwin, attr_keycode, "9");
 		waddstr(curwin, "]");
 		waddstr(curwin, " or ");
-		attrpr(curwin, ATTR_KEYCODE, "<CTRL><C>");
+		attrpr(curwin, attr_keycode, "<CTRL><C>");
 		waddstr(curwin, " to cancel: ");
 
 		curs_set(CURS_ON);
@@ -408,8 +408,8 @@ selection_t get_move (void)
 		    game_num = key - '0';
 
 		    // Try to save the game, if possible
-		    newtxwin(5, 30, 7, WCENTER(30), true, ATTR_STATUS_WINDOW);
-		    center(curwin, 2, ATTR_STATUS_WINDOW,
+		    newtxwin(5, 30, 7, WCENTER(30), true, attr_status_window);
+		    center(curwin, 2, attr_status_window,
 			   "Saving game %d... ", game_num);
 		    wrefresh(curwin);
 
@@ -641,42 +641,42 @@ void bankrupt_player (bool forced)
 
     longname = (strlen(player[current_player].name) > 20);
     if (forced) {
-	newtxwin(longname ? 9 : 8, 54, 7, WCENTER(54), true, ATTR_ERROR_WINDOW);
+	newtxwin(longname ? 9 : 8, 54, 7, WCENTER(54), true, attr_error_window);
     } else {
-	newtxwin(longname ? 8 : 7, 50, 7, WCENTER(50), true, ATTR_ERROR_WINDOW);
+	newtxwin(longname ? 8 : 7, 50, 7, WCENTER(50), true, attr_error_window);
     }
 
-    center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
+    center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
 
     if (forced) {
 	if (longname) {
-	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT, "%s",
+	    center(curwin, 3, attr_error_highlight, "%s",
 		   player[current_player].name);
-	    center(curwin, 4, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 4, attr_error_highlight,
 		   "has been declared bankrupt by the");
-	    center(curwin, 5, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 5, attr_error_highlight,
 		   "Interstellar Trading Bank");
 	} else {
-	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 3, attr_error_highlight,
 		   "%s has been declared bankrupt",
 		   player[current_player].name);
-	    center(curwin, 4, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 4, attr_error_highlight,
 		   "by the Interstellar Trading Bank");
 	}
     } else {
 	if (longname) {
-	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT, "%s",
+	    center(curwin, 3, attr_error_highlight, "%s",
 		   player[current_player].name);
-	    center(curwin, 4, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 4, attr_error_highlight,
 		   "has declared bankruptcy");
 	} else {
-	    center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+	    center(curwin, 3, attr_error_highlight,
 		   "%s has declared bankruptcy",
 		   player[current_player].name);
 	}
     }
 
-    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_ERROR_WAITFORKEY);
+    wait_for_key(curwin, getmaxy(curwin) - 2, attr_error_waitforkey);
 
     deltxwin();
     txrefresh();
@@ -742,14 +742,14 @@ void try_start_new_company (int x, int y)
     } else {
 	// Create the new company
 
-	newtxwin(8, 50, 7, WCENTER(50), true, ATTR_NORMAL_WINDOW);
+	newtxwin(8, 50, 7, WCENTER(50), true, attr_normal_window);
 
-	center(curwin, 1, ATTR_TITLE, "  New Company  ");
-	center(curwin, 3, ATTR_NORMAL, "A new company has been formed!");
-	center2(curwin, 4, ATTR_NORMAL, ATTR_HIGHLIGHT, "Its name is ",
+	center(curwin, 1, attr_title, "  New Company  ");
+	center(curwin, 3, attr_normal, "A new company has been formed!");
+	center2(curwin, 4, attr_normal, attr_highlight, "Its name is ",
 		"%s", company[i].name);
 
-	wait_for_key(curwin, 6, ATTR_WAITFORKEY);
+	wait_for_key(curwin, 6, attr_waitforkey);
 
 	deltxwin();
 	txrefresh();
@@ -807,27 +807,27 @@ void merge_companies (map_val_t a, map_val_t b)
     // Display information about the merger
 
     newtxwin(number_players + 14, WIN_COLS - 4, 9 - number_players,
-	     WCENTER(WIN_COLS - 4), true, ATTR_NORMAL_WINDOW);
+	     WCENTER(WIN_COLS - 4), true, attr_normal_window);
 
-    center(curwin, 1, ATTR_TITLE, "  Company Merger  ");
-    center3(curwin, 3, ATTR_HIGHLIGHT, ATTR_HIGHLIGHT, ATTR_NORMAL,
+    center(curwin, 1, attr_title, "  Company Merger  ");
+    center3(curwin, 3, attr_highlight, attr_highlight, attr_normal,
 	    company[bb].name, company[aa].name, " has just merged into ");
 
-    center(curwin, 5, ATTR_NORMAL, "Please note the following transactions:");
+    center(curwin, 5, attr_normal, "Please note the following transactions:");
 
-    center2(curwin, 7, ATTR_NORMAL, ATTR_HIGHLIGHT, " Old stock: ",
+    center2(curwin, 7, attr_normal, attr_highlight, " Old stock: ",
 	    "%-20s", company[bb].name);
-    center2(curwin, 8, ATTR_NORMAL, ATTR_HIGHLIGHT, " New stock: ",
+    center2(curwin, 8, attr_normal, attr_highlight, " New stock: ",
 	    "%-20s", company[aa].name);
 
     // Handle the locale's currency symbol
     snprintf(buf, BUFSIZE, "Bonus (%s)", lconvinfo.currency_symbol);
 
     int w = getmaxx(curwin) - 52;
-    wattrset(curwin, ATTR_SUBTITLE);
+    wattrset(curwin, attr_subtitle);
     mvwprintw(curwin, 10, 2, "  %-*.*s  %8s  %8s  %8s  %12s  ", w, w,
 	      "Player", "Old", "New", "Total", buf);
-    wattrset(curwin, ATTR_NORMAL);
+    wattrset(curwin, attr_normal);
 
     total_new = 0;
     for (line = 11, i = 0; i < number_players; i++) {
@@ -871,7 +871,7 @@ void merge_companies (map_val_t a, map_val_t b)
 	}
     }
 
-    wait_for_key(curwin, getmaxy(curwin) - 2, ATTR_WAITFORKEY);
+    wait_for_key(curwin, getmaxy(curwin) - 2, attr_waitforkey);
 
     deltxwin();			// "Company merger" window
     txrefresh();
@@ -958,18 +958,18 @@ void adjust_values (void)
 
 	if (company[which].on_map) {
 	    if (randf() < ALL_ASSETS_TAKEN) {
-		newtxwin(10, 60, 6, WCENTER(60), true, ATTR_ERROR_WINDOW);
+		newtxwin(10, 60, 6, WCENTER(60), true, attr_error_window);
 
-		center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
-		center(curwin, 3, ATTR_ERROR_HIGHLIGHT, "%s has been declared",
+		center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
+		center(curwin, 3, attr_error_highlight, "%s has been declared",
 			company[which].name);
-		center(curwin, 4, ATTR_ERROR_HIGHLIGHT,
+		center(curwin, 4, attr_error_highlight,
 		       "bankrupt by the Interstellar Trading Bank.");
 
-		center(curwin, 6, ATTR_ERROR_WINDOW,
+		center(curwin, 6, attr_error_window,
 		       "All assets have been taken to repay outstanding loans.");
 
-		wait_for_key(curwin, 8, ATTR_ERROR_WAITFORKEY);
+		wait_for_key(curwin, 8, attr_error_waitforkey);
 		deltxwin();
 		txrefresh();
 
@@ -988,30 +988,30 @@ void adjust_values (void)
 		    }
 		}
 
-		newtxwin(14, 60, 4, WCENTER(60), true, ATTR_ERROR_WINDOW);
+		newtxwin(14, 60, 4, WCENTER(60), true, attr_error_window);
 
-		center(curwin, 1, ATTR_ERROR_TITLE, "  Bankruptcy Court  ");
-		center(curwin, 3, ATTR_ERROR_HIGHLIGHT, "%s has been declared",
+		center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
+		center(curwin, 3, attr_error_highlight, "%s has been declared",
 			company[which].name);
-		center(curwin, 4, ATTR_ERROR_HIGHLIGHT,
+		center(curwin, 4, attr_error_highlight,
 		       "bankrupt by the Interstellar Trading Bank.");
 
-		center2(curwin, 6, ATTR_ERROR_NORMAL, ATTR_ERROR_HIGHLIGHT,
+		center2(curwin, 6, attr_error_normal, attr_error_highlight,
 			"The Bank has agreed to pay stock holders ",
 			"%4.2f%%", rate * 100.0);
-		center(curwin, 7, ATTR_ERROR_NORMAL,
+		center(curwin, 7, attr_error_normal,
 		       "of the share value on each share owned.");
 
 		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price);
-		center2(curwin, 9, ATTR_ERROR_NORMAL, ATTR_ERROR_HIGHLIGHT,
+		center2(curwin, 9, attr_error_normal, attr_error_highlight,
 			"Old share value:       ", "%s", buf);
 
 		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price
 			  * rate);
-		center2(curwin, 10, ATTR_ERROR_NORMAL, ATTR_ERROR_HIGHLIGHT,
+		center2(curwin, 10, attr_error_normal, attr_error_highlight,
 			"Amount paid per share: ", "%s", buf);
 
-		wait_for_key(curwin, 12, ATTR_ERROR_WAITFORKEY);
+		wait_for_key(curwin, 12, attr_error_waitforkey);
 		deltxwin();
 		txrefresh();
 
@@ -1101,19 +1101,19 @@ void adjust_values (void)
 	impounded = MIN(player[current_player].cash,
 			player[current_player].debt);
 
-	newtxwin(8, 60, 7, WCENTER(60), true, ATTR_ERROR_WINDOW);
-	center(curwin, 1, ATTR_ERROR_TITLE, "  Interstellar Trading Bank  ");
+	newtxwin(8, 60, 7, WCENTER(60), true, attr_error_window);
+	center(curwin, 1, attr_error_title, "  Interstellar Trading Bank  ");
 
 	l_strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);
-	center(curwin, 3, ATTR_ERROR_HIGHLIGHT,
+	center(curwin, 3, attr_error_highlight,
 	       "Your debt has amounted to %s", buf);
 
 	l_strfmon(buf, BUFSIZE, "%1n", impounded);
-	center3(curwin, 4, ATTR_ERROR_NORMAL, ATTR_ERROR_NORMAL,
-		ATTR_ERROR_HIGHLIGHT, "The Bank has impounded ",
+	center3(curwin, 4, attr_error_normal, attr_error_normal,
+		attr_error_highlight, "The Bank has impounded ",
 		" from your cash", "%s", buf);
 
-	wait_for_key(curwin, 6, ATTR_ERROR_WAITFORKEY);
+	wait_for_key(curwin, 6, attr_error_waitforkey);
 	deltxwin();
 	txrefresh();
 

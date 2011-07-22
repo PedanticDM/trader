@@ -47,7 +47,41 @@ typedef struct txwin {
 ************************************************************************/
 
 WINDOW *curwin = NULL;		// Top-most (current) window
-bool use_color = false;		// True to use colour in Star Traders
+
+
+// Character renditions (attributes) used by Star Traders
+
+chtype attr_root_window;	// Root window (behind all others)
+chtype attr_game_title;		// One-line game title at top
+
+chtype attr_normal_window;	// Normal window background
+chtype attr_title;		// Normal window title
+chtype attr_subtitle;		// Normal window subtitle
+chtype attr_normal;		// Normal window text
+chtype attr_highlight;		// Normal window highlighted string
+chtype attr_blink;		// Blinking text in normal window
+chtype attr_keycode;		// Make keycodes like <1> stand out
+chtype attr_choice;		// Make map/company choices stand out
+chtype attr_input_field;	// Background for input text field
+chtype attr_waitforkey;		// "Press any key", normal window
+
+chtype attr_map_window;		// Map window background
+chtype attr_mapwin_title;	// Map window title (player name, turn)
+chtype attr_mapwin_highlight;	// Map window title highlight
+chtype attr_mapwin_blink;	// Map window title blinking text
+chtype attr_map_empty;		// On map, empty space
+chtype attr_map_outpost;	// On map, outpost
+chtype attr_map_star;		// On map, star
+chtype attr_map_company;	// On map, company
+chtype attr_map_choice;		// On map, a choice of moves
+
+chtype attr_status_window;	// Status window background
+
+chtype attr_error_window;	// Error message window background
+chtype attr_error_title;	// Error window title
+chtype attr_error_normal;	// Error window ordinary text
+chtype attr_error_highlight;	// Error window highlighted string
+chtype attr_error_waitforkey;	// "Press any key", error window
 
 
 /************************************************************************
@@ -99,8 +133,6 @@ void init_screen (void)
 		 MIN_COLS, MIN_LINES);
     }
 
-    use_color = ! option_no_color && has_colors();
-
     // Initialise variables controlling the stack of windows
     curwin = stdscr;
     topwin = NULL;
@@ -110,35 +142,101 @@ void init_screen (void)
     curs_set(CURS_OFF);
     raw();
 
-    // Initialise all colour pairs used; see intf.h for more comments
-    if (use_color) {
+    // Initialise all character renditions used in the game
+    if (! option_no_color && has_colors()) {
 	start_color();
 
-	init_pair(BLACK_ON_WHITE,  COLOR_BLACK,  COLOR_WHITE);
-	init_pair(BLUE_ON_BLACK,   COLOR_BLUE,   COLOR_BLACK);
-	init_pair(GREEN_ON_BLACK,  COLOR_GREEN,  COLOR_BLACK);
-	init_pair(CYAN_ON_BLUE,    COLOR_CYAN,   COLOR_BLUE);
-	init_pair(RED_ON_BLACK,    COLOR_RED,    COLOR_BLACK);
-	init_pair(YELLOW_ON_BLACK, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(YELLOW_ON_BLUE,  COLOR_YELLOW, COLOR_BLUE);
-	init_pair(YELLOW_ON_CYAN,  COLOR_YELLOW, COLOR_CYAN);
-	init_pair(WHITE_ON_BLACK,  COLOR_WHITE,  COLOR_BLACK);
-	init_pair(WHITE_ON_BLUE,   COLOR_WHITE,  COLOR_BLUE);
-	init_pair(WHITE_ON_RED,    COLOR_WHITE,  COLOR_RED);
+	init_pair(1,  COLOR_BLACK,  COLOR_WHITE);
+	init_pair(2,  COLOR_BLUE,   COLOR_BLACK);
+	init_pair(3,  COLOR_GREEN,  COLOR_BLACK);
+	init_pair(4,  COLOR_CYAN,   COLOR_BLUE);
+	init_pair(5,  COLOR_RED,    COLOR_BLACK);
+	init_pair(6,  COLOR_YELLOW, COLOR_BLACK);
+	init_pair(7,  COLOR_YELLOW, COLOR_BLUE);
+	init_pair(8,  COLOR_YELLOW, COLOR_CYAN);
+	init_pair(9,  COLOR_WHITE,  COLOR_BLACK);
+	init_pair(10, COLOR_WHITE,  COLOR_BLUE);
+	init_pair(11, COLOR_WHITE,  COLOR_RED);
 
-	bkgd(ATTR_ROOT_WINDOW);
+	attr_root_window      = COLOR_PAIR(9);
+	attr_game_title	      = COLOR_PAIR(8)   | A_BOLD;
+
+	attr_normal_window    = COLOR_PAIR(10);
+	attr_title	      = COLOR_PAIR(6)   | A_BOLD;
+	attr_subtitle	      = COLOR_PAIR(9);
+	attr_normal	      = attr_normal_window;
+	attr_highlight	      = COLOR_PAIR(7)   | A_BOLD;
+	attr_blink	      = COLOR_PAIR(7)   | A_BOLD  | A_BLINK;
+	attr_keycode	      = COLOR_PAIR(6)   | A_BOLD;
+	attr_choice	      = COLOR_PAIR(11)  | A_BOLD;
+	attr_input_field      = COLOR_PAIR(9);
+	attr_waitforkey	      = COLOR_PAIR(4);
+
+	attr_map_window	      = COLOR_PAIR(9);
+	attr_mapwin_title     = COLOR_PAIR(10);
+	attr_mapwin_highlight = COLOR_PAIR(7)   | A_BOLD;
+	attr_mapwin_blink     = COLOR_PAIR(7)   | A_BOLD  | A_BLINK;
+	attr_map_empty	      = COLOR_PAIR(2)   | A_BOLD;
+	attr_map_outpost      = COLOR_PAIR(3)   | A_BOLD;
+	attr_map_star	      = COLOR_PAIR(6)   | A_BOLD;
+	attr_map_company      = COLOR_PAIR(5)   | A_BOLD;
+	attr_map_choice	      = COLOR_PAIR(11)  | A_BOLD;
+
+	attr_status_window    = COLOR_PAIR(1);
+
+	attr_error_window     = COLOR_PAIR(11);
+	attr_error_title      = COLOR_PAIR(6)   | A_BOLD;
+	attr_error_normal     = attr_error_window;
+	attr_error_highlight  = COLOR_PAIR(11)  | A_BOLD;
+	attr_error_waitforkey = COLOR_PAIR(11);
+
+    } else {
+	// No colour is to be used
+
+	attr_root_window      = A_NORMAL;
+	attr_game_title	      = A_REVERSE | A_BOLD;
+
+	attr_normal_window    = A_NORMAL;
+	attr_title	      = A_REVERSE;
+	attr_subtitle	      = A_REVERSE;
+	attr_normal	      = attr_normal_window;
+	attr_highlight	      = A_BOLD;
+	attr_blink	      = A_BOLD | A_BLINK;
+	attr_keycode	      = A_REVERSE;
+	attr_choice	      = A_REVERSE;
+	attr_input_field      = A_BOLD | '_';
+	attr_waitforkey	      = A_NORMAL;
+
+	attr_map_window	      = A_NORMAL;
+	attr_mapwin_title     = A_NORMAL;
+	attr_mapwin_highlight = A_BOLD;
+	attr_mapwin_blink     = A_BOLD | A_BLINK;
+	attr_map_empty	      = A_NORMAL;
+	attr_map_outpost      = A_NORMAL;
+	attr_map_star	      = A_BOLD;
+	attr_map_company      = A_BOLD;
+	attr_map_choice	      = A_REVERSE;
+
+	attr_status_window    = A_REVERSE;
+
+	attr_error_window     = A_REVERSE;
+	attr_error_title      = A_BOLD;
+	attr_error_normal     = attr_error_window;
+	attr_error_highlight  = A_REVERSE;
+	attr_error_waitforkey = A_REVERSE;
     }
 
+    bkgd(attr_root_window);
     clear();
 
     move(0, 0);
     for (int i = 0; i < COLS; i++) {
-	addch(ATTR_GAME_TITLE | ' ');
+	addch(attr_game_title | ' ');
     }
 
-    center(stdscr, 0, ATTR_GAME_TITLE, PACKAGE_NAME);
+    center(stdscr, 0, attr_game_title, PACKAGE_NAME);
 
-    attrset(ATTR_ROOT_WINDOW);
+    attrset(attr_root_window);
     refresh();
 }
 

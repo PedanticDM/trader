@@ -110,74 +110,46 @@ typedef enum curs_type {
 #endif
 
 
-/*
-  Colour pairs used in Star Traders.  This list MUST be synchronised with
-  the initialisation of colour pairs in init_screen().
-
-  X/Open Curses only lists the following colours: black, blue, green,
-  cyan, red, magenta, yellow, white.  Most implementations allow these
-  colours plus bold versions (for the foreground).
-*/
-enum color_pairs {
-    DEFAULT_COLORS = 0,
-    BLACK_ON_WHITE,
-    BLUE_ON_BLACK,
-    GREEN_ON_BLACK,
-    CYAN_ON_BLUE,
-    RED_ON_BLACK,
-    YELLOW_ON_BLACK,
-    YELLOW_ON_BLUE,
-    YELLOW_ON_CYAN,
-    WHITE_ON_BLACK,
-    WHITE_ON_BLUE,
-    WHITE_ON_RED
-};
-
-// Colour and non-colour character rendition selection
-#define ATTR(color, nocolor)	(use_color ? (color) : (nocolor))
-
-/*
-  Character renditions (attributes) used in Star Traders
-*/
-#define ATTR_ROOT_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_NORMAL)
-#define ATTR_GAME_TITLE		ATTR(COLOR_PAIR(YELLOW_ON_CYAN)  | A_BOLD,           A_REVERSE | A_BOLD)
-
-#define ATTR_NORMAL_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_BLUE),                      A_NORMAL)
-#define ATTR_TITLE		ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_REVERSE)
-#define ATTR_SUBTITLE		ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_REVERSE)
-#define ATTR_NORMAL		ATTR_NORMAL_WINDOW
-#define ATTR_HIGHLIGHT		ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD,           A_BOLD)
-#define ATTR_BLINK		ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD | A_BLINK, A_BOLD | A_BLINK)
-#define ATTR_KEYCODE		ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_REVERSE)
-#define ATTR_CHOICE		ATTR(COLOR_PAIR(WHITE_ON_RED)    | A_BOLD,           A_REVERSE)
-#define ATTR_INPUT_FIELD	ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_BOLD | '_')
-#define ATTR_WAITFORKEY		ATTR(COLOR_PAIR(CYAN_ON_BLUE),                       A_NORMAL)
-
-#define ATTR_MAP_WINDOW		ATTR(COLOR_PAIR(WHITE_ON_BLACK),                     A_NORMAL)
-#define ATTR_MAPWIN_TITLE	ATTR(COLOR_PAIR(WHITE_ON_BLUE),                      A_NORMAL)
-#define ATTR_MAPWIN_HIGHLIGHT	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD,           A_BOLD)
-#define ATTR_MAPWIN_BLINK	ATTR(COLOR_PAIR(YELLOW_ON_BLUE)  | A_BOLD | A_BLINK, A_BOLD | A_BLINK)
-#define ATTR_MAP_EMPTY		ATTR(COLOR_PAIR(BLUE_ON_BLACK)   | A_BOLD,           A_NORMAL)
-#define ATTR_MAP_OUTPOST	ATTR(COLOR_PAIR(GREEN_ON_BLACK)  | A_BOLD,           A_NORMAL)
-#define ATTR_MAP_STAR		ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_BOLD)
-#define ATTR_MAP_COMPANY	ATTR(COLOR_PAIR(RED_ON_BLACK)    | A_BOLD,           A_BOLD)
-#define ATTR_MAP_CHOICE		ATTR(COLOR_PAIR(WHITE_ON_RED)    | A_BOLD,           A_REVERSE)
-
-#define ATTR_STATUS_WINDOW	ATTR(COLOR_PAIR(BLACK_ON_WHITE),                     A_REVERSE)
-
-#define ATTR_ERROR_WINDOW	ATTR(COLOR_PAIR(WHITE_ON_RED),                       A_REVERSE)
-#define ATTR_ERROR_TITLE	ATTR(COLOR_PAIR(YELLOW_ON_BLACK) | A_BOLD,           A_BOLD)
-#define ATTR_ERROR_NORMAL	ATTR_ERROR_WINDOW
-#define ATTR_ERROR_HIGHLIGHT	ATTR(COLOR_PAIR(WHITE_ON_RED)    | A_BOLD,           A_REVERSE)
-#define ATTR_ERROR_WAITFORKEY	ATTR(COLOR_PAIR(WHITE_ON_RED),                       A_REVERSE)
-
-
 /************************************************************************
 *                     Global variable declarations                      *
 ************************************************************************/
 
 extern WINDOW *curwin;			// Top-most (current) window
-extern bool use_color;			// True to use colour in Star Traders
+
+
+// Character renditions (attributes) used by Star Traders
+
+extern chtype attr_root_window;		// Root window (behind all others)
+extern chtype attr_game_title;		// One-line game title at top
+
+extern chtype attr_normal_window;	// Normal window background
+extern chtype attr_title;		// Normal window title
+extern chtype attr_subtitle;		// Normal window subtitle
+extern chtype attr_normal;		// Normal window text
+extern chtype attr_highlight;		// Normal window highlighted string
+extern chtype attr_blink;		// Blinking text in normal window
+extern chtype attr_keycode;		// Make keycodes like <1> stand out
+extern chtype attr_choice;		// Make map/company choices stand out
+extern chtype attr_input_field;		// Background for input text field
+extern chtype attr_waitforkey;		// "Press any key", normal window
+
+extern chtype attr_map_window;		// Map window background
+extern chtype attr_mapwin_title;	// Map window title (player name, turn)
+extern chtype attr_mapwin_highlight;	// Map window title highlight
+extern chtype attr_mapwin_blink;	// Map window title blinking text
+extern chtype attr_map_empty;		// On map, empty space
+extern chtype attr_map_outpost;		// On map, outpost
+extern chtype attr_map_star;		// On map, star
+extern chtype attr_map_company;		// On map, company
+extern chtype attr_map_choice;		// On map, a choice of moves
+
+extern chtype attr_status_window;	// Status window background
+
+extern chtype attr_error_window;	// Error message window background
+extern chtype attr_error_title;		// Error window title
+extern chtype attr_error_normal;	// Error window ordinary text
+extern chtype attr_error_highlight;	// Error window highlighted string
+extern chtype attr_error_waitforkey;	// "Press any key", error window
 
 
 /************************************************************************
