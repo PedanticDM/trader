@@ -73,9 +73,9 @@ extern selection_t get_move (void);
   Returns:    (nothing)
 
   This function processes the move in selection.  It assumes the "Select
-  move" and galaxy map windows are still open.
-
-
+  move" and galaxy map windows are still open.  In particular, this
+  function tries to start new companies, merge companies, bankrupt
+  companies and/or players, adjust values, etc.
 */
 extern void process_move (selection_t selection);
 
