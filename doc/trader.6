@@ -20,12 +20,239 @@
 .\"
 .\" You should have received a copy of the GNU General Public License
 .\" along with this program.  If not, see http://www.gnu.org/licenses/.
-
-.TH TRADER 6 "14th June, 2011" "Unix-like systems"
+.\"
+.\"
+.\" *********************************************************************
+.\" Various macros
+.\"
+.\" Allow hyphenation
+.hy 14
+.\"
+.\" Define .URL, .MTO and .FTP, then try to load the www.tmac version
+.de URL
+\\$2 \(la\\$1\(ra\\$3
+..
+.de MTO
+\\$2 \(la\\$1\(ra\\$3
+..
+.de FTP
+\\$2 \(la\\$1\(ra\\$3
+..
+.if \n[.g] .mso www.tmac
+.\"
+.\" *********************************************************************
+.TH TRADER 6 "22nd July, 2011" "Unix-like systems"
 .SH NAME
 trader \- a game of interstellar trading
+.\" *********************************************************************
 .SH SYNOPSIS
+.B trader
+.RB [ \-\-no\-color | \-\-no\-colour ]
+.RB [ \-\-max\-turn=\c
+.IR NUM ]
+.RI [ GAME ]
+.br
+.B trader
+.RB [ \-h | \-\-help ]
+.RB [ \-V | \-\-version ]
+.\" *********************************************************************
 .SH DESCRIPTION
+\fBStar Traders\fR is a simple game of interstellar trading, where the
+objective is to create companies, buy and sell shares, borrow and repay
+money, in order to become the wealthiest player (the winner).
+.\" *********************************************************************
 .SH OPTIONS
-.SH AUTHOR
-John Zaitseff <J.Zaitseff@zap.org.au>
+.TP
+.I GAME
+If \fIGAME\fR is specified as a number between \fB1\fR and \fB9\fR
+(inclusive), load and continue playing that game.  If \fIGAME\fR is not
+specified, start a new game.
+.TP
+.BR \-\-no\-color ", " \-\-no\-colour
+Don't use colour for displaying the text in the game.  Use this option
+for a \*(lqretro-computing\*(rq look (as shown in the
+.B EXAMPLES
+below).
+.TP
+.BI \-\-max\-turn= NUM
+Set the number of turns in the game to \fINUM\fR.  In this version of
+Star Traders, \fINUM\fR must be greater or equal to 10.  If this option
+is not specified, the default is 50 turns.
+.TP
+.BR \-h ", " \-\-help
+Show a summary of command-line options and exit.
+.TP
+.BR \-V ", " \-\-version
+Display version information about the program, then exit.
+.\" *********************************************************************
+.SH "EXIT STATUS"
+.TP
+.B 0
+Star Traders finished without any errors.
+.TP
+.B 1
+Star Traders encountered an unrecoverable problem or error; a diagnostic
+message will be written to standard error in this case.
+.\" *********************************************************************
+.SH EXAMPLES
+You can start an ordinary game by running Star Traders without any
+command line options:
+.RS
+.sp
+.B trader
+.sp
+.RE
+If you would like to continue a previously-saved game, simply specify
+that game number on the command line.  For example, the following starts
+game 4, if it was previously saved:
+.RS
+.sp
+.B trader 4
+.sp
+.RE
+If you are running under the X Window System, you might like to start the
+game in a dedicated
+.BR xterm (1)
+window (all on one line):
+.RS
+.sp
+.hy 0
+.B "xterm \-g 80x24 \-fa Mono \-fs 18 \-bg black \-fg white \-bc +sb +fbx \-e trader &"
+.hy 14
+.sp
+.RE
+If you would like a full \*(lqretro-computing\*(rq green-screen
+experience, try (again, all on one line):
+.RS
+.sp
+.hy 0
+.B "xterm \-g 80x24 \-fa Mono \-fs 18 \-bg black \-fg '#009911' \-bc +sb +bdc +fbx \-xrm 'XTerm*colorBD: #00FF00' \-e trader \-\-no\-colour &"
+.hy 14
+.sp
+.RE
+.\" *********************************************************************
+.SH ENVIRONMENT
+.TP
+.BR LINES ", " COLUMNS
+Star Traders uses the Curses library for displaying text on the screen.
+As such, it will access these two environment variables if the underlying
+Curses library does so (see, for example, the \fBENVIRONMENT\fR section
+in the
+.BR ncurses (3)
+manual page for in-depth details).  It requires a text console or window
+of at least 80\(mu24 in size.
+.TP
+.BR LANG ", " LC_ALL ", etc."
+This version of Star Traders has rudimentary support for locales and will
+use appropriate settings.  In particular, numeric quantities will be
+displayed using \fBLC_NUMERIC\fR and monetary quantities will use
+\fBLC_MONETARY\fR.  See the
+.BR locale (7)
+or
+.BR setlocale (3)
+manual pages for more details on locale settings.
+.\" *********************************************************************
+.SH FILES
+.TP
+.IB ~/.trader/game N
+Star Traders stores saved game files in the \fI.trader\fR subdirectory in
+your home directory.  \fIN\fR is a number between \fB1\fR and \fB9\fR
+inclusive.  The game file is scrambled to prevent you or others from
+casually cheating!
+.\" *********************************************************************
+.SH BUGS
+The current version of Star Traders does \fInot\fR handle locales with
+multibyte character sequences (such as UTF-8) correctly.  Each byte in a
+multibyte sequence is treated as a separate character.  Eight-bit locales
+(such as US-ASCII, ISO8859-1, etc.) work correctly.
+.\" *********************************************************************
+.SH FEEDBACK
+Your comments, suggestions, corrections and enhancements are always
+warmly welcomed!  Please send these to:
+.IP Postal: 10n
+\fBJohn Zaitseff\fR,
+.br
+The ZAP Group,
+.br
+Unit 6, 116 Woodburn Road,
+.br
+Berala, NSW, 2141,
+.br
+Australia
+.IP E-mail: 10n
+.MTO J.Zaitseff@zap.org.au
+.PD 0
+.IP Web: 10n
+.URL http://www.zap.org.au/software/trader/
+.IP FTP: 10n
+.FTP ftp://ftp.zap.org.au/pub/trader/
+.PD
+.PP
+.\" *********************************************************************
+.SH COPYRIGHT
+Copyright \(co 1990\-2011, John Zaitseff.
+.PP
+\fBStar Traders\fR is free software that is distributed under the terms
+of the GNU General Public License.  You can redistribute it and/or modify
+it under the terms of that License as published by the Free Software
+Foundation, either version 3 or (at your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+Public License for more details.
+.PP
+You should have received a copy of the GNU General Public License along
+with this program.  If not, see the
+.URL http://www.gnu.org/licenses/ "GNU licenses web page" .
+.PP
+Even though the GNU General Public License does \fInot\fR require you to
+send your modifications back to the author, it is considered \*(lqgood
+form\*(rq to do so, as this allows your modifications to be incorporated
+into future versions of the program, allowing others to benefit from
+them.
+.\" *********************************************************************
+.SH HISTORY
+The original (and very primitive) Star Traders game was written by
+S.\ J.\ Singer in 1984 using Altair Basic.  This was modified for
+Microsoft Basic (MBASIC) running under the CP/M-80 operating system by
+John Zaitseff and released on 7th March, 1988.
+.PP
+Star Traders was then completely rewritten in 1990 for the
+Australian-designed 8-bit MicroBee computer running CP/M-80 on a Zilog
+Z80 processor, using Turbo Pascal 3.01a.  Essentially, only the name of
+the game and some of the ideas were retained in this version.  Version
+4.1 of Star Traders was released on 1st August, 1991.
+.PP
+In 1992, it was recompiled for the NEC Advanced Personal Computer (with
+8-inch drives!) running CP/M-86 on an 8086 processor, using Turbo Pascal
+2.0.  This version had colour added to it in the form of ANSI escape
+sequences; version 4.4 was released on 2nd August, 1993.
+.PP
+The next version came in 1993, when the program was recompiled to run on
+IBM-compatible machines running MS-DOS and ANSI.SYS.  Turbo Pascal 6.0
+was used for this.  The ANSI escape sequences were slightly different
+under MS-DOS than under the NEC, in that the NEC supported a number of
+extra character attributes.
+.PP
+Star Traders was recompiled again in 1994 for IBM-compatible machines
+with VGA/EGA/CGA video graphics adapters.  The output routines were
+recoded to use a \*(lqwindowed\*(rq look.  Borland Pascal 7.0 was used
+for this purpose, along with a number of text window manipulation
+modules.  Version 5.4 was released on 1st June, 1994.
+.PP
+In 1995, Star Traders was completely rewritten for the 16-bit Microsoft
+Windows 3.1 graphical environment.  Microsoft Visual Basic 3.0 was used
+for this purpose.  Although completely rewritten, the original algorithms
+were reused from previous versions.  Version 6.0 of the game was released
+on 15th September, 1995.
+.PP
+Star Traders was then to languish until almost 16 years later... when the
+game was rewritten once again, this time in the C programming language.
+Version 7.0 was released on @@@ for Unix-like operating systems such as
+Linux.  Now you, too, can run this small piece of computing history!
+.\" *********************************************************************
+.SH "SEE ALSO"
+.URL http://www.zap.org.au/software/trader/ "Star Traders home page"
+.\" *********************************************************************
+.\" End of file
