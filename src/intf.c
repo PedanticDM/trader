@@ -1277,7 +1277,7 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 
     char *buf, *bufcopy;
     char *allowed, *emptystr, *defaultstr;
-    long val;
+    long int val;
     bool done;
     int ret;
 
