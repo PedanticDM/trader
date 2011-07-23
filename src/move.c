@@ -226,7 +226,7 @@ selection_t get_move (void)
     wrefresh(curwin);
 
     // Show menu of choices for the player
-    newtxwin(5, WIN_COLS, 19, WCENTER(WIN_COLS), false, 0);
+    newtxwin(5, WIN_COLS, 19, WCENTER, false, 0);
     while (selection == SEL_NONE) {
 	wbkgd(curwin, attr_normal_window);
 	werase(curwin);
@@ -345,7 +345,7 @@ selection_t get_move (void)
 
 	    if (game_loaded) {
 		// Save the game to the same game number
-		newtxwin(5, 30, 7, WCENTER(30), true, attr_status_window);
+		newtxwin(5, 30, 7, WCENTER, true, attr_status_window);
 		center(curwin, 2, attr_status_window,
 		       "Saving game %d... ", game_num);
 		wrefresh(curwin);
@@ -361,7 +361,7 @@ selection_t get_move (void)
 		bool done;
 
 		// Ask which game to save
-		newtxwin(6, 54, 8, WCENTER(54), true, attr_normal_window);
+		newtxwin(6, 54, 8, WCENTER, true, attr_normal_window);
 
 		center(curwin, 1, attr_title, "  Save Game  ");
 		mvwaddstr(curwin, 3, 2, "Enter game number ");
@@ -408,7 +408,7 @@ selection_t get_move (void)
 		    game_num = key - '0';
 
 		    // Try to save the game, if possible
-		    newtxwin(5, 30, 7, WCENTER(30), true, attr_status_window);
+		    newtxwin(5, 30, 7, WCENTER, true, attr_status_window);
 		    center(curwin, 2, attr_status_window,
 			   "Saving game %d... ", game_num);
 		    wrefresh(curwin);
@@ -641,9 +641,9 @@ void bankrupt_player (bool forced)
 
     longname = (strlen(player[current_player].name) > 20);
     if (forced) {
-	newtxwin(longname ? 9 : 8, 54, 7, WCENTER(54), true, attr_error_window);
+	newtxwin(longname ? 9 : 8, 54, 7, WCENTER, true, attr_error_window);
     } else {
-	newtxwin(longname ? 8 : 7, 50, 7, WCENTER(50), true, attr_error_window);
+	newtxwin(longname ? 8 : 7, 50, 7, WCENTER, true, attr_error_window);
     }
 
     center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
@@ -742,7 +742,7 @@ void try_start_new_company (int x, int y)
     } else {
 	// Create the new company
 
-	newtxwin(8, 50, 7, WCENTER(50), true, attr_normal_window);
+	newtxwin(8, 50, 7, WCENTER, true, attr_normal_window);
 
 	center(curwin, 1, attr_title, "  New Company  ");
 	center(curwin, 3, attr_normal, "A new company has been formed!");
@@ -807,7 +807,7 @@ void merge_companies (map_val_t a, map_val_t b)
     // Display information about the merger
 
     newtxwin(number_players + 14, WIN_COLS - 4, 9 - number_players,
-	     WCENTER(WIN_COLS - 4), true, attr_normal_window);
+	     WCENTER, true, attr_normal_window);
 
     center(curwin, 1, attr_title, "  Company Merger  ");
     center3(curwin, 3, attr_highlight, attr_highlight, attr_normal,
@@ -958,7 +958,7 @@ void adjust_values (void)
 
 	if (company[which].on_map) {
 	    if (randf() < ALL_ASSETS_TAKEN) {
-		newtxwin(10, 60, 6, WCENTER(60), true, attr_error_window);
+		newtxwin(10, 60, 6, WCENTER, true, attr_error_window);
 
 		center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
 		center(curwin, 3, attr_error_highlight, "%s has been declared",
@@ -988,7 +988,7 @@ void adjust_values (void)
 		    }
 		}
 
-		newtxwin(14, 60, 4, WCENTER(60), true, attr_error_window);
+		newtxwin(14, 60, 4, WCENTER, true, attr_error_window);
 
 		center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
 		center(curwin, 3, attr_error_highlight, "%s has been declared",
@@ -1101,7 +1101,7 @@ void adjust_values (void)
 	impounded = MIN(player[current_player].cash,
 			player[current_player].debt);
 
-	newtxwin(8, 60, 7, WCENTER(60), true, attr_error_window);
+	newtxwin(8, 60, 7, WCENTER, true, attr_error_window);
 	center(curwin, 1, attr_error_title, "  Interstellar Trading Bank  ");
 
 	l_strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);

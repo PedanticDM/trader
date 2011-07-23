@@ -54,7 +54,7 @@
 #define WIN_LINES	MIN_LINES	// Number of lines in main window
 #define WIN_COLS	MIN_COLS	// Number of columns in main window
 
-#define WCENTER(x)	((COLS - (x)) / 2)	// Centre the window
+#define WCENTER		-1		// Centre the new window
 
 
 // Visibility of the cursor in Curses (for curs_set())
@@ -201,9 +201,10 @@ extern void end_screen (void);
   places it top-most in the stack of windows managed by this module.  A
   pointer to this new window is returned; the global variable curwin also
   points to this new window.  Note that begin_y and begin_x are zero-
-  based global coordinates.  If dofill is true, bkgd_attr is used to fill
-  the background and box(curwin, 0, 0) is called.  Note that wrefresh()
-  is NOT called on the new window.
+  based global coordinates; either (or both) can be WCENTER to centre
+  that dimension within the terminal screen.  If dofill is true,
+  bkgd_attr is used to fill the background and box(curwin, 0, 0) is
+  called.  Note that wrefresh() is NOT called on the new window.
 
   If newtxwin() fails to create a new window due to insufficient memory,
   this function does NOT return: it terminates the program with an "out

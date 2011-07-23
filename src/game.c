@@ -110,7 +110,7 @@ void init_game (void)
 {
     // Try to load an old game, if possible
     if (game_num != 0) {
-	newtxwin(5, 30, 6, WCENTER(30), true, attr_status_window);
+	newtxwin(5, 30, 6, WCENTER, true, attr_status_window);
 	center(curwin, 2, attr_status_window, "Loading game %d... ", game_num);
 	wrefresh(curwin);
 
@@ -137,7 +137,7 @@ void init_game (void)
 		    game_num = choice;
 
 		    // Try to load the game, if possible
-		    newtxwin(5, 30, 9, WCENTER(30), true, attr_status_window);
+		    newtxwin(5, 30, 9, WCENTER, true, attr_status_window);
 		    center(curwin, 2, attr_status_window,
 			   "Loading game %d... ", game_num);
 		    wrefresh(curwin);
@@ -207,7 +207,7 @@ void init_game (void)
 		first_player   = randi(number_players);
 		current_player = first_player;
 
-		newtxwin(7, 50, 8, WCENTER(50), true, attr_normal_window);
+		newtxwin(7, 50, 8, WCENTER, true, attr_normal_window);
 
 		center(curwin, 2, attr_normal, "The first player to go is");
 		center(curwin, 3, attr_highlight, "%s",
@@ -235,7 +235,7 @@ static int ask_number_players (void)
 
 
     // Ask for the number of players
-    newtxwin(5, 62, 3, WCENTER(62), true, attr_normal_window);
+    newtxwin(5, 62, 3, WCENTER, true, attr_normal_window);
 
     mvwaddstr(curwin, 2, 2, "Enter number of players ");
     waddstr(curwin, "[");
@@ -297,7 +297,7 @@ int ask_game_number (void)
 
 
     // Ask which game to load
-    newtxwin(5, 54, 6, WCENTER(54), true, attr_normal_window);
+    newtxwin(5, 54, 6, WCENTER, true, attr_normal_window);
 
     mvwaddstr(curwin, 2, 2, "Enter game number ");
     waddstr(curwin, "[");
@@ -351,8 +351,7 @@ void ask_player_names (void)
     if (number_players == 1) {
 	// Ask for the player's name
 
-	newtxwin(5, WIN_COLS - 4, 9, WCENTER(WIN_COLS - 4), true,
-		 attr_normal_window);
+	newtxwin(5, WIN_COLS - 4, 9, WCENTER, true, attr_normal_window);
 
 	mvwaddstr(curwin, 2, 2, "Please enter your name: ");
 
@@ -370,7 +369,7 @@ void ask_player_names (void)
 	    }
 	}
 
-	newtxwin(5, 44, 6, WCENTER(44), true, attr_normal_window);
+	newtxwin(5, 44, 6, WCENTER, true, attr_normal_window);
 	mvwaddstr(curwin, 2, 2, "Do you need any instructions?");
 	if (answer_yesno(curwin, attr_keycode)) {
 	    show_help();
@@ -383,7 +382,7 @@ void ask_player_names (void)
 	bool done, modified;
 	int cur, len, i;
 
-	newtxwin(number_players + 5, WIN_COLS - 4, 9, WCENTER(WIN_COLS - 4),
+	newtxwin(number_players + 5, WIN_COLS - 4, 9, WCENTER,
 		 true, attr_normal_window);
 
 	center(curwin, 1, attr_title, "  Enter Player Names  ");
@@ -467,7 +466,7 @@ void ask_player_names (void)
 	    }
 	}
 
-	newtxwin(5, 50, 6, WCENTER(50), true, attr_normal_window);
+	newtxwin(5, 50, 6, WCENTER, true, attr_normal_window);
 	mvwaddstr(curwin, 2, 2, "Does any player need instructions?");
 	if (answer_yesno(curwin, attr_keycode)) {
 	    show_help();
@@ -498,7 +497,7 @@ void end_game (void)
 	err_exit_nomem();
     }
 
-    newtxwin(7, 40, 9, WCENTER(40), true, attr_error_window);
+    newtxwin(7, 40, 9, WCENTER, true, attr_error_window);
 
     center(curwin, 1, attr_error_title, "  Game Over  ");
     center(curwin, 3, attr_error_highlight, "The game is over after %d turns",
@@ -514,7 +513,7 @@ void end_game (void)
     if (number_players == 1) {
 	l_strfmon(buf, BUFSIZE, "%1n", total_value(0));
 
-	newtxwin(9, 60, 8, WCENTER(60), true, attr_normal_window);
+	newtxwin(9, 60, 8, WCENTER, true, attr_normal_window);
 
 	center(curwin, 1, attr_title, "  Total Value  ");
 	center2(curwin, 4, attr_normal, attr_highlight,
@@ -529,7 +528,7 @@ void end_game (void)
 	}
 	qsort(player, number_players, sizeof(player_info_t), cmp_player);
 
-	newtxwin(number_players + 10, WIN_COLS - 4, 3, WCENTER(WIN_COLS - 4),
+	newtxwin(number_players + 10, WIN_COLS - 4, 3, WCENTER,
 		 true, attr_normal_window);
 
 	center(curwin, 1, attr_title, "  Game Winner  ");
@@ -572,7 +571,7 @@ void show_map (bool closewin)
     int n, x, y;
 
 
-    newtxwin(MAX_Y + 4, WIN_COLS, 1, WCENTER(WIN_COLS), true, attr_map_window);
+    newtxwin(MAX_Y + 4, WIN_COLS, 1, WCENTER, true, attr_map_window);
 
     // Draw various borders
     mvwaddch(curwin, 2, 0, ACS_LTEE);
@@ -650,7 +649,7 @@ void show_map (bool closewin)
 
 	wrefresh(curwin);
 
-	newtxwin(WIN_LINES - MAX_Y - 5, WIN_COLS, MAX_Y + 5, WCENTER(WIN_COLS),
+	newtxwin(WIN_LINES - MAX_Y - 5, WIN_COLS, MAX_Y + 5, WCENTER,
 		 true, attr_normal_window);
 
 	wait_for_key(curwin, 2, attr_waitforkey);
@@ -673,7 +672,7 @@ void show_status (int num)
 
     assert(num >= 0 && num < number_players);
 
-    newtxwin(MAX_COMPANIES + 15, WIN_COLS, 1, WCENTER(WIN_COLS), true,
+    newtxwin(MAX_COMPANIES + 15, WIN_COLS, 1, WCENTER, true,
 	     attr_normal_window);
 
     center(curwin, 1, attr_title, "  Stock Portfolio  ");

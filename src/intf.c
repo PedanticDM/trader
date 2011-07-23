@@ -269,6 +269,14 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
     txwin_t *nw;
 
 
+    // Centre the window, if required
+    if (begin_y == WCENTER) {
+	begin_y = (nlines == 0) ? 0 : (LINES - nlines) / 2;
+    }
+    if (begin_x == WCENTER) {
+	begin_x = (ncols == 0) ? 0 : (COLS - ncols) / 2;
+    }
+
     // Create the new window
 
     win = newwin(nlines, ncols, begin_y, begin_x);

@@ -169,7 +169,7 @@ void show_help (void)
     if (numpages == 0)
 	return;
 
-    newtxwin(WIN_LINES - 1, WIN_COLS, 1, WCENTER(WIN_COLS), false, 0);
+    newtxwin(WIN_LINES - 1, WIN_COLS, 1, WCENTER, false, 0);
 
     while (! done) {
 	// Display a page of instructions
