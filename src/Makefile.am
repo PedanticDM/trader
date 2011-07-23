@@ -41,6 +41,7 @@ trader_SOURCES	= \
 	utils.c		utils.h		\
 			system.h
 
-trader_LDADD	= @CURSES_LIB@
+AM_CPPFLAGS	= -I$(top_builddir)/lib -I$(top_srcdir)/lib
+trader_LDADD	= @LIBINTL@ @CURSES_LIB@ $(top_builddir)/lib/libgnu.a
 
 EXTRA_DIST	= README

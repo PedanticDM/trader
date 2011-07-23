@@ -12,8 +12,15 @@ Makefile.in
 /configure
 /stamp-h1
 
+/build-aux/config.guess
+/build-aux/config.sub
 /build-aux/depcomp
 /build-aux/install-sh
 /build-aux/missing
+
+/build-aux/snippet/arg-nonnull.h
+/build-aux/snippet/c++defs.h
+/build-aux/snippet/warn-on-use.h
+/build-aux/snippet/_Noreturn.h
 
 /src/trader
