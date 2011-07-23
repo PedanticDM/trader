@@ -248,6 +248,7 @@ void end_screen (void)
 {
     delalltxwin();
 
+    curs_set(CURS_ON);
     clear();
     refresh();
     endwin();
