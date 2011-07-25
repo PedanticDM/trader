@@ -32,3 +32,6 @@ ACLOCAL_AMFLAGS = -I m4
 
 # Subdirectories to recurse into
 SUBDIRS = lib src doc m4
+
+# Additional files to distribute
+EXTRA_DIST = build-aux/bootstrap

@@ -60,6 +60,5 @@ AC_CONFIG_FILES([
 	src/Makefile
 	doc/Makefile
 	m4/Makefile
-	build-aux/Makefile
 ])
 AC_OUTPUT
