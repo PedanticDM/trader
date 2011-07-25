@@ -8,9 +8,9 @@
 # Author: John Zaitseff <J.Zaitseff@zap.org.au>
 # $Id$
 #
-# This file, m4/Makefile.am, contains the m4 macro directory Makefile for
-# Star Traders.  It needs to be processed by automake to produce the
-# corresponding Makefile.in.
+# This file, build-aux/Makefile.am, contains the auxiliary build
+# directory Makefile for Star Traders.  It needs to be processed by
+# automake to produce the corresponding Makefile.in.
 #
 #
 # This program is free software: you can redistribute it and/or modify it
@@ -27,9 +27,4 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-EXTRA_DIST = README \
-	ax_append_flag.m4	\
-	ax_cflags_warn_all.m4	\
-	ax_c___attribute__.m4	\
-	ax_with_curses.m4	\
-	gnulib-cache.m4
+EXTRA_DIST = README bootstrap
