@@ -27,7 +27,8 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-EXTRA_DIST = README \
+EXTRA_DIST = \
+	README			\
 	ax_append_flag.m4	\
 	ax_cflags_warn_all.m4	\
 	ax_c___attribute__.m4	\

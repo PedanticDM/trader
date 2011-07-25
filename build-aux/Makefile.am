@@ -27,4 +27,15 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-EXTRA_DIST = README bootstrap
+EXTRA_DIST = \
+	README			\
+	bootstrap		\
+	config.guess		\
+	config.sub		\
+	depcomp			\
+	install-sh		\
+	missing			\
+	snippet/arg-nonnull.h	\
+	snippet/c++defs.h	\
+	snippet/warn-on-use.h	\
+	snippet/_Noreturn.h
