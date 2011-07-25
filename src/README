@@ -5,7 +5,7 @@
 *                                                                        *
 **************************************************************************
 
-This directory, "src", contains the main source code to Star Traders.  The
+This directory, src, contains the  main source code for Star Traders.  The
 source code is split up among the following files:
 
     trader.c    trader.h    - Main program, command-line interface

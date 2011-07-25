@@ -5,7 +5,7 @@
 *                                                                        *
 **************************************************************************
 
-This directory, "m4", contains M4 macros used by Autoconf.
+This directory, m4, contains M4 macros used by Autoconf.
 
 The following macros are from the Autoconf Archive project, as detailed on
 that project's web site, http://www.gnu.org/software/autoconf-archive/:
