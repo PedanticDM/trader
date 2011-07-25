@@ -37,7 +37,7 @@ good luck in the game!
 
 The manual page for Star Traders contains more information on command line
 options, as well as some  suggestions for running a retro-computing green-
-screen nostalgia tour  version of the game...  Try  running the following,
+screen nostalgia-tour  version of the game...  Try  running the following,
 for example (all on one line):
 
     xterm -g 80x24 -fa Mono -fs 18 -bg black -fg '#009911' -bc +sb +bdc \

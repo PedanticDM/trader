@@ -5,4 +5,168 @@
 *                                                                        *
 **************************************************************************
 
-@@@ To be written
+Star Traders is written in  the C99 programming language and uses Autoconf
+and Automake  to handle compilation  and installation.  Assuming  you have
+the needed tools, all you should  need to do is run the following commands
+from the source directory:
+
+    ./configure
+    make
+    make install
+
+The first two commands  may be run as an ordinary user;  the last may need
+to be done as the system administrator (root).
+
+
+Prerequisites
+=============
+
+Star Traders requires the  following components for successful compilation
+and installation:
+
+1.  A  working C compiler conforming  to ISO/IEC 9899:1999  (also known as
+    C99).  Any recent version of the GNU Compiler Collection (GCC) is more
+    than adequate.
+
+2.  An operating system  ideally conforming to ISO/IEC 9945-1:2001 (POSIX)
+    or to the X/Open Single Unix Specification v3 or later.  In short, any
+    modern Unix or Unix-like system like Linux almost certainly qualifies.
+    In actual fact, Star Traders uses the GNU Portability Library, so many
+    older systems may also work without modification.
+
+3.  A working X/Open Curses-compatible library, such as NCurses.
+
+4.  Development libraries and header files  for all of the above.  On many
+    systems, these files are part of XXX-dev packages.
+
+
+Installation
+============
+
+The installation of Star Traders can be broken down into three main steps:
+configuration, compilation and the installation proper.
+
+The first step is configuring  the package for your compiler and operating
+system environment.  As  Star Traders uses Autoconf and  Automake, all you
+need to do in most cases is run "./configure" from the top-level directory
+of the Star Traders source  tree.  The configure script understands all of
+the usual Autoconf options; these  are explained in detail in the Autoconf
+manual:
+
+    http://www.gnu.org/software/autoconf/manual/autoconf.html#Running-configure-Scripts
+
+This version of the  configure script understands the following additional
+command line options:
+
+    --disable-assert    Turn off all debugging assert() statements
+    --with-ncurses      Force the use of NCurses  over the system's Curses
+                        library
+    --without-ncursesw  Don't use the NCursesW library with wide-character
+                        support
+
+By default, configure uses  "/usr/local" as the top-level (prefix) install
+directory.  You  can change this  by specifying "--prefix=DIR" to  use DIR
+instead.  For example, you can use  a directory in your own home directory
+by specifying something like:
+
+    ./configure --prefix=$HOME/opt/trader
+
+You may also specify certain configuration and/or compilation variables on
+the command line to override  choices made by configure.  For example, you
+can specify the compiler flags to use by passing the CFLAGS variable:
+
+    ./configure CFLAGS="-g -O2 -Wall"
+
+The "configure" script  has many other options.  You may  obtain a list of
+these by running:
+
+    ./configure --help
+
+You can also run configure  in a separate build-only directory tree.  This
+feature requires GNU Make and allows you to keep the source code tree from
+being modified by  the compilation process.  To use  this option, create a
+separate build directory, then run  configure.  For example, if you placed
+the Star Traders  source code tree in $HOME/src/trader-7.0,  you could run
+something like:
+
+    mkdir /tmp/trader-build-7.0
+    cd /tmp/trader-build-7.0
+    $HOME/src/trader-7.0/configure
+
+Once again, the Autoconf manual describes these options (and many others):
+
+    http://www.gnu.org/software/autoconf/manual/autoconf.html#Running-configure-Scripts
+
+Once the package  has been configured, you can type  "make" to compile it,
+then "make install" to install  it.  You can specify the following command
+lines, amongst others:
+
+    make all
+    make install
+    make clean
+    make distclean
+    make uninstall
+
+The command  "make all" does the  same thing as running  "make" by itself:
+compile the package source code into an executable.
+
+Running "make  install" copies the  executable program and  all associated
+data  and  documentation  files  to  those  directories  specified  during
+configuration.  If  any of these directories  require system administrator
+access  privileges for writing,  you will  need to  run "make  install" as
+system administrator (root).
+
+If you like, you can specify the DESTDIR variable to copy all installation
+files to a temporary location  before installing them later.  For example,
+if the prefix directory is "/usr/local", typing:
+
+    make install DESTDIR=/tmp/trader-install
+
+will copy the final program "trader" to /tmp/trader-install/usr/local/bin,
+the manual page to /tmp/trader-install/usr/local/share/man/man6 and so on.
+
+The "make clean"  command will remove most build-generated  files, such as
+object  files generated by  the compiler,  from the  source code  or build
+directory.  Running "make distclean" will do the same, but will remove the
+Makefiles  generated by configure  as well.   In other  words, if  you run
+"make distclean", you will need to  rerun "configure" if you would like to
+recompile Star Traders at a later date.
+
+Finally, "make uninstall" will  remove the executable program "trader" and
+associated  data and  documentation  files from  their final  installation
+location.  This assumes, of course, that you have NOT run "make distclean"
+to  remove the  Makefiles that  know the  path to  which those  files were
+installed!
+
+
+Subversion Repository
+=====================
+
+You can always  download the latest version of  Star Traders directly from
+the Subversion repository on the ZAP Group server:
+
+    svn co http://svn.zap.org.au/svn/trader/unix/trunk/ trader
+
+Released versions of Star Traders include all scripts and files needed for
+installation.  If you are checking out the source code from the Subversion
+repository, however,  you will need  to update these files  yourself.  You
+will need  the following additional tools  installed on your  system to do
+so:
+
+1.  Autoconf (http://www.gnu.org/software/autoconf/)
+2.  Automake (http://www.gnu.org/software/automake/)
+3.  GNU Portability Library (http://www.gnu.org/software/gnulib/)
+
+The  GNU Portability Library  may  be installed  by retrieving  the latest
+Gnulib source code from the Git repository:
+
+    git clone git://git.savannah.gnu.org/gnulib.git
+
+Once you have these tools, change to the Star Traders source code tree and
+type:
+
+    PATH=${PATH}:/path/to/gnulib-tool ./build-aux/bootstrap
+
+where "/path/to/gnulib-tool"  is, of course, the  directory containing the
+Gnulib "gnulib-tool" script.   You should be ready to  run "./configure &&
+make && make install" now.
