@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Import or update automatically-generated files for Star Traders
+# $Id$
+
+set -e
+
+gnulib-tool --update
+autoreconf --install --verbose
