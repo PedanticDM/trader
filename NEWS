@@ -15,8 +15,8 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
-Version 7.0 (not yet released)
-------------------------------
+Version 7.0 (25th July, 2011)
+-----------------------------
 
 Released the first version of Star Traders for Unix-like operating systems
 such as Linux.  It requires a text  console or window of at least 80x24 in
