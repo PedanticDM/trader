@@ -32,6 +32,7 @@ AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 AC_PREREQ([2.67])
 AC_CONFIG_SRCDIR([src/trader.c])
 AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.11 -Wall -Werror foreign dist-bzip2])
 AC_CONFIG_LIBOBJ_DIR([lib])
 
@@ -53,7 +54,6 @@ AS_IF([test "x$ax_cv_curses" != "xyes"],
 	AC_MSG_ERROR([requires an X/Open-compatible Curses library.]),
 	AC_SUBST([CURSES_LIB]))
 
-AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
 	Makefile
 	lib/Makefile
