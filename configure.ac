@@ -37,12 +37,14 @@ AM_INIT_AUTOMAKE([1.11 -Wall -Werror foreign dist-bzip2])
 AC_CONFIG_LIBOBJ_DIR([lib])
 
 AC_PROG_CC
-AC_PROG_CC_STDC
+AC_PROG_CC_C99
+
+AS_IF([test "x$ac_cv_prog_cc_c99" != "xyes"],
+	AC_MSG_ERROR([requires an ISO/IEC 9899:1999 (C99) compiler.]))
+
 gl_EARLY
 
 AX_CFLAGS_WARN_ALL
-AC_C_RESTRICT
-AC_C_VOLATILE
 AX_C___ATTRIBUTE__
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
