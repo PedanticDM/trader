@@ -25,6 +25,7 @@ inttypes_h.m4
 isnand.m4
 isnanf.m4
 isnanl.m4
+largefile.m4
 ldexpl.m4
 locale_h.m4
 longlong.m4
