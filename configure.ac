@@ -39,7 +39,7 @@ AC_CONFIG_LIBOBJ_DIR([lib])
 AC_PROG_CC
 AC_PROG_CC_C99
 
-AS_IF([test "x$ac_cv_prog_cc_c99" != "xyes"],
+AS_IF([test "x$ac_cv_prog_cc_c99" = "xno"],
 	AC_MSG_ERROR([requires an ISO/IEC 9899:1999 (C99) compiler.]))
 
 gl_EARLY
