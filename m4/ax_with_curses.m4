@@ -282,8 +282,39 @@ AC_DEFUN([AX_WITH_CURSES], [
                 AC_DEFINE([HAVE_NCURSESW_H],      [1], [Define to 1 if <ncursesw.h> is present])
             ])
 
-            AS_IF([test "x$ax_cv_header_ncursesw_curses_h" = xno && test "x$ax_cv_header_ncursesw_h" = xno], [
-                AC_MSG_WARN([could not find either ncursesw/curses.h or ncursesw.h])
+            AC_CACHE_CHECK([for ncurses.h], [ax_cv_header_ncurses_h_with_ncursesw], [
+                AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+                        @%:@define _XOPEN_SOURCE_EXTENDED 1
+                        @%:@include <ncurses.h>
+                    ]], [[
+                        chtype a = A_BOLD;
+                        int b = KEY_LEFT;
+                        chtype c = COLOR_PAIR(1) & A_COLOR;
+                        attr_t d = WA_NORMAL;
+                        cchar_t e;
+                        wint_t f;
+                        int g = getattrs(stdscr);
+                        int h = getcurx(stdscr) + getmaxx(stdscr);
+                        initscr();
+                        init_pair(1, COLOR_WHITE, COLOR_RED);
+                        wattr_set(stdscr, d, 0, NULL);
+                        wget_wch(stdscr, &f);
+                    ]])],
+                    [ax_cv_header_ncurses_h_with_ncursesw=yes],
+                    [ax_cv_header_ncurses_h_with_ncursesw=no])
+            ])
+            AS_IF([test "x$ax_cv_header_ncurses_h_with_ncursesw" = xyes], [
+                ax_cv_curses_enhanced=yes
+                ax_cv_curses_color=yes
+                ax_cv_curses_obsolete=yes
+                AC_DEFINE([HAVE_CURSES_ENHANCED], [1], [Define to 1 if library supports X/Open Enhanced functions])
+                AC_DEFINE([HAVE_CURSES_COLOR],    [1], [Define to 1 if library supports color (enhanced functions)])
+                AC_DEFINE([HAVE_CURSES_OBSOLETE], [1], [Define to 1 if library supports certain obsolete features])
+                AC_DEFINE([HAVE_NCURSES_H],       [1], [Define to 1 if <ncurses.h> is present])
+            ])
+
+            AS_IF([test "x$ax_cv_header_ncursesw_curses_h" = xno && test "x$ax_cv_header_ncursesw_h" = xno && test "x$ax_cv_header_ncurses_h_with_ncursesw" = xno], [
+                AC_MSG_WARN([could not find a working ncursesw/curses.h, ncursesw.h or ncurses.h])
             ])
         ])
     ])
@@ -355,7 +386,7 @@ AC_DEFUN([AX_WITH_CURSES], [
             ])
 
             AS_IF([test "x$ax_cv_header_ncurses_curses_h" = xno && test "x$ax_cv_header_ncurses_h" = xno], [
-                AC_MSG_WARN([could not find either ncurses/curses.h or ncurses.h])
+                AC_MSG_WARN([could not find a working ncurses/curses.h or ncurses.h])
             ])
         ])
     ])
@@ -473,7 +504,7 @@ AC_DEFUN([AX_WITH_CURSES], [
             ])
 
             AS_IF([test "x$ax_cv_header_curses_h" = xno], [
-                AC_MSG_WARN([could not find curses.h])
+                AC_MSG_WARN([could not find a working curses.h])
             ])
         ])
     ])
