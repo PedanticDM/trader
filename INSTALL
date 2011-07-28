@@ -61,8 +61,12 @@ command line options:
     --disable-assert    Turn off all debugging assert() statements
     --with-ncurses      Force the use of NCurses  over the system's Curses
                         library
+    --with-ncursesw     Force the use of  the NCursesW library  with wide-
+                        character support
     --without-ncursesw  Don't use the NCursesW library with wide-character
                         support
+    --without-ncurses   Don't use  the NCurses  library:  use the system's
+                        normal Curses library
 
 By default, configure uses  "/usr/local" as the top-level (prefix) install
 directory.  You  can change this  by specifying "--prefix=DIR" to  use DIR

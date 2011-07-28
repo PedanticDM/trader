@@ -39,8 +39,9 @@ AC_CONFIG_LIBOBJ_DIR([lib])
 AC_PROG_CC
 AC_PROG_CC_C99
 
-AS_IF([test "x$ac_cv_prog_cc_c99" = "xno"],
-	AC_MSG_ERROR([requires an ISO/IEC 9899:1999 (C99) compiler.]))
+AS_IF([test "x$ac_cv_prog_cc_c99" = xno], [
+	AC_MSG_ERROR([requires an ISO/IEC 9899:1999 (C99) compiler])
+])
 
 gl_EARLY
 
@@ -52,9 +53,9 @@ AC_TYPE_SSIZE_T
 gl_INIT
 
 AX_WITH_CURSES
-AS_IF([test "x$ax_cv_curses" != "xyes"],
-	AC_MSG_ERROR([requires an X/Open-compatible Curses library.]),
-	AC_SUBST([CURSES_LIB]))
+AS_IF([test "x$ax_cv_curses" != xyes || test "x$ax_cv_curses_color" != xyes], [
+	AC_MSG_ERROR([requires an X/Open-compatible Curses library with colour])
+])
 
 AC_CONFIG_FILES([
 	Makefile
