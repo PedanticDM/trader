@@ -382,7 +382,7 @@ AC_DEFUN([AX_WITH_CURSES], [
                 ax_cv_curses_obsolete=yes
                 AC_DEFINE([HAVE_CURSES_COLOR],    [1], [Define to 1 if library supports color (enhanced functions)])
                 AC_DEFINE([HAVE_CURSES_OBSOLETE], [1], [Define to 1 if library supports certain obsolete features])
-                AC_DEFINE([HAVE_NCURSES_H],       [1], [Define to 1 if <ncurses/curses.h> is present])
+                AC_DEFINE([HAVE_NCURSES_H],       [1], [Define to 1 if <ncurses.h> is present])
             ])
 
             AS_IF([test "x$ax_cv_header_ncurses_curses_h" = xno && test "x$ax_cv_header_ncurses_h" = xno], [
