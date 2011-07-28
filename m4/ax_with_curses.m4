@@ -220,7 +220,7 @@ AC_DEFUN([AX_WITH_CURSES], [
             AC_DEFINE([HAVE_NCURSESW], [1], [Define to 1 if the NcursesW library is present])
             AC_DEFINE([HAVE_CURSES],   [1], [Define to 1 if a SysV or X/Open compatible Curses library is present])
 
-            AC_CACHE_CHECK([for ncursesw/curses.h], [ax_cv_header_ncursesw_curses_h], [
+            AC_CACHE_CHECK([for working ncursesw/curses.h], [ax_cv_header_ncursesw_curses_h], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
                         @%:@define _XOPEN_SOURCE_EXTENDED 1
                         @%:@include <ncursesw/curses.h>
@@ -251,7 +251,7 @@ AC_DEFUN([AX_WITH_CURSES], [
                 AC_DEFINE([HAVE_NCURSESW_CURSES_H], [1], [Define to 1 if <ncursesw/curses.h> is present])
             ])
 
-            AC_CACHE_CHECK([for ncursesw.h], [ax_cv_header_ncursesw_h], [
+            AC_CACHE_CHECK([for working ncursesw.h], [ax_cv_header_ncursesw_h], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
                         @%:@define _XOPEN_SOURCE_EXTENDED 1
                         @%:@include <ncursesw.h>
@@ -282,7 +282,7 @@ AC_DEFUN([AX_WITH_CURSES], [
                 AC_DEFINE([HAVE_NCURSESW_H],      [1], [Define to 1 if <ncursesw.h> is present])
             ])
 
-            AC_CACHE_CHECK([for ncurses.h], [ax_cv_header_ncurses_h_with_ncursesw], [
+            AC_CACHE_CHECK([for working ncurses.h], [ax_cv_header_ncurses_h_with_ncursesw], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
                         @%:@define _XOPEN_SOURCE_EXTENDED 1
                         @%:@include <ncurses.h>
@@ -339,7 +339,7 @@ AC_DEFUN([AX_WITH_CURSES], [
             AC_DEFINE([HAVE_NCURSES], [1], [Define to 1 if the Ncurses library is present])
             AC_DEFINE([HAVE_CURSES],  [1], [Define to 1 if a SysV or X/Open compatible Curses library is present])
 
-            AC_CACHE_CHECK([for ncurses/curses.h], [ax_cv_header_ncurses_curses_h], [
+            AC_CACHE_CHECK([for working ncurses/curses.h], [ax_cv_header_ncurses_curses_h], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
                         @%:@include <ncurses/curses.h>
                     ]], [[
@@ -362,7 +362,7 @@ AC_DEFUN([AX_WITH_CURSES], [
                 AC_DEFINE([HAVE_NCURSES_CURSES_H], [1], [Define to 1 if <ncurses/curses.h> is present])
             ])
 
-            AC_CACHE_CHECK([for ncurses.h], [ax_cv_header_ncurses_h], [
+            AC_CACHE_CHECK([for working ncurses.h], [ax_cv_header_ncurses_h], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
                         @%:@include <ncurses.h>
                     ]], [[
@@ -415,7 +415,7 @@ AC_DEFUN([AX_WITH_CURSES], [
 
             # Check for base conformance (and header file)
 
-            AC_CACHE_CHECK([for curses.h], [ax_cv_header_curses_h], [
+            AC_CACHE_CHECK([for working curses.h], [ax_cv_header_curses_h], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
                         @%:@include <curses.h>
                     ]], [[
