@@ -222,6 +222,7 @@ AC_DEFUN([AX_WITH_CURSES], [
 
             AC_CACHE_CHECK([for ncursesw/curses.h], [ax_cv_header_ncursesw_curses_h], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+                        @%:@define _XOPEN_SOURCE_EXTENDED 1
                         @%:@include <ncursesw/curses.h>
                     ]], [[
                         chtype a = A_BOLD;
@@ -252,6 +253,7 @@ AC_DEFUN([AX_WITH_CURSES], [
 
             AC_CACHE_CHECK([for ncursesw.h], [ax_cv_header_ncursesw_h], [
                 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+                        @%:@define _XOPEN_SOURCE_EXTENDED 1
                         @%:@include <ncursesw.h>
                     ]], [[
                         chtype a = A_BOLD;
@@ -400,6 +402,7 @@ AC_DEFUN([AX_WITH_CURSES], [
 
                 AC_CACHE_CHECK([for X/Open Enhanced Curses conformance], [ax_cv_plaincurses_enhanced], [
                     AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+                            @%:@define _XOPEN_SOURCE_EXTENDED 1
                             @%:@include <curses.h>
                             @%:@ifndef _XOPEN_CURSES
                             @%:@error "this Curses library is not enhanced"
@@ -431,7 +434,8 @@ AC_DEFUN([AX_WITH_CURSES], [
 
                 AC_CACHE_CHECK([for Curses color functions], [ax_cv_plaincurses_color], [
                     AC_LINK_IFELSE([AC_LANG_PROGRAM([[
-                            @%:@include <curses.h>
+                        @%:@define _XOPEN_SOURCE_EXTENDED 1
+                        @%:@include <curses.h>
                         ]], [[
                             chtype a = A_BOLD;
                             int b = KEY_LEFT;
