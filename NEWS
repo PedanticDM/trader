@@ -15,6 +15,15 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
+Version 7.1 (29th July, 2011)
+-----------------------------
+
+A minor updated  release to fix configuration problems  on some platforms.
+In particular, some systems could  not find the Curses libraries or header
+files, so the  Autoconf macro that performed the  search was rewritten and
+extended.
+
+
 Version 7.0 (25th July, 2011)
 -----------------------------
 
