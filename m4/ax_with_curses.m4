@@ -8,17 +8,17 @@
 #
 # DESCRIPTION
 #
-#   This macro checks whether a SysV or X/Open-compatible Curses library
-#   is present, along with the associated header file.  The NcursesW
+#   This macro checks whether a SysV or X/Open-compatible Curses library is
+#   present, along with the associated header file.  The NcursesW
 #   (wide-character) library is searched for first, followed by Ncurses,
 #   then the system-default plain Curses.  The first library found is the
 #   one returned.
 #
 #   The following options are understood: --with-ncursesw, --with-ncurses,
-#   --without-ncursesw, --without-ncurses.  The "--with" options force
-#   the macro to use that particular library, terminating with an error
-#   if not found.  The "--without" options simply skip the check for that
-#   library.  The effect on the search pattern is:
+#   --without-ncursesw, --without-ncurses.  The "--with" options force the
+#   macro to use that particular library, terminating with an error if not
+#   found.  The "--without" options simply skip the check for that library.
+#   The effect on the search pattern is:
 #
 #     (no options)                           - NcursesW, Ncurses, Curses
 #     --with-ncurses     --with-ncursesw     - NcursesW only [*]
@@ -31,10 +31,11 @@
 #     --without-ncurses                      - NcursesW, Curses
 #
 #   [*]  If the library is not found, abort the configure script.
+#
 #   [**] If the second library (Ncurses) is not found, abort configure.
 #
-#   The following preprocessor symbols may be defined by this macro if
-#   the appropriate conditions are met:
+#   The following preprocessor symbols may be defined by this macro if the
+#   appropriate conditions are met:
 #
 #     HAVE_CURSES             - if any SysV or X/Open Curses library found
 #     HAVE_CURSES_ENHANCED    - if library supports X/Open Enhanced functions
@@ -51,23 +52,23 @@
 #
 #   (These preprocessor symbols are discussed later in this document.)
 #
-#   The following output variable is defined by this macro; it is
-#   precious and may be overridden on the ./configure command line:
+#   The following output variable is defined by this macro; it is precious
+#   and may be overridden on the ./configure command line:
 #
 #     CURSES_LIB  - library to add to xxx_LDADD
 #
-#   The library listed in CURSES_LIB is NOT added to LIBS by default.
-#   You need to add CURSES_LIB to the appropriate xxx_LDADD line in your
+#   The library listed in CURSES_LIB is NOT added to LIBS by default. You
+#   need to add CURSES_LIB to the appropriate xxx_LDADD line in your
 #   Makefile.am.  For example:
 #
 #     prog_LDADD = @CURSES_LIB@
 #
-#   If CURSES_LIB is set on the configure command line (such as by
-#   running "./configure CURSES_LIB=-lmycurses"), then the only header
-#   searched for is <curses.h>.  The user may use the CPPFLAGS precious
-#   variable to override the standard #include search path.  If the user
-#   needs to specify an alternative path for a library (such as for a
-#   non-standard NcurseW), the user should use the LDFLAGS variable.
+#   If CURSES_LIB is set on the configure command line (such as by running
+#   "./configure CURSES_LIB=-lmycurses"), then the only header searched for
+#   is <curses.h>.  The user may use the CPPFLAGS precious variable to
+#   override the standard #include search path.  If the user needs to
+#   specify an alternative path for a library (such as for a non-standard
+#   NcurseW), the user should use the LDFLAGS variable.
 #
 #   The following shell variables may be defined by this macro:
 #
@@ -81,36 +82,35 @@
 #     ax_cv_plaincurses   - set to "yes" if plain Curses library found
 #     ax_cv_curses_which  - set to "ncursesw", "ncurses", "plaincurses" or "no"
 #
-#   These variables can be used in your configure.ac to determine the
-#   level of support you need from the Curses library.  For example, if
-#   you must have either Ncurses or NcursesW, you could include:
+#   These variables can be used in your configure.ac to determine the level
+#   of support you need from the Curses library.  For example, if you must
+#   have either Ncurses or NcursesW, you could include:
 #
 #     AX_WITH_CURSES
 #     if test "x$ax_cv_ncursesw" != xyes && test "x$ax_cv_ncurses" != xyes; then
 #         AX_MSG_ERROR([requires either NcursesW or Ncurses library])
 #     fi
 #
-#   If any Curses library will do (but one must be present and must
-#   support color), you could use:
+#   If any Curses library will do (but one must be present and must support
+#   color), you could use:
 #
 #     AX_WITH_CURSES
 #     if test "x$ax_cv_curses" != xyes || test "x$ax_cv_curses_color" != xyes; then
 #         AC_MSG_ERROR([requires an X/Open-compatible Curses library with color])
 #     fi
 #
-#   Certain preprocessor symbols and shell variables defined by this
-#   macro can be used to determine various features of the Curses
-#   library.  In particular, HAVE_CURSES and ax_cv_curses are defined if
-#   the Curses library found conforms to the traditional SysV and/or
-#   X/Open Base Curses definition.  Any working Curses library conforms
-#   to this level.
+#   Certain preprocessor symbols and shell variables defined by this macro
+#   can be used to determine various features of the Curses library.  In
+#   particular, HAVE_CURSES and ax_cv_curses are defined if the Curses
+#   library found conforms to the traditional SysV and/or X/Open Base Curses
+#   definition.  Any working Curses library conforms to this level.
 #
 #   HAVE_CURSES_ENHANCED and ax_cv_curses_enhanced are defined if the
-#   library supports the X/Open Enhanced Curses definition.  In
-#   particular, the wide-character types attr_t, cchar_t and wint_t, the
-#   functions wattr_set() and wget_wch() and the macros WA_NORMAL and
-#   _XOPEN_CURSES are checked.  The Ncurses library does NOT conform to
-#   this definition, although NcursesW does.
+#   library supports the X/Open Enhanced Curses definition.  In particular,
+#   the wide-character types attr_t, cchar_t and wint_t, the functions
+#   wattr_set() and wget_wch() and the macros WA_NORMAL and _XOPEN_CURSES
+#   are checked.  The Ncurses library does NOT conform to this definition,
+#   although NcursesW does.
 #
 #   HAVE_CURSES_COLOR and ax_cv_curses_color are defined if the library
 #   supports color functions and macros such as COLOR_PAIR, A_COLOR,
@@ -120,8 +120,8 @@
 #   NcursesW.
 #
 #   HAVE_CURSES_OBSOLETE and ax_cv_curses_obsolete are defined if the
-#   library supports certain features present in SysV and BSD Curses but
-#   not defined in the X/Open definition.  In particular, the functions
+#   library supports certain features present in SysV and BSD Curses but not
+#   defined in the X/Open definition.  In particular, the functions
 #   getattrs(), getcurx() and getmaxx() are checked.
 #
 #   To use the HAVE_xxx_H preprocessor symbols, insert the following into
@@ -141,14 +141,13 @@
 #     #  error "SysV or X/Open-compatible Curses header file required"
 #     #endif
 #
-#   For previous users of this macro: you should not need to change
-#   anything in your configure.ac or Makefile.am, as the previous (serial
-#   10) semantics are still valid.  However, you should update your
-#   system.h (or equivalent) header file to the fragment shown above.
-#   You are encouraged also to make use of the extended functionality
-#   provided by this version of AX_WITH_CURSES, as well as in the
-#   additional macros AX_WITH_CURSES_PANEL, AX_WITH_CURSES_MENU and
-#   AX_WITH_CURSES_FORM.
+#   For previous users of this macro: you should not need to change anything
+#   in your configure.ac or Makefile.am, as the previous (serial 10)
+#   semantics are still valid.  However, you should update your system.h (or
+#   equivalent) header file to the fragment shown above. You are encouraged
+#   also to make use of the extended functionality provided by this version
+#   of AX_WITH_CURSES, as well as in the additional macros
+#   AX_WITH_CURSES_PANEL, AX_WITH_CURSES_MENU and AX_WITH_CURSES_FORM.
 #
 # LICENSE
 #
@@ -184,6 +183,7 @@
 #   exception to the GPL to apply to your modified version as well.
 
 #serial 11
+
 AU_ALIAS([MP_WITH_CURSES], [AX_WITH_CURSES])
 AC_DEFUN([AX_WITH_CURSES], [
     AC_ARG_VAR([CURSES_LIB], [linker library for Curses, e.g. -lcurses])
