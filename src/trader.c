@@ -333,7 +333,7 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
 	printf(_("Report %s bugs to <%s>.\n"), PACKAGE_PACKAGER, PACKAGE_PACKAGER_BUG_REPORTS);
 #endif
 #ifdef PACKAGE_URL
-	printf(_(PACKAGE_NAME " home page: <%s>.\n"), PACKAGE_URL);
+	printf(_("Star Traders home page: <%s>.\n"), PACKAGE_URL);
 #endif
     }
 

@@ -234,7 +234,7 @@ void init_screen (void)
 	addch(attr_game_title | ' ');
     }
 
-    center(stdscr, 0, attr_game_title, PACKAGE_NAME);
+    center(stdscr, 0, attr_game_title, "Star Traders");
 
     attrset(attr_root_window);
     refresh();
