@@ -37,28 +37,28 @@
 
 // Company names
 const char *company_name[MAX_COMPANIES] = {
-    "Altair Starways",
-    "Betelgeuse, Ltd",
-    "Capella Freight Co",
-    "Denebola Shippers",
-    "Eridani Expediters",
-    "Fornax Express",
-    "Gemeni Inc",
-    "Hercules and Co"
+    N_("Altair Starways"),
+    N_("Betelgeuse, Ltd"),
+    N_("Capella Freight Co"),
+    N_("Denebola Shippers"),
+    N_("Eridani Expediters"),
+    N_("Fornax Express"),
+    N_("Gemeni Inc"),
+    N_("Hercules and Co")
 };
 
 
 // Ordinal strings
 const char *ordinal[MAX_PLAYERS + 1] = {
-    "0th",
-    "1st",
-    "2nd",
-    "3rd",
-    "4th",
-    "5th",
-    "6th",
-    "7th",
-    "8th"
+    N_("0th"),
+    N_("1st"),
+    N_("2nd"),
+    N_("3rd"),
+    N_("4th"),
+    N_("5th"),
+    N_("6th"),
+    N_("7th"),
+    N_("8th")
 };
 
 

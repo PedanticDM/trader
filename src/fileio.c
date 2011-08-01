@@ -52,15 +52,15 @@ static const unsigned char game_file_crypt_key[] = {
 #define load_game_scanf(_fmt, _var, _cond)				\
     do {								\
 	if (fgets(buf, BUFSIZE, file) == NULL) {			\
-	    err_exit("%s: missing field on line %d", filename, lineno);	\
+	    err_exit(_("%s: missing field on line %d"), filename, lineno);  \
 	}								\
 	if (sscanf(unscramble(crypt_key, buf, BUFSIZE), _fmt "\n",	\
 		   &(_var)) != 1) {					\
-	    err_exit("%s: illegal field on line %d: `%s'",		\
+	    err_exit(_("%s: illegal field on line %d: `%s'"),		\
 		     filename, lineno, buf);				\
 	}								\
 	if (! (_cond)) {						\
-	    err_exit("%s: illegal value on line %d: `%s'",		\
+	    err_exit(_("%s: illegal value on line %d: `%s'"),		\
 		     filename, lineno, buf);				\
 	}								\
 	lineno++;							\
@@ -87,10 +87,10 @@ static const unsigned char game_file_crypt_key[] = {
 	int len;							\
 									\
 	if (fgets(buf, BUFSIZE, file) == NULL) {			\
-	    err_exit("%s: missing field on line %d", filename, lineno);	\
+	    err_exit(_("%s: missing field on line %d"), filename, lineno);  \
 	}								\
 	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) == 0) {		\
-	    err_exit("%s: illegal value on line %d", filename, lineno);	\
+	    err_exit(_("%s: illegal value on line %d"), filename, lineno);  \
 	}								\
 	lineno++;							\
 									\
@@ -205,16 +205,16 @@ bool load_game (int num)
 
     // Read the game file header
     if (fgets(buf, BUFSIZE, file) == NULL) {
-	err_exit("%s: missing header in game file", filename);
+	err_exit(_("%s: missing header in game file"), filename);
     }
     if (strcmp(buf, GAME_FILE_HEADER "\n") != 0) {
-	err_exit("%s: not a valid game file", filename);
+	err_exit(_("%s: not a valid game file"), filename);
     }
     if (fgets(buf, BUFSIZE, file) == NULL) {
-	err_exit("%s: missing subheader in game file", filename);
+	err_exit(_("%s: missing subheader in game file"), filename);
     }
     if (strcmp(buf, GAME_FILE_API_VERSION "\n") != 0) {
-	err_exit("%s: saved under a different version of Star Traders",
+	err_exit(_("%s: saved under a different version of Star Traders"),
 		 filename);
     }
 
@@ -222,7 +222,7 @@ bool load_game (int num)
 
     // Read in the game file encryption key
     if (fscanf(file, "%i\n", &crypt_key) != 1) {
-	err_exit("%s: illegal or missing field on line %d", filename, lineno);
+	err_exit(_("%s: illegal or missing field on line %d"), filename, lineno);
     }
     lineno++;
 
@@ -251,7 +251,7 @@ bool load_game (int num)
 
     // Read in company data
     for (i = 0; i < MAX_COMPANIES; i++) {
-	company[i].name = company_name[i];
+	company[i].name = strdup(gettext(company_name[i]));
 	load_game_read_double(company[i].share_price,  company[i].share_price >= 0.0);
 	load_game_read_double(company[i].share_return, true);
 	load_game_read_long(company[i].stock_issued,   company[i].stock_issued >= 0);
@@ -262,10 +262,10 @@ bool load_game (int num)
     // Read in galaxy map
     for (int x = 0; x < MAX_X; x++) {
 	if (fgets(buf, BUFSIZE, file) == NULL) {
-	    err_exit("%s: missing field on line %d", filename, lineno);
+	    err_exit(_("%s: missing field on line %d"), filename, lineno);
 	}
 	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) != MAX_Y + 1) {
-	    err_exit("%s: illegal field on line %d", filename, lineno);
+	    err_exit(_("%s: illegal field on line %d"), filename, lineno);
 	}
 
 	for (int y = 0; y < MAX_Y; y++) {
@@ -274,7 +274,7 @@ bool load_game (int num)
 		|| (c >= MAP_A && c <= MAP_LAST)) {
 		galaxy_map[x][y] = (map_val_t) c;
 	    } else {
-		err_exit("%s: illegal value on line %d", filename, lineno);
+		err_exit(_("%s: illegal value on line %d"), filename, lineno);
 	    }
 	}
 

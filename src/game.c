@@ -178,7 +178,7 @@ void init_game (void)
 
 	    // Initialise company data
 	    for (i = 0; i < MAX_COMPANIES; i++) {
-		company[i].name         = company_name[i];
+		company[i].name         = strdup(gettext(company_name[i]));
 		company[i].share_price  = 0.0;
 		company[i].share_return = INITIAL_RETURN;
 		company[i].stock_issued = 0;
@@ -552,7 +552,7 @@ void end_game (void)
 	for (i = 0; i < number_players; i++) {
 	    l_strfmon(buf, BUFSIZE, "%!18n", player[i].sort_value);
 	    mvwprintw(curwin, i + 7, 2, "%5s  %-*.*s  %18s  ",
-		      ordinal[i + 1], w, w, player[i].name, buf);
+		      gettext(ordinal[i + 1]), w, w, player[i].name, buf);
 	}
 
 	wait_for_key(curwin, getmaxy(curwin) - 2, attr_waitforkey);

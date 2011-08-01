@@ -129,7 +129,7 @@ void init_screen (void)
     initscr();
 
     if (COLS < MIN_COLS || LINES < MIN_LINES) {
-	err_exit("terminal size is too small (%d x %d required)",
+	err_exit(_("terminal size is too small (%d x %d required)"),
 		 MIN_COLS, MIN_LINES);
     }
 

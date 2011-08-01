@@ -232,7 +232,7 @@ void process_cmdline (int argc, char *argv[])
 		option_max_turn = strtol(optarg, &p, 10);
 
 		if (option_max_turn < MIN_MAX_TURN || p == NULL || *p != '\0') {
-		    fprintf(stderr, "%s: invalid value for --max-turn: `%s'\n",
+		    fprintf(stderr, _("%s: invalid value for --max-turn: `%s'\n"),
 			    program_name(), optarg);
 		    show_usage(EXIT_FAILURE);
 		}
@@ -248,7 +248,7 @@ void process_cmdline (int argc, char *argv[])
 
     if (optind < argc && argv[optind] != NULL) {
 	if (*argv[optind] == '-') {
-	    fprintf(stderr, "%s: invalid operand `%s'\n", program_name(),
+	    fprintf(stderr, _("%s: invalid operand `%s'\n"), program_name(),
 		    argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
@@ -257,7 +257,7 @@ void process_cmdline (int argc, char *argv[])
 	    && *argv[optind] >= '1' && *argv[optind] <= '9') {
 	    game_num = *argv[optind] - '0';
 	} else {
-	    fprintf(stderr, "%s: invalid game number `%s'\n",
+	    fprintf(stderr, _("%s: invalid game number `%s'\n"),
 		    program_name(), argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
@@ -266,7 +266,7 @@ void process_cmdline (int argc, char *argv[])
     }
 
     if (optind < argc && argv[optind] != NULL) {
-	fprintf(stderr, "%s: extra operand `%s'\n", program_name(),
+	fprintf(stderr, _("%s: extra operand `%s'\n"), program_name(),
 		argv[optind]);
 	show_usage(EXIT_FAILURE);
     }
@@ -278,7 +278,7 @@ void process_cmdline (int argc, char *argv[])
 
 void show_version (void)
 {
-    printf("\
+    printf(_("\
 " PACKAGE_NAME " (%s) %s\n\
 Copyright (C) %s, John Zaitseff.\n\
 \n\
@@ -290,7 +290,7 @@ This program is free software that is distributed under the terms of the\n\
 GNU General Public License, version 3 or later.  You are welcome to\n\
 modify and/or distribute it under certain conditions.  This program has\n\
 NO WARRANTY, to the extent permitted by law; see the License for details.\n\
-", program_name(), PACKAGE_VERSION, "1990-2011");
+"), program_name(), PACKAGE_VERSION, "1990-2011");
 
     exit(EXIT_SUCCESS);
 }
@@ -305,35 +305,35 @@ void show_usage (int status)
 
 
     if (status != EXIT_SUCCESS) {
-	fprintf(stderr, "%s: Try `%s --help' for more information.\n",
+	fprintf(stderr, _("%s: Try `%s --help' for more information.\n"),
 		pn, pn);
     } else {
-	printf("Usage: %s [OPTION ...] [GAME]\n", pn);
-	printf("\
+	printf(_("Usage: %s [OPTION ...] [GAME]\n"), pn);
+	printf(_("\
 Play Star Traders, a simple game of interstellar trading.\n\n\
-");
-	printf("\
+"));
+	printf(_("\
 Options:\n\
   -V, --version        output version information and exit\n\
   -h, --help           display this help and exit\n\
       --no-color       don't use colour for displaying text\n\
       --max-turn=NUM   set the number of turns to NUM\n\n\
-");
-	printf("\
+"));
+	printf(_("\
 If GAME is specified as a number between 1 and 9, load and continue\n\
 playing that game.  If GAME is not specified, start a new game.\n\n\
-");
+"));
 
 #ifdef PACKAGE_AUTHOR
-	printf("Report bugs to %s <%s>.\n", PACKAGE_AUTHOR, PACKAGE_BUGREPORT);
+	printf(_("Report bugs to %s <%s>.\n"), PACKAGE_AUTHOR, PACKAGE_BUGREPORT);
 #else
-	printf("Report bugs to <%s>.\n", PACKAGE_BUGREPORT);
+	printf(_("Report bugs to <%s>.\n"), PACKAGE_BUGREPORT);
 #endif
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
-	printf("Report %s bugs to <%s>.\n", PACKAGE_PACKAGER, PACKAGE_PACKAGER_BUG_REPORTS);
+	printf(_("Report %s bugs to <%s>.\n"), PACKAGE_PACKAGER, PACKAGE_PACKAGER_BUG_REPORTS);
 #endif
 #ifdef PACKAGE_URL
-	printf(PACKAGE_NAME " home page: <%s>.\n", PACKAGE_URL);
+	printf(_(PACKAGE_NAME " home page: <%s>.\n"), PACKAGE_URL);
 #endif
     }
 

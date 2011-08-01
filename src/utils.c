@@ -206,7 +206,7 @@ void err_exit (const char *restrict format, ...)
 
     end_screen();
 
-    fprintf(stderr, "%s: ", program_name());
+    fprintf(stderr, _("%s: "), program_name());
     va_start(args, format);
     vfprintf(stderr, format, args);
     va_end(args);
@@ -227,12 +227,12 @@ void errno_exit (const char *restrict format, ...)
 
     end_screen();
 
-    fprintf(stderr, "%s: ", program_name());
+    fprintf(stderr, _("%s: "), program_name());
     if (format != NULL) {
 	va_start(args, format);
 	vfprintf(stderr, format, args);
 	va_end(args);
-	fputs(": ", stderr);
+	fputs(_(": "), stderr);
     }
     fprintf(stderr, "%s\n", strerror(saved_errno));
 
@@ -245,7 +245,7 @@ void errno_exit (const char *restrict format, ...)
 
 void err_exit_nomem (void)
 {
-    err_exit("out of memory");
+    err_exit(_("out of memory"));
 }
 
 
