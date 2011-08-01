@@ -316,7 +316,7 @@ Play Star Traders, a simple game of interstellar trading.\n\n\
 Options:\n\
   -V, --version        output version information and exit\n\
   -h, --help           display this help and exit\n\
-      --no-color       don't use colour for displaying text\n\
+      --no-color       don't use color for displaying text\n\
       --max-turn=NUM   set the number of turns to NUM\n\n\
 "));
 	printf(_("\
