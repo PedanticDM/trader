@@ -8,8 +8,8 @@
 # Author: John Zaitseff <J.Zaitseff@zap.org.au>
 # $Id$
 #
-# This file, po/POTFILES.in, contains a list of source files which
-# contain translatable strings.
+# This file, po/LINGUAS, contains a list of the available languages in
+# the po directory.
 #
 #
 # This program is free software: you can redistribute it and/or modify it
@@ -26,17 +26,4 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-# Source files from Star Traders
-src/trader.c
-src/globals.c
-src/game.c
-src/move.c
-src/exch.c
-src/fileio.c
-src/help.c
-src/intf.c
-src/utils.c
-
-
-# Source files from the Gnulib GNU Portability Library
-lib/getopt.c
+en@quot
