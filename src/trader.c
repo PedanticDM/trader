@@ -279,7 +279,7 @@ void process_cmdline (int argc, char *argv[])
 void show_version (void)
 {
     printf(_("\
-" PACKAGE_NAME " (%s) %s\n\
+Star Traders (%s) %s\n\
 Copyright (C) %s, John Zaitseff.\n\
 \n\
 Star Traders is a simple game of interstellar trading, where the object\n\
