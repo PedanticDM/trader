@@ -74,6 +74,14 @@
 #include <getopt.h>
 
 
+// Internationalisation using GNU gettext
+
+#include "gettext.h"			// This handles ENABLE_NLS correctly
+
+#define _(string)	gettext(string)
+#define N_(string)	gettext_noop(string)
+
+
 // X/Open-compatible Curses library
 
 #if defined(HAVE_NCURSESW_CURSES_H)

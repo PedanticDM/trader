@@ -14,6 +14,7 @@ Makefile.in
 /stamp-h1
 
 /build-aux/config.guess
+/build-aux/config.rpath
 /build-aux/config.sub
 /build-aux/depcomp
 /build-aux/install-sh
@@ -23,5 +24,8 @@ Makefile.in
 /build-aux/snippet/c++defs.h
 /build-aux/snippet/warn-on-use.h
 /build-aux/snippet/_Noreturn.h
+
+/po/POTFILES
+/po/remove-potcdate.sed
 
 /src/trader

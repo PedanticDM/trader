@@ -155,6 +155,10 @@ int main (int argc, char *argv[])
 		 "(check LANG, LC_ALL and LANGUAGE in environment)");
     }
 
+    // Use correct message catalogs for the locale
+    bindtextdomain(PACKAGE, LOCALEDIR);
+    textdomain(PACKAGE);
+
     // Process command line arguments
     process_cmdline(argc, argv);
 

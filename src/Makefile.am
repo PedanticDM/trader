@@ -43,5 +43,6 @@ trader_SOURCES	= \
 
 AM_CPPFLAGS	= -I$(top_builddir)/lib -I$(top_srcdir)/lib
 trader_LDADD	= @LIBINTL@ @CURSES_LIB@ $(top_builddir)/lib/libgnu.a
+DEFS		= -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 EXTRA_DIST	= README

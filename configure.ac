@@ -57,11 +57,15 @@ AS_IF([test "x$ax_cv_curses" != xyes || test "x$ax_cv_curses_color" != xyes], [
 	AC_MSG_ERROR([requires an X/Open-compatible Curses library with colour])
 ])
 
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.18.1])
+
 AC_CONFIG_FILES([
 	Makefile
 	lib/Makefile
 	src/Makefile
 	doc/Makefile
+	po/Makefile.in
 	m4/Makefile
 ])
 AC_OUTPUT

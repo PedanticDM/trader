@@ -8,9 +8,8 @@
 # Author: John Zaitseff <J.Zaitseff@zap.org.au>
 # $Id$
 #
-# This file, Makefile.am, contains the top-level Makefile for Star
-# Traders.  It needs to be processed by automake to produce the
-# corresponding Makefile.in.
+# This file, po/Makevars, contains variables that are substituted into
+# po/Makefile for use with GNU gettext.
 #
 #
 # This program is free software: you can redistribute it and/or modify it
@@ -27,11 +26,24 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-# Find various M4 macro snippets
-ACLOCAL_AMFLAGS = -I m4
+# The message domain is the same as the package name
+DOMAIN = $(PACKAGE)
 
-# Subdirectories to recurse into
-SUBDIRS = lib src doc po m4
+# These two variables depend on the location of this directory
+subdir = po
+top_builddir = ..
 
-# Additional files to distribute
-EXTRA_DIST = build-aux/bootstrap
+# These options get passed to xgettext
+XGETTEXT_OPTIONS = --keyword=_ --keyword=N_
+
+# Copyright holder that gets inserted into the header of the
+# $(DOMAIN).pot file.
+COPYRIGHT_HOLDER = John Zaitseff
+
+# E-mail address or URL used by translators to report bugs in the
+# untranslated (original) strings
+MSGID_BUGS_ADDRESS = J.Zaitseff@zap.org.au
+
+# List of locale categories, beyond LC_MESSAGES, for which the message
+# catalogs shall be used.  It is usually empty.
+EXTRA_LOCALE_CATEGORIES =
