@@ -39,6 +39,9 @@ and installation:
 4.  Development libraries and header files  for all of the above.  On many
     systems, these files are part of XXX-dev packages.
 
+5.  The GNU Perfect Hash Function  Generator, gperf.  This utility program
+    is required for parts of the GNU Portability Library.
+
 
 Installation
 ============
@@ -58,6 +61,7 @@ manual:
 This version of the  configure script understands the following additional
 command line options:
 
+    --disable-nls       Do not use Native Language Support
     --disable-assert    Turn off all debugging assert() statements
     --with-ncurses      Force the use of NCurses  over the system's Curses
                         library
