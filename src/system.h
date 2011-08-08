@@ -64,6 +64,7 @@
 // Headers defined by X/Open Single Unix Specification v4
 
 #include <unistd.h>
+#include <signal.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <monetary.h>

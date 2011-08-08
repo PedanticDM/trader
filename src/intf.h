@@ -534,16 +534,17 @@ extern int gettxlong (WINDOW *win, long int *restrict result, long int min,
   Function:   answer_yesno - Wait for a Yes/No answer
   Parameters: win          - Window to use (should be curwin)
               attr_keys    - Window rendition to use for key choices
-  Returns:    bool         - True if Yes was selected, false if No
+  Returns:    int          - 1 if Yes was selected, 0 if No, ERR if error
 
   This function prompts the user by printing " [Y/N] " using appropriate
   character renditions ("Y" and "N" in attr_keys, the rest in the current
   rendition), then waits for the user to press either "Y" (for Yes) or
-  "N" (for No) on the keyboard, then prints the answer using A_BOLD.
-  True is returned if "Y" was selected, false if "N".  Note that the
-  cursor becomes invisible after calling this function.
+  "N" (for No) on the keyboard, then prints the answer using A_BOLD.  If
+  "Y" was selected, 1 is returned, if "N", 0 is returned.  ERR is
+  returned if abort_game becomes true.  Note that the cursor becomes
+  invisible after calling this function.
 */
-extern bool answer_yesno (WINDOW *win, chtype attr_keys);
+extern int answer_yesno (WINDOW *win, chtype attr_keys);
 
 
 /*

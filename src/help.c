@@ -162,6 +162,9 @@ void show_help (void)
     bool done = false;
 
 
+    if (abort_game)
+	return;
+
     // Count how many pages appear in the help text
     for (numpages = 0; help_text[numpages] != NULL; numpages++)
 	;
@@ -356,6 +359,9 @@ void show_help (void)
 	    break;
 
 	default:
+	    if (abort_game)
+		return;
+
 	    curpage++;
 	    done = (curpage == numpages);
 	}

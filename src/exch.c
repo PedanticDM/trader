@@ -211,6 +211,9 @@ void exchange_stock (void)
 		    break;
 
 		default:
+		    if (abort_game)
+			return;
+
 		    beep();
 		}
 	    }
@@ -255,6 +258,9 @@ void visit_bank (void)
     bool done;
     char *buf;
 
+
+    if (abort_game)
+	return;
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -328,6 +334,9 @@ void visit_bank (void)
 	    break;
 
 	default:
+	    if (abort_game)
+		return;
+
 	    beep();
 	}
     }
@@ -482,6 +491,9 @@ void trade_shares (int num, bool *bid_used)
     char *buf;
 
 
+    if (abort_game)
+	return;
+
     assert(num >= 0 && num < MAX_COMPANIES);
     assert(company[num].on_map);
 
@@ -581,6 +593,9 @@ void trade_shares (int num, bool *bid_used)
 	    break;
 
 	default:
+	    if (abort_game)
+		return;
+
 	    beep();
 	}
     }

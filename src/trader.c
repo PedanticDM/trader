@@ -180,7 +180,7 @@ int main (int argc, char *argv[])
 
     // Finish up...
     end_program();
-    return EXIT_SUCCESS;
+    return abort_game ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
 

@@ -101,6 +101,7 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
   Parameters: dest          - Destination buffer of size BUFSIZE
               src           - Source buffer of size BUFSIZE
               isfloat       - True if src contains a floating point number
+  Returns:    (nothing)
 
   This helper function copies the string in src to dest, performing
   certain fixups along the way.  In particular, thousands separators are
@@ -112,6 +113,17 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
 */
 static void txinput_fixup (char *restrict dest, char *restrict src,
 			   bool isfloat);
+
+
+/*
+  Function:   sigterm_handler - Handle program termination signals
+  Parameters: sig             - Signal number
+  Returns:    (nothing)
+
+  This function handles termination signals (like SIGINT and SIGTERM) by
+  setting the global variable abort_game to true.
+*/
+static void sigterm_handler (int sig);
 
 
 /************************************************************************
@@ -126,6 +138,22 @@ static void txinput_fixup (char *restrict dest, char *restrict src,
 
 void init_screen (void)
 {
+    struct sigaction sa;
+
+
+    // Initialise signal handlers
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sa.sa_handler = sigterm_handler;
+
+    if (sigaction(SIGINT, &sa, NULL) == -1) {
+	errno_exit("sigaction(SIGINT)");
+    }
+    if (sigaction(SIGTERM, &sa, NULL) == -1) {
+	errno_exit("sigaction(SIGTERM)");
+    }
+
+    // Initialise the screen
     initscr();
 
     if (COLS < MIN_COLS || LINES < MIN_LINES) {
@@ -256,6 +284,21 @@ void end_screen (void)
     curwin = NULL;
     topwin = NULL;
     firstwin = NULL;
+}
+
+
+/***********************************************************************/
+// sigterm_handler: Handle program termination signals
+
+void sigterm_handler (int sig)
+{
+    /* Note that sigterm_handler() simply sets a volatile variable
+       instead of directly terminating, as functions like endwin() and
+       end_screen() are NOT reentrant.  A side-effect of doing this,
+       however, is that the main program needs to have abort_game checks
+       scattered all over it. */
+
+    abort_game = true;
 }
 
 
@@ -642,8 +685,10 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
 	key = wgetch(win);
 	if (key == ERR) {
-	    // Do nothing on ERR
-	    ;
+	    if (abort_game) {
+		ret = ERR;
+		done = true;
+	    }
 	} else if ((key == KEY_DEFAULTVAL1 || key == KEY_DEFAULTVAL2)
 		   && defaultval != NULL && len == 0) {
 	    // Initialise buffer with the default value
@@ -1447,7 +1492,7 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 /***********************************************************************/
 // answer_yesno: Wait for a Yes/No answer
 
-bool answer_yesno (WINDOW *win, chtype attr_keys)
+int answer_yesno (WINDOW *win, chtype attr_keys)
 {
     int key;
     bool done;
@@ -1474,6 +1519,8 @@ bool answer_yesno (WINDOW *win, chtype attr_keys)
 
 	if (key == 'Y' || key == 'N') {
 	    done = true;
+	} else if (abort_game) {
+	    return ERR;
 	} else {
 	    beep();
 	}

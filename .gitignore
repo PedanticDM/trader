@@ -21,11 +21,11 @@ Makefile.in
 /build-aux/install-sh
 /build-aux/missing
 
+/build-aux/snippet/_Noreturn.h
 /build-aux/snippet/arg-nonnull.h
 /build-aux/snippet/c++defs.h
 /build-aux/snippet/unused-parameter.h
 /build-aux/snippet/warn-on-use.h
-/build-aux/snippet/_Noreturn.h
 
 /po/POTFILES
 /po/remove-potcdate.sed
