@@ -320,8 +320,10 @@ void init_locale (void)
     /* Are we in the POSIX locale?  This test may not be portable as the
        string returned by setlocale() is supposed to be opaque. */
     add_currency_symbol = false;
-    if (strcmp(current_mon_locale, "POSIX") == 0
-	|| strcmp(current_mon_locale, "C")  == 0) {
+    if (   strcmp(current_mon_locale, "POSIX")   == 0
+	|| strcmp(current_mon_locale, "C")       == 0
+	|| strcmp(current_mon_locale, "C.UTF-8") == 0
+	|| strcmp(current_mon_locale, "C.utf8")  == 0) {
 
 	add_currency_symbol = true;
 	lconvinfo.currency_symbol = MOD_POSIX_CURRENCY_SYMBOL;
