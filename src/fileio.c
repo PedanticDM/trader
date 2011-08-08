@@ -52,7 +52,8 @@ static const unsigned char game_file_crypt_key[] = {
 #define load_game_scanf(_fmt, _var, _cond)				\
     do {								\
 	if (fgets(buf, BUFSIZE, file) == NULL) {			\
-	    err_exit(_("%s: missing field on line %d"), filename, lineno);  \
+	    err_exit(_("%s: missing field on line %d"),			\
+		     filename, lineno);					\
 	}								\
 	if (sscanf(unscramble(crypt_key, buf, BUFSIZE), _fmt "\n",	\
 		   &(_var)) != 1) {					\
@@ -81,32 +82,76 @@ static const unsigned char game_file_crypt_key[] = {
 	(_var) = b;							\
     } while (0)
 
-#define load_game_read_string(_var)					\
+#ifdef USE_UTF8_GAME_FILE
+#  define load_game_read_string(_var)					\
     do {								\
 	char *s;							\
 	int len;							\
 									\
 	if (fgets(buf, BUFSIZE, file) == NULL) {			\
-	    err_exit(_("%s: missing field on line %d"), filename, lineno);  \
+	    err_exit(_("%s: missing field on line %d"),			\
+		     filename, lineno);					\
 	}								\
 	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) == 0) {		\
-	    err_exit(_("%s: illegal value on line %d"), filename, lineno);  \
+	    err_exit(_("%s: illegal value on line %d"),			\
+		     filename, lineno);					\
 	}								\
-	lineno++;							\
-									\
-	s = malloc(strlen(buf) + 1);					\
-	if (s == NULL) {						\
-	    err_exit_nomem();						\
+	if (need_icd) {							\
+	    s = str_cd_iconv(buf, icd);					\
+	    if (s == NULL) {						\
+		if (errno == EILSEQ) {					\
+		    err_exit(_("%s: illegal characters on line %d"),	\
+			     filename, lineno);				\
+		} else {						\
+		    errno_exit("str_cd_iconv()");			\
+		}							\
+	    }								\
+	} else {							\
+	    s = malloc(strlen(buf) + 1);				\
+	    if (s == NULL) {						\
+		err_exit_nomem();					\
+	    }								\
+	    strcpy(s, buf);						\
 	}								\
 									\
-	strcpy(s, buf);							\
 	len = strlen(s);						\
 	if (len > 0 && s[len - 1] == '\n') {				\
 	    s[len - 1] = '\0';						\
 	}								\
 									\
+	lineno++;							\
 	(_var) = s;							\
     } while (0)
+#else // ! USE_UTF8_GAME_FILE
+#  define load_game_read_string(_var)					\
+    do {								\
+	char *s;							\
+	int len;							\
+									\
+	if (fgets(buf, BUFSIZE, file) == NULL) {			\
+	    err_exit(_("%s: missing field on line %d"),			\
+		     filename, lineno);					\
+	}								\
+	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) == 0) {		\
+	    err_exit(_("%s: illegal value on line %d"),			\
+		     filename, lineno);					\
+	}								\
+									\
+	s = malloc(strlen(buf) + 1);					\
+	if (s == NULL) {						\
+	    err_exit_nomem();						\
+	}								\
+	strcpy(s, buf);							\
+									\
+	len = strlen(s);						\
+	if (len > 0 && s[len - 1] == '\n') {				\
+	    s[len - 1] = '\0';						\
+	}								\
+									\
+	lineno++;							\
+	(_var) = s;							\
+    } while (0)
+#endif // ! USE_UTF8_GAME_FILE
 
 
 // Macros used in save_game()
@@ -126,8 +171,30 @@ static const unsigned char game_file_crypt_key[] = {
     save_game_printf("%2.20e", _var)
 #define save_game_write_bool(_var)					\
     save_game_printf("%d", (int) _var)
-#define save_game_write_string(_var)					\
+
+#ifdef USE_UTF8_GAME_FILE
+#  define save_game_write_string(_var)					\
+    do {								\
+	if (need_icd) {							\
+	    char *s = str_cd_iconv(_var, icd);				\
+	    if (s == NULL) {						\
+		if (errno == EILSEQ) {					\
+		    err_exit(_("%s: could not convert string"),		\
+			     filename);					\
+		} else {						\
+		    errno_exit("str_cd_iconv()");			\
+		}							\
+	    }								\
+	    save_game_printf("%s", s);					\
+	    free(s);							\
+	} else {							\
+	    save_game_printf("%s", _var);				\
+	}								\
+    } while (0)
+#else // ! USE_UTF8_GAME_FILE
+#  define save_game_write_string(_var)					\
     save_game_printf("%s", _var)
+#endif // ! USE_UTF8_GAME_FILE
 
 
 /************************************************************************
@@ -144,11 +211,17 @@ bool load_game (int num)
 {
     char *buf, *filename;
     FILE *file;
+    char *codeset, *codeset_nl;
     int saved_errno, lineno;
     char *prev_locale;
 
     int crypt_key;
     int n, i, j;
+
+#ifdef USE_UTF8_GAME_FILE
+    iconv_t icd;
+    bool need_icd;
+#endif
 
 
     assert(num >= 1 && num <= 9);
@@ -196,6 +269,39 @@ bool load_game (int num)
 	return false;
     }
 
+#ifdef USE_UTF8_GAME_FILE
+    // Make sure all strings are read in UTF-8 format for consistency
+    codeset = nl_langinfo(CODESET);
+    if (codeset == NULL) {
+	errno_exit("nl_langinfo(CODESET)");
+    }
+    need_icd = (strcmp(codeset, GAME_FILE_CHARSET) != 0);
+    if (need_icd) {
+	icd = iconv_open(codeset, GAME_FILE_CHARSET);
+	if (icd == (iconv_t) -1) {
+	    errno_exit("iconv_open()");
+	}
+    } else {
+	icd = (iconv_t) -1;
+    }
+    codeset_nl = strdup(GAME_FILE_CHARSET "\n");
+    if (codeset_nl == NULL) {
+	err_exit_nomem();
+    }
+#else // ! USE_UTF8_GAME_FILE
+    // Make sure all strings are read in the correct codeset
+    codeset = nl_langinfo(CODESET);
+    if (codeset == NULL) {
+	errno_exit("nl_langinfo(CODESET)");
+    }
+    codeset_nl = malloc(strlen(codeset) + 2);
+    if (codeset_nl == NULL) {
+	err_exit_nomem();
+    }
+    strcpy(codeset_nl, codeset);
+    strcat(codeset_nl, "\n");
+#endif // ! USE_UTF8_GAME_FILE
+
     // Change the formatting of numbers to the POSIX locale for consistency
     prev_locale = strdup(setlocale(LC_NUMERIC, NULL));
     if (prev_locale == NULL) {
@@ -217,8 +323,15 @@ bool load_game (int num)
 	err_exit(_("%s: saved under a different version of Star Traders"),
 		 filename);
     }
+    if (fgets(buf, BUFSIZE, file) == NULL) {
+	err_exit(_("%s: missing subheader in game file"), filename);
+    }
+    if (strcmp(buf, codeset_nl) != 0) {
+	err_exit(_("%s: saved under an incompatible character encoding"),
+		 filename);
+    }
 
-    lineno = 3;
+    lineno = 4;
 
     // Read in the game file encryption key
     if (fscanf(file, "%i\n", &crypt_key) != 1) {
@@ -291,9 +404,16 @@ bool load_game (int num)
     // Change the formatting of numbers back to the user-supplied locale
     setlocale(LC_NUMERIC, prev_locale);
 
+#ifdef USE_UTF8_GAME_FILE
+    if (need_icd) {
+	iconv_close(icd);
+    }
+#endif
+
     free(buf);
     free(filename);
     free(prev_locale);
+    free(codeset_nl);
     return true;
 }
 
@@ -306,11 +426,17 @@ bool save_game (int num)
     const char *data_dir;
     char *buf, *filename;
     FILE *file;
+    char *codeset;
     int saved_errno;
     char *prev_locale;
     struct stat statbuf;
     int crypt_key;
     int i, j, x, y;
+
+#ifdef USE_UTF8_GAME_FILE
+    iconv_t icd;
+    bool need_icd;
+#endif
 
 
     assert(num >= 1 && num <= 9);
@@ -375,6 +501,30 @@ bool save_game (int num)
 	return false;
     }
 
+#ifdef USE_UTF8_GAME_FILE
+    // Make sure all strings are output in UTF-8 format for consistency
+    codeset = nl_langinfo(CODESET);
+    if (codeset == NULL) {
+	errno_exit("nl_langinfo(CODESET)");
+    }
+    need_icd = (strcmp(codeset, GAME_FILE_CHARSET) != 0);
+    if (need_icd) {
+	icd = iconv_open(codeset, GAME_FILE_CHARSET);
+	if (icd == (iconv_t) -1) {
+	    errno_exit("iconv_open()");
+	}
+    } else {
+	icd = (iconv_t) -1;
+    }
+    codeset = GAME_FILE_CHARSET;	// Now contains output codeset
+#else // ! USE_UTF8_GAME_FILE
+    // Make sure all strings are output in the correct codeset
+    codeset = nl_langinfo(CODESET);
+    if (codeset == NULL) {
+	errno_exit("nl_langinfo(CODESET)");
+    }
+#endif // ! USE_UTF8_GAME_FILE
+
     // Change the formatting of numbers to the POSIX locale for consistency
     prev_locale = strdup(setlocale(LC_NUMERIC, NULL));
     if (prev_locale == NULL) {
@@ -384,7 +534,7 @@ bool save_game (int num)
 
     // Write out the game file header and encryption key
     fprintf(file, "%s\n" "%s\n", GAME_FILE_HEADER, GAME_FILE_API_VERSION);
-    fprintf(file, "%d\n", crypt_key);
+    fprintf(file, "%s\n" "%d\n", codeset, crypt_key);
 
     // Write out various game variables
     save_game_write_int(MAX_X);
@@ -442,6 +592,12 @@ bool save_game (int num)
 
     // Change the formatting of numbers back to the user-supplied locale
     setlocale(LC_NUMERIC, prev_locale);
+
+#ifdef USE_UTF8_GAME_FILE
+    if (need_icd) {
+	iconv_close(icd);
+    }
+#endif
 
     free(buf);
     free(filename);

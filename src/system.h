@@ -67,6 +67,7 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <monetary.h>
+#include <langinfo.h>
 
 
 // Headers defined by the GNU C Library
@@ -80,6 +81,15 @@
 
 #define _(string)	gettext(string)
 #define N_(string)	gettext_noop(string)
+
+
+// Character set conversion for game files
+
+#undef USE_UTF8_GAME_FILE
+#ifdef HAVE_ICONV
+#  define USE_UTF8_GAME_FILE	1
+#  include "striconv.h"
+#endif
 
 
 // X/Open-compatible Curses library
