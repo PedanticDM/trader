@@ -18,7 +18,8 @@ at http://www.zap.org.au/services/svn/.
 Version 7.2 (not yet released)
 ------------------------------
 
-@@@ To be written.  Internationalisation, multibyte strings
+@@@ To be written.  Internationalisation, multibyte strings, terminal
+resizing, signals, game file in UTF-8
 
 
 Version 7.1 (29th July, 2011)
