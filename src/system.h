@@ -86,10 +86,11 @@
 
 // Character set conversion for game files
 
-#undef USE_UTF8_GAME_FILE
 #ifdef HAVE_ICONV
 #  define USE_UTF8_GAME_FILE	1
 #  include "striconv.h"
+#else
+#  undef USE_UTF8_GAME_FILE
 #endif
 
 
