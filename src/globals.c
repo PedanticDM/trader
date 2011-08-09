@@ -84,12 +84,11 @@ bool	game_loaded	= false;	// True if game was loaded from disk
 int	game_num	= 0;		// Game number (1-9)
 
 bool	quit_selected	= false;	// Is a player trying to quit the game?
+bool	abort_game	= false;	// Abort game without declaring winner?
 
 bool	option_no_color     = false;	// True if --no-color was specified
 bool	option_dont_encrypt = false;	// True if --dont-encrypt was specified
 int	option_max_turn     = 0;	// Max. turns if --max-turn was specified
-
-volatile sig_atomic_t abort_game = false; // Abort game as quickly as possible?
 
 
 /***********************************************************************/

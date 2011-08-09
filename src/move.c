@@ -159,9 +159,6 @@ void select_moves (void)
     bool unique;
 
 
-    if (abort_game)
-	return;
-
     // How many empty spaces are there in the galaxy map?
     count = 0;
     for (x = 0; x < MAX_X; x++) {
@@ -321,9 +318,6 @@ selection_t get_move (void)
 		    break;
 
 		default:
-		    if (abort_game)
-			return SEL_QUIT;
-
 		    beep();
 		}
 	    }
@@ -341,12 +335,9 @@ selection_t get_move (void)
 
 	// Ask the player to confirm their choice
 	mvwaddstr(curwin, 2, 22, "Are you sure?");
-	if (answer_yesno(curwin, attr_keycode) != true) {
+	if (! answer_yesno(curwin, attr_keycode)) {
 	    selection = SEL_NONE;
 	}
-
-	if (abort_game)
-	    return SEL_QUIT;
 
 	// Save the game if required
 	if (selection == SEL_SAVE) {
@@ -406,9 +397,6 @@ selection_t get_move (void)
 			    break;
 
 			default:
-			    if (abort_game)
-				return SEL_QUIT;
-
 			    beep();
 			}
 		    }
@@ -456,13 +444,12 @@ selection_t get_move (void)
 
 void process_move (selection_t selection)
 {
-    if (abort_game)
-	return;
-
     if (selection == SEL_QUIT) {
 	// The players want to end the game
 	quit_selected = true;
+    }
 
+    if (quit_selected || abort_game) {
 	deltxwin();			// "Select move" window
 	deltxwin();			// Galaxy map window
 	txrefresh();
@@ -508,18 +495,12 @@ void process_move (selection_t selection)
 		assign_vals(x, y, left, right, up, down);
 	    }
 
-	    if (abort_game)
-		return;
-
 	    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(up)
 		&& left != up) {
 		galaxy_map[x][y] = left;
 		merge_companies(left, up);
 		assign_vals(x, y, left, right, up, down);
 	    }
-
-	    if (abort_game)
-		return;
 
 	    if (IS_MAP_COMPANY(left) && IS_MAP_COMPANY(down)
 		&& left != down) {
@@ -528,18 +509,12 @@ void process_move (selection_t selection)
 		assign_vals(x, y, left, right, up, down);
 	    }
 
-	    if (abort_game)
-		return;
-
 	    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(up)
 		&& right != up) {
 		galaxy_map[x][y] = right;
 		merge_companies(right, up);
 		assign_vals(x, y, left, right, up, down);
 	    }
-
-	    if (abort_game)
-		return;
 
 	    if (IS_MAP_COMPANY(right) && IS_MAP_COMPANY(down)
 		&& right != down) {
@@ -548,9 +523,6 @@ void process_move (selection_t selection)
 		assign_vals(x, y, left, right, up, down);
 	    }
 
-	    if (abort_game)
-		return;
-
 	    if (IS_MAP_COMPANY(up) && IS_MAP_COMPANY(down)
 		&& up != down) {
 		galaxy_map[x][y] = up;
@@ -558,9 +530,6 @@ void process_move (selection_t selection)
 		assign_vals(x, y, left, right, up, down);
 	    }
 	}
-
-	if (abort_game)
-	    return;
 
 	// See if an existing company can be expanded
 	nearby = (IS_MAP_COMPANY(left)    ? left :
@@ -627,9 +596,6 @@ void next_player (void)
     bool all_out;
 
 
-    if (abort_game)
-	return;
-
     all_out = true;
     for (i = 0; i < number_players; i++) {
 	if (player[i].in_game) {
@@ -669,9 +635,6 @@ void bankrupt_player (bool forced)
     bool longname;
     int i;
 
-
-    if (abort_game)
-	return;
 
     /* It would be nice if we had functions that would do word-wrapping
        for us automatically! */
@@ -826,9 +789,6 @@ void merge_companies (map_val_t a, map_val_t b)
     double bonus;
     char *buf;
 
-
-    if (abort_game)
-	return;
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -992,9 +952,6 @@ void adjust_values (void)
     int which;
 
 
-    if (abort_game)
-	return;
-
     // Declare a company bankrupt!
     if (randf() > (1.0 - COMPANY_BANKRUPTCY)) {
 	which = randi(MAX_COMPANIES);
@@ -1127,9 +1084,6 @@ void adjust_values (void)
     if (interest_rate > MAX_INTEREST_RATE) {
 	interest_rate /= randf() + INTEREST_RATE_DIVIDER;
     }
-
-    if (abort_game)
-	return;
 
     // Calculate current player's debt
     player[current_player].debt *= interest_rate + 1.0;

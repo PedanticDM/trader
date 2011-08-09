@@ -33,7 +33,6 @@
 
 
 #include <stdbool.h>
-#include <signal.h>
 
 
 /************************************************************************
@@ -196,12 +195,11 @@ extern bool	game_loaded;		// True if game was loaded from disk
 extern int	game_num;		// Game number (1-9)
 
 extern bool	quit_selected;		// Is a player trying to quit the game?
+extern bool	abort_game;		// Abort game without declaring winner?
 
 extern bool	option_no_color;	// True if --no-color was specified
 extern bool	option_dont_encrypt;	// True if --dont-encrypt was specified
 extern int	option_max_turn;	// Max. turns if --max-turn was specified
-
-extern volatile sig_atomic_t abort_game; // Abort game as quickly as possible?
 
 
 #endif /* included_GLOBALS_H */

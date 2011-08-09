@@ -112,8 +112,9 @@ static void init_title (void);
   Parameters: sig             - Signal number
   Returns:    (nothing)
 
-  This function handles termination signals (like SIGINT and SIGTERM) by
-  setting the global variable abort_game to true.
+  This function handles termination signals (like SIGINT, SIGTERM and
+  SIGQUIT) by clearing the screen, uninstalling itself and reraising the
+  signal.
 */
 static void sigterm_handler (int sig);
 
@@ -162,6 +163,9 @@ void init_screen (void)
     }
     if (sigaction(SIGTERM, &sa, NULL) == -1) {
 	errno_exit("sigaction(SIGTERM)");
+    }
+    if (sigaction(SIGQUIT, &sa, NULL) == -1) {
+	errno_exit("sigaction(SIGQUIT)");
     }
 
     // Initialise the screen
@@ -312,13 +316,26 @@ void init_title (void)
 
 void sigterm_handler (int sig)
 {
-    /* Note that sigterm_handler() simply sets a volatile variable
-       instead of directly terminating, as functions like endwin() and
-       end_screen() are NOT reentrant.  A side-effect of doing this,
-       however, is that the main program needs to have abort_game checks
-       scattered all over it. */
+    struct sigaction sa;
 
-    abort_game = true;
+
+    /* The following Curses functions are NOT async-signal-safe (ie, are
+       not reentrant) as they may well call malloc() or free().  However,
+       it does allow us to terminate with the correct signal without
+       having convoluted code in the main program. */
+
+    curs_set(CURS_ON);
+    clear();
+    refresh();
+    endwin();
+
+    // Reraise the same signal, using the system-default handler
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sa.sa_handler = SIG_DFL;
+
+    sigaction(sig, &sa, NULL);
+    raise(sig);
 }
 
 
@@ -705,10 +722,8 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
 	key = wgetch(win);
 	if (key == ERR) {
-	    if (abort_game) {
-		ret = ERR;
-		done = true;
-	    }
+	    // Do nothing on ERR
+	    ;
 	} else if ((key == KEY_DEFAULTVAL1 || key == KEY_DEFAULTVAL2)
 		   && defaultval != NULL && len == 0) {
 	    // Initialise buffer with the default value
@@ -1512,7 +1527,7 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 /***********************************************************************/
 // answer_yesno: Wait for a Yes/No answer
 
-int answer_yesno (WINDOW *win, chtype attr_keys)
+bool answer_yesno (WINDOW *win, chtype attr_keys)
 {
     int key;
     bool done;
@@ -1539,8 +1554,6 @@ int answer_yesno (WINDOW *win, chtype attr_keys)
 
 	if (key == 'Y' || key == 'N') {
 	    done = true;
-	} else if (abort_game) {
-	    return ERR;
 	} else {
 	    beep();
 	}

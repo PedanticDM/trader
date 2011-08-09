@@ -126,18 +126,12 @@ void init_game (void)
 	while (number_players == 0) {
 	    int choice = ask_number_players();
 
-	    if (abort_game)
-		return;
-
 	    if (choice == ERR) {
 		abort_game = true;
 		return;
 
 	    } else if (choice == 0) {
 		choice = ask_game_number();
-
-		if (abort_game)
-		    return;
 
 		if (choice != ERR) {
 		    game_num = choice;
@@ -167,9 +161,6 @@ void init_game (void)
 	    int i, j, x, y;
 
 	    ask_player_names();
-
-	    if (abort_game)
-		return;
 
 	    deltxwin();			// "Number of players" window
 	    txrefresh();
@@ -230,6 +221,7 @@ void init_game (void)
     }
 
     quit_selected = false;
+    abort_game = false;
 }
 
 
@@ -285,9 +277,6 @@ static int ask_number_players (void)
 		break;
 
 	    default:
-		if (abort_game)
-		    return ERR;
-
 		beep();
 	    }
 	}
@@ -344,9 +333,6 @@ int ask_game_number (void)
 		break;
 
 	    default:
-		if (abort_game)
-		    return ERR;
-
 		beep();
 	    }
 	}
@@ -362,9 +348,6 @@ int ask_game_number (void)
 
 void ask_player_names (void)
 {
-    if (abort_game)
-	return;
-
     if (number_players == 1) {
 	// Ask for the player's name
 
@@ -379,9 +362,6 @@ void ask_player_names (void)
 	while (true) {
 	    int ret = gettxstr(curwin, &player[0].name, NULL, false,
 			       2, x, w, attr_input_field);
-	    if (abort_game)
-		return;
-
 	    if (ret == OK && strlen(player[0].name) != 0) {
 		break;
 	    } else {
@@ -391,7 +371,7 @@ void ask_player_names (void)
 
 	newtxwin(5, 44, 6, WCENTER, true, attr_normal_window);
 	mvwaddstr(curwin, 2, 2, "Do you need any instructions?");
-	if (answer_yesno(curwin, attr_keycode) == true) {
+	if (answer_yesno(curwin, attr_keycode)) {
 	    show_help();
 	}
 
@@ -452,9 +432,6 @@ void ask_player_names (void)
 		break;
 
 	    case ERR:
-		if (abort_game)
-		    return;
-
 		beep();
 		break;
 
@@ -491,7 +468,7 @@ void ask_player_names (void)
 
 	newtxwin(5, 50, 6, WCENTER, true, attr_normal_window);
 	mvwaddstr(curwin, 2, 2, "Does any player need instructions?");
-	if (answer_yesno(curwin, attr_keycode) == true) {
+	if (answer_yesno(curwin, attr_keycode)) {
 	    show_help();
 	}
     }
@@ -510,8 +487,10 @@ void end_game (void)
     char *buf;
 
 
-    if (abort_game)
+    if (abort_game) {
+	// init_game() was cancelled by user
 	return;
+    }
 
     buf = malloc(BUFSIZE);
     if (buf == NULL) {
@@ -530,9 +509,6 @@ void end_game (void)
     for (i = 0; i < number_players; i++) {
 	show_status(i);
     }
-
-    if (abort_game)
-	return;
 
     if (number_players == 1) {
 	l_strfmon(buf, BUFSIZE, "%1n", total_value(0));
@@ -594,9 +570,6 @@ void show_map (bool closewin)
 {
     int n, x, y;
 
-
-    if (abort_game)
-	return;
 
     newtxwin(MAX_Y + 4, WIN_COLS, 1, WCENTER, true, attr_map_window);
 
@@ -696,9 +669,6 @@ void show_status (int num)
     double val;
     int i, line;
 
-
-    if (abort_game)
-	return;
 
     assert(num >= 0 && num < number_players);
 
