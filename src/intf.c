@@ -97,6 +97,17 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
 ************************************************************************/
 
 /*
+  Function:   sigterm_handler - Handle program termination signals
+  Parameters: sig             - Signal number
+  Returns:    (nothing)
+
+  This function handles termination signals (like SIGINT and SIGTERM) by
+  setting the global variable abort_game to true.
+*/
+static void sigterm_handler (int sig);
+
+
+/*
   Function:   txinput_fixup - Copy strings with fixup
   Parameters: dest          - Destination buffer of size BUFSIZE
               src           - Source buffer of size BUFSIZE
@@ -113,17 +124,6 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
 */
 static void txinput_fixup (char *restrict dest, char *restrict src,
 			   bool isfloat);
-
-
-/*
-  Function:   sigterm_handler - Handle program termination signals
-  Parameters: sig             - Signal number
-  Returns:    (nothing)
-
-  This function handles termination signals (like SIGINT and SIGTERM) by
-  setting the global variable abort_game to true.
-*/
-static void sigterm_handler (int sig);
 
 
 /************************************************************************
