@@ -97,6 +97,17 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
 ************************************************************************/
 
 /*
+  Function:   init_title - Draw the main window title
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function draws the main window game title, "Star Traders", and
+  clears the rest of the screen.
+*/
+static void init_title (void);
+
+
+/*
   Function:   sigterm_handler - Handle program termination signals
   Parameters: sig             - Signal number
   Returns:    (nothing)
@@ -254,18 +265,7 @@ void init_screen (void)
 	attr_error_waitforkey = A_REVERSE;
     }
 
-    bkgd(attr_root_window);
-    clear();
-
-    move(0, 0);
-    for (int i = 0; i < COLS; i++) {
-	addch(attr_game_title | ' ');
-    }
-
-    center(stdscr, 0, attr_game_title, "Star Traders");
-
-    attrset(attr_root_window);
-    refresh();
+    init_title();
 }
 
 
@@ -284,6 +284,26 @@ void end_screen (void)
     curwin = NULL;
     topwin = NULL;
     firstwin = NULL;
+}
+
+
+/***********************************************************************/
+// init_title: Draw the main window title
+
+void init_title (void)
+{
+    bkgd(attr_root_window);
+    clear();
+
+    move(0, 0);
+    for (int i = 0; i < COLS; i++) {
+	addch(attr_game_title | ' ');
+    }
+
+    center(stdscr, 0, attr_game_title, "Star Traders");
+
+    attrset(attr_root_window);
+    refresh();
 }
 
 
