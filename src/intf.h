@@ -43,18 +43,25 @@
 /*
   This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
   terminal screen; this terminal must be at least MIN_COLS x MIN_LINES in
-  size; the newtxwin() function automatically places a new window in the
-  centre-top of the terminal screen.  The program does not yet handle
-  terminal resizing events.
+  size.  The newtxwin() function automatically places a new window in the
+  centre-top of the terminal screen.
 */
 
 #define MIN_LINES	24	// Minimum number of lines in terminal
 #define MIN_COLS	80	// Minimum number of columns in terminal
 
-#define WIN_LINES	MIN_LINES	// Number of lines in main window
-#define WIN_COLS	MIN_COLS	// Number of columns in main window
+#define WIN_LINES	MIN_LINES	// Number of lines used in main window
+#define WIN_COLS	MIN_COLS	// Number of columns used in main window
 
 #define WCENTER		-1		// Centre the new window
+
+
+// Check if resizing events are supported
+#ifdef KEY_RESIZE
+#  define HANDLE_RESIZE_EVENTS	1
+#else
+#  undef HANDLE_RESIZE_EVENTS
+#endif
 
 
 // Visibility of the cursor in Curses (for curs_set())
@@ -77,8 +84,6 @@ typedef enum curs_type {
 
 #define KEY_CTRL(x)	((x) - 0100)	// ASCII control character
 
-#define KEY_ILLEGAL	077777		// No key should ever return this!
-
 // Keycodes for inserting the default value in input routines
 #define KEY_DEFAULTVAL1	'='
 #define KEY_DEFAULTVAL2	';'
@@ -89,17 +94,6 @@ typedef enum curs_type {
 #  define KEY_CUP	01060		// CTRL + Up Arrow
 #  define KEY_CLEFT	01033		// CTRL + Left Arrow
 #  define KEY_CRIGHT	01052		// CTRL + Right Arrow
-#endif
-
-// Keycodes only defined by NCurses
-#ifndef KEY_RESIZE
-#  define KEY_RESIZE	KEY_ILLEGAL
-#endif
-#ifndef KEY_EVENT
-#  define KEY_EVENT	KEY_ILLEGAL
-#endif
-#ifndef KEY_MOUSE
-#  define KEY_MOUSE	KEY_ILLEGAL
 #endif
 
 // Timeout value (in ms) for Meta-X-style keyboard input

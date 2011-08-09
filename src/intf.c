@@ -120,6 +120,19 @@ static void sigterm_handler (int sig);
 
 
 /*
+  Function:   txresize - Handle a terminal resize event
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function handles a SIGWINCH (terminal window size changed) event
+  by refreshing Curses windows as appropriate.
+*/
+#ifdef HANDLE_RESIZE_EVENTS
+static void txresize (void);
+#endif
+
+
+/*
   Function:   txinput_fixup - Copy strings with fixup
   Parameters: dest          - Destination buffer of size BUFSIZE
               src           - Source buffer of size BUFSIZE
@@ -465,6 +478,26 @@ int txrefresh (void)
 
 
 /***********************************************************************/
+// txresize: Handle a terminal resize event
+
+#ifdef HANDLE_RESIZE_EVENTS
+
+void txresize (void)
+{
+    /* The current implementation cannot resize windows per se: a given
+       window would have to be destroyed and recreated in the new
+       location, then redrawn, most likely via a call-back function.
+       We just redraw the game title, refresh all windows and hope for
+       the best! */
+
+    init_title();
+    txrefresh();
+}
+
+#endif // HANDLE_RESIZE_EVENTS
+
+
+/***********************************************************************/
 // attrpr: Print a string with a particular character rendition
 
 int attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
@@ -654,11 +687,34 @@ int center3 (WINDOW *win, int y, chtype attr1, chtype attr3, chtype attr2,
 
 int gettxchar (WINDOW *win)
 {
+    int key;
+    bool done;
+
+
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
 
-    return wgetch(win);
+    done = false;
+    while (! done) {
+	key = wgetch(win);
+	switch (key) {
+	case ERR:
+	    beep();
+	    break;
+
+#ifdef HANDLE_RESIZE_EVENTS
+	case KEY_RESIZE:
+	    txresize();
+	    break;
+#endif // HANDLE_RESIZE_EVENTS
+
+	default:
+	    done = true;
+	}
+    }
+
+    return key;
 }
 
 
@@ -1265,11 +1321,11 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
 		    // Miscellaneous keys and events
 
+#ifdef HANDLE_RESIZE_EVENTS
 		    case KEY_RESIZE:
-		    case KEY_EVENT:
-			ret = key;
-			done = true;
+			txresize();
 			break;
+#endif // HANDLE_RESIZE_EVENTS
 
 		    default:
 			beep();
@@ -1279,11 +1335,11 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		wtimeout(win, -1);
 		break;
 
+#ifdef HANDLE_RESIZE_EVENTS
 	    case KEY_RESIZE:
-	    case KEY_EVENT:
-		ret = key;
-		done = true;
+		txresize();
 		break;
+#endif // HANDLE_RESIZE_EVENTS
 
 	    default:
 		beep();
@@ -1553,11 +1609,24 @@ bool answer_yesno (WINDOW *win, chtype attr_keys)
 
     done = false;
     while (! done) {
-	key = toupper(wgetch(win));
+	key = wgetch(win);
 
-	if (key == 'Y' || key == 'N') {
+	switch (key) {
+	case 'Y':
+	case 'y':
+	case 'N':
+	case 'n':
+	    key = toupper(key);
 	    done = true;
-	} else {
+	    break;
+
+#ifdef HANDLE_RESIZE_EVENTS
+	case KEY_RESIZE:
+	    txresize();
+	    break;
+#endif // HANDLE_RESIZE_EVENTS
+
+	default:
 	    beep();
 	}
     }
@@ -1584,6 +1653,10 @@ bool answer_yesno (WINDOW *win, chtype attr_keys)
 
 void wait_for_key (WINDOW *win, int y, chtype attr)
 {
+    int key;
+    bool done;
+
+
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
@@ -1591,7 +1664,24 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
     center(win, y, attr, "[ Press <SPACE> to continue ] ");
     wrefresh(win);
 
-    (void) wgetch(win);
+    done = false;
+    while (! done) {
+	key = wgetch(win);
+	switch (key) {
+	case ERR:
+	    beep();
+	    break;
+
+#ifdef HANDLE_RESIZE_EVENTS
+	case KEY_RESIZE:
+	    txresize();
+	    break;
+#endif // HANDLE_RESIZE_EVENTS
+
+	default:
+	    done = true;
+	}
+    }
 }
 
 
