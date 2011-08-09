@@ -154,9 +154,12 @@ void init_screen (void)
 
 
     // Initialise signal handlers
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
     sa.sa_handler = sigterm_handler;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sigaddset(&sa.sa_mask, SIGINT);
+    sigaddset(&sa.sa_mask, SIGTERM);
+    sigaddset(&sa.sa_mask, SIGQUIT);
 
     if (sigaction(SIGINT, &sa, NULL) == -1) {
 	errno_exit("sigaction(SIGINT)");
@@ -330,9 +333,9 @@ void sigterm_handler (int sig)
     endwin();
 
     // Reraise the same signal, using the system-default handler
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
     sa.sa_handler = SIG_DFL;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
 
     sigaction(sig, &sa, NULL);
     raise(sig);
