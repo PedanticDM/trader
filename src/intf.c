@@ -556,6 +556,78 @@ void txresize (void)
 
 
 /***********************************************************************/
+// txdlgbox: Display a dialog box and wait for any key
+
+int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
+	      chtype bkgd_attr, chtype title_attr, chtype norm_attr,
+	      chtype alt1_attr, chtype alt2_attr, chtype keywait_attr,
+	      const char *restrict boxtitle, const char *restrict format, ...)
+{
+    bool usetitle = (boxtitle != NULL);
+
+    chtype *chbuf;
+    int *widthbuf;
+    int lines;
+    va_list args;
+
+
+    assert(maxlines > 0);
+
+    chbuf = malloc(BUFSIZE * sizeof(chtype));
+    if (chbuf == NULL) {
+	err_exit_nomem();
+    }
+
+    widthbuf = malloc(maxlines * sizeof(int));
+    if (widthbuf == NULL) {
+	err_exit_nomem();
+    }
+
+    va_start(args, format);
+    lines = vprepstr(chbuf, BUFSIZE, norm_attr, alt1_attr, alt2_attr, maxlines,
+		     ncols - 4, widthbuf, maxlines, format, args);
+    va_end(args);
+
+    if (lines < 0) {
+	errno_exit("txdlgbox: `%s'", format);
+    }
+
+    newtxwin(usetitle ? lines + 6 : lines + 5, ncols, begin_y, begin_x,
+	     true, bkgd_attr);
+
+    if (usetitle) {
+	chtype *titlebuf;
+	int titlewidth;
+	int titlelines;
+
+	titlebuf = malloc(BUFSIZE * sizeof(chtype));
+	if (titlebuf == NULL) {
+	    err_exit_nomem();
+	}
+
+	titlelines = prepstr(titlebuf, BUFSIZE, title_attr, bkgd_attr,
+			     norm_attr, 1, ncols - 4, &titlewidth, 1,
+			     "%s", boxtitle);
+	if (titlelines < 0) {
+	    errno_exit("txdlgbox: `%s'", boxtitle);
+	}
+
+	pr_center(curwin, 1, 0, titlebuf, titlelines, &titlewidth);
+
+	free(titlebuf);
+    }
+
+    pr_center(curwin, usetitle ? 3 : 2, 0, chbuf, lines, widthbuf);
+    wait_for_key(curwin, getmaxy(curwin) - 2, keywait_attr);
+    deltxwin();
+
+    free(widthbuf);
+    free(chbuf);
+    return OK;
+}
+
+
+/***********************************************************************/
 // prepstr: Prepare a string for printing to screen
 
 int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
@@ -940,8 +1012,9 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		const char *str;
 
 		char *buf = malloc(BUFSIZE);
-		if (buf == NULL)
+		if (buf == NULL) {
 		    err_exit_nomem();
+		}
 
 		while (inspec && *format != '\0') {
 		    char c = *format++;

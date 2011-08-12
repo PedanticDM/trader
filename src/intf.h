@@ -185,10 +185,10 @@ extern void end_screen (void);
   Function:   newtxwin  - Create a new window, inserted into window stack
   Parameters: nlines    - Number of lines in new window
               ncols     - Number of columns in new window
-              begin_y   - Starting line number (0 to LINES-1)
-              begin_x   - Starting column number (0 to COLS-1)
+              begin_y   - Starting line number (0 to LINES-1) or WCENTER
+              begin_x   - Starting column number (0 to COLS-1) or WCENTER
               dofill    - True to draw background and box frame
-              bkgd_attr - Background attribute
+              bkgd_attr - Background character rendition
   Returns:    WINDOW *  - Pointer to new window
 
   This function creates a window using the Curses newwin() function and
@@ -252,6 +252,36 @@ extern int delalltxwin (void);
   under that one will need refreshing by calling txrefresh().
 */
 extern int txrefresh (void);
+
+
+/*
+  Function:   txdlgbox     - Display a dialog box and wait for any key
+  Parameters: maxlines     - Maximum number of lines of text in window
+              ncols        - Number of columns in dialog box window
+              begin_y      - Starting line number (0 to LINES-1) or WCENTER
+              begin_x      - Starting column number (0 to COLS-1) or WCENTER
+              bkgd_attr    - Background character rendition
+              title_attr   - Character rendition to use for dialog box title
+              norm_attr    - Normal character rendition in box
+              alt1_attr    - Alternate character rendition 1 (highlight)
+              alt2_attr    - Alternate character rendition 2 (more highlighted)
+              keywait_attr - "Press any key" character rendition
+              boxtitle     - Dialog box title (may be NULL)
+              format       - Dialog box text, as passed to prepstr()
+              ...          - Dialog box text format parameters
+  Returns:    int          - OK is always returned
+
+  This function creates a dialog box window using newtxwin(), displays
+  boxtitle centered on the first line (if boxtitle is not NULL), displays
+  format (and associated parameters) centered using prepstr(), then waits
+  for the user to press any key before closing the dialog box window.
+  Note that txrefresh() is NOT called once the window is closed.
+*/
+extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
+		     chtype bkgd_attr, chtype title_attr, chtype norm_attr,
+		     chtype alt1_attr, chtype alt2_attr, chtype keywait_attr,
+		     const char *restrict boxtitle,
+		     const char *restrict format, ...);
 
 
 /*
