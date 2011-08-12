@@ -108,10 +108,7 @@ void exchange_stock (void)
 	if (all_off_map) {
 	    center(curwin, 8, attr_normal, "No companies on the map");
 	} else {
-	    char *buf = malloc(BUFSIZE);
-	    if (buf == NULL) {
-		err_exit_nomem();
-	    }
+	    char *buf = xmalloc(BUFSIZE);
 
 	    // Handle the locale's currency symbol
 	    snprintf(buf, BUFSIZE, "share (%s)", lconvinfo.currency_symbol);
@@ -256,10 +253,7 @@ void visit_bank (void)
     char *buf;
 
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     credit_limit = (total_value(current_player) - player[current_player].debt)
 	* CREDIT_LIMIT_RATE;
@@ -470,10 +464,7 @@ void trade_shares (int num, bool *bid_used)
     assert(num >= 0 && num < MAX_COMPANIES);
     assert(company[num].on_map);
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     ownership = (company[num].stock_issued == 0) ? 0.0 :
 	((double) player[current_player].stock_owned[num]

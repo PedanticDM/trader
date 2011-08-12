@@ -384,14 +384,9 @@ void init_title (void)
 	addch(attr_game_title | ' ');
     }
 
-    chbuf = malloc(BUFSIZE * sizeof(chtype));
-    if (chbuf == NULL) {
-	err_exit_nomem();
-    }
-
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     lines = prepstr(chbuf, BUFSIZE, attr_game_title, 0, 0, 1, COLS,
 		    &width, 1, _("Star Traders"));
-
     pr_center(stdscr, 0, 0, chbuf, lines, &width);
     attrset(attr_root_window);
     free(chbuf);
@@ -451,13 +446,9 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
 	err_exit_nomem();
     }
 
-    nw = malloc(sizeof(txwin_t));
-    if (nw == NULL) {
-	err_exit_nomem();
-    }
-
     // Insert the new window into the txwin stack
 
+    nw = xmalloc(sizeof(txwin_t));
     nw->win = win;
     nw->next = NULL;
     nw->prev = topwin;
@@ -586,15 +577,8 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 
     assert(maxlines > 0);
 
-    chbuf = malloc(BUFSIZE * sizeof(chtype));
-    if (chbuf == NULL) {
-	err_exit_nomem();
-    }
-
-    widthbuf = malloc(maxlines * sizeof(int));
-    if (widthbuf == NULL) {
-	err_exit_nomem();
-    }
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    widthbuf = xmalloc(maxlines * sizeof(int));
 
     va_start(args, format);
     lines = vprepstr(chbuf, BUFSIZE, norm_attr, alt1_attr, alt2_attr, maxlines,
@@ -605,14 +589,9 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 	     true, bkgd_attr);
 
     if (usetitle) {
-	chtype *titlebuf;
+	chtype *titlebuf = xmalloc(BUFSIZE * sizeof(chtype));
 	int titlewidth;
 	int titlelines;
-
-	titlebuf = malloc(BUFSIZE * sizeof(chtype));
-	if (titlebuf == NULL) {
-	    err_exit_nomem();
-	}
 
 	titlelines = prepstr(titlebuf, BUFSIZE, title_attr, 0, 0, 1,
 			     ncols - 4, &titlewidth, 1, boxtitle);
@@ -995,10 +974,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		int count = 0;
 		const char *str;
 
-		char *buf = malloc(BUFSIZE);
-		if (buf == NULL) {
-		    err_exit_nomem();
-		}
+		char *buf = xmalloc(BUFSIZE);
 
 		while (inspec && *format != '\0') {
 		    char c = *format++;
@@ -1215,11 +1191,7 @@ chtype *chbufdup (const chtype *restrict chbuf, int chbufsize)
     for (len = 1, p = chbuf; *p != '\0' && len <= chbufsize; p++, len++)
 	;
 
-    ret = malloc(len * sizeof(chtype));
-    if (ret == NULL) {
-	err_exit_nomem();
-    }
-
+    ret = xmalloc(len * sizeof(chtype));
     memcpy(ret, chbuf, len * sizeof(chtype));
     ret[len - 1] = '\0';	// Terminating NUL, just in case not present
 
@@ -1358,10 +1330,7 @@ int center (WINDOW *win, int y, chtype attr, const char *restrict format, ...)
     assert(win != NULL);
     assert(format != NULL);
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     chtype oldattr = getattrs(win);
     chtype oldbkgd = getbkgd(win);
@@ -1406,10 +1375,7 @@ int center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
     assert(initial != NULL);
     assert(format != NULL);
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     chtype oldattr = getattrs(win);
     chtype oldbkgd = getbkgd(win);
@@ -1460,10 +1426,7 @@ int center3 (WINDOW *win, int y, chtype attr1, chtype attr3, chtype attr2,
     assert(final != NULL);
     assert(format != NULL);
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     chtype oldattr = getattrs(win);
     chtype oldbkgd = getbkgd(win);
@@ -2191,11 +2154,7 @@ int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
 
     // Allocate the result buffer if needed
     if (*bufptr == NULL) {
-	*bufptr = malloc(BUFSIZE);
-	if (*bufptr == NULL) {
-	    err_exit_nomem();
-	}
-
+	*bufptr = xmalloc(BUFSIZE);
 	**bufptr = '\0';
     }
 
@@ -2275,16 +2234,11 @@ int gettxdouble (WINDOW *win, double *restrict result, double min,
     assert(result != NULL);
     assert(min <= max);
 
-    buf        = malloc(BUFSIZE);
-    bufcopy    = malloc(BUFSIZE);
-    allowed    = malloc(BUFSIZE);
-    emptystr   = malloc(BUFSIZE);
-    defaultstr = malloc(BUFSIZE);
-
-    if (buf == NULL || bufcopy == NULL || allowed == NULL
-	|| emptystr == NULL || defaultstr == NULL) {
-	err_exit_nomem();
-    }
+    buf        = xmalloc(BUFSIZE);
+    bufcopy    = xmalloc(BUFSIZE);
+    allowed    = xmalloc(BUFSIZE);
+    emptystr   = xmalloc(BUFSIZE);
+    defaultstr = xmalloc(BUFSIZE);
 
     *buf = '\0';
 
@@ -2348,16 +2302,11 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
     assert(result != NULL);
     assert(min <= max);
 
-    buf        = malloc(BUFSIZE);
-    bufcopy    = malloc(BUFSIZE);
-    allowed    = malloc(BUFSIZE);
-    emptystr   = malloc(BUFSIZE);
-    defaultstr = malloc(BUFSIZE);
-
-    if (buf == NULL || bufcopy == NULL || allowed == NULL
-	|| emptystr == NULL || defaultstr == NULL) {
-	err_exit_nomem();
-    }
+    buf        = xmalloc(BUFSIZE);
+    bufcopy    = xmalloc(BUFSIZE);
+    allowed    = xmalloc(BUFSIZE);
+    emptystr   = xmalloc(BUFSIZE);
+    defaultstr = xmalloc(BUFSIZE);
 
     *buf = '\0';
 
@@ -2481,11 +2430,7 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
     meta(win, true);
     wtimeout(win, -1);
 
-    chbuf = malloc(BUFSIZE * sizeof(chtype));
-    if (chbuf == NULL) {
-	err_exit_nomem();
-    }
-
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     lines = prepstr(chbuf, BUFSIZE, attr, 0, 0, 1, getmaxx(win) - 4,
 		    &width, 1, _("[ Press <SPACE> to continue ] "));
     pr_center(win, y, 0, chbuf, lines, &width);

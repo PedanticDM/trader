@@ -114,7 +114,7 @@ const char *home_directory (void)
 	char *home = getenv("HOME");
 
 	if (home != NULL && *home != '\0') {
-	    home_directory_str = strdup(home);
+	    home_directory_str = xstrdup(home);
 	}
     }
 
@@ -136,13 +136,12 @@ const char *data_directory (void)
 	const char *home = home_directory();
 
 	if (name != NULL && home != NULL) {
-	    char *p = malloc(strlen(home) + strlen(name) + 3);
-	    if (p != NULL) {
-		strcpy(p, home);
-		strcat(p, "/.");
-		strcat(p, name);
-		data_directory_str = p;
-	    }
+	    char *p = xmalloc(strlen(home) + strlen(name) + 3);
+
+	    strcpy(p, home);
+	    strcat(p, "/.");
+	    strcat(p, name);
+	    data_directory_str = p;
 	}
     }
 
@@ -170,20 +169,13 @@ char *game_filename (int gamenum)
     snprintf(buf, GAME_FILENAME_BUFSIZE, GAME_FILENAME_PROTO, gamenum);
 
     if (dd == NULL) {
-	char *p = malloc(strlen(buf) + 1);
-
-	if (p != NULL) {
-	    strcpy(p, buf);
-	}
-	return p;
+	return xstrdup(buf);
     } else {
-	char *p = malloc(strlen(dd) + strlen(buf) + 2);
+	char *p = xmalloc(strlen(dd) + strlen(buf) + 2);
 
-	if (p != NULL) {
-	    strcpy(p, dd);
-	    strcat(p, "/");
-	    strcat(p, buf);
-	}
+	strcpy(p, dd);
+	strcat(p, "/");
+	strcat(p, buf);
 	return p;
     }
 }
@@ -436,6 +428,53 @@ char *scramble (int key, char *restrict buf, int bufsize)
 char *unscramble (int key, char *restrict buf, int bufsize)
 {
     return scramble(key, buf, bufsize);
+}
+
+
+/************************************************************************
+*                  Miscellaneous function definitions                   *
+************************************************************************/
+
+// These functions are documented in the file "utils.h"
+
+
+/***********************************************************************/
+// xmalloc: Allocate a new block of memory, with checking
+
+void *xmalloc (size_t size)
+{
+    void *p;
+
+
+    if (size < 1)
+	size = 1;
+
+    p = malloc(size);
+    if (p == NULL) {
+	err_exit_nomem();
+    }
+
+    return p;
+}
+
+
+/***********************************************************************/
+// xstrdup: Duplicate a string, with checking
+
+char *xstrdup (const char *str)
+{
+    char *s;
+
+
+    if (str == NULL)
+	str = "";
+
+    s = strdup(str);
+    if (s == NULL) {
+	err_exit_nomem();
+    }
+
+    return s;
 }
 
 

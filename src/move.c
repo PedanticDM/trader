@@ -746,13 +746,8 @@ void merge_companies (map_val_t a, map_val_t b)
     long int old_stock, new_stock, total_new;
     int x, y, i, line;
     double bonus;
-    char *buf;
+    char *buf = xmalloc(BUFSIZE);
 
-
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
 
     if (val_aa < val_bb) {
 	// Make sure aa is the dominant company
@@ -930,12 +925,7 @@ void adjust_values (void)
 
 	    } else {
 		double rate = randf();
-		char *buf;
-
-		buf = malloc(BUFSIZE);
-		if (buf == NULL) {
-		    err_exit_nomem();
-		}
+		char *buf = xmalloc(BUFSIZE);
 
 		for (i = 0; i < number_players; i++) {
 		    if (player[i].in_game) {

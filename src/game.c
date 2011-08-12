@@ -178,7 +178,7 @@ void init_game (void)
 
 	    // Initialise company data
 	    for (i = 0; i < MAX_COMPANIES; i++) {
-		company[i].name         = strdup(gettext(company_name[i]));
+		company[i].name         = xstrdup(gettext(company_name[i]));
 		company[i].share_price  = 0.0;
 		company[i].share_return = INITIAL_RETURN;
 		company[i].stock_issued = 0;
@@ -489,10 +489,7 @@ void end_game (void)
 	return;
     }
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     txdlgbox(MAX_DLG_LINES, 50, 9, WCENTER, attr_error_window,
 	     attr_error_title, attr_error_highlight, 0, 0,
@@ -577,11 +574,7 @@ void show_map (bool closewin)
 
     if (turn_number != max_turn) {
 	const char *initial = "Turn: ";
-
-	char *buf = malloc(BUFSIZE);
-	if (buf == NULL) {
-	    err_exit_nomem();
-	}
+	char *buf = xmalloc(BUFSIZE);
 
 	int len1 = strlen(initial);
 	int len2 = snprintf(buf, BUFSIZE, "%d", turn_number);
@@ -671,10 +664,7 @@ void show_status (int num)
 	center(curwin, 11, attr_blink, "* * *   B A N K R U P T   * * *");
 
     } else {
-	char *buf = malloc(BUFSIZE);
-	if (buf == NULL) {
-	    err_exit_nomem();
-	}
+	char *buf = xmalloc(BUFSIZE);
 
 	// Check to see if any companies are on the map
 	bool none = true;

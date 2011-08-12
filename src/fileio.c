@@ -107,11 +107,7 @@ static const unsigned char game_file_crypt_key[] = {
 		}							\
 	    }								\
 	} else {							\
-	    s = malloc(strlen(buf) + 1);				\
-	    if (s == NULL) {						\
-		err_exit_nomem();					\
-	    }								\
-	    strcpy(s, buf);						\
+	    s = xstrdup(buf);						\
 	}								\
 									\
 	len = strlen(s);						\
@@ -137,11 +133,7 @@ static const unsigned char game_file_crypt_key[] = {
 		     filename, lineno);					\
 	}								\
 									\
-	s = malloc(strlen(buf) + 1);					\
-	if (s == NULL) {						\
-	    err_exit_nomem();						\
-	}								\
-	strcpy(s, buf);							\
+	s = xstrdup(buf);						\
 									\
 	len = strlen(s);						\
 	if (len > 0 && s[len - 1] == '\n') {				\
@@ -226,10 +218,7 @@ bool load_game (int num)
 
     assert(num >= 1 && num <= 9);
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     filename = game_filename(num);
     assert(filename != NULL);
@@ -275,29 +264,20 @@ bool load_game (int num)
     } else {
 	icd = (iconv_t) -1;
     }
-    codeset_nl = strdup(GAME_FILE_CHARSET "\n");
-    if (codeset_nl == NULL) {
-	err_exit_nomem();
-    }
+    codeset_nl = xstrdup(GAME_FILE_CHARSET "\n");
 #else // ! USE_UTF8_GAME_FILE
     // Make sure all strings are read in the correct codeset
     codeset = nl_langinfo(CODESET);
     if (codeset == NULL) {
 	errno_exit("nl_langinfo(CODESET)");
     }
-    codeset_nl = malloc(strlen(codeset) + 2);
-    if (codeset_nl == NULL) {
-	err_exit_nomem();
-    }
+    codeset_nl = xmalloc(strlen(codeset) + 2);
     strcpy(codeset_nl, codeset);
     strcat(codeset_nl, "\n");
 #endif // ! USE_UTF8_GAME_FILE
 
     // Change the formatting of numbers to the POSIX locale for consistency
-    prev_locale = strdup(setlocale(LC_NUMERIC, NULL));
-    if (prev_locale == NULL) {
-	err_exit_nomem();
-    }
+    prev_locale = xstrdup(setlocale(LC_NUMERIC, NULL));
     setlocale(LC_NUMERIC, "C");
 
     // Read the game file header
@@ -355,7 +335,7 @@ bool load_game (int num)
 
     // Read in company data
     for (i = 0; i < MAX_COMPANIES; i++) {
-	company[i].name = strdup(gettext(company_name[i]));
+	company[i].name = xstrdup(gettext(company_name[i]));
 	load_game_read_double(company[i].share_price,  company[i].share_price >= 0.0);
 	load_game_read_double(company[i].share_return, true);
 	load_game_read_long(company[i].stock_issued,   company[i].stock_issued >= 0);
@@ -432,10 +412,7 @@ bool save_game (int num)
 
     assert(num >= 1 && num <= 9);
 
-    buf = malloc(BUFSIZE);
-    if (buf == NULL) {
-	err_exit_nomem();
-    }
+    buf = xmalloc(BUFSIZE);
 
     crypt_key = option_dont_encrypt ? 0 :
 	game_file_crypt_key[randi(GAME_FILE_CRYPT_KEY_SIZE)];
@@ -508,10 +485,7 @@ bool save_game (int num)
 #endif // ! USE_UTF8_GAME_FILE
 
     // Change the formatting of numbers to the POSIX locale for consistency
-    prev_locale = strdup(setlocale(LC_NUMERIC, NULL));
-    if (prev_locale == NULL) {
-	err_exit_nomem();
-    }
+    prev_locale = xstrdup(setlocale(LC_NUMERIC, NULL));
     setlocale(LC_NUMERIC, "C");
 
     // Write out the game file header and encryption key

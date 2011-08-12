@@ -300,4 +300,32 @@ extern char *scramble (int key, char *restrict buf, int bufsize);
 extern char *unscramble (int key, char *restrict buf, int bufsize);
 
 
+/************************************************************************
+*                   Miscellaneous function prototypes                   *
+************************************************************************/
+
+/*
+  Function:   xmalloc - Allocate a new block of memory, with checking
+  Parameters: size    - Size of new block of memory in bytes
+  Returns:    void *  - Pointer to new block of memory
+
+  This wrapper function allocates a new block of memory by calling
+  malloc(), then checks if a NULL pointer has been returned.  If so, the
+  program terminates with an "Out of memory" error.
+*/
+extern void *xmalloc (size_t size);
+
+
+/*
+  Function:   xstrdup - Duplicate a string, with checking
+  Parameters: str     - String to duplicate
+  Returns:    char *  - Pointer to new string, allocated with malloc()
+
+  This wrapper function duplicates a string by calling strdup(), then
+  checks if a NULL pointer has been returned.  If so, the program
+  terminates with an "Out of memory" error.
+*/
+extern char *xstrdup (const char *str);
+
+
 #endif /* included_UTILS_H */
