@@ -386,6 +386,20 @@ extern int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
 /*
+  Function:   chbufdup  - Duplicate a chtype buffer
+  Parameters: chbuf     - Buffer to duplicate
+              chbufsize - Number of chtype elements in chbuf
+  Returns:    chtype *  - Pointer to new duplicated buffer
+
+  This function returns a new buffer of type chtype * that contains a
+  copy of the string in chbuf.  No errors are returned: if sufficient
+  memory is not available, the program terminates with an "Out of memory"
+  message.
+*/
+extern chtype *chbufdup (const chtype *restrict chbuf, int chbufsize);
+
+
+/*
   Function:   pr_left  - Print strings in chbuf left-aligned
   Parameters: win      - Window to use (should be curwin)
               y        - Line on which to print first string

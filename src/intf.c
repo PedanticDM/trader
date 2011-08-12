@@ -1236,6 +1236,32 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
 /***********************************************************************/
+// chbufdup: Duplicate a chtype buffer
+
+chtype *chbufdup (const chtype *restrict chbuf, int chbufsize)
+{
+    const chtype *p;
+    int len;
+    chtype *ret;
+
+
+    // Determine chbuf length, including ending NUL
+    for (len = 1, p = chbuf; *p != '\0' && len <= chbufsize; p++, len++)
+	;
+
+    ret = malloc(len * sizeof(chtype));
+    if (ret == NULL) {
+	err_exit_nomem();
+    }
+
+    memcpy(ret, chbuf, len * sizeof(chtype));
+    ret[len - 1] = '\0';	// Terminating NUL, just in case not present
+
+    return ret;
+}
+
+
+/***********************************************************************/
 // pr_left: Print strings in chbuf left-aligned
 
 int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
