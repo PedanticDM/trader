@@ -42,6 +42,29 @@ typedef struct txwin {
 } txwin_t;
 
 
+// Declarations for argument processing in prepstr()
+
+#define MAXFMTARGS	8	// Maximum number of positional arguments
+
+enum argument_type {
+    TYPE_NONE,			// No type yet assigned
+    TYPE_INT,			// int
+    TYPE_LONGINT,		// long int
+    TYPE_DOUBLE,		// double
+    TYPE_STRING			// const char *
+};
+
+struct argument {
+    enum argument_type a_type;
+    union a {
+	int		a_int;
+	long int	a_longint;
+	double		a_double;
+	const char	*a_string;
+    } a;
+};
+
+
 /************************************************************************
 *                      Global variable definitions                      *
 ************************************************************************/
@@ -133,6 +156,40 @@ static void txresize (void);
 
 
 /*
+  Function:   prepstr_addch - Add a character to the prepstr buffer
+  Parameters: chbuf         - Pointer to chtype pointer in which to store string
+              chbufsize     - Pointer to number of chtype elements in chbuf
+              attr          - Character rendition to use
+              maxlines      - Maximum number of screen lines to use
+              maxwidth      - Maximum width of each line, in chars
+              line          - Pointer to current line number
+              width         - Pointer to current line width
+              lastspc       - Pointer to const char * pointer to last space
+              widthspc      - Pointer to width just before last space
+              widthbuf      - Pointer to buffer to store widths of each line
+              widthbufsize  - Number of int elements in widthbuf
+              str           - Pointer to const char * pointer to string
+  Returns:    int           - -1 on error (with errno set), 0 otherwise
+
+  This helper function adds the character **str to **chbuf, using attr as
+  the character rendition (attributes), incrementing both *str and *chbuf
+  and decrementing *chbufsize.  If a string is too long for the current
+  line, a previous space in the current line is converted to a new line
+  (if possible), else a new line is inserted into the current location
+  (if not on the last line).  *line, *width, *lastspc, *widthspc and
+  widthbuf[] are all updated appropriately.
+*/
+static int prepstr_addch (chtype *restrict *restrict chbuf,
+			  int *restrict chbufsize, chtype attr,
+			  int maxlines, int maxwidth, int *restrict line,
+			  int *restrict width,
+			  chtype *restrict *restrict lastspc,
+			  int *restrict widthspc, int *restrict widthbuf,
+			  int widthbufsize,
+			  const char *restrict *restrict str);
+
+
+/*
   Function:   txinput_fixup - Copy strings with fixup
   Parameters: dest          - Destination buffer of size BUFSIZE
               src           - Source buffer of size BUFSIZE
@@ -155,7 +212,8 @@ static void txinput_fixup (char *restrict dest, char *restrict src,
 *             Basic text input/output function definitions              *
 ************************************************************************/
 
-// These functions are documented in the file "intf.h"
+/* These functions are documented either in the file "intf.h" or in the
+   comments above. */
 
 
 /***********************************************************************/
@@ -495,6 +553,643 @@ void txresize (void)
 }
 
 #endif // HANDLE_RESIZE_EVENTS
+
+
+/***********************************************************************/
+// prepstr_addch: Add a character to the prepstr buffer
+
+int prepstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
+		   chtype attr, int maxlines, int maxwidth,
+		   int *restrict line, int *restrict width,
+		   chtype *restrict *restrict lastspc, int *restrict widthspc,
+		   int *restrict widthbuf, int widthbufsize,
+		   const char *restrict *restrict str)
+{
+    if (*line < 0) {
+	// First character in buffer: start line 0
+	*line = 0;
+    }
+
+    if (**str == '\n') {
+	// Start a new line
+
+	if (*line < maxlines - 1) {
+	    *(*chbuf)++ = '\n';
+	    (*chbufsize)--;
+	}
+
+	widthbuf[*line] = *width;
+	*width = 0;
+
+	*lastspc = NULL;
+	*widthspc = 0;
+
+	(*line)++;
+	(*str)++;
+    } else if (*width == maxwidth) {
+	// Current line is now too long
+
+	if (! isspace(**str) && *lastspc != NULL && *line < maxlines - 1) {
+	    // Break on the last space in this line
+	    **lastspc = '\n';
+
+	    widthbuf[*line] = *widthspc;
+	    *width -= *widthspc + 1;
+
+	    *lastspc = NULL;
+	    *widthspc = 0;
+
+	    (*line)++;
+	} else {
+	    // Insert a new-line character (if not on last line)
+	    if (*line < maxlines - 1) {
+		*(*chbuf)++ = '\n';
+		(*chbufsize)--;
+	    }
+
+	    widthbuf[*line] = *width;
+	    *width = 0;
+
+	    *lastspc = NULL;
+	    *widthspc = 0;
+
+	    (*line)++;
+
+	    // Skip any following spaces
+	    while (isspace(**str)) {
+		if (*(*str)++ == '\n') {
+		    break;
+		}
+	    }
+	}
+    } else {
+	// Insert an ordinary character into the output string
+
+	if (isspace(**str)) {
+	    *lastspc = *chbuf;
+	    *widthspc = *width;
+	}
+
+	*(*chbuf)++ = (unsigned char) **str | attr;
+	(*chbufsize)--;
+	(*width)++;
+	(*str)++;
+    }
+
+    return 0;
+}
+
+
+/***********************************************************************/
+// prepstr: Prepare a string for printing to screen
+
+int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+	     chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
+	     int *restrict widthbuf, int widthbufsize,
+	     const char *restrict format, ...)
+{
+    struct argument format_arg[MAXFMTARGS];
+    int num_format_args, arg_num;
+    const char *orig_format;
+    va_list args;
+    int line, width;
+    chtype *lastspc;
+    int widthspc;
+    chtype curattr;
+    int saved_errno;
+
+
+    assert(chbuf != NULL);
+    assert(chbufsize > 0);
+    assert(maxlines > 0);
+    assert(maxwidth > 0);
+    assert(widthbuf != NULL);
+    assert(widthbufsize >= maxlines);
+    assert(format != NULL);
+
+    /* Do a preliminary scan through the format parameter to determine
+       the types of each positional argument (conversion specifier).  If
+       we did not support "%m$"-style specifiers, this would not be
+       necessary. */
+
+    orig_format = format;
+    memset(format_arg, 0, sizeof(format_arg));
+    num_format_args = 0;
+    arg_num = 0;
+    va_start(args, format);
+
+    while (*format != '\0') {
+	switch (*format++) {
+	case '^':
+	    // Switch to a different character rendition
+	    if (*format == '\0') {
+		goto error_inval;
+	    } else {
+		format++;
+	    }
+	    break;
+
+	case '%':
+	    // Process a conversion specifier
+	    if (*format == '\0') {
+		goto error_inval;
+	    } else if (*format == '%') {
+		format++;
+	    } else {
+		enum argument_type arg_type = TYPE_NONE;
+		bool inspec = true;
+		bool flag_posn = false;
+		bool flag_long = false;
+		int count = 0;
+
+		while (inspec && *format != '\0') {
+		    char c = *format++;
+		    switch (c) {
+		    case '0':
+			// Zero flag, or part of numeric count
+			if (count == 0)
+			    goto error_inval;
+
+			count *= 10;
+			break;
+
+		    case '1':
+		    case '2':
+		    case '3':
+		    case '4':
+		    case '5':
+		    case '6':
+		    case '7':
+		    case '8':
+		    case '9':
+			// Part of some numeric count
+			count = count * 10 + (c - '0');
+			break;
+
+		    case '$':
+			// Fixed-position argument
+			if (flag_posn || count == 0)
+			    goto error_inval;
+
+			if (count > MAXFMTARGS) {
+			    errno = E2BIG;
+			    goto error;
+			}
+
+			flag_posn = true;
+			arg_num = count - 1;
+			count = 0;
+			break;
+
+		    case '\'':
+			// Use locale-specific thousands separator
+			break;
+
+		    case 'l':
+			// Long length modifier
+			if (flag_long)
+			    goto error_inval;
+
+			flag_long = true;
+			break;
+
+		    case 'd':
+			// Insert an integer (int or long int)
+			arg_type = flag_long ? TYPE_LONGINT : TYPE_INT;
+			goto handlefmt;
+
+		    case 'N':
+			// Insert a monetary amount (double)
+			if (flag_long)
+			    goto error_inval;
+
+			arg_type = TYPE_DOUBLE;
+			goto handlefmt;
+
+		    case 's':
+			// Insert a string (const char *)
+			if (flag_long)
+			    goto error_inval;
+
+			arg_type = TYPE_STRING;
+
+		    handlefmt:
+			if (arg_num >= MAXFMTARGS) {
+			    errno = E2BIG;
+			    goto error;
+			}
+
+			if (format_arg[arg_num].a_type == TYPE_NONE) {
+			    format_arg[arg_num].a_type = arg_type;
+			} else if (format_arg[arg_num].a_type != arg_type) {
+			    goto error_inval;
+			}
+
+			arg_num++;
+			num_format_args = MAX(num_format_args, arg_num);
+
+			inspec = false;
+			break;
+
+		    default:
+			goto error_inval;
+		    }
+		}
+		if (inspec)
+		    goto error_inval;
+	    }
+	    break;
+
+	default:
+	    // Process an ordinary character: do nothing for now
+	    ;
+	}
+    }
+
+    for (int i = 0; i < num_format_args; i++) {
+	switch (format_arg[i].a_type) {
+	case TYPE_INT:
+	    format_arg[i].a.a_int = va_arg(args, int);
+	    break;
+
+	case TYPE_LONGINT:
+	    format_arg[i].a.a_longint = va_arg(args, long int);
+	    break;
+
+	case TYPE_DOUBLE:
+	    format_arg[i].a.a_double = va_arg(args, double);
+	    break;
+
+	case TYPE_STRING:
+	    format_arg[i].a.a_string = va_arg(args, const char *);
+	    break;
+
+	default:
+	    /* Cannot allow unused arguments, as we have no way of
+	       knowing how much space they take (cf. int vs. long long
+	       int). */
+	    goto error_inval;
+	}
+    }
+
+    // Actually process the format parameter string
+
+    format = orig_format;
+    arg_num = 0;
+
+    curattr = attr_norm;
+    line = -1;				// Current line number (0 = first)
+    width = 0;				// Width of the current line
+    lastspc = NULL;			// Pointer to last space in line
+    widthspc = 0;			// Width of line before last space
+
+    while (*format != '\0' && chbufsize > 1 && line < maxlines) {
+	switch (*format) {
+	case '^':
+	    // Switch to a different character rendition
+	    if (*++format == '\0') {
+		goto error_inval;
+	    } else {
+		switch (*format) {
+		case '^':
+		    if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines,
+				      maxwidth, &line, &width, &lastspc,
+				      &widthspc, widthbuf, widthbufsize,
+				      &format) < 0) {
+			goto error;
+		    }
+		    break;
+
+		case '{':
+		    curattr = attr_alt1;
+		    format++;
+		    break;
+
+		case '[':
+		    curattr = attr_alt2;
+		    format++;
+		    break;
+
+		case '}':
+		case ']':
+		    curattr = attr_norm;
+		    format++;
+		    break;
+
+		default:
+		    goto error_inval;
+		}
+	    }
+	    break;
+
+	case '%':
+	    // Process a conversion specifier
+	    if (*++format == '\0') {
+		goto error_inval;
+	    } else if (*format == '%') {
+		if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines,
+				  maxwidth, &line, &width, &lastspc, &widthspc,
+				  widthbuf, widthbufsize, &format) < 0) {
+		    goto error;
+		}
+	    } else {
+		bool inspec = true;
+		bool flag_posn = false;
+		bool flag_long = false;
+		bool flag_thou = false;
+		int count = 0;
+		const char *str;
+
+		char *buf = malloc(BUFSIZE);
+		if (buf == NULL)
+		    err_exit_nomem();
+
+		while (inspec && *format != '\0') {
+		    char c = *format++;
+		    switch (c) {
+		    case '0':
+			// Zero flag, or part of numeric count
+			if (count == 0) {
+			    // Zero flag is not supported
+			    free(buf);
+			    goto error_inval;
+			}
+
+			count *= 10;
+			break;
+
+		    case '1':
+		    case '2':
+		    case '3':
+		    case '4':
+		    case '5':
+		    case '6':
+		    case '7':
+		    case '8':
+		    case '9':
+			// Part of some numeric count
+			count = count * 10 + (c - '0');
+			break;
+
+		    case '$':
+			// Fixed-position argument
+			if (flag_posn || count == 0) {
+			    free(buf);
+			    goto error_inval;
+			}
+
+			if (count > MAXFMTARGS) {
+			    free(buf);
+			    errno = E2BIG;
+			    goto error;
+			}
+
+			flag_posn = true;
+			arg_num = count - 1;
+			count = 0;
+			break;
+
+		    case '\'':
+			// Use locale-specific thousands separator
+			if (flag_thou) {
+			    free(buf);
+			    goto error_inval;
+			}
+
+			flag_thou = true;
+			break;
+
+		    case 'l':
+			// Long length modifier
+			if (flag_long) {
+			    free(buf);
+			    goto error_inval;
+			}
+
+			flag_long = true;
+			break;
+
+		    case 'd':
+			// Insert an integer (int or long int) into the output
+			if (count != 0) {
+			    free(buf);
+			    goto error_inval;
+			}
+
+			if (arg_num >= MAXFMTARGS) {
+			    free(buf);
+			    errno = E2BIG;
+			    goto error;
+			}
+
+			if (flag_long) {
+			    if (snprintf(buf, BUFSIZE, flag_thou ? "%'ld" : "%ld",
+					 format_arg[arg_num].a.a_longint) < 0) {
+				saved_errno = errno;
+				free(buf);
+				errno = saved_errno;
+				goto error;
+			    }
+			} else {
+			    if (snprintf(buf, BUFSIZE, flag_thou ? "%'d" : "%d",
+					 format_arg[arg_num].a.a_int) < 0) {
+				saved_errno = errno;
+				free(buf);
+				errno = saved_errno;
+				goto error;
+			    }
+			}
+
+			str = buf;
+			goto insertstr;
+
+		    case 'N':
+			// Insert a monetary amount (double) into the output
+			if (count != 0 || flag_thou || flag_long) {
+			    free(buf);
+			    goto error_inval;
+			}
+
+			if (arg_num >= MAXFMTARGS) {
+			    free(buf);
+			    errno = E2BIG;
+			    goto error;
+			}
+
+			if (l_strfmon(buf, BUFSIZE, "%n",
+				      format_arg[arg_num].a.a_double) < 0) {
+			    saved_errno = errno;
+			    free(buf);
+			    errno = saved_errno;
+			    goto error;
+			}
+
+			str = buf;
+			goto insertstr;
+
+		    case 's':
+			// Insert a string (const char *) into the output
+			if (count != 0 || flag_thou || flag_long) {
+			    free(buf);
+			    goto error_inval;
+			}
+
+			if (arg_num >= MAXFMTARGS) {
+			    free(buf);
+			    errno = E2BIG;
+			    goto error;
+			}
+
+			str = format_arg[arg_num].a.a_string;
+
+			if (str == NULL) {
+			    str = "(null)";	// As per GNU printf()
+			}
+
+		    insertstr:
+			// Insert the string pointed to by str
+			while (*str != '\0' && chbufsize > 1 && line < maxlines) {
+			    if (prepstr_addch(&chbuf, &chbufsize, curattr,
+					      maxlines, maxwidth, &line, &width,
+					      &lastspc, &widthspc, widthbuf,
+					      widthbufsize, &str) < 0) {
+				saved_errno = errno;
+				free(buf);
+				errno = saved_errno;
+				goto error;
+			    }
+			}
+
+			arg_num++;
+			inspec = false;
+			break;
+
+		    default:
+			free(buf);
+			goto error_inval;
+		    }
+		}
+		free(buf);
+		if (inspec)
+		    goto error_inval;
+	    }
+	    break;
+
+	default:
+	    // Process an ordinary character (including new-line)
+	    if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines, maxwidth,
+			      &line, &width, &lastspc, &widthspc, widthbuf,
+			      widthbufsize, &format) < 0) {
+		goto error;
+	    }
+	}
+    }
+
+    *chbuf = 0;				// Terminating NUL byte
+
+    if (line >= 0 && line < maxlines) {
+	widthbuf[line] = width;
+    } else if (line >= maxlines) {
+	line = maxlines - 1;
+    }
+
+    va_end(args);
+    return line + 1;
+
+error_inval:
+    errno = EINVAL;
+
+error:
+    va_end(args);
+    return -1;
+}
+
+
+/***********************************************************************/
+// pr_left: Print strings in chbuf left-aligned
+
+int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
+	     int lines, const int *restrict widthbuf)
+{
+    assert(win != NULL);
+    assert(chbuf != NULL);
+    assert(lines > 0);
+    assert(widthbuf != NULL);
+
+    wmove(win, y, x);
+    for ( ; *chbuf != '\0'; chbuf++) {
+	if (*chbuf == '\n') {
+	    wmove(win, getcury(win) + 1, x);
+	} else {
+	    waddch(win, *chbuf);
+	}
+    }
+
+    return OK;
+}
+
+
+/***********************************************************************/
+// pr_center: Print strings in chbuf centered in window
+
+int pr_center (WINDOW *win, int y, int offset, const chtype *restrict chbuf,
+	       int lines, const int *restrict widthbuf)
+{
+    int ln = 0;
+
+
+    assert(win != NULL);
+    assert(chbuf != NULL);
+    assert(lines > 0);
+    assert(widthbuf != NULL);
+
+    wmove(win, y, (getmaxx(win) - widthbuf[ln]) / 2 + offset);
+    for ( ; *chbuf != '\0'; chbuf++) {
+	if (*chbuf == '\n') {
+	    if (ln++ >= lines) {
+		return ERR;
+	    } else {
+		wmove(win, getcury(win) + 1,
+		      (getmaxx(win) - widthbuf[ln]) / 2 + offset);
+	    }
+	} else {
+	    waddch(win, *chbuf);
+	}
+    }
+
+    return OK;
+}
+
+
+/***********************************************************************/
+// pr_right: Print strings in chbuf right-aligned
+
+int pr_right (WINDOW *win, int y, int x, const chtype *restrict chbuf,
+	      int lines, const int *restrict widthbuf)
+{
+    int ln = 0;
+
+
+    assert(win != NULL);
+    assert(chbuf != NULL);
+    assert(lines > 0);
+    assert(widthbuf != NULL);
+
+    wmove(win, y, x - widthbuf[ln]);
+    for ( ; *chbuf != '\0'; chbuf++) {
+	if (*chbuf == '\n') {
+	    if (ln++ >= lines) {
+		return ERR;
+	    } else {
+		wmove(win, getcury(win) + 1, x - widthbuf[ln]);
+	    }
+	} else {
+	    waddch(win, *chbuf);
+	}
+    }
+
+    return OK;
+}
 
 
 /***********************************************************************/

@@ -255,6 +255,132 @@ extern int txrefresh (void);
 
 
 /*
+  Function:   prepstr      - Prepare a string for printing to screen
+  Parameters: chbuf        - Pointer to chtype buffer in which to store string
+              chbufsize    - Number of chtype elements in chbuf
+              attr_norm    - Normal character rendition to use
+              attr_alt1    - First alternate character rendition to use
+              attr_alt2    - Second alternate character rendition to use
+              maxlines     - Maximum number of screen lines to use
+              maxwidth     - Maximum width of each line, in chars
+              widthbuf     - Pointer to buffer to store widths of each line
+              widthbufsize - Number of int elements in widthbuf
+              format       - Format string as described below
+              ...          - Arguments for the format string
+  Returns:    int          - Number of lines actually used, or -1 on error
+
+  This function converts the format string and following arguments into
+  chbuf, a chtype buffer that can be used for calls to pr_left(),
+  pr_center() and pr_right().  At most maxlines lines are used, each with
+  a maximum width of maxwidth.  The actual widths of each resulting line
+  are stored in widthbuf (which must not be NULL).  If maxlines is
+  greater than 1, lines are wrapped as needed.
+
+  The format string is similar to but more limited than printf().  In
+  particular, the following conversion specifiers are understood:
+
+    %%      - Print the ASCII percent sign (ASCII code U+0025)
+
+    %s      - Insert the next parameter as a string
+    %d      - Insert the next parameter as an integer (type int)
+    %'d     - Insert as an int, using the locale's thousands separator
+    %ld     - Insert the next parameter as a long int
+    %'ld    - Insert as a long int, using the locale's thousands separator
+    %N      - Insert the next parameter as a double, using the locale's
+              national currency format (extension to printf())
+
+  Instead of using "%" to convert the next parameter, "%m$" can be used
+  to indicate fixed parameter m (where m is an integer from 1 to 8).  For
+  example, "%4$s" inserts the fourth parameter after "format" as a string
+  into chbuf.  As with printf(), using "%m$" together with ordinary "%"
+  forms is undefined.  If "%m$" is used, no parameter m can be skipped.
+
+  Note that no other flag, field width, precision or length modifier
+  characters are recognised: if needed, these should be formatted FIRST
+  with snprintf(), then inserted using %s as appropriate.
+
+  In addition to the conversion specifiers, the following character
+  rendition flags are understood, where the "^" character is a literal
+  ASCII circumflex accent:
+
+    ^^   - Print the circumflex accent (ASCII code U+005E)
+    ^{   - Switch to using attr_alt1 character rendition (alternate mode 1)
+    ^}   - Switch to using attr_norm character rendition
+    ^[   - Switch to using attr_alt2 character rendition (alternate mode 2)
+    ^]   - Switch to using attr_norm character rendition
+
+  Characters other than these are inserted as literals, except that '\n'
+  will force the start of a new line.  By default, attr_norm is used as
+  the character rendition (attributes).
+
+  This function returns the actual number of lines used (from 0 to
+  maxlines), or -1 on error (with errno set to EINVAL for an invalid
+  format conversion specifier or argument).
+*/
+extern int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+		    chtype attr_alt1, chtype attr_alt2, int maxlines,
+		    int maxwidth, int *restrict widthbuf, int widthbufsize,
+		    const char *restrict format, ...);
+
+
+/*
+  Function:   pr_left  - Print strings in chbuf left-aligned
+  Parameters: win      - Window to use (should be curwin)
+              y        - Line on which to print first string
+              x        - Starting column number for each line
+              chbuf    - chtype buffer as returned from prepstr()
+              lines    - Number of lines in chbuf (as returned from prepstr())
+              widthbuf - Widths of each line (as returned from prepstr())
+  Returns:    int      - Error code OK
+
+  This function takes the strings in the chtype array chbuf and prints
+  them left-aligned in the window win.  Note that wrefresh() is NOT
+  called.
+*/
+extern int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
+		    int lines, const int *restrict widthbuf);
+
+
+/*
+  Function:   pr_center - Print strings in chbuf centered in window
+  Parameters: win       - Window to use (should be curwin)
+              y         - Line on which to print first string
+              offset    - Column offset to add to position for each line
+              chbuf     - chtype buffer as returned from prepstr()
+              lines     - Number of lines in chbuf (as returned from prepstr())
+              widthbuf  - Widths of each line (as returned from prepstr())
+  Returns:    int       - ERR if more lines in chbuf[] than lines, else OK
+
+  This function takes the strings in the chtype array chbuf and prints
+  them centered in the window win, offset by the parameter offset.  Note
+  that wrefresh() is NOT called.  ERR is returned if there are more lines
+  in chbuf[] than are passed in the parameter lines.
+*/
+extern int pr_center (WINDOW *win, int y, int offset,
+		      const chtype *restrict chbuf, int lines,
+		      const int *restrict widthbuf);
+
+
+/*
+  Function:   pr_right - Print strings in chbuf right-aligned
+  Parameters: win      - Window to use (should be curwin)
+              y        - Line on which to print first string
+              x        - Ending column number for each line
+              chbuf    - chtype buffer as returned from prepstr()
+              lines    - Number of lines in chbuf (as returned from prepstr())
+              widthbuf - Widths of each line (as returned from prepstr())
+  Returns:    int      - ERR if more lines in chbuf[] than lines, else OK
+
+  This function takes the strings in the chtype array chbuf and prints
+  them right-aligned in the window win, with each line ending at column
+  x.  Note that wrefresh() is NOT called.  ERR is returned if there are
+  more lines in chbuf[] than are passed in the parameter lines.
+*/
+extern int pr_right (WINDOW *win, int y, int x, const chtype *restrict chbuf,
+		     int lines, const int *restrict widthbuf);
+
+
+/*
   Function:   attrpr - Print a string with a particular character rendition
   Parameters: win    - Window to use (should be curwin)
               attr   - Character rendition to use for the string
