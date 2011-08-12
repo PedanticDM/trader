@@ -299,7 +299,7 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
               widthbufsize - Number of int elements in widthbuf
               format       - Format string as described below
               ...          - Arguments for the format string
-  Returns:    int          - Number of lines actually used, or -1 on error
+  Returns:    int          - Number of lines actually used
 
   This function converts the format string and following arguments into
   chbuf, a chtype buffer that can be used for calls to pr_left(),
@@ -350,8 +350,7 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
   multibyte characters may be split over two lines.
 
   This function returns the actual number of lines used (from 0 to
-  maxlines), or -1 on error (with errno set to EINVAL for an invalid
-  format conversion specifier or argument).
+  maxlines).  If an error is detected, the application terminates.
 */
 extern int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    chtype attr_alt1, chtype attr_alt2, int maxlines,
@@ -372,7 +371,7 @@ extern int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
               widthbufsize - Number of int elements in widthbuf
               format       - Format string as described for prepstr()
               args         - Variable argument list
-  Returns:    int          - Number of lines actually used, or -1 on error
+  Returns:    int          - Number of lines actually used
 
   This function is exactly the same as prepstr(), except that it is
   called with a va_list parameter args instead of a variable number of

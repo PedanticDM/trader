@@ -390,10 +390,7 @@ void init_title (void)
     }
 
     lines = prepstr(chbuf, BUFSIZE, attr_game_title, 0, 0, 1, COLS,
-		    &width, 1, "%s", _("Star Traders"));
-    if (lines < 0) {
-	errno_exit("init_title");
-    }
+		    &width, 1, _("Star Traders"));
 
     pr_center(stdscr, 0, 0, chbuf, lines, &width);
     attrset(attr_root_window);
@@ -604,10 +601,6 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 		     ncols - 4, widthbuf, maxlines, format, args);
     va_end(args);
 
-    if (lines < 0) {
-	errno_exit(_("txdlgbox: `%s'"), format);
-    }
-
     newtxwin(usetitle ? lines + 6 : lines + 5, ncols, begin_y, begin_x,
 	     true, bkgd_attr);
 
@@ -621,15 +614,9 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 	    err_exit_nomem();
 	}
 
-	titlelines = prepstr(titlebuf, BUFSIZE, title_attr, bkgd_attr,
-			     norm_attr, 1, ncols - 4, &titlewidth, 1,
-			     "%s", boxtitle);
-	if (titlelines < 0) {
-	    errno_exit(_("txdlgbox: `%s'"), boxtitle);
-	}
-
+	titlelines = prepstr(titlebuf, BUFSIZE, title_attr, 0, 0, 1,
+			     ncols - 4, &titlewidth, 1, boxtitle);
 	pr_center(curwin, 1, 0, titlebuf, titlelines, &titlewidth);
-
 	free(titlebuf);
     }
 
@@ -790,8 +777,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '^':
 	    // Switch to a different character rendition
 	    if (*format == '\0') {
-		errno = EINVAL;
-		return -1;
+		goto error_inval;
 	    } else {
 		format++;
 	    }
@@ -800,8 +786,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '%':
 	    // Process a conversion specifier
 	    if (*format == '\0') {
-		errno = EINVAL;
-		return -1;
+		goto error_inval;
 	    } else if (*format == '%') {
 		format++;
 	    } else {
@@ -816,10 +801,8 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    switch (c) {
 		    case '0':
 			// Zero flag, or part of numeric count
-			if (count == 0) {
-			    errno = EINVAL;
-			    return -1;
-			}
+			if (count == 0)
+			    goto error_inval;
 
 			count *= 10;
 			break;
@@ -839,14 +822,12 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    case '$':
 			// Fixed-position argument
-			if (flag_posn || count == 0) {
-			    errno = EINVAL;
-			    return -1;
-			}
+			if (flag_posn || count == 0)
+			    goto error_inval;
 
 			if (count > MAXFMTARGS) {
 			    errno = E2BIG;
-			    return -1;
+			    goto error;
 			}
 
 			flag_posn = true;
@@ -860,10 +841,8 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    case 'l':
 			// Long length modifier
-			if (flag_long) {
-			    errno = EINVAL;
-			    return -1;
-			}
+			if (flag_long)
+			    goto error_inval;
 
 			flag_long = true;
 			break;
@@ -875,34 +854,29 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    case 'N':
 			// Insert a monetary amount (double)
-			if (flag_long) {
-			    errno = EINVAL;
-			    return -1;
-			}
+			if (flag_long)
+			    goto error_inval;
 
 			arg_type = TYPE_DOUBLE;
 			goto handlefmt;
 
 		    case 's':
 			// Insert a string (const char *)
-			if (flag_long) {
-			    errno = EINVAL;
-			    return -1;
-			}
+			if (flag_long)
+			    goto error_inval;
 
 			arg_type = TYPE_STRING;
 
 		    handlefmt:
 			if (arg_num >= MAXFMTARGS) {
 			    errno = E2BIG;
-			    return -1;
+			    goto error;
 			}
 
 			if (format_arg[arg_num].a_type == TYPE_NONE) {
 			    format_arg[arg_num].a_type = arg_type;
 			} else if (format_arg[arg_num].a_type != arg_type) {
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			arg_num++;
@@ -912,13 +886,11 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			break;
 
 		    default:
-			errno = EINVAL;
-			return -1;
+			goto error_inval;
 		    }
 		}
 		if (inspec) {
-		    errno = EINVAL;
-		    return -1;
+		    goto error_inval;
 		}
 	    }
 	    break;
@@ -951,8 +923,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	    /* Cannot allow unused arguments, as we have no way of
 	       knowing how much space they take (cf. int vs. long long
 	       int). */
-	    errno = EINVAL;
-	    return -1;
+	    goto error_inval;
 	}
     }
 
@@ -972,8 +943,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '^':
 	    // Switch to a different character rendition
 	    if (*++format == '\0') {
-		errno = EINVAL;
-		return -1;
+		goto error_inval;
 	    } else {
 		switch (*format) {
 		case '^':
@@ -981,7 +951,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				      maxwidth, &line, &width, &lastspc,
 				      &widthspc, widthbuf, widthbufsize,
 				      &format) < 0) {
-			return -1;
+			goto error;
 		    }
 		    break;
 
@@ -1002,8 +972,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    break;
 
 		default:
-		    errno = EINVAL;
-		    return -1;
+		    goto error_inval;
 		}
 	    }
 	    break;
@@ -1011,13 +980,12 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '%':
 	    // Process a conversion specifier
 	    if (*++format == '\0') {
-		errno = EINVAL;
-		return -1;
+		goto error_inval;
 	    } else if (*format == '%') {
 		if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines,
 				  maxwidth, &line, &width, &lastspc, &widthspc,
 				  widthbuf, widthbufsize, &format) < 0) {
-		    return -1;
+		    goto error;
 		}
 	    } else {
 		bool inspec = true;
@@ -1040,8 +1008,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			if (count == 0) {
 			    // Zero flag is not supported
 			    free(buf);
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			count *= 10;
@@ -1064,14 +1031,13 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Fixed-position argument
 			if (flag_posn || count == 0) {
 			    free(buf);
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			if (count > MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    return -1;
+			    goto error;
 			}
 
 			flag_posn = true;
@@ -1083,8 +1049,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Use locale-specific thousands separator
 			if (flag_thou) {
 			    free(buf);
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			flag_thou = true;
@@ -1094,8 +1059,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Long length modifier
 			if (flag_long) {
 			    free(buf);
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			flag_long = true;
@@ -1105,14 +1069,13 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Insert an integer (int or long int) into the output
 			if (count != 0) {
 			    free(buf);
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			if (arg_num >= MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    return -1;
+			    goto error;
 			}
 
 			if (flag_long) {
@@ -1121,7 +1084,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				saved_errno = errno;
 				free(buf);
 				errno = saved_errno;
-				return -1;
+				goto error;
 			    }
 			} else {
 			    if (snprintf(buf, BUFSIZE, flag_thou ? "%'d" : "%d",
@@ -1129,7 +1092,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				saved_errno = errno;
 				free(buf);
 				errno = saved_errno;
-				return -1;
+				goto error;
 			    }
 			}
 
@@ -1140,14 +1103,13 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Insert a monetary amount (double) into the output
 			if (count != 0 || flag_thou || flag_long) {
 			    free(buf);
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			if (arg_num >= MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    return -1;
+			    goto error;
 			}
 
 			if (l_strfmon(buf, BUFSIZE, "%n",
@@ -1155,7 +1117,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			    saved_errno = errno;
 			    free(buf);
 			    errno = saved_errno;
-			    return -1;
+			    goto error;
 			}
 
 			str = buf;
@@ -1165,14 +1127,13 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Insert a string (const char *) into the output
 			if (count != 0 || flag_thou || flag_long) {
 			    free(buf);
-			    errno = EINVAL;
-			    return -1;
+			    goto error_inval;
 			}
 
 			if (arg_num >= MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    return -1;
+			    goto error;
 			}
 
 			str = format_arg[arg_num].a.a_string;
@@ -1191,7 +1152,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				saved_errno = errno;
 				free(buf);
 				errno = saved_errno;
-				return -1;
+				goto error;
 			    }
 			}
 
@@ -1201,14 +1162,12 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    default:
 			free(buf);
-			errno = EINVAL;
-			return -1;
+			goto error_inval;
 		    }
 		}
 		free(buf);
 		if (inspec) {
-		    errno = EINVAL;
-		    return -1;
+		    goto error_inval;
 		}
 	    }
 	    break;
@@ -1218,7 +1177,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	    if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines, maxwidth,
 			      &line, &width, &lastspc, &widthspc, widthbuf,
 			      widthbufsize, &format) < 0) {
-		return -1;
+		goto error;
 	    }
 	}
     }
@@ -1232,6 +1191,13 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
     }
 
     return line + 1;
+
+
+error_inval:
+    errno = EINVAL;
+
+error:
+    errno_exit(_("prepstr: `%s'"), orig_format);
 }
 
 
@@ -2507,10 +2473,8 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
     chtype *chbuf;
     int width;
     int lines;
-
     int key;
     bool done;
-
 
 
     keypad(win, true);
@@ -2524,10 +2488,6 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
 
     lines = prepstr(chbuf, BUFSIZE, attr, 0, 0, 1, getmaxx(win) - 4,
 		    &width, 1, _("[ Press <SPACE> to continue ] "));
-    if (lines < 0) {
-	errno_exit("wait_for_key");
-    }
-
     pr_center(win, y, 0, chbuf, lines, &width);
     wrefresh(win);
 
