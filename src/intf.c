@@ -556,6 +556,27 @@ void txresize (void)
 
 
 /***********************************************************************/
+// prepstr: Prepare a string for printing to screen
+
+int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+	     chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
+	     int *restrict widthbuf, int widthbufsize,
+	     const char *restrict format, ...)
+{
+    va_list args;
+    int lines;
+
+
+    va_start(args, format);
+    lines = vprepstr(chbuf, chbufsize, attr_norm, attr_alt1, attr_alt2,
+		     maxlines, maxwidth, widthbuf, widthbufsize, format,
+		     args);
+    va_end(args);
+    return lines;
+}
+
+
+/***********************************************************************/
 // prepstr_addch: Add a character to the prepstr buffer
 
 int prepstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
@@ -641,17 +662,16 @@ int prepstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
 
 
 /***********************************************************************/
-// prepstr: Prepare a string for printing to screen
+// vprepstr: Prepare a string for printing to screen
 
-int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
-	     chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
-	     int *restrict widthbuf, int widthbufsize,
-	     const char *restrict format, ...)
+int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+	      chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
+	      int *restrict widthbuf, int widthbufsize,
+	      const char *restrict format, va_list args)
 {
     struct argument format_arg[MAXFMTARGS];
     int num_format_args, arg_num;
     const char *orig_format;
-    va_list args;
     int line, width;
     chtype *lastspc;
     int widthspc;
@@ -676,14 +696,14 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
     memset(format_arg, 0, sizeof(format_arg));
     num_format_args = 0;
     arg_num = 0;
-    va_start(args, format);
 
     while (*format != '\0') {
 	switch (*format++) {
 	case '^':
 	    // Switch to a different character rendition
 	    if (*format == '\0') {
-		goto error_inval;
+		errno = EINVAL;
+		return -1;
 	    } else {
 		format++;
 	    }
@@ -692,7 +712,8 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '%':
 	    // Process a conversion specifier
 	    if (*format == '\0') {
-		goto error_inval;
+		errno = EINVAL;
+		return -1;
 	    } else if (*format == '%') {
 		format++;
 	    } else {
@@ -707,8 +728,10 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    switch (c) {
 		    case '0':
 			// Zero flag, or part of numeric count
-			if (count == 0)
-			    goto error_inval;
+			if (count == 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			count *= 10;
 			break;
@@ -728,12 +751,14 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    case '$':
 			// Fixed-position argument
-			if (flag_posn || count == 0)
-			    goto error_inval;
+			if (flag_posn || count == 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			if (count > MAXFMTARGS) {
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			flag_posn = true;
@@ -747,8 +772,10 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    case 'l':
 			// Long length modifier
-			if (flag_long)
-			    goto error_inval;
+			if (flag_long) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			flag_long = true;
 			break;
@@ -760,29 +787,34 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    case 'N':
 			// Insert a monetary amount (double)
-			if (flag_long)
-			    goto error_inval;
+			if (flag_long) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			arg_type = TYPE_DOUBLE;
 			goto handlefmt;
 
 		    case 's':
 			// Insert a string (const char *)
-			if (flag_long)
-			    goto error_inval;
+			if (flag_long) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			arg_type = TYPE_STRING;
 
 		    handlefmt:
 			if (arg_num >= MAXFMTARGS) {
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			if (format_arg[arg_num].a_type == TYPE_NONE) {
 			    format_arg[arg_num].a_type = arg_type;
 			} else if (format_arg[arg_num].a_type != arg_type) {
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			arg_num++;
@@ -792,11 +824,14 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			break;
 
 		    default:
-			goto error_inval;
+			errno = EINVAL;
+			return -1;
 		    }
 		}
-		if (inspec)
-		    goto error_inval;
+		if (inspec) {
+		    errno = EINVAL;
+		    return -1;
+		}
 	    }
 	    break;
 
@@ -828,7 +863,8 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	    /* Cannot allow unused arguments, as we have no way of
 	       knowing how much space they take (cf. int vs. long long
 	       int). */
-	    goto error_inval;
+	    errno = EINVAL;
+	    return -1;
 	}
     }
 
@@ -848,7 +884,8 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '^':
 	    // Switch to a different character rendition
 	    if (*++format == '\0') {
-		goto error_inval;
+		errno = EINVAL;
+		return -1;
 	    } else {
 		switch (*format) {
 		case '^':
@@ -856,7 +893,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				      maxwidth, &line, &width, &lastspc,
 				      &widthspc, widthbuf, widthbufsize,
 				      &format) < 0) {
-			goto error;
+			return -1;
 		    }
 		    break;
 
@@ -877,7 +914,8 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    break;
 
 		default:
-		    goto error_inval;
+		    errno = EINVAL;
+		    return -1;
 		}
 	    }
 	    break;
@@ -885,12 +923,13 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '%':
 	    // Process a conversion specifier
 	    if (*++format == '\0') {
-		goto error_inval;
+		errno = EINVAL;
+		return -1;
 	    } else if (*format == '%') {
 		if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines,
 				  maxwidth, &line, &width, &lastspc, &widthspc,
 				  widthbuf, widthbufsize, &format) < 0) {
-		    goto error;
+		    return -1;
 		}
 	    } else {
 		bool inspec = true;
@@ -912,7 +951,8 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			if (count == 0) {
 			    // Zero flag is not supported
 			    free(buf);
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			count *= 10;
@@ -935,13 +975,14 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Fixed-position argument
 			if (flag_posn || count == 0) {
 			    free(buf);
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			if (count > MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			flag_posn = true;
@@ -953,7 +994,8 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Use locale-specific thousands separator
 			if (flag_thou) {
 			    free(buf);
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			flag_thou = true;
@@ -963,7 +1005,8 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Long length modifier
 			if (flag_long) {
 			    free(buf);
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			flag_long = true;
@@ -973,13 +1016,14 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Insert an integer (int or long int) into the output
 			if (count != 0) {
 			    free(buf);
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			if (arg_num >= MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			if (flag_long) {
@@ -988,7 +1032,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				saved_errno = errno;
 				free(buf);
 				errno = saved_errno;
-				goto error;
+				return -1;
 			    }
 			} else {
 			    if (snprintf(buf, BUFSIZE, flag_thou ? "%'d" : "%d",
@@ -996,7 +1040,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				saved_errno = errno;
 				free(buf);
 				errno = saved_errno;
-				goto error;
+				return -1;
 			    }
 			}
 
@@ -1007,13 +1051,14 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Insert a monetary amount (double) into the output
 			if (count != 0 || flag_thou || flag_long) {
 			    free(buf);
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			if (arg_num >= MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			if (l_strfmon(buf, BUFSIZE, "%n",
@@ -1021,7 +1066,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			    saved_errno = errno;
 			    free(buf);
 			    errno = saved_errno;
-			    goto error;
+			    return -1;
 			}
 
 			str = buf;
@@ -1031,13 +1076,14 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			// Insert a string (const char *) into the output
 			if (count != 0 || flag_thou || flag_long) {
 			    free(buf);
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
 			if (arg_num >= MAXFMTARGS) {
 			    free(buf);
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			str = format_arg[arg_num].a.a_string;
@@ -1056,7 +1102,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 				saved_errno = errno;
 				free(buf);
 				errno = saved_errno;
-				goto error;
+				return -1;
 			    }
 			}
 
@@ -1066,12 +1112,15 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    default:
 			free(buf);
-			goto error_inval;
+			errno = EINVAL;
+			return -1;
 		    }
 		}
 		free(buf);
-		if (inspec)
-		    goto error_inval;
+		if (inspec) {
+		    errno = EINVAL;
+		    return -1;
+		}
 	    }
 	    break;
 
@@ -1080,7 +1129,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	    if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines, maxwidth,
 			      &line, &width, &lastspc, &widthspc, widthbuf,
 			      widthbufsize, &format) < 0) {
-		goto error;
+		return -1;
 	    }
 	}
     }
@@ -1093,15 +1142,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	line = maxlines - 1;
     }
 
-    va_end(args);
     return line + 1;
-
-error_inval:
-    errno = EINVAL;
-
-error:
-    va_end(args);
-    return -1;
 }
 
 

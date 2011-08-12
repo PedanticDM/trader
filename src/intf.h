@@ -324,6 +324,32 @@ extern int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
 /*
+  Function:   vprepstr     - Prepare a string for printing to screen
+  Parameters: chbuf        - Pointer to chtype buffer in which to store string
+              chbufsize    - Number of chtype elements in chbuf
+              attr_norm    - Normal character rendition to use
+              attr_alt1    - First alternate character rendition to use
+              attr_alt2    - Second alternate character rendition to use
+              maxlines     - Maximum number of screen lines to use
+              maxwidth     - Maximum width of each line, in chars
+              widthbuf     - Pointer to buffer to store widths of each line
+              widthbufsize - Number of int elements in widthbuf
+              format       - Format string as described for prepstr()
+              args         - Variable argument list
+  Returns:    int          - Number of lines actually used, or -1 on error
+
+  This function is exactly the same as prepstr(), except that it is
+  called with a va_list parameter args instead of a variable number of
+  arguments.  Note that va_end() is NOT called on args, and that args is
+  undefined after this function.
+*/
+extern int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+		     chtype attr_alt1, chtype attr_alt2, int maxlines,
+		     int maxwidth, int *restrict widthbuf, int widthbufsize,
+		     const char *restrict format, va_list args);
+
+
+/*
   Function:   pr_left  - Print strings in chbuf left-aligned
   Parameters: win      - Window to use (should be curwin)
               y        - Line on which to print first string
