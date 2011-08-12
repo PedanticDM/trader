@@ -632,58 +632,23 @@ void next_player (void)
 
 void bankrupt_player (bool forced)
 {
-    bool longname;
-    int i;
-
-
-    /* It would be nice if we had functions that would do word-wrapping
-       for us automatically! */
-
-    longname = (strlen(player[current_player].name) > 20);
     if (forced) {
-	newtxwin(longname ? 9 : 8, 54, 7, WCENTER, true, attr_error_window);
+	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
+		 attr_error_title, attr_error_highlight, 0, 0,
+		 attr_error_waitforkey, "  Bankruptcy Court  ",
+		 "%s has been declared bankrupt by the Interstellar Trading Bank.",
+		 player[current_player].name);
     } else {
-	newtxwin(longname ? 8 : 7, 50, 7, WCENTER, true, attr_error_window);
+	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
+		 attr_error_title, attr_error_highlight, 0, 0,
+		 attr_error_waitforkey, "  Bankruptcy Court  ",
+		 "%s has declared bankruptcy.", player[current_player].name);
     }
-
-    center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
-
-    if (forced) {
-	if (longname) {
-	    center(curwin, 3, attr_error_highlight, "%s",
-		   player[current_player].name);
-	    center(curwin, 4, attr_error_highlight,
-		   "has been declared bankrupt by the");
-	    center(curwin, 5, attr_error_highlight,
-		   "Interstellar Trading Bank");
-	} else {
-	    center(curwin, 3, attr_error_highlight,
-		   "%s has been declared bankrupt",
-		   player[current_player].name);
-	    center(curwin, 4, attr_error_highlight,
-		   "by the Interstellar Trading Bank");
-	}
-    } else {
-	if (longname) {
-	    center(curwin, 3, attr_error_highlight, "%s",
-		   player[current_player].name);
-	    center(curwin, 4, attr_error_highlight,
-		   "has declared bankruptcy");
-	} else {
-	    center(curwin, 3, attr_error_highlight,
-		   "%s has declared bankruptcy",
-		   player[current_player].name);
-	}
-    }
-
-    wait_for_key(curwin, getmaxy(curwin) - 2, attr_error_waitforkey);
-
-    deltxwin();
     txrefresh();
 
     // Confiscate all assets belonging to player
     player[current_player].in_game = false;
-    for (i = 0; i < MAX_COMPANIES; i++) {
+    for (int i = 0; i < MAX_COMPANIES; i++) {
 	company[i].stock_issued -= player[current_player].stock_owned[i];
 	player[current_player].stock_owned[i] = 0;
     }
@@ -692,7 +657,7 @@ void bankrupt_player (bool forced)
 
     // Is anyone still left in the game?
     bool all_out = true;
-    for (i = 0; i < number_players; i++) {
+    for (int i = 0; i < number_players; i++) {
 	if (player[i].in_game) {
 	    all_out = false;
 	    break;
@@ -742,16 +707,10 @@ void try_start_new_company (int x, int y)
     } else {
 	// Create the new company
 
-	newtxwin(8, 50, 7, WCENTER, true, attr_normal_window);
-
-	center(curwin, 1, attr_title, "  New Company  ");
-	center(curwin, 3, attr_normal, "A new company has been formed!");
-	center2(curwin, 4, attr_normal, attr_highlight, "Its name is ",
-		"%s", company[i].name);
-
-	wait_for_key(curwin, 6, attr_waitforkey);
-
-	deltxwin();
+	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_normal_window,
+		 attr_title, attr_normal, attr_highlight, 0, attr_waitforkey,
+		 "  New Company  ", "A new company has been formed!\n"
+		 "Its name is ^{%s^}.", company[i].name);
 	txrefresh();
 
 	galaxy_map[x][y] = COMPANY_TO_MAP(i);
@@ -958,19 +917,15 @@ void adjust_values (void)
 
 	if (company[which].on_map) {
 	    if (randf() < ALL_ASSETS_TAKEN) {
-		newtxwin(10, 60, 6, WCENTER, true, attr_error_window);
-
-		center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
-		center(curwin, 3, attr_error_highlight, "%s has been declared",
-			company[which].name);
-		center(curwin, 4, attr_error_highlight,
-		       "bankrupt by the Interstellar Trading Bank.");
-
-		center(curwin, 6, attr_error_window,
-		       "All assets have been taken to repay outstanding loans.");
-
-		wait_for_key(curwin, 8, attr_error_waitforkey);
-		deltxwin();
+		txdlgbox(MAX_DLG_LINES, 60, 6, WCENTER, attr_error_window,
+			 attr_error_title, attr_error_highlight,
+			 attr_error_normal, 0, attr_error_waitforkey,
+			 "  Bankruptcy Court  ",
+			 "%s has been declared bankrupt "
+			 "by the Interstellar Trading Bank.\n\n"
+			 "^{All assets have been taken "
+			 "to repay outstanding loans.^}",
+			 company[which].name);
 		txrefresh();
 
 	    } else {
@@ -1090,31 +1045,15 @@ void adjust_values (void)
 
     // Check if a player's debt is too large
     if (total_value(current_player) <= -MAX_OVERDRAFT) {
-	double impounded;
-	char *buf;
+	double impounded = MIN(player[current_player].cash,
+			       player[current_player].debt);
 
-	buf = malloc(BUFSIZE);
-	if (buf == NULL) {
-	    err_exit_nomem();
-	}
-
-	impounded = MIN(player[current_player].cash,
-			player[current_player].debt);
-
-	newtxwin(8, 60, 7, WCENTER, true, attr_error_window);
-	center(curwin, 1, attr_error_title, "  Interstellar Trading Bank  ");
-
-	l_strfmon(buf, BUFSIZE, "%1n", player[current_player].debt);
-	center(curwin, 3, attr_error_highlight,
-	       "Your debt has amounted to %s", buf);
-
-	l_strfmon(buf, BUFSIZE, "%1n", impounded);
-	center3(curwin, 4, attr_error_normal, attr_error_normal,
-		attr_error_highlight, "The Bank has impounded ",
-		" from your cash", "%s", buf);
-
-	wait_for_key(curwin, 6, attr_error_waitforkey);
-	deltxwin();
+	txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
+		 attr_error_title, attr_error_highlight, attr_error_normal,
+		 0, attr_error_waitforkey, "  Interstellar Trading Bank  ",
+		 "Your debt has amounted to %N!\n"
+		 "^{The Bank has impounded ^}%N^{ from your cash.^}",
+		 player[current_player].debt, impounded);
 	txrefresh();
 
 	player[current_player].cash -= impounded;

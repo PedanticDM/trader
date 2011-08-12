@@ -55,6 +55,8 @@
 
 #define WCENTER		-1		// Centre the new window
 
+#define MAX_DLG_LINES	10		// Default maximum lines in dialog box
+
 
 // Check if resizing events are supported
 #ifdef KEY_RESIZE

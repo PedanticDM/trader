@@ -207,14 +207,11 @@ void init_game (void)
 		first_player   = randi(number_players);
 		current_player = first_player;
 
-		newtxwin(7, 50, 8, WCENTER, true, attr_normal_window);
-
-		center(curwin, 2, attr_normal, "The first player to go is");
-		center(curwin, 3, attr_highlight, "%s",
-		       player[first_player].name);
-
-		wait_for_key(curwin, 5, attr_waitforkey);
-		deltxwin();
+		txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
+			 attr_title, attr_normal, attr_highlight, 0,
+			 attr_waitforkey, "  First Player  ",
+			 "The first player to go is ^{%s^}.",
+			 player[first_player].name);
 		txrefresh();
 	    }
 	}
@@ -497,30 +494,20 @@ void end_game (void)
 	err_exit_nomem();
     }
 
-    newtxwin(7, 40, 9, WCENTER, true, attr_error_window);
-
-    center(curwin, 1, attr_error_title, "  Game Over  ");
-    center(curwin, 3, attr_error_highlight, "The game is over after %d turns",
-	   turn_number - 1);
-
-    wait_for_key(curwin, 5, attr_error_waitforkey);
-    deltxwin();
+    txdlgbox(MAX_DLG_LINES, 50, 9, WCENTER, attr_error_window,
+	     attr_error_title, attr_error_highlight, 0, 0,
+	     attr_error_waitforkey, "  Game Over  ",
+	     "The game is over after %d turns.", turn_number - 1);
 
     for (i = 0; i < number_players; i++) {
 	show_status(i);
     }
 
     if (number_players == 1) {
-	l_strfmon(buf, BUFSIZE, "%1n", total_value(0));
-
-	newtxwin(9, 60, 8, WCENTER, true, attr_normal_window);
-
-	center(curwin, 1, attr_title, "  Total Value  ");
-	center2(curwin, 4, attr_normal, attr_highlight,
-		"Your total value was ", "%s", buf);
-
-	wait_for_key(curwin, 7, attr_waitforkey);
-	deltxwin();
+	txdlgbox(MAX_DLG_LINES, 60, 8, WCENTER, attr_normal_window,
+		 attr_title, attr_normal, attr_highlight, 0, attr_waitforkey,
+		 "  Total Value  ", "Your total value was ^{%N^}.",
+		 total_value(0));
     } else {
 	// Sort players on the basis of total value
 	for (i = 0; i < number_players; i++) {

@@ -338,15 +338,10 @@ void visit_bank (void)
     case '1':
 	// Borrow money from the Bank
 	if (credit_limit == 0.0) {
-	    newtxwin(7, 50, 8, WCENTER, true, attr_error_window);
-
-	    center(curwin, 1, attr_error_title, "  Insufficient Credit Limit  ");
-	    center(curwin, 3, attr_error_highlight,
-		   "The Bank will not lend you any more money");
-
-	    wait_for_key(curwin, 5, attr_error_waitforkey);
-	    deltxwin();
-
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, 0, 0,
+		     attr_error_waitforkey, "  Insufficient Credit Limit  ",
+		     "The Bank will not lend you any more money.");
 	} else {
 	    int x, y, n;
 	    int ret;
@@ -390,25 +385,15 @@ void visit_bank (void)
     case '2':
 	// Repay a debt
 	if (player[current_player].debt == 0.0) {
-	    newtxwin(7, 50, 8, WCENTER, true, attr_error_window);
-
-	    center(curwin, 1, attr_error_title, "  No Debt  ");
-	    center(curwin, 3, attr_error_highlight,
-		   "You have no debt to repay");
-
-	    wait_for_key(curwin, 5, attr_error_waitforkey);
-	    deltxwin();
-
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, 0, 0,
+		     attr_error_waitforkey, "  No Debt  ",
+		     "You have no debt to repay.");
 	} else if (player[current_player].cash == 0.0) {
-	    newtxwin(7, 60, 8, WCENTER, true, attr_error_window);
-
-	    center(curwin, 1, attr_error_title, "  No Cash  ");
-	    center(curwin, 3, attr_error_highlight,
-		   "You have no cash with which to repay the debt!");
-
-	    wait_for_key(curwin, 5, attr_error_waitforkey);
-	    deltxwin();
-
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, 0, 0,
+		     attr_error_waitforkey, "  No Cash  ",
+		     "You have no cash with which to repay the debt!");
 	} else {
 	    int x, y, n;
 	    int ret;
@@ -593,25 +578,15 @@ void trade_shares (int num, bool *bid_used)
 	maxshares = player[current_player].cash / company[num].share_price;
 
 	if (company[num].max_stock - company[num].stock_issued == 0) {
-	    newtxwin(7, 50, 8, WCENTER, true, attr_error_window);
-
-	    center(curwin, 1, attr_error_title, "  No Shares Available  ");
-	    center(curwin, 3, attr_error_highlight,
-		   "No more shares are available for purchase");
-
-	    wait_for_key(curwin, 5, attr_error_waitforkey);
-	    deltxwin();
-
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, 0, 0,
+		     attr_error_waitforkey, "  No Shares Available  ",
+		     "No more shares are available for purchase.");
 	} else if (maxshares <= 0) {
-	    newtxwin(7, 50, 8, WCENTER, true, attr_error_window);
-
-	    center(curwin, 1, attr_error_title, "  Insufficient Cash  ");
-	    center(curwin, 3, attr_error_highlight,
-		   "Not enough cash to purchase shares");
-
-	    wait_for_key(curwin, 5, attr_error_waitforkey);
-	    deltxwin();
-
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, 0, 0,
+		     attr_error_waitforkey, "  Insufficient Cash  ",
+		     "Not enough cash to purchase shares.");
 	} else {
 	    maxshares = MIN(maxshares, company[num].max_stock -
 			    company[num].stock_issued);
@@ -641,15 +616,10 @@ void trade_shares (int num, bool *bid_used)
 	// Sell stock back to company
 	maxshares = player[current_player].stock_owned[num];
 	if (maxshares == 0) {
-	    newtxwin(7, 50, 8, WCENTER, true, attr_error_window);
-
-	    center(curwin, 1, attr_error_title, "  No Shares  ");
-	    center(curwin, 3, attr_error_highlight,
-		   "You do not have any shares to sell");
-
-	    wait_for_key(curwin, 5, attr_error_waitforkey);
-	    deltxwin();
-
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, 0, 0,
+		     attr_error_waitforkey, "  No Shares  ",
+		     "You do not have any shares to sell.");
 	} else {
 	    wbkgd(curwin, attr_normal_window);
 	    werase(curwin);
@@ -683,25 +653,17 @@ void trade_shares (int num, bool *bid_used)
 	*bid_used = true;
 
 	if (maxshares == 0) {
-	    newtxwin(8, 50, 8, WCENTER, true, attr_error_window);
-
-	    center(curwin, 1, attr_error_title, "  No Shares Issued  ");
-	    center(curwin, 3, attr_error_highlight, "%s", company[num].name);
-	    center(curwin, 4, attr_error_highlight,
-		   "has refused to issue more shares");
-
-	    wait_for_key(curwin, 6, attr_error_waitforkey);
-	    deltxwin();
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, 0, 0,
+		     attr_error_waitforkey, "  No Shares Issued  ",
+		     "%s has refused\nto issue more shares.",
+		     company[num].name);
 	} else {
-	    newtxwin(8, 50, 8, WCENTER, true, attr_normal_window);
-
-	    center(curwin, 1, attr_title, "  Shares Issued  ");
-	    center(curwin, 3, attr_highlight, "%s", company[num].name);
-	    center(curwin, 4, attr_highlight, "has issued %'ld more shares",
-		maxshares);
-
-	    wait_for_key(curwin, 6, attr_waitforkey);
-	    deltxwin();
+	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
+		     attr_title, attr_normal, attr_highlight, 0,
+		     attr_waitforkey, "  Shares Issued  ",
+		     "%s has issued\n^{%'ld^} more shares.",
+		     company[num].name, maxshares);
 	}
 	break;
 
