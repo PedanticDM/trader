@@ -125,7 +125,7 @@ txwin_t *firstwin = NULL;	// First (bottom-most) txwin structure
   Returns:    (nothing)
 
   This function draws the main window game title, "Star Traders", and
-  clears the rest of the screen.
+  clears the rest of the screen.  It does NOT call wrefresh().
 */
 static void init_title (void);
 
@@ -344,6 +344,7 @@ void init_screen (void)
     }
 
     init_title();
+    refresh();
 }
 
 
@@ -379,9 +380,7 @@ void init_title (void)
     }
 
     center(stdscr, 0, attr_game_title, "Star Traders");
-
     attrset(attr_root_window);
-    refresh();
 }
 
 
