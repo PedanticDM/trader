@@ -272,8 +272,8 @@ extern int txrefresh (void);
   Returns:    int          - OK is always returned
 
   This function creates a dialog box window using newtxwin(), displays
-  boxtitle centered on the first line (if boxtitle is not NULL), displays
-  format (and associated parameters) centered using prepstr(), then waits
+  boxtitle centred on the first line (if boxtitle is not NULL), displays
+  format (and associated parameters) centred using prepstr(), then waits
   for the user to press any key before closing the dialog box window.
   Note that txrefresh() is NOT called once the window is closed.
 */
@@ -398,7 +398,7 @@ extern int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
 
 
 /*
-  Function:   pr_center - Print strings in chbuf centered in window
+  Function:   pr_center - Print strings in chbuf centred in window
   Parameters: win       - Window to use (should be curwin)
               y         - Line on which to print first string
               offset    - Column offset to add to position for each line
@@ -408,7 +408,7 @@ extern int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
   Returns:    int       - ERR if more lines in chbuf[] than lines, else OK
 
   This function takes the strings in the chtype array chbuf and prints
-  them centered in the window win, offset by the parameter offset.  Note
+  them centred in the window win, offset by the parameter offset.  Note
   that wrefresh() is NOT called.  ERR is returned if there are more lines
   in chbuf[] than are passed in the parameter lines.
 */

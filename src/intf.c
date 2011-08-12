@@ -371,6 +371,11 @@ void end_screen (void)
 
 void init_title (void)
 {
+    chtype *chbuf;
+    int width;
+    int lines;
+
+
     bkgd(attr_root_window);
     clear();
 
@@ -379,8 +384,20 @@ void init_title (void)
 	addch(attr_game_title | ' ');
     }
 
-    center(stdscr, 0, attr_game_title, "Star Traders");
+    chbuf = malloc(BUFSIZE * sizeof(chtype));
+    if (chbuf == NULL) {
+	err_exit_nomem();
+    }
+
+    lines = prepstr(chbuf, BUFSIZE, attr_game_title, 0, 0, 1, COLS,
+		    &width, 1, "%s", _("Star Traders"));
+    if (lines < 0) {
+	errno_exit("init_title");
+    }
+
+    pr_center(stdscr, 0, 0, chbuf, lines, &width);
     attrset(attr_root_window);
+    free(chbuf);
 }
 
 
@@ -588,7 +605,7 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
     va_end(args);
 
     if (lines < 0) {
-	errno_exit("txdlgbox: `%s'", format);
+	errno_exit(_("txdlgbox: `%s'"), format);
     }
 
     newtxwin(usetitle ? lines + 6 : lines + 5, ncols, begin_y, begin_x,
@@ -608,7 +625,7 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 			     norm_attr, 1, ncols - 4, &titlewidth, 1,
 			     "%s", boxtitle);
 	if (titlelines < 0) {
-	    errno_exit("txdlgbox: `%s'", boxtitle);
+	    errno_exit(_("txdlgbox: `%s'"), boxtitle);
 	}
 
 	pr_center(curwin, 1, 0, titlebuf, titlelines, &titlewidth);
@@ -1243,7 +1260,7 @@ int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
 
 
 /***********************************************************************/
-// pr_center: Print strings in chbuf centered in window
+// pr_center: Print strings in chbuf centred in window
 
 int pr_center (WINDOW *win, int y, int offset, const chtype *restrict chbuf,
 	       int lines, const int *restrict widthbuf)
@@ -2461,15 +2478,31 @@ bool answer_yesno (WINDOW *win, chtype attr_keys)
 
 void wait_for_key (WINDOW *win, int y, chtype attr)
 {
+    chtype *chbuf;
+    int width;
+    int lines;
+
     int key;
     bool done;
+
 
 
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
 
-    center(win, y, attr, "[ Press <SPACE> to continue ] ");
+    chbuf = malloc(BUFSIZE * sizeof(chtype));
+    if (chbuf == NULL) {
+	err_exit_nomem();
+    }
+
+    lines = prepstr(chbuf, BUFSIZE, attr, 0, 0, 1, getmaxx(win) - 4,
+		    &width, 1, _("[ Press <SPACE> to continue ] "));
+    if (lines < 0) {
+	errno_exit("wait_for_key");
+    }
+
+    pr_center(win, y, 0, chbuf, lines, &width);
     wrefresh(win);
 
     done = false;
@@ -2490,6 +2523,8 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
 	    done = true;
 	}
     }
+
+    free(chbuf);
 }
 
 
