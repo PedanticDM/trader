@@ -343,6 +343,10 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
   will force the start of a new line.  By default, attr_norm is used as
   the character rendition (attributes).
 
+  Please note that this function does NOT handle multibyte characters
+  correctly: widths may be incorrect (byte count, not actual width) and
+  multibyte characters may be split over two lines.
+
   This function returns the actual number of lines used (from 0 to
   maxlines), or -1 on error (with errno set to EINVAL for an invalid
   format conversion specifier or argument).
