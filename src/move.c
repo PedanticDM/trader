@@ -208,6 +208,8 @@ void select_moves (void)
 selection_t get_move (void)
 {
     selection_t selection = SEL_NONE;
+    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    int lines, width;
 
 
     if (quit_selected || abort_game) {
@@ -231,34 +233,31 @@ selection_t get_move (void)
 	werase(curwin);
 	box(curwin, 0, 0);
 
-	wmove(curwin, 2, 2);
-	attrpr(curwin, attr_keycode, "<1>");
-	waddstr(curwin, " Display stock portfolio");
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+			1, getmaxx(curwin) / 2 - 4, &width, 1,
+			"^{<1>^} Display stock portfolio");
+	pr_left(curwin, 2, 2, chbuf, lines, &width);
 
-	wmove(curwin, 3, 2);
-	attrpr(curwin, attr_keycode, "<2>");
-	waddstr(curwin, " Declare bankruptcy");
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+			1, getmaxx(curwin) / 2 - 4, &width, 1,
+			"^{<2>^} Declare bankruptcy");
+	pr_left(curwin, 3, 2, chbuf, lines, &width);
 
-	wmove(curwin, 2, 42);
-	attrpr(curwin, attr_keycode, "<3>");
-	waddstr(curwin, " Save and end the game");
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+			1, getmaxx(curwin) / 2 - 4, &width, 1,
+			"^{<3>^} Save and end the game");
+	pr_left(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
 
-	wmove(curwin, 3, 42);
-	attrpr(curwin, attr_keycode, "<CTRL><C>");
-	waddstr(curwin, " Quit the game");
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+			1, getmaxx(curwin) / 2 - 4, &width, 1,
+			"^{<CTRL><C>^} Quit the game");
+	pr_left(curwin, 3, getmaxx(curwin) / 2, chbuf, lines, &width);
 
-	mvwaddstr(curwin, 1, 9, "Select move ");
-	waddstr(curwin, "[");
-	attrpr(curwin, attr_choice, "%c", MOVE_TO_KEY(0));
-	waddstr(curwin, "-");
-	attrpr(curwin, attr_choice, "%c", MOVE_TO_KEY(NUMBER_MOVES - 1));
-	waddstr(curwin, "/");
-	attrpr(curwin, attr_keycode, "1");
-	waddstr(curwin, "-");
-	attrpr(curwin, attr_keycode, "3");
-	waddstr(curwin, "/");
-	attrpr(curwin, attr_keycode, "<CTRL><C>");
-	waddstr(curwin, "]: ");
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, attr_choice,
+			1, getmaxx(curwin) / 2 - 4, &width, 1,
+			"Select move [^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: ",
+			MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
+	pr_right(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 
 	curs_set(CURS_ON);
 	wrefresh(curwin);
@@ -271,8 +270,10 @@ selection_t get_move (void)
 		selection = KEY_TO_MOVE(key);
 
 		curs_set(CURS_OFF);
-		waddstr(curwin, "Move ");
-		attrpr(curwin, attr_choice, "%c", key);
+		lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_choice, 0,
+				1, getmaxx(curwin) / 2 - 4, &width, 1,
+				"Move ^{%c^}", key);
+		pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 	    } else {
 		switch (key) {
 		case '1':
@@ -285,20 +286,22 @@ selection_t get_move (void)
 		    selection = SEL_BANKRUPT;
 
 		    curs_set(CURS_OFF);
-		    wattron(curwin, A_BOLD);
-		    waddstr(curwin, "<2>");
-		    wattroff(curwin, A_BOLD);
-		    waddstr(curwin, " (Declare bankruptcy)");
+		    lines = prepstr(chbuf, BUFSIZE, attr_normal,
+				    attr_normal | A_BOLD, 0, 1,
+				    getmaxx(curwin) / 2 - 4, &width, 1,
+				    "^{<2>^} (Declare bankruptcy)");
+		    pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 		    break;
 
 		case '3':
 		    selection = SEL_SAVE;
 
 		    curs_set(CURS_OFF);
-		    wattron(curwin, A_BOLD);
-		    waddstr(curwin, "<3>");
-		    wattroff(curwin, A_BOLD);
-		    waddstr(curwin, " (Save and end the game)");
+		    lines = prepstr(chbuf, BUFSIZE, attr_normal,
+				    attr_normal | A_BOLD, 0, 1,
+				    getmaxx(curwin) / 2 - 4, &width, 1,
+				    "^{<3>^} (Save and end the game)");
+		    pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 		    break;
 
 		case KEY_ESC:
@@ -310,10 +313,11 @@ selection_t get_move (void)
 		    selection = SEL_QUIT;
 
 		    curs_set(CURS_OFF);
-		    wattron(curwin, A_BOLD);
-		    waddstr(curwin, "<CTRL><C>");
-		    wattroff(curwin, A_BOLD);
-		    waddstr(curwin, " (Quit the game)");
+		    lines = prepstr(chbuf, BUFSIZE, attr_normal,
+				    attr_normal | A_BOLD, 0, 1,
+				    getmaxx(curwin) / 2 - 4, &width, 1,
+				    "^{<CTRL><C>^} (Quit the game)");
+		    pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 		    break;
 
 		default:
@@ -327,13 +331,10 @@ selection_t get_move (void)
 	mvwhline(curwin, 3, 2, ' ' | attr_normal, getmaxx(curwin) - 4);
 
 	// Ask the player to confirm their choice
-	wattrset(curwin, attr_normal);
-	mvwaddstr(curwin, 2, 22, "Are you sure? ");
-	waddstr(curwin, "[");
-	attrpr(curwin, attr_keycode, "Y");
-	waddstr(curwin, "/");
-	attrpr(curwin, attr_keycode, "N");
-	waddstr(curwin, "] ");
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+			1, getmaxx(curwin) / 2 - 4, &width, 1,
+			"Are you sure? [^{Y^}/^{N^}] ");
+	pr_right(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
 	wrefresh(curwin);
 
 	if (! answer_yesno(curwin)) {
@@ -346,9 +347,6 @@ selection_t get_move (void)
 
 	    if (game_loaded) {
 		// Save the game to the same game number
-		chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-		int lines, width;
-
 		lines = prepstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
 				WIN_COLS - 7, &width, 1,
 				"Saving game %d... ", game_num);
@@ -360,26 +358,30 @@ selection_t get_move (void)
 
 		deltxwin();
 		txrefresh();
-		free(chbuf);
 	    }
 
 	    if (! saved) {
+		// Ask which game to save
+
 		int key;
 		bool done;
+		int widthbuf[2];
+		int maxwidth;
 
-		// Ask which game to save
-		newtxwin(6, 54, 8, WCENTER, true, attr_normal_window);
 
-		center(curwin, 1, attr_title, "  Save Game  ");
-		mvwaddstr(curwin, 3, 2, "Enter game number ");
-		waddstr(curwin, "[");
-		attrpr(curwin, attr_keycode, "1");
-		waddstr(curwin, "-");
-		attrpr(curwin, attr_keycode, "9");
-		waddstr(curwin, "]");
-		waddstr(curwin, " or ");
-		attrpr(curwin, attr_keycode, "<CTRL><C>");
-		waddstr(curwin, " to cancel: ");
+		lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+				sizeof(widthbuf) / sizeof(widthbuf[0]),
+				WIN_COLS - 7, widthbuf,
+				sizeof(widthbuf) / sizeof(widthbuf[0]),
+				"Enter game number [^{1^}-^{9^}] "
+				"or ^{<CTRL><C>^} to cancel: ");
+		assert(lines == 1 || lines == 2);
+		maxwidth = ((lines == 1) ? widthbuf[0] :
+			    MAX(widthbuf[0], widthbuf[1])) + 5;
+
+		newtxwin(lines + 4, maxwidth, 8, WCENTER, true,
+			 attr_normal_window);
+		pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
 
 		curs_set(CURS_ON);
 		wrefresh(curwin);
@@ -413,9 +415,6 @@ selection_t get_move (void)
 
 		if (key != KEY_CANCEL) {
 		    // Try to save the game, if possible
-		    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-		    int lines, width;
-
 		    game_num = key - '0';
 
 		    lines = prepstr(chbuf, BUFSIZE, attr_status_window,
@@ -429,7 +428,6 @@ selection_t get_move (void)
 
 		    deltxwin();
 		    txrefresh();
-		    free(chbuf);
 		}
 
 		deltxwin();		// "Enter game number" window
@@ -448,6 +446,7 @@ selection_t get_move (void)
 	}
     }
 
+    free(chbuf);
     return selection;
 }
 

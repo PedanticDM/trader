@@ -254,7 +254,8 @@ static int ask_number_players (void)
 		    widthbuf, sizeof(widthbuf) / sizeof(widthbuf[0]),
 		    "Enter number of players [^{1^}-^{%d^}] "
 		    "or ^{<C>^} to continue a game: ", MAX_PLAYERS);
-    maxwidth = MAX(widthbuf[0], widthbuf[1]) + 5;
+    assert(lines == 1 || lines == 2);
+    maxwidth = ((lines == 1) ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
 
     newtxwin(lines + 4, maxwidth, 3, WCENTER, true, attr_normal_window);
     pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
@@ -318,7 +319,8 @@ int ask_game_number (void)
 		    widthbuf, sizeof(widthbuf) / sizeof(widthbuf[0]),
 		    "Enter game number [^{1^}-^{9^}] "
 		    "or ^{<CTRL><C>^} to cancel: ");
-    maxwidth = MAX(widthbuf[0], widthbuf[1]) + 5;
+    assert(lines == 1 || lines == 2);
+    maxwidth = ((lines == 1) ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
 
     newtxwin(lines + 4, maxwidth, 6, WCENTER, true, attr_normal_window);
     pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
