@@ -303,14 +303,14 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
   Returns:    int          - Number of lines actually used
 
   This function converts the format string and following arguments into
-  chbuf, a chtype buffer that can be used for calls to pr_left(),
-  pr_center() and pr_right().  At most maxlines lines are used, each with
-  a maximum width of maxwidth.  The actual widths of each resulting line
-  are stored in widthbuf (which must not be NULL).  If maxlines is
-  greater than 1, lines are wrapped as needed.
+  chbuf, a chtype buffer that can be used for calls to leftch(), centerch()
+  and rightch().  At most maxlines lines are used, each with a maximum
+  width of maxwidth.  The actual widths of each resulting line are stored
+  in widthbuf (which must not be NULL).  If maxlines is greater than 1,
+  lines are wrapped as needed.
 
   The format string is similar to but more limited than printf().  In
-  particular, the following conversion specifiers are understood:
+  particular, only the following conversion specifiers are understood:
 
     %%      - Print the ASCII percent sign (ASCII code U+0025)
 
@@ -404,60 +404,60 @@ extern chtype *chstrdup (const chtype *restrict chstr, int chstrsize);
 
 
 /*
-  Function:   pr_left  - Print strings in chbuf left-aligned
+  Function:   leftch   - Print strings in chstr left-aligned
   Parameters: win      - Window to use (should be curwin)
               y        - Line on which to print first string
               x        - Starting column number for each line
-              chbuf    - chtype buffer as returned from mkchstr()
-              lines    - Number of lines in chbuf (as returned from mkchstr())
-              widthbuf - Widths of each line (as returned from mkchstr())
+              chstr    - chtype string as returned from mkchstr()
+              lines    - Number of lines in chstr as returned from mkchstr()
+              widthbuf - Widths of each line as returned from mkchstr()
   Returns:    int      - Error code OK
 
-  This function takes the strings in the chtype array chbuf and prints
+  This function takes the strings in the chtype array chstr and prints
   them left-aligned in the window win.  Note that wrefresh() is NOT
   called.
 */
-extern int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
-		    int lines, const int *restrict widthbuf);
+extern int leftch (WINDOW *win, int y, int x, const chtype *restrict chstr,
+		   int lines, const int *restrict widthbuf);
 
 
 /*
-  Function:   pr_center - Print strings in chbuf centred in window
-  Parameters: win       - Window to use (should be curwin)
-              y         - Line on which to print first string
-              offset    - Column offset to add to position for each line
-              chbuf     - chtype buffer as returned from mkchstr()
-              lines     - Number of lines in chbuf (as returned from mkchstr())
-              widthbuf  - Widths of each line (as returned from mkchstr())
-  Returns:    int       - ERR if more lines in chbuf[] than lines, else OK
+  Function:   centerch - Print strings in chstr centred in window
+  Parameters: win      - Window to use (should be curwin)
+              y        - Line on which to print first string
+              offset   - Column offset to add to position for each line
+              chstr    - chtype string as returned from mkchstr()
+              lines    - Number of lines in chstr as returned from mkchstr()
+              widthbuf - Widths of each line as returned from mkchstr()
+  Returns:    int      - ERR if more lines in chstr[] than lines, else OK
 
-  This function takes the strings in the chtype array chbuf and prints
+  This function takes the strings in the chtype array chstr and prints
   them centred in the window win, offset by the parameter offset.  Note
   that wrefresh() is NOT called.  ERR is returned if there are more lines
-  in chbuf[] than are passed in the parameter lines.
+  in chstr[] than are passed in the parameter lines.
 */
-extern int pr_center (WINDOW *win, int y, int offset,
-		      const chtype *restrict chbuf, int lines,
-		      const int *restrict widthbuf);
+extern int centerch (WINDOW *win, int y, int offset,
+		     const chtype *restrict chstr, int lines,
+		     const int *restrict widthbuf);
 
 
 /*
-  Function:   pr_right - Print strings in chbuf right-aligned
+  Function:   rightch  - Print strings in chstr right-aligned
   Parameters: win      - Window to use (should be curwin)
               y        - Line on which to print first string
               x        - Ending column number for each line
-              chbuf    - chtype buffer as returned from mkchstr()
-              lines    - Number of lines in chbuf (as returned from mkchstr())
-              widthbuf - Widths of each line (as returned from mkchstr())
-  Returns:    int      - ERR if more lines in chbuf[] than lines, else OK
+              chstr    - chtype string as returned from mkchstr()
+              lines    - Number of lines in chstr as returned from mkchstr()
+              widthbuf - Widths of each line as returned from mkchstr()
+  Returns:    int      - ERR if more lines in chstr[] than lines, else OK
 
-  This function takes the strings in the chtype array chbuf and prints
-  them right-aligned in the window win, with each line ending at column
-  x.  Note that wrefresh() is NOT called.  ERR is returned if there are
-  more lines in chbuf[] than are passed in the parameter lines.
+  This function takes the strings in the chtype array chstr and prints
+  them right-aligned in the window win, with each line ending just before
+  column x.  Note that wrefresh() is NOT called.  ERR is returned if
+  there are more lines in chstr[] than are passed in the parameter lines.
 */
-extern int pr_right (WINDOW *win, int y, int x, const chtype *restrict chbuf,
-		     int lines, const int *restrict widthbuf);
+extern int rightch (WINDOW *win, int y, int x, const chtype *restrict chstr,
+		    int lines, const int *restrict widthbuf);
 
 
 /*

@@ -205,12 +205,12 @@ void show_help (void)
 	werase(curwin);
 	wbkgd(curwin, attr_normal_window);
 	box(curwin, 0, 0);
-	pr_center(curwin, 1, 0, ch_title, ln_title, &w_title);
+	centerch(curwin, 1, 0, ch_title, ln_title, &w_title);
 
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
 			WIN_COLS - 4, &width, 1, "Page %d of %d",
 			curpage + 1, numpages);
-	pr_center(curwin, 2, 0, chbuf, lines, &width);
+	centerch(curwin, 2, 0, chbuf, lines, &width);
 	wmove(curwin, 4, 2);
 
 	// Process the help text string
@@ -356,11 +356,11 @@ void show_help (void)
 	}
 
 	if (curpage == 0) {
-	    pr_center(curwin, getmaxy(curwin) - 2, 0, ch_contfirst,
-		      ln_contfirst, &w_contfirst);
+	    centerch(curwin, getmaxy(curwin) - 2, 0, ch_contfirst,
+		     ln_contfirst, &w_contfirst);
 	} else {
-	    pr_center(curwin, getmaxy(curwin) - 2, 0, ch_contnext,
-		      ln_contnext, &w_contnext);
+	    centerch(curwin, getmaxy(curwin) - 2, 0, ch_contnext,
+		     ln_contnext, &w_contnext);
 	}
 
 	wrefresh(curwin);

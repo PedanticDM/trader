@@ -236,28 +236,28 @@ selection_t get_move (void)
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<1>^} Display stock portfolio");
-	pr_left(curwin, 2, 2, chbuf, lines, &width);
+	leftch(curwin, 2, 2, chbuf, lines, &width);
 
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<2>^} Declare bankruptcy");
-	pr_left(curwin, 3, 2, chbuf, lines, &width);
+	leftch(curwin, 3, 2, chbuf, lines, &width);
 
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<3>^} Save and end the game");
-	pr_left(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
+	leftch(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
 
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<CTRL><C>^} Quit the game");
-	pr_left(curwin, 3, getmaxx(curwin) / 2, chbuf, lines, &width);
+	leftch(curwin, 3, getmaxx(curwin) / 2, chbuf, lines, &width);
 
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, attr_choice,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"Select move [^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: ",
 			MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
-	pr_right(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+	rightch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 
 	curs_set(CURS_ON);
 	wrefresh(curwin);
@@ -273,7 +273,7 @@ selection_t get_move (void)
 		lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_choice, 0,
 				1, getmaxx(curwin) / 2 - 4, &width, 1,
 				"Move ^{%c^}", key);
-		pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 	    } else {
 		switch (key) {
 		case '1':
@@ -290,7 +290,7 @@ selection_t get_move (void)
 				    attr_normal | A_BOLD, 0, 1,
 				    getmaxx(curwin) / 2 - 4, &width, 1,
 				    "^{<2>^} (Declare bankruptcy)");
-		    pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		    leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 		    break;
 
 		case '3':
@@ -301,7 +301,7 @@ selection_t get_move (void)
 				    attr_normal | A_BOLD, 0, 1,
 				    getmaxx(curwin) / 2 - 4, &width, 1,
 				    "^{<3>^} (Save and end the game)");
-		    pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		    leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 		    break;
 
 		case KEY_ESC:
@@ -317,7 +317,7 @@ selection_t get_move (void)
 				    attr_normal | A_BOLD, 0, 1,
 				    getmaxx(curwin) / 2 - 4, &width, 1,
 				    "^{<CTRL><C>^} (Quit the game)");
-		    pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		    leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
 		    break;
 
 		default:
@@ -334,7 +334,7 @@ selection_t get_move (void)
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"Are you sure? [^{Y^}/^{N^}] ");
-	pr_right(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
+	rightch(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
 	wrefresh(curwin);
 
 	if (! answer_yesno(curwin)) {
@@ -351,7 +351,7 @@ selection_t get_move (void)
 				WIN_COLS - 7, &width, 1,
 				"Saving game %d... ", game_num);
 		newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
-		pr_center(curwin, 2, 0, chbuf, 1, &width);
+		centerch(curwin, 2, 0, chbuf, 1, &width);
 		wrefresh(curwin);
 
 		saved = save_game(game_num);
@@ -381,7 +381,7 @@ selection_t get_move (void)
 
 		newtxwin(lines + 4, maxwidth, 8, WCENTER, true,
 			 attr_normal_window);
-		pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
+		leftch(curwin, 2, 2, chbuf, lines, widthbuf);
 
 		curs_set(CURS_ON);
 		wrefresh(curwin);
@@ -421,7 +421,7 @@ selection_t get_move (void)
 				    0, 0, 1, WIN_COLS - 7, &width, 1,
 				    "Saving game %d... ", game_num);
 		    newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
-		    pr_center(curwin, 2, 0, chbuf, 1, &width);
+		    centerch(curwin, 2, 0, chbuf, 1, &width);
 		    wrefresh(curwin);
 
 		    saved = save_game(game_num);

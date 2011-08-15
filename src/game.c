@@ -117,7 +117,7 @@ void init_game (void)
 			WIN_COLS - 7, &width, 1,
 			"Loading game %d... ", game_num);
 	newtxwin(5, width + 5, 6, WCENTER, true, attr_status_window);
-	pr_center(curwin, 2, 0, chbuf, 1, &width);
+	centerch(curwin, 2, 0, chbuf, 1, &width);
 	wrefresh(curwin);
 
 	game_loaded = load_game(game_num);
@@ -152,7 +152,7 @@ void init_game (void)
 				    0, 0, 1, WIN_COLS - 7, &width, 1,
 				    "Loading game %d... ", game_num);
 		    newtxwin(5, width + 5, 9, WCENTER, true, attr_status_window);
-		    pr_center(curwin, 2, 0, chbuf, 1, &width);
+		    centerch(curwin, 2, 0, chbuf, 1, &width);
 		    wrefresh(curwin);
 
 		    game_loaded = load_game(game_num);
@@ -258,7 +258,7 @@ static int ask_number_players (void)
     maxwidth = ((lines == 1) ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
 
     newtxwin(lines + 4, maxwidth, 3, WCENTER, true, attr_normal_window);
-    pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
+    leftch(curwin, 2, 2, chbuf, lines, widthbuf);
     free(chbuf);
 
     curs_set(CURS_ON);
@@ -323,7 +323,7 @@ int ask_game_number (void)
     maxwidth = ((lines == 1) ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
 
     newtxwin(lines + 4, maxwidth, 6, WCENTER, true, attr_normal_window);
-    pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
+    leftch(curwin, 2, 2, chbuf, lines, widthbuf);
     free(chbuf);
 
     curs_set(CURS_ON);
@@ -393,7 +393,7 @@ void ask_player_names (void)
 			"Do you need any instructions? [^{Y^}/^{N^}] ");
 	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
 		 attr_normal_window);
-	pr_left(curwin, 2, 2, chbuf, lines, &width);
+	leftch(curwin, 2, 2, chbuf, lines, &width);
 	free(chbuf);
 	if (answer_yesno(curwin)) {
 	    show_help();
@@ -413,7 +413,7 @@ void ask_player_names (void)
 		 true, attr_normal_window);
 	lines = mkchstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 8,
 			&width, 1, "  Enter Player Names  ");
-	pr_center(curwin, 1, 0, chbuf, lines, &width);
+	centerch(curwin, 1, 0, chbuf, lines, &width);
 
 	for (i = 0; i < number_players; i++) {
 	    player[i].name = NULL;
@@ -499,7 +499,7 @@ void ask_player_names (void)
 			"Does any player need instructions? [^{Y^}/^{N^}] ");
 	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
 		 attr_normal_window);
-	pr_left(curwin, 2, 2, chbuf, lines, &width);
+	leftch(curwin, 2, 2, chbuf, lines, &width);
 	if (answer_yesno(curwin)) {
 	    show_help();
 	}
@@ -606,13 +606,13 @@ void show_map (bool closewin)
     lines = mkchstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
 		    0, 1, WIN_COLS - 4, &width, 1, "  Player: ^{%s^}  ",
 		    player[current_player].name);
-    pr_left(curwin, 1, 2, chbuf, lines, &width);
+    leftch(curwin, 1, 2, chbuf, lines, &width);
 
     lines = mkchstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
 		    attr_mapwin_blink, 1, WIN_COLS / 2, &width, 1,
 		    (turn_number != max_turn) ? "  Turn: ^{%d^}  " :
 		    "  ^[*** Last Turn ***^]  ", turn_number);
-    pr_right(curwin, 1, WIN_COLS - 2, chbuf, lines, &width);
+    rightch(curwin, 1, WIN_COLS - 2, chbuf, lines, &width);
 
     wattrset(curwin, attr_map_window);
 
@@ -681,19 +681,19 @@ void show_status (int num)
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     lines = mkchstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 4,
 		    &width, 1, "  Stock Portfolio  ");
-    pr_center(curwin, 1, 0, chbuf, lines, &width);
+    centerch(curwin, 1, 0, chbuf, lines, &width);
 
     lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
 		    WIN_COLS - 4, &width, 1, "Player: ^{%s^}",
 		    player[num].name);
-    pr_center(curwin, 2, 0, chbuf, lines, &width);
+    centerch(curwin, 2, 0, chbuf, lines, &width);
 
     val = total_value(num);
     if (val == 0.0) {
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight,
 			attr_blink, 1, WIN_COLS - 4, &width, 1,
 			"^[* * *   B A N K R U P T   * * *^]");
-	pr_center(curwin, 11, 0, chbuf, lines, &width);
+	centerch(curwin, 11, 0, chbuf, lines, &width);
 
     } else {
 	char *buf = xmalloc(BUFSIZE);
@@ -711,7 +711,7 @@ void show_status (int num)
 	    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0,
 			    1, WIN_COLS - 4, &width, 1,
 			    "No companies on the map");
-	    pr_center(curwin, 8, 0, chbuf, lines, &width);
+	    centerch(curwin, 8, 0, chbuf, lines, &width);
 	} else {
 	    // Handle the locale's currency symbol
 	    snprintf(buf, BUFSIZE, "share (%s)", lconvinfo.currency_symbol);

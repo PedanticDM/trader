@@ -418,7 +418,7 @@ void init_title (void)
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     lines = mkchstr(chbuf, BUFSIZE, attr_game_title, 0, 0, 1, COLS,
 		    &width, 1, _("Star Traders"));
-    pr_center(stdscr, 0, 0, chbuf, lines, &width);
+    centerch(stdscr, 0, 0, chbuf, lines, &width);
     attrset(attr_root_window);
     free(chbuf);
 }
@@ -626,11 +626,11 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 
 	titlelines = mkchstr(titlebuf, BUFSIZE, title_attr, 0, 0, 1,
 			     ncols - 4, &titlewidth, 1, boxtitle);
-	pr_center(curwin, 1, 0, titlebuf, titlelines, &titlewidth);
+	centerch(curwin, 1, 0, titlebuf, titlelines, &titlewidth);
 	free(titlebuf);
     }
 
-    pr_center(curwin, usetitle ? 3 : 2, 0, chbuf, lines, widthbuf);
+    centerch(curwin, usetitle ? 3 : 2, 0, chbuf, lines, widthbuf);
     wait_for_key(curwin, getmaxy(curwin) - 2, keywait_attr);
     deltxwin();
 
@@ -1202,19 +1202,19 @@ error:
 /***********************************************************************/
 // chstrdup: Duplicate a chtype buffer
 
-chtype *chstrdup (const chtype *restrict chbuf, int chbufsize)
+chtype *chstrdup (const chtype *restrict chstr, int chstrsize)
 {
     const chtype *p;
     int len;
     chtype *ret;
 
 
-    // Determine chbuf length, including ending NUL
-    for (len = 1, p = chbuf; *p != '\0' && len <= chbufsize; p++, len++)
+    // Determine chstr length, including ending NUL
+    for (len = 1, p = chstr; *p != '\0' && len <= chstrsize; p++, len++)
 	;
 
     ret = xmalloc(len * sizeof(chtype));
-    memcpy(ret, chbuf, len * sizeof(chtype));
+    memcpy(ret, chstr, len * sizeof(chtype));
     ret[len - 1] = '\0';	// Terminating NUL, just in case not present
 
     return ret;
@@ -1222,22 +1222,22 @@ chtype *chstrdup (const chtype *restrict chbuf, int chbufsize)
 
 
 /***********************************************************************/
-// pr_left: Print strings in chbuf left-aligned
+// leftch: Print strings in chstr left-aligned
 
-int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
-	     int lines, const int *restrict widthbuf)
+int leftch (WINDOW *win, int y, int x, const chtype *restrict chstr,
+	    int lines, const int *restrict widthbuf)
 {
     assert(win != NULL);
-    assert(chbuf != NULL);
+    assert(chstr != NULL);
     assert(lines > 0);
     assert(widthbuf != NULL);
 
     wmove(win, y, x);
-    for ( ; *chbuf != '\0'; chbuf++) {
-	if (*chbuf == '\n') {
+    for ( ; *chstr != '\0'; chstr++) {
+	if (*chstr == '\n') {
 	    wmove(win, getcury(win) + 1, x);
 	} else {
-	    waddch(win, *chbuf);
+	    waddch(win, *chstr);
 	}
     }
 
@@ -1246,22 +1246,22 @@ int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
 
 
 /***********************************************************************/
-// pr_center: Print strings in chbuf centred in window
+// centerch: Print strings in chstr centred in window
 
-int pr_center (WINDOW *win, int y, int offset, const chtype *restrict chbuf,
-	       int lines, const int *restrict widthbuf)
+int centerch (WINDOW *win, int y, int offset, const chtype *restrict chstr,
+	      int lines, const int *restrict widthbuf)
 {
     int ln = 0;
 
 
     assert(win != NULL);
-    assert(chbuf != NULL);
+    assert(chstr != NULL);
     assert(lines > 0);
     assert(widthbuf != NULL);
 
     wmove(win, y, (getmaxx(win) - widthbuf[ln]) / 2 + offset);
-    for ( ; *chbuf != '\0'; chbuf++) {
-	if (*chbuf == '\n') {
+    for ( ; *chstr != '\0'; chstr++) {
+	if (*chstr == '\n') {
 	    if (ln++ >= lines) {
 		return ERR;
 	    } else {
@@ -1269,7 +1269,7 @@ int pr_center (WINDOW *win, int y, int offset, const chtype *restrict chbuf,
 		      (getmaxx(win) - widthbuf[ln]) / 2 + offset);
 	    }
 	} else {
-	    waddch(win, *chbuf);
+	    waddch(win, *chstr);
 	}
     }
 
@@ -1278,29 +1278,29 @@ int pr_center (WINDOW *win, int y, int offset, const chtype *restrict chbuf,
 
 
 /***********************************************************************/
-// pr_right: Print strings in chbuf right-aligned
+// rightch: Print strings in chstr right-aligned
 
-int pr_right (WINDOW *win, int y, int x, const chtype *restrict chbuf,
-	      int lines, const int *restrict widthbuf)
+int rightch (WINDOW *win, int y, int x, const chtype *restrict chstr,
+	     int lines, const int *restrict widthbuf)
 {
     int ln = 0;
 
 
     assert(win != NULL);
-    assert(chbuf != NULL);
+    assert(chstr != NULL);
     assert(lines > 0);
     assert(widthbuf != NULL);
 
     wmove(win, y, x - widthbuf[ln]);
-    for ( ; *chbuf != '\0'; chbuf++) {
-	if (*chbuf == '\n') {
+    for ( ; *chstr != '\0'; chstr++) {
+	if (*chstr == '\n') {
 	    if (ln++ >= lines) {
 		return ERR;
 	    } else {
 		wmove(win, getcury(win) + 1, x - widthbuf[ln]);
 	    }
 	} else {
-	    waddch(win, *chbuf);
+	    waddch(win, *chstr);
 	}
     }
 
@@ -2449,7 +2449,7 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     lines = mkchstr(chbuf, BUFSIZE, attr, 0, 0, 1, getmaxx(win) - 4,
 		    &width, 1, _("[ Press <SPACE> to continue ] "));
-    pr_center(win, y, 0, chbuf, lines, &width);
+    centerch(win, y, 0, chbuf, lines, &width);
     wrefresh(win);
 
     done = false;
