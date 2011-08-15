@@ -208,8 +208,6 @@ void select_moves (void)
 selection_t get_move (void)
 {
     selection_t selection = SEL_NONE;
-    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    int lines, width;
 
 
     if (quit_selected || abort_game) {
@@ -233,31 +231,19 @@ selection_t get_move (void)
 	werase(curwin);
 	box(curwin, 0, 0);
 
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
-			1, getmaxx(curwin) / 2 - 4, &width, 1,
-			"^{<1>^} Display stock portfolio");
-	leftch(curwin, 2, 2, chbuf, lines, &width);
+	left(curwin, 2, 2, attr_normal, attr_keycode, 0,
+	     "^{<1>^} Display stock portfolio");
+	left(curwin, 3, 2, attr_normal, attr_keycode, 0,
+	     "^{<2>^} Declare bankruptcy");
+	left(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0,
+	     "^{<3>^} Save and end the game");
+	left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0,
+	     "^{<CTRL><C>^} Quit the game");
 
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
-			1, getmaxx(curwin) / 2 - 4, &width, 1,
-			"^{<2>^} Declare bankruptcy");
-	leftch(curwin, 3, 2, chbuf, lines, &width);
-
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
-			1, getmaxx(curwin) / 2 - 4, &width, 1,
-			"^{<3>^} Save and end the game");
-	leftch(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
-
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
-			1, getmaxx(curwin) / 2 - 4, &width, 1,
-			"^{<CTRL><C>^} Quit the game");
-	leftch(curwin, 3, getmaxx(curwin) / 2, chbuf, lines, &width);
-
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, attr_choice,
-			1, getmaxx(curwin) / 2 - 4, &width, 1,
-			"Select move [^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: ",
-			MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
-	rightch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
+	      attr_choice, "Select move "
+	      "[^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: ",
+	      MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
 
 	curs_set(CURS_ON);
 	wrefresh(curwin);
@@ -270,10 +256,8 @@ selection_t get_move (void)
 		selection = KEY_TO_MOVE(key);
 
 		curs_set(CURS_OFF);
-		lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_choice, 0,
-				1, getmaxx(curwin) / 2 - 4, &width, 1,
-				"Move ^{%c^}", key);
-		leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		left(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_choice,
+		     0, "Move ^{%c^}", key);
 	    } else {
 		switch (key) {
 		case '1':
@@ -286,22 +270,18 @@ selection_t get_move (void)
 		    selection = SEL_BANKRUPT;
 
 		    curs_set(CURS_OFF);
-		    lines = mkchstr(chbuf, BUFSIZE, attr_normal,
-				    attr_normal | A_BOLD, 0, 1,
-				    getmaxx(curwin) / 2 - 4, &width, 1,
-				    "^{<2>^} (Declare bankruptcy)");
-		    leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			 attr_normal | A_BOLD, 0,
+			 "^{<2>^} (Declare bankruptcy)");
 		    break;
 
 		case '3':
 		    selection = SEL_SAVE;
 
 		    curs_set(CURS_OFF);
-		    lines = mkchstr(chbuf, BUFSIZE, attr_normal,
-				    attr_normal | A_BOLD, 0, 1,
-				    getmaxx(curwin) / 2 - 4, &width, 1,
-				    "^{<3>^} (Save and end the game)");
-		    leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			 attr_normal | A_BOLD, 0,
+			 "^{<3>^} (Save and end the game)");
 		    break;
 
 		case KEY_ESC:
@@ -313,11 +293,9 @@ selection_t get_move (void)
 		    selection = SEL_QUIT;
 
 		    curs_set(CURS_OFF);
-		    lines = mkchstr(chbuf, BUFSIZE, attr_normal,
-				    attr_normal | A_BOLD, 0, 1,
-				    getmaxx(curwin) / 2 - 4, &width, 1,
-				    "^{<CTRL><C>^} (Quit the game)");
-		    leftch(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
+		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			 attr_normal | A_BOLD, 0,
+			 "^{<CTRL><C>^} (Quit the game)");
 		    break;
 
 		default:
@@ -331,10 +309,8 @@ selection_t get_move (void)
 	mvwhline(curwin, 3, 2, ' ' | attr_normal, getmaxx(curwin) - 4);
 
 	// Ask the player to confirm their choice
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
-			1, getmaxx(curwin) / 2 - 4, &width, 1,
-			"Are you sure? [^{Y^}/^{N^}] ");
-	rightch(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
+	right(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0,
+	      "Are you sure? [^{Y^}/^{N^}] ");
 	wrefresh(curwin);
 
 	if (! answer_yesno(curwin)) {
@@ -343,13 +319,15 @@ selection_t get_move (void)
 
 	// Save the game if required
 	if (selection == SEL_SAVE) {
+	    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+	    int width;
+
 	    bool saved = false;
 
 	    if (game_loaded) {
 		// Save the game to the same game number
-		lines = mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
-				WIN_COLS - 7, &width, 1,
-				"Saving game %d... ", game_num);
+		mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1, WIN_COLS
+			- 7, &width, 1, "Saving game %d... ", game_num);
 		newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
 		centerch(curwin, 2, 0, chbuf, 1, &width);
 		wrefresh(curwin);
@@ -366,13 +344,10 @@ selection_t get_move (void)
 		int key;
 		bool done;
 		int widthbuf[2];
-		int maxwidth;
-
+		int lines, maxwidth;
 
 		lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
-				sizeof(widthbuf) / sizeof(widthbuf[0]),
-				WIN_COLS - 7, widthbuf,
-				sizeof(widthbuf) / sizeof(widthbuf[0]),
+				2, WIN_COLS - 7, widthbuf, 2,
 				"Enter game number [^{1^}-^{9^}] "
 				"or ^{<CTRL><C>^} to cancel: ");
 		assert(lines == 1 || lines == 2);
@@ -417,9 +392,9 @@ selection_t get_move (void)
 		    // Try to save the game, if possible
 		    game_num = key - '0';
 
-		    lines = mkchstr(chbuf, BUFSIZE, attr_status_window,
-				    0, 0, 1, WIN_COLS - 7, &width, 1,
-				    "Saving game %d... ", game_num);
+		    mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
+			    WIN_COLS - 7, &width, 1,
+			    "Saving game %d... ", game_num);
 		    newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
 		    centerch(curwin, 2, 0, chbuf, 1, &width);
 		    wrefresh(curwin);
@@ -443,10 +418,11 @@ selection_t get_move (void)
 
 		selection = SEL_NONE;
 	    }
+
+	    free(chbuf);
 	}
     }
 
-    free(chbuf);
     return selection;
 }
 

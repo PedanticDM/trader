@@ -157,45 +157,17 @@ static const char *help_text[] = {
 
 void show_help (void)
 {
-    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    int lines, width;
-
     int curpage = 0;
     int numpages;
     bool done = false;
-
-    chtype *ch_title;			// Title string
-    chtype *ch_contfirst;		// "Continue", first page
-    chtype *ch_contnext;		// "Continue", following pages
-    int w_title,     ln_title;
-    int w_contfirst, ln_contfirst;
-    int w_contnext,  ln_contnext;
 
 
     // Count how many pages appear in the help text
     for (numpages = 0; help_text[numpages] != NULL; numpages++)
 	;
 
-    if (numpages == 0) {
-	free(chbuf);
+    if (numpages == 0)
 	return;
-    }
-
-    // Prepare fixed-text strings
-    ln_title = mkchstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 4,
-		       &w_title, 1, "  How to Play  ");
-    ch_title = chstrdup(chbuf, BUFSIZE);
-
-    ln_contfirst = mkchstr(chbuf, BUFSIZE, attr_waitforkey, 0, 0, 1,
-			   WIN_COLS - 4, &w_contfirst, 1,
-			   "[ Press <SPACE> to continue ] ");
-    ch_contfirst = chstrdup(chbuf, BUFSIZE);
-
-    ln_contnext = mkchstr(chbuf, BUFSIZE, attr_waitforkey, 0, 0, 1,
-			  WIN_COLS - 4, &w_contnext, 1,
-			  "[ Press <SPACE> to continue or "
-			  "<BACKSPACE> for the previous page ] ");
-    ch_contnext = chstrdup(chbuf, BUFSIZE);
 
     newtxwin(WIN_LINES - 1, WIN_COLS, 1, WCENTER, false, 0);
 
@@ -205,12 +177,10 @@ void show_help (void)
 	werase(curwin);
 	wbkgd(curwin, attr_normal_window);
 	box(curwin, 0, 0);
-	centerch(curwin, 1, 0, ch_title, ln_title, &w_title);
 
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
-			WIN_COLS - 4, &width, 1, "Page %d of %d",
-			curpage + 1, numpages);
-	centerch(curwin, 2, 0, chbuf, lines, &width);
+	center(curwin, 1, 0, attr_title, 0, 0, "  How to Play  ");
+	center(curwin, 2, 0, attr_normal, attr_highlight, 0,
+	       "Page %d of %d", curpage + 1, numpages);
 	wmove(curwin, 4, 2);
 
 	// Process the help text string
@@ -355,14 +325,10 @@ void show_help (void)
 	    s++;
 	}
 
-	if (curpage == 0) {
-	    centerch(curwin, getmaxy(curwin) - 2, 0, ch_contfirst,
-		     ln_contfirst, &w_contfirst);
-	} else {
-	    centerch(curwin, getmaxy(curwin) - 2, 0, ch_contnext,
-		     ln_contnext, &w_contnext);
-	}
-
+	center(curwin, getmaxy(curwin) - 2, 0, attr_waitforkey, 0, 0,
+	       (curpage == 0) ? "[ Press <SPACE> to continue ] " :
+	       "[ Press <SPACE> to continue or <BACKSPACE> "
+	       "for the previous page ] ");
 	wrefresh(curwin);
 
 	int key = gettxchar(curwin);
@@ -399,9 +365,4 @@ void show_help (void)
 
     deltxwin();
     txrefresh();
-
-    free(ch_title);
-    free(ch_contfirst);
-    free(ch_contnext);
-    free(chbuf);
 }

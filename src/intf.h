@@ -411,7 +411,7 @@ extern chtype *chstrdup (const chtype *restrict chstr, int chstrsize);
               chstr    - chtype string as returned from mkchstr()
               lines    - Number of lines in chstr as returned from mkchstr()
               widthbuf - Widths of each line as returned from mkchstr()
-  Returns:    int      - Error code OK
+  Returns:    int      - Always returns OK
 
   This function takes the strings in the chtype array chstr and prints
   them left-aligned in the window win.  Note that wrefresh() is NOT
@@ -458,6 +458,69 @@ extern int centerch (WINDOW *win, int y, int offset,
 */
 extern int rightch (WINDOW *win, int y, int x, const chtype *restrict chstr,
 		    int lines, const int *restrict widthbuf);
+
+
+/*
+  Function:   left      - Print strings left-aligned
+  Parameters: win       - Window to use (should be curwin)
+              y         - Line on which to print first string
+              x         - Starting column number for each line
+              attr_norm - Normal character rendition to use
+              attr_alt1 - First alternate character rendition to use
+              attr_alt2 - Second alternate character rendition to use
+              format    - Format string as described for mkchstr()
+              ...       - Arguments for the format string
+  Returns:    int       - Always returns OK
+
+  This shortcut function prepares a chtype string using mkchstr(), then
+  prints the string using leftch().  At most MAX_DLG_LINES are printed,
+  with the maximum width being that of the window win - x - 2 (the "2" is
+  for the right-hand border).
+*/
+extern int left (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
+		 chtype attr_alt2, const char *restrict format, ...);
+
+
+/*
+  Function:   center    - Print strings centred in window
+  Parameters: win       - Window to use (should be curwin)
+              y         - Line on which to print first string
+              offset    - Column offset to add to position for each line
+              attr_norm - Normal character rendition to use
+              attr_alt1 - First alternate character rendition to use
+              attr_alt2 - Second alternate character rendition to use
+              format    - Format string as described for mkchstr()
+              ...       - Arguments for the format string
+  Returns:    int       - Always returns OK
+
+  This shortcut function prepares a chtype string using mkchstr(), then
+  prints the string using centerch().  At most MAX_DLG_LINES are printed,
+  with the maximum width being that of the window win - 4 (for borders).
+*/
+extern int center (WINDOW *win, int y, int offset, chtype attr_norm,
+		   chtype attr_alt1, chtype attr_alt2,
+		   const char *restrict format, ...);
+
+
+/*
+  Function:   right     - Print strings right-aligned
+  Parameters: win       - Window to use (should be curwin)
+              y         - Line on which to print first string
+              x         - Ending column number for each line
+              attr_norm - Normal character rendition to use
+              attr_alt1 - First alternate character rendition to use
+              attr_alt2 - Second alternate character rendition to use
+              format    - Format string as described for mkchstr()
+              ...       - Arguments for the format string
+  Returns:    int       - Always returns OK
+
+  This shortcut function prepares a chtype string using mkchstr(), then
+  prints the string using rightch().  At most MAX_DLG_LINES are printed,
+  with the maximum width being that of x - 2 (the "2" is for the
+  left-hand border).
+*/
+extern int right (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
+		  chtype attr_alt2, const char *restrict format, ...);
 
 
 /*
