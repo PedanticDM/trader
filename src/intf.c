@@ -409,7 +409,7 @@ void init_title (void)
     clear();
 
     mvwhline(stdscr, 0, 0, ' ' | attr_game_title, COLS);
-    center(stdscr, 0, 0, attr_game_title, 0, 0, _("Star Traders"));
+    center(stdscr, 0, 0, attr_game_title, 0, 0, 1, _("Star Traders"));
 }
 
 
@@ -609,7 +609,7 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 	     true, bkgd_attr);
 
     if (usetitle) {
-	center(curwin, 1, 0, title_attr, 0, 0, boxtitle);
+	center(curwin, 1, 0, title_attr, 0, 0, 1, boxtitle);
     }
 
     centerch(curwin, usetitle ? 3 : 2, 0, chbuf, lines, widthbuf);
@@ -1345,25 +1345,30 @@ int rightch (WINDOW *win, int y, int x, const chtype *restrict chstr,
 // left: Print strings left-aligned
 
 int left (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
-	  chtype attr_alt2, const char *restrict format, ...)
+	  chtype attr_alt2, int maxlines, const char *restrict format, ...)
 {
     va_list args;
-    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    int widthbuf[MAX_DLG_LINES];
+    chtype *chbuf;
+    int *widthbuf;
     int lines;
     int ret;
 
 
+    assert(maxlines > 0);
+
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    widthbuf = xmalloc(maxlines * sizeof(int));
+
     va_start(args, format);
-    lines = vmkchstr(chbuf, BUFSIZE, attr_norm, attr_alt1, attr_alt2,
-		     MAX_DLG_LINES, getmaxx(win) - x - 2, widthbuf,
-		     MAX_DLG_LINES, format, args);
+    lines = vmkchstr(chbuf, BUFSIZE, attr_norm, attr_alt1, attr_alt2, maxlines,
+		     getmaxx(win) - x - 2, widthbuf, maxlines, format, args);
     ret = leftch(win, y, x, chbuf, lines, widthbuf);
     assert(ret == OK);
     va_end(args);
 
+    free(widthbuf);
     free(chbuf);
-    return ret;
+    return lines;
 }
 
 
@@ -1371,25 +1376,30 @@ int left (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
 // center: Print strings centred in window
 
 int center (WINDOW *win, int y, int offset, chtype attr_norm, chtype attr_alt1,
-	    chtype attr_alt2, const char *restrict format, ...)
+	    chtype attr_alt2, int maxlines, const char *restrict format, ...)
 {
     va_list args;
-    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    int widthbuf[MAX_DLG_LINES];
+    chtype *chbuf;
+    int *widthbuf;
     int lines;
     int ret;
 
 
+    assert(maxlines > 0);
+
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    widthbuf = xmalloc(maxlines * sizeof(int));
+
     va_start(args, format);
-    lines = vmkchstr(chbuf, BUFSIZE, attr_norm, attr_alt1, attr_alt2,
-		     MAX_DLG_LINES, getmaxx(win) - 4, widthbuf,
-		     MAX_DLG_LINES, format, args);
+    lines = vmkchstr(chbuf, BUFSIZE, attr_norm, attr_alt1, attr_alt2, maxlines,
+		     getmaxx(win) - 4, widthbuf, maxlines, format, args);
     ret = centerch(win, y, offset, chbuf, lines, widthbuf);
     assert(ret == OK);
     va_end(args);
 
+    free(widthbuf);
     free(chbuf);
-    return ret;
+    return lines;
 }
 
 
@@ -1397,25 +1407,30 @@ int center (WINDOW *win, int y, int offset, chtype attr_norm, chtype attr_alt1,
 // right: Print strings right-aligned
 
 int right (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
-	   chtype attr_alt2, const char *restrict format, ...)
+	   chtype attr_alt2, int maxlines, const char *restrict format, ...)
 {
     va_list args;
-    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    int widthbuf[MAX_DLG_LINES];
+    chtype *chbuf;
+    int *widthbuf;
     int lines;
     int ret;
 
 
+    assert(maxlines > 0);
+
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    widthbuf = xmalloc(maxlines * sizeof(int));
+
     va_start(args, format);
-    lines = vmkchstr(chbuf, BUFSIZE, attr_norm, attr_alt1, attr_alt2,
-		     MAX_DLG_LINES, x - 2, widthbuf, MAX_DLG_LINES,
-		     format, args);
+    lines = vmkchstr(chbuf, BUFSIZE, attr_norm, attr_alt1, attr_alt2, maxlines,
+		     x - 2, widthbuf, maxlines, format, args);
     ret = rightch(win, y, x, chbuf, lines, widthbuf);
     assert(ret == OK);
     va_end(args);
 
+    free(widthbuf);
     free(chbuf);
-    return ret;
+    return lines;
 }
 
 
@@ -2554,7 +2569,7 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
     meta(win, true);
     wtimeout(win, -1);
 
-    center(curwin, y, 0, attr, 0, 0, _("[ Press <SPACE> to continue ] "));
+    center(curwin, y, 0, attr, 0, 0, 1, _("[ Press <SPACE> to continue ] "));
     wrefresh(win);
 
     done = false;

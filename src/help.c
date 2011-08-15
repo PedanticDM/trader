@@ -178,8 +178,8 @@ void show_help (void)
 	wbkgd(curwin, attr_normal_window);
 	box(curwin, 0, 0);
 
-	center(curwin, 1, 0, attr_title, 0, 0, "  How to Play  ");
-	center(curwin, 2, 0, attr_normal, attr_highlight, 0,
+	center(curwin, 1, 0, attr_title, 0, 0, 1, "  How to Play  ");
+	center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
 	       "Page %d of %d", curpage + 1, numpages);
 	wmove(curwin, 4, 2);
 
@@ -325,7 +325,7 @@ void show_help (void)
 	    s++;
 	}
 
-	center(curwin, getmaxy(curwin) - 2, 0, attr_waitforkey, 0, 0,
+	center(curwin, getmaxy(curwin) - 2, 0, attr_waitforkey, 0, 0, 1,
 	       (curpage == 0) ? "[ Press <SPACE> to continue ] " :
 	       "[ Press <SPACE> to continue or <BACKSPACE> "
 	       "for the previous page ] ");

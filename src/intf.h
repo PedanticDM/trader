@@ -50,13 +50,19 @@
 #define MIN_LINES	24	// Minimum number of lines in terminal
 #define MIN_COLS	80	// Minimum number of columns in terminal
 
-#define WIN_LINES	MIN_LINES	// Number of lines used in main window
-#define WIN_COLS	MIN_COLS	// Number of columns used in main window
+#define WIN_LINES	MIN_LINES   // Number of lines used in main window
+#define WIN_COLS	MIN_COLS    // Number of columns used in main window
 
-#define WCENTER		-1	// Centre the new window
+#define WCENTER			-1  // Centre the new window
 
-#define MAX_DLG_LINES	10	// Default maximum lines of text in dialog box
-#define YESNO_COLS	4	// Space to allow for "Yes" or "No" response
+#define MAX_DLG_LINES		10  // Default maximum lines of text in dialog box
+#define YESNO_COLS		4   // Space to allow for "Yes" or "No" response
+#define ORDINAL_COLS		5   // Space for ordinals (1st, 2nd, etc)
+#define TOTAL_VALUE_COLS	18  // Space for total value (monetary)
+#define SHARE_PRICE_COLS	12  // Space for "Price per share"
+#define SHARE_RETURN_COLS	10  // Space for "Return per share"
+#define STOCK_OWNED_COLS	10  // Space for "Holdings (shares)"
+#define OWNERSHIP_COLS		10  // Space for "Company ownership (%)"
 
 
 // Check if resizing events are supported
@@ -470,9 +476,10 @@ extern int rightch (WINDOW *win, int y, int x, const chtype *restrict chstr,
               attr_norm - Normal character rendition to use
               attr_alt1 - First alternate character rendition to use
               attr_alt2 - Second alternate character rendition to use
+              maxlines  - Maximum number of screen lines to use
               format    - Format string as described for mkchstr()
               ...       - Arguments for the format string
-  Returns:    int       - Always returns OK
+  Returns:    int       - Number of lines actually used
 
   This shortcut function prepares a chtype string using mkchstr(), then
   prints the string using leftch().  At most MAX_DLG_LINES are printed,
@@ -480,7 +487,8 @@ extern int rightch (WINDOW *win, int y, int x, const chtype *restrict chstr,
   for the right-hand border).
 */
 extern int left (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
-		 chtype attr_alt2, const char *restrict format, ...);
+		 chtype attr_alt2, int maxlines, const char *restrict format,
+		 ...);
 
 
 /*
@@ -491,16 +499,17 @@ extern int left (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
               attr_norm - Normal character rendition to use
               attr_alt1 - First alternate character rendition to use
               attr_alt2 - Second alternate character rendition to use
+              maxlines  - Maximum number of screen lines to use
               format    - Format string as described for mkchstr()
               ...       - Arguments for the format string
-  Returns:    int       - Always returns OK
+  Returns:    int       - Number of lines actually used
 
   This shortcut function prepares a chtype string using mkchstr(), then
   prints the string using centerch().  At most MAX_DLG_LINES are printed,
   with the maximum width being that of the window win - 4 (for borders).
 */
 extern int center (WINDOW *win, int y, int offset, chtype attr_norm,
-		   chtype attr_alt1, chtype attr_alt2,
+		   chtype attr_alt1, chtype attr_alt2, int maxlines,
 		   const char *restrict format, ...);
 
 
@@ -512,9 +521,10 @@ extern int center (WINDOW *win, int y, int offset, chtype attr_norm,
               attr_norm - Normal character rendition to use
               attr_alt1 - First alternate character rendition to use
               attr_alt2 - Second alternate character rendition to use
+              maxlines  - Maximum number of screen lines to use
               format    - Format string as described for mkchstr()
               ...       - Arguments for the format string
-  Returns:    int       - Always returns OK
+  Returns:    int       - Number of lines actually used
 
   This shortcut function prepares a chtype string using mkchstr(), then
   prints the string using rightch().  At most MAX_DLG_LINES are printed,
@@ -522,7 +532,8 @@ extern int center (WINDOW *win, int y, int offset, chtype attr_norm,
   left-hand border).
 */
 extern int right (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
-		  chtype attr_alt2, const char *restrict format, ...);
+		  chtype attr_alt2, int maxlines, const char *restrict format,
+		  ...);
 
 
 /*

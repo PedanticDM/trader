@@ -368,7 +368,7 @@ void ask_player_names (void)
 	// Ask for the player's name
 
 	newtxwin(5, WIN_COLS - 4, 9, WCENTER, true, attr_normal_window);
-	left(curwin, 2, 2, attr_normal, 0, 0, "Please enter your name: ");
+	left(curwin, 2, 2, attr_normal, 0, 0, 1, "Please enter your name: ");
 
 	int x = getcurx(curwin);
 	int w = getmaxx(curwin) - x - 2;
@@ -404,12 +404,12 @@ void ask_player_names (void)
 
 	newtxwin(number_players + 5, WIN_COLS - 4, 9, WCENTER,
 		 true, attr_normal_window);
-	center(curwin, 1, 0, attr_title, 0, 0, "  Enter Player Names  ");
+	center(curwin, 1, 0, attr_title, 0, 0, 1, "  Enter Player Names  ");
 
 	for (i = 0; i < number_players; i++) {
 	    player[i].name = NULL;
 	    entered[i] = false;
-	    left(curwin, i + 3, 2, attr_normal, 0, 0, "Player %d:", i + 1);
+	    left(curwin, i + 3, 2, attr_normal, 0, 0, 1, "Player %d:", i + 1);
 	}
 
 	int x = getcurx(curwin) + 1;
@@ -508,8 +508,9 @@ void ask_player_names (void)
 
 void end_game (void)
 {
-    int i;
-    char *buf;
+    chtype *chbuf;
+    int lines;
+    int widthbuf[5];
 
 
     if (abort_game) {
@@ -517,14 +518,14 @@ void end_game (void)
 	return;
     }
 
-    buf = xmalloc(BUFSIZE);
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
 
     txdlgbox(MAX_DLG_LINES, 50, 9, WCENTER, attr_error_window,
 	     attr_error_title, attr_error_highlight, 0, 0,
 	     attr_error_waitforkey, "  Game Over  ",
 	     "The game is over after %d turns.", turn_number - 1);
 
-    for (i = 0; i < number_players; i++) {
+    for (int i = 0; i < number_players; i++) {
 	show_status(i);
     }
 
@@ -535,43 +536,45 @@ void end_game (void)
 		 total_value(0));
     } else {
 	// Sort players on the basis of total value
-	for (i = 0; i < number_players; i++) {
+	for (int i = 0; i < number_players; i++) {
 	    player[i].sort_value = total_value(i);
 	}
 	qsort(player, number_players, sizeof(player_info_t), cmp_player);
 
-	newtxwin(number_players + 10, WIN_COLS - 4, 3, WCENTER,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, attr_blink,
+			5, WIN_COLS - 8, widthbuf, 5, (player[0].sort_value == 0) ?
+			"The winner is ^{%s^}\n"
+			"who is ^[*** BANKRUPT ***^]" :
+			"The winner is ^{%s^}\n"
+			"with a value of ^{%N^}.", player[0].name,
+			player[0].sort_value);
+
+	newtxwin(number_players + lines + 8, WIN_COLS - 4, 3, WCENTER,
 		 true, attr_normal_window);
+	center(curwin, 1, 0, attr_title, 0, 0, 1, "  Game Winner  ");
+	centerch(curwin, 3, 0, chbuf, lines, widthbuf);
 
-	old_center(curwin, 1, attr_title, "  Game Winner  ");
-	old_center2(curwin, 3, attr_normal, attr_highlight, "The winner is ",
-		"%s", player[0].name);
-	if (player[0].sort_value == 0.0) {
-	    old_center2(curwin, 4, attr_normal, attr_blink, "who is ",
-		    "*** BANKRUPT ***");
-	} else {
-	    l_strfmon(buf, BUFSIZE, "%1n", player[0].sort_value);
-	    old_center2(curwin, 4, attr_normal, attr_highlight,
-		    "with a value of ", "%s", buf);
-	}
+	mvwhline(curwin, lines + 4, 2, ' ' | attr_subtitle,
+		 getmaxx(curwin) - 4);
+	left(curwin, lines + 4, ORDINAL_COLS + 4, attr_subtitle, 0, 0, 1,
+	     "Player");
+	right(curwin, lines + 4, getmaxx(curwin) - 4, attr_subtitle, 0, 0, 1,
+	      "Total Value (%s)", lconvinfo.currency_symbol);
 
-	int w = getmaxx(curwin) - 33;
-	wattrset(curwin, attr_subtitle);
-	snprintf(buf, BUFSIZE, "Total Value (%s)", lconvinfo.currency_symbol);
-	mvwprintw(curwin, 6, 2, "%5s  %-*.*s  %18s  ", "", w, w, "Player", buf);
-	wattrset(curwin, attr_normal);
-
-	for (i = 0; i < number_players; i++) {
-	    l_strfmon(buf, BUFSIZE, "%!18n", player[i].sort_value);
-	    mvwprintw(curwin, i + 7, 2, "%5s  %-*.*s  %18s  ",
-		      gettext(ordinal[i + 1]), w, w, player[i].name, buf);
+	for (int i = 0; i < number_players; i++) {
+	    right(curwin, i + lines + 5, ORDINAL_COLS + 2, attr_normal, 0, 0,
+		  1, gettext(ordinal[i + 1]));
+	    left(curwin, i + lines + 5, ORDINAL_COLS + 4, attr_normal, 0, 0,
+		 1, "%s", player[i].name);
+	    right(curwin, i + lines + 5, getmaxx(curwin) - 2, attr_normal, 0,
+		  0, 1, "  %!N  ", player[i].sort_value);
 	}
 
 	wait_for_key(curwin, getmaxy(curwin) - 2, attr_waitforkey);
 	deltxwin();
     }
 
-    free(buf);
+    free(chbuf);
 }
 
 
@@ -592,13 +595,12 @@ void show_map (bool closewin)
     mvwhline(curwin, 1, 2, ' ' | attr_mapwin_title, getmaxx(curwin) - 4);
 
     // Display current player and turn number
-    left(curwin, 1, 2, attr_mapwin_title, attr_mapwin_highlight, 0,
+    left(curwin, 1, 2, attr_mapwin_title, attr_mapwin_highlight, 0, 1,
 	 "  Player: ^{%s^}  ", player[current_player].name);
     right(curwin, 1, getmaxx(curwin) - 2, attr_mapwin_title,
-	  attr_mapwin_highlight, attr_mapwin_blink, (turn_number != max_turn) ?
-	  "  Turn: ^{%d^}  " : "  ^[*** Last Turn ***^]  ", turn_number);
-
-    wattrset(curwin, attr_map_window);
+	  attr_mapwin_highlight, attr_mapwin_blink, 1,
+	  (turn_number != max_turn) ? "  Turn: ^{%d^}  " :
+	  "  ^[*** Last Turn ***^]  ", turn_number);
 
     // Display the actual map
     for (y = 0; y < MAX_Y; y++) {
@@ -657,17 +659,15 @@ void show_status (int num)
 
     newtxwin(MAX_COMPANIES + 15, WIN_COLS, 1, WCENTER, true,
 	     attr_normal_window);
-    center(curwin, 1, 0, attr_title, 0, 0, "  Stock Portfolio  ");
-    center(curwin, 2, 0, attr_normal, attr_highlight, 0, "Player: ^{%s^}",
+    center(curwin, 1, 0, attr_title, 0, 0, 1, "  Stock Portfolio  ");
+    center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1, "Player: ^{%s^}",
 		    player[num].name);
 
     val = total_value(num);
     if (val == 0.0) {
-	center(curwin, 11, 0, attr_normal, attr_highlight, attr_blink,
+	center(curwin, 11, 0, attr_normal, attr_highlight, attr_blink, 1,
 			"^[* * *   B A N K R U P T   * * *^]");
     } else {
-	char *buf = xmalloc(BUFSIZE);
-
 	// Check to see if any companies are on the map
 	bool none = true;
 	for (i = 0; i < MAX_COMPANIES; i++) {
@@ -678,52 +678,83 @@ void show_status (int num)
 	}
 
 	if (none) {
-	    center(curwin, 8, 0, attr_normal, attr_highlight, 0,
+	    center(curwin, 8, 0, attr_normal, attr_highlight, 0, 1,
 			    "No companies on the map");
 	} else {
-	    // Handle the locale's currency symbol
-	    snprintf(buf, BUFSIZE, "share (%s)", lconvinfo.currency_symbol);
+	    mvwhline(curwin, 4, 2, ' ' | attr_subtitle, getmaxx(curwin) - 4);
+	    mvwhline(curwin, 5, 2, ' ' | attr_subtitle, getmaxx(curwin) - 4);
 
-	    wattrset(curwin, attr_subtitle);
-	    mvwprintw(curwin, 4, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
-		      "", "Price per", "", "Holdings", "Company");
-	    mvwprintw(curwin, 5, 2, "  %-22s  %12s  %10s  %10s  %10s  ",
-		      "Company", buf, "Return (%)", "(shares)", "owner (%)");
-	    wattrset(curwin, attr_normal);
+	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2, "\nCompany");
+	    right(curwin, 4, getmaxx(curwin) - 4, attr_subtitle, 0, 0, 2,
+		  "Ownership\n(%%)");
+	    right(curwin, 4, getmaxx(curwin) - 6 - OWNERSHIP_COLS,
+		  attr_subtitle, 0, 0, 2, "Holdings\n(shares)");
+	    right(curwin, 4, getmaxx(curwin) - 8 - OWNERSHIP_COLS
+		  - STOCK_OWNED_COLS, attr_subtitle, 0, 0, 2,
+		  "\nReturn (%%)");
+	    right(curwin, 4, getmaxx(curwin) - 10 - OWNERSHIP_COLS
+		  - STOCK_OWNED_COLS - SHARE_RETURN_COLS, attr_subtitle, 0, 0,
+		  2, "Price per\nshare (%s)", lconvinfo.currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
-		    l_strfmon(buf, BUFSIZE, "%!12n", company[i].share_price);
-		    mvwprintw(curwin, line, 2,
-			      "  %-22s  %10s  %10.2f  %'10ld  %10.2f  ",
-			      company[i].name, buf,
-			      company[i].share_return * 100.0,
-			      player[num].stock_owned[i],
-			      (company[i].stock_issued == 0) ? 0.0 :
-			      ((double) player[num].stock_owned[i] * 100.0)
-			      / company[i].stock_issued);
+		    left(curwin, line, 4, attr_normal, 0, 0, 1, "%s",
+			 company[i].name);
+
+		    right(curwin, line, getmaxx(curwin) - 2, attr_normal, 0, 0,
+			  1, "%.2f  ", (company[i].stock_issued == 0) ? 0.0 :
+			  ((double) player[num].stock_owned[i] * 100.0)
+			  / company[i].stock_issued);
+		    right(curwin, line, getmaxx(curwin) - 4 - OWNERSHIP_COLS,
+			  attr_normal, 0, 0, 1, "%'ld  ",
+			  player[num].stock_owned[i]);
+		    right(curwin, line, getmaxx(curwin) - 6 - OWNERSHIP_COLS
+			  - STOCK_OWNED_COLS, attr_normal, 0, 0, 1, "%.2f  ",
+			  company[i].share_return * 100.0);
+		    right(curwin, line, getmaxx(curwin) - 8 - OWNERSHIP_COLS
+			  - STOCK_OWNED_COLS - SHARE_RETURN_COLS, attr_normal,
+			  0, 0, 1, "  %!N  ", company[i].share_price);
+
 		    line++;
 		}
 	    }
 	}
 
-	line = 15;
-	l_strfmon(buf, BUFSIZE, "%18n", player[num].cash);
-	old_center2(curwin, line++, attr_normal, attr_highlight, "Current cash:  ",
-		" %s ", buf);
+	line = MAX_COMPANIES + 7;
+
+	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+	int width, x;
+
+	mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
+		&width, 1, "Total value:   ");
+	x = (getmaxx(curwin) + width - (TOTAL_VALUE_COLS + 2)) / 2;
+
+	right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
+	      "Current cash:  ");
+	right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
+	      attr_highlight, 0, 1, " ^{%N^} ", player[num].cash);
+	line++;
+
 	if (player[num].debt != 0.0) {
-	    l_strfmon(buf, BUFSIZE, "%18n", player[num].debt);
-	    old_center2(curwin, line++, attr_normal, attr_highlight,
-		    "Current debt:  ", " %s ", buf);
-	    old_center2(curwin, line++, attr_normal, attr_highlight,
-		    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
+	    right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
+		  "Current debt:  ");
+	    right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
+		  attr_highlight, 0, 1, " ^{%N^} ", player[num].debt);
+	    line++;
+
+	    right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
+		  "Interest rate: ");
+	    right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
+		  attr_highlight, 0, 1, " ^{%.2f%%^} ", interest_rate * 100.0);
+	    line++;
 	}
 
-	l_strfmon(buf, BUFSIZE, "%18n", val);
-	old_center2(curwin, line + 1, attr_highlight, attr_title,
-		"Total value:   ", " %s ", buf);
+	rightch(curwin, line + 1, x, chbuf, 1, &width);
+	whline(curwin, ' ' | attr_title, TOTAL_VALUE_COLS + 2);
+	right(curwin, line + 1, x + TOTAL_VALUE_COLS + 2, attr_title, 0, 0, 1,
+	      " %N ", val);
 
-	free(buf);
+	free(chbuf);
     }
 
     wait_for_key(curwin, getmaxy(curwin) - 2, attr_waitforkey);

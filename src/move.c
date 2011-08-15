@@ -231,17 +231,17 @@ selection_t get_move (void)
 	werase(curwin);
 	box(curwin, 0, 0);
 
-	left(curwin, 2, 2, attr_normal, attr_keycode, 0,
+	left(curwin, 2, 2, attr_normal, attr_keycode, 0, 1,
 	     "^{<1>^} Display stock portfolio");
-	left(curwin, 3, 2, attr_normal, attr_keycode, 0,
+	left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
 	     "^{<2>^} Declare bankruptcy");
-	left(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0,
+	left(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
 	     "^{<3>^} Save and end the game");
-	left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0,
+	left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
 	     "^{<CTRL><C>^} Quit the game");
 
 	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
-	      attr_choice, "Select move "
+	      attr_choice, 1, "Select move "
 	      "[^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: ",
 	      MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
 
@@ -257,7 +257,7 @@ selection_t get_move (void)
 
 		curs_set(CURS_OFF);
 		left(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_choice,
-		     0, "Move ^{%c^}", key);
+		     0, 1, "Move ^{%c^}", key);
 	    } else {
 		switch (key) {
 		case '1':
@@ -271,7 +271,7 @@ selection_t get_move (void)
 
 		    curs_set(CURS_OFF);
 		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
-			 attr_normal | A_BOLD, 0,
+			 attr_normal | A_BOLD, 0, 1,
 			 "^{<2>^} (Declare bankruptcy)");
 		    break;
 
@@ -280,7 +280,7 @@ selection_t get_move (void)
 
 		    curs_set(CURS_OFF);
 		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
-			 attr_normal | A_BOLD, 0,
+			 attr_normal | A_BOLD, 0, 1,
 			 "^{<3>^} (Save and end the game)");
 		    break;
 
@@ -294,7 +294,7 @@ selection_t get_move (void)
 
 		    curs_set(CURS_OFF);
 		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
-			 attr_normal | A_BOLD, 0,
+			 attr_normal | A_BOLD, 0, 1,
 			 "^{<CTRL><C>^} (Quit the game)");
 		    break;
 
@@ -309,7 +309,7 @@ selection_t get_move (void)
 	mvwhline(curwin, 3, 2, ' ' | attr_normal, getmaxx(curwin) - 4);
 
 	// Ask the player to confirm their choice
-	right(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0,
+	right(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
 	      "Are you sure? [^{Y^}/^{N^}] ");
 	wrefresh(curwin);
 
