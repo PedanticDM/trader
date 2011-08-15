@@ -70,11 +70,13 @@ struct argument {
 #define MAXFMTSPECS	16	// Maximum number of conversion specifiers
 
 struct convspec {
-    int		len;		// Length of conversion specifier, 0 = unused
+    char	spec;		// Conversion specifier: c d f N s
     int		arg_num;	// Which variable argument to use
-    char	spec;		// Conversion specifier: c d N s
+    int		len;		// Length of conversion specifier, 0 = unused
+    int		precision;	// Precision value
     bool	flag_group;	// Flag "'" (thousands grouping)
     bool	flag_nosym;	// Flag "!" (omit currency symbol)
+    bool	flag_prec;	// Flag "." (precision)
     bool	flag_long;	// Length modifier "l" (long)
 };
 
@@ -835,6 +837,17 @@ int mkchstr_parse (const char *restrict format,
 			flag_other = true;
 			break;
 
+		    case '.':
+			// Precision flag
+			if (format_spec->flag_prec || count != 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
+
+			format_spec->flag_prec = true;
+			flag_other = true;
+			break;
+
 		    case 'l':
 			// Long length modifier
 			if (format_spec->flag_long) {
@@ -850,7 +863,8 @@ int mkchstr_parse (const char *restrict format,
 		    case 'c':
 			// Insert a character (char)
 			if (format_spec->flag_group || format_spec->flag_nosym
-			    || format_spec->flag_long || count != 0) {
+			    || format_spec->flag_prec || format_spec->flag_long
+			    || count != 0) {
 			    errno = EINVAL;
 			    return -1;
 			}
@@ -860,7 +874,8 @@ int mkchstr_parse (const char *restrict format,
 
 		    case 'd':
 			// Insert an integer (int or long int)
-			if (count != 0) {
+			if (format_spec->flag_nosym || format_spec->flag_prec
+			    || count != 0) {
 			    errno = EINVAL;
 			    return -1;
 			}
@@ -869,10 +884,23 @@ int mkchstr_parse (const char *restrict format,
 			    TYPE_LONGINT : TYPE_INT;
 			goto handlefmt;
 
+		    case 'f':
+			// Insert a floating-point number (double)
+			if (format_spec->flag_nosym || format_spec->flag_long ||
+			    (! format_spec->flag_prec && count != 0)) {
+			    errno = EINVAL;
+			    return -1;
+			}
+
+			format_spec->precision = count;
+
+			arg_type = TYPE_DOUBLE;
+			goto handlefmt;
+
 		    case 'N':
 			// Insert a monetary amount (double)
-			if (format_spec->flag_group || format_spec->flag_long
-			    || count != 0) {
+			if (format_spec->flag_group || format_spec->flag_prec
+			    || format_spec->flag_long || count != 0) {
 			    errno = EINVAL;
 			    return -1;
 			}
@@ -883,7 +911,8 @@ int mkchstr_parse (const char *restrict format,
 		    case 's':
 			// Insert a string (const char *)
 			if (format_spec->flag_group || format_spec->flag_nosym
-			    || format_spec->flag_long || count != 0) {
+			    || format_spec->flag_prec || format_spec->flag_long
+			    || count != 0) {
 			    errno = EINVAL;
 			    return -1;
 			}
@@ -1092,6 +1121,31 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			if (snprintf(buf, BUFSIZE, spec->flag_group ?
 				     "%'d" : "%d",
 				     format_arg[spec->arg_num].a.a_int) < 0) {
+			    saved_errno = errno;
+			    free(buf);
+			    errno = saved_errno;
+			    goto error;
+			}
+		    }
+
+		    str = buf;
+		    goto insertstr;
+
+		case 'f':
+		    // Insert a floating-point number (double) into the output
+		    if (spec->flag_prec) {
+			if (snprintf(buf, BUFSIZE, spec->flag_group ?
+				     "%'.*f" : "%.*f", spec->precision,
+				     format_arg[spec->arg_num].a.a_double) < 0) {
+			    saved_errno = errno;
+			    free(buf);
+			    errno = saved_errno;
+			    goto error;
+			}
+		    } else {
+			if (snprintf(buf, BUFSIZE, spec->flag_group ?
+				     "%'f" : "%f",
+				     format_arg[spec->arg_num].a.a_double) < 0) {
 			    saved_errno = errno;
 			    free(buf);
 			    errno = saved_errno;
