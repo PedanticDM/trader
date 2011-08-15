@@ -113,7 +113,7 @@ void init_game (void)
 	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
 	int lines, width;
 
-	lines = prepstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
+	lines = mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
 			WIN_COLS - 7, &width, 1,
 			"Loading game %d... ", game_num);
 	newtxwin(5, width + 5, 6, WCENTER, true, attr_status_window);
@@ -148,7 +148,7 @@ void init_game (void)
 
 		    game_num = choice;
 
-		    lines = prepstr(chbuf, BUFSIZE, attr_status_window,
+		    lines = mkchstr(chbuf, BUFSIZE, attr_status_window,
 				    0, 0, 1, WIN_COLS - 7, &width, 1,
 				    "Loading game %d... ", game_num);
 		    newtxwin(5, width + 5, 9, WCENTER, true, attr_status_window);
@@ -249,7 +249,7 @@ static int ask_number_players (void)
 
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 		    sizeof(widthbuf) / sizeof(widthbuf[0]), WIN_COLS - 7,
 		    widthbuf, sizeof(widthbuf) / sizeof(widthbuf[0]),
 		    "Enter number of players [^{1^}-^{%d^}] "
@@ -314,7 +314,7 @@ int ask_game_number (void)
 
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 		    sizeof(widthbuf) / sizeof(widthbuf[0]), WIN_COLS - 7,
 		    widthbuf, sizeof(widthbuf) / sizeof(widthbuf[0]),
 		    "Enter game number [^{1^}-^{9^}] "
@@ -388,7 +388,7 @@ void ask_player_names (void)
 	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
 	int lines, width;
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, WIN_COLS - YESNO_COLS - 6, &width, 1,
 			"Do you need any instructions? [^{Y^}/^{N^}] ");
 	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
@@ -411,7 +411,7 @@ void ask_player_names (void)
 
 	newtxwin(number_players + 5, WIN_COLS - 4, 9, WCENTER,
 		 true, attr_normal_window);
-	lines = prepstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 8,
+	lines = mkchstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 8,
 			&width, 1, "  Enter Player Names  ");
 	pr_center(curwin, 1, 0, chbuf, lines, &width);
 
@@ -494,7 +494,7 @@ void ask_player_names (void)
 	    }
 	}
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, WIN_COLS - YESNO_COLS - 6, &width, 1,
 			"Does any player need instructions? [^{Y^}/^{N^}] ");
 	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
@@ -552,15 +552,15 @@ void end_game (void)
 	newtxwin(number_players + 10, WIN_COLS - 4, 3, WCENTER,
 		 true, attr_normal_window);
 
-	center(curwin, 1, attr_title, "  Game Winner  ");
-	center2(curwin, 3, attr_normal, attr_highlight, "The winner is ",
+	old_center(curwin, 1, attr_title, "  Game Winner  ");
+	old_center2(curwin, 3, attr_normal, attr_highlight, "The winner is ",
 		"%s", player[0].name);
 	if (player[0].sort_value == 0.0) {
-	    center2(curwin, 4, attr_normal, attr_blink, "who is ",
+	    old_center2(curwin, 4, attr_normal, attr_blink, "who is ",
 		    "*** BANKRUPT ***");
 	} else {
 	    l_strfmon(buf, BUFSIZE, "%1n", player[0].sort_value);
-	    center2(curwin, 4, attr_normal, attr_highlight,
+	    old_center2(curwin, 4, attr_normal, attr_highlight,
 		    "with a value of ", "%s", buf);
 	}
 
@@ -603,12 +603,12 @@ void show_map (bool closewin)
     mvwhline(curwin, 1, 2, ' ' | attr_mapwin_title, getmaxx(curwin) - 4);
 
     // Display current player and turn number
-    lines = prepstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
+    lines = mkchstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
 		    0, 1, WIN_COLS - 4, &width, 1, "  Player: ^{%s^}  ",
 		    player[current_player].name);
     pr_left(curwin, 1, 2, chbuf, lines, &width);
 
-    lines = prepstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
+    lines = mkchstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
 		    attr_mapwin_blink, 1, WIN_COLS / 2, &width, 1,
 		    (turn_number != max_turn) ? "  Turn: ^{%d^}  " :
 		    "  ^[*** Last Turn ***^]  ", turn_number);
@@ -679,18 +679,18 @@ void show_status (int num)
 	     attr_normal_window);
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    lines = prepstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 4,
+    lines = mkchstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 4,
 		    &width, 1, "  Stock Portfolio  ");
     pr_center(curwin, 1, 0, chbuf, lines, &width);
 
-    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
+    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
 		    WIN_COLS - 4, &width, 1, "Player: ^{%s^}",
 		    player[num].name);
     pr_center(curwin, 2, 0, chbuf, lines, &width);
 
     val = total_value(num);
     if (val == 0.0) {
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_highlight,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight,
 			attr_blink, 1, WIN_COLS - 4, &width, 1,
 			"^[* * *   B A N K R U P T   * * *^]");
 	pr_center(curwin, 11, 0, chbuf, lines, &width);
@@ -708,7 +708,7 @@ void show_status (int num)
 	}
 
 	if (none) {
-	    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0,
+	    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0,
 			    1, WIN_COLS - 4, &width, 1,
 			    "No companies on the map");
 	    pr_center(curwin, 8, 0, chbuf, lines, &width);
@@ -741,18 +741,18 @@ void show_status (int num)
 
 	line = 15;
 	l_strfmon(buf, BUFSIZE, "%18n", player[num].cash);
-	center2(curwin, line++, attr_normal, attr_highlight, "Current cash:  ",
+	old_center2(curwin, line++, attr_normal, attr_highlight, "Current cash:  ",
 		" %s ", buf);
 	if (player[num].debt != 0.0) {
 	    l_strfmon(buf, BUFSIZE, "%18n", player[num].debt);
-	    center2(curwin, line++, attr_normal, attr_highlight,
+	    old_center2(curwin, line++, attr_normal, attr_highlight,
 		    "Current debt:  ", " %s ", buf);
-	    center2(curwin, line++, attr_normal, attr_highlight,
+	    old_center2(curwin, line++, attr_normal, attr_highlight,
 		    "Interest rate: ", " %17.2f%% ", interest_rate * 100.0);
 	}
 
 	l_strfmon(buf, BUFSIZE, "%18n", val);
-	center2(curwin, line + 1, attr_highlight, attr_title,
+	old_center2(curwin, line + 1, attr_highlight, attr_title,
 		"Total value:   ", " %s ", buf);
 
 	free(buf);

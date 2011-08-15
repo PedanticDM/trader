@@ -182,20 +182,20 @@ void show_help (void)
     }
 
     // Prepare fixed-text strings
-    ln_title = prepstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 4,
+    ln_title = mkchstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 4,
 		       &w_title, 1, "  How to Play  ");
-    ch_title = chbufdup(chbuf, BUFSIZE);
+    ch_title = chstrdup(chbuf, BUFSIZE);
 
-    ln_contfirst = prepstr(chbuf, BUFSIZE, attr_waitforkey, 0, 0, 1,
+    ln_contfirst = mkchstr(chbuf, BUFSIZE, attr_waitforkey, 0, 0, 1,
 			   WIN_COLS - 4, &w_contfirst, 1,
 			   "[ Press <SPACE> to continue ] ");
-    ch_contfirst = chbufdup(chbuf, BUFSIZE);
+    ch_contfirst = chstrdup(chbuf, BUFSIZE);
 
-    ln_contnext = prepstr(chbuf, BUFSIZE, attr_waitforkey, 0, 0, 1,
+    ln_contnext = mkchstr(chbuf, BUFSIZE, attr_waitforkey, 0, 0, 1,
 			  WIN_COLS - 4, &w_contnext, 1,
 			  "[ Press <SPACE> to continue or "
 			  "<BACKSPACE> for the previous page ] ");
-    ch_contnext = chbufdup(chbuf, BUFSIZE);
+    ch_contnext = chstrdup(chbuf, BUFSIZE);
 
     newtxwin(WIN_LINES - 1, WIN_COLS, 1, WCENTER, false, 0);
 
@@ -207,7 +207,7 @@ void show_help (void)
 	box(curwin, 0, 0);
 	pr_center(curwin, 1, 0, ch_title, ln_title, &w_title);
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
 			WIN_COLS - 4, &width, 1, "Page %d of %d",
 			curpage + 1, numpages);
 	pr_center(curwin, 2, 0, chbuf, lines, &width);

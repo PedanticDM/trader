@@ -233,27 +233,27 @@ selection_t get_move (void)
 	werase(curwin);
 	box(curwin, 0, 0);
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<1>^} Display stock portfolio");
 	pr_left(curwin, 2, 2, chbuf, lines, &width);
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<2>^} Declare bankruptcy");
 	pr_left(curwin, 3, 2, chbuf, lines, &width);
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<3>^} Save and end the game");
 	pr_left(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"^{<CTRL><C>^} Quit the game");
 	pr_left(curwin, 3, getmaxx(curwin) / 2, chbuf, lines, &width);
 
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, attr_choice,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, attr_choice,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"Select move [^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: ",
 			MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
@@ -270,7 +270,7 @@ selection_t get_move (void)
 		selection = KEY_TO_MOVE(key);
 
 		curs_set(CURS_OFF);
-		lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_choice, 0,
+		lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_choice, 0,
 				1, getmaxx(curwin) / 2 - 4, &width, 1,
 				"Move ^{%c^}", key);
 		pr_left(curwin, 1, getmaxx(curwin) / 2, chbuf, lines, &width);
@@ -286,7 +286,7 @@ selection_t get_move (void)
 		    selection = SEL_BANKRUPT;
 
 		    curs_set(CURS_OFF);
-		    lines = prepstr(chbuf, BUFSIZE, attr_normal,
+		    lines = mkchstr(chbuf, BUFSIZE, attr_normal,
 				    attr_normal | A_BOLD, 0, 1,
 				    getmaxx(curwin) / 2 - 4, &width, 1,
 				    "^{<2>^} (Declare bankruptcy)");
@@ -297,7 +297,7 @@ selection_t get_move (void)
 		    selection = SEL_SAVE;
 
 		    curs_set(CURS_OFF);
-		    lines = prepstr(chbuf, BUFSIZE, attr_normal,
+		    lines = mkchstr(chbuf, BUFSIZE, attr_normal,
 				    attr_normal | A_BOLD, 0, 1,
 				    getmaxx(curwin) / 2 - 4, &width, 1,
 				    "^{<3>^} (Save and end the game)");
@@ -313,7 +313,7 @@ selection_t get_move (void)
 		    selection = SEL_QUIT;
 
 		    curs_set(CURS_OFF);
-		    lines = prepstr(chbuf, BUFSIZE, attr_normal,
+		    lines = mkchstr(chbuf, BUFSIZE, attr_normal,
 				    attr_normal | A_BOLD, 0, 1,
 				    getmaxx(curwin) / 2 - 4, &width, 1,
 				    "^{<CTRL><C>^} (Quit the game)");
@@ -331,7 +331,7 @@ selection_t get_move (void)
 	mvwhline(curwin, 3, 2, ' ' | attr_normal, getmaxx(curwin) - 4);
 
 	// Ask the player to confirm their choice
-	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 			1, getmaxx(curwin) / 2 - 4, &width, 1,
 			"Are you sure? [^{Y^}/^{N^}] ");
 	pr_right(curwin, 2, getmaxx(curwin) / 2, chbuf, lines, &width);
@@ -347,7 +347,7 @@ selection_t get_move (void)
 
 	    if (game_loaded) {
 		// Save the game to the same game number
-		lines = prepstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
+		lines = mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
 				WIN_COLS - 7, &width, 1,
 				"Saving game %d... ", game_num);
 		newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
@@ -369,7 +369,7 @@ selection_t get_move (void)
 		int maxwidth;
 
 
-		lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+		lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 				sizeof(widthbuf) / sizeof(widthbuf[0]),
 				WIN_COLS - 7, widthbuf,
 				sizeof(widthbuf) / sizeof(widthbuf[0]),
@@ -417,7 +417,7 @@ selection_t get_move (void)
 		    // Try to save the game, if possible
 		    game_num = key - '0';
 
-		    lines = prepstr(chbuf, BUFSIZE, attr_status_window,
+		    lines = mkchstr(chbuf, BUFSIZE, attr_status_window,
 				    0, 0, 1, WIN_COLS - 7, &width, 1,
 				    "Saving game %d... ", game_num);
 		    newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
@@ -775,15 +775,15 @@ void merge_companies (map_val_t a, map_val_t b)
     newtxwin(number_players + 14, WIN_COLS - 4, 9 - number_players,
 	     WCENTER, true, attr_normal_window);
 
-    center(curwin, 1, attr_title, "  Company Merger  ");
-    center3(curwin, 3, attr_highlight, attr_highlight, attr_normal,
+    old_center(curwin, 1, attr_title, "  Company Merger  ");
+    old_center3(curwin, 3, attr_highlight, attr_highlight, attr_normal,
 	    company[bb].name, company[aa].name, " has just merged into ");
 
-    center(curwin, 5, attr_normal, "Please note the following transactions:");
+    old_center(curwin, 5, attr_normal, "Please note the following transactions:");
 
-    center2(curwin, 7, attr_normal, attr_highlight, " Old stock: ",
+    old_center2(curwin, 7, attr_normal, attr_highlight, " Old stock: ",
 	    "%-20s", company[bb].name);
-    center2(curwin, 8, attr_normal, attr_highlight, " New stock: ",
+    old_center2(curwin, 8, attr_normal, attr_highlight, " New stock: ",
 	    "%-20s", company[aa].name);
 
     // Handle the locale's currency symbol
@@ -947,25 +947,25 @@ void adjust_values (void)
 
 		newtxwin(14, 60, 4, WCENTER, true, attr_error_window);
 
-		center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
-		center(curwin, 3, attr_error_highlight, "%s has been declared",
+		old_center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
+		old_center(curwin, 3, attr_error_highlight, "%s has been declared",
 			company[which].name);
-		center(curwin, 4, attr_error_highlight,
+		old_center(curwin, 4, attr_error_highlight,
 		       "bankrupt by the Interstellar Trading Bank.");
 
-		center2(curwin, 6, attr_error_normal, attr_error_highlight,
+		old_center2(curwin, 6, attr_error_normal, attr_error_highlight,
 			"The Bank has agreed to pay stock holders ",
 			"%4.2f%%", rate * 100.0);
-		center(curwin, 7, attr_error_normal,
+		old_center(curwin, 7, attr_error_normal,
 		       "of the share value on each share owned.");
 
 		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price);
-		center2(curwin, 9, attr_error_normal, attr_error_highlight,
+		old_center2(curwin, 9, attr_error_normal, attr_error_highlight,
 			"Old share value:       ", "%s", buf);
 
 		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price
 			  * rate);
-		center2(curwin, 10, attr_error_normal, attr_error_highlight,
+		old_center2(curwin, 10, attr_error_normal, attr_error_highlight,
 			"Amount paid per share: ", "%s", buf);
 
 		wait_for_key(curwin, 12, attr_error_waitforkey);

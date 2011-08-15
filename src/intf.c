@@ -42,7 +42,7 @@ typedef struct txwin {
 } txwin_t;
 
 
-// Declarations for argument processing in prepstr()
+// Declarations for argument processing in mkchstr()
 
 #define MAXFMTARGS	8	// Maximum number of positional arguments
 
@@ -170,7 +170,7 @@ static void txresize (void);
 
 
 /*
-  Function:   prepstr_addch - Add a character to the prepstr buffer
+  Function:   mkchstr_addch - Add a character to the mkchstr buffer
   Parameters: chbuf         - Pointer to chtype pointer in which to store string
               chbufsize     - Pointer to number of chtype elements in chbuf
               attr          - Character rendition to use
@@ -193,7 +193,7 @@ static void txresize (void);
   (if not on the last line).  *line, *width, *lastspc, *widthspc and
   widthbuf[] are all updated appropriately.
 */
-static int prepstr_addch (chtype *restrict *restrict chbuf,
+static int mkchstr_addch (chtype *restrict *restrict chbuf,
 			  int *restrict chbufsize, chtype attr,
 			  int maxlines, int maxwidth, int *restrict line,
 			  int *restrict width,
@@ -204,17 +204,17 @@ static int prepstr_addch (chtype *restrict *restrict chbuf,
 
 
 /*
-  Function:   prepstr_parse - Parse the format string for prepstr()
-  Parameters: format        - Format string as described for prepstr()
+  Function:   mkchstr_parse - Parse the format string for mkchstr()
+  Parameters: format        - Format string as described for mkchstr()
               format_arg    - Pointer to variable arguments array
               format_spec   - Pointer to conversion specifiers array
-              args          - Variable argument list passed to prepstr()
+              args          - Variable argument list passed to mkchstr()
   Returns:    int           - 0 if OK, -1 if error (with errno set)
 
-  This helper function parses the format string passed to prepstr(),
+  This helper function parses the format string passed to mkchstr(),
   setting the format_arg and format_spec arrays appropriately.
 */
-static int prepstr_parse (const char *restrict format,
+static int mkchstr_parse (const char *restrict format,
 			  struct argument *restrict format_arg,
 			  struct convspec *restrict format_spec,
 			  va_list args);
@@ -416,7 +416,7 @@ void init_title (void)
     }
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    lines = prepstr(chbuf, BUFSIZE, attr_game_title, 0, 0, 1, COLS,
+    lines = mkchstr(chbuf, BUFSIZE, attr_game_title, 0, 0, 1, COLS,
 		    &width, 1, _("Star Traders"));
     pr_center(stdscr, 0, 0, chbuf, lines, &width);
     attrset(attr_root_window);
@@ -612,7 +612,7 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
     widthbuf = xmalloc(maxlines * sizeof(int));
 
     va_start(args, format);
-    lines = vprepstr(chbuf, BUFSIZE, norm_attr, alt1_attr, alt2_attr, maxlines,
+    lines = vmkchstr(chbuf, BUFSIZE, norm_attr, alt1_attr, alt2_attr, maxlines,
 		     ncols - 4, widthbuf, maxlines, format, args);
     va_end(args);
 
@@ -624,7 +624,7 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 	int titlewidth;
 	int titlelines;
 
-	titlelines = prepstr(titlebuf, BUFSIZE, title_attr, 0, 0, 1,
+	titlelines = mkchstr(titlebuf, BUFSIZE, title_attr, 0, 0, 1,
 			     ncols - 4, &titlewidth, 1, boxtitle);
 	pr_center(curwin, 1, 0, titlebuf, titlelines, &titlewidth);
 	free(titlebuf);
@@ -641,9 +641,9 @@ int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 
 
 /***********************************************************************/
-// prepstr: Prepare a string for printing to screen
+// mkchstr: Prepare a string for printing to screen
 
-int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+int mkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	     chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
 	     int *restrict widthbuf, int widthbufsize,
 	     const char *restrict format, ...)
@@ -653,7 +653,7 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
     va_start(args, format);
-    lines = vprepstr(chbuf, chbufsize, attr_norm, attr_alt1, attr_alt2,
+    lines = vmkchstr(chbuf, chbufsize, attr_norm, attr_alt1, attr_alt2,
 		     maxlines, maxwidth, widthbuf, widthbufsize, format,
 		     args);
     va_end(args);
@@ -662,9 +662,9 @@ int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
 /***********************************************************************/
-// prepstr_addch: Add a character to the prepstr buffer
+// mkchstr_addch: Add a character to the mkchstr buffer
 
-int prepstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
+int mkchstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
 		   chtype attr, int maxlines, int maxwidth,
 		   int *restrict line, int *restrict width,
 		   chtype *restrict *restrict lastspc, int *restrict widthspc,
@@ -747,9 +747,9 @@ int prepstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
 
 
 /***********************************************************************/
-// prepstr_parse: Parse the format string for prepstr()
+// mkchstr_parse: Parse the format string for mkchstr()
 
-int prepstr_parse (const char *restrict format,
+int mkchstr_parse (const char *restrict format,
 		   struct argument *restrict format_arg,
 		   struct convspec *restrict format_spec, va_list args)
 {
@@ -991,9 +991,9 @@ int prepstr_parse (const char *restrict format,
 
 
 /***********************************************************************/
-// vprepstr: Prepare a string for printing to screen
+// vmkchstr: Prepare a string for printing to screen
 
-int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	      chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
 	      int *restrict widthbuf, int widthbufsize,
 	      const char *restrict format, va_list args)
@@ -1017,7 +1017,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
     assert(widthbufsize >= maxlines);
     assert(format != NULL);
 
-    if (prepstr_parse(format, format_arg, format_spec, args) < 0) {
+    if (mkchstr_parse(format, format_arg, format_spec, args) < 0) {
 	goto error;
     }
 
@@ -1038,7 +1038,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	    } else {
 		switch (*format) {
 		case '^':
-		    if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines,
+		    if (mkchstr_addch(&chbuf, &chbufsize, curattr, maxlines,
 				      maxwidth, &line, &width, &lastspc,
 				      &widthspc, widthbuf, widthbufsize,
 				      &format) < 0) {
@@ -1073,7 +1073,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	    if (*++format == '\0') {
 		goto error_inval;
 	    } else if (*format == '%') {
-		if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines,
+		if (mkchstr_addch(&chbuf, &chbufsize, curattr, maxlines,
 				  maxwidth, &line, &width, &lastspc, &widthspc,
 				  widthbuf, widthbufsize, &format) < 0) {
 		    goto error;
@@ -1147,7 +1147,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		insertstr:
 		    // Insert the string pointed to by str
 		    while (*str != '\0' && chbufsize > 1 && line < maxlines) {
-			if (prepstr_addch(&chbuf, &chbufsize, curattr,
+			if (mkchstr_addch(&chbuf, &chbufsize, curattr,
 					  maxlines, maxwidth, &line, &width,
 					  &lastspc, &widthspc, widthbuf,
 					  widthbufsize, &str) < 0) {
@@ -1172,7 +1172,7 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 	default:
 	    // Process an ordinary character (including new-line)
-	    if (prepstr_addch(&chbuf, &chbufsize, curattr, maxlines, maxwidth,
+	    if (mkchstr_addch(&chbuf, &chbufsize, curattr, maxlines, maxwidth,
 			      &line, &width, &lastspc, &widthspc, widthbuf,
 			      widthbufsize, &format) < 0) {
 		goto error;
@@ -1195,14 +1195,14 @@ error_inval:
     errno = EINVAL;
 
 error:
-    errno_exit(_("prepstr: `%s'"), orig_format);
+    errno_exit(_("mkchstr: `%s'"), orig_format);
 }
 
 
 /***********************************************************************/
-// chbufdup: Duplicate a chtype buffer
+// chstrdup: Duplicate a chtype buffer
 
-chtype *chbufdup (const chtype *restrict chbuf, int chbufsize)
+chtype *chstrdup (const chtype *restrict chbuf, int chbufsize)
 {
     const chtype *p;
     int len;
@@ -1309,9 +1309,9 @@ int pr_right (WINDOW *win, int y, int x, const chtype *restrict chbuf,
 
 
 /***********************************************************************/
-// attrpr: Print a string with a particular character rendition
+// old_attrpr: Print a string with a particular character rendition
 
-int attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
+int old_attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
 {
     va_list args;
     int ret;
@@ -1340,9 +1340,9 @@ int attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
 
 
 /***********************************************************************/
-// center: Centre a string in a given window
+// old_center: Centre a string in a given window
 
-int center (WINDOW *win, int y, chtype attr, const char *restrict format, ...)
+int old_center (WINDOW *win, int y, chtype attr, const char *restrict format, ...)
 {
     va_list args;
     int ret, len, x;
@@ -1357,7 +1357,7 @@ int center (WINDOW *win, int y, chtype attr, const char *restrict format, ...)
     chtype oldattr = getattrs(win);
     chtype oldbkgd = getbkgd(win);
 
-    // Order is important: see attrpr()
+    // Order is important: see old_attrpr()
     wbkgdset(win, (oldbkgd & A_COLOR) | A_NORMAL);
     wattrset(win, attr);
 
@@ -1383,9 +1383,9 @@ int center (WINDOW *win, int y, chtype attr, const char *restrict format, ...)
 
 
 /***********************************************************************/
-// center2: Centre two strings in a given window
+// old_center2: Centre two strings in a given window
 
-int center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
+int old_center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
 	     const char *initial, const char *restrict format, ...)
 {
     va_list args;
@@ -1431,9 +1431,9 @@ int center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
 
 
 /***********************************************************************/
-// center3: Centre three strings in a given window
+// old_center3: Centre three strings in a given window
 
-int center3 (WINDOW *win, int y, chtype attr1, chtype attr3, chtype attr2,
+int old_center3 (WINDOW *win, int y, chtype attr1, chtype attr3, chtype attr2,
 	     const char *initial, const char *final,
 	     const char *restrict format, ...)
 {
@@ -2447,7 +2447,7 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
     wtimeout(win, -1);
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    lines = prepstr(chbuf, BUFSIZE, attr, 0, 0, 1, getmaxx(win) - 4,
+    lines = mkchstr(chbuf, BUFSIZE, attr, 0, 0, 1, getmaxx(win) - 4,
 		    &width, 1, _("[ Press <SPACE> to continue ] "));
     pr_center(win, y, 0, chbuf, lines, &width);
     wrefresh(win);

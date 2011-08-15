@@ -288,7 +288,7 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 
 
 /*
-  Function:   prepstr      - Prepare a string for printing to screen
+  Function:   mkchstr      - Prepare a string for printing to screen
   Parameters: chbuf        - Pointer to chtype buffer in which to store string
               chbufsize    - Number of chtype elements in chbuf
               attr_norm    - Normal character rendition to use
@@ -357,14 +357,14 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
   This function returns the actual number of lines used (from 0 to
   maxlines).  If an error is detected, the application terminates.
 */
-extern int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+extern int mkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    chtype attr_alt1, chtype attr_alt2, int maxlines,
 		    int maxwidth, int *restrict widthbuf, int widthbufsize,
 		    const char *restrict format, ...);
 
 
 /*
-  Function:   vprepstr     - Prepare a string for printing to screen
+  Function:   vmkchstr     - Prepare a string for printing to screen
   Parameters: chbuf        - Pointer to chtype buffer in which to store string
               chbufsize    - Number of chtype elements in chbuf
               attr_norm    - Normal character rendition to use
@@ -374,33 +374,33 @@ extern int prepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
               maxwidth     - Maximum width of each line, in chars
               widthbuf     - Pointer to buffer to store widths of each line
               widthbufsize - Number of int elements in widthbuf
-              format       - Format string as described for prepstr()
+              format       - Format string as described for mkchstr()
               args         - Variable argument list
   Returns:    int          - Number of lines actually used
 
-  This function is exactly the same as prepstr(), except that it is
+  This function is exactly the same as mkchstr(), except that it is
   called with a va_list parameter args instead of a variable number of
   arguments.  Note that va_end() is NOT called on args, and that args is
   undefined after this function.
 */
-extern int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+extern int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		     chtype attr_alt1, chtype attr_alt2, int maxlines,
 		     int maxwidth, int *restrict widthbuf, int widthbufsize,
 		     const char *restrict format, va_list args);
 
 
 /*
-  Function:   chbufdup  - Duplicate a chtype buffer
-  Parameters: chbuf     - Buffer to duplicate
-              chbufsize - Number of chtype elements in chbuf
-  Returns:    chtype *  - Pointer to new duplicated buffer
+  Function:   chstrdup  - Duplicate a chtype string
+  Parameters: chstr     - String to duplicate
+              chstrsize - Maximum number of chtype elements in chstr
+  Returns:    chtype *  - Pointer to new (duplicated) string
 
-  This function returns a new buffer of type chtype * that contains a
-  copy of the string in chbuf.  No errors are returned: if sufficient
+  This function returns a new string of type chtype * that contains a
+  copy of the string in chstr.  No errors are returned: if sufficient
   memory is not available, the program terminates with an "Out of memory"
   message.
 */
-extern chtype *chbufdup (const chtype *restrict chbuf, int chbufsize);
+extern chtype *chstrdup (const chtype *restrict chstr, int chstrsize);
 
 
 /*
@@ -408,9 +408,9 @@ extern chtype *chbufdup (const chtype *restrict chbuf, int chbufsize);
   Parameters: win      - Window to use (should be curwin)
               y        - Line on which to print first string
               x        - Starting column number for each line
-              chbuf    - chtype buffer as returned from prepstr()
-              lines    - Number of lines in chbuf (as returned from prepstr())
-              widthbuf - Widths of each line (as returned from prepstr())
+              chbuf    - chtype buffer as returned from mkchstr()
+              lines    - Number of lines in chbuf (as returned from mkchstr())
+              widthbuf - Widths of each line (as returned from mkchstr())
   Returns:    int      - Error code OK
 
   This function takes the strings in the chtype array chbuf and prints
@@ -426,9 +426,9 @@ extern int pr_left (WINDOW *win, int y, int x, const chtype *restrict chbuf,
   Parameters: win       - Window to use (should be curwin)
               y         - Line on which to print first string
               offset    - Column offset to add to position for each line
-              chbuf     - chtype buffer as returned from prepstr()
-              lines     - Number of lines in chbuf (as returned from prepstr())
-              widthbuf  - Widths of each line (as returned from prepstr())
+              chbuf     - chtype buffer as returned from mkchstr()
+              lines     - Number of lines in chbuf (as returned from mkchstr())
+              widthbuf  - Widths of each line (as returned from mkchstr())
   Returns:    int       - ERR if more lines in chbuf[] than lines, else OK
 
   This function takes the strings in the chtype array chbuf and prints
@@ -446,9 +446,9 @@ extern int pr_center (WINDOW *win, int y, int offset,
   Parameters: win      - Window to use (should be curwin)
               y        - Line on which to print first string
               x        - Ending column number for each line
-              chbuf    - chtype buffer as returned from prepstr()
-              lines    - Number of lines in chbuf (as returned from prepstr())
-              widthbuf - Widths of each line (as returned from prepstr())
+              chbuf    - chtype buffer as returned from mkchstr()
+              lines    - Number of lines in chbuf (as returned from mkchstr())
+              widthbuf - Widths of each line (as returned from mkchstr())
   Returns:    int      - ERR if more lines in chbuf[] than lines, else OK
 
   This function takes the strings in the chtype array chbuf and prints
@@ -461,7 +461,7 @@ extern int pr_right (WINDOW *win, int y, int x, const chtype *restrict chbuf,
 
 
 /*
-  Function:   attrpr - Print a string with a particular character rendition
+  Function:   old_attrpr - Print a string with a particular character rendition
   Parameters: win    - Window to use (should be curwin)
               attr   - Character rendition to use for the string
               format - printf()-like format string
@@ -473,12 +473,12 @@ extern int pr_right (WINDOW *win, int y, int x, const chtype *restrict chbuf,
   rendition.  The return code is as returned from wprintw().  Note that
   wrefresh() is NOT called.
 */
-extern int attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
+extern int old_attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
     __attribute__((format (printf, 3, 4)));
 
 
 /*
-  Function:   center - Centre a string in a given window
+  Function:   old_center - Centre a string in a given window
   Parameters: win    - Window to use (should be curwin)
               y      - Line on which to centre the string
               attr   - Character rendition to use for the string
@@ -495,13 +495,13 @@ extern int attrpr (WINDOW *win, chtype attr, const char *restrict format, ...)
   handle multibyte strings correctly: strlen() is used to determine the
   printing width of the string.
 */
-extern int center (WINDOW *win, int y, chtype attr,
+extern int old_center (WINDOW *win, int y, chtype attr,
 		   const char *restrict format, ...)
     __attribute__((format (printf, 4, 5)));
 
 
 /*
-  Function:   center2 - Centre two strings in a given window
+  Function:   old_center2 - Centre two strings in a given window
   Parameters: win     - Window to use (should be curwin)
               y       - Line on which to centre the strings
               attr1   - Character rendition to use for initial string
@@ -521,13 +521,13 @@ extern int center (WINDOW *win, int y, chtype attr,
   As with center(), the current implementation does NOT handle multibyte
   strings correctly.
 */
-extern int center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
+extern int old_center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
 		    const char *initial, const char *restrict format, ...)
     __attribute__((format (printf, 6, 7)));
 
 
 /*
-  Function:   center3 - Centre three strings in a given window
+  Function:   old_center3 - Centre three strings in a given window
   Parameters: win     - Window to use (should be curwin)
               y       - Line on which to centre the strings
               attr1   - Character rendition to use for initial string
@@ -552,7 +552,7 @@ extern int center2 (WINDOW *win, int y, chtype attr1, chtype attr2,
   strings correctly.
 */
 
-extern int center3 (WINDOW *win, int y, chtype attr1, chtype attr3,
+extern int old_center3 (WINDOW *win, int y, chtype attr1, chtype attr3,
 		    chtype attr2, const char *initial, const char *final,
 		    const char *restrict format, ...)
     __attribute__((format (printf, 8, 9)));
