@@ -48,6 +48,7 @@ typedef struct txwin {
 
 enum argument_type {
     TYPE_NONE,			// No type yet assigned
+    TYPE_CHAR,			// char
     TYPE_INT,			// int
     TYPE_LONGINT,		// long int
     TYPE_DOUBLE,		// double
@@ -57,11 +58,24 @@ enum argument_type {
 struct argument {
     enum argument_type a_type;
     union a {
+	char		a_char;
 	int		a_int;
 	long int	a_longint;
 	double		a_double;
 	const char	*a_string;
     } a;
+};
+
+
+#define MAXFMTSPECS	16	// Maximum number of conversion specifiers
+
+struct convspec {
+    int		len;		// Length of conversion specifier, 0 = unused
+    int		arg_num;	// Which variable argument to use
+    char	spec;		// Conversion specifier: c d N s
+    bool	flag_group;	// Flag "'" (thousands grouping)
+    bool	flag_nosym;	// Flag "!" (omit currency symbol)
+    bool	flag_long;	// Length modifier "l" (long)
 };
 
 
@@ -187,6 +201,23 @@ static int prepstr_addch (chtype *restrict *restrict chbuf,
 			  int *restrict widthspc, int *restrict widthbuf,
 			  int widthbufsize,
 			  const char *restrict *restrict str);
+
+
+/*
+  Function:   prepstr_parse - Parse the format string for prepstr()
+  Parameters: format        - Format string as described for prepstr()
+              format_arg    - Pointer to variable arguments array
+              format_spec   - Pointer to conversion specifiers array
+              args          - Variable argument list passed to prepstr()
+  Returns:    int           - 0 if OK, -1 if error (with errno set)
+
+  This helper function parses the format string passed to prepstr(),
+  setting the format_arg and format_spec arrays appropriately.
+*/
+static int prepstr_parse (const char *restrict format,
+			  struct argument *restrict format_arg,
+			  struct convspec *restrict format_spec,
+			  va_list args);
 
 
 /*
@@ -716,48 +747,29 @@ int prepstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
 
 
 /***********************************************************************/
-// vprepstr: Prepare a string for printing to screen
+// prepstr_parse: Parse the format string for prepstr()
 
-int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
-	      chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
-	      int *restrict widthbuf, int widthbufsize,
-	      const char *restrict format, va_list args)
+int prepstr_parse (const char *restrict format,
+		   struct argument *restrict format_arg,
+		   struct convspec *restrict format_spec, va_list args)
 {
-    struct argument format_arg[MAXFMTARGS];
-    int num_format_args, arg_num;
-    const char *orig_format;
-    int line, width;
-    chtype *lastspc;
-    int widthspc;
-    chtype curattr;
-    int saved_errno;
+    int num_args = 0;			// 0 .. MAXFMTARGS
+    int arg_num = 0;			// Current index into format_arg[]
+    int specs_left = MAXFMTSPECS;	// MAXFMTSPECS .. 0 (counting down)
 
 
-    assert(chbuf != NULL);
-    assert(chbufsize > 0);
-    assert(maxlines > 0);
-    assert(maxwidth > 0);
-    assert(widthbuf != NULL);
-    assert(widthbufsize >= maxlines);
-    assert(format != NULL);
-
-    /* Do a preliminary scan through the format parameter to determine
-       the types of each positional argument (conversion specifier).  If
-       we did not support "%m$"-style specifiers, this would not be
-       necessary. */
-
-    orig_format = format;
-    memset(format_arg, 0, sizeof(format_arg));
-    num_format_args = 0;
-    arg_num = 0;
+    memset(format_arg, 0, MAXFMTARGS * sizeof(format_arg[0]));
+    memset(format_spec, 0, MAXFMTSPECS * sizeof(format_spec[0]));
 
     while (*format != '\0') {
 	switch (*format++) {
 	case '^':
 	    // Switch to a different character rendition
 	    if (*format == '\0') {
-		goto error_inval;
+		errno = EINVAL;
+		return -1;
 	    } else {
+		// Ignore next character for now
 		format++;
 	    }
 	    break;
@@ -765,14 +777,17 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	case '%':
 	    // Process a conversion specifier
 	    if (*format == '\0') {
-		goto error_inval;
+		errno = EINVAL;
+		return -1;
 	    } else if (*format == '%') {
+		// Ignore "%%" specifier
 		format++;
 	    } else {
-		enum argument_type arg_type = TYPE_NONE;
+		const char *start = format;
+		enum argument_type arg_type;
 		bool inspec = true;
-		bool flag_posn = false;
-		bool flag_long = false;
+		bool flag_posn = false;		// Have we already seen "$"?
+		bool flag_other = false;	// Have we seen something else?
 		int count = 0;
 
 		while (inspec && *format != '\0') {
@@ -780,8 +795,11 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    switch (c) {
 		    case '0':
 			// Zero flag, or part of numeric count
-			if (count == 0)
-			    goto error_inval;
+			if (count == 0) {
+			    // Zero flag is NOT supported
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			count *= 10;
 			break;
@@ -801,12 +819,14 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		    case '$':
 			// Fixed-position argument
-			if (flag_posn || count == 0)
-			    goto error_inval;
+			if (flag_posn || flag_other || count == 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			if (count > MAXFMTARGS) {
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			flag_posn = true;
@@ -815,61 +835,116 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			break;
 
 		    case '\'':
-			// Use locale-specific thousands separator
+			// Use locale-specific thousands group separator
+			if (format_spec->flag_group) {
+			    errno = EINVAL;
+			    return -1;
+			}
+
+			format_spec->flag_group = true;
+			flag_other = true;
+			break;
+
+		    case '!':
+			// Omit the locale-specific currency symbol
+			if (format_spec->flag_nosym) {
+			    errno = EINVAL;
+			    return -1;
+			}
+
+			format_spec->flag_nosym = true;
+			flag_other = true;
 			break;
 
 		    case 'l':
 			// Long length modifier
-			if (flag_long)
-			    goto error_inval;
+			if (format_spec->flag_long) {
+			    // "ll" is NOT supported
+			    errno = EINVAL;
+			    return -1;
+			}
 
-			flag_long = true;
+			format_spec->flag_long = true;
+			flag_other = true;
 			break;
+
+		    case 'c':
+			// Insert a character (char)
+			if (format_spec->flag_group || format_spec->flag_nosym
+			    || format_spec->flag_long || count != 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
+
+			arg_type = TYPE_CHAR;
+			goto handlefmt;
 
 		    case 'd':
 			// Insert an integer (int or long int)
-			arg_type = flag_long ? TYPE_LONGINT : TYPE_INT;
+			if (count != 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
+
+			arg_type = format_spec->flag_long ?
+			    TYPE_LONGINT : TYPE_INT;
 			goto handlefmt;
 
 		    case 'N':
 			// Insert a monetary amount (double)
-			if (flag_long)
-			    goto error_inval;
+			if (format_spec->flag_group || format_spec->flag_long
+			    || count != 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			arg_type = TYPE_DOUBLE;
 			goto handlefmt;
 
 		    case 's':
 			// Insert a string (const char *)
-			if (flag_long)
-			    goto error_inval;
+			if (format_spec->flag_group || format_spec->flag_nosym
+			    || format_spec->flag_long || count != 0) {
+			    errno = EINVAL;
+			    return -1;
+			}
 
 			arg_type = TYPE_STRING;
 
 		    handlefmt:
-			if (arg_num >= MAXFMTARGS) {
+			if (arg_num >= MAXFMTARGS || specs_left == 0) {
 			    errno = E2BIG;
-			    goto error;
+			    return -1;
 			}
 
 			if (format_arg[arg_num].a_type == TYPE_NONE) {
 			    format_arg[arg_num].a_type = arg_type;
 			} else if (format_arg[arg_num].a_type != arg_type) {
-			    goto error_inval;
+			    errno = EINVAL;
+			    return -1;
 			}
 
+			format_spec->len = format - start;
+			format_spec->arg_num = arg_num;
+			format_spec->spec = c;
+
 			arg_num++;
-			num_format_args = MAX(num_format_args, arg_num);
+			num_args = MAX(num_args, arg_num);
+
+			format_spec++;
+			specs_left--;
 
 			inspec = false;
 			break;
 
 		    default:
-			goto error_inval;
+			errno = EINVAL;
+			return -1;
 		    }
 		}
 		if (inspec) {
-		    goto error_inval;
+		    errno = EINVAL;
+		    return -1;
 		}
 	    }
 	    break;
@@ -880,36 +955,73 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	}
     }
 
-    for (int i = 0; i < num_format_args; i++) {
-	switch (format_arg[i].a_type) {
+    for (int i = 0; i < num_args; format_arg++, i++) {
+	switch (format_arg->a_type) {
+	case TYPE_CHAR:
+	    format_arg->a.a_char = (char) va_arg(args, int);
+	    break;
+
 	case TYPE_INT:
-	    format_arg[i].a.a_int = va_arg(args, int);
+	    format_arg->a.a_int = va_arg(args, int);
 	    break;
 
 	case TYPE_LONGINT:
-	    format_arg[i].a.a_longint = va_arg(args, long int);
+	    format_arg->a.a_longint = va_arg(args, long int);
 	    break;
 
 	case TYPE_DOUBLE:
-	    format_arg[i].a.a_double = va_arg(args, double);
+	    format_arg->a.a_double = va_arg(args, double);
 	    break;
 
 	case TYPE_STRING:
-	    format_arg[i].a.a_string = va_arg(args, const char *);
+	    format_arg->a.a_string = va_arg(args, const char *);
 	    break;
 
 	default:
 	    /* Cannot allow unused arguments, as we have no way of
 	       knowing how much space they take (cf. int vs. long long
 	       int). */
-	    goto error_inval;
+	    errno = EINVAL;
+	    return -1;
 	}
     }
 
-    // Actually process the format parameter string
+    return 0;
+}
 
-    format = orig_format;
-    arg_num = 0;
+
+/***********************************************************************/
+// vprepstr: Prepare a string for printing to screen
+
+int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
+	      chtype attr_alt1, chtype attr_alt2, int maxlines, int maxwidth,
+	      int *restrict widthbuf, int widthbufsize,
+	      const char *restrict format, va_list args)
+{
+    const char *orig_format = format;
+    struct argument format_arg[MAXFMTARGS];
+    struct convspec format_spec[MAXFMTSPECS];
+    struct convspec *spec;
+    int line, width;
+    chtype *lastspc;
+    int widthspc;
+    chtype curattr;
+    int saved_errno;
+
+
+    assert(chbuf != NULL);
+    assert(chbufsize > 0);
+    assert(maxlines > 0);
+    assert(maxwidth > 0);
+    assert(widthbuf != NULL);
+    assert(widthbufsize >= maxlines);
+    assert(format != NULL);
+
+    if (prepstr_parse(format, format_arg, format_spec, args) < 0) {
+	goto error;
+    }
+
+    spec = format_spec;
 
     curattr = attr_norm;
     line = -1;				// Current line number (0 = first)
@@ -967,184 +1079,94 @@ int vprepstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    goto error;
 		}
 	    } else {
-		bool inspec = true;
-		bool flag_posn = false;
-		bool flag_long = false;
-		bool flag_thou = false;
-		int count = 0;
-		const char *str;
+		assert(spec->len != 0);
 
+		const char *str;
 		char *buf = xmalloc(BUFSIZE);
 
-		while (inspec && *format != '\0') {
-		    char c = *format++;
-		    switch (c) {
-		    case '0':
-			// Zero flag, or part of numeric count
-			if (count == 0) {
-			    // Zero flag is not supported
-			    free(buf);
-			    goto error_inval;
-			}
+		switch (spec->spec) {
+		case 'c':
+		    // Insert a character (char) into the output
+		    if (snprintf(buf, BUFSIZE, "%c",
+				 format_arg[spec->arg_num].a.a_char) < 0) {
+			saved_errno = errno;
+			free(buf);
+			errno = saved_errno;
+			goto error;
+		    }
 
-			count *= 10;
-			break;
+		    str = buf;
+		    goto insertstr;
 
-		    case '1':
-		    case '2':
-		    case '3':
-		    case '4':
-		    case '5':
-		    case '6':
-		    case '7':
-		    case '8':
-		    case '9':
-			// Part of some numeric count
-			count = count * 10 + (c - '0');
-			break;
-
-		    case '$':
-			// Fixed-position argument
-			if (flag_posn || count == 0) {
-			    free(buf);
-			    goto error_inval;
-			}
-
-			if (count > MAXFMTARGS) {
-			    free(buf);
-			    errno = E2BIG;
-			    goto error;
-			}
-
-			flag_posn = true;
-			arg_num = count - 1;
-			count = 0;
-			break;
-
-		    case '\'':
-			// Use locale-specific thousands separator
-			if (flag_thou) {
-			    free(buf);
-			    goto error_inval;
-			}
-
-			flag_thou = true;
-			break;
-
-		    case 'l':
-			// Long length modifier
-			if (flag_long) {
-			    free(buf);
-			    goto error_inval;
-			}
-
-			flag_long = true;
-			break;
-
-		    case 'd':
-			// Insert an integer (int or long int) into the output
-			if (count != 0) {
-			    free(buf);
-			    goto error_inval;
-			}
-
-			if (arg_num >= MAXFMTARGS) {
-			    free(buf);
-			    errno = E2BIG;
-			    goto error;
-			}
-
-			if (flag_long) {
-			    if (snprintf(buf, BUFSIZE, flag_thou ? "%'ld" : "%ld",
-					 format_arg[arg_num].a.a_longint) < 0) {
-				saved_errno = errno;
-				free(buf);
-				errno = saved_errno;
-				goto error;
-			    }
-			} else {
-			    if (snprintf(buf, BUFSIZE, flag_thou ? "%'d" : "%d",
-					 format_arg[arg_num].a.a_int) < 0) {
-				saved_errno = errno;
-				free(buf);
-				errno = saved_errno;
-				goto error;
-			    }
-			}
-
-			str = buf;
-			goto insertstr;
-
-		    case 'N':
-			// Insert a monetary amount (double) into the output
-			if (count != 0 || flag_thou || flag_long) {
-			    free(buf);
-			    goto error_inval;
-			}
-
-			if (arg_num >= MAXFMTARGS) {
-			    free(buf);
-			    errno = E2BIG;
-			    goto error;
-			}
-
-			if (l_strfmon(buf, BUFSIZE, "%n",
-				      format_arg[arg_num].a.a_double) < 0) {
+		case 'd':
+		    // Insert an integer (int or long int) into the output
+		    if (spec->flag_long) {
+			if (snprintf(buf, BUFSIZE, spec->flag_group ?
+				     "%'ld" : "%ld",
+				     format_arg[spec->arg_num].a.a_longint) < 0) {
 			    saved_errno = errno;
 			    free(buf);
 			    errno = saved_errno;
 			    goto error;
 			}
-
-			str = buf;
-			goto insertstr;
-
-		    case 's':
-			// Insert a string (const char *) into the output
-			if (count != 0 || flag_thou || flag_long) {
+		    } else {
+			if (snprintf(buf, BUFSIZE, spec->flag_group ?
+				     "%'d" : "%d",
+				     format_arg[spec->arg_num].a.a_int) < 0) {
+			    saved_errno = errno;
 			    free(buf);
-			    goto error_inval;
-			}
-
-			if (arg_num >= MAXFMTARGS) {
-			    free(buf);
-			    errno = E2BIG;
+			    errno = saved_errno;
 			    goto error;
 			}
-
-			str = format_arg[arg_num].a.a_string;
-
-			if (str == NULL) {
-			    str = "(null)";	// As per GNU printf()
-			}
-
-		    insertstr:
-			// Insert the string pointed to by str
-			while (*str != '\0' && chbufsize > 1 && line < maxlines) {
-			    if (prepstr_addch(&chbuf, &chbufsize, curattr,
-					      maxlines, maxwidth, &line, &width,
-					      &lastspc, &widthspc, widthbuf,
-					      widthbufsize, &str) < 0) {
-				saved_errno = errno;
-				free(buf);
-				errno = saved_errno;
-				goto error;
-			    }
-			}
-
-			arg_num++;
-			inspec = false;
-			break;
-
-		    default:
-			free(buf);
-			goto error_inval;
 		    }
+
+		    str = buf;
+		    goto insertstr;
+
+		case 'N':
+		    // Insert a monetary amount (double) into the output
+		    if (l_strfmon(buf, BUFSIZE, spec->flag_nosym ? "%!n" : "%n",
+				  format_arg[spec->arg_num].a.a_double) < 0) {
+			saved_errno = errno;
+			free(buf);
+			errno = saved_errno;
+			goto error;
+		    }
+
+		    str = buf;
+		    goto insertstr;
+
+		case 's':
+		    // Insert a string (const char *) into the output
+		    str = format_arg[spec->arg_num].a.a_string;
+
+		    if (str == NULL) {
+			str = "(null)";		// As per GNU printf()
+		    }
+
+		insertstr:
+		    // Insert the string pointed to by str
+		    while (*str != '\0' && chbufsize > 1 && line < maxlines) {
+			if (prepstr_addch(&chbuf, &chbufsize, curattr,
+					  maxlines, maxwidth, &line, &width,
+					  &lastspc, &widthspc, widthbuf,
+					  widthbufsize, &str) < 0) {
+			    saved_errno = errno;
+			    free(buf);
+			    errno = saved_errno;
+			    goto error;
+			}
+		    }
+
+		    format += spec->len;
+		    spec++;
+		    break;
+
+		default:
+		    assert(spec->spec);
 		}
+
 		free(buf);
-		if (inspec) {
-		    goto error_inval;
-		}
 	    }
 	    break;
 

@@ -314,13 +314,17 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
 
     %%      - Print the ASCII percent sign (ASCII code U+0025)
 
-    %s      - Insert the next parameter as a string
+    %c      - Insert the next parameter as a character (type char)
+    %s      - Insert the next parameter as a string (type char *)
     %d      - Insert the next parameter as an integer (type int)
     %'d     - Insert as an int, using the locale's thousands separator
     %ld     - Insert the next parameter as a long int
     %'ld    - Insert as a long int, using the locale's thousands separator
     %N      - Insert the next parameter as a double, using the locale's
               national currency format (extension to printf())
+    %!N     - Insert the next parameter as a double, using the locale's
+              national currency format without the actual currency symbol
+              (extension to printf())
 
   Instead of using "%" to convert the next parameter, "%m$" can be used
   to indicate fixed parameter m (where m is an integer from 1 to 8).  For
