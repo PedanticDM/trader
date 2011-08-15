@@ -2352,7 +2352,7 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 /***********************************************************************/
 // answer_yesno: Wait for a Yes/No answer
 
-bool answer_yesno (WINDOW *win, chtype attr_keys)
+bool answer_yesno (WINDOW *win)
 {
     int key;
     bool done;
@@ -2364,12 +2364,6 @@ bool answer_yesno (WINDOW *win, chtype attr_keys)
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
-
-    waddstr(curwin, " [");
-    attrpr(curwin, attr_keys, "Y");
-    waddstr(curwin, "/");
-    attrpr(curwin, attr_keys, "N");
-    waddstr(curwin, "] ");
 
     curs_set(CURS_ON);
 

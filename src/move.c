@@ -207,7 +207,6 @@ void select_moves (void)
 
 selection_t get_move (void)
 {
-    int i, x, y;
     selection_t selection = SEL_NONE;
 
 
@@ -219,7 +218,7 @@ selection_t get_move (void)
     show_map(false);
 
     // Display current move choices on the galaxy map
-    for (i = 0; i < NUMBER_MOVES; i++) {
+    for (int i = 0; i < NUMBER_MOVES; i++) {
 	mvwaddch(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
 		 MOVE_TO_KEY(i) | attr_map_choice);
     }
@@ -324,18 +323,20 @@ selection_t get_move (void)
 	}
 
 	// Clear the menu choices (but not the prompt!)
-	wattrset(curwin, attr_normal);
-	for (y = 2; y < 4; y++) {
-	    wmove(curwin, y, 2);
-	    for (x = 2; x < getmaxx(curwin) - 2; x++) {
-		waddch(curwin, ' ' | attr_normal);
-	    }
-	}
-	wrefresh(curwin);
+	mvwhline(curwin, 2, 2, ' ' | attr_normal, getmaxx(curwin) - 4);
+	mvwhline(curwin, 3, 2, ' ' | attr_normal, getmaxx(curwin) - 4);
 
 	// Ask the player to confirm their choice
-	mvwaddstr(curwin, 2, 22, "Are you sure?");
-	if (! answer_yesno(curwin, attr_keycode)) {
+	wattrset(curwin, attr_normal);
+	mvwaddstr(curwin, 2, 22, "Are you sure? ");
+	waddstr(curwin, "[");
+	attrpr(curwin, attr_keycode, "Y");
+	waddstr(curwin, "/");
+	attrpr(curwin, attr_keycode, "N");
+	waddstr(curwin, "] ");
+	wrefresh(curwin);
+
+	if (! answer_yesno(curwin)) {
 	    selection = SEL_NONE;
 	}
 
@@ -345,15 +346,21 @@ selection_t get_move (void)
 
 	    if (game_loaded) {
 		// Save the game to the same game number
-		newtxwin(5, 30, 7, WCENTER, true, attr_status_window);
-		center(curwin, 2, attr_status_window,
-		       "Saving game %d... ", game_num);
+		chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+		int lines, width;
+
+		lines = prepstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
+				WIN_COLS - 7, &width, 1,
+				"Saving game %d... ", game_num);
+		newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
+		pr_center(curwin, 2, 0, chbuf, 1, &width);
 		wrefresh(curwin);
 
 		saved = save_game(game_num);
 
 		deltxwin();
 		txrefresh();
+		free(chbuf);
 	    }
 
 	    if (! saved) {
@@ -405,18 +412,24 @@ selection_t get_move (void)
 		curs_set(CURS_OFF);
 
 		if (key != KEY_CANCEL) {
+		    // Try to save the game, if possible
+		    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+		    int lines, width;
+
 		    game_num = key - '0';
 
-		    // Try to save the game, if possible
-		    newtxwin(5, 30, 7, WCENTER, true, attr_status_window);
-		    center(curwin, 2, attr_status_window,
-			   "Saving game %d... ", game_num);
+		    lines = prepstr(chbuf, BUFSIZE, attr_status_window,
+				    0, 0, 1, WIN_COLS - 7, &width, 1,
+				    "Saving game %d... ", game_num);
+		    newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
+		    pr_center(curwin, 2, 0, chbuf, 1, &width);
 		    wrefresh(curwin);
 
 		    saved = save_game(game_num);
 
 		    deltxwin();
 		    txrefresh();
+		    free(chbuf);
 		}
 
 		deltxwin();		// "Enter game number" window

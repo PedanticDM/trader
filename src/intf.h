@@ -53,9 +53,10 @@
 #define WIN_LINES	MIN_LINES	// Number of lines used in main window
 #define WIN_COLS	MIN_COLS	// Number of columns used in main window
 
-#define WCENTER		-1		// Centre the new window
+#define WCENTER		-1	// Centre the new window
 
-#define MAX_DLG_LINES	10		// Default maximum lines in dialog box
+#define MAX_DLG_LINES	10	// Default maximum lines of text in dialog box
+#define YESNO_COLS	4	// Space to allow for "Yes" or "No" response
 
 
 // Check if resizing events are supported
@@ -728,17 +729,14 @@ extern int gettxlong (WINDOW *win, long int *restrict result, long int min,
 /*
   Function:   answer_yesno - Wait for a Yes/No answer
   Parameters: win          - Window to use (should be curwin)
-              attr_keys    - Window rendition to use for key choices
   Returns:    bool         - True if Yes was selected, false if No
 
-  This function prompts the user by printing " [Y/N] " using appropriate
-  character renditions ("Y" and "N" in attr_keys, the rest in the current
-  rendition), then waits for the user to press either "Y" (for Yes) or
-  "N" (for No) on the keyboard, then prints the answer using A_BOLD.
-  True is returned if "Y" was selected, false if "N".  Note that the
-  cursor becomes invisible after calling this function.
+  This function waits for the user to press either "Y" (for Yes) or "N"
+  (for No) on the keyboard, then prints the answer using A_BOLD.  True is
+  returned if "Y" was selected, false if "N".  Note that the cursor
+  becomes invisible after calling this function.
 */
-extern bool answer_yesno (WINDOW *win, chtype attr_keys);
+extern bool answer_yesno (WINDOW *win);
 
 
 /*

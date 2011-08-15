@@ -110,14 +110,21 @@ void init_game (void)
 {
     // Try to load an old game, if possible
     if (game_num != 0) {
-	newtxwin(5, 30, 6, WCENTER, true, attr_status_window);
-	center(curwin, 2, attr_status_window, "Loading game %d... ", game_num);
+	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+	int lines, width;
+
+	lines = prepstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
+			WIN_COLS - 7, &width, 1,
+			"Loading game %d... ", game_num);
+	newtxwin(5, width + 5, 6, WCENTER, true, attr_status_window);
+	pr_center(curwin, 2, 0, chbuf, 1, &width);
 	wrefresh(curwin);
 
 	game_loaded = load_game(game_num);
 
 	deltxwin();
 	txrefresh();
+	free(chbuf);
     }
 
     // Initialise game data, if not already loaded
@@ -134,18 +141,25 @@ void init_game (void)
 		choice = ask_game_number();
 
 		if (choice != ERR) {
+		    // Try to load the game, if possible
+
+		    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+		    int lines, width;
+
 		    game_num = choice;
 
-		    // Try to load the game, if possible
-		    newtxwin(5, 30, 9, WCENTER, true, attr_status_window);
-		    center(curwin, 2, attr_status_window,
-			   "Loading game %d... ", game_num);
+		    lines = prepstr(chbuf, BUFSIZE, attr_status_window,
+				    0, 0, 1, WIN_COLS - 7, &width, 1,
+				    "Loading game %d... ", game_num);
+		    newtxwin(5, width + 5, 9, WCENTER, true, attr_status_window);
+		    pr_center(curwin, 2, 0, chbuf, 1, &width);
 		    wrefresh(curwin);
 
 		    game_loaded = load_game(game_num);
 
 		    deltxwin();
 		    txrefresh();
+		    free(chbuf);
 		}
 
 		deltxwin();		// "Enter game number" window
@@ -227,22 +241,24 @@ void init_game (void)
 
 static int ask_number_players (void)
 {
+    chtype *chbuf;
+    int lines, maxwidth;
+    int widthbuf[2];
     int key, ret;
     bool done;
 
 
-    // Ask for the number of players
-    newtxwin(5, 62, 3, WCENTER, true, attr_normal_window);
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+		    sizeof(widthbuf) / sizeof(widthbuf[0]), WIN_COLS - 7,
+		    widthbuf, sizeof(widthbuf) / sizeof(widthbuf[0]),
+		    "Enter number of players [^{1^}-^{%d^}] "
+		    "or ^{<C>^} to continue a game: ", MAX_PLAYERS);
+    maxwidth = MAX(widthbuf[0], widthbuf[1]) + 5;
 
-    mvwaddstr(curwin, 2, 2, "Enter number of players ");
-    waddstr(curwin, "[");
-    attrpr(curwin, attr_keycode, "1");
-    waddstr(curwin, "-");
-    attrpr(curwin, attr_keycode, "%d", MAX_PLAYERS);
-    waddstr(curwin, "]");
-    waddstr(curwin, " or ");
-    attrpr(curwin, attr_keycode, "<C>");
-    waddstr(curwin, " to continue a game: ");
+    newtxwin(lines + 4, maxwidth, 3, WCENTER, true, attr_normal_window);
+    pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
+    free(chbuf);
 
     curs_set(CURS_ON);
     wrefresh(curwin);
@@ -289,22 +305,24 @@ static int ask_number_players (void)
 
 int ask_game_number (void)
 {
+    chtype *chbuf;
+    int lines, maxwidth;
+    int widthbuf[2];
     int key, ret;
     bool done;
 
 
-    // Ask which game to load
-    newtxwin(5, 54, 6, WCENTER, true, attr_normal_window);
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+		    sizeof(widthbuf) / sizeof(widthbuf[0]), WIN_COLS - 7,
+		    widthbuf, sizeof(widthbuf) / sizeof(widthbuf[0]),
+		    "Enter game number [^{1^}-^{9^}] "
+		    "or ^{<CTRL><C>^} to cancel: ");
+    maxwidth = MAX(widthbuf[0], widthbuf[1]) + 5;
 
-    mvwaddstr(curwin, 2, 2, "Enter game number ");
-    waddstr(curwin, "[");
-    attrpr(curwin, attr_keycode, "1");
-    waddstr(curwin, "-");
-    attrpr(curwin, attr_keycode, "9");
-    waddstr(curwin, "]");
-    waddstr(curwin, " or ");
-    attrpr(curwin, attr_keycode, "<CTRL><C>");
-    waddstr(curwin, " to cancel: ");
+    newtxwin(lines + 4, maxwidth, 6, WCENTER, true, attr_normal_window);
+    pr_left(curwin, 2, 2, chbuf, lines, widthbuf);
+    free(chbuf);
 
     curs_set(CURS_ON);
     wrefresh(curwin);
@@ -349,7 +367,6 @@ void ask_player_names (void)
 	// Ask for the player's name
 
 	newtxwin(5, WIN_COLS - 4, 9, WCENTER, true, attr_normal_window);
-
 	mvwaddstr(curwin, 2, 2, "Please enter your name: ");
 
 	int x = getcurx(curwin);
@@ -366,14 +383,25 @@ void ask_player_names (void)
 	    }
 	}
 
-	newtxwin(5, 44, 6, WCENTER, true, attr_normal_window);
-	mvwaddstr(curwin, 2, 2, "Do you need any instructions?");
-	if (answer_yesno(curwin, attr_keycode)) {
+	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+	int lines, width;
+
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+			1, WIN_COLS - YESNO_COLS - 6, &width, 1,
+			"Do you need any instructions? [^{Y^}/^{N^}] ");
+	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
+		 attr_normal_window);
+	pr_left(curwin, 2, 2, chbuf, lines, &width);
+	free(chbuf);
+	if (answer_yesno(curwin)) {
 	    show_help();
 	}
 
     } else {
 	// Ask for all of the player names
+
+	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+	int lines, width;
 
 	bool entered[MAX_PLAYERS];
 	bool done, modified;
@@ -381,8 +409,9 @@ void ask_player_names (void)
 
 	newtxwin(number_players + 5, WIN_COLS - 4, 9, WCENTER,
 		 true, attr_normal_window);
-
-	center(curwin, 1, attr_title, "  Enter Player Names  ");
+	lines = prepstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 8,
+			&width, 1, "  Enter Player Names  ");
+	pr_center(curwin, 1, 0, chbuf, lines, &width);
 
 	for (i = 0; i < number_players; i++) {
 	    player[i].name = NULL;
@@ -463,11 +492,17 @@ void ask_player_names (void)
 	    }
 	}
 
-	newtxwin(5, 50, 6, WCENTER, true, attr_normal_window);
-	mvwaddstr(curwin, 2, 2, "Does any player need instructions?");
-	if (answer_yesno(curwin, attr_keycode)) {
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
+			1, WIN_COLS - YESNO_COLS - 6, &width, 1,
+			"Does any player need instructions? [^{Y^}/^{N^}] ");
+	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
+		 attr_normal_window);
+	pr_left(curwin, 2, 2, chbuf, lines, &width);
+	if (answer_yesno(curwin)) {
 	    show_help();
 	}
+
+	free(chbuf);
     }
 
     deltxwin();				// "Need instructions?" window
@@ -552,48 +587,30 @@ void end_game (void)
 
 void show_map (bool closewin)
 {
-    int n, x, y;
+    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    int lines, width;
+    int x, y;
 
 
     newtxwin(MAX_Y + 4, WIN_COLS, 1, WCENTER, true, attr_map_window);
 
-    // Draw various borders
+    // Draw various borders and highlights
     mvwaddch(curwin, 2, 0, ACS_LTEE);
     whline(curwin, ACS_HLINE, getmaxx(curwin) - 2);
     mvwaddch(curwin, 2, getmaxx(curwin) - 1, ACS_RTEE);
+    mvwhline(curwin, 1, 2, ' ' | attr_mapwin_title, getmaxx(curwin) - 4);
 
     // Display current player and turn number
-    wattrset(curwin, attr_mapwin_title);
-    mvwaddstr(curwin, 1, 2, "  ");
-    waddstr(curwin, "Player: ");
-    n = getmaxx(curwin) - getcurx(curwin) - 4;
-    wattrset(curwin, attr_mapwin_highlight);
-    wprintw(curwin, "%-*.*s", n, n, player[current_player].name);
-    wattrset(curwin, attr_mapwin_title);
-    waddstr(curwin, "  ");
+    lines = prepstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
+		    0, 1, WIN_COLS - 4, &width, 1, "  Player: ^{%s^}  ",
+		    player[current_player].name);
+    pr_left(curwin, 1, 2, chbuf, lines, &width);
 
-    if (turn_number != max_turn) {
-	const char *initial = "Turn: ";
-	char *buf = xmalloc(BUFSIZE);
-
-	int len1 = strlen(initial);
-	int len2 = snprintf(buf, BUFSIZE, "%d", turn_number);
-
-	mvwaddstr(curwin, 1, getmaxx(curwin) - (len1 + len2) - 6, "  ");
-	waddstr(curwin, initial);
-	attrpr(curwin, attr_mapwin_highlight, "%s", buf);
-	waddstr(curwin, "  ");
-
-	free(buf);
-
-    } else {
-	const char *buf = "*** Last Turn ***";
-	int len = strlen(buf);
-
-	mvwaddstr(curwin, 1, getmaxx(curwin) - len - 6, "  ");
-	attrpr(curwin, attr_mapwin_blink, "%s", buf);
-	waddstr(curwin, "  ");
-    }
+    lines = prepstr(chbuf, BUFSIZE, attr_mapwin_title, attr_mapwin_highlight,
+		    attr_mapwin_blink, 1, WIN_COLS / 2, &width, 1,
+		    (turn_number != max_turn) ? "  Turn: ^{%d^}  " :
+		    "  ^[*** Last Turn ***^]  ", turn_number);
+    pr_right(curwin, 1, WIN_COLS - 2, chbuf, lines, &width);
 
     wattrset(curwin, attr_map_window);
 
@@ -638,6 +655,8 @@ void show_map (bool closewin)
 	deltxwin();			// Galaxy map window
 	txrefresh();
     }
+
+    free(chbuf);
 }
 
 
@@ -646,6 +665,8 @@ void show_map (bool closewin)
 
 void show_status (int num)
 {
+    chtype *chbuf;
+    int lines, width;
     double val;
     int i, line;
 
@@ -655,13 +676,22 @@ void show_status (int num)
     newtxwin(MAX_COMPANIES + 15, WIN_COLS, 1, WCENTER, true,
 	     attr_normal_window);
 
-    center(curwin, 1, attr_title, "  Stock Portfolio  ");
-    center2(curwin, 2, attr_normal, attr_highlight, "Player: ", "%s",
-	    player[num].name);
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    lines = prepstr(chbuf, BUFSIZE, attr_title, 0, 0, 1, WIN_COLS - 4,
+		    &width, 1, "  Stock Portfolio  ");
+    pr_center(curwin, 1, 0, chbuf, lines, &width);
+
+    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 1,
+		    WIN_COLS - 4, &width, 1, "Player: ^{%s^}",
+		    player[num].name);
+    pr_center(curwin, 2, 0, chbuf, lines, &width);
 
     val = total_value(num);
     if (val == 0.0) {
-	center(curwin, 11, attr_blink, "* * *   B A N K R U P T   * * *");
+	lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_highlight,
+			attr_blink, 1, WIN_COLS - 4, &width, 1,
+			"^[* * *   B A N K R U P T   * * *^]");
+	pr_center(curwin, 11, 0, chbuf, lines, &width);
 
     } else {
 	char *buf = xmalloc(BUFSIZE);
@@ -676,7 +706,10 @@ void show_status (int num)
 	}
 
 	if (none) {
-	    center(curwin, 8, attr_normal, "No companies on the map");
+	    lines = prepstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0,
+			    1, WIN_COLS - 4, &width, 1,
+			    "No companies on the map");
+	    pr_center(curwin, 8, 0, chbuf, lines, &width);
 	} else {
 	    // Handle the locale's currency symbol
 	    snprintf(buf, BUFSIZE, "share (%s)", lconvinfo.currency_symbol);
@@ -726,6 +759,7 @@ void show_status (int num)
     wait_for_key(curwin, getmaxy(curwin) - 2, attr_waitforkey);
     deltxwin();
     txrefresh();
+    free(chbuf);
 }
 
 
