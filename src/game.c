@@ -114,7 +114,7 @@ void init_game (void)
 	int width;
 
 	mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1, WIN_COLS - 7,
-		&width, 1, "Loading game %d... ", game_num);
+		&width, 1, _("Loading game %d... "), game_num);
 	newtxwin(5, width + 5, 6, WCENTER, true, attr_status_window);
 	centerch(curwin, 2, 0, chbuf, 1, &width);
 	wrefresh(curwin);
@@ -149,7 +149,7 @@ void init_game (void)
 
 		    mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
 			    WIN_COLS - 7, &width, 1,
-			    "Loading game %d... ", game_num);
+			    _("Loading game %d... "), game_num);
 		    newtxwin(5, width + 5, 9, WCENTER, true, attr_status_window);
 		    centerch(curwin, 2, 0, chbuf, 1, &width);
 		    wrefresh(curwin);
@@ -171,26 +171,24 @@ void init_game (void)
 	}
 
 	if (! game_loaded) {
-	    int i, j, x, y;
-
 	    ask_player_names();
 
 	    deltxwin();			// "Number of players" window
 	    txrefresh();
 
 	    // Initialise player data (other than names)
-	    for (i = 0; i < number_players; i++) {
+	    for (int i = 0; i < number_players; i++) {
 		player[i].cash    = INITIAL_CASH;
 		player[i].debt    = 0.0;
 		player[i].in_game = true;
 
-		for (j = 0; j < MAX_COMPANIES; j++) {
+		for (int j = 0; j < MAX_COMPANIES; j++) {
 		    player[i].stock_owned[j] = 0;
 		}
 	    }
 
 	    // Initialise company data
-	    for (i = 0; i < MAX_COMPANIES; i++) {
+	    for (int i = 0; i < MAX_COMPANIES; i++) {
 		company[i].name         = xstrdup(gettext(company_name[i]));
 		company[i].share_price  = 0.0;
 		company[i].share_return = INITIAL_RETURN;
@@ -200,8 +198,8 @@ void init_game (void)
 	    }
 
 	    // Initialise galaxy map
-	    for (x = 0; x < MAX_X; x++) {
-		for (y = 0; y < MAX_Y; y++) {
+	    for (int x = 0; x < MAX_X; x++) {
+		for (int y = 0; y < MAX_Y; y++) {
 		    galaxy_map[x][y] = (randf() < STAR_RATIO) ?
 			MAP_STAR : MAP_EMPTY;
 		}
@@ -222,8 +220,8 @@ void init_game (void)
 
 		txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
 			 attr_title, attr_normal, attr_highlight, 0,
-			 attr_waitforkey, "  First Player  ",
-			 "The first player to go is ^{%s^}.",
+			 attr_waitforkey, _("  First Player  "),
+			 _("The first player to go is ^{%s^}."),
 			 player[first_player].name);
 		txrefresh();
 	    }
@@ -248,11 +246,12 @@ static int ask_number_players (void)
 
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 2, WIN_COLS
-		    - 7, widthbuf, 2, "Enter number of players [^{1^}-^{%d^}] "
-		    "or ^{<C>^} to continue a game: ", MAX_PLAYERS);
+    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 2,
+		    WIN_COLS - 7, widthbuf, 2,
+		    _("Enter number of players [^{1^}-^{%d^}] "
+		      "or ^{<C>^} to continue a game: "), MAX_PLAYERS);
     assert(lines == 1 || lines == 2);
-    maxwidth = ((lines == 1) ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
+    maxwidth = (lines == 1 ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
 
     newtxwin(lines + 4, maxwidth, 3, WCENTER, true, attr_normal_window);
     leftch(curwin, 2, 2, chbuf, lines, widthbuf);
@@ -311,11 +310,12 @@ int ask_game_number (void)
 
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
-    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 2, WIN_COLS
-		    - 7, widthbuf, 2, "Enter game number [^{1^}-^{9^}] "
-		    "or ^{<CTRL><C>^} to cancel: ");
+    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 2,
+		    WIN_COLS - 7, widthbuf, 2,
+		    _("Enter game number [^{1^}-^{9^}] "
+		      "or ^{<CTRL><C>^} to cancel: "));
     assert(lines == 1 || lines == 2);
-    maxwidth = ((lines == 1) ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
+    maxwidth = (lines == 1 ? widthbuf[0] : MAX(widthbuf[0], widthbuf[1])) + 5;
 
     newtxwin(lines + 4, maxwidth, 6, WCENTER, true, attr_normal_window);
     leftch(curwin, 2, 2, chbuf, lines, widthbuf);
@@ -368,7 +368,7 @@ void ask_player_names (void)
 	// Ask for the player's name
 
 	newtxwin(5, WIN_COLS - 4, 9, WCENTER, true, attr_normal_window);
-	left(curwin, 2, 2, attr_normal, 0, 0, 1, "Please enter your name: ");
+	left(curwin, 2, 2, attr_normal, 0, 0, 1, _("Please enter your name: "));
 
 	int x = getcurx(curwin);
 	int w = getmaxx(curwin) - x - 2;
@@ -386,7 +386,7 @@ void ask_player_names (void)
 
 	mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 1,
 		WIN_COLS - YESNO_COLS - 6, &width, 1,
-		"Do you need any instructions? [^{Y^}/^{N^}] ");
+		_("Do you need any instructions? [^{Y^}/^{N^}] "));
 	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
 		 attr_normal_window);
 	leftch(curwin, 2, 2, chbuf, 1, &width);
@@ -404,12 +404,13 @@ void ask_player_names (void)
 
 	newtxwin(number_players + 5, WIN_COLS - 4, 9, WCENTER,
 		 true, attr_normal_window);
-	center(curwin, 1, 0, attr_title, 0, 0, 1, "  Enter Player Names  ");
+	center(curwin, 1, 0, attr_title, 0, 0, 1, _("  Enter Player Names  "));
 
 	for (i = 0; i < number_players; i++) {
 	    player[i].name = NULL;
 	    entered[i] = false;
-	    left(curwin, i + 3, 2, attr_normal, 0, 0, 1, "Player %d:", i + 1);
+	    left(curwin, i + 3, 2, attr_normal, 0, 0, 1,
+		 _("Player %d:"), i + 1);
 	}
 
 	int x = getcurx(curwin) + 1;
@@ -487,7 +488,7 @@ void ask_player_names (void)
 
 	mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 1,
 		WIN_COLS - YESNO_COLS - 6, &width, 1,
-		"Does any player need instructions? [^{Y^}/^{N^}] ");
+		_("Does any player need instructions? [^{Y^}/^{N^}] "));
 	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
 		 attr_normal_window);
 	leftch(curwin, 2, 2, chbuf, 1, &width);
@@ -509,8 +510,7 @@ void ask_player_names (void)
 void end_game (void)
 {
     chtype *chbuf;
-    int lines;
-    int widthbuf[5];
+    int lines, widthbuf[5];
 
 
     if (abort_game) {
@@ -522,8 +522,8 @@ void end_game (void)
 
     txdlgbox(MAX_DLG_LINES, 50, 9, WCENTER, attr_error_window,
 	     attr_error_title, attr_error_highlight, 0, 0,
-	     attr_error_waitforkey, "  Game Over  ",
-	     "The game is over after %d turns.", turn_number - 1);
+	     attr_error_waitforkey, _("  Game Over  "),
+	     _("The game is over after %d turns."), turn_number - 1);
 
     for (int i = 0; i < number_players; i++) {
 	show_status(i);
@@ -532,7 +532,7 @@ void end_game (void)
     if (number_players == 1) {
 	txdlgbox(MAX_DLG_LINES, 60, 8, WCENTER, attr_normal_window,
 		 attr_title, attr_normal, attr_highlight, 0, attr_waitforkey,
-		 "  Total Value  ", "Your total value was ^{%N^}.",
+		 _("  Total Value  "), _("Your total value was ^{%N^}."),
 		 total_value(0));
     } else {
 	// Sort players on the basis of total value
@@ -541,33 +541,35 @@ void end_game (void)
 	}
 	qsort(player, number_players, sizeof(player_info_t), cmp_player);
 
-	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, attr_blink,
-			5, WIN_COLS - 8, widthbuf, 5, (player[0].sort_value == 0) ?
-			"The winner is ^{%s^}\n"
-			"who is ^[*** BANKRUPT ***^]" :
-			"The winner is ^{%s^}\n"
-			"with a value of ^{%N^}.", player[0].name,
-			player[0].sort_value);
+	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight,
+			attr_blink, 5, WIN_COLS - 8, widthbuf, 5,
+			(player[0].sort_value == 0) ?
+			_("The winner is ^{%s^}\n"
+			  "who is ^[*** BANKRUPT ***^]") :
+			_("The winner is ^{%s^}\n"
+			  "with a value of ^{%N^}."),
+			player[0].name, player[0].sort_value);
 
 	newtxwin(number_players + lines + 8, WIN_COLS - 4, 3, WCENTER,
 		 true, attr_normal_window);
-	center(curwin, 1, 0, attr_title, 0, 0, 1, "  Game Winner  ");
+	center(curwin, 1, 0, attr_title, 0, 0, 1, _("  Game Winner  "));
 	centerch(curwin, 3, 0, chbuf, lines, widthbuf);
 
-	mvwhline(curwin, lines + 4, 2, ' ' | attr_subtitle,
-		 getmaxx(curwin) - 4);
+	int w = getmaxx(curwin);
+
+	mvwhline(curwin, lines + 4, 2, ' ' | attr_subtitle, w - 4);
 	left(curwin, lines + 4, ORDINAL_COLS + 4, attr_subtitle, 0, 0, 1,
-	     "Player");
-	right(curwin, lines + 4, getmaxx(curwin) - 4, attr_subtitle, 0, 0, 1,
-	      "Total Value (%s)", lconvinfo.currency_symbol);
+	     _("Player"));
+	right(curwin, lines + 4, w - 4, attr_subtitle, 0, 0, 1,
+	      _("Total Value (%s)"), lconvinfo.currency_symbol);
 
 	for (int i = 0; i < number_players; i++) {
 	    right(curwin, i + lines + 5, ORDINAL_COLS + 2, attr_normal, 0, 0,
 		  1, gettext(ordinal[i + 1]));
 	    left(curwin, i + lines + 5, ORDINAL_COLS + 4, attr_normal, 0, 0,
 		 1, "%s", player[i].name);
-	    right(curwin, i + lines + 5, getmaxx(curwin) - 2, attr_normal, 0,
-		  0, 1, "  %!N  ", player[i].sort_value);
+	    right(curwin, i + lines + 5, w - 2, attr_normal, 0, 0,
+		  1, "  %!N  ", player[i].sort_value);
 	}
 
 	wait_for_key(curwin, getmaxy(curwin) - 2, attr_waitforkey);
@@ -583,9 +585,6 @@ void end_game (void)
 
 void show_map (bool closewin)
 {
-    int x, y;
-
-
     newtxwin(MAX_Y + 4, WIN_COLS, 1, WCENTER, true, attr_map_window);
 
     // Draw various borders and highlights
@@ -596,16 +595,16 @@ void show_map (bool closewin)
 
     // Display current player and turn number
     left(curwin, 1, 2, attr_mapwin_title, attr_mapwin_highlight, 0, 1,
-	 "  Player: ^{%s^}  ", player[current_player].name);
+	 _("  Player: ^{%s^}  "), player[current_player].name);
     right(curwin, 1, getmaxx(curwin) - 2, attr_mapwin_title,
 	  attr_mapwin_highlight, attr_mapwin_blink, 1,
-	  (turn_number != max_turn) ? "  Turn: ^{%d^}  " :
-	  "  ^[*** Last Turn ***^]  ", turn_number);
+	  (turn_number != max_turn) ? _("  Turn: ^{%d^}  ") :
+	  _("  ^[*** Last Turn ***^]  "), turn_number);
 
     // Display the actual map
-    for (y = 0; y < MAX_Y; y++) {
+    for (int y = 0; y < MAX_Y; y++) {
 	wmove(curwin, y + 3, 2);
-	for (x = 0; x < MAX_X; x++) {
+	for (int x = 0; x < MAX_X; x++) {
 	    map_val_t m = galaxy_map[x][y];
 
 	    switch (m) {
@@ -659,14 +658,14 @@ void show_status (int num)
 
     newtxwin(MAX_COMPANIES + 15, WIN_COLS, 1, WCENTER, true,
 	     attr_normal_window);
-    center(curwin, 1, 0, attr_title, 0, 0, 1, "  Stock Portfolio  ");
-    center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1, "Player: ^{%s^}",
-		    player[num].name);
+    center(curwin, 1, 0, attr_title, 0, 0, 1, _("  Stock Portfolio  "));
+    center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
+	   _("Player: ^{%s^}"), player[num].name);
 
     val = total_value(num);
     if (val == 0.0) {
 	center(curwin, 11, 0, attr_normal, attr_highlight, attr_blink, 1,
-			"^[* * *   B A N K R U P T   * * *^]");
+	       _("^[* * *   B A N K R U P T   * * *^]"));
     } else {
 	w = getmaxx(curwin);
 
@@ -681,20 +680,22 @@ void show_status (int num)
 
 	if (none) {
 	    center(curwin, 8, 0, attr_normal, attr_highlight, 0, 1,
-			    "No companies on the map");
+		   _("No companies on the map"));
 	} else {
 	    mvwhline(curwin, 4, 2, ' ' | attr_subtitle, w - 4);
 	    mvwhline(curwin, 5, 2, ' ' | attr_subtitle, w - 4);
 
-	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2, "\nCompany");
-	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2, "Ownership\n(%%)");
-	    right(curwin, 4, w - 6 - OWNERSHIP_COLS, attr_subtitle, 0, 0,
-		  2, "Holdings\n(shares)");
+	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2,
+		 _("\nCompany"));
+	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2,
+		  _("Ownership\n(%%)"));
+	    right(curwin, 4, w - 6 - OWNERSHIP_COLS, attr_subtitle, 0, 0, 2,
+		  _("Holdings\n(shares)"));
 	    right(curwin, 4, w - 8 - OWNERSHIP_COLS - STOCK_OWNED_COLS,
-		  attr_subtitle, 0, 0, 2, "Return\n(%%)");
+		  attr_subtitle, 0, 0, 2, _("Return\n(%%)"));
 	    right(curwin, 4, w - 10 - OWNERSHIP_COLS - STOCK_OWNED_COLS
 		  - SHARE_RETURN_COLS, attr_subtitle, 0, 0, 2,
-		  "Price per\nshare (%s)", lconvinfo.currency_symbol);
+		  _("Price per\nshare (%s)"), lconvinfo.currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
@@ -725,24 +726,24 @@ void show_status (int num)
 	int width, x;
 
 	mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, w / 2, &width, 1,
-		"Total value:   ");
+		_("Total value:   "));
 	x = (w + width - (TOTAL_VALUE_COLS + 2)) / 2;
 
 	right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
-	      "Current cash:  ");
+	      _("Current cash:  "));
 	right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
 	      attr_highlight, 0, 1, " ^{%N^} ", player[num].cash);
 	line++;
 
 	if (player[num].debt != 0.0) {
 	    right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
-		  "Current debt:  ");
+		  _("Current debt:  "));
 	    right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
 		  attr_highlight, 0, 1, " ^{%N^} ", player[num].debt);
 	    line++;
 
 	    right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
-		  "Interest rate: ");
+		  _("Interest rate: "));
 	    right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
 		  attr_highlight, 0, 1, " ^{%.2f%%^} ", interest_rate * 100.0);
 	    line++;
@@ -768,13 +769,12 @@ void show_status (int num)
 double total_value (int num)
 {
     double val;
-    int i;
 
 
     assert(num >= 0 && num < number_players);
 
     val = player[num].cash - player[num].debt;
-    for (i = 0; i < MAX_COMPANIES; i++) {
+    for (int i = 0; i < MAX_COMPANIES; i++) {
 	if (company[i].on_map) {
 	    val += player[num].stock_owned[i] * company[i].share_price;
 	}

@@ -95,9 +95,9 @@ void exchange_stock (void)
 	box(curwin, 0, 0);
 
 	center(curwin, 1, 0, attr_title, 0, 0, 1,
-	       "  Interstellar Stock Exchange  ");
+	       _("  Interstellar Stock Exchange  "));
 	center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-	       "Player: ^{%s^}", player[current_player].name);
+	       _("Player: ^{%s^}"), player[current_player].name);
 
 	all_off_map = true;
 	for (i = 0; i < MAX_COMPANIES; i++) {
@@ -109,20 +109,20 @@ void exchange_stock (void)
 
 	if (all_off_map) {
 	    center(curwin, 8, 0, attr_normal, attr_highlight, 0, 1,
-			    "No companies on the map");
+		   _("No companies on the map"));
 	} else {
 	    mvwhline(curwin, 4, 2, ' ' | attr_subtitle, w - 4);
 	    mvwhline(curwin, 5, 2, ' ' | attr_subtitle, w - 4);
 
-	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2, "\nCompany");
-	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2, "Shares\nleft");
+	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2, _("\nCompany"));
+	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2, _("Shares\nleft"));
 	    right(curwin, 4, w - 6 - STOCK_LEFT_COLS, attr_subtitle, 0, 0,
-		  2, "Shares\nissued");
+		  2, _("Shares\nissued"));
 	    right(curwin, 4, w - 8 - STOCK_LEFT_COLS - STOCK_ISSUED_COLS,
-		  attr_subtitle, 0, 0, 2, "Return\n(%%)");
+		  attr_subtitle, 0, 0, 2, _("Return\n(%%)"));
 	    right(curwin, 4, w - 10 - STOCK_LEFT_COLS - STOCK_ISSUED_COLS
 		  - SHARE_RETURN_COLS, attr_subtitle, 0, 0, 2,
-		  "Price per\nshare (%s)", lconvinfo.currency_symbol);
+		  _("Price per\nshare (%s)"), lconvinfo.currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
@@ -154,16 +154,16 @@ void exchange_stock (void)
 	newtxwin(6, WIN_COLS, 18, WCENTER, true, attr_normal_window);
 
 	left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<1>^} Display stock portfolio");
+	     _("^{<1>^} Display stock portfolio"));
 	left(curwin, 4, 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<2>^} Display galaxy map");
+	     _("^{<2>^} Display galaxy map"));
 	left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<3>^} Visit the Trading Bank");
+	     _("^{<3>^} Visit the Trading Bank"));
 	left(curwin, 4, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<4>^} Exit the Stock Exchange");
+	     _("^{<4>^} Exit the Stock Exchange"));
 
 	center(curwin, 1, -1, attr_normal, attr_keycode, attr_highlight, 1,
-	       "Enter selection [^[Company letter^]/^{1^}-^{4^}]: ");
+	       _("Enter selection [^[Company letter^]/^{1^}-^{4^}]: "));
 
 	curs_set(CURS_ON);
 	wrefresh(curwin);
@@ -263,25 +263,26 @@ void visit_bank (void)
     // Show the informational part of the Bank
     newtxwin(10, WIN_COLS - 4, 5, WCENTER, true, attr_normal_window);
 
-    center(curwin, 1, 0, attr_title, 0, 0, 1, "  Interstellar Trading Bank  ");
+    center(curwin, 1, 0, attr_title, 0, 0, 1,
+	   _("  Interstellar Trading Bank  "));
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) - 4, &width,
-	    1, "Current cash:  ");
+	    1, _("Current cash:  "));
     x = (getmaxx(curwin) + width - (BANK_VALUE_COLS + 2)) / 2;
 
     rightch(curwin, 3, x, chbuf, 1, &width);
     right(curwin, 3, x + BANK_VALUE_COLS + 2, attr_normal, attr_highlight, 0,
 	  1, " ^{%N^} ", player[current_player].cash);
 
-    right(curwin, 4, x, attr_normal, 0, 0, 1, "Current debt:  ");
+    right(curwin, 4, x, attr_normal, 0, 0, 1, _("Current debt:  "));
     right(curwin, 4, x + BANK_VALUE_COLS + 2, attr_normal, attr_highlight, 0,
 	  1, " ^{%N^} ", player[current_player].debt);
 
-    right(curwin, 5, x, attr_normal, 0, 0, 1, "Interest rate: ");
+    right(curwin, 5, x, attr_normal, 0, 0, 1, _("Interest rate: "));
     right(curwin, 5, x + BANK_VALUE_COLS + 2, attr_normal, attr_highlight, 0,
 	  1, " ^{%.2f%%^} ", interest_rate * 100.0);
 
-    right(curwin, 7, x, attr_highlight, 0, 0, 1, "Credit limit:  ");
+    right(curwin, 7, x, attr_highlight, 0, 0, 1, _("Credit limit:  "));
     whline(curwin, ' ' | attr_title, BANK_VALUE_COLS + 2);
     right(curwin, 7, x + BANK_VALUE_COLS + 2, attr_title, 0, 0, 1,
 	  " %N ", credit_limit);
@@ -292,14 +293,14 @@ void visit_bank (void)
     newtxwin(7, WIN_COLS - 4, 15, WCENTER, true, attr_normal_window);
 
     center(curwin, 3, 0, attr_normal, attr_keycode, 0, 1,
-	   "^{<1>^} Borrow money      ");
+	   _("^{<1>^} Borrow money      "));
     center(curwin, 4, 0, attr_normal, attr_keycode, 0, 1,
-	   "^{<2>^} Repay debt        ");
+	   _("^{<2>^} Repay debt        "));
     center(curwin, 5, 0, attr_normal, attr_keycode, 0, 1,
-	   "^{<3>^} Exit from the Bank");
+	   _("^{<3>^} Exit from the Bank"));
 
     center(curwin, 1, 0, attr_normal, attr_keycode, 0, 1,
-	   "Enter selection [^{1^}-^{3^}]: ");
+	   _("Enter selection [^{1^}-^{3^}]: "));
 
     curs_set(CURS_ON);
     wrefresh(curwin);
@@ -338,8 +339,8 @@ void visit_bank (void)
 	if (credit_limit == 0.0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  Insufficient Credit Limit  ",
-		     "The Bank will not lend you any more money.");
+		     attr_error_waitforkey, _("  Insufficient Credit Limit  "),
+		     _("The Bank will not lend you any more money."));
 	} else {
 	    chtype *chbuf_cursym;
 	    int width_cursym;
@@ -359,7 +360,7 @@ void visit_bank (void)
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
 		    - BANK_INPUT_COLS - width_cursym - 6, &width, 1,
-		    "How much do you wish to borrow? ");
+		    _("How much do you wish to borrow? "));
 	    x = (getmaxx(curwin) + width - BANK_INPUT_COLS - width_cursym
 		 - n) / 2;
 	    rightch(curwin, 3, x, chbuf, 1, &width);
@@ -391,13 +392,13 @@ void visit_bank (void)
 	if (player[current_player].debt == 0.0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  No Debt  ",
-		     "You have no debt to repay.");
+		     attr_error_waitforkey, _("  No Debt  "),
+		     _("You have no debt to repay."));
 	} else if (player[current_player].cash == 0.0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  No Cash  ",
-		     "You have no cash with which to repay the debt!");
+		     attr_error_waitforkey, _("  No Cash  "),
+		     _("You have no cash with which to repay the debt!"));
 	} else {
 	    chtype *chbuf_cursym;
 	    int width_cursym;
@@ -417,7 +418,7 @@ void visit_bank (void)
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
 		    - BANK_INPUT_COLS - width_cursym - 6, &width, 1,
-		    "How much do you wish to repay? ");
+		    _("How much do you wish to repay? "));
 	    x = (getmaxx(curwin) + width - BANK_INPUT_COLS - width_cursym
 		 - n) / 2;
 	    rightch(curwin, 3, x, chbuf, 1, &width);
@@ -490,36 +491,36 @@ void trade_shares (int num, bool *bid_used)
     newtxwin(9, WIN_COLS - 4, 5, WCENTER, true, attr_normal_window);
     w = getmaxx(curwin);
 
-    center(curwin, 1, 0, attr_title, 0, 0, 1, "  Stock Transaction in %s  ",
+    center(curwin, 1, 0, attr_title, 0, 0, 1, _("  Stock Transaction in %s  "),
 	   company[num].name);
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, w / 2, &width, 1,
-	    "Shares issued:   ");
+	    _("Shares issued:   "));
     leftch(curwin, 3, 2, chbuf, 1, &width);
     right(curwin, 3, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%'ld^}", company[num].stock_issued);
 
-    left(curwin, 4, 2, attr_normal, 0, 0, 1, "Shares left:     ");
+    left(curwin, 4, 2, attr_normal, 0, 0, 1, _("Shares left:     "));
     right(curwin, 4, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%'ld^}", company[num].max_stock - company[num].stock_issued);
 
-    left(curwin, 5, 2, attr_normal, 0, 0, 1, "Price per share: ");
+    left(curwin, 5, 2, attr_normal, 0, 0, 1, _("Price per share: "));
     right(curwin, 5, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%N^}", company[num].share_price);
 
-    left(curwin, 6, 2, attr_normal, 0, 0, 1, "Return:          ");
+    left(curwin, 6, 2, attr_normal, 0, 0, 1, _("Return:          "));
     right(curwin, 6, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%.2f%%^}", company[num].share_return * 100.0);
 
-    left(curwin, 3, w / 2, attr_normal, 0, 0, 1, "Current holdings: ");
+    left(curwin, 3, w / 2, attr_normal, 0, 0, 1, _("Current holdings: "));
     right(curwin, 3, w - 2, attr_normal, attr_highlight, 0, 1, " ^{%'ld^} ",
 	  player[current_player].stock_owned[num]);
 
-    left(curwin, 4, w / 2, attr_normal, 0, 0, 1, "Percentage owned: ");
+    left(curwin, 4, w / 2, attr_normal, 0, 0, 1, _("Percentage owned: "));
     right(curwin, 4, w - 2, attr_normal, attr_highlight, 0, 1, " ^{%.2f%%^} ",
 	  ownership * 100.0);
 
-    left(curwin, 6, w / 2, attr_highlight, 0, 0, 1, "Current cash:     ");
+    left(curwin, 6, w / 2, attr_highlight, 0, 0, 1, _("Current cash:     "));
     whline(curwin, ' ' | attr_title, TRADE_VALUE_COLS + 2);
     right(curwin, 6, w - 2, attr_title, 0, 0, 1, " %N ",
 	  player[current_player].cash);
@@ -530,16 +531,16 @@ void trade_shares (int num, bool *bid_used)
     newtxwin(7, WIN_COLS - 4, 14, WCENTER, true, attr_normal_window);
 
     left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
-	 "^{<1>^} Buy stock from company");
+	 _("^{<1>^} Buy stock from company"));
     left(curwin, 4, 2, attr_normal, attr_keycode, 0, 1,
-	 "^{<2>^} Sell stock back to company");
+	 _("^{<2>^} Sell stock back to company"));
     left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
-	 "^{<3>^} Bid company to issue more shares");
+	 _("^{<3>^} Bid company to issue more shares"));
     left(curwin, 4, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
-	 "^{<4>^} Exit to the Stock Exchange");
+	 _("^{<4>^} Exit to the Stock Exchange"));
 
     center(curwin, 1, 0, attr_normal, attr_keycode, 0, 1,
-	   "Enter selection [^{1^}-^{4^}]: ");
+	   _("Enter selection [^{1^}-^{4^}]: "));
 
     curs_set(CURS_ON);
     wrefresh(curwin);
@@ -581,14 +582,14 @@ void trade_shares (int num, bool *bid_used)
 	if (company[num].max_stock - company[num].stock_issued == 0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  No Shares Available  ",
-		     "No more shares are available for purchase.");
+		     attr_error_waitforkey, _("  No Shares Available  "),
+		     _("No more shares are available for purchase."));
 	} else if (maxshares <= 0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  Insufficient Cash  ",
-		     "You do not have enough cash\n"
-		     "to purchase additional shares.");
+		     attr_error_waitforkey, _("  Insufficient Cash  "),
+		     _("You do not have enough cash\n"
+		       "to purchase additional shares."));
 	} else {
 	    maxshares = MIN(maxshares, company[num].max_stock -
 			    company[num].stock_issued);
@@ -598,11 +599,11 @@ void trade_shares (int num, bool *bid_used)
 	    box(curwin, 0, 0);
 
 	    center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-		   "You can purchase up to ^{%'ld^} shares.", maxshares);
+		   _("You can purchase up to ^{%'ld^} shares."), maxshares);
 
-	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
-		    - TRADE_INPUT_COLS - 4, &width, 1,
-		    "How many shares do you wish to purchase? ");
+	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1,
+		    getmaxx(curwin) - TRADE_INPUT_COLS - 4, &width, 1,
+		    _("How many shares do you wish to purchase? "));
 	    x = (getmaxx(curwin) + width - TRADE_INPUT_COLS) / 2;
 	    rightch(curwin, 4, x, chbuf, 1, &width);
 
@@ -623,19 +624,19 @@ void trade_shares (int num, bool *bid_used)
 	if (maxshares == 0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  No Shares  ",
-		     "You do not have any shares to sell.");
+		     attr_error_waitforkey, _("  No Shares  "),
+		     _("You do not have any shares to sell."));
 	} else {
 	    wbkgdset(curwin, attr_normal_window);
 	    werase(curwin);
 	    box(curwin, 0, 0);
 
 	    center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-		   "You can sell up to ^{%'ld^} shares.", maxshares);
+		   _("You can sell up to ^{%'ld^} shares."), maxshares);
 
-	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
-		    - TRADE_INPUT_COLS - 4, &width, 1,
-		    "How many shares do you wish to sell? ");
+	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1,
+		    getmaxx(curwin) - TRADE_INPUT_COLS - 4, &width, 1,
+		    _("How many shares do you wish to sell? "));
 	    x = (getmaxx(curwin) + width - TRADE_INPUT_COLS) / 2;
 	    rightch(curwin, 4, x, chbuf, 1, &width);
 
@@ -663,14 +664,14 @@ void trade_shares (int num, bool *bid_used)
 	if (maxshares == 0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  No Shares Issued  ",
-		     "%s has refused\nto issue more shares.",
+		     attr_error_waitforkey, _("  No Shares Issued  "),
+		     _("%s has refused\nto issue more shares."),
 		     company[num].name);
 	} else {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
 		     attr_title, attr_normal, attr_highlight, 0,
-		     attr_waitforkey, "  Shares Issued  ",
-		     "%s has issued\n^{%'ld^} more shares.",
+		     attr_waitforkey, _("  Shares Issued  "),
+		     _("%s has issued\n^{%'ld^} more shares."),
 		     company[num].name, maxshares);
 	}
 	break;

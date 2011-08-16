@@ -232,17 +232,17 @@ selection_t get_move (void)
 	box(curwin, 0, 0);
 
 	left(curwin, 2, 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<1>^} Display stock portfolio");
+	     _("^{<1>^} Display stock portfolio"));
 	left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<2>^} Declare bankruptcy");
+	     _("^{<2>^} Declare bankruptcy"));
 	left(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<3>^} Save and end the game");
+	     _("^{<3>^} Save and end the game"));
 	left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
-	     "^{<CTRL><C>^} Quit the game");
+	     _("^{<CTRL><C>^} Quit the game"));
 
 	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
-	      attr_choice, 1, "Select move "
-	      "[^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: ",
+	      attr_choice, 1,
+	      _("Select move [^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
 	      MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
 
 	curs_set(CURS_ON);
@@ -257,7 +257,7 @@ selection_t get_move (void)
 
 		curs_set(CURS_OFF);
 		left(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_choice,
-		     0, 1, "Move ^{%c^}", key);
+		     0, 1, _("Move ^{%c^}"), key);
 	    } else {
 		switch (key) {
 		case '1':
@@ -272,7 +272,7 @@ selection_t get_move (void)
 		    curs_set(CURS_OFF);
 		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
 			 attr_normal | A_BOLD, 0, 1,
-			 "^{<2>^} (Declare bankruptcy)");
+			 _("^{<2>^} (Declare bankruptcy)"));
 		    break;
 
 		case '3':
@@ -281,7 +281,7 @@ selection_t get_move (void)
 		    curs_set(CURS_OFF);
 		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
 			 attr_normal | A_BOLD, 0, 1,
-			 "^{<3>^} (Save and end the game)");
+			 _("^{<3>^} (Save and end the game)"));
 		    break;
 
 		case KEY_ESC:
@@ -295,7 +295,7 @@ selection_t get_move (void)
 		    curs_set(CURS_OFF);
 		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
 			 attr_normal | A_BOLD, 0, 1,
-			 "^{<CTRL><C>^} (Quit the game)");
+			 _("^{<CTRL><C>^} (Quit the game)"));
 		    break;
 
 		default:
@@ -310,7 +310,7 @@ selection_t get_move (void)
 
 	// Ask the player to confirm their choice
 	right(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
-	      "Are you sure? [^{Y^}/^{N^}] ");
+	      _("Are you sure? [^{Y^}/^{N^}] "));
 	wrefresh(curwin);
 
 	if (! answer_yesno(curwin)) {
@@ -327,7 +327,7 @@ selection_t get_move (void)
 	    if (game_loaded) {
 		// Save the game to the same game number
 		mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1, WIN_COLS
-			- 7, &width, 1, "Saving game %d... ", game_num);
+			- 7, &width, 1, _("Saving game %d... "), game_num);
 		newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
 		centerch(curwin, 2, 0, chbuf, 1, &width);
 		wrefresh(curwin);
@@ -348,8 +348,8 @@ selection_t get_move (void)
 
 		lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 				2, WIN_COLS - 7, widthbuf, 2,
-				"Enter game number [^{1^}-^{9^}] "
-				"or ^{<CTRL><C>^} to cancel: ");
+				_("Enter game number [^{1^}-^{9^}] "
+				  "or ^{<CTRL><C>^} to cancel: "));
 		assert(lines == 1 || lines == 2);
 		maxwidth = ((lines == 1) ? widthbuf[0] :
 			    MAX(widthbuf[0], widthbuf[1])) + 5;
@@ -394,8 +394,9 @@ selection_t get_move (void)
 
 		    mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
 			    WIN_COLS - 7, &width, 1,
-			    "Saving game %d... ", game_num);
-		    newtxwin(5, width + 5, 7, WCENTER, true, attr_status_window);
+			    _("Saving game %d... "), game_num);
+		    newtxwin(5, width + 5, 7, WCENTER, true,
+			     attr_status_window);
 		    centerch(curwin, 2, 0, chbuf, 1, &width);
 		    wrefresh(curwin);
 
@@ -623,14 +624,16 @@ void bankrupt_player (bool forced)
     if (forced) {
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
-		 attr_error_waitforkey, "  Bankruptcy Court  ",
-		 "%s has been declared bankrupt by the Interstellar Trading Bank.",
+		 attr_error_waitforkey, _("  Bankruptcy Court  "),
+		 _("%s has been declared bankrupt "
+		   "by the Interstellar Trading Bank."),
 		 player[current_player].name);
     } else {
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
-		 attr_error_waitforkey, "  Bankruptcy Court  ",
-		 "%s has declared bankruptcy.", player[current_player].name);
+		 attr_error_waitforkey, _("  Bankruptcy Court  "),
+		 _("%s has declared bankruptcy."),
+		 player[current_player].name);
     }
     txrefresh();
 
@@ -697,8 +700,9 @@ void try_start_new_company (int x, int y)
 
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_normal_window,
 		 attr_title, attr_normal, attr_highlight, 0, attr_waitforkey,
-		 "  New Company  ", "A new company has been formed!\n"
-		 "Its name is ^{%s^}.", company[i].name);
+		 _("  New Company  "),
+		 _("A new company has been formed!\nIts name is ^{%s^}."),
+		 company[i].name);
 	txrefresh();
 
 	galaxy_map[x][y] = COMPANY_TO_MAP(i);
@@ -751,14 +755,15 @@ void merge_companies (map_val_t a, map_val_t b)
 
     // Display information about the merger
 
-    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 4, WIN_COLS
-		    - 8, widthbuf, 4, "^{%s^} has just merged into ^{%s^}.\n"
-		    "Please note the following transactions:\n",
+    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 4,
+		    WIN_COLS - 8, widthbuf, 4,
+		    _("^{%s^} has just merged into ^{%s^}.\n"
+		      "Please note the following transactions:\n"),
 		    company[bb].name, company[aa].name);
 
     newtxwin(number_players + lines + 10, WIN_COLS - 4, lines + 6
 	     - number_players, WCENTER, true, attr_normal_window);
-    center(curwin, 1, 0, attr_title, 0, 0, 1, "  Company Merger  ");
+    center(curwin, 1, 0, attr_title, 0, 0, 1, _("  Company Merger  "));
     centerch(curwin, 3, 0, chbuf, lines, widthbuf);
 
     mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
@@ -770,7 +775,7 @@ void merge_companies (map_val_t a, map_val_t b)
     chbuf_bb = chstrdup(chbuf, BUFSIZE);
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) / 2, &width,
-	    1, "Old stock: ");
+	    1, _("Old stock: "));
 
     w = getmaxx(curwin);
     x = (w + width - MAX(width_aa, width_bb)) / 2;
@@ -778,19 +783,19 @@ void merge_companies (map_val_t a, map_val_t b)
     rightch(curwin, lines + 3, x, chbuf, 1, &width);
     leftch(curwin, lines + 3, x, chbuf_bb, 1, &width_bb);
 
-    right(curwin, lines + 4, x, attr_normal, 0, 0, 1, "New Stock: ");
+    right(curwin, lines + 4, x, attr_normal, 0, 0, 1, _("New Stock: "));
     leftch(curwin, lines + 4, x, chbuf_aa, 1, &width_aa);
 
     mvwhline(curwin, lines + 6, 2, ' ' | attr_subtitle, w - 4);
-    left(curwin, lines + 6, 4, attr_subtitle, 0, 0, 1, "Player");
+    left(curwin, lines + 6, 4, attr_subtitle, 0, 0, 1, _("Player"));
     right(curwin, lines + 6, w - 4, attr_subtitle, 0, 0, 1,
-	  "Bonus (%s)", lconvinfo.currency_symbol);
+	  _("Bonus (%s)"), lconvinfo.currency_symbol);
     right(curwin, lines + 6, w - 6 - MERGE_BONUS_COLS, attr_subtitle, 0, 0,
-	  1, "Total");
+	  1, _("Total"));
     right(curwin, lines + 6, w - 8 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS,
-	  attr_subtitle, 0, 0, 1, "New");
+	  attr_subtitle, 0, 0, 1, _("New"));
     right(curwin, lines + 6, w - 10 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS
-	  - MERGE_NEW_STOCK_COLS, attr_subtitle, 0, 0, 1, "Old");
+	  - MERGE_NEW_STOCK_COLS, attr_subtitle, 0, 0, 1, _("Old"));
 
     total_new = 0;
     for (ln = lines + 7, i = 0; i < number_players; i++) {
@@ -936,11 +941,11 @@ void adjust_values (void)
 		txdlgbox(MAX_DLG_LINES, 60, 6, WCENTER, attr_error_window,
 			 attr_error_title, attr_error_highlight,
 			 attr_error_normal, 0, attr_error_waitforkey,
-			 "  Bankruptcy Court  ",
-			 "%s has been declared bankrupt "
-			 "by the Interstellar Trading Bank.\n\n"
-			 "^{All assets have been taken "
-			 "to repay outstanding loans.^}",
+			 _("  Bankruptcy Court  "),
+			 _("%s has been declared bankrupt "
+			   "by the Interstellar Trading Bank.\n\n"
+			   "^{All assets have been taken "
+			   "to repay outstanding loans.^}"),
 			 company[which].name);
 		txrefresh();
 
@@ -959,17 +964,18 @@ void adjust_values (void)
 
 		lines = mkchstr(chbuf, BUFSIZE, attr_error_highlight,
 				attr_error_normal, 0, 6, 60 - 4, widthbuf, 6,
-				"%s has been declared bankrupt by the "
-				"Interstellar Trading Bank.\n\n"
-				"^{The Bank has agreed to pay stock holders ^}"
-				"%.2f%%^{ of the share value on each share "
-				"owned.^}", company[which].name, rate * 100.0);
+				_("%s has been declared bankrupt by the "
+				  "Interstellar Trading Bank.\n\n"
+				  "^{The Bank has agreed to pay stock holders ^}"
+				  "%.2f%%^{ of the share value on each share "
+				  "owned.^}"),
+				company[which].name, rate * 100.0);
 
 		newtxwin(9 + lines, 60, 4, WCENTER, true, attr_error_window);
 		w = getmaxx(curwin);
 
 		center(curwin, 1, 0, attr_error_title, 0, 0, 1,
-		       "  Bankruptcy Court  ");
+		       _("  Bankruptcy Court  "));
 		centerch(curwin, 3, 0, chbuf, lines, widthbuf);
 
 		mkchstr(chbuf, BUFSIZE, attr_error_highlight, 0, 0, 1, w / 2,
@@ -977,11 +983,11 @@ void adjust_values (void)
 		chbuf_amt = chstrdup(chbuf, BUFSIZE);
 
 		mkchstr(chbuf, BUFSIZE, attr_error_normal, 0, 0, 1, w / 2,
-			&width, 1, "Amount paid per share: ");
+			&width, 1, _("Amount paid per share: "));
 		x = (w + width - width_amt) / 2;
 
 		right(curwin, lines + 4, x, attr_error_normal, 0, 0, 1,
-		      "Old share value:       ");
+		      _("Old share value:       "));
 		leftch(curwin, lines + 4, x, chbuf_amt, 1, &width_amt);
 
 		rightch(curwin, lines + 5, x, chbuf, 1, &width);
@@ -1073,9 +1079,9 @@ void adjust_values (void)
 
 	txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, attr_error_normal,
-		 0, attr_error_waitforkey, "  Interstellar Trading Bank  ",
-		 "Your debt has amounted to %N!\n"
-		 "^{The Bank has impounded ^}%N^{ from your cash.^}",
+		 0, attr_error_waitforkey, _("  Interstellar Trading Bank  "),
+		 _("Your debt has amounted to %N!\n"
+		   "^{The Bank has impounded ^}%N^{ from your cash.^}"),
 		 player[current_player].debt, impounded);
 	txrefresh();
 

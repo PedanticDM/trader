@@ -2368,9 +2368,9 @@ bool answer_yesno (WINDOW *win)
     wattron(win, A_BOLD);
 
     if (key == 'Y') {
-	waddstr(win, "Yes");
+	waddstr(win, _("Yes"));
     } else {
-	waddstr(win, "No");
+	waddstr(win, _("No"));
     }
 
     wbkgdset(win, oldbkgd);

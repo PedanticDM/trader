@@ -231,17 +231,18 @@ bool load_game (int num)
 	    // File not found
 	    txdlgbox(MAX_DLG_LINES, 50, 9, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
-		     attr_error_waitforkey, "  Game Not Found  ",
-		     "Game %d has not been saved to disk.", num);
+		     attr_error_waitforkey, _("  Game Not Found  "),
+		     _("Game %d has not been saved to disk."), num);
 	} else {
 	    // Some other file error
 	    saved_errno = errno;
 	    txdlgbox(MAX_DLG_LINES, 60, 9, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight,
 		     attr_error_normal, 0, attr_error_waitforkey,
-		     "  Game Not Loaded  ",
-		     "Game %d could not be loaded from disk.\n\n"
-		     "^{File %s: %s^}", num, filename, strerror(saved_errno));
+		     _("  Game Not Loaded  "),
+		     _("Game %d could not be loaded from disk.\n\n"
+		       "^{File %s: %s^}"), num, filename,
+		     strerror(saved_errno));
 	}
 
 	free(buf);
@@ -430,9 +431,9 @@ bool save_game (int num)
 		txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
 			 attr_error_title, attr_error_highlight,
 			 attr_error_normal, 0, attr_error_waitforkey,
-			 "  Game Not Saved  ",
-			 "Game %d could not be saved to disk.\n\n"
-			 "^{Directory %s: %s^}", num, data_dir,
+			 _("  Game Not Saved  "),
+			 _("Game %d could not be saved to disk.\n\n"
+			   "^{Directory %s: %s^}"), num, data_dir,
 			 strerror(saved_errno));
 
 		free(buf);
@@ -451,9 +452,9 @@ bool save_game (int num)
 	txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight,
 		 attr_error_normal, 0, attr_error_waitforkey,
-		 "  Game Not Saved  ",
-		 "Game %d could not be saved to disk.\n\n"
-		 "^{File %s: %s^}", num, filename, strerror(saved_errno));
+		 _("  Game Not Saved  "),
+		 _("Game %d could not be saved to disk.\n\n"
+		   "^{File %s: %s^}"), num, filename, strerror(saved_errno));
 
 	free(buf);
 	free(filename);

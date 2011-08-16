@@ -36,110 +36,116 @@
 ************************************************************************/
 
 static const char *help_text[] = {
-    "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
-    "game is to amass  the greatest amount  of wealth  possible.  This is done by\n"
-    "creating interstellar  shipping lanes, expanding them  and buying shares  in\n"
-    "the companies  controlling  them.  Shares  appreciate  in value  as  company\n"
-    "operations expand.  In addition, the return  on each share (as a percentage)\n"
-    "also changes.  Players may also borrow from the Interstellar Trading Bank to\n"
-    "finance additional purchases on the Stock Exchange.\n"
-    "\n"
-    "The map of the galaxy  is represented  by a ^B~x^N x ^B~y^N grid.  A typical section\n"
-    "of it may be:\n"
-    "\n"
-    "        ^e . . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-    "        ^e . . . . . . . . . ^N        ^e . ^N represents ^Bempty space^N,\n"
-    "        ^e . ^s*^e . . . . . . . ^N        ^s * ^N represents a ^Bstar^N.\n"
-    "        ^e . . . . . . . ^s*^e . ^N\n"
-    "        ^e . . . . ^s*^e . . . . ^N\n"
-    ,
+    N_(""
+       "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
+       "game is to amass  the greatest amount  of wealth  possible.  This is done by\n"
+       "creating interstellar  shipping lanes, expanding them  and buying shares  in\n"
+       "the companies  controlling  them.  Shares  appreciate  in value  as  company\n"
+       "operations expand.  In addition, the return  on each share (as a percentage)\n"
+       "also changes.  Players may also borrow from the Interstellar Trading Bank to\n"
+       "finance additional purchases on the Stock Exchange.\n"
+       "\n"
+       "The map of the galaxy  is represented  by a ^B~x^N x ^B~y^N grid.  A typical section\n"
+       "of it may be:\n"
+       "\n"
+       "        ^e . . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
+       "        ^e . . . . . . . . . ^N        ^e . ^N represents ^Bempty space^N,\n"
+       "        ^e . ^s*^e . . . . . . . ^N        ^s * ^N represents a ^Bstar^N.\n"
+       "        ^e . . . . . . . ^s*^e . ^N\n"
+       "        ^e . . . . ^s*^e . . . . ^N\n"
+       ""),
 
-    "The computer selects ^B~m^N moves  (labeled ^k~1^N to ^k~M^N)  at random, and places these\n"
-    "on the map.  To select  any of the highlighted positions, press that letter.\n"
-    "As an example, some of the moves on the map may be:\n"
-    "\n"
-    "\n"
-    "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-    "        ^e . . . ^k~3^e . . . . . ^N\n"
-    "        ^e . ^s*^e . . . . ^k~5^e . . ^N        Moves ^k~1^N to ^k~5^N shown.\n"
-    "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e . ^N\n"
-    "        ^e . . . . ^s*^e . . . . ^N\n"
-    "\n"
-    "\n"
-    "Selecting a position  that is  ^Bnot^N  next to a star (such as moves ^k~1^N, ^k~3^N or ^k~5^N)\n"
-    "will set up  an ^Boutpost^N,  not belonging to any company.  Thus, if move ^k~3^N was\n"
-    "selected on the above map, a ^o + ^N would be placed at that position.\n"
-    ,
+    N_(""
+       "The computer selects ^B~m^N moves  (labeled ^k~1^N to ^k~M^N)  at random, and places these\n"
+       "on the map.  To select  any of the highlighted positions, press that letter.\n"
+       "As an example, some of the moves on the map may be:\n"
+       "\n"
+       "\n"
+       "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
+       "        ^e . . . ^k~3^e . . . . . ^N\n"
+       "        ^e . ^s*^e . . . . ^k~5^e . . ^N        Moves ^k~1^N to ^k~5^N shown.\n"
+       "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e . ^N\n"
+       "        ^e . . . . ^s*^e . . . . ^N\n"
+       "\n"
+       "\n"
+       "Selecting a position  that is  ^Bnot^N  next to a star (such as moves ^k~1^N, ^k~3^N or ^k~5^N)\n"
+       "will set up  an ^Boutpost^N,  not belonging to any company.  Thus, if move ^k~3^N was\n"
+       "selected on the above map, a ^o + ^N would be placed at that position.\n"
+       ""),
 
-    "If, on the other hand, a position  next to  a star  (or another outpost)  is\n"
-    "selected, a ^Bcompany^N would be formed and its first letter would appear on the\n"
-    "map.  As a reward  for creating the company, you are granted  the first five\n"
-    "shares.  Up to ^B~c^N companies can be created in this way.\n"
-    "\n"
-    "If a position  next to  an existing company  is selected, the company  would\n"
-    "expand its operations  by one square.  This increases the cost of its shares\n"
-    "and hence  your return.  Thus,  if the map  was as shown below,  selecting ^k~6^N\n"
-    "or ^k~8^N increases Company ^B~B^N's shipping lane:\n"
-    "\n"
-    "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-    "        ^e . . . ^o+^e . . ^k~6^e . . ^N\n"
-    "        ^e . ^s*^e . . . . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N or ^k~8^N increases Company ^B~B^N.\n"
-    "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e ^c~B^e ^N\n"
-    "        ^e . . . . ^s*^e . . . ^k~8^e ^N\n"
-    ,
+    N_(""
+       "If, on the other hand, a position  next to  a star  (or another outpost)  is\n"
+       "selected, a ^Bcompany^N would be formed and its first letter would appear on the\n"
+       "map.  As a reward  for creating the company, you are granted  the first five\n"
+       "shares.  Up to ^B~c^N companies can be created in this way.\n"
+       "\n"
+       "If a position  next to  an existing company  is selected, the company  would\n"
+       "expand its operations  by one square.  This increases the cost of its shares\n"
+       "and hence  your return.  Thus,  if the map  was as shown below,  selecting ^k~6^N\n"
+       "or ^k~8^N increases Company ^B~B^N's shipping lane:\n"
+       "\n"
+       "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
+       "        ^e . . . ^o+^e . . ^k~6^e . . ^N\n"
+       "        ^e . ^s*^e . . . . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N or ^k~8^N increases Company ^B~B^N.\n"
+       "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e ^c~B^e ^N\n"
+       "        ^e . . . . ^s*^e . . . ^k~8^e ^N\n"
+       ""),
 
-    "Selecting positions next to stars increases the value of your stock by about\n"
-    "five times as much  as an extension  not next to a star.  Thus move ^k~6^N should\n"
-    "be preferred to move ^k~8^N.\n"
-    "\n"
-    "        ^e ^c~C^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-    "        ^e ^k~1^e ^o+^e . ^o+^e . . ^k~6^e . . ^N\n"
-    "        ^e . ^s*^e . . . . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N is preferred to ^k~8^N.\n"
-    "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e ^c~B^e ^N\n"
-    "        ^e . . . . ^s*^e . . . ^k~8^e ^N\n"
-    "\n"
-    "You can also expand  any company  by selecting positions  next to  outposts.\n"
-    "Such outposts  will be swallowed up  by  that company.  Thus,  move  ^k~1^N  will\n"
-    "extend  Company ^BC^N by ^Btwo^N squares.  As a bonus,  outposts  next to  stars are\n"
-    "more valuable:  the company's share price  will increase by a greater amount\n"
-    "than it would for outposts not next to stars.\n"
-    ,
+    N_(""
+       "Selecting positions next to stars increases the value of your stock by about\n"
+       "five times as much  as an extension  not next to a star.  Thus move ^k~6^N should\n"
+       "be preferred to move ^k~8^N.\n"
+       "\n"
+       "        ^e ^c~C^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
+       "        ^e ^k~1^e ^o+^e . ^o+^e . . ^k~6^e . . ^N\n"
+       "        ^e . ^s*^e . . . . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N is preferred to ^k~8^N.\n"
+       "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e ^c~B^e ^N\n"
+       "        ^e . . . . ^s*^e . . . ^k~8^e ^N\n"
+       "\n"
+       "You can also expand  any company  by selecting positions  next to  outposts.\n"
+       "Such outposts  will be swallowed up  by  that company.  Thus,  move  ^k~1^N  will\n"
+       "extend  Company ^BC^N by ^Btwo^N squares.  As a bonus,  outposts  next to  stars are\n"
+       "more valuable:  the company's share price  will increase by a greater amount\n"
+       "than it would for outposts not next to stars.\n"
+       ""),
 
-    "If two companies  are separated on the map by only one square, then they can\n"
-    "be ^Bmerged^N into  one company  by selecting that position (if available).  For\n"
-    "example, on the map below, companies ^B~A^N and ^B~B^N  can be merged  by selecting ^k~5^N.\n"
-    "When this occurs, the company  with the greater assets value  takes over the\n"
-    "other one.  Here, Company ^B~B^N might take over  Company ^B~A^N.  Company ^B~A^N ceases to\n"
-    "exist, although it may reappear as an entirely new company at a later stage.\n"
-    "\n"
-    "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-    "        ^e . . . ^c~A^e ^c~A^e ^k~5^e ^c~B^e . . ^N\n"
-    "        ^e . ^s*^e . . ^c~A^e . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~5^N merges companies ^B~A^N and ^B~B^N.\n"
-    "        ^e . ^k~2^e . . . . . ^s*^e ^c~B^e ^N\n"
-    "        ^e . . . . ^s*^e . ^o+^e . . ^N\n"
-    "\n"
-    "When  companies  merge, players are granted  shares in the  dominant company\n"
-    "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
-    "is also paid, proportional to the percentage of the old company owned.\n"
-    ,
+    N_(""
+       "If two companies  are separated on the map by only one square, then they can\n"
+       "be ^Bmerged^N into  one company  by selecting that position (if available).  For\n"
+       "example, on the map below, companies ^B~A^N and ^B~B^N  can be merged  by selecting ^k~5^N.\n"
+       "When this occurs, the company  with the greater assets value  takes over the\n"
+       "other one.  Here, Company ^B~B^N might take over  Company ^B~A^N.  Company ^B~A^N ceases to\n"
+       "exist, although it may reappear as an entirely new company at a later stage.\n"
+       "\n"
+       "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
+       "        ^e . . . ^c~A^e ^c~A^e ^k~5^e ^c~B^e . . ^N\n"
+       "        ^e . ^s*^e . . ^c~A^e . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~5^N merges companies ^B~A^N and ^B~B^N.\n"
+       "        ^e . ^k~2^e . . . . . ^s*^e ^c~B^e ^N\n"
+       "        ^e . . . . ^s*^e . ^o+^e . . ^N\n"
+       "\n"
+       "When  companies  merge, players are granted  shares in the  dominant company\n"
+       "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
+       "is also paid, proportional to the percentage of the old company owned.\n"
+       ""),
 
-    "Once you select your move, you enter  the ^BInterstellar Stock Exchange^N.  Here\n"
-    "you can  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
-    "some of your debt (if applicable).  Note that each company  issues a limited\n"
-    "number  of shares --- you cannot  go on buying for ever!  You can,  however,\n"
-    "bid for more shares to be issued.  You have a better chance of succeeding if\n"
-    "you own a larger proportion of the company.\n"
-    "\n"
-    "The game usually ends after ^B~t^N turns.  However, you can  end the game sooner\n"
-    "by pressing  ^K<CTRL><C>^N  when asked  to select  a move.  As  well, individual\n"
-    "players can declare themselves bankrupt at  any time.  If your debt is large\n"
-    "enough, the Bank  may do this for you!  If you  do not complete your game in\n"
-    "the time you have available, you may save the game and continue it later.\n"
-    "\n"
-    "\n"
-    "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
-    "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
-    ,
+    N_(""
+       "Once you select your move, you enter  the ^BInterstellar Stock Exchange^N.  Here\n"
+       "you can  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
+       "some of your debt (if applicable).  Note that each company  issues a limited\n"
+       "number  of shares --- you cannot  go on buying for ever!  You can,  however,\n"
+       "bid for more shares to be issued.  You have a better chance of succeeding if\n"
+       "you own a larger proportion of the company.\n"
+       "\n"
+       "The game usually ends after ^B~t^N turns.  However, you can  end the game sooner\n"
+       "by pressing  ^K<CTRL><C>^N  when asked  to select  a move.  As  well, individual\n"
+       "players can declare themselves bankrupt at  any time.  If your debt is large\n"
+       "enough, the Bank  may do this for you!  If you  do not complete your game in\n"
+       "the time you have available, you may save the game and continue it later.\n"
+       "\n"
+       "\n"
+       "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
+       "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
+       ""),
 
     NULL
 };
@@ -178,14 +184,14 @@ void show_help (void)
 	werase(curwin);
 	box(curwin, 0, 0);
 
-	center(curwin, 1, 0, attr_title, 0, 0, 1, "  How to Play  ");
+	center(curwin, 1, 0, attr_title, 0, 0, 1, _("  How to Play  "));
 	center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-	       "Page %d of %d", curpage + 1, numpages);
+	       _("Page %d of %d"), curpage + 1, numpages);
 	wmove(curwin, 4, 2);
 
 	// Process the help text string
 
-	const char *s = help_text[curpage];
+	const char *s = gettext(help_text[curpage]);
 	int curattr = attr_normal;
 
 	while (*s != '\0') {
@@ -326,9 +332,9 @@ void show_help (void)
 	}
 
 	center(curwin, getmaxy(curwin) - 2, 0, attr_waitforkey, 0, 0, 1,
-	       (curpage == 0) ? "[ Press <SPACE> to continue ] " :
-	       "[ Press <SPACE> to continue or <BACKSPACE> "
-	       "for the previous page ] ");
+	       (curpage == 0) ? _("[ Press <SPACE> to continue ] ") :
+	       _("[ Press <SPACE> to continue or <BACKSPACE> "
+		 "for the previous page ] "));
 	wrefresh(curwin);
 
 	int key = gettxchar(curwin);
