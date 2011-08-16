@@ -345,9 +345,9 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 	if (strstr(format, "!") == NULL) {
 	    /* Insert lconvinfo.currency_symbol to s.
 
-	       NB: add_currecy_symbol == true assumes POSIX locale:
-	       single-byte strings are in effect, so strlen(), etc, work
-	       correctly. */
+	       NB: add_currecy_symbol == true assumes a POSIX locale and
+	       that MOD_POSIX_CURRENCY_SYMBOL contains only ASCII-safe
+	       characters that work with strlen(), etc. */
 	    const char *sym = lconvinfo.currency_symbol;
 	    int symlen = strlen(sym);
 	    char *p;
