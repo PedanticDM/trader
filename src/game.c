@@ -410,10 +410,10 @@ void ask_player_names (void)
 	    player[i].name = NULL;
 	    entered[i] = false;
 	    left(curwin, i + 3, 2, attr_normal, 0, 0, 1,
-		 _("Player %d:"), i + 1);
+		 _("Player %d: "), i + 1);
 	}
 
-	int x = getcurx(curwin) + 1;
+	int x = getcurx(curwin);
 	int w = getmaxx(curwin) - x - 2;
 
 	cur = 0;
