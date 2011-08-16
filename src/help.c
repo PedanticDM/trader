@@ -174,8 +174,8 @@ void show_help (void)
     while (! done) {
 	// Display a page of instructions
 
+	wbkgdset(curwin, attr_normal_window);
 	werase(curwin);
-	wbkgd(curwin, attr_normal_window);
 	box(curwin, 0, 0);
 
 	center(curwin, 1, 0, attr_title, 0, 0, 1, "  How to Play  ");

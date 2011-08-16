@@ -652,7 +652,7 @@ void show_map (bool closewin)
 void show_status (int num)
 {
     double val;
-    int i, line;
+    int w, i, line;
 
 
     assert(num >= 0 && num < number_players);
@@ -668,6 +668,8 @@ void show_status (int num)
 	center(curwin, 11, 0, attr_normal, attr_highlight, attr_blink, 1,
 			"^[* * *   B A N K R U P T   * * *^]");
     } else {
+	w = getmaxx(curwin);
+
 	// Check to see if any companies are on the map
 	bool none = true;
 	for (i = 0; i < MAX_COMPANIES; i++) {
@@ -681,37 +683,34 @@ void show_status (int num)
 	    center(curwin, 8, 0, attr_normal, attr_highlight, 0, 1,
 			    "No companies on the map");
 	} else {
-	    mvwhline(curwin, 4, 2, ' ' | attr_subtitle, getmaxx(curwin) - 4);
-	    mvwhline(curwin, 5, 2, ' ' | attr_subtitle, getmaxx(curwin) - 4);
+	    mvwhline(curwin, 4, 2, ' ' | attr_subtitle, w - 4);
+	    mvwhline(curwin, 5, 2, ' ' | attr_subtitle, w - 4);
 
 	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2, "\nCompany");
-	    right(curwin, 4, getmaxx(curwin) - 4, attr_subtitle, 0, 0, 2,
-		  "Ownership\n(%%)");
-	    right(curwin, 4, getmaxx(curwin) - 6 - OWNERSHIP_COLS,
-		  attr_subtitle, 0, 0, 2, "Holdings\n(shares)");
-	    right(curwin, 4, getmaxx(curwin) - 8 - OWNERSHIP_COLS
-		  - STOCK_OWNED_COLS, attr_subtitle, 0, 0, 2,
-		  "\nReturn (%%)");
-	    right(curwin, 4, getmaxx(curwin) - 10 - OWNERSHIP_COLS
-		  - STOCK_OWNED_COLS - SHARE_RETURN_COLS, attr_subtitle, 0, 0,
-		  2, "Price per\nshare (%s)", lconvinfo.currency_symbol);
+	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2, "Ownership\n(%%)");
+	    right(curwin, 4, w - 6 - OWNERSHIP_COLS, attr_subtitle, 0, 0,
+		  2, "Holdings\n(shares)");
+	    right(curwin, 4, w - 8 - OWNERSHIP_COLS - STOCK_OWNED_COLS,
+		  attr_subtitle, 0, 0, 2, "Return\n(%%)");
+	    right(curwin, 4, w - 10 - OWNERSHIP_COLS - STOCK_OWNED_COLS
+		  - SHARE_RETURN_COLS, attr_subtitle, 0, 0, 2,
+		  "Price per\nshare (%s)", lconvinfo.currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
 		    left(curwin, line, 4, attr_normal, 0, 0, 1, "%s",
 			 company[i].name);
 
-		    right(curwin, line, getmaxx(curwin) - 2, attr_normal, 0, 0,
-			  1, "%.2f  ", (company[i].stock_issued == 0) ? 0.0 :
+		    right(curwin, line, w - 2, attr_normal, 0, 0, 1, "%.2f  ",
+			  (company[i].stock_issued == 0) ? 0.0 :
 			  ((double) player[num].stock_owned[i] * 100.0)
 			  / company[i].stock_issued);
-		    right(curwin, line, getmaxx(curwin) - 4 - OWNERSHIP_COLS,
-			  attr_normal, 0, 0, 1, "%'ld  ",
-			  player[num].stock_owned[i]);
-		    right(curwin, line, getmaxx(curwin) - 6 - OWNERSHIP_COLS
+		    right(curwin, line, w - 4 - OWNERSHIP_COLS, attr_normal,
+			  0, 0, 1, "%'ld  ", player[num].stock_owned[i]);
+		    right(curwin, line, w - 6 - OWNERSHIP_COLS
 			  - STOCK_OWNED_COLS, attr_normal, 0, 0, 1, "%.2f  ",
 			  company[i].share_return * 100.0);
-		    right(curwin, line, getmaxx(curwin) - 8 - OWNERSHIP_COLS
+		    right(curwin, line, w - 8 - OWNERSHIP_COLS
 			  - STOCK_OWNED_COLS - SHARE_RETURN_COLS, attr_normal,
 			  0, 0, 1, "  %!N  ", company[i].share_price);
 
@@ -725,9 +724,9 @@ void show_status (int num)
 	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
 	int width, x;
 
-	mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
-		&width, 1, "Total value:   ");
-	x = (getmaxx(curwin) + width - (TOTAL_VALUE_COLS + 2)) / 2;
+	mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, w / 2, &width, 1,
+		"Total value:   ");
+	x = (w + width - (TOTAL_VALUE_COLS + 2)) / 2;
 
 	right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
 	      "Current cash:  ");

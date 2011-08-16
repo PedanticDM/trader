@@ -227,7 +227,7 @@ selection_t get_move (void)
     // Show menu of choices for the player
     newtxwin(5, WIN_COLS, 19, WCENTER, false, 0);
     while (selection == SEL_NONE) {
-	wbkgd(curwin, attr_normal_window);
+	wbkgdset(curwin, attr_normal_window);
 	werase(curwin);
 	box(curwin, 0, 0);
 
@@ -731,10 +731,13 @@ void merge_companies (map_val_t a, map_val_t b)
     double val_bb = company[bb].share_price * company[bb].stock_issued *
 	company[bb].share_return;
 
-    long int old_stock, new_stock, total_new;
-    int x, y, i, line;
     double bonus;
-    char *buf = xmalloc(BUFSIZE);
+    long int old_stock, new_stock, total_new;
+    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    int lines, width, widthbuf[4];
+    chtype *chbuf_aa, *chbuf_bb;
+    int width_aa, width_bb;
+    int x, y, w, i, ln;
 
 
     if (val_aa < val_bb) {
@@ -748,31 +751,49 @@ void merge_companies (map_val_t a, map_val_t b)
 
     // Display information about the merger
 
-    newtxwin(number_players + 14, WIN_COLS - 4, 9 - number_players,
-	     WCENTER, true, attr_normal_window);
+    lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 4, WIN_COLS
+		    - 8, widthbuf, 4, "^{%s^} has just merged into ^{%s^}.\n"
+		    "Please note the following transactions:\n",
+		    company[bb].name, company[aa].name);
 
-    old_center(curwin, 1, attr_title, "  Company Merger  ");
-    old_center3(curwin, 3, attr_highlight, attr_highlight, attr_normal,
-	    company[bb].name, company[aa].name, " has just merged into ");
+    newtxwin(number_players + lines + 10, WIN_COLS - 4, lines + 6
+	     - number_players, WCENTER, true, attr_normal_window);
+    center(curwin, 1, 0, attr_title, 0, 0, 1, "  Company Merger  ");
+    centerch(curwin, 3, 0, chbuf, lines, widthbuf);
 
-    old_center(curwin, 5, attr_normal, "Please note the following transactions:");
+    mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
+	    &width_aa, 1, "%s", company[aa].name);
+    chbuf_aa = chstrdup(chbuf, BUFSIZE);
 
-    old_center2(curwin, 7, attr_normal, attr_highlight, " Old stock: ",
-	    "%-20s", company[bb].name);
-    old_center2(curwin, 8, attr_normal, attr_highlight, " New stock: ",
-	    "%-20s", company[aa].name);
+    mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
+	    &width_bb, 1, "%s", company[bb].name);
+    chbuf_bb = chstrdup(chbuf, BUFSIZE);
 
-    // Handle the locale's currency symbol
-    snprintf(buf, BUFSIZE, "Bonus (%s)", lconvinfo.currency_symbol);
+    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) / 2, &width,
+	    1, "Old stock: ");
 
-    int w = getmaxx(curwin) - 52;
-    wattrset(curwin, attr_subtitle);
-    mvwprintw(curwin, 10, 2, "  %-*.*s  %8s  %8s  %8s  %12s  ", w, w,
-	      "Player", "Old", "New", "Total", buf);
-    wattrset(curwin, attr_normal);
+    w = getmaxx(curwin);
+    x = (w + width - MAX(width_aa, width_bb)) / 2;
+
+    rightch(curwin, lines + 3, x, chbuf, 1, &width);
+    leftch(curwin, lines + 3, x, chbuf_bb, 1, &width_bb);
+
+    right(curwin, lines + 4, x, attr_normal, 0, 0, 1, "New Stock: ");
+    leftch(curwin, lines + 4, x, chbuf_aa, 1, &width_aa);
+
+    mvwhline(curwin, lines + 6, 2, ' ' | attr_subtitle, w - 4);
+    left(curwin, lines + 6, 4, attr_subtitle, 0, 0, 1, "Player");
+    right(curwin, lines + 6, w - 4, attr_subtitle, 0, 0, 1,
+	  "Bonus (%s)", lconvinfo.currency_symbol);
+    right(curwin, lines + 6, w - 6 - MERGE_BONUS_COLS, attr_subtitle, 0, 0,
+	  1, "Total");
+    right(curwin, lines + 6, w - 8 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS,
+	  attr_subtitle, 0, 0, 1, "New");
+    right(curwin, lines + 6, w - 10 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS
+	  - MERGE_NEW_STOCK_COLS, attr_subtitle, 0, 0, 1, "Old");
 
     total_new = 0;
-    for (line = 11, i = 0; i < number_players; i++) {
+    for (ln = lines + 7, i = 0; i < number_players; i++) {
 	if (player[i].in_game) {
 	    // Calculate new stock and any bonus
 	    old_stock = player[i].stock_owned[bb];
@@ -787,11 +808,22 @@ void merge_companies (map_val_t a, map_val_t b)
 	    player[i].stock_owned[bb] = 0;
 	    player[i].cash += bonus;
 
-	    l_strfmon(buf, BUFSIZE, "%!12n", bonus);
-	    mvwprintw(curwin, line, 2, "  %-*.*s  %'8ld  %'8ld  %'8ld  %12s  ",
-		      w, w, player[i].name, old_stock, new_stock,
-		      player[i].stock_owned[aa], buf);
-	    line++;
+	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, w - 12
+		    - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS
+		    - MERGE_NEW_STOCK_COLS - MERGE_OLD_STOCK_COLS,
+		    &width, 1, "%s", player[i].name);
+	    leftch(curwin, ln, 4, chbuf, 1, &width);
+
+	    right(curwin, ln, w - 4, attr_normal, 0, 0, 1, "%!N", bonus);
+	    right(curwin, ln, w - 6 - MERGE_BONUS_COLS, attr_normal, 0, 0, 1,
+		  "%'ld", player[i].stock_owned[aa]);
+	    right(curwin, ln, w - 8 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS,
+		  attr_normal, 0, 0, 1, "%'ld", new_stock);
+	    right(curwin, ln, w - 10 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS
+		  - MERGE_NEW_STOCK_COLS, attr_normal, 0, 0, 1, "%'ld",
+		  old_stock);
+
+	    ln++;
 	}
     }
 
@@ -818,7 +850,9 @@ void merge_companies (map_val_t a, map_val_t b)
     deltxwin();			// "Company merger" window
     txrefresh();
 
-    free(buf);
+    free(chbuf_bb);
+    free(chbuf_aa);
+    free(chbuf);
 }
 
 
@@ -890,7 +924,6 @@ void inc_share_price (int num, double inc)
 
 void adjust_values (void)
 {
-    int i, x, y;
     int which;
 
 
@@ -913,45 +946,57 @@ void adjust_values (void)
 
 	    } else {
 		double rate = randf();
-		char *buf = xmalloc(BUFSIZE);
 
-		for (i = 0; i < number_players; i++) {
+		chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+		chtype *chbuf_amt;
+		int w, x, lines, width, width_amt, widthbuf[6];
+
+		for (int i = 0; i < number_players; i++) {
 		    if (player[i].in_game) {
 			player[i].cash += player[i].stock_owned[which] * rate;
 		    }
 		}
 
-		newtxwin(14, 60, 4, WCENTER, true, attr_error_window);
+		lines = mkchstr(chbuf, BUFSIZE, attr_error_highlight,
+				attr_error_normal, 0, 6, 60 - 4, widthbuf, 6,
+				"%s has been declared bankrupt by the "
+				"Interstellar Trading Bank.\n\n"
+				"^{The Bank has agreed to pay stock holders ^}"
+				"%.2f%%^{ of the share value on each share "
+				"owned.^}", company[which].name, rate * 100.0);
 
-		old_center(curwin, 1, attr_error_title, "  Bankruptcy Court  ");
-		old_center(curwin, 3, attr_error_highlight, "%s has been declared",
-			company[which].name);
-		old_center(curwin, 4, attr_error_highlight,
-		       "bankrupt by the Interstellar Trading Bank.");
+		newtxwin(9 + lines, 60, 4, WCENTER, true, attr_error_window);
+		w = getmaxx(curwin);
 
-		old_center2(curwin, 6, attr_error_normal, attr_error_highlight,
-			"The Bank has agreed to pay stock holders ",
-			"%4.2f%%", rate * 100.0);
-		old_center(curwin, 7, attr_error_normal,
-		       "of the share value on each share owned.");
+		center(curwin, 1, 0, attr_error_title, 0, 0, 1,
+		       "  Bankruptcy Court  ");
+		centerch(curwin, 3, 0, chbuf, lines, widthbuf);
 
-		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price);
-		old_center2(curwin, 9, attr_error_normal, attr_error_highlight,
-			"Old share value:       ", "%s", buf);
+		mkchstr(chbuf, BUFSIZE, attr_error_highlight, 0, 0, 1, w / 2,
+			&width_amt, 1, "%N", company[which].share_price);
+		chbuf_amt = chstrdup(chbuf, BUFSIZE);
 
-		l_strfmon(buf, BUFSIZE, "%12n", company[which].share_price
-			  * rate);
-		old_center2(curwin, 10, attr_error_normal, attr_error_highlight,
-			"Amount paid per share: ", "%s", buf);
+		mkchstr(chbuf, BUFSIZE, attr_error_normal, 0, 0, 1, w / 2,
+			&width, 1, "Amount paid per share: ");
+		x = (w + width - width_amt) / 2;
 
-		wait_for_key(curwin, 12, attr_error_waitforkey);
+		right(curwin, lines + 4, x, attr_error_normal, 0, 0, 1,
+		      "Old share value:       ");
+		leftch(curwin, lines + 4, x, chbuf_amt, 1, &width_amt);
+
+		rightch(curwin, lines + 5, x, chbuf, 1, &width);
+		left(curwin, lines + 5, x, attr_error_highlight, 0, 0, 1,
+		     "%N", company[which].share_price * rate);
+
+		wait_for_key(curwin, getmaxy(curwin) - 2, attr_error_waitforkey);
 		deltxwin();
 		txrefresh();
 
-		free(buf);
+		free(chbuf_amt);
+		free(chbuf);
 	    }
 
-	    for (i = 0; i < number_players; i++) {
+	    for (int i = 0; i < number_players; i++) {
 		player[i].stock_owned[which] = 0;
 	    }
 
@@ -961,8 +1006,8 @@ void adjust_values (void)
 	    company[which].max_stock    = 0;
 	    company[which].on_map       = false;
 
-	    for (x = 0; x < MAX_X; x++) {
-		for (y = 0; y < MAX_Y; y++) {
+	    for (int x = 0; x < MAX_X; x++) {
+		for (int y = 0; y < MAX_Y; y++) {
 		    if (galaxy_map[x][y] == COMPANY_TO_MAP((unsigned int) which)) {
 			galaxy_map[x][y] = MAP_EMPTY;
 		    }
@@ -980,7 +1025,7 @@ void adjust_values (void)
     }
 
     // Make sure that a company's return is not too large
-    for (i = 0; i < MAX_COMPANIES; i++) {
+    for (int i = 0; i < MAX_COMPANIES; i++) {
 	if (company[i].on_map && company[i].share_return > MAX_COMPANY_RETURN) {
 	    company[i].share_return /= randf() + RETURN_DIVIDER;
 	}
@@ -1000,7 +1045,7 @@ void adjust_values (void)
     }
 
     // Give the current player the companies' dividends
-    for (i = 0; i < MAX_COMPANIES; i++) {
+    for (int i = 0; i < MAX_COMPANIES; i++) {
 	if (company[i].on_map && company[i].stock_issued != 0) {
 	    player[current_player].cash += player[current_player].stock_owned[i]
 		* company[i].share_price * company[i].share_return

@@ -56,6 +56,7 @@
 #define WCENTER			-1  // Centre the new window
 
 #define MAX_DLG_LINES		10  // Default maximum lines of text in dialog box
+
 #define YESNO_COLS		4   // Space to allow for "Yes" or "No" response
 #define ORDINAL_COLS		5   // Space for ordinals (1st, 2nd, etc)
 #define TOTAL_VALUE_COLS	18  // Space for total value (monetary)
@@ -63,6 +64,16 @@
 #define SHARE_RETURN_COLS	10  // Space for "Return per share"
 #define STOCK_OWNED_COLS	10  // Space for "Holdings (shares)"
 #define OWNERSHIP_COLS		10  // Space for "Company ownership (%)"
+#define STOCK_ISSUED_COLS	10  // Space for "Shares issued"
+#define STOCK_LEFT_COLS		10  // Space for "Shares left"
+#define BANK_VALUE_COLS		18  // Space for amounts in bank window
+#define BANK_INPUT_COLS		16  // Space for input text box in bank
+#define TRADE_VALUE_COLS	16  // Space for amounts in trade window
+#define TRADE_INPUT_COLS	10  // Space for input text box in trade window
+#define MERGE_BONUS_COLS	12  // Space for "Bonus" (company merger)
+#define MERGE_OLD_STOCK_COLS	8   // Space for "Old stocks" (company merger)
+#define MERGE_NEW_STOCK_COLS	8   // Space for "New stocks" (company merger)
+#define MERGE_TOTAL_STOCK_COLS	8   // Space for "Total stocks" (company merger)
 
 
 // Check if resizing events are supported
