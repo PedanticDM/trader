@@ -1484,9 +1484,12 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 	       const char *allowed, bool stripspc, int y, int x, int width,
 	       chtype attr)
 {
-    int len, pos, cpos, nb, ret;
+    int len, pos, cpos, ret;
     bool done, redraw, mod;
     int key, key2;
+    chtype oldattr;
+    chtype *chbuf;
+    int chbufwidth;
 
 
     assert(win != NULL);
@@ -1494,17 +1497,13 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
     assert(bufsize > 2);
     assert(width > 1);
 
+    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
 
-    chtype oldattr = getattrs(win);
-    chtype oldbkgd = getbkgd(win);
-
-    /* Note that wattrset() will override parts of wbkgdset() and vice
-       versa: don't swap the order of these two lines! */
-    wbkgdset(win, (oldbkgd & A_COLOR) | A_NORMAL);
-    wattrset(win, attr & ~A_CHARTEXT);
+    oldattr = getattrs(win);
     curs_set(CURS_ON);
 
     len = strlen(buf);
@@ -1522,16 +1521,11 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 	      Blanks at the end of the input area are replaced with
 	      "attr", which may contain a '_' for non-colour mode.
 	    */
-	    mvwprintw(win, y, x, "%-*.*s", width, width, buf + pos - cpos);
-
-	    // nb = number of blanks
-	    nb = (len - (pos - cpos) > width) ? 0 : width - (len - (pos - cpos));
-	    wmove(win, y, x + width - nb);
-
-	    chtype ch = ((attr & A_CHARTEXT) == 0) ? attr | ' ' : attr;
-	    for (int i = 0; i < nb; i++) {
-		waddch(win, ch);
-	    }
+	    mvwhline(win, y, x, ((attr & A_CHARTEXT) == 0) ?
+		     ' ' | attr : attr, width);
+	    mkchstr(chbuf, BUFSIZE, attr & ~A_CHARTEXT, 0, 0, 1, width,
+		    &chbufwidth, 1, "%s", buf + pos - cpos);
+	    leftch(win, y, x, chbuf, 1, &chbufwidth);
 
 	    wmove(win, y, x + cpos);
 	    wrefresh(win);
@@ -2107,16 +2101,17 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
     curs_set(CURS_OFF);
 
-    wattrset(win, oldattr | A_BOLD);
-    mvwprintw(win, y, x, "%-*.*s", width, width, buf);
-
-    wbkgdset(win, oldbkgd);
-    wattrset(win, oldattr);
+    mvwhline(win, y, x, ' ' | oldattr, width);
+    mkchstr(chbuf, BUFSIZE, oldattr | A_BOLD, 0, 0, 1, width,
+	    &chbufwidth, 1, "%s", buf);
+    leftch(win, y, x, chbuf, 1, &chbufwidth);
     wrefresh(win);
 
     if (modified != NULL) {
 	*modified = mod;
     }
+
+    free(chbuf);
     return ret;
 }
 
