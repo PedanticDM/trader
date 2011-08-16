@@ -118,6 +118,7 @@ typedef enum curs_type {
 ************************************************************************/
 
 extern WINDOW *curwin;			// Top-most (current) window
+extern bool use_color;			// True to use colour
 
 
 // Character renditions (attributes) used by Star Traders

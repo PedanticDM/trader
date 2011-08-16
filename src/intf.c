@@ -86,6 +86,7 @@ struct convspec {
 ************************************************************************/
 
 WINDOW *curwin = NULL;		// Top-most (current) window
+bool use_color = true;		// True to use colour
 
 
 // Character renditions (attributes) used by Star Traders
@@ -293,7 +294,8 @@ void init_screen (void)
     raw();
 
     // Initialise all character renditions used in the game
-    if (! option_no_color && has_colors()) {
+    use_color = ! option_no_color && has_colors();
+    if (use_color) {
 	start_color();
 
 	init_pair(1,  COLOR_BLACK,  COLOR_WHITE);
@@ -489,6 +491,10 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
     if (dofill) {
 	wbkgd(win, bkgd_attr);
 	box(win, 0, 0);
+    }
+
+    if (! use_color) {
+	wbkgdset(win, A_NORMAL);
     }
 
     return win;
