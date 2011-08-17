@@ -599,7 +599,9 @@ void trade_shares (int num, bool *bid_used)
 	    box(curwin, 0, 0);
 
 	    center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-		   _("You can purchase up to ^{%'ld^} shares."), maxshares);
+		   ngettext("You can purchase ^{one^} share.",
+			    "You can purchase up to ^{%'ld^} shares.",
+			    maxshares), maxshares);
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1,
 		    getmaxx(curwin) - TRADE_INPUT_COLS - 4, &width, 1,
@@ -632,7 +634,9 @@ void trade_shares (int num, bool *bid_used)
 	    box(curwin, 0, 0);
 
 	    center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-		   _("You can sell up to ^{%'ld^} shares."), maxshares);
+		   ngettext("You can sell ^{one^} share.",
+			    "You can sell up to ^{%'ld^} shares.",
+			    maxshares), maxshares);
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1,
 		    getmaxx(curwin) - TRADE_INPUT_COLS - 4, &width, 1,
@@ -671,8 +675,9 @@ void trade_shares (int num, bool *bid_used)
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
 		     attr_title, attr_normal, attr_highlight, 0,
 		     attr_waitforkey, _("  Shares Issued  "),
-		     _("%s has issued\n^{%'ld^} more shares."),
-		     company[num].name, maxshares);
+		     ngettext("%s has issued\none more share.",
+			      "%s has issued\n^{%'ld^} more shares.",
+			      maxshares), company[num].name, maxshares);
 	}
 	break;
 

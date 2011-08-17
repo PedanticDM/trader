@@ -523,7 +523,9 @@ void end_game (void)
     txdlgbox(MAX_DLG_LINES, 50, 9, WCENTER, attr_error_window,
 	     attr_error_title, attr_error_highlight, 0, 0,
 	     attr_error_waitforkey, _("  Game Over  "),
-	     _("The game is over after %d turns."), turn_number - 1);
+	     ngettext("The game is over after one turn.",
+		      "The game is over after %d turns.",
+		      turn_number - 1), turn_number - 1);
 
     for (int i = 0; i < number_players; i++) {
 	show_status(i);
