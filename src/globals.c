@@ -41,7 +41,8 @@ const char *company_name[MAX_COMPANIES] = {
     /* TRANSLATORS: The eight company names do NOT have to be literal
        translations of the English names.  In fact, if possible, the
        names should start with successive letters of your alphabet (in
-       English, "A" to "H"). */
+       English, "A" to "H").  No company name should be more than 24
+       characters (column positions, to be precise) long. */
     N_("Altair Starways"),
     N_("Betelgeuse, Ltd"),
     N_("Capella Freight Co"),

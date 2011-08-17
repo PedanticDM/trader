@@ -2368,9 +2368,12 @@ bool answer_yesno (WINDOW *win)
     wattron(win, A_BOLD);
 
     if (key == 'Y') {
-	waddstr(win, _("Yes"));
+	/* TRANSLATORS: The strings "Yes" and "No" are printed as a
+	   response to user input in answer to questions like "Are you
+	   sure? [Y/N] " */
+	waddstr(win, pgettext("answer", "Yes"));
     } else {
-	waddstr(win, _("No"));
+	waddstr(win, pgettext("answer", "No"));
     }
 
     wbkgdset(win, oldbkgd);

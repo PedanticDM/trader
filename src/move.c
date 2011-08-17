@@ -257,7 +257,11 @@ selection_t get_move (void)
 
 		curs_set(CURS_OFF);
 		left(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_choice,
-		     0, 1, _("Move ^{%c^}"), key);
+		     0, 1,
+		     /* TRANSLATORS: "Move" refers to the choice of moves
+			made by the current player (out of a selection of
+			20 moves). */
+		     _("Move ^{%c^}"), key);
 	    } else {
 		switch (key) {
 		case '1':
@@ -774,8 +778,16 @@ void merge_companies (map_val_t a, map_val_t b)
 	    &width_bb, 1, "%s", company[bb].name);
     chbuf_bb = chstrdup(chbuf, BUFSIZE);
 
-    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) / 2, &width,
-	    1, _("Old stock: "));
+    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) / 2,
+	    &width, 1,
+	    /* TRANSLATORS: "Old stock" refers to the company that has
+	       just ceased existence due to a merger.
+
+	       Note that the "Old stock" and "New stock" labels MUST be
+	       the same length and must contain a trailing space for the
+	       display routines to work correctly.  The maximum length of
+	       each label is 36 characters. */
+	    pgettext("label", "Old stock: "));
 
     w = getmaxx(curwin);
     x = (w + width - MAX(width_aa, width_bb)) / 2;
@@ -783,19 +795,43 @@ void merge_companies (map_val_t a, map_val_t b)
     rightch(curwin, lines + 3, x, chbuf, 1, &width);
     leftch(curwin, lines + 3, x, chbuf_bb, 1, &width_bb);
 
-    right(curwin, lines + 4, x, attr_normal, 0, 0, 1, _("New Stock: "));
+    right(curwin, lines + 4, x, attr_normal, 0, 0, 1,
+	  /* TRANSLATORS: "New stock" refers to the company that has
+	     absorbed another due to a merger. */
+	  pgettext("label", "New Stock: "));
     leftch(curwin, lines + 4, x, chbuf_aa, 1, &width_aa);
 
     mvwhline(curwin, lines + 6, 2, ' ' | attr_subtitle, w - 4);
-    left(curwin, lines + 6, 4, attr_subtitle, 0, 0, 1, _("Player"));
+    left(curwin, lines + 6, 4, attr_subtitle, 0, 0, 1,
+	 /* TRANSLATORS: "Player" is used as a column title in a
+	    table containing all player names. */
+	 pgettext("subtitle", "Player"));
     right(curwin, lines + 6, w - 4, attr_subtitle, 0, 0, 1,
-	  _("Bonus (%s)"), lconvinfo.currency_symbol);
-    right(curwin, lines + 6, w - 6 - MERGE_BONUS_COLS, attr_subtitle, 0, 0,
-	  1, _("Total"));
+	  /* TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
+	     each player after two companies merge.  %s is the currency
+	     symbol in the current locale.  The maximum column width is
+	     12 characters INCLUDING the currency symbol (see
+	     MERGE_BONUS_COLS in src/intf.h). */
+	  pgettext("subtitle", "Bonus (%s)"),
+	  lconvinfo.currency_symbol);
+    right(curwin, lines + 6, w - 6 - MERGE_BONUS_COLS, attr_subtitle, 0, 0, 1,
+	  /* TRANSLATORS: "Total" refers to the total number of shares in
+	     the new company after a merger.  The maximum column width is
+	     8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h). */
+	  pgettext("subtitle", "Total"));
     right(curwin, lines + 6, w - 8 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS,
-	  attr_subtitle, 0, 0, 1, _("New"));
+	  attr_subtitle, 0, 0, 1,
+	  /* TRANSLATORS: "New" refers to how many (new) shares each
+	     player receives in the surviving company after a merger.
+	     The maximum column width is 8 characters (see
+	     MERGE_NEW_STOCK_COLS in src/intf.h). */
+	  pgettext("subtitle", "New"));
     right(curwin, lines + 6, w - 10 - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS
-	  - MERGE_NEW_STOCK_COLS, attr_subtitle, 0, 0, 1, _("Old"));
+	  - MERGE_NEW_STOCK_COLS, attr_subtitle, 0, 0, 1,
+	  /* TRANSLATORS: "Old" refers to how many shares each player had
+	     in the company ceasing existence.  The maximum column width
+	     is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h). */
+	  pgettext("subtitle", "Old"));
 
     total_new = 0;
     for (ln = lines + 7, i = 0; i < number_players; i++) {
@@ -983,11 +1019,24 @@ void adjust_values (void)
 		chbuf_amt = chstrdup(chbuf, BUFSIZE);
 
 		mkchstr(chbuf, BUFSIZE, attr_error_normal, 0, 0, 1, w / 2,
-			&width, 1, _("Amount paid per share: "));
+			&width, 1,
+			/* TRANSLATORS: The label "Amount paid per share"
+			   refers to payment made by the Interstellar
+			   Trading Bank to each player upon company
+			   bankruptcy.  This label MUST be the same
+			   length as "Old share value" and MUST have at
+			   least one trailing space for the display
+			   routines to work correctly.  The maximum
+			   length is 28 characters. */
+			pgettext("label", "Amount paid per share: "));
 		x = (w + width - width_amt) / 2;
 
 		right(curwin, lines + 4, x, attr_error_normal, 0, 0, 1,
-		      _("Old share value:       "));
+		      /* TRANSLATORS: "Old share value" refers to the
+			 share price of a company before it was forced
+			 into bankruptcy by the Bank.  This label must be
+			 the same width as "Amount paid per share". */
+		      pgettext("label", "Old share value:       "));
 		leftch(curwin, lines + 4, x, chbuf_amt, 1, &width_amt);
 
 		rightch(curwin, lines + 5, x, chbuf, 1, &width);

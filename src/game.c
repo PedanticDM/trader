@@ -410,6 +410,7 @@ void ask_player_names (void)
 	    player[i].name = NULL;
 	    entered[i] = false;
 	    left(curwin, i + 3, 2, attr_normal, 0, 0, 1,
+		 /* xgettext:c-format, range: 1..8 */
 		 _("Player %d: "), i + 1);
 	}
 
@@ -564,9 +565,15 @@ void end_game (void)
 
 	mvwhline(curwin, lines + 4, 2, ' ' | attr_subtitle, w - 4);
 	left(curwin, lines + 4, ORDINAL_COLS + 4, attr_subtitle, 0, 0, 1,
-	     _("Player"));
+	     /* TRANSLATORS: "Player" is used as a column title in a
+		table containing all player names. */
+	     pgettext("subtitle", "Player"));
 	right(curwin, lines + 4, w - 4, attr_subtitle, 0, 0, 1,
-	      _("Total Value (%s)"), lconvinfo.currency_symbol);
+	      /* TRANSLATORS: "Total Value" refers to the total worth
+		 (shares, cash and debt) of any given player.  %s is the
+		 currency symbol of the current locale. */
+	      pgettext("subtitle", "Total Value (%s)"),
+	      lconvinfo.currency_symbol);
 
 	for (int i = 0; i < number_players; i++) {
 	    right(curwin, i + lines + 5, ORDINAL_COLS + 2, attr_normal, 0, 0,
@@ -599,8 +606,8 @@ void show_map (bool closewin)
     mvwhline(curwin, 1, 2, ' ' | attr_mapwin_title, getmaxx(curwin) - 4);
 
     // Display current player and turn number
-    left(curwin, 1, 2, attr_mapwin_title, attr_mapwin_highlight, 0, 1,
-	 _("  Player: ^{%s^}  "), player[current_player].name);
+    left(curwin, 1, 4, attr_mapwin_title, attr_mapwin_highlight, 0, 1,
+	 _("Player: ^{%s^}"), player[current_player].name);
     right(curwin, 1, getmaxx(curwin) - 2, attr_mapwin_title,
 	  attr_mapwin_highlight, attr_mapwin_blink, 1,
 	  (turn_number != max_turn) ? _("  Turn: ^{%d^}  ") :
@@ -691,16 +698,40 @@ void show_status (int num)
 	    mvwhline(curwin, 5, 2, ' ' | attr_subtitle, w - 4);
 
 	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2,
-		 _("\nCompany"));
+		 /* TRANSLATORS: "Company" is a two-line column label in
+		    a table containing a list of companies. */
+		 pgettext("subtitle", "\nCompany"));
 	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2,
-		  _("Ownership\n(%%)"));
+		  /* TRANSLATORS: "Ownership" is a two-line column label
+		     in a table containing the current player's
+		     percentage ownership in any given company.  The
+		     maximum column width is 10 characters (see
+		     OWNERSHIP_COLS in src/intf.h). */
+		  pgettext("subtitle", "Ownership\n(%%)"));
 	    right(curwin, 4, w - 6 - OWNERSHIP_COLS, attr_subtitle, 0, 0, 2,
-		  _("Holdings\n(shares)"));
+		  /* TRANSLATORS: "Holdings" is a two-line column label
+		     in a table containing the number of shares the
+		     current player owns in any given company.  The
+		     maximum column width is 10 characters (see
+		     STOCK_OWNED_COLS in src/intf.h). */
+		  pgettext("subtitle", "Holdings\n(shares)"));
 	    right(curwin, 4, w - 8 - OWNERSHIP_COLS - STOCK_OWNED_COLS,
-		  attr_subtitle, 0, 0, 2, _("Return\n(%%)"));
+		  attr_subtitle, 0, 0, 2,
+		  /* TRANSLATORS: "Return" is a two-line column label in
+		     a table containing the share return as a percentage
+		     in any given company.  The maximum column width is
+		     10 characters (see SHARE_RETURN_COLS in src/intf.h). */
+		  pgettext("subtitle", "Return\n(%%)"));
 	    right(curwin, 4, w - 10 - OWNERSHIP_COLS - STOCK_OWNED_COLS
 		  - SHARE_RETURN_COLS, attr_subtitle, 0, 0, 2,
-		  _("Price per\nshare (%s)"), lconvinfo.currency_symbol);
+		  /* TRANSLATORS: "Price per share" is a two-line column
+		     label in a table containing the price per share in
+		     any given company.  %s is the currency symbol in the
+		     current locale.  The maximum column width is 12
+		     characters INCLUDING the currency symbol (see
+		     SHARE_PRICE_COLS in src/intf.h). */
+		  pgettext("subtitle", "Price per\nshare (%s)"),
+		  lconvinfo.currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
@@ -731,24 +762,33 @@ void show_status (int num)
 	int width, x;
 
 	mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, w / 2, &width, 1,
-		_("Total value:   "));
+		/* TRANSLATORS: The "Total value", "Current cash",
+		   "Current debt" and "Interest rate" labels MUST all be
+		   the same length (ie, right-padded with spaces as
+		   needed) and must have at least one trailing space so
+		   that the display routines work correctly.  The maximum
+		   length of each label is 36 characters.
+
+		   Note that some of these labels are used for both the
+		   Player Status window and the Trading Bank window. */
+		pgettext("label", "Total value:   "));
 	x = (w + width - (TOTAL_VALUE_COLS + 2)) / 2;
 
 	right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
-	      _("Current cash:  "));
+	      pgettext("label", "Current cash:  "));
 	right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
 	      attr_highlight, 0, 1, " ^{%N^} ", player[num].cash);
 	line++;
 
 	if (player[num].debt != 0.0) {
 	    right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
-		  _("Current debt:  "));
+		  pgettext("label", "Current debt:  "));
 	    right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
 		  attr_highlight, 0, 1, " ^{%N^} ", player[num].debt);
 	    line++;
 
 	    right(curwin, line, x, attr_normal, attr_highlight, 0, 1,
-		  _("Interest rate: "));
+		  pgettext("label", "Interest rate: "));
 	    right(curwin, line, x + TOTAL_VALUE_COLS + 2, attr_normal,
 		  attr_highlight, 0, 1, " ^{%.2f%%^} ", interest_rate * 100.0);
 	    line++;

@@ -336,14 +336,16 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
 	   address or web URL for reporting bugs in your translation. */
 	printf(_("Report bugs to %s <%s>.\n"), PACKAGE_AUTHOR, PACKAGE_BUGREPORT);
 #else
-	/* TRANSLATORS: The %s is the e-mail address for reporting bugs.
-	   As with the previous string, please add ANOTHER line with the
+	/* TRANSLATORS: %s is the e-mail address for reporting bugs.  As
+	   with the previous string, please add ANOTHER line with the
 	   (translated) text "Report translation bugs to <ADDRESS>\n",
 	   with ADDRESS replaced with either an e-mail address or web URL
 	   for reporting bugs in your translation. */
 	printf(_("Report bugs to <%s>.\n"), PACKAGE_BUGREPORT);
 #endif
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
+	/* TRANSLATORS: The first %s is for packagers and may be
+	   something like "Debian". */
 	printf(_("Report %s bugs to <%s>.\n"), PACKAGE_PACKAGER, PACKAGE_PACKAGER_BUG_REPORTS);
 #endif
 #ifdef PACKAGE_URL

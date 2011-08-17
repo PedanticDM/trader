@@ -114,15 +114,41 @@ void exchange_stock (void)
 	    mvwhline(curwin, 4, 2, ' ' | attr_subtitle, w - 4);
 	    mvwhline(curwin, 5, 2, ' ' | attr_subtitle, w - 4);
 
-	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2, _("\nCompany"));
-	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2, _("Shares\nleft"));
-	    right(curwin, 4, w - 6 - STOCK_LEFT_COLS, attr_subtitle, 0, 0,
-		  2, _("Shares\nissued"));
+	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2,
+		 /* TRANSLATORS: "Company" is a two-line column label in
+		    a table containing a list of companies. */
+		 pgettext("subtitle", "\nCompany"));
+	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2,
+		  /* TRANSLATORS: "Shares left" is a two-line column
+		     label in a table containing the number of shares
+		     left to be purchased in any given company.  The
+		     maximum column width is 10 characters (see
+		     STOCK_LEFT_COLS in src/intf.h). */
+		  pgettext("subtitle", "Shares\nleft"));
+	    right(curwin, 4, w - 6 - STOCK_LEFT_COLS, attr_subtitle, 0, 0, 2,
+		  /* TRANSLATORS: "Shares issued" is a two-line column
+		     label in a table containing the number of shares
+		     already sold (ie, bought by all players) in any
+		     given company.  The maximum column width is 10
+		     characters (see STOCK_ISSUED_COLS in src/intf.h). */
+		  pgettext("subtitle", "Shares\nissued"));
 	    right(curwin, 4, w - 8 - STOCK_LEFT_COLS - STOCK_ISSUED_COLS,
-		  attr_subtitle, 0, 0, 2, _("Return\n(%%)"));
+		  attr_subtitle, 0, 0, 2,
+		  /* TRANSLATORS: "Return" is a two-line column label in
+		     a table containing the share return as a percentage
+		     in any given company.  The maximum column width is
+		     10 characters (see SHARE_RETURN_COLS in src/intf.h). */
+		  pgettext("subtitle", "Return\n(%%)"));
 	    right(curwin, 4, w - 10 - STOCK_LEFT_COLS - STOCK_ISSUED_COLS
 		  - SHARE_RETURN_COLS, attr_subtitle, 0, 0, 2,
-		  _("Price per\nshare (%s)"), lconvinfo.currency_symbol);
+		  /* TRANSLATORS: "Price per share" is a two-line column
+		     label in a table containing the price per share in
+		     any given company.  %s is the currency symbol in the
+		     current locale.  The maximum column width is 12
+		     characters INCLUDING the currency symbol (see
+		     SHARE_PRICE_COLS in src/intf.h). */
+		  pgettext("subtitle", "Price per\nshare (%s)"),
+		  lconvinfo.currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
@@ -267,22 +293,34 @@ void visit_bank (void)
 	   _("  Interstellar Trading Bank  "));
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) - 4, &width,
-	    1, _("Current cash:  "));
+	    1, pgettext("label", "Current cash:  "));
     x = (getmaxx(curwin) + width - (BANK_VALUE_COLS + 2)) / 2;
 
     rightch(curwin, 3, x, chbuf, 1, &width);
     right(curwin, 3, x + BANK_VALUE_COLS + 2, attr_normal, attr_highlight, 0,
 	  1, " ^{%N^} ", player[current_player].cash);
 
-    right(curwin, 4, x, attr_normal, 0, 0, 1, _("Current debt:  "));
+    right(curwin, 4, x, attr_normal, 0, 0, 1,
+	  pgettext("label", "Current debt:  "));
     right(curwin, 4, x + BANK_VALUE_COLS + 2, attr_normal, attr_highlight, 0,
 	  1, " ^{%N^} ", player[current_player].debt);
 
-    right(curwin, 5, x, attr_normal, 0, 0, 1, _("Interest rate: "));
+    right(curwin, 5, x, attr_normal, 0, 0, 1,
+	  pgettext("label", "Interest rate: "));
     right(curwin, 5, x + BANK_VALUE_COLS + 2, attr_normal, attr_highlight, 0,
 	  1, " ^{%.2f%%^} ", interest_rate * 100.0);
 
-    right(curwin, 7, x, attr_highlight, 0, 0, 1, _("Credit limit:  "));
+    right(curwin, 7, x, attr_highlight, 0, 0, 1,
+	  /* TRANSLATORS: The "Total value", "Current cash", "Current
+	     debt", "Interest rate" and "Credit limit" labels MUST all be
+	     the same length (ie, right-padded with spaces as needed) and
+	     must have at least one trailing space so that the display
+	     routines work correctly.  The maximum length of each label
+	     is 36 characters.
+
+	     Note that some of these labels are used for both the Player
+	     Status window and the Trading Bank window. */
+	  pgettext("label", "Credit limit:  "));
     whline(curwin, ' ' | attr_title, BANK_VALUE_COLS + 2);
     right(curwin, 7, x + BANK_VALUE_COLS + 2, attr_title, 0, 0, 1,
 	  " %N ", credit_limit);
@@ -293,6 +331,10 @@ void visit_bank (void)
     newtxwin(7, WIN_COLS - 4, 15, WCENTER, true, attr_normal_window);
 
     center(curwin, 3, 0, attr_normal, attr_keycode, 0, 1,
+	   /* TRANSLATORS: The "Borrow money", "Repay debt" and "Exit
+	      from the Bank" menu options must all be the same length
+	      (ie, padded with trailing spaces as required).  The maximum
+	      length is 72 characters. */
 	   _("^{<1>^} Borrow money      "));
     center(curwin, 4, 0, attr_normal, attr_keycode, 0, 1,
 	   _("^{<2>^} Repay debt        "));
@@ -491,36 +533,66 @@ void trade_shares (int num, bool *bid_used)
     newtxwin(9, WIN_COLS - 4, 5, WCENTER, true, attr_normal_window);
     w = getmaxx(curwin);
 
-    center(curwin, 1, 0, attr_title, 0, 0, 1, _("  Stock Transaction in %s  "),
-	   company[num].name);
+    center(curwin, 1, 0, attr_title, 0, 0, 1,
+	   /* TRANSLATORS: %s represents the company name. */
+	   _("  Stock Transaction in %s  "), company[num].name);
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, w / 2, &width, 1,
-	    _("Shares issued:   "));
+	    /* TRANSLATORS: "Shares issued" represents the number of
+	       shares already sold by the company to all players.
+
+	       Note that the labels "Shares issued", "Shares left",
+	       "Price per share" and "Return" must all be the same length
+	       and must have at least one trailing space for the output
+	       routines to work correctly.  The maximum length of each
+	       label is 22 characters. */
+	    pgettext("label|Stock A", "Shares issued:   "));
     leftch(curwin, 3, 2, chbuf, 1, &width);
     right(curwin, 3, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%'ld^}", company[num].stock_issued);
 
-    left(curwin, 4, 2, attr_normal, 0, 0, 1, _("Shares left:     "));
+    left(curwin, 4, 2, attr_normal, 0, 0, 1,
+	 /* TRANSLATORS: "Shares left" is the number of shares that are
+	    left to be purchased in the current company. */
+	 pgettext("label|Stock A", "Shares left:     "));
     right(curwin, 4, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%'ld^}", company[num].max_stock - company[num].stock_issued);
 
-    left(curwin, 5, 2, attr_normal, 0, 0, 1, _("Price per share: "));
+    left(curwin, 5, 2, attr_normal, 0, 0, 1,
+	 /* TRANSLATORS: "Price per share" is the cost of each share in
+	    the current company. */
+	 pgettext("label|Stock A", "Price per share: "));
     right(curwin, 5, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%N^}", company[num].share_price);
 
-    left(curwin, 6, 2, attr_normal, 0, 0, 1, _("Return:          "));
+    left(curwin, 6, 2, attr_normal, 0, 0, 1,
+	 /* TRANSLATORS: "Return" is the share return as a percentage. */
+	 pgettext("label|Stock A", "Return:          "));
     right(curwin, 6, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%.2f%%^}", company[num].share_return * 100.0);
 
-    left(curwin, 3, w / 2, attr_normal, 0, 0, 1, _("Current holdings: "));
+    left(curwin, 3, w / 2, attr_normal, 0, 0, 1,
+	 /* TRANSLATORS: "Current holdings" is the number of shares the
+	    current player owns in this particular company.
+
+	    Note that the labels "Current holdings", "Percentage owned"
+	    and "Current cash" MUST all be the same length and contain at
+	    least one trailing space for the display routines to work
+	    correctly.  The maximum length of each label is 18
+	    characters. */
+	 pgettext("label|Stock B", "Current holdings: "));
     right(curwin, 3, w - 2, attr_normal, attr_highlight, 0, 1, " ^{%'ld^} ",
 	  player[current_player].stock_owned[num]);
 
-    left(curwin, 4, w / 2, attr_normal, 0, 0, 1, _("Percentage owned: "));
+    left(curwin, 4, w / 2, attr_normal, 0, 0, 1,
+	 /* TRANSLATORS: "Percentage owned" is the current player's
+	    percentage ownership in this particular company. */
+	 pgettext("label|Stock B", "Percentage owned: "));
     right(curwin, 4, w - 2, attr_normal, attr_highlight, 0, 1, " ^{%.2f%%^} ",
 	  ownership * 100.0);
 
-    left(curwin, 6, w / 2, attr_highlight, 0, 0, 1, _("Current cash:     "));
+    left(curwin, 6, w / 2, attr_highlight, 0, 0, 1,
+	 pgettext("label|Stock B", "Current cash:     "));
     whline(curwin, ' ' | attr_title, TRADE_VALUE_COLS + 2);
     right(curwin, 6, w - 2, attr_title, 0, 0, 1, " %N ",
 	  player[current_player].cash);
@@ -669,12 +741,14 @@ void trade_shares (int num, bool *bid_used)
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
 		     attr_error_waitforkey, _("  No Shares Issued  "),
+		     /* TRANSLATORS: %s represents the company name. */
 		     _("%s has refused\nto issue more shares."),
 		     company[num].name);
 	} else {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
 		     attr_title, attr_normal, attr_highlight, 0,
 		     attr_waitforkey, _("  Shares Issued  "),
+		     /* TRANSLATORS: %s represents the company name. */
 		     ngettext("%s has issued\n^{one^} more share.",
 			      "%s has issued\n^{%'ld^} more shares.",
 			      maxshares), company[num].name, maxshares);
