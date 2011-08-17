@@ -675,7 +675,7 @@ void trade_shares (int num, bool *bid_used)
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
 		     attr_title, attr_normal, attr_highlight, 0,
 		     attr_waitforkey, _("  Shares Issued  "),
-		     ngettext("%s has issued\none more share.",
+		     ngettext("%s has issued\n^{one^} more share.",
 			      "%s has issued\n^{%'ld^} more shares.",
 			      maxshares), company[num].name, maxshares);
 	}
