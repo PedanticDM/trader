@@ -64,7 +64,8 @@ static const char *help_text[] = {
     ^k - Switch to using the character rendition used for keyboard choices on the galaxy map
 
     The help text parsing routines also understand the following "value
-    escapes" introduced by the ASCII tilde character "~":
+    escapes" introduced by the ASCII tilde character "~"; these act like
+    "%" conversion specifiers in printf():
 
     ~~       - Print the tilde character (ASCII code U+007E) [*]
     ~x       - Print the width of the galaxy map (MAX_X) [**]
@@ -153,7 +154,7 @@ static const char *help_text[] = {
        "\n"
        "You can also expand  any company  by selecting positions  next to  outposts.\n"
        "Such outposts  will be swallowed up  by  that company.  Thus,  move  ^k~1^N  will\n"
-       "extend  Company ^BC^N by ^Btwo^N squares.  As a bonus,  outposts  next to  stars are\n"
+       "extend  Company ^B~C^N by ^Btwo^N squares.  As a bonus,  outposts  next to  stars are\n"
        "more valuable:  the company's share price  will increase by a greater amount\n"
        "than it would for outposts not next to stars.\n"
        ""),
