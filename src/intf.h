@@ -108,7 +108,7 @@ typedef enum curs_type {
 #define KEY_DEFAULTVAL1	'='
 #define KEY_DEFAULTVAL2	';'
 
-// Control-arrow key combinations, as returned by NCurses
+// Control-arrow key combinations, as returned by Ncurses
 #ifndef KEY_CDOWN
 #  define KEY_CDOWN	01007		// CTRL + Down Arrow
 #  define KEY_CUP	01060		// CTRL + Up Arrow
