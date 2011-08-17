@@ -2397,7 +2397,11 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
     meta(win, true);
     wtimeout(win, -1);
 
-    center(curwin, y, 0, attr, 0, 0, 1, _("[ Press <SPACE> to continue ] "));
+    center(curwin, y, 0, attr, 0, 0, 1,
+	   /* TRANSLATORS: The reason the user is not asked "Press any
+	      key to continue" is historical: many, many people used to
+	      ask "where is the <ANY> key?" :-) */
+	   _("[ Press <SPACE> to continue ] "));
     wrefresh(win);
 
     done = false;

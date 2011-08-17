@@ -36,6 +36,55 @@
 ************************************************************************/
 
 static const char *help_text[] = {
+
+  /*
+    TRANSLATORS: The help text for Star Traders is marked up using a
+    custom mark-up format NOT used anywhere else in the source code.
+
+    Each string is a single page of text that is displayed in an area 76
+    columns wide by 16 lines high.  Ideally, each line within the string
+    should be (manually) space-justified or centred; each line is
+    separated by "\n".  If a string starts with "@" as the very first
+    character, that string (and all strings following) are ignored: this
+    allows a variable number of help text pages (from one to twelve).
+
+    The ASCII circumflex accent character "^" switches to a different
+    character rendition (also called attributes), depending on the
+    character following the "^":
+
+    ^^ - Print the circumflex accent (ASCII code U+005E)
+    ^N - Switch to using the normal character rendition
+    ^B - Switch to using the bold character rendition
+    ^B - Switch to using the highlight character rendition
+    ^K - Switch to using the keycode character rendition (such as used for "<CTRL><C>")
+    ^e - Switch to using the character rendition used for empty space
+    ^o - Switch to using the character rendition used for outposts
+    ^s - Switch to using the character rendition used for stars
+    ^c - Switch to using the character rendition used for companies
+    ^k - Switch to using the character rendition used for keyboard choices on the galaxy map
+
+    The help text parsing routines also understand the following "value
+    escapes" introduced by the ASCII tilde character "~":
+
+    ~~       - Print the tilde character (ASCII code U+007E) [*]
+    ~x       - Print the width of the galaxy map (MAX_X) [**]
+    ~y       - Print the height of the galaxy map (MAX_Y) [**]
+    ~m       - Print the number of moves available (NUMBER_MOVES) [**]
+    ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
+    ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+    ~1 to ~9 - Print the keycode for the N-th choice of move, appropriately localised [*]
+    ~M       - Print the keycode for the last choice of move [*]
+    ~A to ~H - Print the character used to represent the company on the galaxy map, appropriately localised [*]
+
+    [*]  Takes one character space in the output
+    [**] Takes two character spaces in the output
+
+    Note that the tilde value escapes do NOT change the current character
+    rendition: a circumflex accent escape is needed for that.  For
+    example, to display the first choice of move as it would be shown on
+    the galaxy map, use something like "^k~1^N" (a six-character sequence
+    that would translate to just one character in the output text).
+  */
     N_(""
        "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
        "game is to amass  the greatest amount  of wealth  possible.  This is done by\n"
@@ -147,6 +196,15 @@ static const char *help_text[] = {
        "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
        ""),
 
+#ifdef ENABLE_NLS
+    N_("@ Help text, page 7"),
+    N_("@ Help text, page 8"),
+    N_("@ Help text, page 9"),
+    N_("@ Help text, page 10"),
+    N_("@ Help text, page 11"),
+    N_("@ Help text, page 12"),
+#endif
+
     NULL
 };
 
@@ -164,13 +222,17 @@ static const char *help_text[] = {
 void show_help (void)
 {
     int curpage = 0;
-    int numpages;
+    int numpages = 0;
     bool done = false;
 
 
-    // Count how many pages appear in the help text
-    for (numpages = 0; help_text[numpages] != NULL; numpages++)
-	;
+    // Count how many pages appear in the (translated) help text
+    while (help_text[numpages] != NULL) {
+	const char *s = gettext(help_text[numpages]);
+	if (s == NULL || *s == '\0' || *s == '@')
+	    break;
+	numpages++;
+    }
 
     if (numpages == 0)
 	return;
@@ -202,7 +264,7 @@ void show_help (void)
 		break;
 
 	    case '^':
-		// Set the current attribute
+		// Switch to a different character rendition
 		switch (*++s) {
 		case '^':
 		    waddch(curwin, *s | curattr);
@@ -333,6 +395,12 @@ void show_help (void)
 
 	center(curwin, getmaxy(curwin) - 2, 0, attr_waitforkey, 0, 0, 1,
 	       (curpage == 0) ? _("[ Press <SPACE> to continue ] ") :
+	       /* TRANSLATORS: The specific use of <SPACE> and
+		  <BACKSPACE> is not essential: you can use <DEL>,
+		  <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
+		  <BACKSPACE>, and almost any other key instead of
+		  <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
+		  <CTRL><G> or <CTRL><\>). */
 	       _("[ Press <SPACE> to continue or <BACKSPACE> "
 		 "for the previous page ] "));
 	wrefresh(curwin);
