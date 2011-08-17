@@ -278,6 +278,9 @@ void process_cmdline (int argc, char *argv[])
 
 void show_version (void)
 {
+    /* TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
+       name of the author.  The IPA pronunciation in this comment is in
+       UTF-8 encoding. */
     printf(_("\
 Star Traders (%s) %s\n\
 Copyright (C) %s, John Zaitseff.\n\
@@ -325,8 +328,19 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
 "));
 
 #ifdef PACKAGE_AUTHOR
+	/* TRANSLATORS: The first %s is the proper name of the package
+	   author, John Zaitseff [IPA d͡ʒɒn ˈzaɪ̯t͡səf]; the second %s is
+	   the e-mail address for reporting bugs.  Please add ANOTHER
+	   line with the (translated) text "Report translation bugs to
+	   <ADDRESS>\n", with ADDRESS replaced with either an e-mail
+	   address or web URL for reporting bugs in your translation. */
 	printf(_("Report bugs to %s <%s>.\n"), PACKAGE_AUTHOR, PACKAGE_BUGREPORT);
 #else
+	/* TRANSLATORS: The %s is the e-mail address for reporting bugs.
+	   As with the previous string, please add ANOTHER line with the
+	   (translated) text "Report translation bugs to <ADDRESS>\n",
+	   with ADDRESS replaced with either an e-mail address or web URL
+	   for reporting bugs in your translation. */
 	printf(_("Report bugs to <%s>.\n"), PACKAGE_BUGREPORT);
 #endif
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
