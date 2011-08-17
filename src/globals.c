@@ -38,6 +38,10 @@
 
 // Company names
 const char *company_name[MAX_COMPANIES] = {
+    /* TRANSLATORS: The eight company names do NOT have to be literal
+       translations of the English names.  In fact, if possible, the
+       names should start with successive letters of your alphabet (in
+       English, "A" to "H"). */
     N_("Altair Starways"),
     N_("Betelgeuse, Ltd"),
     N_("Capella Freight Co"),
@@ -51,7 +55,12 @@ const char *company_name[MAX_COMPANIES] = {
 
 // Ordinal strings
 const char *ordinal[MAX_PLAYERS + 1] = {
-    N_("0th"),
+    "",
+    /* TRANSLATORS: The ordinal strings "1st" to "8th" are used in the
+       Game Winner dialog box at the end of the game.  If ordinals depend
+       on the gender of the player, it may be simpler to list cardinal
+       numbers instead (eg, "No. 1").  Up to five characters are allowed
+       (see ORDINAL_COLS in src/intf.h). */
     N_("1st"),
     N_("2nd"),
     N_("3rd"),
