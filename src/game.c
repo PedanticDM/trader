@@ -238,6 +238,7 @@ void init_game (void)
 
 static int ask_number_players (void)
 {
+    char *keys_contgame;
     chtype *chbuf;
     int lines, maxwidth;
     int widthbuf[2];
@@ -248,6 +249,9 @@ static int ask_number_players (void)
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 2,
 		    WIN_COLS - 7, widthbuf, 2,
+		    /* TRANSLATORS: The keycode <C> should be modified to
+		       match that (or those) specified with msgctxt
+		       "input|ContinueGame". */
 		    _("Enter number of players [^{1^}-^{%d^}] "
 		      "or ^{<C>^} to continue a game: "), MAX_PLAYERS);
     assert(lines == 1 || lines == 2);
@@ -260,13 +264,24 @@ static int ask_number_players (void)
     curs_set(CURS_ON);
     wrefresh(curwin);
 
+    /* TRANSLATORS: This string specifies the keycodes used to continue a
+       game; these must NOT contain any numeric digit from 1 to 9.  The
+       first character (keyboard input code) is used to print the user's
+       response if one of those keys is pressed.  Both upper and
+       lower-case versions should be present. */
+    keys_contgame = xstrdup(pgettext("input|ContinueGame", "Cc"));
+
     done = false;
     while (! done) {
-	key = toupper(gettxchar(curwin));
+	key = gettxchar(curwin);
 
 	if (key >= '1' && key <= MAX_PLAYERS + '0') {
 	    wechochar(curwin, key | A_BOLD);
 	    ret = key - '0';
+	    done = true;
+	} else if (strchr(keys_contgame, key) != NULL) {
+	    wechochar(curwin, ((unsigned char) *keys_contgame) | A_BOLD);
+	    ret = 0;
 	    done = true;
 	} else {
 	    switch (key) {
@@ -280,12 +295,6 @@ static int ask_number_players (void)
 		done = true;
 		break;
 
-	    case 'C':
-		wechochar(curwin, key | A_BOLD);
-		ret = 0;
-		done = true;
-		break;
-
 	    default:
 		beep();
 	    }
@@ -293,6 +302,7 @@ static int ask_number_players (void)
     }
 
     curs_set(CURS_OFF);
+    free(keys_contgame);
     return ret;
 }
 
