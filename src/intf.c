@@ -2327,11 +2327,23 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 
 bool answer_yesno (WINDOW *win)
 {
-    int key;
-    bool done;
+    static char *keys_yes;
+    static char *keys_no;
+
+    bool ret;
 
     chtype oldattr = getattrs(win);
     chtype oldbkgd = getbkgd(win);
+
+
+    if (keys_yes == NULL) {
+	/* TRANSLATORS: The strings with msgctxt "input|Yes" and
+	   "input|No" contain the keycodes used to determine whether a
+	   user is answering "Yes" or "No" in response to some question.
+	   Both upper and lower-case versions should be present. */
+	keys_yes = xstrdup(pgettext("input|Yes", "Yy"));
+	keys_no  = xstrdup(pgettext("input|No",  "Nn"));
+    }
 
 
     keypad(win, true);
@@ -2340,26 +2352,22 @@ bool answer_yesno (WINDOW *win)
 
     curs_set(CURS_ON);
 
-    done = false;
-    while (! done) {
-	key = wgetch(win);
+    while (true) {
+	int key = wgetch(win);
 
-	switch (key) {
-	case 'Y':
-	case 'y':
-	case 'N':
-	case 'n':
-	    key = toupper(key);
-	    done = true;
+	if (strchr(keys_yes, key) != NULL) {
+	    ret = true;
 	    break;
-
+	} else if (strchr(keys_no, key) != NULL) {
+	    ret = false;
+	    break;
+	} else
 #ifdef HANDLE_RESIZE_EVENTS
-	case KEY_RESIZE:
+	if (key == KEY_RESIZE) {
 	    txresize();
-	    break;
+	} else
 #endif // HANDLE_RESIZE_EVENTS
-
-	default:
+	{
 	    beep();
 	}
     }
@@ -2367,7 +2375,7 @@ bool answer_yesno (WINDOW *win)
     curs_set(CURS_OFF);
     wattron(win, A_BOLD);
 
-    if (key == 'Y') {
+    if (ret) {
 	/* TRANSLATORS: The strings "Yes" and "No" are printed as a
 	   response to user input in answer to questions like "Are you
 	   sure? [Y/N] " */
@@ -2380,7 +2388,7 @@ bool answer_yesno (WINDOW *win)
     wattrset(win, oldattr);
 
     wrefresh(win);
-    return (key == 'Y');
+    return ret;
 }
 
 
