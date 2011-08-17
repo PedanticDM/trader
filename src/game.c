@@ -532,7 +532,9 @@ void end_game (void)
     if (number_players == 1) {
 	txdlgbox(MAX_DLG_LINES, 60, 8, WCENTER, attr_normal_window,
 		 attr_title, attr_normal, attr_highlight, 0, attr_waitforkey,
-		 _("  Total Value  "), _("Your total value was ^{%N^}."),
+		 _("  Total Value  "),
+		 /* xgettext:c-format */
+		 _("Your total value was ^{%N^}."),
 		 total_value(0));
     } else {
 	// Sort players on the basis of total value
@@ -546,6 +548,7 @@ void end_game (void)
 			(player[0].sort_value == 0) ?
 			_("The winner is ^{%s^}\n"
 			  "who is ^[*** BANKRUPT ***^]") :
+			/* xgettext:c-format */
 			_("The winner is ^{%s^}\n"
 			  "with a value of ^{%N^}."),
 			player[0].name, player[0].sort_value);

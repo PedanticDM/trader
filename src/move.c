@@ -1080,6 +1080,7 @@ void adjust_values (void)
 	txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, attr_error_normal,
 		 0, attr_error_waitforkey, _("  Interstellar Trading Bank  "),
+		 /* xgettext:c-format */
 		 _("Your debt has amounted to %N!\n"
 		   "^{The Bank has impounded ^}%N^{ from your cash.^}"),
 		 player[current_player].debt, impounded);
