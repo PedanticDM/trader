@@ -77,6 +77,9 @@ static bool add_currency_symbol = false;	// Do we need to add "$"?
 
 void init_program_name (char *argv[])
 {
+    /* This implementation assumes a POSIX environment with an ASCII-safe
+       character encoding (such as ASCII or UTF-8). */
+
     if (argv == NULL || argv[0] == NULL || *argv[0] == '\0') {
 	program_name_str = PACKAGE;
     } else {
@@ -129,7 +132,8 @@ const char *data_directory (void)
 {
     /* This implementation assumes a POSIX environment by using "/" as
        the directory separator.  It also assumes a dot-starting directory
-       name is permissible (again, true on POSIX systems) */
+       name is permissible (again, true on POSIX systems) and that the
+       character encoding is ASCII-safe. */
 
     if (data_directory_str == NULL) {
 	const char *name = program_name();
@@ -154,8 +158,8 @@ const char *data_directory (void)
 
 char *game_filename (int gamenum)
 {
-    /* This implementation assumes a POSIX environment by using "/" as
-       the directory separator */
+    /* This implementation assumes a POSIX environment and an ASCII-safe
+       character encoding. */
 
     char buf[GAME_FILENAME_BUFSIZE];	// Buffer for part of filename
     const char *dd;			// Data directory
@@ -335,7 +339,8 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
     /* The current implementation assumes MOD_POSIX_P_CS_PRECEDES is 1
        (currency symbol precedes value) and that MOD_POSIX_P_SEP_BY_SPACE
        is 0 (no space separates currency symbol and value).  It does,
-       however, handle currency symbols of length > 1 */
+       however, handle currency symbols of length > 1. */
+
     assert(MOD_POSIX_P_CS_PRECEDES  == 1);
     assert(MOD_POSIX_P_SEP_BY_SPACE == 0);
 
@@ -346,8 +351,8 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 	    /* Insert lconvinfo.currency_symbol to s.
 
 	       NB: add_currecy_symbol == true assumes a POSIX locale and
-	       that MOD_POSIX_CURRENCY_SYMBOL contains only ASCII-safe
-	       characters that work with strlen(), etc. */
+	       that the character encoding is ASCII-safe (such as by
+	       being ASCII itself, or UTF-8). */
 	    const char *sym = lconvinfo.currency_symbol;
 	    int symlen = strlen(sym);
 	    char *p;
