@@ -59,6 +59,8 @@
 #include <ctype.h>
 #include <string.h>
 #include <errno.h>
+#include <wchar.h>
+#include <wctype.h>
 
 
 // Headers defined by X/Open Single Unix Specification v4

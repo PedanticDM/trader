@@ -91,6 +91,7 @@ verify.h
 vfprintf.c
 vsnprintf.c
 wchar.in.h
+wctype.in.h
 xsize.h
 
 alloca.h
@@ -119,6 +120,7 @@ unitypes.h
 unused-parameter.h
 warn-on-use.h
 wchar.h
+wctype.h
 
 unistr/.dirstamp
 unistr/u8-mbtoucr.c

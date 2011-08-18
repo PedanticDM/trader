@@ -15,7 +15,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --no-conditional-dependencies --no-libtool --macro-prefix=gl assert config-h ctype fprintf-posix getopt-gnu gettext gettext-h gettimeofday langinfo locale printf-posix sigaction signal snprintf-posix stat stdarg stdbool stdio strdup-posix striconv string strncat strstr sys_stat sys_time unistd vfprintf-posix vsnprintf-posix
+#   gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --no-conditional-dependencies --no-libtool --macro-prefix=gl assert config-h ctype fprintf-posix getopt-gnu gettext gettext-h gettimeofday langinfo locale printf-posix sigaction signal snprintf-posix stat stdarg stdbool stdio strdup-posix striconv string strncat strstr sys_stat sys_time unistd vfprintf-posix vsnprintf-posix wchar wctype-h
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
@@ -48,6 +48,8 @@ gl_MODULES([
   unistd
   vfprintf-posix
   vsnprintf-posix
+  wchar
+  wctype-h
 ])
 gl_AVOID([])
 gl_SOURCE_BASE([lib])
