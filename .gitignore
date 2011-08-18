@@ -29,6 +29,12 @@ TAGS
 /build-aux/snippet/warn-on-use.h
 
 /po/POTFILES
+/po/en@quot.gmo
+/po/en@quot.insert-header
+/po/en@quot.po
+/po/messages.mo
 /po/remove-potcdate.sed
+/po/stamp-po
+/po/trader.pot
 
 /src/trader
