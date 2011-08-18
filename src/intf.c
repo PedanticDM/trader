@@ -1241,7 +1241,7 @@ error:
 /***********************************************************************/
 // chstrdup: Duplicate a chtype buffer
 
-chtype *chstrdup (const chtype *restrict chstr, int chstrsize)
+chtype *chstrdup (const chtype *restrict chstr)
 {
     const chtype *p;
     int len;
@@ -1249,7 +1249,7 @@ chtype *chstrdup (const chtype *restrict chstr, int chstrsize)
 
 
     // Determine chstr length, including ending NUL
-    for (len = 1, p = chstr; *p != '\0' && len <= chstrsize; p++, len++)
+    for (len = 1, p = chstr; *p != '\0'; p++, len++)
 	;
 
     ret = xmalloc(len * sizeof(chtype));

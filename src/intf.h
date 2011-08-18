@@ -412,7 +412,6 @@ extern int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 /*
   Function:   chstrdup  - Duplicate a chtype string
   Parameters: chstr     - String to duplicate
-              chstrsize - Maximum number of chtype elements in chstr
   Returns:    chtype *  - Pointer to new (duplicated) string
 
   This function returns a new string of type chtype * that contains a
@@ -420,7 +419,7 @@ extern int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
   memory is not available, the program terminates with an "Out of memory"
   message.
 */
-extern chtype *chstrdup (const chtype *restrict chstr, int chstrsize);
+extern chtype *chstrdup (const chtype *restrict chstr);
 
 
 /*
