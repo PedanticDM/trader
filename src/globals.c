@@ -54,6 +54,52 @@ const char *company_name[MAX_COMPANIES] = {
 };
 
 
+// Default keycodes (keyboard input characters) for each company
+const char *default_keycode_company =
+    /* TRANSLATORS: This string specifies the keycodes (keyboard input
+       codes) used to enter the Stock Transaction window for each
+       company.  There must be exactly eight characters, one for each
+       company in order, before the ASCII vertical line "|"; these must
+       be EITHER all in upper-case or all in lower-case.  If at all
+       possible, these should be successive letters in your alphabet (in
+       English, "A" to "H").  Do NOT use digits or control characters.
+       Do not change or translate anything after the vertical line. */
+    N_("ABCDEFGH|input|Companies");
+
+
+// Default keycodes (keyboard input characters) for each move
+const char *default_keycode_game_move =
+    /* TRANSLATORS: This string specifies the keycodes used to select a
+       game move.  There must be exactly 20 characters, one for each
+       move, before the ASCII vertical line "|"; these must be EITHER all
+       in upper-case or all in lower-case.  If at all possible, these
+       should be successive letters in your alphabet.  Do NOT use digits
+       or control characters.  Do not change or translate anything after
+       the vertical line. */
+    N_("ABCDEFGHIJKLMNOPQRST|input|GameMoves");
+
+
+// Default printable output representations for each map element
+const char *default_printable_map_val =
+    /* TRANSLATORS: This string is used to display the galaxy map to
+       screen.  There must be exactly 11 characters before the ASCII
+       vertical line.  The first ("." in English) is used for empty
+       space, the second ("+") for outposts, the third ("*") for stars,
+       the remaining for the eight companies.  Do not change or translate
+       anything after the vertical line. */
+    N_(".+*ABCDEFGH|output|MapVals");
+
+
+// Default printable output representations for each move
+const char *default_printable_game_move =
+    /* TRANSLATORS: This string is used to display the game moves
+       (choices).  There must be exactly 20 characters before the ASCII
+       vertical line.  The first character corresponds to the first
+       character in the "input|GameMoves" string, and so on.  Do not
+       change or translate anything after the vertical line. */
+    N_("abcdefghijklmnopqrst|output|GameMoves");
+
+
 // Ordinal strings
 const char *ordinal[MAX_PLAYERS + 1] = {
     "",
@@ -81,6 +127,11 @@ company_info_t	company[MAX_COMPANIES];		// Array of companies
 player_info_t	player[MAX_PLAYERS];		// Array of players
 map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 move_rec_t	game_move[NUMBER_MOVES];	// Current moves
+
+char	*keycode_company;		// Keycodes for each company
+char	*keycode_game_move;		// Keycodes for each game move
+char	*printable_map_val;		// Printable output for each map value
+char	*printable_game_move;		// Printable output for each game move
 
 int	max_turn;			// Max. number of turns in game
 int	turn_number;			// Current turn (1 to max_turn)

@@ -44,9 +44,10 @@ static const char *help_text[] = {
     Each string is a single page of text that is displayed in an area 76
     columns wide by 16 lines high.  Ideally, each line within the string
     should be (manually) space-justified or centred; each line is
-    separated by "\n".  If a string starts with "@" as the very first
-    character, that string (and all strings following) are ignored: this
-    allows a variable number of help text pages (from one to twelve).
+    separated by "\n".  TAB characters and other control codes must NOT
+    be used.  If a string starts with "@" as the very first character,
+    that string (and all strings following) are ignored: this allows a
+    variable number of help text pages (from one to twelve).
 
     The ASCII circumflex accent character "^" switches to a different
     character rendition (also called attributes), depending on the
@@ -73,18 +74,23 @@ static const char *help_text[] = {
     ~m       - Print the number of moves available (NUMBER_MOVES) [**]
     ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
     ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
-    ~1 to ~9 - Print the keycode for the N-th choice of move, appropriately localised [*]
+    ~1 to ~9 - Print the keycode for the N-th choice of move [*]
     ~M       - Print the keycode for the last choice of move [*]
-    ~A to ~H - Print the character used to represent the company on the galaxy map, appropriately localised [*]
+    ~A to ~H - Print the character used to represent the company on the galaxy map [*]
+    ~.       - Print the character used to represent empty space on the map [*]
+    ~+       - Print the character used to represent outposts on the map [*]
+    ~*       - Print the character used to represent stars on the map [*]
 
     [*]  Takes one character space in the output
     [**] Takes two character spaces in the output
 
-    Note that the tilde value escapes do NOT change the current character
-    rendition: a circumflex accent escape is needed for that.  For
-    example, to display the first choice of move as it would be shown on
-    the galaxy map, use something like "^k~1^N" (a six-character sequence
-    that would translate to just one character in the output text).
+    Note that all keycodes and map representation characters use locale-
+    specific characters.  Note also that the tilde value escapes do NOT
+    change the current character rendition: a circumflex accent escape is
+    needed for that.  For example, to display the first choice of move as
+    it would be shown on the galaxy map, use something like "^k~1^N" (a
+    six-character sequence that would translate to just one character in
+    the output text).
   */
     N_(""
        "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
@@ -98,47 +104,47 @@ static const char *help_text[] = {
        "The map of the galaxy  is represented  by a ^B~x^N x ^B~y^N grid.  A typical section\n"
        "of it may be:\n"
        "\n"
-       "        ^e . . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-       "        ^e . . . . . . . . . ^N        ^e . ^N represents ^Bempty space^N,\n"
-       "        ^e . ^s*^e . . . . . . . ^N        ^s * ^N represents a ^Bstar^N.\n"
-       "        ^e . . . . . . . ^s*^e . ^N\n"
-       "        ^e . . . . ^s*^e . . . . ^N\n"
+       "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+       "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N represents ^Bempty space^N,\n"
+       "        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N represents a ^Bstar^N.\n"
+       "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
+       "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
        ""),
 
     N_(""
        "The computer selects ^B~m^N moves  (labeled ^k~1^N to ^k~M^N)  at random, and places these\n"
        "on the map.  To select  any of the highlighted positions, press that letter.\n"
-       "As an example, some of the moves on the map may be:\n"
+       "For example, some of the moves on the map may be:\n"
        "\n"
        "\n"
-       "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-       "        ^e . . . ^k~3^e . . . . . ^N\n"
-       "        ^e . ^s*^e . . . . ^k~5^e . . ^N        Moves ^k~1^N to ^k~5^N shown.\n"
-       "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e . ^N\n"
-       "        ^e . . . . ^s*^e . . . . ^N\n"
+       "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+       "        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
+       "        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Moves ^k~1^N to ^k~5^N shown.\n"
+       "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
+       "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
        "\n"
        "\n"
        "Selecting a position  that is  ^Bnot^N  next to a star (such as moves ^k~1^N, ^k~3^N or ^k~5^N)\n"
-       "will set up  an ^Boutpost^N,  not belonging to any company.  Thus, if move ^k~3^N was\n"
-       "selected on the above map, a ^o + ^N would be placed at that position.\n"
+       "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
+       "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
        ""),
 
     N_(""
        "If, on the other hand, a position  next to  a star  (or another outpost)  is\n"
-       "selected, a ^Bcompany^N would be formed and its first letter would appear on the\n"
-       "map.  As a reward  for creating the company, you are granted  the first five\n"
-       "shares.  Up to ^B~c^N companies can be created in this way.\n"
+       "selected, a ^Bcompany^N would be formed  and its letter would appear on the map.\n"
+       "As a reward for creating the company, you are granted the first five shares.\n"
+       "Up to ^B~c^N companies can be created in this way.\n"
        "\n"
        "If a position  next to  an existing company  is selected, the company  would\n"
        "expand its operations  by one square.  This increases the cost of its shares\n"
        "and hence  your return.  Thus,  if the map  was as shown below,  selecting ^k~6^N\n"
        "or ^k~8^N increases Company ^B~B^N's shipping lane:\n"
        "\n"
-       "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-       "        ^e . . . ^o+^e . . ^k~6^e . . ^N\n"
-       "        ^e . ^s*^e . . . . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N or ^k~8^N increases Company ^B~B^N.\n"
-       "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e ^c~B^e ^N\n"
-       "        ^e . . . . ^s*^e . . . ^k~8^e ^N\n"
+       "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+       "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+       "        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N or ^k~8^N increases Company ^B~B^N.\n"
+       "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+       "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
        ""),
 
     N_(""
@@ -146,13 +152,13 @@ static const char *help_text[] = {
        "five times as much  as an extension  not next to a star.  Thus move ^k~6^N should\n"
        "be preferred to move ^k~8^N.\n"
        "\n"
-       "        ^e ^c~C^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-       "        ^e ^k~1^e ^o+^e . ^o+^e . . ^k~6^e . . ^N\n"
-       "        ^e . ^s*^e . . . . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N is preferred to ^k~8^N.\n"
-       "        ^e . ^k~2^e . . ^k~4^e . . ^s*^e ^c~B^e ^N\n"
-       "        ^e . . . . ^s*^e . . . ^k~8^e ^N\n"
+       "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+       "        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+       "        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N is preferred to ^k~8^N.\n"
+       "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+       "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
        "\n"
-       "You can also expand  any company  by selecting positions  next to  outposts.\n"
+       "You may also expand  any company  by selecting positions  next to  outposts.\n"
        "Such outposts  will be swallowed up  by  that company.  Thus,  move  ^k~1^N  will\n"
        "extend  Company ^B~C^N by ^Btwo^N squares.  As a bonus,  outposts  next to  stars are\n"
        "more valuable:  the company's share price  will increase by a greater amount\n"
@@ -167,11 +173,11 @@ static const char *help_text[] = {
        "other one.  Here, Company ^B~B^N might take over  Company ^B~A^N.  Company ^B~A^N ceases to\n"
        "exist, although it may reappear as an entirely new company at a later stage.\n"
        "\n"
-       "        ^e ^k~1^e . ^s*^e . . . ^s*^e ^s*^e . ^N\n"
-       "        ^e . . . ^c~A^e ^c~A^e ^k~5^e ^c~B^e . . ^N\n"
-       "        ^e . ^s*^e . . ^c~A^e . ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~5^N merges companies ^B~A^N and ^B~B^N.\n"
-       "        ^e . ^k~2^e . . . . . ^s*^e ^c~B^e ^N\n"
-       "        ^e . . . . ^s*^e . ^o+^e . . ^N\n"
+       "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+       "        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
+       "        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~5^N merges companies ^B~A^N and ^B~B^N.\n"
+       "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
+       "        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
        "\n"
        "When  companies  merge, players are granted  shares in the  dominant company\n"
        "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
@@ -180,13 +186,13 @@ static const char *help_text[] = {
 
     N_(""
        "Once you select your move, you enter  the ^BInterstellar Stock Exchange^N.  Here\n"
-       "you can  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
+       "you may  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
        "some of your debt (if applicable).  Note that each company  issues a limited\n"
-       "number  of shares --- you cannot  go on buying for ever!  You can,  however,\n"
+       "number  of shares --- you cannot  go on buying for ever!  You may,  however,\n"
        "bid for more shares to be issued.  You have a better chance of succeeding if\n"
        "you own a larger proportion of the company.\n"
        "\n"
-       "The game usually ends after ^B~t^N turns.  However, you can  end the game sooner\n"
+       "The game usually ends after ^B~t^N turns.  However, you may  end the game sooner\n"
        "by pressing  ^K<CTRL><C>^N  when asked  to select  a move.  As  well, individual\n"
        "players can declare themselves bankrupt at  any time.  If your debt is large\n"
        "enough, the Bank  may do this for you!  If you  do not complete your game in\n"
@@ -359,12 +365,27 @@ void show_help (void)
 		case '8':
 		case '9':
 		    // N-th choice of move, as a key press
-		    wprintw(curwin, "%c", MOVE_TO_KEY(*s - '1'));
+		    wprintw(curwin, "%c", PRINTABLE_GAME_MOVE(*s - '1'));
 		    break;
 
 		case 'M':
 		    // Last choice of move, as a key press
-		    wprintw(curwin, "%c", MOVE_TO_KEY(NUMBER_MOVES - 1));
+		    wprintw(curwin, "%c", PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
+		    break;
+
+		case '.':
+		    // Map representation of empty space
+		    wprintw(curwin, "%c", PRINTABLE_MAP_VAL(MAP_EMPTY));
+		    break;
+
+		case '+':
+		    // Map representation of an outpost
+		    wprintw(curwin, "%c", PRINTABLE_MAP_VAL(MAP_OUTPOST));
+		    break;
+
+		case '*':
+		    // Map representation of a star
+		    wprintw(curwin, "%c", PRINTABLE_MAP_VAL(MAP_STAR));
 		    break;
 
 		case 'A':

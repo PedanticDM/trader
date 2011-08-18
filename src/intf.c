@@ -2327,8 +2327,8 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 
 bool answer_yesno (WINDOW *win)
 {
-    static char *keys_yes;
-    static char *keys_no;
+    static char *keycode_yes;
+    static char *keycode_no;
 
     bool ret;
 
@@ -2336,13 +2336,13 @@ bool answer_yesno (WINDOW *win)
     chtype oldbkgd = getbkgd(win);
 
 
-    if (keys_yes == NULL) {
+    if (keycode_yes == NULL) {
 	/* TRANSLATORS: The strings with msgctxt "input|Yes" and
 	   "input|No" contain the keycodes used to determine whether a
 	   user is answering "Yes" or "No" in response to some question.
 	   Both upper and lower-case versions should be present. */
-	keys_yes = xstrdup(pgettext("input|Yes", "Yy"));
-	keys_no  = xstrdup(pgettext("input|No",  "Nn"));
+	keycode_yes = xstrdup(pgettext("input|Yes", "Yy"));
+	keycode_no  = xstrdup(pgettext("input|No",  "Nn"));
     }
 
 
@@ -2355,10 +2355,10 @@ bool answer_yesno (WINDOW *win)
     while (true) {
 	int key = wgetch(win);
 
-	if (strchr(keys_yes, key) != NULL) {
+	if (strchr(keycode_yes, key) != NULL) {
 	    ret = true;
 	    break;
-	} else if (strchr(keys_no, key) != NULL) {
+	} else if (strchr(keycode_no, key) != NULL) {
 	    ret = false;
 	    break;
 	} else

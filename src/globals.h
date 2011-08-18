@@ -130,11 +130,11 @@ typedef enum map_val {
 #define MAP_TO_COMPANY(m)	((m) - MAP_A)
 #define IS_MAP_COMPANY(m)	((m) >= MAP_A && (m) <= MAP_LAST)
 
-#define PRINTABLE_MAP_VAL(m)	((char) (m))
-
-#define COMPANY_TO_KEY(i)	((i) + 'A')
-#define KEY_TO_COMPANY(k)	((k) - 'A')
-#define IS_COMPANY_KEY(k)	((k) >= 'A' && (k) < COMPANY_TO_KEY(MAX_COMPANIES))
+#define PRINTABLE_MAP_VAL(m)						\
+    (((m) == MAP_EMPTY)   ? printable_map_val[0] :			\
+    (((m) == MAP_OUTPOST) ? printable_map_val[1] :			\
+    (((m) == MAP_STAR)    ? printable_map_val[2] :			\
+			    printable_map_val[(m) - MAP_A + 3])))
 
 
 // Information about a move
@@ -143,9 +143,7 @@ typedef struct move_rec {
     int y;
 } move_rec_t;
 
-#define MOVE_TO_KEY(m)	((m) + 'a')
-#define KEY_TO_MOVE(k)	((k) - 'a')
-#define IS_MOVE_KEY(k)	((k) >= 'a' && (k) < MOVE_TO_KEY(NUMBER_MOVES))
+#define PRINTABLE_GAME_MOVE(m)	(printable_game_move[m])
 
 
 // Player moves / selection values
@@ -170,6 +168,18 @@ typedef enum selection {
 // Company names
 extern const char *company_name[MAX_COMPANIES];
 
+// Default keycodes (keyboard input characters) for each company
+extern const char *default_keycode_company;
+
+// Default keycodes (keyboard input characters) for each move
+extern const char *default_keycode_game_move;
+
+// Default printable output representations for each map element
+extern const char *default_printable_map_val;
+
+// Default printable output representations for each move
+extern const char *default_printable_game_move;
+
 // Ordinal strings
 extern const char *ordinal[MAX_PLAYERS + 1];
 
@@ -182,6 +192,11 @@ extern company_info_t	company[MAX_COMPANIES];		// Array of companies
 extern player_info_t	player[MAX_PLAYERS];		// Array of players
 extern map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 extern move_rec_t	game_move[NUMBER_MOVES];	// Current moves
+
+extern char	*keycode_company;	// Keycodes for each company
+extern char	*keycode_game_move;	// Keycodes for each game move
+extern char	*printable_map_val;	// Printable output for each map value
+extern char	*printable_game_move;	// Printable output for each game move
 
 extern int	max_turn;		// Max. number of turns in game
 extern int	turn_number;		// Current turn (1 to max_turn)

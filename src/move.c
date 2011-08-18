@@ -220,7 +220,7 @@ selection_t get_move (void)
     // Display current move choices on the galaxy map
     for (int i = 0; i < NUMBER_MOVES; i++) {
 	mvwaddch(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
-		 MOVE_TO_KEY(i) | attr_map_choice);
+		 PRINTABLE_GAME_MOVE(i) | attr_map_choice);
     }
     wrefresh(curwin);
 
@@ -243,26 +243,42 @@ selection_t get_move (void)
 	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
 	      attr_choice, 1,
 	      _("Select move [^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
-	      MOVE_TO_KEY(0), MOVE_TO_KEY(NUMBER_MOVES - 1));
+	      PRINTABLE_GAME_MOVE(0), PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
 
 	curs_set(CURS_ON);
 	wrefresh(curwin);
 
 	// Get the actual selection made by the player
 	while (selection == SEL_NONE) {
-	    int key = tolower(gettxchar(curwin));
+	    int i;
+	    bool found;
 
-	    if (IS_MOVE_KEY(key)) {
-		selection = KEY_TO_MOVE(key);
+	    int key = gettxchar(curwin);
 
-		curs_set(CURS_OFF);
-		left(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_choice,
-		     0, 1,
-		     /* TRANSLATORS: "Move" refers to the choice of moves
-			made by the current player (out of a selection of
-			20 moves). */
-		     _("Move ^{%c^}"), key);
-	    } else {
+	    if (isupper(*keycode_game_move)) {
+		key = toupper(key);
+	    } else if (islower(*keycode_game_move)) {
+		key = tolower(key);
+	    }
+
+	    for (i = 0, found = false; keycode_game_move[i] != '\0'; i++) {
+		if (keycode_game_move[i] == key) {
+		    found = true;
+		    selection = i;
+
+		    curs_set(CURS_OFF);
+		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			 attr_choice, 0, 1,
+			 /* TRANSLATORS: "Move" refers to the choice of
+			    moves made by the current player (out of a
+			    selection of 20 moves). */
+			 _("Move ^{%c^}"), PRINTABLE_GAME_MOVE(i));
+
+		    break;
+		}
+	    }
+
+	    if (! found) {
 		switch (key) {
 		case '1':
 		    curs_set(CURS_OFF);

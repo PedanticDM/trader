@@ -196,15 +196,29 @@ void exchange_stock (void)
 
 	// Get the actual selection made by the player
 	while (selection == SEL_NONE) {
-	    int key = toupper(gettxchar(curwin));
+	    bool found;
 
-	    if (IS_COMPANY_KEY(key)) {
-		if (company[KEY_TO_COMPANY(key)].on_map) {
-		    selection = KEY_TO_COMPANY(key);
-		} else {
-		    beep();
+	    int key = gettxchar(curwin);
+
+	    if (isupper(*keycode_company)) {
+		key = toupper(key);
+	    } else if (islower(*keycode_company)) {
+		key = tolower(key);
+	    }
+
+	    for (i = 0, found = false; keycode_company[i] != '\0'; i++) {
+		if (keycode_company[i] == key) {
+		    found = true;
+		    if (company[i].on_map) {
+			selection = i;
+		    } else {
+			beep();
+		    }
+		    break;
 		}
-	    } else {
+	    }
+
+	    if (! found) {
 		switch (key) {
 		case '1':
 		    curs_set(CURS_OFF);

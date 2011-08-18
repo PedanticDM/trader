@@ -42,8 +42,9 @@
   Returns:    (nothing)
 
   This function displays instructions on how to play Star Traders in a
-  Curses window.  It does not depend on any global game variable.  On
-  exit, the previous screen is restored and refreshed.
+  Curses window.  It does not depend on any global game variables other
+  than printable_map_val[] and printable_game_move[].  On exit, the
+  previous screen is restored and refreshed.
 */
 extern void show_help (void);
 

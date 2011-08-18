@@ -108,6 +108,48 @@ static int cmp_player (const void *a, const void *b);
 
 void init_game (void)
 {
+    /* Initialise strings used for keycode input and map representations.
+
+       Each string must have an ASCII vertical line (U+007C) in the
+       correct position, followed by context information (such as
+       "input|Company" and "output|MapVals").  This is done to overcome a
+       limitation of gettext_noop() and N_() that does NOT allow context
+       IDs.  This vertical line is replaced by a NUL character to
+       terminate the resulting string.  The vertical line MAY appear in
+       other positions; if so, it is handled correctly. */
+
+    keycode_company = xstrdup(gettext(default_keycode_company));
+    if (strlen(keycode_company) < MAX_COMPANIES + 1
+	|| keycode_company[MAX_COMPANIES] != '|') {
+	err_exit(_("keycode string for companies has incorrect format: `%s'"),
+		 keycode_company);
+    }
+    keycode_company[MAX_COMPANIES] = '\0';
+
+    keycode_game_move = xstrdup(gettext(default_keycode_game_move));
+    if (strlen(keycode_game_move) < NUMBER_MOVES + 1
+	|| keycode_game_move[NUMBER_MOVES] != '|') {
+	err_exit(_("keycode string for game moves has incorrect format: `%s'"),
+		 keycode_game_move);
+    }
+    keycode_game_move[NUMBER_MOVES] = '\0';
+
+    printable_map_val = xstrdup(gettext(default_printable_map_val));
+    if (strlen(printable_map_val) < MAX_COMPANIES + 4
+	|| printable_map_val[MAX_COMPANIES + 3] != '|') {
+	err_exit(_("output string for companies has incorrect format: `%s'"),
+		 printable_map_val);
+    }
+    printable_map_val[MAX_COMPANIES + 3] = '\0';
+
+    printable_game_move = xstrdup(gettext(default_printable_game_move));
+    if (strlen(printable_game_move) < NUMBER_MOVES + 1
+	|| printable_game_move[NUMBER_MOVES] != '|') {
+	err_exit(_("output string for game moves has incorrect format: `%s'"),
+		 printable_game_move);
+    }
+    printable_game_move[NUMBER_MOVES] = '\0';
+
     // Try to load an old game, if possible
     if (game_num != 0) {
 	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
@@ -238,7 +280,7 @@ void init_game (void)
 
 static int ask_number_players (void)
 {
-    char *keys_contgame;
+    char *keycode_contgame;
     chtype *chbuf;
     int lines, maxwidth;
     int widthbuf[2];
@@ -269,7 +311,7 @@ static int ask_number_players (void)
        first character (keyboard input code) is used to print the user's
        response if one of those keys is pressed.  Both upper and
        lower-case versions should be present. */
-    keys_contgame = xstrdup(pgettext("input|ContinueGame", "Cc"));
+    keycode_contgame = xstrdup(pgettext("input|ContinueGame", "Cc"));
 
     done = false;
     while (! done) {
@@ -279,8 +321,8 @@ static int ask_number_players (void)
 	    wechochar(curwin, key | A_BOLD);
 	    ret = key - '0';
 	    done = true;
-	} else if (strchr(keys_contgame, key) != NULL) {
-	    wechochar(curwin, ((unsigned char) *keys_contgame) | A_BOLD);
+	} else if (strchr(keycode_contgame, key) != NULL) {
+	    wechochar(curwin, ((unsigned char) *keycode_contgame) | A_BOLD);
 	    ret = 0;
 	    done = true;
 	} else {
@@ -302,7 +344,7 @@ static int ask_number_players (void)
     }
 
     curs_set(CURS_OFF);
-    free(keys_contgame);
+    free(keycode_contgame);
     return ret;
 }
 
@@ -687,6 +729,8 @@ void show_status (int num)
     val = total_value(num);
     if (val == 0.0) {
 	center(curwin, 11, 0, attr_normal, attr_highlight, attr_blink, 1,
+	       /* TRANSLATORS: The current player is bankrupt (has no
+		  shares or cash, ie, whose total value is zero) */
 	       _("^[* * *   B A N K R U P T   * * *^]"));
     } else {
 	w = getmaxx(curwin);
