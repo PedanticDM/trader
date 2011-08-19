@@ -6,6 +6,7 @@ c-ctype.h
 c-strcase.h
 c-strcasecmp.c
 c-strncasecmp.c
+config.charset
 ctype.in.h
 dosname.h
 errno.in.h
@@ -41,9 +42,16 @@ isnanf.c
 isnanl-nolibm.h
 isnanl.c
 langinfo.in.h
+localcharset.c
+localcharset.h
 locale.in.h
 malloc.c
 math.in.h
+mbrtowc.c
+mbsinit.c
+mbsrtowcs-impl.h
+mbsrtowcs-state.c
+mbsrtowcs.c
 memchr.c
 memchr.valgrind
 printf-args.c
@@ -55,6 +63,8 @@ printf-frexpl.h
 printf-parse.c
 printf-parse.h
 printf.c
+ref-add.sin
+ref-del.sin
 sig-handler.h
 sigaction.c
 signal.in.h
@@ -74,10 +84,13 @@ stdio.in.h
 stdlib.in.h
 str-two-way.h
 strdup.c
+streq.h
 striconv.c
 striconv.h
 string.in.h
 strncat.c
+strnlen1.c
+strnlen1.h
 strstr.c
 sys_stat.in.h
 sys_time.in.h
@@ -91,6 +104,10 @@ verify.h
 vfprintf.c
 vsnprintf.c
 wchar.in.h
+wcrtomb.c
+wcsrtombs-impl.h
+wcsrtombs-state.c
+wcsrtombs.c
 wctype.in.h
 xsize.h
 
