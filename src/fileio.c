@@ -103,7 +103,7 @@ static const unsigned char game_file_crypt_key[] = {
 		    err_exit(_("%s: illegal characters on line %d"),	\
 			     filename, lineno);				\
 		} else {						\
-		    errno_exit("str_cd_iconv()");			\
+		    errno_exit("str_cd_iconv");				\
 		}							\
 	    }								\
 	} else {							\
@@ -174,7 +174,7 @@ static const unsigned char game_file_crypt_key[] = {
 		    err_exit(_("%s: could not convert string"),		\
 			     filename);					\
 		} else {						\
-		    errno_exit("str_cd_iconv()");			\
+		    errno_exit("str_cd_iconv");				\
 		}							\
 	    }								\
 	    save_game_printf("%s", s);					\
@@ -260,7 +260,7 @@ bool load_game (int num)
     if (need_icd) {
 	icd = iconv_open(codeset, GAME_FILE_CHARSET);
 	if (icd == (iconv_t) -1) {
-	    errno_exit("iconv_open()");
+	    errno_exit("iconv_open");
 	}
     } else {
 	icd = (iconv_t) -1;
@@ -471,7 +471,7 @@ bool save_game (int num)
     if (need_icd) {
 	icd = iconv_open(codeset, GAME_FILE_CHARSET);
 	if (icd == (iconv_t) -1) {
-	    errno_exit("iconv_open()");
+	    errno_exit("iconv_open");
 	}
     } else {
 	icd = (iconv_t) -1;
