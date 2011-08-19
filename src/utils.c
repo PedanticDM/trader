@@ -61,7 +61,6 @@ static char *program_name_str   = NULL;		// Canonical program name
 static char *home_directory_str = NULL;		// Full pathname to home
 static char *data_directory_str = NULL;		// Writable data dir pathname
 
-static char *current_mon_locale;		// As returned by setlocale()
 static bool add_currency_symbol = false;	// Do we need to add "$"?
 
 
@@ -302,24 +301,26 @@ extern int randi (int limit)
 
 void init_locale (void)
 {
+    char *cur, *cloc;
     struct lconv *lc;
 
 
-    current_mon_locale = setlocale(LC_MONETARY, NULL);
+    cur = xstrdup(setlocale(LC_MONETARY, NULL));
     lc = localeconv();
-
-    assert(current_mon_locale != NULL);
     assert(lc != NULL);
 
     lconvinfo = *lc;
 
-    /* Are we in the POSIX locale?  This test may not be portable as the
-       string returned by setlocale() is supposed to be opaque. */
     add_currency_symbol = false;
-    if (   strcmp(current_mon_locale, "POSIX")   == 0
-	|| strcmp(current_mon_locale, "C")       == 0
-	|| strcmp(current_mon_locale, "C.UTF-8") == 0
-	|| strcmp(current_mon_locale, "C.utf8")  == 0) {
+
+    /* Are we in the POSIX locale?  The string returned by setlocale() is
+       supposed to be opaque, but in practise is not.  To be on the safe
+       side, we explicitly set the locale to "C", then test the returned
+       value of that, too. */
+    cloc = setlocale(LC_MONETARY, "C");
+    if (   strcmp(cur, cloc)      == 0
+	|| strcmp(cur, "POSIX")   == 0 || strcmp(cur, "C")      == 0
+	|| strcmp(cur, "C.UTF-8") == 0 || strcmp(cur, "C.utf8") == 0) {
 
 	add_currency_symbol = true;
 	lconvinfo.currency_symbol = MOD_POSIX_CURRENCY_SYMBOL;
@@ -327,6 +328,9 @@ void init_locale (void)
 	lconvinfo.p_cs_precedes   = MOD_POSIX_P_CS_PRECEDES;
 	lconvinfo.p_sep_by_space  = MOD_POSIX_P_SEP_BY_SPACE;
     }
+
+    setlocale(LC_MONETARY, cur);
+    free(cur);
 }
 
 
