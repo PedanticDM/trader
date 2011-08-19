@@ -116,6 +116,8 @@ xsize.h
 alloca.h
 arg-nonnull.h
 c++defs.h
+charset.alias
+configmake.h
 ctype.h
 getopt.h
 iconv.h
@@ -127,15 +129,18 @@ iconv_open-solaris.h
 langinfo.h
 locale.h
 math.h
+ref-add.sed
+ref-del.sed
 signal.h
 stdio.h
 stdlib.h
 string.h
-sys
+sys/
 time.h
 unistd.h
 unistr.h
 unitypes.h
+uniwidth.h
 unused-parameter.h
 warn-on-use.h
 wchar.h
@@ -146,5 +151,6 @@ unistr/u8-mbtoucr.c
 unistr/u8-uctomb-aux.c
 unistr/u8-uctomb.c
 
+uniwidth/.dirstamp
 uniwidth/cjk.h
 uniwidth/width.c
