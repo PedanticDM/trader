@@ -43,8 +43,7 @@
 /*
   This version of Star Traders only utilises WIN_COLS x WIN_LINES of a
   terminal screen; this terminal must be at least MIN_COLS x MIN_LINES in
-  size.  The newtxwin() function automatically places a new window in the
-  centre-top of the terminal screen.
+  size.  Windows are placed in the centre-top of the terminal screen.
 */
 
 #define MIN_LINES	24	// Minimum number of lines in terminal
@@ -57,6 +56,7 @@
 
 #define MAX_DLG_LINES		10  // Default maximum lines of text in dialog box
 
+// Space (number of terminal columns) to allow for various fields
 #define YESNO_COLS		4   // Space to allow for "Yes" or "No" response
 #define ORDINAL_COLS		5   // Space for ordinals (1st, 2nd, etc)
 #define TOTAL_VALUE_COLS	18  // Space for total value (monetary)
@@ -288,13 +288,13 @@ extern int txrefresh (void);
               alt2_attr    - Alternate character rendition 2 (more highlighted)
               keywait_attr - "Press any key" character rendition
               boxtitle     - Dialog box title (may be NULL)
-              format       - Dialog box text, as passed to prepstr()
+              format       - Dialog box text, as passed to mkchstr()
               ...          - Dialog box text format parameters
   Returns:    int          - OK is always returned
 
   This function creates a dialog box window using newtxwin(), displays
   boxtitle centred on the first line (if boxtitle is not NULL), displays
-  format (and associated parameters) centred using prepstr(), then waits
+  format (and associated parameters) centred using mkchstr(), then waits
   for the user to press any key before closing the dialog box window.
   Note that txrefresh() is NOT called once the window is closed.
 */
@@ -330,10 +330,12 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
   The format string is similar to but more limited than printf().  In
   particular, only the following conversion specifiers are understood:
 
-    %%      - Print the ASCII percent sign (ASCII code U+0025)
+    %%      - Insert the ASCII percent sign (ASCII code U+0025)
 
     %c      - Insert the next parameter as a character (type char)
+    %lc     - Insert the next parameter as a wide char (type wchar_t)
     %s      - Insert the next parameter as a string (type char *)
+    %ls     - Insert the next parameter as a wide string (type wchar_t *)
     %d      - Insert the next parameter as an integer (type int)
     %'d     - As above, using the locale's thousands group separator
     %ld     - Insert the next parameter as a long int
@@ -360,19 +362,16 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
   rendition flags are understood, where the "^" character is a literal
   ASCII circumflex accent:
 
-    ^^   - Print the circumflex accent (ASCII code U+005E)
+    ^^   - Insert the circumflex accent (ASCII code U+005E)
     ^{   - Switch to using attr_alt1 character rendition (alternate mode 1)
     ^}   - Switch to using attr_norm character rendition
     ^[   - Switch to using attr_alt2 character rendition (alternate mode 2)
     ^]   - Switch to using attr_norm character rendition
 
-  Characters other than these are inserted as literals, except that '\n'
-  will force the start of a new line.  By default, attr_norm is used as
-  the character rendition (attributes).
-
-  Please note that this function does NOT handle multibyte characters
-  correctly: widths may be incorrect (byte count, not actual width) and
-  multibyte characters may be split over two lines.
+  Printable characters other than these are inserted as literals.  The
+  character '\n' will force the start of a new line; no other control (or
+  non-printable) characters are allowed.  By default, attr_norm is used
+  as the character rendition (attributes).
 
   This function returns the actual number of lines used (from 0 to
   maxlines).  If an error is detected, the application terminates.

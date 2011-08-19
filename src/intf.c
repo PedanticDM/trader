@@ -44,25 +44,31 @@ typedef struct txwin {
 
 // Declarations for argument processing in mkchstr()
 
+#define EILSEQ_REPL	'?'	// Illegal byte sequence replacement character
+
 #define MAXFMTARGS	8	// Maximum number of positional arguments
 
 enum argument_type {
     TYPE_NONE,			// No type yet assigned
     TYPE_CHAR,			// char
+    TYPE_WCHAR,			// wchar_t
     TYPE_INT,			// int
     TYPE_LONGINT,		// long int
     TYPE_DOUBLE,		// double
-    TYPE_STRING			// const char *
+    TYPE_STRING,		// const char *
+    TYPE_WSTRING		// const wchar_t *
 };
 
 struct argument {
     enum argument_type a_type;
     union a {
 	char		a_char;
+	wchar_t		a_wchar;
 	int		a_int;
 	long int	a_longint;
 	double		a_double;
 	const char	*a_string;
+	const wchar_t	*a_wstring;
     } a;
 };
 
@@ -70,9 +76,9 @@ struct argument {
 #define MAXFMTSPECS	16	// Maximum number of conversion specifiers
 
 struct convspec {
-    char	spec;		// Conversion specifier: c d f N s
+    wchar_t	spec;		// Conversion specifier: c d f N s
     int		arg_num;	// Which variable argument to use
-    int		len;		// Length of conversion specifier, 0 = unused
+    ptrdiff_t	len;		// Length of conversion specifier, 0 = unused
     int		precision;	// Precision value
     bool	flag_group;	// Flag "'" (thousands grouping)
     bool	flag_nosym;	// Flag "!" (omit currency symbol)
@@ -173,37 +179,39 @@ static void txresize (void);
 
 
 /*
-  Function:   mkchstr_addch - Add a character to the mkchstr buffer
-  Parameters: chbuf         - Pointer to chtype pointer in which to store string
-              chbufsize     - Pointer to number of chtype elements in chbuf
-              attr          - Character rendition to use
-              maxlines      - Maximum number of screen lines to use
-              maxwidth      - Maximum width of each line, in chars
-              line          - Pointer to current line number
-              width         - Pointer to current line width
-              lastspc       - Pointer to const char * pointer to last space
-              widthspc      - Pointer to width just before last space
-              widthbuf      - Pointer to buffer to store widths of each line
-              widthbufsize  - Number of int elements in widthbuf
-              str           - Pointer to const char * pointer to string
-  Returns:    int           - -1 on error (with errno set), 0 otherwise
+  Function:   mkchstr_add  - Add one character to the mkchstr() buffers
+  Parameters: outbuf       - Pointer to wchar_t pointer in which to store char
+              attrbuf      - Pointer to chtype pointer in which to store attr
+              count        - Pointer to number of wchar_t elements left in outbuf
+              attr         - Character rendition to use
+              maxlines     - Maximum number of screen lines to use
+              maxwidth     - Maximum width of each line, in column positions
+              line         - Pointer to current line number
+              width        - Pointer to current line width
+              lastspc      - Pointer to wchar_t * pointer to last space
+              spcattr      - Pointer to corresponding place in attrbuf
+              widthspc     - Pointer to width just before last space
+              widthbuf     - Pointer to buffer to store widths of each line
+              widthbufsize - Number of int elements in widthbuf
+              str          - Pointer to const wchar_t * pointer to string
+  Returns:    int          - -1 on error (with errno set), 0 otherwise
 
-  This helper function adds the character **str to **chbuf, using attr as
-  the character rendition (attributes), incrementing both *str and *chbuf
-  and decrementing *chbufsize.  If a string is too long for the current
-  line, a previous space in the current line is converted to a new line
-  (if possible), else a new line is inserted into the current location
-  (if not on the last line).  *line, *width, *lastspc, *widthspc and
-  widthbuf[] are all updated appropriately.
+  This helper function adds one wide character from **str to **outbuf,
+  and the character rendition attr to **attrbuf, incrementing *str and
+  *outbuf and decrementing *count.  If a string is too long for the
+  current line, a previous space in the current line is converted to a
+  new line (if possible), else a new line is inserted into the current
+  location (if not on the last line).  *line, *width, *lastspc, *widthspc
+  and widthbuf[] are all updated appropriately.
 */
-static int mkchstr_addch (chtype *restrict *restrict chbuf,
-			  int *restrict chbufsize, chtype attr,
-			  int maxlines, int maxwidth, int *restrict line,
-			  int *restrict width,
-			  chtype *restrict *restrict lastspc,
-			  int *restrict widthspc, int *restrict widthbuf,
-			  int widthbufsize,
-			  const char *restrict *restrict str);
+static int mkchstr_add (wchar_t *restrict *restrict outbuf,
+			chtype *restrict *restrict attrbuf,
+			int *restrict count, chtype attr, int maxlines,
+			int maxwidth, int *restrict line, int *restrict width,
+			wchar_t *restrict *restrict lastspc,
+			chtype *restrict *restrict spcattr,
+			int *restrict widthspc, int *restrict widthbuf,
+			int widthbufsize, const wchar_t *restrict *restrict str);
 
 
 /*
@@ -217,10 +225,25 @@ static int mkchstr_addch (chtype *restrict *restrict chbuf,
   This helper function parses the format string passed to mkchstr(),
   setting the format_arg and format_spec arrays appropriately.
 */
-static int mkchstr_parse (const char *restrict format,
+static int mkchstr_parse (const wchar_t *restrict format,
 			  struct argument *restrict format_arg,
 			  struct convspec *restrict format_spec,
 			  va_list args);
+
+
+/*
+  Function:   mkchstr_conv - Convert (wcbuf, attrbuf) to chbuf
+  Parameters: chbuf        - Pointer to chtype buffer in which to store string
+              chbufsize    - Number of chtype elements in chbuf
+              wcbuf        - Wide-character string from which to convert
+              attrbuf      - Associated character rendition array
+  Returns:    (nothing)
+
+  This helper function converts the wide-character string in wcbuf and
+  the array of character renditions in attrbuf to a chtype * string.
+*/
+static void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
+			  wchar_t *restrict wcbuf, chtype *restrict attrbuf);
 
 
 /*
@@ -649,15 +672,19 @@ int mkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
 /***********************************************************************/
-// mkchstr_addch: Add a character to the mkchstr buffer
+// mkchstr_add: Add a character to the mkchstr buffer
 
-int mkchstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
-		   chtype attr, int maxlines, int maxwidth,
-		   int *restrict line, int *restrict width,
-		   chtype *restrict *restrict lastspc, int *restrict widthspc,
-		   int *restrict widthbuf, int widthbufsize,
-		   const char *restrict *restrict str)
+int mkchstr_add (wchar_t *restrict *restrict outbuf,
+		 chtype *restrict *restrict attrbuf, int *restrict count,
+		 chtype attr, int maxlines, int maxwidth, int *restrict line,
+		 int *restrict width, wchar_t *restrict *restrict lastspc,
+		 chtype *restrict *restrict spcattr, int *restrict widthspc,
+		 int *restrict widthbuf, int widthbufsize,
+		 const wchar_t *restrict *restrict str)
 {
+    int w, wspc;
+
+
     if (*line < 0) {
 	// First character in buffer: start line 0
 	*line = 0;
@@ -667,66 +694,87 @@ int mkchstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
 	// Start a new line
 
 	if (*line < maxlines - 1) {
-	    *(*chbuf)++ = '\n';
-	    (*chbufsize)--;
+	    *(*outbuf)++ = '\n';
+	    *(*attrbuf)++ = 0;
+	    (*count)--;
 	}
 
 	widthbuf[*line] = *width;
 	*width = 0;
 
 	*lastspc = NULL;
+	*spcattr = NULL;
 	*widthspc = 0;
 
 	(*line)++;
 	(*str)++;
-    } else if (*width == maxwidth) {
-	// Current line is now too long
+    } else {
+	w = wcwidth(**str);
+	if (w < 0) {
+	    // We don't support control or non-printable characters
+	    errno = EILSEQ;
+	    return -1;
+	}
 
-	if (! isspace(**str) && *lastspc != NULL && *line < maxlines - 1) {
-	    // Break on the last space in this line
-	    **lastspc = '\n';
+	if (*width + w > maxwidth) {
+	    // Current line would be too long to fit in **str
 
-	    widthbuf[*line] = *widthspc;
-	    *width -= *widthspc + 1;
+	    if (! iswspace(**str) && *lastspc != NULL && *line < maxlines - 1) {
+		// Break on the last space in this line
+		wspc = wcwidth(**lastspc);
 
-	    *lastspc = NULL;
-	    *widthspc = 0;
+		**lastspc = '\n';
+		**spcattr = 0;
 
-	    (*line)++;
-	} else {
-	    // Insert a new-line character (if not on last line)
-	    if (*line < maxlines - 1) {
-		*(*chbuf)++ = '\n';
-		(*chbufsize)--;
-	    }
+		widthbuf[*line] = *widthspc;
+		*width -= *widthspc + wspc;
 
-	    widthbuf[*line] = *width;
-	    *width = 0;
+		*lastspc = NULL;
+		*spcattr = NULL;
+		*widthspc = 0;
 
-	    *lastspc = NULL;
-	    *widthspc = 0;
+		(*line)++;
+	    } else {
+		// Insert a new-line character (if not on last line)
+		if (*line < maxlines - 1) {
+		    *(*outbuf)++ = '\n';
+		    *(*attrbuf)++ = 0;
+		    (*count)--;
+		}
 
-	    (*line)++;
+		widthbuf[*line] = *width;
+		*width = 0;
 
-	    // Skip any following spaces
-	    while (isspace(**str)) {
-		if (*(*str)++ == '\n') {
-		    break;
+		*lastspc = NULL;
+		*spcattr = NULL;
+		*widthspc = 0;
+
+		(*line)++;
+
+		/* Skip any following spaces.  This assumes that no-one
+		   will ever have combining diacritical marks following a
+		   (line-breaking) space! */
+		while (iswspace(**str)) {
+		    if (*(*str)++ == '\n') {
+			break;
+		    }
 		}
 	    }
-	}
-    } else {
-	// Insert an ordinary character into the output string
+	} else {
+	    // Insert an ordinary character into the output buffer
 
-	if (isspace(**str)) {
-	    *lastspc = *chbuf;
-	    *widthspc = *width;
-	}
+	    if (iswspace(**str)) {
+		*lastspc = *outbuf;
+		*spcattr = *attrbuf;
+		*widthspc = *width;
+	    }
 
-	*(*chbuf)++ = (unsigned char) **str | attr;
-	(*chbufsize)--;
-	(*width)++;
-	(*str)++;
+	    *(*outbuf)++ = **str;
+	    *(*attrbuf)++ = attr;
+	    (*count)--;
+	    *width += w;
+	    (*str)++;
+	}
     }
 
     return 0;
@@ -736,7 +784,7 @@ int mkchstr_addch (chtype *restrict *restrict chbuf, int *restrict chbufsize,
 /***********************************************************************/
 // mkchstr_parse: Parse the format string for mkchstr()
 
-int mkchstr_parse (const char *restrict format,
+int mkchstr_parse (const wchar_t *restrict format,
 		   struct argument *restrict format_arg,
 		   struct convspec *restrict format_spec, va_list args)
 {
@@ -770,7 +818,7 @@ int mkchstr_parse (const char *restrict format,
 		// Ignore "%%" specifier
 		format++;
 	    } else {
-		const char *start = format;
+		const wchar_t *start = format;
 		enum argument_type arg_type;
 		bool inspec = true;
 		bool flag_posn = false;		// Have we already seen "$"?
@@ -778,8 +826,8 @@ int mkchstr_parse (const char *restrict format,
 		int count = 0;
 
 		while (inspec && *format != '\0') {
-		    char c = *format++;
-		    switch (c) {
+		    wchar_t wc = *format++;
+		    switch (wc) {
 		    case '0':
 			// Zero flag, or part of numeric count
 			if (count == 0) {
@@ -801,7 +849,7 @@ int mkchstr_parse (const char *restrict format,
 		    case '8':
 		    case '9':
 			// Part of some numeric count
-			count = count * 10 + (c - '0');
+			count = count * 10 + (wc - '0');
 			break;
 
 		    case '$':
@@ -867,15 +915,15 @@ int mkchstr_parse (const char *restrict format,
 			break;
 
 		    case 'c':
-			// Insert a character (char)
+			// Insert a character (char or wchar_t)
 			if (format_spec->flag_group || format_spec->flag_nosym
-			    || format_spec->flag_prec || format_spec->flag_long
-			    || count != 0) {
+			    || format_spec->flag_prec || count != 0) {
 			    errno = EINVAL;
 			    return -1;
 			}
 
-			arg_type = TYPE_CHAR;
+			arg_type = format_spec->flag_long ?
+			    TYPE_WCHAR : TYPE_CHAR;
 			goto handlefmt;
 
 		    case 'd':
@@ -915,15 +963,15 @@ int mkchstr_parse (const char *restrict format,
 			goto handlefmt;
 
 		    case 's':
-			// Insert a string (const char *)
+			// Insert a string (const char * or const wchar_t *)
 			if (format_spec->flag_group || format_spec->flag_nosym
-			    || format_spec->flag_prec || format_spec->flag_long
-			    || count != 0) {
+			    || format_spec->flag_prec || count != 0) {
 			    errno = EINVAL;
 			    return -1;
 			}
 
-			arg_type = TYPE_STRING;
+			arg_type = format_spec->flag_long ?
+			    TYPE_WSTRING : TYPE_STRING;
 
 		    handlefmt:
 			if (arg_num >= MAXFMTARGS || specs_left == 0) {
@@ -940,7 +988,7 @@ int mkchstr_parse (const char *restrict format,
 
 			format_spec->len = format - start;
 			format_spec->arg_num = arg_num;
-			format_spec->spec = c;
+			format_spec->spec = wc;
 
 			arg_num++;
 			num_args = MAX(num_args, arg_num);
@@ -975,6 +1023,10 @@ int mkchstr_parse (const char *restrict format,
 	    format_arg->a.a_char = (char) va_arg(args, int);
 	    break;
 
+	case TYPE_WCHAR:
+	    format_arg->a.a_wchar = va_arg(args, wchar_t);
+	    break;
+
 	case TYPE_INT:
 	    format_arg->a.a_int = va_arg(args, int);
 	    break;
@@ -991,6 +1043,10 @@ int mkchstr_parse (const char *restrict format,
 	    format_arg->a.a_string = va_arg(args, const char *);
 	    break;
 
+	case TYPE_WSTRING:
+	    format_arg->a.a_wstring = va_arg(args, const wchar_t *);
+	    break;
+
 	default:
 	    /* Cannot allow unused arguments, as we have no way of
 	       knowing how much space they take (cf. int vs. long long
@@ -1005,6 +1061,77 @@ int mkchstr_parse (const char *restrict format,
 
 
 /***********************************************************************/
+// mkchstr_conv: Convert (wcbuf, attrbuf) to chbuf
+
+void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
+		   wchar_t *restrict wcbuf, chtype *restrict attrbuf)
+{
+    char *convbuf = xmalloc(chbufsize);
+    mbstate_t mbstate;
+    wchar_t *wp;
+    char *p;
+    bool done;
+    size_t n;
+
+
+    /* Perform a preliminary conversion to weed out any problems with
+       EILSEQ and insufficient buffer space. */
+    while (true) {
+	memset(&mbstate, 0, sizeof(mbstate));
+	wp = wcbuf;
+	if (wcsrtombs(convbuf, (const wchar_t **) &wp, chbufsize, &mbstate)
+	    == (size_t) -1) {
+	    if (errno == EILSEQ) {
+		/* Replace problematic wide characters with a known-good
+		   (ASCII) one.  This is better than terminating! */
+		*wp = EILSEQ_REPL;
+	    } else {
+		errno_exit("mkchstr_conv: `%ls'", wcbuf);
+	    }
+	} else if (wp != NULL) {
+	    // convbuf is too small: truncate wcbuf if possible
+	    if (wp == wcbuf) {
+		errno = E2BIG;
+		errno_exit("mkchstr_conv: `%ls'", wcbuf);
+	    } else {
+		*(wp - 1) = '\0';
+	    }
+	} else {
+	    // wcbuf CAN fit into convbuf when converted
+	    break;
+	}
+    }
+
+    // Convert for real, combining each multibyte character with attrbuf
+    memset(&mbstate, 0, sizeof(mbstate));
+    done = false;
+    while (! done) {
+	// Yes, we want to convert a wide NUL, too!
+	if ((n = wcrtomb(convbuf, *wcbuf, &mbstate)) == (size_t) -1) {
+	    errno_exit("mkchstr_conv: `%ls'", wcbuf);
+	}
+
+	for (p = convbuf; n > 0; n--, p++, chbuf++) {
+	    if (*p == '\0' || *p == '\n') {
+		/* This code assumes '\n' can never appear in a multibyte
+		   string except as a control character---which is true
+		   of all multibyte encodings (I believe!) */
+		*chbuf = (unsigned char) *p;
+	    } else {
+		*chbuf = (unsigned char) *p | *attrbuf;
+	    }
+	}
+
+	done = (*wcbuf == '\0');
+	wcbuf++;
+	attrbuf++;
+    }
+
+    free(convbuf);
+}
+
+
+/***********************************************************************/
 // vmkchstr: Prepare a string for printing to screen
 
 int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
@@ -1012,12 +1139,20 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	      int *restrict widthbuf, int widthbufsize,
 	      const char *restrict format, va_list args)
 {
-    const char *orig_format = format;
     struct argument format_arg[MAXFMTARGS];
     struct convspec format_spec[MAXFMTSPECS];
     struct convspec *spec;
-    int line, width;
-    chtype *lastspc;
+    const wchar_t *wcformat;
+    wchar_t *orig_wcformat;
+    mbstate_t mbstate;
+
+    wchar_t *outbuf, *orig_outbuf;
+    chtype *attrbuf, *orig_attrbuf;
+    wchar_t *fmtbuf;
+
+    int count, line, width;
+    wchar_t *lastspc;
+    chtype *spcattr;
     int widthspc;
     chtype curattr;
     int saved_errno;
@@ -1025,55 +1160,78 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
     assert(chbuf != NULL);
     assert(chbufsize > 0);
+    assert(chbufsize <= BUFSIZE);
     assert(maxlines > 0);
     assert(maxwidth > 0);
     assert(widthbuf != NULL);
     assert(widthbufsize >= maxlines);
     assert(format != NULL);
 
-    if (mkchstr_parse(format, format_arg, format_spec, args) < 0) {
+    outbuf = orig_outbuf = xmalloc(BUFSIZE * sizeof(wchar_t));
+    attrbuf = orig_attrbuf = xmalloc(BUFSIZE * sizeof(chtype));
+    wcformat = orig_wcformat = xmalloc(chbufsize * sizeof(wchar_t));
+    fmtbuf = xmalloc(BUFSIZE * sizeof(wchar_t));
+
+    // Convert format to a wide-character string
+    {
+	memset(&mbstate, 0, sizeof(mbstate));
+	const char *p = format;
+	if (mbsrtowcs(orig_wcformat, &p, BUFSIZE, &mbstate) == (size_t) -1) {
+	    goto error;
+	} else if (p != NULL) {
+	    errno = E2BIG;
+	    goto error;
+	}
+    }
+
+    if (mkchstr_parse(wcformat, format_arg, format_spec, args) < 0) {
 	goto error;
     }
+
+    // Construct the (outbuf, attrbuf) pair of arrays
 
     spec = format_spec;
 
     curattr = attr_norm;
+    count = BUFSIZE;			// Space left in outbuf
     line = -1;				// Current line number (0 = first)
     width = 0;				// Width of the current line
+
     lastspc = NULL;			// Pointer to last space in line
+    spcattr = NULL;			// Equivalent in attrbuf
     widthspc = 0;			// Width of line before last space
 
-    while (*format != '\0' && chbufsize > 1 && line < maxlines) {
-	switch (*format) {
+    while (*wcformat != '\0' && count > 1 && line < maxlines) {
+	switch (*wcformat) {
 	case '^':
 	    // Switch to a different character rendition
-	    if (*++format == '\0') {
+	    if (*++wcformat == '\0') {
 		goto error_inval;
 	    } else {
-		switch (*format) {
+		switch (*wcformat) {
 		case '^':
-		    if (mkchstr_addch(&chbuf, &chbufsize, curattr, maxlines,
-				      maxwidth, &line, &width, &lastspc,
-				      &widthspc, widthbuf, widthbufsize,
-				      &format) < 0) {
+		    if (mkchstr_add(&outbuf, &attrbuf, &count, curattr,
+				    maxlines, maxwidth, &line, &width,
+				    &lastspc, &spcattr, &widthspc, widthbuf,
+				    widthbufsize, &wcformat) < 0) {
 			goto error;
 		    }
 		    break;
 
 		case '{':
 		    curattr = attr_alt1;
-		    format++;
+		    wcformat++;
 		    break;
 
 		case '[':
 		    curattr = attr_alt2;
-		    format++;
+		    wcformat++;
 		    break;
 
 		case '}':
 		case ']':
 		    curattr = attr_norm;
-		    format++;
+		    wcformat++;
 		    break;
 
 		default:
@@ -1084,148 +1242,181 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 	case '%':
 	    // Process a conversion specifier
-	    if (*++format == '\0') {
+	    if (*++wcformat == '\0') {
 		goto error_inval;
-	    } else if (*format == '%') {
-		if (mkchstr_addch(&chbuf, &chbufsize, curattr, maxlines,
-				  maxwidth, &line, &width, &lastspc, &widthspc,
-				  widthbuf, widthbufsize, &format) < 0) {
+	    } else if (*wcformat == '%') {
+		if (mkchstr_add(&outbuf, &attrbuf, &count, curattr, maxlines,
+				maxwidth, &line, &width, &lastspc, &spcattr,
+				&widthspc, widthbuf, widthbufsize, &wcformat)
+		    < 0) {
 		    goto error;
 		}
 	    } else {
 		assert(spec->len != 0);
-
-		const char *str;
-		char *buf = xmalloc(BUFSIZE);
+		const wchar_t *str;
+		wint_t wc;
 
 		switch (spec->spec) {
 		case 'c':
-		    // Insert a character (char) into the output
-		    if (snprintf(buf, BUFSIZE, "%c",
-				 format_arg[spec->arg_num].a.a_char) < 0) {
-			saved_errno = errno;
-			free(buf);
-			errno = saved_errno;
+		    // Insert a character (char or wchar_t) into the output
+		    if (spec->flag_long) {
+			wc = format_arg[spec->arg_num].a.a_wchar;
+		    } else {
+			wc = btowc(format_arg[spec->arg_num].a.a_char);
+		    }
+
+		    if (wc == '\0' || wc == WEOF) {
+			errno = EILSEQ;
 			goto error;
 		    }
 
-		    str = buf;
+		    fmtbuf[0] = wc;
+		    fmtbuf[1] = '\0';
+
+		    str = fmtbuf;
 		    goto insertstr;
 
 		case 'd':
 		    // Insert an integer (int or long int) into the output
 		    if (spec->flag_long) {
-			if (snprintf(buf, BUFSIZE, spec->flag_group ?
-				     "%'ld" : "%ld",
-				     format_arg[spec->arg_num].a.a_longint) < 0) {
-			    saved_errno = errno;
-			    free(buf);
-			    errno = saved_errno;
+			if (swprintf(fmtbuf, BUFSIZE, spec->flag_group ?
+				     L"%'ld" : L"%ld",
+				     format_arg[spec->arg_num].a.a_longint) < 0)
 			    goto error;
-			}
 		    } else {
-			if (snprintf(buf, BUFSIZE, spec->flag_group ?
-				     "%'d" : "%d",
-				     format_arg[spec->arg_num].a.a_int) < 0) {
-			    saved_errno = errno;
-			    free(buf);
-			    errno = saved_errno;
+			if (swprintf(fmtbuf, BUFSIZE, spec->flag_group ?
+				     L"%'d" : L"%d",
+				     format_arg[spec->arg_num].a.a_int) < 0)
 			    goto error;
-			}
 		    }
 
-		    str = buf;
+		    str = fmtbuf;
 		    goto insertstr;
 
 		case 'f':
 		    // Insert a floating-point number (double) into the output
 		    if (spec->flag_prec) {
-			if (snprintf(buf, BUFSIZE, spec->flag_group ?
-				     "%'.*f" : "%.*f", spec->precision,
-				     format_arg[spec->arg_num].a.a_double) < 0) {
-			    saved_errno = errno;
-			    free(buf);
-			    errno = saved_errno;
+			if (swprintf(fmtbuf, BUFSIZE, spec->flag_group ?
+				     L"%'.*f" : L"%.*f", spec->precision,
+				     format_arg[spec->arg_num].a.a_double) < 0)
 			    goto error;
-			}
 		    } else {
-			if (snprintf(buf, BUFSIZE, spec->flag_group ?
-				     "%'f" : "%f",
-				     format_arg[spec->arg_num].a.a_double) < 0) {
-			    saved_errno = errno;
-			    free(buf);
-			    errno = saved_errno;
+			if (swprintf(fmtbuf, BUFSIZE, spec->flag_group ?
+				     L"%'f" : L"%f",
+				     format_arg[spec->arg_num].a.a_double) < 0)
 			    goto error;
-			}
 		    }
 
-		    str = buf;
+		    str = fmtbuf;
 		    goto insertstr;
 
 		case 'N':
 		    // Insert a monetary amount (double) into the output
-		    if (l_strfmon(buf, BUFSIZE, spec->flag_nosym ? "%!n" : "%n",
-				  format_arg[spec->arg_num].a.a_double) < 0) {
-			saved_errno = errno;
-			free(buf);
-			errno = saved_errno;
-			goto error;
-		    }
+		    {
+			/* strfmon() is not available in a wide-char
+			   version, so we need a multibyte char buffer */
+			char *buf = xmalloc(BUFSIZE);
+			const char *p = buf;
 
-		    str = buf;
-		    goto insertstr;
-
-		case 's':
-		    // Insert a string (const char *) into the output
-		    str = format_arg[spec->arg_num].a.a_string;
-
-		    if (str == NULL) {
-			str = "(null)";		// As per GNU printf()
-		    }
-
-		insertstr:
-		    // Insert the string pointed to by str
-		    while (*str != '\0' && chbufsize > 1 && line < maxlines) {
-			if (mkchstr_addch(&chbuf, &chbufsize, curattr,
-					  maxlines, maxwidth, &line, &width,
-					  &lastspc, &widthspc, widthbuf,
-					  widthbufsize, &str) < 0) {
+			if (l_strfmon(buf, BUFSIZE, spec->flag_nosym ? "%!n" : "%n",
+				      format_arg[spec->arg_num].a.a_double) < 0) {
 			    saved_errno = errno;
 			    free(buf);
 			    errno = saved_errno;
 			    goto error;
 			}
+
+			memset(&mbstate, 0, sizeof(mbstate));
+			if (mbsrtowcs(fmtbuf, &p, BUFSIZE, &mbstate)
+			    == (size_t) -1) {
+			    saved_errno = errno;
+			    free(buf);
+			    errno = saved_errno;
+			    goto error;
+			} else if (p != NULL) {
+			    free(buf);
+			    errno = E2BIG;
+			    goto error;
+			}
+
+			free(buf);
 		    }
 
-		    format += spec->len;
+		    str = fmtbuf;
+		    goto insertstr;
+
+		case 's':
+		    // Insert a string (const char * or const wchar_t *)
+		    if (spec->flag_long) {
+			str = format_arg[spec->arg_num].a.a_wstring;
+		    } else {
+			const char *p = format_arg[spec->arg_num].a.a_string;
+			if (p == NULL) {
+			    str = NULL;
+			} else {
+			    memset(&mbstate, 0, sizeof(mbstate));
+			    if (mbsrtowcs(fmtbuf, &p, BUFSIZE, &mbstate)
+				== (size_t) -1) {
+				goto error;
+			    } else if (p != NULL) {
+				errno = E2BIG;
+				goto error;
+			    }
+			    str = fmtbuf;
+			}
+		    }
+
+		    if (str == NULL) {
+			str = L"(null)";	// As per GNU printf()
+		    }
+
+		insertstr:
+		    // Insert the string pointed to by str
+		    while (*str != '\0' && count > 1 && line < maxlines) {
+			if (mkchstr_add(&outbuf, &attrbuf, &count, curattr,
+					maxlines, maxwidth, &line, &width,
+					&lastspc, &spcattr, &widthspc,
+					widthbuf, widthbufsize, &str) < 0) {
+			    goto error;
+			}
+		    }
+
+		    wcformat += spec->len;
 		    spec++;
 		    break;
 
 		default:
 		    assert(spec->spec);
 		}
-
-		free(buf);
 	    }
 	    break;
 
 	default:
 	    // Process an ordinary character (including new-line)
-	    if (mkchstr_addch(&chbuf, &chbufsize, curattr, maxlines, maxwidth,
-			      &line, &width, &lastspc, &widthspc, widthbuf,
-			      widthbufsize, &format) < 0) {
+	    if (mkchstr_add(&outbuf, &attrbuf, &count, curattr, maxlines,
+			    maxwidth, &line, &width, &lastspc, &spcattr,
+			    &widthspc, widthbuf, widthbufsize, &wcformat) < 0) {
 		goto error;
 	    }
 	}
     }
 
-    *chbuf = 0;				// Terminating NUL byte
+    *outbuf = '\0';			// Terminating NUL character
+    *attrbuf = 0;
 
     if (line >= 0 && line < maxlines) {
 	widthbuf[line] = width;
     } else if (line >= maxlines) {
 	line = maxlines - 1;
     }
+
+    // Convert the (outbuf, attrbuf) pair of arrays to chbuf
+    mkchstr_conv(chbuf, chbufsize, orig_outbuf, orig_attrbuf);
+
+    free(fmtbuf);
+    free(orig_wcformat);
+    free(orig_attrbuf);
+    free(orig_outbuf);
 
     return line + 1;
 
@@ -1234,7 +1425,14 @@ error_inval:
     errno = EINVAL;
 
 error:
-    errno_exit(_("mkchstr: `%s'"), orig_format);
+    saved_errno = errno;
+    free(fmtbuf);
+    free(orig_wcformat);
+    free(orig_attrbuf);
+    free(orig_outbuf);
+    errno = saved_errno;
+
+    errno_exit(_("mkchstr: `%s'"), format);
 }
 
 
