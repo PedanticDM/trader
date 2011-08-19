@@ -484,6 +484,11 @@ WINDOW *newtxwin (int nlines, int ncols, int begin_y, int begin_x,
 	begin_x = (ncols == 0) ? 0 : (COLS - ncols) / 2;
     }
 
+    assert(nlines > 0);
+    assert(ncols > 0);
+    assert(begin_y >= 0);
+    assert(begin_x >= 0);
+
     // Create the new window
 
     win = newwin(nlines, ncols, begin_y, begin_x);
