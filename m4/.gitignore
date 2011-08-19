@@ -2,6 +2,7 @@
 alloca.m4
 asm-underscore.m4
 assert.m4
+btowc.m4
 codeset.m4
 config-h.m4
 configmake.m4
@@ -62,6 +63,7 @@ mbrtowc.m4
 mbsinit.m4
 mbsrtowcs.m4
 mbstate_t.m4
+mbtowc.m4
 memchr.m4
 mmap-anon.m4
 multiarch.m4

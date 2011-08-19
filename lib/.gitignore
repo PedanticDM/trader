@@ -1,6 +1,7 @@
 Makefile.am
 alloca.in.h
 asnprintf.c
+btowc.c
 c-ctype.c
 c-ctype.h
 c-strcase.h
@@ -52,6 +53,8 @@ mbsinit.c
 mbsrtowcs-impl.h
 mbsrtowcs-state.c
 mbsrtowcs.c
+mbtowc-impl.h
+mbtowc.c
 memchr.c
 memchr.valgrind
 printf-args.c
