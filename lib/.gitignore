@@ -98,6 +98,7 @@ time.in.h
 unistd.in.h
 unistr.in.h
 unitypes.in.h
+uniwidth.in.h
 vasnprintf.c
 vasnprintf.h
 verify.h
@@ -109,6 +110,7 @@ wcsrtombs-impl.h
 wcsrtombs-state.c
 wcsrtombs.c
 wctype.in.h
+wcwidth.c
 xsize.h
 
 alloca.h
@@ -143,3 +145,6 @@ unistr/.dirstamp
 unistr/u8-mbtoucr.c
 unistr/u8-uctomb-aux.c
 unistr/u8-uctomb.c
+
+uniwidth/cjk.h
+uniwidth/width.c
