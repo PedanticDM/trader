@@ -1091,13 +1091,13 @@ void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
 		   (ASCII) one.  This is better than terminating! */
 		*wp = EILSEQ_REPL;
 	    } else {
-		errno_exit("mkchstr_conv: `%ls'", wcbuf);
+		errno_exit(_("mkchstr_conv: `%ls'"), wcbuf);
 	    }
 	} else if (wp != NULL) {
 	    // convbuf is too small: truncate wcbuf if possible
 	    if (wp == wcbuf) {
 		errno = E2BIG;
-		errno_exit("mkchstr_conv: `%ls'", wcbuf);
+		errno_exit(_("mkchstr_conv: `%ls'"), wcbuf);
 	    } else {
 		*(wp - 1) = '\0';
 	    }
@@ -1113,7 +1113,7 @@ void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
     while (! done) {
 	// Yes, we want to convert a wide NUL, too!
 	if ((n = wcrtomb(convbuf, *wcbuf, &mbstate)) == (size_t) -1) {
-	    errno_exit("mkchstr_conv: `%ls'", wcbuf);
+	    errno_exit(_("mkchstr_conv: `%ls'"), wcbuf);
 	}
 
 	for (p = convbuf; n > 0; n--, p++, chbuf++) {
