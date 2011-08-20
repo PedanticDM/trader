@@ -177,6 +177,23 @@ static void txresize (void);
 
 
 /*
+  Function:   mkchstr_parse - Parse the format string for mkchstr()
+  Parameters: format        - Format string as described for mkchstr()
+              format_arg    - Pointer to variable arguments array
+              format_spec   - Pointer to conversion specifiers array
+              args          - Variable argument list passed to mkchstr()
+  Returns:    int           - 0 if OK, -1 if error (with errno set)
+
+  This helper function parses the format string passed to mkchstr(),
+  setting the format_arg and format_spec arrays appropriately.
+*/
+static int mkchstr_parse (const wchar_t *restrict format,
+			  struct argument *restrict format_arg,
+			  struct convspec *restrict format_spec,
+			  va_list args);
+
+
+/*
   Function:   mkchstr_add  - Add one character to the mkchstr() buffers
   Parameters: outbuf       - Pointer to wchar_t pointer in which to store char
               attrbuf      - Pointer to chtype pointer in which to store attr
@@ -210,23 +227,6 @@ static int mkchstr_add (wchar_t *restrict *restrict outbuf,
 			chtype *restrict *restrict spcattr,
 			int *restrict widthspc, int *restrict widthbuf,
 			int widthbufsize, const wchar_t *restrict *restrict str);
-
-
-/*
-  Function:   mkchstr_parse - Parse the format string for mkchstr()
-  Parameters: format        - Format string as described for mkchstr()
-              format_arg    - Pointer to variable arguments array
-              format_spec   - Pointer to conversion specifiers array
-              args          - Variable argument list passed to mkchstr()
-  Returns:    int           - 0 if OK, -1 if error (with errno set)
-
-  This helper function parses the format string passed to mkchstr(),
-  setting the format_arg and format_spec arrays appropriately.
-*/
-static int mkchstr_parse (const wchar_t *restrict format,
-			  struct argument *restrict format_arg,
-			  struct convspec *restrict format_spec,
-			  va_list args);
 
 
 /*
@@ -675,116 +675,6 @@ int mkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
 /***********************************************************************/
-// mkchstr_add: Add a character to the mkchstr buffer
-
-int mkchstr_add (wchar_t *restrict *restrict outbuf,
-		 chtype *restrict *restrict attrbuf, int *restrict count,
-		 chtype attr, int maxlines, int maxwidth, int *restrict line,
-		 int *restrict width, wchar_t *restrict *restrict lastspc,
-		 chtype *restrict *restrict spcattr, int *restrict widthspc,
-		 int *restrict widthbuf, int widthbufsize,
-		 const wchar_t *restrict *restrict str)
-{
-    int w, wspc;
-
-
-    if (*line < 0) {
-	// First character in buffer: start line 0
-	*line = 0;
-    }
-
-    if (**str == '\n') {
-	// Start a new line
-
-	if (*line < maxlines - 1) {
-	    *(*outbuf)++ = '\n';
-	    *(*attrbuf)++ = 0;
-	    (*count)--;
-	}
-
-	widthbuf[*line] = *width;
-	*width = 0;
-
-	*lastspc = NULL;
-	*spcattr = NULL;
-	*widthspc = 0;
-
-	(*line)++;
-	(*str)++;
-    } else {
-	w = wcwidth(**str);
-	if (w < 0) {
-	    // We don't support control or non-printable characters
-	    errno = EILSEQ;
-	    return -1;
-	}
-
-	if (*width + w > maxwidth) {
-	    // Current line would be too long to fit in **str
-
-	    if (! iswspace(**str) && *lastspc != NULL && *line < maxlines - 1) {
-		// Break on the last space in this line
-		wspc = wcwidth(**lastspc);
-
-		**lastspc = '\n';
-		**spcattr = 0;
-
-		widthbuf[*line] = *widthspc;
-		*width -= *widthspc + wspc;
-
-		*lastspc = NULL;
-		*spcattr = NULL;
-		*widthspc = 0;
-
-		(*line)++;
-	    } else {
-		// Insert a new-line character (if not on last line)
-		if (*line < maxlines - 1) {
-		    *(*outbuf)++ = '\n';
-		    *(*attrbuf)++ = 0;
-		    (*count)--;
-		}
-
-		widthbuf[*line] = *width;
-		*width = 0;
-
-		*lastspc = NULL;
-		*spcattr = NULL;
-		*widthspc = 0;
-
-		(*line)++;
-
-		/* Skip any following spaces.  This assumes that no-one
-		   will ever have combining diacritical marks following a
-		   (line-breaking) space! */
-		while (iswspace(**str)) {
-		    if (*(*str)++ == '\n') {
-			break;
-		    }
-		}
-	    }
-	} else {
-	    // Insert an ordinary character into the output buffer
-
-	    if (iswspace(**str)) {
-		*lastspc = *outbuf;
-		*spcattr = *attrbuf;
-		*widthspc = *width;
-	    }
-
-	    *(*outbuf)++ = **str;
-	    *(*attrbuf)++ = attr;
-	    (*count)--;
-	    *width += w;
-	    (*str)++;
-	}
-    }
-
-    return 0;
-}
-
-
-/***********************************************************************/
 // mkchstr_parse: Parse the format string for mkchstr()
 
 int mkchstr_parse (const wchar_t *restrict format,
@@ -1056,6 +946,116 @@ int mkchstr_parse (const wchar_t *restrict format,
 	       int). */
 	    errno = EINVAL;
 	    return -1;
+	}
+    }
+
+    return 0;
+}
+
+
+/***********************************************************************/
+// mkchstr_add: Add a character to the mkchstr buffer
+
+int mkchstr_add (wchar_t *restrict *restrict outbuf,
+		 chtype *restrict *restrict attrbuf, int *restrict count,
+		 chtype attr, int maxlines, int maxwidth, int *restrict line,
+		 int *restrict width, wchar_t *restrict *restrict lastspc,
+		 chtype *restrict *restrict spcattr, int *restrict widthspc,
+		 int *restrict widthbuf, int widthbufsize,
+		 const wchar_t *restrict *restrict str)
+{
+    int w, wspc;
+
+
+    if (*line < 0) {
+	// First character in buffer: start line 0
+	*line = 0;
+    }
+
+    if (**str == '\n') {
+	// Start a new line
+
+	if (*line < maxlines - 1) {
+	    *(*outbuf)++ = '\n';
+	    *(*attrbuf)++ = 0;
+	    (*count)--;
+	}
+
+	widthbuf[*line] = *width;
+	*width = 0;
+
+	*lastspc = NULL;
+	*spcattr = NULL;
+	*widthspc = 0;
+
+	(*line)++;
+	(*str)++;
+    } else {
+	w = wcwidth(**str);
+	if (w < 0) {
+	    // We don't support control or non-printable characters
+	    errno = EILSEQ;
+	    return -1;
+	}
+
+	if (*width + w > maxwidth) {
+	    // Current line would be too long to fit in **str
+
+	    if (! iswspace(**str) && *lastspc != NULL && *line < maxlines - 1) {
+		// Break on the last space in this line
+		wspc = wcwidth(**lastspc);
+
+		**lastspc = '\n';
+		**spcattr = 0;
+
+		widthbuf[*line] = *widthspc;
+		*width -= *widthspc + wspc;
+
+		*lastspc = NULL;
+		*spcattr = NULL;
+		*widthspc = 0;
+
+		(*line)++;
+	    } else {
+		// Insert a new-line character (if not on last line)
+		if (*line < maxlines - 1) {
+		    *(*outbuf)++ = '\n';
+		    *(*attrbuf)++ = 0;
+		    (*count)--;
+		}
+
+		widthbuf[*line] = *width;
+		*width = 0;
+
+		*lastspc = NULL;
+		*spcattr = NULL;
+		*widthspc = 0;
+
+		(*line)++;
+
+		/* Skip any following spaces.  This assumes that no-one
+		   will ever have combining diacritical marks following a
+		   (line-breaking) space! */
+		while (iswspace(**str)) {
+		    if (*(*str)++ == '\n') {
+			break;
+		    }
+		}
+	    }
+	} else {
+	    // Insert an ordinary character into the output buffer
+
+	    if (iswspace(**str)) {
+		*lastspc = *outbuf;
+		*spcattr = *attrbuf;
+		*widthspc = *width;
+	    }
+
+	    *(*outbuf)++ = **str;
+	    *(*attrbuf)++ = attr;
+	    (*count)--;
+	    *width += w;
+	    (*str)++;
 	}
     }
 
