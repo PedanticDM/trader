@@ -508,4 +508,80 @@ wchar_t *xwcsdup (const wchar_t *str)
 
 
 /***********************************************************************/
+// xmbstowcs: Convert a multibyte string to a wide-character string
+
+size_t xmbstowcs (wchar_t *restrict dest, const char *restrict src, size_t len)
+{
+    assert(dest != NULL);
+    assert(len > 0);
+
+    char *s = xstrdup(src);
+    size_t n;
+
+    while (true) {
+	mbstate_t mbstate;
+	char *p = s;
+
+	memset(&mbstate, 0, sizeof(mbstate));
+	if ((n = mbsrtowcs(dest, (const char **) &p, len, &mbstate))
+	    == (size_t) -1) {
+	    if (errno == EILSEQ) {
+		// Illegal sequence detected: replace it and try again
+		*p = EILSEQ_REPL;
+	    } else {
+		errno_exit(_("xmbstowcs: `%s'"), src);
+	    }
+	} else if (p != NULL) {
+	    // Multibyte string was too long: truncate dest
+	    dest[len - 1] = '\0';
+	    n--;
+	    break;
+	} else {
+	    break;
+	}
+    }
+
+    free(s);
+    return n;
+}
+
+
+/***********************************************************************/
+// xwcrtomb: Convert a wide character to a multibyte sequence
+
+size_t xwcrtomb (char *restrict dest, wchar_t wc, mbstate_t *restrict mbstate)
+{
+    mbstate_t mbcopy;
+    size_t n;
+
+
+    assert(dest != NULL);
+    assert(mbstate != NULL);
+
+    memcpy(&mbcopy, mbstate, sizeof(mbcopy));
+
+    if ((n = wcrtomb(dest, wc, &mbcopy)) == (size_t) -1) {
+	if (errno == EILSEQ) {
+	    /* wc cannot be represented in current locale.
+
+	       Note that the shift state in mbcopy is now undefined.
+	       Hence, restore the original, try to store an ending shift
+	       sequence, then EILSEQ_REPL. */
+	    memcpy(&mbcopy, mbstate, sizeof(mbcopy));
+	    if ((n = wcrtomb(dest, '\0', &mbcopy)) == (size_t) -1) {
+		errno_exit(_("xwcrtomb: NUL"));
+	    }
+	    dest[n] = EILSEQ_REPL;
+	    dest[n++] = '\0';
+	} else {
+	    errno_exit(_("xwcrtomb: `%lc'"), wc);
+	}
+    }
+
+    memcpy(mbstate, &mbcopy, sizeof(mbcopy));
+    return n;
+}
+
+
+/***********************************************************************/
 // End of file

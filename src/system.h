@@ -55,6 +55,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include <limits.h>
 #include <locale.h>
 #include <ctype.h>
 #include <string.h>

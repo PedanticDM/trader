@@ -1069,68 +1069,51 @@ int mkchstr_parse (const wchar_t *restrict format,
 void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
 		   wchar_t *restrict wcbuf, chtype *restrict attrbuf)
 {
-    char *convbuf = xmalloc(chbufsize);
-    mbstate_t mbstate;
-    wchar_t *wp;
+    char convbuf[MB_LEN_MAX + 1];
+    char endbuf[MB_LEN_MAX];
+    mbstate_t mbstate, mbcopy;
+    size_t endsize, n;
     char *p;
     bool done;
-    size_t n;
 
 
-    /* Perform a preliminary conversion to weed out any problems with
-       EILSEQ and insufficient buffer space. */
-    while (true) {
-	memset(&mbstate, 0, sizeof(mbstate));
-	wp = wcbuf;
-	if (wcsrtombs(convbuf, (const wchar_t **) &wp, chbufsize, &mbstate)
-	    == (size_t) -1) {
-	    if (errno == EILSEQ) {
-		/* Replace problematic wide characters with a known-good
-		   (ASCII) one.  This is better than terminating! */
-		*wp = EILSEQ_REPL;
-	    } else {
-		errno_exit(_("mkchstr_conv: `%ls'"), wcbuf);
-	    }
-	} else if (wp != NULL) {
-	    // convbuf is too small: truncate wcbuf if possible
-	    if (wp == wcbuf) {
-		errno = E2BIG;
-		errno_exit(_("mkchstr_conv: `%ls'"), wcbuf);
-	    } else {
-		*(wp - 1) = '\0';
-	    }
-	} else {
-	    // wcbuf CAN fit into convbuf when converted
-	    break;
-	}
-    }
-
-    // Convert for real, combining each multibyte character with attrbuf
     memset(&mbstate, 0, sizeof(mbstate));
     done = false;
     while (! done) {
-	// Yes, we want to convert a wide NUL, too!
-	if ((n = wcrtomb(convbuf, *wcbuf, &mbstate)) == (size_t) -1) {
-	    errno_exit(_("mkchstr_conv: `%ls'"), wcbuf);
+	// Make sure we always have enough space for ending shift sequence
+	memcpy(&mbcopy, &mbstate, sizeof(mbstate));
+	endsize = wcrtomb(endbuf, '\0', &mbcopy);
+	if (endsize == (size_t) -1) {
+	    errno_exit(_("mkchstr_conv: NUL"));
 	}
 
-	for (p = convbuf; n > 0; n--, p++, chbuf++) {
-	    if (*p == '\0' || *p == '\n') {
-		/* This code assumes '\n' can never appear in a multibyte
-		   string except as a control character---which is true
-		   of all multibyte encodings (I believe!) */
-		*chbuf = (unsigned char) *p;
-	    } else {
-		*chbuf = (unsigned char) *p | *attrbuf;
+	// Yes, we want to convert a wide NUL, too!
+	n = xwcrtomb(convbuf, *wcbuf, &mbstate);
+
+	if (chbufsize > endsize + n) {
+	    for (p = convbuf; n > 0; n--, p++, chbuf++, chbufsize--) {
+		if (*p == '\0' || *p == '\n') {
+		    /* This code assumes '\n' can never appear in a
+		       multibyte string except as a control character---
+		       which is true of all multibyte encodings (I
+		       believe!) */
+		    *chbuf = (unsigned char) *p;
+		} else {
+		    *chbuf = (unsigned char) *p | *attrbuf;
+		}
 	    }
+	} else {
+	    // Not enough space for *wcbuf, so terminate chbuf early
+	    for (p = endbuf; endsize > 0; endsize--, p++, chbuf++) {
+		*chbuf = (unsigned char) *p;
+	    }
+	    break;
 	}
 
 	done = (*wcbuf == '\0');
 	wcbuf++;
 	attrbuf++;
     }
-
-    free(convbuf);
 }
 
 
@@ -1147,7 +1130,6 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
     struct convspec *spec;
     const wchar_t *wcformat;
     wchar_t *orig_wcformat;
-    mbstate_t mbstate;
 
     wchar_t *outbuf, *orig_outbuf;
     chtype *attrbuf, *orig_attrbuf;
@@ -1176,16 +1158,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
     fmtbuf = xmalloc(BUFSIZE * sizeof(wchar_t));
 
     // Convert format to a wide-character string
-    {
-	memset(&mbstate, 0, sizeof(mbstate));
-	const char *p = format;
-	if (mbsrtowcs(orig_wcformat, &p, BUFSIZE, &mbstate) == (size_t) -1) {
-	    goto error;
-	} else if (p != NULL) {
-	    errno = E2BIG;
-	    goto error;
-	}
-    }
+    xmbstowcs(orig_wcformat, format, BUFSIZE);
 
     if (mkchstr_parse(wcformat, format_arg, format_spec, args) < 0) {
 	goto error;
@@ -1269,8 +1242,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    }
 
 		    if (wc == '\0' || wc == WEOF) {
-			errno = EILSEQ;
-			goto error;
+			wc = EILSEQ_REPL;
 		    }
 
 		    fmtbuf[0] = wc;
@@ -1319,7 +1291,6 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			/* strfmon() is not available in a wide-char
 			   version, so we need a multibyte char buffer */
 			char *buf = xmalloc(BUFSIZE);
-			const char *p = buf;
 
 			if (l_strfmon(buf, BUFSIZE, spec->flag_nosym ? "%!n" : "%n",
 				      format_arg[spec->arg_num].a.a_double) < 0) {
@@ -1329,19 +1300,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			    goto error;
 			}
 
-			memset(&mbstate, 0, sizeof(mbstate));
-			if (mbsrtowcs(fmtbuf, &p, BUFSIZE, &mbstate)
-			    == (size_t) -1) {
-			    saved_errno = errno;
-			    free(buf);
-			    errno = saved_errno;
-			    goto error;
-			} else if (p != NULL) {
-			    free(buf);
-			    errno = E2BIG;
-			    goto error;
-			}
-
+			xmbstowcs(fmtbuf, buf, BUFSIZE);
 			free(buf);
 		    }
 
@@ -1357,14 +1316,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			if (p == NULL) {
 			    str = NULL;
 			} else {
-			    memset(&mbstate, 0, sizeof(mbstate));
-			    if (mbsrtowcs(fmtbuf, &p, BUFSIZE, &mbstate)
-				== (size_t) -1) {
-				goto error;
-			    } else if (p != NULL) {
-				errno = E2BIG;
-				goto error;
-			    }
+			    xmbstowcs(fmtbuf, p, BUFSIZE);
 			    str = fmtbuf;
 			}
 		    }

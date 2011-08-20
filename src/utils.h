@@ -343,4 +343,37 @@ extern char *xstrdup (const char *str);
 extern wchar_t *xwcsdup (const wchar_t *str);
 
 
+/*
+  Function:   xmbstowcs - Convert a multibyte string to a wide-character string
+  Parameters: dest      - Location of wide-string buffer
+              src       - String to convert
+              len       - Size of dest, in multiples of wchar_t
+  Returns:    size_t    - Number of characters placed in dest (excluding NUL)
+
+  This wrapper function converts a multibyte string to a wide-character
+  one by calling mbrtowc() continually until the whole string is
+  converted.  If any illegal sequences are present, they are converted to
+  the EILSEQ_REPL character.  If the destination buffer is too small, the
+  string is truncated.
+*/
+extern size_t xmbstowcs (wchar_t *restrict dest, const char *restrict src,
+			 size_t len);
+
+
+/*
+  Function:   xwcrtomb - Convert a wide character to a multibyte sequence
+  Parameters: dest     - Location of multibyte buffer (size >= MB_CUR_MAX + 1)
+              wc       - Character to convert
+              mbstate  - Pointer to current multibyte shift state
+  Returns:    size_t   - Number of characters placed in dest
+
+  This wrapper function converts the wide character in wc (which may be
+  NUL) by calling wcrtomb().  If wc cannot be represented in the current
+  locale, EILSEQ_REPL is used instead (with any characters needed to move
+  to an initial shift state prior to EILSEQ_REPL).
+*/
+extern size_t xwcrtomb (char *restrict dest, wchar_t wc,
+			mbstate_t *restrict mbstate);
+
+
 #endif /* included_UTILS_H */
