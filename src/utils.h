@@ -364,7 +364,7 @@ extern wchar_t *xwcsdup (const wchar_t *str);
   Returns:    size_t    - Number of characters placed in dest (excluding NUL)
 
   This wrapper function converts a multibyte string to a wide-character
-  one by calling mbrtowc() continually until the whole string is
+  one by calling mbsrtowcs() continually until the whole string is
   converted.  If any illegal sequences are present, they are converted to
   the EILSEQ_REPL character.  If the destination buffer is too small, the
   string is truncated.
