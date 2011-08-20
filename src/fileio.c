@@ -258,9 +258,17 @@ bool load_game (int num)
     }
     need_icd = (strcmp(codeset, GAME_FILE_CHARSET) != 0);
     if (need_icd) {
-	icd = iconv_open(codeset, GAME_FILE_CHARSET);
+	// Try using the GNU libiconv "//TRANSLIT" option
+	strcpy(buf, codeset);
+	strcat(buf, GAME_FILE_TRANSLIT);
+
+	icd = iconv_open(buf, GAME_FILE_CHARSET);
 	if (icd == (iconv_t) -1) {
-	    errno_exit("iconv_open");
+	    // Try iconv_open() without "//TRANSLIT"
+	    icd = iconv_open(codeset, GAME_FILE_CHARSET);
+	    if (icd == (iconv_t) -1) {
+		errno_exit("iconv_open");
+	    }
 	}
     } else {
 	icd = (iconv_t) -1;
@@ -469,7 +477,7 @@ bool save_game (int num)
     }
     need_icd = (strcmp(codeset, GAME_FILE_CHARSET) != 0);
     if (need_icd) {
-	icd = iconv_open(codeset, GAME_FILE_CHARSET);
+	icd = iconv_open(GAME_FILE_CHARSET, codeset);
 	if (icd == (iconv_t) -1) {
 	    errno_exit("iconv_open");
 	}

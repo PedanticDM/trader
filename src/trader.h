@@ -58,6 +58,7 @@
 
 #ifdef USE_UTF8_GAME_FILE
 #  define GAME_FILE_CHARSET	"UTF-8"		// For strings in game file
+#  define GAME_FILE_TRANSLIT	"//TRANSLIT"	// Transliterate (GNU libiconv)
 #endif
 
 #define BUFSIZE			1024	// For various string buffers
