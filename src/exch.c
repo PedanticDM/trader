@@ -412,7 +412,7 @@ void visit_bank (void)
 	    mkchstr(chbuf, BUFSIZE, attr_normal, attr_normal | A_BOLD, 0, 1,
 		    getmaxx(curwin) / 2, &width_cursym, 1, "^{%s^}",
 		    lconvinfo.currency_symbol);
-	    chbuf_cursym = chstrdup(chbuf);
+	    chbuf_cursym = xchstrdup(chbuf);
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
 		    - BANK_INPUT_COLS - width_cursym - 6, &width, 1,
@@ -470,7 +470,7 @@ void visit_bank (void)
 	    mkchstr(chbuf, BUFSIZE, attr_normal, attr_normal | A_BOLD, 0, 1,
 		    getmaxx(curwin) / 2, &width_cursym, 1, "^{%s^}",
 		    lconvinfo.currency_symbol);
-	    chbuf_cursym = chstrdup(chbuf);
+	    chbuf_cursym = xchstrdup(chbuf);
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
 		    - BANK_INPUT_COLS - width_cursym - 6, &width, 1,

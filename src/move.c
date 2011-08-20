@@ -788,11 +788,11 @@ void merge_companies (map_val_t a, map_val_t b)
 
     mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
 	    &width_aa, 1, "%s", company[aa].name);
-    chbuf_aa = chstrdup(chbuf);
+    chbuf_aa = xchstrdup(chbuf);
 
     mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
 	    &width_bb, 1, "%s", company[bb].name);
-    chbuf_bb = chstrdup(chbuf);
+    chbuf_bb = xchstrdup(chbuf);
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) / 2,
 	    &width, 1,
@@ -1032,7 +1032,7 @@ void adjust_values (void)
 
 		mkchstr(chbuf, BUFSIZE, attr_error_highlight, 0, 0, 1, w / 2,
 			&width_amt, 1, "%N", company[which].share_price);
-		chbuf_amt = chstrdup(chbuf);
+		chbuf_amt = xchstrdup(chbuf);
 
 		mkchstr(chbuf, BUFSIZE, attr_error_normal, 0, 0, 1, w / 2,
 			&width, 1,

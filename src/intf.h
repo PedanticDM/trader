@@ -409,19 +409,6 @@ extern int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 
 /*
-  Function:   chstrdup  - Duplicate a chtype string
-  Parameters: chstr     - String to duplicate
-  Returns:    chtype *  - Pointer to new (duplicated) string
-
-  This function returns a new string of type chtype * that contains a
-  copy of the string in chstr.  No errors are returned: if sufficient
-  memory is not available, the program terminates with an "Out of memory"
-  message.
-*/
-extern chtype *chstrdup (const chtype *restrict chstr);
-
-
-/*
   Function:   leftch   - Print strings in chstr left-aligned
   Parameters: win      - Window to use (should be curwin)
               y        - Line on which to print first string

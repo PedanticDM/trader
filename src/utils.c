@@ -488,6 +488,28 @@ char *xstrdup (const char *str)
 
 
 /***********************************************************************/
+// chstrdup: Duplicate a chtype buffer
+
+chtype *xchstrdup (const chtype *restrict chstr)
+{
+    const chtype *p;
+    int len;
+    chtype *ret;
+
+
+    // Determine chstr length, including ending NUL
+    for (len = 1, p = chstr; *p != '\0'; p++, len++)
+	;
+
+    ret = xmalloc(len * sizeof(chtype));
+    memcpy(ret, chstr, len * sizeof(chtype));
+    ret[len - 1] = '\0';	// Terminating NUL, just in case not present
+
+    return ret;
+}
+
+
+/***********************************************************************/
 // xwcsdup: Duplicate a wide-character string, with checking
 
 wchar_t *xwcsdup (const wchar_t *str)

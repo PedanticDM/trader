@@ -1392,28 +1392,6 @@ error:
 
 
 /***********************************************************************/
-// chstrdup: Duplicate a chtype buffer
-
-chtype *chstrdup (const chtype *restrict chstr)
-{
-    const chtype *p;
-    int len;
-    chtype *ret;
-
-
-    // Determine chstr length, including ending NUL
-    for (len = 1, p = chstr; *p != '\0'; p++, len++)
-	;
-
-    ret = xmalloc(len * sizeof(chtype));
-    memcpy(ret, chstr, len * sizeof(chtype));
-    ret[len - 1] = '\0';	// Terminating NUL, just in case not present
-
-    return ret;
-}
-
-
-/***********************************************************************/
 // leftch: Print strings in chstr left-aligned
 
 int leftch (WINDOW *win, int y, int x, const chtype *restrict chstr,

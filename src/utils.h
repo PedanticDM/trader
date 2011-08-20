@@ -332,6 +332,19 @@ extern char *xstrdup (const char *str);
 
 
 /*
+  Function:   xchstrdup - Duplicate a chtype string
+  Parameters: chstr     - String to duplicate
+  Returns:    chtype *  - Pointer to new (duplicated) string
+
+  This function returns a new string of type chtype * that contains a
+  copy of the string in chstr.  No errors are returned: if sufficient
+  memory is not available, the program terminates with an "Out of memory"
+  message.
+*/
+extern chtype *xchstrdup (const chtype *restrict chstr);
+
+
+/*
   Function:   xwcsdup   - Duplicate a wide-character string, with checking
   Parameters: str       - String to duplicate
   Returns:    wchar_t * - Pointer to new string, allocated with malloc()
