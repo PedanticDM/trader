@@ -42,6 +42,9 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 
+#define EILSEQ_REPL	'?'	// Illegal character sequence replacement
+
+
 /************************************************************************
 *                     Global variable declarations                      *
 ************************************************************************/
@@ -326,6 +329,18 @@ extern void *xmalloc (size_t size);
   terminates with an "Out of memory" error.
 */
 extern char *xstrdup (const char *str);
+
+
+/*
+  Function:   xwcsdup   - Duplicate a wide-character string, with checking
+  Parameters: str       - String to duplicate
+  Returns:    wchar_t * - Pointer to new string, allocated with malloc()
+
+  This wrapper function duplicates a string by calling wcsdup(), then
+  checks if a NULL pointer has been returned.  If so, the program
+  terminates with an "Out of memory" error.
+*/
+extern wchar_t *xwcsdup (const wchar_t *str);
 
 
 #endif /* included_UTILS_H */

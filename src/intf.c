@@ -44,8 +44,6 @@ typedef struct txwin {
 
 // Declarations for argument processing in mkchstr()
 
-#define EILSEQ_REPL	'?'	// Illegal byte sequence replacement character
-
 #define MAXFMTARGS	8	// Maximum number of positional arguments
 
 enum argument_type {

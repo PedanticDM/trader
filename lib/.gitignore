@@ -109,11 +109,15 @@ vfprintf.c
 vsnprintf.c
 wchar.in.h
 wcrtomb.c
+wcsdup-impl.h
+wcsdup.c
 wcsrtombs-impl.h
 wcsrtombs-state.c
 wcsrtombs.c
 wctype.in.h
 wcwidth.c
+wmemcpy-impl.h
+wmemcpy.c
 xsize.h
 
 alloca.h

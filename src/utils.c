@@ -488,4 +488,24 @@ char *xstrdup (const char *str)
 
 
 /***********************************************************************/
+// xwcsdup: Duplicate a wide-character string, with checking
+
+wchar_t *xwcsdup (const wchar_t *str)
+{
+    wchar_t *s;
+
+
+    if (str == NULL)
+	str = L"";
+
+    s = wcsdup(str);
+    if (s == NULL) {
+	err_exit_nomem();
+    }
+
+    return s;
+}
+
+
+/***********************************************************************/
 // End of file
