@@ -35,19 +35,24 @@
 *                         Help text definition                          *
 ************************************************************************/
 
-static const char *help_text[] = {
+#define HELP_TEXT_PAGES	10
+
+static const char *help_text[HELP_TEXT_PAGES] = {
 
   /*
     TRANSLATORS: The help text for Star Traders is marked up using a
     custom mark-up format NOT used anywhere else in the source code.
 
     Each string is a single page of text that is displayed in an area 76
-    columns wide by 16 lines high.  Ideally, each line within the string
-    should be (manually) space-justified or centred; each line is
-    separated by "\n".  TAB characters and other control codes must NOT
-    be used.  If a string starts with "@" as the very first character,
-    that string (and all strings following) are ignored: this allows a
-    variable number of help text pages (from one to twelve).
+    columns wide by 16 lines high.  Each line is delimited by "\n".  NO
+    word-wrapping is performed: you must place the "\n" characters in the
+    appropriate place.  Ideally, each line within the string should be
+    also (manually) space-justified or centred.  TAB characters and other
+    control codes must NOT be used.  If a string starts with "@" as the
+    very first character, that string is ignored (as are all strings
+    following): this allows a variable number of help text pages (from
+    one to ten).  Multibyte strings are handled correctly (even those
+    requiring shift sequences!).
 
     The ASCII circumflex accent character "^" switches to a different
     character rendition (also called attributes), depending on the
@@ -74,23 +79,26 @@ static const char *help_text[] = {
     ~m       - Print the number of moves available (NUMBER_MOVES) [**]
     ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
     ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
-    ~1 to ~9 - Print the keycode for the N-th choice of move [*]
-    ~M       - Print the keycode for the last choice of move [*]
-    ~A to ~H - Print the character used to represent the company on the galaxy map [*]
-    ~.       - Print the character used to represent empty space on the map [*]
-    ~+       - Print the character used to represent outposts on the map [*]
-    ~*       - Print the character used to represent stars on the map [*]
+    ~1 to ~9 - Print the keycode for the N-th choice of move [***]
+    ~M       - Print the keycode for the last choice of move [***]
+    ~A to ~H - Print the character used to represent the company on the galaxy map [***]
+    ~.       - Print the character used to represent empty space on the map [***]
+    ~+       - Print the character used to represent outposts on the map [***]
+    ~*       - Print the character used to represent stars on the map [***]
 
-    [*]  Takes one character space in the output
-    [**] Takes two character spaces in the output
+    [*]   Takes one character space (column space) in the output
+    [**]  Takes two column spaces in the output
+    [***] Takes one or two column spaces in the output, depending on the
+          appropriate strings in the current PO file.
 
     Note that all keycodes and map representation characters use locale-
-    specific characters.  Note also that the tilde value escapes do NOT
-    change the current character rendition: a circumflex accent escape is
-    needed for that.  For example, to display the first choice of move as
-    it would be shown on the galaxy map, use something like "^k~1^N" (a
-    six-character sequence that would translate to just one character in
-    the output text).
+    specific characters; double-width characters ARE supported.  Note
+    also that the tilde value escapes do NOT change the current character
+    rendition: a circumflex accent escape is needed for that.  For
+    example, to display the first choice of move as it would be shown on
+    the galaxy map, use something like "^k~1^N" (a six-character sequence
+    that would translate to just one character (or maybe two) in the
+    output text).
   */
     N_(""
        "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
@@ -201,18 +209,14 @@ static const char *help_text[] = {
        "\n"
        "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
        "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
-       ""),
+       "")
 
 #ifdef ENABLE_NLS
-    N_("@ Help text, page 7"),
-    N_("@ Help text, page 8"),
-    N_("@ Help text, page 9"),
-    N_("@ Help text, page 10"),
-    N_("@ Help text, page 11"),
-    N_("@ Help text, page 12"),
+    , N_("@ Help text, page 7")
+    , N_("@ Help text, page 8")
+    , N_("@ Help text, page 9")
+    , N_("@ Help text, page 10")
 #endif
-
-    NULL
 };
 
 
@@ -228,21 +232,31 @@ static const char *help_text[] = {
 
 void show_help (void)
 {
+    wchar_t *wchelp_text[HELP_TEXT_PAGES];
+    wchar_t *wcbuf = xmalloc(BIGBUFSIZE * sizeof(wchar_t));
+    chtype *outbuf = xmalloc(BIGBUFSIZE * sizeof(chtype));
+
     int curpage = 0;
     int numpages = 0;
     bool done = false;
 
 
     // Count how many pages appear in the (translated) help text
-    while (help_text[numpages] != NULL) {
+    while (numpages < HELP_TEXT_PAGES) {
 	const char *s = gettext(help_text[numpages]);
 	if (s == NULL || *s == '\0' || *s == '@')
 	    break;
+
+	xmbstowcs(wcbuf, s, BIGBUFSIZE);
+	wchelp_text[numpages] = xwcsdup(wcbuf);
 	numpages++;
     }
 
-    if (numpages == 0)
+    if (numpages == 0) {
+	free(outbuf);
+	free(wcbuf);
 	return;
+    }
 
     newtxwin(WIN_LINES - 1, WIN_COLS, 1, WCENTER, false, 0);
 
@@ -260,100 +274,108 @@ void show_help (void)
 
 	// Process the help text string
 
-	const char *s = gettext(help_text[curpage]);
+	const wchar_t *htxt = wchelp_text[curpage];
+	char convbuf[MB_LEN_MAX + 1];
+	char *cp;
+	mbstate_t mbstate;
+	chtype *outp;
+	wchar_t c;
+	size_t i, n;
+
+	int count = BIGBUFSIZE;
+	int maxchar = MB_CUR_MAX;
 	int curattr = attr_normal;
 
-	while (*s != '\0') {
-	    switch (*s) {
+	memset(&mbstate, 0, sizeof(mbstate));
+	outp = outbuf;
+
+	while (*htxt != '\0' && count > maxchar * 2) {
+	    switch (*htxt) {
 	    case '\n':
-		// Start a new line, suitably indented
-		wmove(curwin, getcury(curwin) + 1, 2);
+		// Start a new line
+		*outp++ = '\n';
+		count--;
 		break;
 
 	    case '^':
 		// Switch to a different character rendition
-		switch (*++s) {
+		switch (*++htxt) {
 		case '^':
-		    waddch(curwin, *s | curattr);
-		    break;
+		    wcbuf[0] = *htxt;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		case 'N':
 		    curattr = attr_normal;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 'B':
 		    curattr = attr_normal | A_BOLD;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 'H':
 		    curattr = attr_highlight;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 'K':
 		    curattr = attr_keycode;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 'e':
 		    curattr = attr_map_empty;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 'o':
 		    curattr = attr_map_outpost;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 's':
 		    curattr = attr_map_star;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 'c':
 		    curattr = attr_map_company;
-		    wattrset(curwin, curattr);
 		    break;
 
 		case 'k':
 		    curattr = attr_map_choice;
-		    wattrset(curwin, curattr);
 		    break;
 
 		default:
-		    waddch(curwin, '^' | curattr);
-		    waddch(curwin, *s  | curattr);
+		    wcbuf[0] = '^';
+		    wcbuf[1] = *htxt;
+		    wcbuf[2] = '\0';
+		    goto addwcbuf;
 		}
 		break;
 
 	    case '~':
 		// Print a global constant
-		switch (*++s) {
+		switch (*++htxt) {
 		case '~':
-		    waddch(curwin, *s | curattr);
-		    break;
+		    wcbuf[0] = *htxt;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		case 'x':
-		    wprintw(curwin, "%2d", MAX_X);
-		    break;
+		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", MAX_X);
+		    goto addwcbuf;
 
 		case 'y':
-		    wprintw(curwin, "%2d", MAX_Y);
-		    break;
+		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", MAX_Y);
+		    goto addwcbuf;
 
 		case 'm':
-		    wprintw(curwin, "%2d", NUMBER_MOVES);
-		    break;
+		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", NUMBER_MOVES);
+		    goto addwcbuf;
 
 		case 'c':
-		    wprintw(curwin, "%d", MAX_COMPANIES);
-		    break;
+		    swprintf(wcbuf, BIGBUFSIZE, L"%d", MAX_COMPANIES);
+		    goto addwcbuf;
 
 		case 't':
-		    wprintw(curwin, "%2d", DEFAULT_MAX_TURN);
-		    break;
+		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", DEFAULT_MAX_TURN);
+		    goto addwcbuf;
 
 		case '1':
 		case '2':
@@ -365,28 +387,38 @@ void show_help (void)
 		case '8':
 		case '9':
 		    // N-th choice of move, as a key press
-		    wprintw(curwin, "%c", PRINTABLE_GAME_MOVE(*s - '1'));
-		    break;
+		    c = btowc(PRINTABLE_GAME_MOVE(*htxt - L'1'));
+		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		case 'M':
 		    // Last choice of move, as a key press
-		    wprintw(curwin, "%c", PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
-		    break;
+		    c = btowc(PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
+		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		case '.':
 		    // Map representation of empty space
-		    wprintw(curwin, "%c", PRINTABLE_MAP_VAL(MAP_EMPTY));
-		    break;
+		    c = btowc(PRINTABLE_MAP_VAL(MAP_EMPTY));
+		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		case '+':
 		    // Map representation of an outpost
-		    wprintw(curwin, "%c", PRINTABLE_MAP_VAL(MAP_OUTPOST));
-		    break;
+		    c = btowc(PRINTABLE_MAP_VAL(MAP_OUTPOST));
+		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		case '*':
 		    // Map representation of a star
-		    wprintw(curwin, "%c", PRINTABLE_MAP_VAL(MAP_STAR));
-		    break;
+		    c = btowc(PRINTABLE_MAP_VAL(MAP_STAR));
+		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		case 'A':
 		case 'B':
@@ -397,22 +429,49 @@ void show_help (void)
 		case 'G':
 		case 'H':
 		    // Map representation of company
-		    wprintw(curwin, "%c",
-			    PRINTABLE_MAP_VAL(COMPANY_TO_MAP(*s - 'A')));
-		    break;
+		    c = btowc(PRINTABLE_MAP_VAL(COMPANY_TO_MAP(*htxt - L'A')));
+		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[1] = '\0';
+		    goto addwcbuf;
 
 		default:
-		    waddch(curwin, '~' | curattr);
-		    waddch(curwin, *s  | curattr);
+		    wcbuf[0] = '~';
+		    wcbuf[1] = *htxt;
+		    goto addwcbuf;
 		}
 		break;
 
 	    default:
 		// Print the character
-		waddch(curwin, *s | curattr);
+		wcbuf[0] = *htxt;
+		wcbuf[1] = '\0';
+
+	    addwcbuf:
+		for (wchar_t *p = wcbuf; *p != '\0' && count > maxchar * 2; p++) {
+		    n = xwcrtomb(convbuf, *p, &mbstate);
+		    for (i = 0, cp = convbuf; i < n; i++, cp++, outp++, count--) {
+			*outp = (unsigned char) *cp | curattr;
+		    }
+		}
 	    }
 
-	    s++;
+	    htxt++;
+	}
+
+	// Add the terminating NUL (possibly with a preceding shift sequence)
+	n = xwcrtomb(convbuf, '\0', &mbstate);
+	for (i = 0, cp = convbuf; i < n; i++, cp++, outp++, count--) {
+	    *outp = (unsigned char) *cp;
+	}
+	assert(count >= 0);
+
+	// Display the formatted text in outbuf
+	for (outp = outbuf; *outp != '\0'; outp++) {
+	    if (*outp == '\n') {
+		wmove(curwin, getcury(curwin) + 1, 2);
+	    } else {
+		waddch(curwin, *outp);
+	    }
 	}
 
 	center(curwin, getmaxy(curwin) - 2, 0, attr_waitforkey, 0, 0, 1,
@@ -461,4 +520,10 @@ void show_help (void)
 
     deltxwin();
     txrefresh();
+
+    for (curpage = 0; curpage < numpages; curpage++) {
+	free(wchelp_text[curpage]);
+    }
+    free(outbuf);
+    free(wcbuf);
 }
