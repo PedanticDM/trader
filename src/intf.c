@@ -742,7 +742,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 		    case '8':
 		    case '9':
 			// Part of some numeric count
-			count = count * 10 + (wc - '0');
+			count = count * 10 + (wc - L'0');
 			break;
 
 		    case '$':
