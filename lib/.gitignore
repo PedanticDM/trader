@@ -114,6 +114,8 @@ wcsdup.c
 wcsrtombs-impl.h
 wcsrtombs-state.c
 wcsrtombs.c
+wcswidth-impl.h
+wcswidth.c
 wctob.c
 wctomb-impl.h
 wctomb.c
