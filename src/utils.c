@@ -38,6 +38,13 @@
 // Global copy, suitably modified, of localeconv() information
 struct lconv lconvinfo;
 
+// localeconv() information, converted to wide strings
+wchar_t *decimal_point;			// Locale's radix character
+wchar_t *thousands_sep;			// Locale's thousands separator
+wchar_t *currency_symbol;		// Local currency symbol
+wchar_t *mon_decimal_point;		// Local monetary radix character
+wchar_t *mon_thousands_sep;		// Local monetary thousands separator
+
 
 /************************************************************************
 *          Module-specific constants and variable definitions           *
@@ -303,6 +310,7 @@ void init_locale (void)
 {
     char *cur, *cloc;
     struct lconv *lc;
+    wchar_t *buf;
 
 
     cur = xstrdup(setlocale(LC_MONETARY, NULL));
@@ -328,6 +336,27 @@ void init_locale (void)
 	lconvinfo.p_cs_precedes   = MOD_POSIX_P_CS_PRECEDES;
 	lconvinfo.p_sep_by_space  = MOD_POSIX_P_SEP_BY_SPACE;
     }
+
+    // Convert localeconv() information to wide strings
+
+    buf = xmalloc(BUFSIZE * sizeof(wchar_t));
+
+    xmbstowcs(buf, lconvinfo.decimal_point, BUFSIZE);
+    decimal_point = xwcsdup(buf);
+
+    xmbstowcs(buf, lconvinfo.thousands_sep, BUFSIZE);
+    thousands_sep = xwcsdup(buf);
+
+    xmbstowcs(buf, lconvinfo.currency_symbol, BUFSIZE);
+    currency_symbol = xwcsdup(buf);
+
+    xmbstowcs(buf, lconvinfo.mon_decimal_point, BUFSIZE);
+    mon_decimal_point = xwcsdup(buf);
+
+    xmbstowcs(buf, lconvinfo.mon_thousands_sep, BUFSIZE);
+    mon_thousands_sep = xwcsdup(buf);
+
+    free(buf);
 
     setlocale(LC_MONETARY, cur);
     free(cur);
@@ -555,7 +584,7 @@ size_t xmbstowcs (wchar_t *restrict dest, const char *restrict src, size_t len)
 	    }
 	} else if (p != NULL) {
 	    // Multibyte string was too long: truncate dest
-	    dest[len - 1] = '\0';
+	    dest[len - 1] = L'\0';
 	    n--;
 	    break;
 	} else {
@@ -590,7 +619,7 @@ size_t xwcrtomb (char *restrict dest, wchar_t wc, mbstate_t *restrict mbstate)
 	       Hence, restore the original, try to store an ending shift
 	       sequence, then EILSEQ_REPL. */
 	    memcpy(&mbcopy, mbstate, sizeof(mbcopy));
-	    if ((n = wcrtomb(dest, '\0', &mbcopy)) == (size_t) -1) {
+	    if ((n = wcrtomb(dest, L'\0', &mbcopy)) == (size_t) -1) {
 		errno_exit(_("xwcrtomb: NUL"));
 	    }
 	    dest[n] = EILSEQ_REPL;

@@ -43,6 +43,7 @@
 
 
 #define EILSEQ_REPL	'?'	// Illegal character sequence replacement
+#define EILSEQ_REPL_WC	L'?'	// ... wide character version
 
 
 /************************************************************************
@@ -51,6 +52,13 @@
 
 // Global copy, suitably modified, of localeconv() information
 extern struct lconv lconvinfo;
+
+// localeconv() information, converted to wide strings
+extern wchar_t *decimal_point;		// Locale's radix character
+extern wchar_t *thousands_sep;		// Locale's thousands separator
+extern wchar_t *currency_symbol;	// Local currency symbol
+extern wchar_t *mon_decimal_point;	// Local monetary radix character
+extern wchar_t *mon_thousands_sep;	// Local monetary thousands separator
 
 
 /************************************************************************
@@ -229,11 +237,12 @@ extern int randi (int limit);
   Parameters: (none)
   Returns:    (nothing)
 
-  This function initialises the global variable lconvinfo with values
-  suitable for this program.  In particular, if the POSIX or C locale is
-  in effect, the currency_symbol and frac_digits members are updated to
-  be something reasonable.  This function must be called before using
-  localeconf_info.
+  This function initialises the global variable lconvinfo, as well as
+  decimal_point, thousands_sep, currency_symbol, mon_decimal_point and
+  mon_thousands_sep, with values suitable for this program.  In
+  particular, if the POSIX or C locale is in effect, the currency_symbol
+  and frac_digits members of lconvinfo are updated to be something
+  reasonable.  This function must be called before using localeconf_info.
 */
 extern void init_locale (void);
 
