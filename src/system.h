@@ -57,7 +57,6 @@
 #include <stdarg.h>
 #include <limits.h>
 #include <locale.h>
-#include <ctype.h>
 #include <string.h>
 #include <errno.h>
 #include <wchar.h>
