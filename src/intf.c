@@ -106,7 +106,7 @@ typedef struct txwin {
     do {								\
 	char *s = gettext(_default);					\
 	if (xmbstowcs(buf, s, BUFSIZE) < (_checkpos) + 1		\
-	    || buf[_checkpos] != '|') {					\
+	    || buf[_checkpos] != L'|') {				\
 	    err_exit(_("%s: string has incorrect format: `%s'"),	\
 		     __stringify(_var), s);				\
 	}								\
