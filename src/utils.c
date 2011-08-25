@@ -35,6 +35,9 @@
 *                      Global variable definitions                      *
 ************************************************************************/
 
+const char *program_name = NULL;	// Canonical program name
+
+
 // Global copy, suitably modified, of localeconv() information
 struct lconv lconvinfo;
 
@@ -64,7 +67,6 @@ wchar_t *mon_thousands_sep;		// Local monetary thousands separator
 *                       Module-specific variables                       *
 ************************************************************************/
 
-static char *program_name_str   = NULL;		// Canonical program name
 static char *home_directory_str = NULL;		// Full pathname to home
 static char *data_directory_str = NULL;		// Writable data dir pathname
 
@@ -79,37 +81,24 @@ static bool add_currency_symbol = false;	// Do we need to add "$"?
 
 
 /***********************************************************************/
-// init_program_name: Make the program name "canonical"
+// init_program_name: Make the program name canonical
 
-void init_program_name (char *argv[])
+void init_program_name (char *argv0)
 {
     /* This implementation assumes a POSIX environment with an ASCII-safe
        character encoding (such as ASCII or UTF-8). */
 
-    if (argv == NULL || argv[0] == NULL || *argv[0] == '\0') {
-	program_name_str = PACKAGE;
+    if (argv0 == NULL || *argv0 == '\0') {
+	program_name = PACKAGE;
     } else {
-	char *p = strrchr(argv[0], '/');
+	char *p = strrchr(argv0, '/');
 
 	if (p != NULL && *++p != '\0') {
-	    argv[0] = p;
+	    program_name = xstrdup(p);
+	} else {
+	    program_name = xstrdup(argv0);
 	}
-
-	program_name_str = argv[0];
     }
-}
-
-
-/***********************************************************************/
-// program_name: Return the canonical program name
-
-const char *program_name (void)
-{
-    if (program_name_str == NULL) {
-	init_program_name(NULL);
-    }
-
-    return program_name_str;
 }
 
 
@@ -142,15 +131,14 @@ const char *data_directory (void)
        character encoding is ASCII-safe. */
 
     if (data_directory_str == NULL) {
-	const char *name = program_name();
 	const char *home = home_directory();
 
-	if (name != NULL && home != NULL) {
-	    char *p = xmalloc(strlen(home) + strlen(name) + 3);
+	if (program_name != NULL && home != NULL) {
+	    char *p = xmalloc(strlen(home) + strlen(program_name) + 3);
 
 	    strcpy(p, home);
 	    strcat(p, "/.");
-	    strcat(p, name);
+	    strcat(p, program_name);
 	    data_directory_str = p;
 	}
     }
@@ -208,7 +196,7 @@ void err_exit (const char *restrict format, ...)
 
     end_screen();
 
-    fprintf(stderr, _("%s: "), program_name());
+    fprintf(stderr, _("%s: "), program_name);
     va_start(args, format);
     vfprintf(stderr, format, args);
     va_end(args);
@@ -229,7 +217,7 @@ void errno_exit (const char *restrict format, ...)
 
     end_screen();
 
-    fprintf(stderr, _("%s: "), program_name());
+    fprintf(stderr, _("%s: "), program_name);
     if (format != NULL) {
 	va_start(args, format);
 	vfprintf(stderr, format, args);

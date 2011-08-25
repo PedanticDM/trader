@@ -50,6 +50,9 @@
 *                     Global variable declarations                      *
 ************************************************************************/
 
+extern const char *program_name;	// Canonical program name
+
+
 // Global copy, suitably modified, of localeconv() information
 extern struct lconv lconvinfo;
 
@@ -66,29 +69,16 @@ extern wchar_t *mon_thousands_sep;	// Local monetary thousands separator
 ************************************************************************/
 
 /*
-  Function:   init_program_name - Make the program name "canonical"
-  Parameters: argv              - Same as passed to main()
+  Function:   init_program_name - Make the program name canonical
+  Parameters: argv0             - Same as passed to main()
   Returns:    (nothing)
 
-  This function modifies the argv[0] pointer to eliminate any leading
+  This function modifies the argv0 pointer to eliminate any leading
   pathname (directory) components from the program name, leaving just the
   basename of the program.  It also saves a copy that can be accessed via
-  the program_name() function.
+  the program_name global variable.
 */
-extern void init_program_name (char *argv[]);
-
-
-/*
-  Function:   program_name - Return the canonical program name
-  Parameters: (none)
-  Returns:    const char * - Pointer to program name
-
-  This function returns the canonical program name (the program name as
-  invoked on the command line, without any leading pathname components).
-  NULL should never be returned; however, init_program_name() SHOULD be
-  called before using this function.
-*/
-extern const char *program_name (void);
+extern void init_program_name (char *argv0);
 
 
 /*
@@ -111,7 +101,7 @@ extern const char *home_directory (void);
 
   This function returns the full pathname to a potentially-writable
   subdirectory within the user's home directory.  Essentially, this
-  function returns home_directory() + "/."  + program_name().  Note that
+  function returns home_directory() + "/."  + program_name.  Note that
   this path is NOT created by this function, nor is the writability of
   this path checked.  NULL is returned if this path cannot be determined.
 */

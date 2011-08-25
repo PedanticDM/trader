@@ -147,7 +147,7 @@ static void end_program (void);
 int main (int argc, char *argv[])
 {
     // Strip off leading pathname components from program name
-    init_program_name(argv);
+    init_program_name(argv[0]);
 
     // Initialise the locale
     if (setlocale(LC_ALL, "") == NULL) {
@@ -233,7 +233,7 @@ void process_cmdline (int argc, char *argv[])
 
 		if (option_max_turn < MIN_MAX_TURN || p == NULL || *p != '\0') {
 		    fprintf(stderr, _("%s: invalid value for --max-turn: `%s'\n"),
-			    program_name(), optarg);
+			    program_name, optarg);
 		    show_usage(EXIT_FAILURE);
 		}
 	    }
@@ -248,7 +248,7 @@ void process_cmdline (int argc, char *argv[])
 
     if (optind < argc && argv[optind] != NULL) {
 	if (*argv[optind] == '-') {
-	    fprintf(stderr, _("%s: invalid operand `%s'\n"), program_name(),
+	    fprintf(stderr, _("%s: invalid operand `%s'\n"), program_name,
 		    argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
@@ -258,7 +258,7 @@ void process_cmdline (int argc, char *argv[])
 	    game_num = *argv[optind] - '0';
 	} else {
 	    fprintf(stderr, _("%s: invalid game number `%s'\n"),
-		    program_name(), argv[optind]);
+		    program_name, argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
 
@@ -266,8 +266,8 @@ void process_cmdline (int argc, char *argv[])
     }
 
     if (optind < argc && argv[optind] != NULL) {
-	fprintf(stderr, _("%s: extra operand `%s'\n"), program_name(),
-		argv[optind]);
+	fprintf(stderr, _("%s: extra operand `%s'\n"),
+		program_name, argv[optind]);
 	show_usage(EXIT_FAILURE);
     }
 }
@@ -293,7 +293,7 @@ This program is free software that is distributed under the terms of the\n\
 GNU General Public License, version 3 or later.  You are welcome to\n\
 modify and/or distribute it under certain conditions.  This program has\n\
 NO WARRANTY, to the extent permitted by law; see the License for details.\n\
-"), program_name(), PACKAGE_VERSION, "1990-2011");
+"), program_name, PACKAGE_VERSION, "1990-2011");
 
     exit(EXIT_SUCCESS);
 }
@@ -304,14 +304,11 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
 
 void show_usage (int status)
 {
-    const char *pn = program_name();
-
-
     if (status != EXIT_SUCCESS) {
 	fprintf(stderr, _("%s: Try `%s --help' for more information.\n"),
-		pn, pn);
+		program_name, program_name);
     } else {
-	printf(_("Usage: %s [OPTION ...] [GAME]\n"), pn);
+	printf(_("Usage: %s [OPTION ...] [GAME]\n"), program_name);
 	printf(_("\
 Play Star Traders, a simple game of interstellar trading.\n\n\
 "));
