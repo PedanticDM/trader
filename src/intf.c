@@ -32,6 +32,62 @@
 
 
 /************************************************************************
+*                      Global variable definitions                      *
+************************************************************************/
+
+WINDOW *curwin = NULL;		// Top-most (current) window
+bool use_color = true;		// True to use colour
+
+
+// Character renditions (attributes) used by Star Traders
+
+chtype attr_root_window;	// Root window (behind all others)
+chtype attr_game_title;		// One-line game title at top
+
+chtype attr_normal_window;	// Normal window background
+chtype attr_title;		// Normal window title
+chtype attr_subtitle;		// Normal window subtitle
+chtype attr_normal;		// Normal window text
+chtype attr_highlight;		// Normal window highlighted string
+chtype attr_blink;		// Blinking text in normal window
+chtype attr_keycode;		// Make keycodes like <1> stand out
+chtype attr_choice;		// Make map/company choices stand out
+chtype attr_input_field;	// Background for input text field
+chtype attr_waitforkey;		// "Press any key", normal window
+
+chtype attr_map_window;		// Map window background
+chtype attr_mapwin_title;	// Map window title (player name, turn)
+chtype attr_mapwin_highlight;	// Map window title highlight
+chtype attr_mapwin_blink;	// Map window title blinking text
+chtype attr_map_empty;		// On map, empty space
+chtype attr_map_outpost;	// On map, outpost
+chtype attr_map_star;		// On map, star
+chtype attr_map_company;	// On map, company
+chtype attr_map_choice;		// On map, a choice of moves
+
+chtype attr_status_window;	// Status window background
+
+chtype attr_error_window;	// Error message window background
+chtype attr_error_title;	// Error window title
+chtype attr_error_normal;	// Error window ordinary text
+chtype attr_error_highlight;	// Error window highlighted string
+chtype attr_error_waitforkey;	// "Press any key", error window
+
+
+/************************************************************************
+*               Game printing global variable definitions               *
+************************************************************************/
+
+wchar_t	*keycode_company;		// Keycodes for each company
+wchar_t	*printable_map_val;		// Printable output for each map value
+chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
+
+wchar_t	*keycode_game_move;		// Keycodes for each game move
+wchar_t	*printable_game_move;		// Printable output for each game move
+chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
+
+
+/************************************************************************
 *        Module-specific constants, type declarations and macros        *
 ************************************************************************/
 
@@ -134,62 +190,6 @@ struct convspec {
     bool	flag_prec;	// Flag "." (precision)
     bool	flag_long;	// Length modifier "l" (long)
 };
-
-
-/************************************************************************
-*                      Global variable definitions                      *
-************************************************************************/
-
-WINDOW *curwin = NULL;		// Top-most (current) window
-bool use_color = true;		// True to use colour
-
-
-// Character renditions (attributes) used by Star Traders
-
-chtype attr_root_window;	// Root window (behind all others)
-chtype attr_game_title;		// One-line game title at top
-
-chtype attr_normal_window;	// Normal window background
-chtype attr_title;		// Normal window title
-chtype attr_subtitle;		// Normal window subtitle
-chtype attr_normal;		// Normal window text
-chtype attr_highlight;		// Normal window highlighted string
-chtype attr_blink;		// Blinking text in normal window
-chtype attr_keycode;		// Make keycodes like <1> stand out
-chtype attr_choice;		// Make map/company choices stand out
-chtype attr_input_field;	// Background for input text field
-chtype attr_waitforkey;		// "Press any key", normal window
-
-chtype attr_map_window;		// Map window background
-chtype attr_mapwin_title;	// Map window title (player name, turn)
-chtype attr_mapwin_highlight;	// Map window title highlight
-chtype attr_mapwin_blink;	// Map window title blinking text
-chtype attr_map_empty;		// On map, empty space
-chtype attr_map_outpost;	// On map, outpost
-chtype attr_map_star;		// On map, star
-chtype attr_map_company;	// On map, company
-chtype attr_map_choice;		// On map, a choice of moves
-
-chtype attr_status_window;	// Status window background
-
-chtype attr_error_window;	// Error message window background
-chtype attr_error_title;	// Error window title
-chtype attr_error_normal;	// Error window ordinary text
-chtype attr_error_highlight;	// Error window highlighted string
-chtype attr_error_waitforkey;	// "Press any key", error window
-
-
-/************************************************************************
-*               Game printing global variable definitions               *
-************************************************************************/
-
-wchar_t	*keycode_company;		// Keycodes for each company
-wchar_t	*printable_map_val;		// Printable output for each map value
-chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
-
-wchar_t	*keycode_game_move;		// Keycodes for each game move
-wchar_t	*printable_game_move;		// Printable output for each game move
-chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
 
 
 /************************************************************************
