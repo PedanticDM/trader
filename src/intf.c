@@ -1867,7 +1867,7 @@ void cpos_end (const wchar_t *restrict buf, int *restrict cpos,
 void cpos_dec (const wchar_t *restrict buf, int *restrict cpos,
 	       int *restrict st, int w, int width)
 {
-    if (*cpos > 0) {
+    if (*cpos - w >= 0) {
 	// Cursor position is not yet in first column
 	*cpos -= w;
     } else if (*st > 0) {
