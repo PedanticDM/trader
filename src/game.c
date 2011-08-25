@@ -108,48 +108,6 @@ static int cmp_player (const void *a, const void *b);
 
 void init_game (void)
 {
-    /* Initialise strings used for keycode input and map representations.
-
-       Each string must have an ASCII vertical line (U+007C) in the
-       correct position, followed by context information (such as
-       "input|Company" and "output|MapVals").  This is done to overcome a
-       limitation of gettext_noop() and N_() that does NOT allow context
-       IDs.  This vertical line is replaced by a NUL character to
-       terminate the resulting string.  The vertical line MAY appear in
-       other positions; if so, it is handled correctly. */
-
-    keycode_company = xstrdup(gettext(default_keycode_company));
-    if (strlen(keycode_company) < MAX_COMPANIES + 1
-	|| keycode_company[MAX_COMPANIES] != '|') {
-	err_exit(_("keycode string for companies has incorrect format: `%s'"),
-		 keycode_company);
-    }
-    keycode_company[MAX_COMPANIES] = '\0';
-
-    keycode_game_move = xstrdup(gettext(default_keycode_game_move));
-    if (strlen(keycode_game_move) < NUMBER_MOVES + 1
-	|| keycode_game_move[NUMBER_MOVES] != '|') {
-	err_exit(_("keycode string for game moves has incorrect format: `%s'"),
-		 keycode_game_move);
-    }
-    keycode_game_move[NUMBER_MOVES] = '\0';
-
-    printable_map_val = xstrdup(gettext(default_printable_map_val));
-    if (strlen(printable_map_val) < MAX_COMPANIES + 4
-	|| printable_map_val[MAX_COMPANIES + 3] != '|') {
-	err_exit(_("output string for companies has incorrect format: `%s'"),
-		 printable_map_val);
-    }
-    printable_map_val[MAX_COMPANIES + 3] = '\0';
-
-    printable_game_move = xstrdup(gettext(default_printable_game_move));
-    if (strlen(printable_game_move) < NUMBER_MOVES + 1
-	|| printable_game_move[NUMBER_MOVES] != '|') {
-	err_exit(_("output string for game moves has incorrect format: `%s'"),
-		 printable_game_move);
-    }
-    printable_game_move[NUMBER_MOVES] = '\0';
-
     // Try to load an old game, if possible
     if (game_num != 0) {
 	chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
@@ -213,6 +171,8 @@ void init_game (void)
 	}
 
 	if (! game_loaded) {
+	    wchar_t *buf = xmalloc(BUFSIZE * sizeof(wchar_t));
+
 	    ask_player_names();
 
 	    deltxwin();			// "Number of players" window
@@ -231,7 +191,8 @@ void init_game (void)
 
 	    // Initialise company data
 	    for (int i = 0; i < MAX_COMPANIES; i++) {
-		company[i].name         = xstrdup(gettext(company_name[i]));
+		xmbstowcs(buf, gettext(company_name[i]), BUFSIZE);
+		company[i].name         = xwcsdup(buf);
 		company[i].share_price  = 0.0;
 		company[i].share_return = INITIAL_RETURN;
 		company[i].stock_issued = 0;
@@ -263,10 +224,12 @@ void init_game (void)
 		txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
 			 attr_title, attr_normal, attr_highlight, 0,
 			 attr_waitforkey, _("  First Player  "),
-			 _("The first player to go is ^{%s^}."),
+			 _("The first player to go is ^{%ls^}."),
 			 player[first_player].name);
 		txrefresh();
 	    }
+
+	    free(buf);
 	}
     }
 
@@ -280,15 +243,14 @@ void init_game (void)
 
 static int ask_number_players (void)
 {
-    char *keycode_contgame;
-    chtype *chbuf;
+    wchar_t *keycode_contgame = xmalloc(BUFSIZE * sizeof(wchar_t));
+    chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     int lines, maxwidth;
     int widthbuf[2];
-    int key, ret;
+    int ret;
     bool done;
 
 
-    chbuf = xmalloc(BUFSIZE * sizeof(chtype));
     lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 2,
 		    WIN_COLS - 7, widthbuf, 2,
 		    /* TRANSLATORS: The keycode <C> should be modified to
@@ -311,21 +273,33 @@ static int ask_number_players (void)
        first character (keyboard input code) is used to print the user's
        response if one of those keys is pressed.  Both upper and
        lower-case versions should be present. */
-    keycode_contgame = xstrdup(pgettext("input|ContinueGame", "Cc"));
+    xmbstowcs(keycode_contgame, pgettext("input|ContinueGame", "Cc"), BUFSIZE);
 
     done = false;
     while (! done) {
-	key = gettxchar(curwin);
+	wint_t key;
 
-	if (key >= '1' && key <= MAX_PLAYERS + '0') {
-	    wechochar(curwin, key | A_BOLD);
-	    ret = key - '0';
-	    done = true;
-	} else if (strchr(keycode_contgame, key) != NULL) {
-	    wechochar(curwin, ((unsigned char) *keycode_contgame) | A_BOLD);
-	    ret = 0;
-	    done = true;
+	if (gettxchar(curwin, &key) == OK) {
+	    // Ordinary wide character
+	    if (key >= '1' && key <= MAX_PLAYERS + '0') {
+		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
+		     0, 0, 1, "%lc", key);
+		wrefresh(curwin);
+
+		ret = key - '0';
+		done = true;
+	    } else if (wcschr(keycode_contgame, key) != NULL) {
+		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
+		     0, 0, 1, "%lc", *keycode_contgame);
+		wrefresh(curwin);
+
+		ret = 0;
+		done = true;
+	    } else {
+		beep();
+	    }
 	} else {
+	    // Function or control key
 	    switch (key) {
 	    case KEY_ESC:
 	    case KEY_CANCEL:
@@ -357,7 +331,7 @@ int ask_game_number (void)
     chtype *chbuf;
     int lines, maxwidth;
     int widthbuf[2];
-    int key, ret;
+    int ret;
     bool done;
 
 
@@ -378,13 +352,22 @@ int ask_game_number (void)
 
     done = false;
     while (! done) {
-	key = gettxchar(curwin);
+	wint_t key;
 
-	if (key >= '1' && key <= '9') {
-	    wechochar(curwin, key | A_BOLD);
-	    ret = key - '0';
-	    done = true;
+	if (gettxchar(curwin, &key) == OK) {
+	    // Ordinary wide character
+	    if (key >= '1' && key <= '9') {
+		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
+		     0, 0, 1, "%lc", key);
+		wrefresh(curwin);
+
+		ret = key - '0';
+		done = true;
+	    } else {
+		beep();
+	    }
 	} else {
+	    // Function or control key
 	    switch (key) {
 	    case KEY_ESC:
 	    case KEY_CANCEL:
@@ -426,10 +409,11 @@ void ask_player_names (void)
 	int w = getmaxx(curwin) - x - 2;
 
 	player[0].name = NULL;
+	player[0].name_utf8 = NULL;
 	while (true) {
 	    int ret = gettxstr(curwin, &player[0].name, NULL, false,
 			       2, x, w, attr_input_field);
-	    if (ret == OK && strlen(player[0].name) != 0) {
+	    if (ret == OK && wcslen(player[0].name) != 0) {
 		break;
 	    } else {
 		beep();
@@ -460,6 +444,7 @@ void ask_player_names (void)
 
 	for (i = 0; i < number_players; i++) {
 	    player[i].name = NULL;
+	    player[i].name_utf8 = NULL;
 	    entered[i] = false;
 	    left(curwin, i + 3, 2, attr_normal, 0, 0, 1,
 		 /* xgettext:c-format, range: 1..8 */
@@ -478,7 +463,7 @@ void ask_player_names (void)
 	    switch (ret) {
 	    case OK:
 		// Make sure name is not an empty string
-		len = strlen(player[cur].name);
+		len = wcslen(player[cur].name);
 		entered[cur] = (len != 0);
 		if (len == 0) {
 		    beep();
@@ -487,7 +472,7 @@ void ask_player_names (void)
 		// Make sure name has not been entered already
 		for (i = 0; i < number_players; i++) {
 		    if (i != cur && player[i].name != NULL
-			&& strcmp(player[i].name, player[cur].name) == 0) {
+			&& wcscmp(player[i].name, player[cur].name) == 0) {
 			entered[cur] = false;
 			beep();
 			break;
@@ -601,10 +586,10 @@ void end_game (void)
 	lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight,
 			attr_blink, 5, WIN_COLS - 8, widthbuf, 5,
 			(player[0].sort_value == 0) ?
-			_("The winner is ^{%s^}\n"
+			_("The winner is ^{%ls^}\n"
 			  "who is ^[*** BANKRUPT ***^]") :
 			/* xgettext:c-format */
-			_("The winner is ^{%s^}\n"
+			_("The winner is ^{%ls^}\n"
 			  "with a value of ^{%N^}."),
 			player[0].name, player[0].sort_value);
 
@@ -622,16 +607,15 @@ void end_game (void)
 	     pgettext("subtitle", "Player"));
 	right(curwin, lines + 4, w - 4, attr_subtitle, 0, 0, 1,
 	      /* TRANSLATORS: "Total Value" refers to the total worth
-		 (shares, cash and debt) of any given player.  %s is the
+		 (shares, cash and debt) of any given player.  %ls is the
 		 currency symbol of the current locale. */
-	      pgettext("subtitle", "Total Value (%s)"),
-	      lconvinfo.currency_symbol);
+	      pgettext("subtitle", "Total Value (%ls)"), currency_symbol);
 
 	for (int i = 0; i < number_players; i++) {
 	    right(curwin, i + lines + 5, ORDINAL_COLS + 2, attr_normal, 0, 0,
 		  1, gettext(ordinal[i + 1]));
 	    left(curwin, i + lines + 5, ORDINAL_COLS + 4, attr_normal, 0, 0,
-		 1, "%s", player[i].name);
+		 1, "%ls", player[i].name);
 	    right(curwin, i + lines + 5, w - 2, attr_normal, 0, 0,
 		  1, "  %!N  ", player[i].sort_value);
 	}
@@ -659,7 +643,7 @@ void show_map (bool closewin)
 
     // Display current player and turn number
     left(curwin, 1, 4, attr_mapwin_title, attr_mapwin_highlight, 0, 1,
-	 _("Player: ^{%s^}"), player[current_player].name);
+	 _("Player: ^{%ls^}"), player[current_player].name);
     right(curwin, 1, getmaxx(curwin) - 2, attr_mapwin_title,
 	  attr_mapwin_highlight, attr_mapwin_blink, 1,
 	  (turn_number != max_turn) ? _("  Turn: ^{%d^}  ") :
@@ -669,26 +653,11 @@ void show_map (bool closewin)
     for (int y = 0; y < MAX_Y; y++) {
 	wmove(curwin, y + 3, 2);
 	for (int x = 0; x < MAX_X; x++) {
-	    map_val_t m = galaxy_map[x][y];
+	    chtype *mapstr = CHTYPE_MAP_VAL(galaxy_map[x][y]);
 
-	    switch (m) {
-	    case MAP_EMPTY:
-		waddch(curwin, PRINTABLE_MAP_VAL(m) | attr_map_empty);
-		break;
-
-	    case MAP_OUTPOST:
-		waddch(curwin, PRINTABLE_MAP_VAL(m) | attr_map_outpost);
-		break;
-
-	    case MAP_STAR:
-		waddch(curwin, PRINTABLE_MAP_VAL(m) | attr_map_star);
-		break;
-
-	    default:
-		waddch(curwin, PRINTABLE_MAP_VAL(m) | attr_map_company);
-		break;
+	    while (*mapstr != '\0') {
+		waddch(curwin, *mapstr++);
 	    }
-	    waddch(curwin, ' ' | attr_map_empty);
 	}
     }
 
@@ -724,7 +693,7 @@ void show_status (int num)
 	     attr_normal_window);
     center(curwin, 1, 0, attr_title, 0, 0, 1, _("  Stock Portfolio  "));
     center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-	   _("Player: ^{%s^}"), player[num].name);
+	   _("Player: ^{%ls^}"), player[num].name);
 
     val = total_value(num);
     if (val == 0.0) {
@@ -780,16 +749,16 @@ void show_status (int num)
 		  - SHARE_RETURN_COLS, attr_subtitle, 0, 0, 2,
 		  /* TRANSLATORS: "Price per share" is a two-line column
 		     label in a table containing the price per share in
-		     any given company.  %s is the currency symbol in the
-		     current locale.  The maximum column width is 12
+		     any given company.  %ls is the currency symbol in
+		     the current locale.  The maximum column width is 12
 		     characters INCLUDING the currency symbol (see
 		     SHARE_PRICE_COLS in src/intf.h). */
-		  pgettext("subtitle", "Price per\nshare (%s)"),
-		  lconvinfo.currency_symbol);
+		  pgettext("subtitle", "Price per\nshare (%ls)"),
+		  currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
-		    left(curwin, line, 4, attr_normal, 0, 0, 1, "%s",
+		    left(curwin, line, 4, attr_normal, 0, 0, 1, "%ls",
 			 company[i].name);
 
 		    right(curwin, line, w - 2, attr_normal, 0, 0, 1, "%.2f  ",

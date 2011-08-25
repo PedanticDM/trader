@@ -83,7 +83,7 @@ static const unsigned char game_file_crypt_key[] = {
     } while (0)
 
 #ifdef USE_UTF8_GAME_FILE
-#  define load_game_read_string(_var)					\
+#  define load_game_read_string(_var, _var_utf8)			\
     do {								\
 	char *s;							\
 	int len;							\
@@ -115,11 +115,14 @@ static const unsigned char game_file_crypt_key[] = {
 	    s[len - 1] = '\0';						\
 	}								\
 									\
+	xmbstowcs(wcbuf, s, BUFSIZE);					\
+	(_var) = xwcsdup(wcbuf);					\
+	(_var_utf8) = s;						\
+									\
 	lineno++;							\
-	(_var) = s;							\
     } while (0)
 #else // ! USE_UTF8_GAME_FILE
-#  define load_game_read_string(_var)					\
+#  define load_game_read_string(_var, _var_utf8)			\
     do {								\
 	char *s;							\
 	int len;							\
@@ -140,8 +143,11 @@ static const unsigned char game_file_crypt_key[] = {
 	    s[len - 1] = '\0';						\
 	}								\
 									\
+	xmbstowcs(wcbuf, s, BUFSIZE);					\
+	(_var) = xwcsdup(wcbuf);					\
+	(_var_utf8) = s;						\
+									\
 	lineno++;							\
-	(_var) = s;							\
     } while (0)
 #endif // ! USE_UTF8_GAME_FILE
 
@@ -165,27 +171,38 @@ static const unsigned char game_file_crypt_key[] = {
     save_game_printf("%d", (int) _var)
 
 #ifdef USE_UTF8_GAME_FILE
-#  define save_game_write_string(_var)					\
+#  define save_game_write_string(_var, _var_utf8)			\
     do {								\
-	if (need_icd) {							\
-	    char *s = str_cd_iconv(_var, icd);				\
-	    if (s == NULL) {						\
-		if (errno == EILSEQ) {					\
-		    err_exit(_("%s: could not convert string"),		\
-			     filename);					\
-		} else {						\
-		    errno_exit("str_cd_iconv");				\
-		}							\
-	    }								\
-	    save_game_printf("%s", s);					\
-	    free(s);							\
+	if ((_var_utf8) != NULL) {					\
+	    save_game_printf("%s", _var_utf8);				\
 	} else {							\
-	    save_game_printf("%s", _var);				\
+	    if (need_icd) {						\
+		snprintf(buf, BUFSIZE, "%ls", _var);			\
+		char *s = str_cd_iconv(buf, icd);			\
+		if (s == NULL) {					\
+		    if (errno == EILSEQ) {				\
+			err_exit(_("%s: could not convert string"),	\
+				 filename);				\
+		    } else {						\
+			errno_exit("str_cd_iconv");			\
+		    }							\
+		}							\
+		save_game_printf("%s", s);				\
+		free(s);						\
+	    } else {							\
+		save_game_printf("%ls", _var);				\
+	    }								\
 	}								\
     } while (0)
 #else // ! USE_UTF8_GAME_FILE
-#  define save_game_write_string(_var)					\
-    save_game_printf("%s", _var)
+#  define save_game_write_string(_var, _var_utf8)			\
+    do {								\
+	if ((_var_utf8) != NULL) {					\
+	    save_game_printf("%s", _var_utf8);				\
+	} else {							\
+	    save_game_printf("%ls", _var);				\
+	}								\
+    } while (0)
 #endif // ! USE_UTF8_GAME_FILE
 
 
@@ -201,11 +218,14 @@ static const unsigned char game_file_crypt_key[] = {
 
 bool load_game (int num)
 {
-    char *buf, *filename;
+    char *filename;
     FILE *file;
     char *codeset, *codeset_nl;
     int saved_errno, lineno;
     char *prev_locale;
+
+    char *buf;
+    wchar_t *wcbuf;
 
     int crypt_key;
     int n, i, j;
@@ -219,6 +239,7 @@ bool load_game (int num)
     assert(num >= 1 && num <= 9);
 
     buf = xmalloc(BUFSIZE);
+    wcbuf = xmalloc(BUFSIZE * sizeof(wchar_t));
 
     filename = game_filename(num);
     assert(filename != NULL);
@@ -246,6 +267,7 @@ bool load_game (int num)
 	}
 
 	free(buf);
+	free(wcbuf);
 	free(filename);
 	return false;
     }
@@ -332,7 +354,7 @@ bool load_game (int num)
 
     // Read in player data
     for (i = 0; i < number_players; i++) {
-	load_game_read_string(player[i].name);
+	load_game_read_string(player[i].name, player[i].name_utf8);
 	load_game_read_double(player[i].cash, player[i].cash >= 0.0);
 	load_game_read_double(player[i].debt, player[i].debt >= 0.0);
 	load_game_read_bool(player[i].in_game);
@@ -344,7 +366,8 @@ bool load_game (int num)
 
     // Read in company data
     for (i = 0; i < MAX_COMPANIES; i++) {
-	company[i].name = xstrdup(gettext(company_name[i]));
+	xmbstowcs(wcbuf, gettext(company_name[i]), BUFSIZE);
+	company[i].name = xwcsdup(wcbuf);
 	load_game_read_double(company[i].share_price,  company[i].share_price >= 0.0);
 	load_game_read_double(company[i].share_return, true);
 	load_game_read_long(company[i].stock_issued,   company[i].stock_issued >= 0);
@@ -391,6 +414,7 @@ bool load_game (int num)
 #endif
 
     free(buf);
+    free(wcbuf);
     free(filename);
     free(prev_locale);
     free(codeset_nl);
@@ -514,7 +538,7 @@ bool save_game (int num)
 
     // Write out player data
     for (i = 0; i < number_players; i++) {
-	save_game_write_string(player[i].name);
+	save_game_write_string(player[i].name, player[i].name_utf8);
 	save_game_write_double(player[i].cash);
 	save_game_write_double(player[i].debt);
 	save_game_write_bool(player[i].in_game);

@@ -279,7 +279,6 @@ void show_help (void)
 	char *cp;
 	mbstate_t mbstate;
 	chtype *outp;
-	wchar_t c;
 	size_t i, n;
 
 	int count = BIGBUFSIZE;
@@ -387,36 +386,31 @@ void show_help (void)
 		case '8':
 		case '9':
 		    // N-th choice of move, as a key press
-		    c = btowc(PRINTABLE_GAME_MOVE(*htxt - L'1'));
-		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[0] = PRINTABLE_GAME_MOVE(*htxt - L'1');
 		    wcbuf[1] = '\0';
 		    goto addwcbuf;
 
 		case 'M':
 		    // Last choice of move, as a key press
-		    c = btowc(PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
-		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[0] = PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1);
 		    wcbuf[1] = '\0';
 		    goto addwcbuf;
 
 		case '.':
 		    // Map representation of empty space
-		    c = btowc(PRINTABLE_MAP_VAL(MAP_EMPTY));
-		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[0] = PRINTABLE_MAP_VAL(MAP_EMPTY);
 		    wcbuf[1] = '\0';
 		    goto addwcbuf;
 
 		case '+':
 		    // Map representation of an outpost
-		    c = btowc(PRINTABLE_MAP_VAL(MAP_OUTPOST));
-		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[0] = PRINTABLE_MAP_VAL(MAP_OUTPOST);
 		    wcbuf[1] = '\0';
 		    goto addwcbuf;
 
 		case '*':
 		    // Map representation of a star
-		    c = btowc(PRINTABLE_MAP_VAL(MAP_STAR));
-		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    wcbuf[0] = PRINTABLE_MAP_VAL(MAP_STAR);
 		    wcbuf[1] = '\0';
 		    goto addwcbuf;
 
@@ -429,8 +423,8 @@ void show_help (void)
 		case 'G':
 		case 'H':
 		    // Map representation of company
-		    c = btowc(PRINTABLE_MAP_VAL(COMPANY_TO_MAP(*htxt - L'A')));
-		    wcbuf[0] = (c == WEOF) ? EILSEQ_REPL : c;
+		    assert((*htxt - L'A') < MAX_COMPANIES);
+		    wcbuf[0] = PRINTABLE_MAP_VAL(COMPANY_TO_MAP(*htxt - L'A'));
 		    wcbuf[1] = '\0';
 		    goto addwcbuf;
 
@@ -486,35 +480,41 @@ void show_help (void)
 		 "for the previous page ] "));
 	wrefresh(curwin);
 
-	int key = gettxchar(curwin);
-
-	switch (key) {
-	case KEY_BS:
-	case KEY_BACKSPACE:
-	case KEY_DEL:
-	case KEY_PPAGE:
-	case KEY_UP:
-	case KEY_LEFT:
-	case KEY_BTAB:
-	    if (curpage == 0) {
-		beep();
-	    } else {
-		curpage--;
-	    }
-	    break;
-
-	case KEY_ESC:
-	case KEY_CANCEL:
-	case KEY_EXIT:
-	case KEY_CTRL('C'):
-	case KEY_CTRL('G'):
-	case KEY_CTRL('\\'):
-	    done = true;
-	    break;
-
-	default:
+	wint_t key;
+	if (gettxchar(curwin, &key) == OK) {
+	    // Ordinary wide character
 	    curpage++;
 	    done = (curpage == numpages);
+	} else {
+	    // Function or control character
+	    switch (key) {
+	    case KEY_BS:
+	    case KEY_BACKSPACE:
+	    case KEY_DEL:
+	    case KEY_PPAGE:
+	    case KEY_UP:
+	    case KEY_LEFT:
+	    case KEY_BTAB:
+		if (curpage == 0) {
+		    beep();
+		} else {
+		    curpage--;
+		}
+		break;
+
+	    case KEY_ESC:
+	    case KEY_CANCEL:
+	    case KEY_EXIT:
+	    case KEY_CTRL('C'):
+	    case KEY_CTRL('G'):
+	    case KEY_CTRL('\\'):
+		done = true;
+		break;
+
+	    default:
+		curpage++;
+		done = (curpage == numpages);
+	    }
 	}
     }
 

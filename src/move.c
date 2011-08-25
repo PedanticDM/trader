@@ -219,8 +219,8 @@ selection_t get_move (void)
 
     // Display current move choices on the galaxy map
     for (int i = 0; i < NUMBER_MOVES; i++) {
-	mvwaddch(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
-		 PRINTABLE_GAME_MOVE(i) | attr_map_choice);
+	mvwaddchstr(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
+		    CHTYPE_GAME_MOVE(i));
     }
     wrefresh(curwin);
 
@@ -242,7 +242,7 @@ selection_t get_move (void)
 
 	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
 	      attr_choice, 1,
-	      _("Select move [^[%c^]-^[%c^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
+	      _("Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
 	      PRINTABLE_GAME_MOVE(0), PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
 
 	curs_set(CURS_ON);
@@ -250,60 +250,69 @@ selection_t get_move (void)
 
 	// Get the actual selection made by the player
 	while (selection == SEL_NONE) {
-	    int i;
-	    bool found;
+	    wint_t key;
 
-	    int key = gettxchar(curwin);
+	    if (gettxchar(curwin, &key) == OK) {
+		// Ordinary wide character
+		int i;
+		bool found;
 
-	    if (isupper(*keycode_game_move)) {
-		key = toupper(key);
-	    } else if (islower(*keycode_game_move)) {
-		key = tolower(key);
-	    }
-
-	    for (i = 0, found = false; keycode_game_move[i] != '\0'; i++) {
-		if (keycode_game_move[i] == key) {
-		    found = true;
-		    selection = i;
-
-		    curs_set(CURS_OFF);
-		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
-			 attr_choice, 0, 1,
-			 /* TRANSLATORS: "Move" refers to the choice of
-			    moves made by the current player (out of a
-			    selection of 20 moves). */
-			 _("Move ^{%c^}"), PRINTABLE_GAME_MOVE(i));
-
-		    break;
+		if (iswupper(*keycode_game_move)) {
+		    key = towupper(key);
+		} else if (iswlower(*keycode_game_move)) {
+		    key = towlower(key);
 		}
-	    }
 
-	    if (! found) {
+		for (i = 0, found = false; keycode_game_move[i] != '\0'; i++) {
+		    if (keycode_game_move[i] == key) {
+			found = true;
+			selection = i;
+
+			curs_set(CURS_OFF);
+			left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			     attr_choice, 0, 1,
+			     /* TRANSLATORS: "Move" refers to the choice of
+				moves made by the current player (out of a
+				selection of 20 moves). */
+			     _("Move ^{%lc^}"), PRINTABLE_GAME_MOVE(i));
+
+			break;
+		    }
+		}
+
+		if (! found) {
+		    switch (key) {
+		    case '1':
+			curs_set(CURS_OFF);
+			show_status(current_player);
+			curs_set(CURS_ON);
+			break;
+
+		    case '2':
+			selection = SEL_BANKRUPT;
+
+			curs_set(CURS_OFF);
+			left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			     attr_normal | A_BOLD, 0, 1,
+			     _("^{<2>^} (Declare bankruptcy)"));
+			break;
+
+		    case '3':
+			selection = SEL_SAVE;
+
+			curs_set(CURS_OFF);
+			left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			     attr_normal | A_BOLD, 0, 1,
+			     _("^{<3>^} (Save and end the game)"));
+			break;
+
+		    default:
+			beep();
+		    }
+		}
+	    } else {
+		// Function or control key
 		switch (key) {
-		case '1':
-		    curs_set(CURS_OFF);
-		    show_status(current_player);
-		    curs_set(CURS_ON);
-		    break;
-
-		case '2':
-		    selection = SEL_BANKRUPT;
-
-		    curs_set(CURS_OFF);
-		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
-			 attr_normal | A_BOLD, 0, 1,
-			 _("^{<2>^} (Declare bankruptcy)"));
-		    break;
-
-		case '3':
-		    selection = SEL_SAVE;
-
-		    curs_set(CURS_OFF);
-		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
-			 attr_normal | A_BOLD, 0, 1,
-			 _("^{<3>^} (Save and end the game)"));
-		    break;
-
 		case KEY_ESC:
 		case KEY_CANCEL:
 		case KEY_EXIT:
@@ -361,10 +370,10 @@ selection_t get_move (void)
 	    if (! saved) {
 		// Ask which game to save
 
-		int key;
 		bool done;
 		int widthbuf[2];
 		int lines, maxwidth;
+		int choice;
 
 		lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0,
 				2, WIN_COLS - 7, widthbuf, 2,
@@ -383,12 +392,22 @@ selection_t get_move (void)
 
 		done = false;
 		while (! done) {
-		    key = gettxchar(curwin);
+		    wint_t key;
 
-		    if (key >= '1' && key <= '9') {
-			wechochar(curwin, key | A_BOLD);
-			done = true;
+		    if (gettxchar(curwin, &key) == OK) {
+			// Ordinary wide character
+			if (key >= '1' && key <= '9') {
+			    left(curwin, getcury(curwin), getcurx(curwin),
+				 A_BOLD, 0, 0, 1, "%lc", key);
+			    wrefresh(curwin);
+
+			    choice = key - '0';
+			    done = true;
+			} else {
+			    beep();
+			}
 		    } else {
+			// Function or control key
 			switch (key) {
 			case KEY_ESC:
 			case KEY_CANCEL:
@@ -396,7 +415,7 @@ selection_t get_move (void)
 			case KEY_CTRL('C'):
 			case KEY_CTRL('G'):
 			case KEY_CTRL('\\'):
-			    key = KEY_CANCEL;
+			    choice = ERR;
 			    done = true;
 			    break;
 
@@ -408,9 +427,10 @@ selection_t get_move (void)
 
 		curs_set(CURS_OFF);
 
-		if (key != KEY_CANCEL) {
+		if (choice != ERR) {
 		    // Try to save the game, if possible
-		    game_num = key - '0';
+
+		    game_num = choice;
 
 		    mkchstr(chbuf, BUFSIZE, attr_status_window, 0, 0, 1,
 			    WIN_COLS - 7, &width, 1,
@@ -645,14 +665,14 @@ void bankrupt_player (bool forced)
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
 		 attr_error_waitforkey, _("  Bankruptcy Court  "),
-		 _("%s has been declared bankrupt "
+		 _("%ls has been declared bankrupt "
 		   "by the Interstellar Trading Bank."),
 		 player[current_player].name);
     } else {
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
 		 attr_error_waitforkey, _("  Bankruptcy Court  "),
-		 _("%s has declared bankruptcy."),
+		 _("%ls has declared bankruptcy."),
 		 player[current_player].name);
     }
     txrefresh();
@@ -721,7 +741,7 @@ void try_start_new_company (int x, int y)
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_normal_window,
 		 attr_title, attr_normal, attr_highlight, 0, attr_waitforkey,
 		 _("  New Company  "),
-		 _("A new company has been formed!\nIts name is ^{%s^}."),
+		 _("A new company has been formed!\nIts name is ^{%ls^}."),
 		 company[i].name);
 	txrefresh();
 
@@ -777,7 +797,7 @@ void merge_companies (map_val_t a, map_val_t b)
 
     lines = mkchstr(chbuf, BUFSIZE, attr_normal, attr_highlight, 0, 4,
 		    WIN_COLS - 8, widthbuf, 4,
-		    _("^{%s^} has just merged into ^{%s^}.\n"
+		    _("^{%ls^} has just merged into ^{%ls^}.\n"
 		      "Please note the following transactions:\n"),
 		    company[bb].name, company[aa].name);
 
@@ -787,11 +807,11 @@ void merge_companies (map_val_t a, map_val_t b)
     centerch(curwin, 3, 0, chbuf, lines, widthbuf);
 
     mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
-	    &width_aa, 1, "%s", company[aa].name);
+	    &width_aa, 1, "%ls", company[aa].name);
     chbuf_aa = xchstrdup(chbuf);
 
     mkchstr(chbuf, BUFSIZE, attr_highlight, 0, 0, 1, getmaxx(curwin) / 2,
-	    &width_bb, 1, "%s", company[bb].name);
+	    &width_bb, 1, "%ls", company[bb].name);
     chbuf_bb = xchstrdup(chbuf);
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin) / 2,
@@ -824,12 +844,11 @@ void merge_companies (map_val_t a, map_val_t b)
 	 pgettext("subtitle", "Player"));
     right(curwin, lines + 6, w - 4, attr_subtitle, 0, 0, 1,
 	  /* TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
-	     each player after two companies merge.  %s is the currency
+	     each player after two companies merge.  %ls is the currency
 	     symbol in the current locale.  The maximum column width is
 	     12 characters INCLUDING the currency symbol (see
 	     MERGE_BONUS_COLS in src/intf.h). */
-	  pgettext("subtitle", "Bonus (%s)"),
-	  lconvinfo.currency_symbol);
+	  pgettext("subtitle", "Bonus (%ls)"), currency_symbol);
     right(curwin, lines + 6, w - 6 - MERGE_BONUS_COLS, attr_subtitle, 0, 0, 1,
 	  /* TRANSLATORS: "Total" refers to the total number of shares in
 	     the new company after a merger.  The maximum column width is
@@ -868,7 +887,7 @@ void merge_companies (map_val_t a, map_val_t b)
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, w - 12
 		    - MERGE_BONUS_COLS - MERGE_TOTAL_STOCK_COLS
 		    - MERGE_NEW_STOCK_COLS - MERGE_OLD_STOCK_COLS,
-		    &width, 1, "%s", player[i].name);
+		    &width, 1, "%ls", player[i].name);
 	    leftch(curwin, ln, 4, chbuf, 1, &width);
 
 	    right(curwin, ln, w - 4, attr_normal, 0, 0, 1, "%!N", bonus);
@@ -994,7 +1013,7 @@ void adjust_values (void)
 			 attr_error_title, attr_error_highlight,
 			 attr_error_normal, 0, attr_error_waitforkey,
 			 _("  Bankruptcy Court  "),
-			 _("%s has been declared bankrupt "
+			 _("%ls has been declared bankrupt "
 			   "by the Interstellar Trading Bank.\n\n"
 			   "^{All assets have been taken "
 			   "to repay outstanding loans.^}"),
@@ -1016,7 +1035,7 @@ void adjust_values (void)
 
 		lines = mkchstr(chbuf, BUFSIZE, attr_error_highlight,
 				attr_error_normal, 0, 6, 60 - 4, widthbuf, 6,
-				_("%s has been declared bankrupt by the "
+				_("%ls has been declared bankrupt by the "
 				  "Interstellar Trading Bank.\n\n"
 				  "^{The Bank has agreed to pay stock holders ^}"
 				  "%.2f%%^{ of the share value on each share "

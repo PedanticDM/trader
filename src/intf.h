@@ -105,8 +105,8 @@ typedef enum curs_type {
 #define KEY_CTRL(x)	((x) - 0100)	// ASCII control character
 
 // Keycodes for inserting the default value in input routines
-#define KEY_DEFAULTVAL1	'='
-#define KEY_DEFAULTVAL2	';'
+#define CHAR_DEFVAL1	'='
+#define CHAR_DEFVAL2	';'
 
 // Control-arrow key combinations, as returned by Ncurses
 #ifndef KEY_CDOWN
@@ -114,6 +114,11 @@ typedef enum curs_type {
 #  define KEY_CUP	01060		// CTRL + Up Arrow
 #  define KEY_CLEFT	01033		// CTRL + Left Arrow
 #  define KEY_CRIGHT	01052		// CTRL + Right Arrow
+#endif
+
+// Function-key result, for Curses that do not define it
+#ifndef KEY_CODE_YES
+#  define KEY_CODE_YES	0400
 #endif
 
 // Timeout value (in ms) for Meta-X-style keyboard input
@@ -321,7 +326,7 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
   Returns:    int          - Number of lines actually used
 
   This function converts the format string and following arguments into
-  chbuf, a chtype buffer that can be used for calls to leftch(), centerch()
+  chbuf, a chtype string that can be used for calls to leftch(), centerch()
   and rightch().  At most maxlines lines are used, each with a maximum
   width of maxwidth.  The actual widths of each resulting line are stored
   in widthbuf (which must not be NULL).  If maxlines is greater than 1,
@@ -534,26 +539,26 @@ extern int right (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
 
 
 /*
-  Function:   gettxchar - Read a character from the keyboard
+  Function:   gettxchar - Read a wide character from the keyboard
   Parameters: win       - Window to use (should be curwin)
-  Returns:    int       - The keyboard character
+              wch       - Pointer to keyboard wide character
+  Returns:    int       - OK or KEY_CODE_YES
 
-  This function reads a single character from the keyboard.  The key is
-  NOT echoed to the terminal display, nor is the cursor visibility
-  affected.
-
-  This implementation does not handle multibyte characters correctly:
-  each part of the multibyte character most likely appears as a separate
-  keyboard press.
+  This function waits until the user presses a key on the keyboard, then
+  reads that key as a single wide character.  If it is a function key or
+  a control key, it is stored in wch and KEY_CODE_YES is returned.
+  Otherwise, it is an ordinary key: it is also stored in wch and OK is
+  returned.  ERR is never returned.  The key is NOT echoed to the
+  terminal display, nor is the cursor visibility affected.
 */
-extern int gettxchar (WINDOW *win);
+extern int gettxchar (WINDOW *win, wint_t *wch);
 
 
 /*
-  Function:   gettxline  - Read a line from the keyboard (low-level)
+  Function:   gettxline  - Read a line of input from the keyboard (low-level)
   Parameters: win        - Window to use (should be curwin)
               buf        - Pointer to preallocated buffer
-              bufsize    - Size of buffer in bytes
+              bufsize    - Size of buffer (number of wchar_t elements)
               modified   - Pointer to modified status (result)
               multifield - Allow <TAB>, etc, to exit this function
               emptyval   - String used if input line is empty
@@ -561,14 +566,14 @@ extern int gettxchar (WINDOW *win);
               allowed    - Characters allowed in the input line
               stripspc   - True to strip leading/trailing spaces
               y, x       - Start of the input field (line, column)
-              width      - Width of the input field
+              width      - Width of the input field (column spaces)
               attr       - Character rendition to use for input field
   Returns:    int        - Status code: OK, ERR or KEY_ keycode
 
-  This low-level function draws an input field width characters long
+  This low-level function shows an input field width column spaces long
   using attr as the character rendition, then reads a line of input from
   the keyboard and places it into the preallocated buffer buf[] of size
-  bufsize.  On entry, buf[] must contain a valid C string; this string is
+  bufsize.  On entry, buf[] must contain a valid string; this string is
   used as the initial contents of the input field.  On exit, buf[]
   contains the final string as edited or input by the user.  This string
   is printed in place of the input field using the original character
@@ -580,13 +585,13 @@ extern int gettxchar (WINDOW *win);
   empty string is entered, the string pointed to by emptyval (if not
   NULL) is stored in buf[].
 
-  If CANCEL, EXIT, ESC, ^C, ^\ or ^G is pressed, ERR is returned.  In
+  If ESC, CANCEL, EXIT, ^C, ^G or ^\ is pressed, ERR is returned.  In
   this case, buf[] contains the string as left by the user: emptyval is
   NOT used, nor are leading and trailing spaces stripped.
 
   If multifield is true, the UP and DOWN arrow keys, as well as TAB,
-  Shift-TAB, ^P (Previous) and ^N (Next) return KEY_UP or KEY_DOWN as
-  appropriate.  As with CANCEL etc., emptyval is NOT used, nor are
+  Shift-TAB, ^P (Previous) and ^N (Next) return either KEY_UP or KEY_DOWN
+  as appropriate.  As with ESC etc., emptyval is NOT used, nor are
   leading and trailing spaces stripped.
 
   In all of these cases, the boolean variable *modified (if modified is
@@ -594,7 +599,7 @@ extern int gettxchar (WINDOW *win);
   way (including if the user made any changed, spaces were stripped or if
   emptyval was copied into buf[]).
 
-  If KEY_DEFAULTVAL1 or KEY_DEFAULTVAL2 is pressed when the input line is
+  If either KEY_DEFVAL1 or KEY_DEFVAL2 is pressed when the input line is
   empty, the string pointed to by defaultval (if not NULL) is placed in
   the buffer as if typed by the user.  Editing is NOT terminated in this
   case.
@@ -607,17 +612,12 @@ extern int gettxchar (WINDOW *win);
   Note that the character rendition (attributes) in attr may contain a
   printing character.  For example, A_BOLD | '_' is a valid rendition
   that causes the input field to be a series of "_" characters in bold.
-
-  This implementation does not handle multibyte characters correctly:
-  each part of the multibyte character most likely appears as a separate
-  keyboard press and is handled as a separate character, causing the
-  cursor position to be incorrect.  In addition, allowed is compared on a
-  byte-by-byte basis, not character-by-character.
+  Note also that the cursor becomes invisible after calling this function.
 */
-extern int gettxline (WINDOW *win, char *buf, int bufsize,
+extern int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		      bool *restrict modified, bool multifield,
-		      const char *emptyval, const char *defaultval,
-		      const char *allowed, bool stripspc, int y, int x,
+		      const wchar_t *emptyval, const wchar_t *defaultval,
+		      const wchar_t *allowed, bool stripspc, int y, int x,
 		      int width, chtype attr);
 
 
@@ -633,18 +633,19 @@ extern int gettxline (WINDOW *win, char *buf, int bufsize,
   Returns:    int        - Status code: OK, ERR or KEY_ keycode
 
   This function calls gettxline() to allow the user to enter a string via
-  the keyboard.  On entry, bufptr must be the address of a char * pointer
-  variable; that pointer (*bufptr) must either be NULL or contain the
-  address of a buffer previously allocated with gettxstr().  If *bufptr
-  is NULL, a buffer of BUFSIZE is automatically allocated using malloc();
-  this buffer is used to store and return the input line.
+  the keyboard.  On entry, bufptr must be the address of a wchar_t *
+  pointer variable; that pointer (*bufptr) must either be NULL or contain
+  the address of a buffer previously allocated with gettxstr().  If
+  *bufptr is NULL, a buffer of BUFSIZE is automatically allocated using
+  malloc(); this buffer is used to store and return the input line.
 
   Apart from bufptr, all parameters are as used for gettxline().  The
   gettxline() parameters emptyval and defaultval are passed as "",
   allowed is NULL and stripspc is true.
 */
-extern int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
-		     bool multifield, int y, int x, int width, chtype attr);
+extern int gettxstr (WINDOW *win, wchar_t *restrict *restrict bufptr,
+		     bool *restrict modified, bool multifield,
+		     int y, int x, int width, chtype attr);
 
 
 /*
@@ -656,7 +657,7 @@ extern int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
               emptyval    - Value to use for empty input
               defaultval  - Value to use for default input
               y, x        - Start of the input field (line, column)
-              width       - Width of the input field
+              width       - Width of the input field (column spaces)
               attr        - Character rendition to use for input field
   Returns:    int         - Status code: OK, ERR or KEY_ keycode
 
@@ -668,12 +669,11 @@ extern int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
   result from gettxline() is passed back to the caller.  Note that the
   low-level function gettxline() is called with multifield set to false.
 
-  This function is locale-aware, although multibyte strings are not
-  handled correctly.  In particular, the default value is formatted using
-  strfmon() and uses the locale monetary default decimal places
-  (frac_digits).  In addition, the user is allowed to use the locale's
-  radix character (decimal point) and the thousands separator, as well as
-  the monetary versions of these.
+  This function is locale-aware.  In particular, the default value is
+  formatted using strfmon() and uses the locale monetary default decimal
+  places (frac_digits).  In addition, the user is allowed to use the
+  locale's radix character (decimal point) and the thousands separator,
+  as well as the monetary versions of these.
 */
 extern int gettxdouble (WINDOW *win, double *restrict result, double min,
 			double max, double emptyval, double defaultval,
@@ -696,9 +696,9 @@ extern int gettxdouble (WINDOW *win, double *restrict result, double min,
   This function behaves almost exactly like gettxdouble(), except that
   only integer numbers are allowed to be entered.
 
-  This function is locale-aware, although multibyte strings are not
-  handled correctly.  In particular, the user is allowed to use the
-  locale's thousands separator and the monetary thousands separator.
+  This function is locale-aware.  In particular, the user is allowed to
+  use the locale's thousands separator and the monetary thousands
+  separator.
 */
 extern int gettxlong (WINDOW *win, long int *restrict result, long int min,
 		      long int max, long int emptyval, long int defaultval,
@@ -710,10 +710,11 @@ extern int gettxlong (WINDOW *win, long int *restrict result, long int min,
   Parameters: win          - Window to use (should be curwin)
   Returns:    bool         - True if Yes was selected, false if No
 
-  This function waits for the user to press either "Y" (for Yes) or "N"
-  (for No) on the keyboard, then prints the answer using A_BOLD.  True is
-  returned if "Y" was selected, false if "N".  Note that the cursor
-  becomes invisible after calling this function.
+  This function waits for the user to press either the locale-specific
+  equivalent of "Y" (for Yes) or "N" (for No) on the keyboard, then
+  prints the answer using A_BOLD.  True is returned if "Y" was selected,
+  false if "N".  Note that the cursor becomes invisible after calling
+  this function.
 */
 extern bool answer_yesno (WINDOW *win);
 
@@ -730,10 +731,6 @@ extern bool answer_yesno (WINDOW *win);
 
   The reason the user is not asked "Press any key to continue" is
   historical: many, many people used to ask "where is the <ANY> key?" :-)
-
-  The current implementation does not handle multibyte characters
-  correctly: only the first byte of the character is consumed, with
-  further bytes left in the keyboard queue.
 */
 extern void wait_for_key (WINDOW *win, int y, chtype attr);
 

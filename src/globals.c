@@ -128,10 +128,12 @@ player_info_t	player[MAX_PLAYERS];		// Array of players
 map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
-char	*keycode_company;		// Keycodes for each company
-char	*keycode_game_move;		// Keycodes for each game move
-char	*printable_map_val;		// Printable output for each map value
-char	*printable_game_move;		// Printable output for each game move
+wchar_t	*keycode_company;		// Keycodes for each company
+wchar_t	*keycode_game_move;		// Keycodes for each game move
+wchar_t	*printable_map_val;		// Printable output for each map value
+wchar_t	*printable_game_move;		// Printable output for each game move
+chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
+chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
 
 int	max_turn;			// Max. number of turns in game
 int	turn_number;			// Current turn (1 to max_turn)

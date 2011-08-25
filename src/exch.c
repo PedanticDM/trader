@@ -97,7 +97,7 @@ void exchange_stock (void)
 	center(curwin, 1, 0, attr_title, 0, 0, 1,
 	       _("  Interstellar Stock Exchange  "));
 	center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-	       _("Player: ^{%s^}"), player[current_player].name);
+	       _("Player: ^{%ls^}"), player[current_player].name);
 
 	all_off_map = true;
 	for (i = 0; i < MAX_COMPANIES; i++) {
@@ -143,19 +143,19 @@ void exchange_stock (void)
 		  - SHARE_RETURN_COLS, attr_subtitle, 0, 0, 2,
 		  /* TRANSLATORS: "Price per share" is a two-line column
 		     label in a table containing the price per share in
-		     any given company.  %s is the currency symbol in the
-		     current locale.  The maximum column width is 12
+		     any given company.  %ls is the currency symbol in
+		     the current locale.  The maximum column width is 12
 		     characters INCLUDING the currency symbol (see
 		     SHARE_PRICE_COLS in src/intf.h). */
-		  pgettext("subtitle", "Price per\nshare (%s)"),
-		  lconvinfo.currency_symbol);
+		  pgettext("subtitle", "Price per\nshare (%ls)"),
+		  currency_symbol);
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
 		    mvwaddch(curwin, line, 2, PRINTABLE_MAP_VAL(COMPANY_TO_MAP(i))
 			     | attr_choice);
 
-		    left(curwin, line, 4, attr_normal, 0, 0, 1, "%s",
+		    left(curwin, line, 4, attr_normal, 0, 0, 1, "%ls",
 			 company[i].name);
 
 		    right(curwin, line, w - 2, attr_normal, 0, 0, 1, "%'ld  ",
@@ -196,48 +196,61 @@ void exchange_stock (void)
 
 	// Get the actual selection made by the player
 	while (selection == SEL_NONE) {
-	    bool found;
+	    wint_t key;
 
-	    int key = gettxchar(curwin);
+	    if (gettxchar(curwin, &key) == OK) {
+		// Ordinary wide character
+		bool found;
 
-	    if (isupper(*keycode_company)) {
-		key = toupper(key);
-	    } else if (islower(*keycode_company)) {
-		key = tolower(key);
-	    }
+		if (iswupper(*keycode_company)) {
+		    key = towupper(key);
+		} else if (iswlower(*keycode_company)) {
+		    key = towlower(key);
+		}
 
-	    for (i = 0, found = false; keycode_company[i] != '\0'; i++) {
-		if (keycode_company[i] == key) {
-		    found = true;
-		    if (company[i].on_map) {
-			selection = i;
-		    } else {
+		for (i = 0, found = false; keycode_company[i] != '\0'; i++) {
+		    if (keycode_company[i] == key) {
+			found = true;
+			if (company[i].on_map) {
+			    selection = i;
+			} else {
+			    beep();
+			}
+			break;
+		    }
+		}
+
+		if (! found) {
+		    switch (key) {
+		    case '1':
+			curs_set(CURS_OFF);
+			show_status(current_player);
+			curs_set(CURS_ON);
+			break;
+
+		    case '2':
+			curs_set(CURS_OFF);
+			show_map(true);
+			curs_set(CURS_ON);
+			break;
+
+		    case '3':
+			selection = SEL_BANK;
+			break;
+
+		    case '4':
+		    case ' ':
+			selection = SEL_EXIT;
+			break;
+
+		    default:
 			beep();
 		    }
-		    break;
 		}
-	    }
-
-	    if (! found) {
+	    } else {
+		// Function or control key
 		switch (key) {
-		case '1':
-		    curs_set(CURS_OFF);
-		    show_status(current_player);
-		    curs_set(CURS_ON);
-		    break;
-
-		case '2':
-		    curs_set(CURS_OFF);
-		    show_map(true);
-		    curs_set(CURS_ON);
-		    break;
-
-		case '3':
-		    selection = SEL_BANK;
-		    break;
-
-		case '4':
-		case ' ':
+		case KEY_ESC:
 		case KEY_CANCEL:
 		case KEY_EXIT:
 		case KEY_CTRL('C'):
@@ -287,7 +300,7 @@ void visit_bank (void)
 {
     double credit_limit;
     double val, max;
-    int key;
+    wint_t key;
     bool done;
 
     chtype *chbuf = xmalloc(BUFSIZE * sizeof(chtype));
@@ -363,27 +376,41 @@ void visit_bank (void)
 
     done = false;
     while (! done) {
-	key = gettxchar(curwin);
+	if (gettxchar(curwin, &key) == OK) {
+	    // Ordinary wide character
+	    switch (key) {
+	    case '1':
+	    case '2':
+	    case '3':
+		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
+		     0, 0, 1, "%lc", key);
+		wrefresh(curwin);
 
-	switch (key) {
-	case '1':
-	case '2':
-	case '3':
-	    wechochar(curwin, key | A_BOLD);
-	    done = true;
-	    break;
+		done = true;
+		break;
 
-	case ' ':
-	case KEY_CANCEL:
-	case KEY_EXIT:
-	case KEY_CTRL('C'):
-	case KEY_CTRL('G'):
-	case KEY_CTRL('\\'):
-	    done = true;
-	    break;
+	    case ' ':
+		done = true;
+		break;
 
-	default:
-	    beep();
+	    default:
+		beep();
+	    }
+	} else {
+	    // Function or control key
+	    switch (key) {
+	    case KEY_ESC:
+	    case KEY_CANCEL:
+	    case KEY_EXIT:
+	    case KEY_CTRL('C'):
+	    case KEY_CTRL('G'):
+	    case KEY_CTRL('\\'):
+		done = true;
+		break;
+
+	    default:
+		beep();
+	    }
 	}
     }
 
@@ -410,8 +437,8 @@ void visit_bank (void)
 	    n = (lconvinfo.p_sep_by_space == 1) ? 1 : 0;
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, attr_normal | A_BOLD, 0, 1,
-		    getmaxx(curwin) / 2, &width_cursym, 1, "^{%s^}",
-		    lconvinfo.currency_symbol);
+		    getmaxx(curwin) / 2, &width_cursym, 1, "^{%ls^}",
+		    currency_symbol);
 	    chbuf_cursym = xchstrdup(chbuf);
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
@@ -468,8 +495,8 @@ void visit_bank (void)
 	    n = (lconvinfo.p_sep_by_space == 1) ? 1 : 0;
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, attr_normal | A_BOLD, 0, 1,
-		    getmaxx(curwin) / 2, &width_cursym, 1, "^{%s^}",
-		    lconvinfo.currency_symbol);
+		    getmaxx(curwin) / 2, &width_cursym, 1, "^{%ls^}",
+		    currency_symbol);
 	    chbuf_cursym = xchstrdup(chbuf);
 
 	    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, getmaxx(curwin)
@@ -527,11 +554,12 @@ void visit_bank (void)
 void trade_shares (int num, bool *bid_used)
 {
     bool done;
-    int key, ret, w, x;
+    int ret, w, x;
     long int maxshares, val;
     double ownership;
     chtype *chbuf;
     int width;
+    wint_t key;
 
 
     assert(num >= 0 && num < MAX_COMPANIES);
@@ -548,8 +576,8 @@ void trade_shares (int num, bool *bid_used)
     w = getmaxx(curwin);
 
     center(curwin, 1, 0, attr_title, 0, 0, 1,
-	   /* TRANSLATORS: %s represents the company name. */
-	   _("  Stock Transaction in %s  "), company[num].name);
+	   /* TRANSLATORS: %ls represents the company name. */
+	   _("  Stock Transaction in %ls  "), company[num].name);
 
     mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, w / 2, &width, 1,
 	    /* TRANSLATORS: "Shares issued" represents the number of
@@ -633,28 +661,42 @@ void trade_shares (int num, bool *bid_used)
 
     done = false;
     while (! done) {
-	key = gettxchar(curwin);
+	if (gettxchar(curwin, &key) == OK) {
+	    // Ordinary wide character
+	    switch (key) {
+	    case '1':
+	    case '2':
+	    case '3':
+	    case '4':
+		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
+		     0, 0, 1, "%lc", key);
+		wrefresh(curwin);
 
-	switch (key) {
-	case '1':
-	case '2':
-	case '3':
-	case '4':
-	    wechochar(curwin, key | A_BOLD);
-	    done = true;
-	    break;
+		done = true;
+		break;
 
-	case ' ':
-	case KEY_CANCEL:
-	case KEY_EXIT:
-	case KEY_CTRL('C'):
-	case KEY_CTRL('G'):
-	case KEY_CTRL('\\'):
-	    done = true;
-	    break;
+	    case ' ':
+		done = true;
+		break;
 
-	default:
-	    beep();
+	    default:
+		beep();
+	    }
+	} else {
+	    // Function or control key
+	    switch (key) {
+	    case KEY_ESC:
+	    case KEY_CANCEL:
+	    case KEY_EXIT:
+	    case KEY_CTRL('C'):
+	    case KEY_CTRL('G'):
+	    case KEY_CTRL('\\'):
+		done = true;
+		break;
+
+	    default:
+		beep();
+	    }
 	}
     }
 
@@ -755,16 +797,16 @@ void trade_shares (int num, bool *bid_used)
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
 		     attr_error_title, attr_error_highlight, 0, 0,
 		     attr_error_waitforkey, _("  No Shares Issued  "),
-		     /* TRANSLATORS: %s represents the company name. */
-		     _("%s has refused\nto issue more shares."),
+		     /* TRANSLATORS: %ls represents the company name. */
+		     _("%ls has refused\nto issue more shares."),
 		     company[num].name);
 	} else {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_normal_window,
 		     attr_title, attr_normal, attr_highlight, 0,
 		     attr_waitforkey, _("  Shares Issued  "),
-		     /* TRANSLATORS: %s represents the company name. */
-		     ngettext("%s has issued\n^{one^} more share.",
-			      "%s has issued\n^{%'ld^} more shares.",
+		     /* TRANSLATORS: %ls represents the company name. */
+		     ngettext("%ls has issued\n^{one^} more share.",
+			      "%ls has issued\n^{%'ld^} more shares.",
 			      maxshares), company[num].name, maxshares);
 	}
 	break;

@@ -32,7 +32,7 @@
 #define included_GLOBALS_H 1
 
 
-#include <stdbool.h>
+#include <system.h>
 
 
 /************************************************************************
@@ -97,7 +97,7 @@
 
 // Information about each company
 typedef struct company_info {
-    const char	*name;			// Company name
+    wchar_t	*name;			// Company name
     double	share_price;		// Share price
     double	share_return;		// Return per share
     long int	stock_issued;		// Total stock sold to players
@@ -108,7 +108,8 @@ typedef struct company_info {
 
 // Information about each player
 typedef struct player_info {
-    char	*name;			// Player name
+    wchar_t	*name;			// Player name
+    char	*name_utf8;		// Player name (in UTF-8, for load/save)
     double	cash;			// Cash available
     double	debt;			// Amount of debt
     long int	stock_owned[MAX_COMPANIES];	// How much stock is owned
@@ -130,11 +131,14 @@ typedef enum map_val {
 #define MAP_TO_COMPANY(m)	((m) - MAP_A)
 #define IS_MAP_COMPANY(m)	((m) >= MAP_A && (m) <= MAP_LAST)
 
-#define PRINTABLE_MAP_VAL(m)						\
-    (((m) == MAP_EMPTY)   ? printable_map_val[0] :			\
-    (((m) == MAP_OUTPOST) ? printable_map_val[1] :			\
-    (((m) == MAP_STAR)    ? printable_map_val[2] :			\
-			    printable_map_val[(m) - MAP_A + 3])))
+#define MAP_TO_INDEX(m)							\
+    (((m) == MAP_EMPTY)   ? 0 :						\
+    (((m) == MAP_OUTPOST) ? 1 :						\
+    (((m) == MAP_STAR)    ? 2 :						\
+			    ((m) - MAP_A + 3))))
+
+#define PRINTABLE_MAP_VAL(m)	printable_map_val[MAP_TO_INDEX(m)]
+#define CHTYPE_MAP_VAL(m)	chtype_map_val[MAP_TO_INDEX(m)]
 
 
 // Information about a move
@@ -144,6 +148,7 @@ typedef struct move_rec {
 } move_rec_t;
 
 #define PRINTABLE_GAME_MOVE(m)	(printable_game_move[m])
+#define CHTYPE_GAME_MOVE(m)	(chtype_game_move[m])
 
 
 // Player moves / selection values
@@ -193,10 +198,12 @@ extern player_info_t	player[MAX_PLAYERS];		// Array of players
 extern map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 extern move_rec_t	game_move[NUMBER_MOVES];	// Current moves
 
-extern char	*keycode_company;	// Keycodes for each company
-extern char	*keycode_game_move;	// Keycodes for each game move
-extern char	*printable_map_val;	// Printable output for each map value
-extern char	*printable_game_move;	// Printable output for each game move
+extern wchar_t	*keycode_company;	// Keycodes for each company
+extern wchar_t	*keycode_game_move;	// Keycodes for each game move
+extern wchar_t	*printable_map_val;	// Printable output for each map value
+extern wchar_t	*printable_game_move;	// Printable output for each game move
+extern chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
+extern chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
 
 extern int	max_turn;		// Max. number of turns in game
 extern int	turn_number;		// Current turn (1 to max_turn)

@@ -32,7 +32,7 @@
 
 
 /************************************************************************
-*            Module-specific constants and type declarations            *
+*        Module-specific constants, type declarations and macros        *
 ************************************************************************/
 
 typedef struct txwin {
@@ -40,6 +40,57 @@ typedef struct txwin {
     struct txwin	*next;		// Next window in stack
     struct txwin	*prev;		// Previous window in stack
 } txwin_t;
+
+
+// Initialisation macros used in init_screen()
+
+#define __stringify(s) #s
+
+#define init_game_str(_var, _default, _checkpos)			\
+    do {								\
+	char *s = gettext(_default);					\
+	if (xmbstowcs(buf, s, BUFSIZE) < (_checkpos) + 1		\
+	    || buf[_checkpos] != '|') {					\
+	    err_exit(_("%s: string has incorrect format: `%s'"),	\
+		     __stringify(_var), s);				\
+	}								\
+	(_var) = xwcsdup(buf);						\
+	(_var)[_checkpos] = '\0';					\
+    } while (0)
+
+#define init_game_chstr(_chvar, _var, _attr, _err)			\
+    do {								\
+	chtype *p = chbuf;						\
+	wchar_t c;							\
+	int w, n;							\
+	mbstate_t mbstate;						\
+									\
+	c = (_var);							\
+	if ((w = wcwidth(c)) < 1) {					\
+	    err_exit(_("%s: character has illegal width: `%lc'"),	\
+		     __stringify(_err), c);				\
+	}								\
+									\
+	memset(&mbstate, 0, sizeof(mbstate));				\
+	n = xwcrtomb(convbuf, c, &mbstate);				\
+	for (int i = 0; i < n; i++) {					\
+	    *p++ = (unsigned char) convbuf[i] | (_attr);		\
+	}								\
+									\
+	if (w == 1) {							\
+	    n = xwcrtomb(convbuf, ' ', &mbstate);			\
+	    for (int i = 0; i < n; i++) {				\
+		*p++ = (unsigned char) convbuf[i] | attr_map_empty;	\
+	    }								\
+	}								\
+									\
+	n = xwcrtomb(convbuf, '\0', &mbstate);				\
+	for (int i = 0; i < n; i++) {					\
+	    *p++ = (unsigned char) convbuf[i];				\
+	}								\
+									\
+	(_chvar) = xchstrdup(chbuf);					\
+    } while (0)
 
 
 // Declarations for argument processing in mkchstr()
@@ -245,6 +296,72 @@ static void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
 
 
 /*
+  Function:   getwch - Get a wide character from the keyboard
+  Parameters: win    - Window to use (should be curwin)
+              wch    - Pointer to wide character result
+  Returns:    int    - OK, KEY_CODE_YES or ERR
+
+  This internal function waits for a complete wide character to be typed
+  on the keyboard.  OK is returned if wch contains an ordinary wide
+  character, KEY_CODE_YES if a function key or control key, or ERR on
+  error.
+
+  This function is either a wrapper (with modifications) for wget_wch()
+  from Curses, or an implementation of that function using wgetch().
+*/
+static int getwch (WINDOW *win, wint_t *wch);
+
+
+/*
+  Function:   cpos_endl - Adjust cpos and st for printing the ending part of buf
+  Parameters: buf       - Pointer to current editing buffer
+              cpos      - Pointer to current cursor position (result)
+              st        - Pointer to current starting offset for buf[] (result)
+              clen      - Current column width of entire string
+              width     - Width of editing field in column spaces
+              len       - Length of string being edited (wchar_t elements)
+  Returns:    (nothing)
+
+  This helper function adjusts *cpos and *st so that the cursor is placed
+  at the end of the current editing buffer buf[].
+*/
+static void cpos_endl (wchar_t *restrict buf, int *restrict cpos,
+		       int *restrict st, int clen, int width, int len);
+
+
+/*
+  Function:   cpos_decr - Adjust cpos and st: scroll to the left by w columns
+  Parameters: buf       - Pointer to current editing buffer
+              cpos      - Pointer to current cursor position (result)
+              st        - Pointer to current starting offset for buf[] (result)
+              w         - Number of columns to scroll left
+              width     - Width of editing field in column spaces
+  Returns:    (nothing)
+
+  This helper function adjusts *cpos and *st so that the cursor is moved
+  to the left by w column positions.
+*/
+static void cpos_decr (wchar_t *restrict buf, int *restrict cpos,
+		       int *restrict st, int w, int width);
+
+
+/*
+  Function:   cpos_incr - Adjust cpos and st: scroll to the right by w columns
+  Parameters: buf       - Pointer to current editing buffer
+              cpos      - Pointer to current cursor position (result)
+              st        - Pointer to current starting offset for buf[] (result)
+              w         - Number of columns to scroll right
+              width     - Width of editing field in column spaces
+  Returns:    (nothing)
+
+  This helper function adjusts *cpos and *st so that the cursor is moved
+  to the right by w column positions.
+*/
+static void cpos_incr (wchar_t *restrict buf, int *restrict cpos,
+		       int *restrict st, int w, int width);
+
+
+/*
   Function:   txinput_fixup - Copy strings with fixup
   Parameters: dest          - Destination buffer of size BUFSIZE
               src           - Source buffer of size BUFSIZE
@@ -259,7 +376,7 @@ static void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
   This function is used by gettxdouble() and gettxlong() to share some
   common code.
 */
-static void txinput_fixup (char *restrict dest, char *restrict src,
+static void txinput_fixup (wchar_t *restrict dest, wchar_t *restrict src,
 			   bool isfloat);
 
 
@@ -401,6 +518,51 @@ void init_screen (void)
 
     init_title();
     refresh();
+
+    /* Initialise strings used for keycode input and map representations.
+
+       Each string must have an ASCII vertical line (U+007C) in the
+       correct position, followed by context information (such as
+       "input|Company" and "output|MapVals").  This is done to overcome a
+       limitation of gettext_noop() and N_() that does NOT allow context
+       IDs.  This vertical line is replaced by a NUL character to
+       terminate the resulting string.  The vertical line MAY appear in
+       other positions; if so, it is handled correctly. */
+
+    wchar_t *buf = xmalloc(BUFSIZE * sizeof(wchar_t));
+    char convbuf[MB_LEN_MAX + 1];
+    chtype chbuf[MB_LEN_MAX * 3 + 1];
+
+    init_game_str(keycode_company, default_keycode_company, MAX_COMPANIES);
+    init_game_str(keycode_game_move, default_keycode_game_move, NUMBER_MOVES);
+
+    init_game_str(printable_map_val, default_printable_map_val, MAX_COMPANIES + 3);
+    init_game_str(printable_game_move, default_printable_game_move, NUMBER_MOVES);
+
+    /* To save time later, convert each output character to its own
+       chtype string, with appropriate attributes. */
+
+    init_game_chstr(chtype_map_val[MAP_TO_INDEX(MAP_EMPTY)],
+		    printable_map_val[MAP_TO_INDEX(MAP_EMPTY)],
+		    attr_map_empty, MAP_EMPTY);
+    init_game_chstr(chtype_map_val[MAP_TO_INDEX(MAP_OUTPOST)],
+		    printable_map_val[MAP_TO_INDEX(MAP_OUTPOST)],
+		    attr_map_outpost, MAP_OUTPOST);
+    init_game_chstr(chtype_map_val[MAP_TO_INDEX(MAP_STAR)],
+		    printable_map_val[MAP_TO_INDEX(MAP_STAR)],
+		    attr_map_star, MAP_STAR);
+    for (int i = 0; i < MAX_COMPANIES; i++) {
+	init_game_chstr(chtype_map_val[MAP_TO_INDEX(COMPANY_TO_MAP(i))],
+			printable_map_val[MAP_TO_INDEX(COMPANY_TO_MAP(i))],
+			attr_map_company, COMPANY_TO_MAP(i));
+    }
+
+    for (int i = 0; i < NUMBER_MOVES; i++) {
+	init_game_chstr(chtype_game_move[i], printable_game_move[i],
+			attr_map_choice, printable_game_move[i]);
+    }
+
+    free(buf);
 }
 
 
@@ -1242,7 +1404,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    }
 
 		    if (wc == '\0' || wc == WEOF) {
-			wc = EILSEQ_REPL;
+			wc = EILSEQ_REPL_WC;
 		    }
 
 		    fmtbuf[0] = wc;
@@ -1322,7 +1484,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    }
 
 		    if (str == NULL) {
-			str = L"(null)";	// As per GNU printf()
+			str = L"(NULL)";	// As per GNU printf()
 		    }
 
 		insertstr:
@@ -1572,52 +1734,184 @@ int right (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
 
 
 /***********************************************************************/
+// getwch: Get a wide character from the keyboard
+
+/* There are two implementations of getwch(): one used if enhanced Curses
+   is present (with wide-character functions), the other if only
+   single-byte functions are available. */
+
+#if defined(HAVE_CURSES_ENHANCED) || defined(HAVE_NCURSESW)
+
+int getwch (WINDOW *win, wint_t *wch)
+{
+    int ret = wget_wch(win, wch);
+
+    if (ret == OK) {
+	char c = wctob(*wch);
+	if ((c >= 0 && c < ' ') || c == 0x7F) {
+	    /* Make control characters (and DEL) appear to be similar to
+	       function keys.  This assumes the KEY_xxx definitions do
+	       not overlap, which is true of all Curses implementations
+	       (due to the same codes being returned by getch()).  We do
+	       not use iswcntrl() as certain additional Unicode
+	       characters are also control characters (eg, U+2028) */
+	    ret = KEY_CODE_YES;
+	}
+    }
+
+    return ret;
+}
+
+#else // !defined(HAVE_CURSES_ENHANCED) && !defined(HAVE_NCURSESW)
+
+int getwch (WINDOW *win, wint_t *wch)
+{
+#error "Single-byte version of getwch() not yet implemented"
+"Single-byte version of getwch() not yet implemented"
+}
+
+#endif // !defined(HAVE_CURSES_ENHANCED) && !defined(HAVE_NCURSESW)
+
+
+/***********************************************************************/
 // gettxchar: Read a character from the keyboard
 
-int gettxchar (WINDOW *win)
+int gettxchar (WINDOW *win, wint_t *wch)
 {
-    int key;
-    bool done;
+    int ret;
 
+
+    assert(win != NULL);
+    assert(wch != NULL);
 
     keypad(win, true);
     meta(win, true);
     wtimeout(win, -1);
 
-    done = false;
-    while (! done) {
-	key = wgetch(win);
-	switch (key) {
-	case ERR:
-	    beep();
+    while (true) {
+	ret = getwch(win, wch);
+	if (ret == OK) {
 	    break;
+	} else if (ret == KEY_CODE_YES) {
 
 #ifdef HANDLE_RESIZE_EVENTS
-	case KEY_RESIZE:
-	    txresize();
+	    if (*wch == KEY_RESIZE) {
+		txresize();
+	    } else {
+		break;
+	    }
+#else // ! HANDLE_RESIZE_EVENTS
 	    break;
-#endif // HANDLE_RESIZE_EVENTS
+#endif // ! HANDLE_RESIZE_EVENTS
 
-	default:
-	    done = true;
+	} else {
+	    // ret == ERR
+	    beep();
 	}
     }
 
-    return key;
+    return ret;
 }
 
 
 /***********************************************************************/
-// gettxline: Read a line from the keyboard (low-level)
+// cpos_endl: Adjust cpos and st for printing the ending part of buf
 
-int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
-	       bool multifield, const char *emptyval, const char *defaultval,
-	       const char *allowed, bool stripspc, int y, int x, int width,
-	       chtype attr)
+void cpos_endl (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
+		int clen, int width, int len)
 {
-    int len, pos, cpos, ret;
+    *cpos = MIN(clen, width - 1);
+
+    if (clen <= width - 1) {
+	// Whole string can be displayed
+	*st = 0;
+    } else {
+	// String too long: figure out offset from which to print (value of st)
+	int i = width - 1;
+	*st = len;
+	while (i > 0) {
+	    i -= wcwidth(buf[--(*st)]);
+	}
+	if (i < 0) {
+	    /* Don't truncate a double-width character if the second half
+	       would appear in the first column position. */
+	    i += wcwidth(buf[(*st)++]);
+	    while (wcwidth(buf[*st]) == 0) {
+		// Skip over zero-width characters (mostly combining ones)
+		(*st)++;
+	    }
+	    *cpos -= i;
+	}
+    }
+
+    assert(*st >= 0);
+}
+
+
+/***********************************************************************/
+// cpos_decr: Adjust cpos and st: scroll to the left by w columns
+
+void cpos_decr (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
+		int w, int width)
+{
+    if (*cpos > 0) {
+	// Cursor position is not yet in first column
+	*cpos -= w;
+    } else if (*st > 0) {
+	(*st)--;
+	if (w == 0) {
+	    /* Make sure zero-width characters (esp. combining ones) do
+	       not appear without the associated base character */
+	    w = wcwidth(buf[*st]);
+	    while (*st > 0 && w == 0) {
+		w = wcwidth(buf[--(*st)]);
+	    }
+	    *cpos = w;
+	}
+    }
+}
+
+
+/***********************************************************************/
+// cpos_incr: Adjust cpos and st: scroll to the right by w columns
+
+void cpos_incr (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
+		int w, int width)
+{
+    if (*cpos + w <= width - 1) {
+	// Cursor position is not yet in second-last column
+	*cpos += w;
+    } else {
+	int i = 0;
+	while (i < w) {
+	    i += wcwidth(buf[(*st)++]);
+	}
+	while (wcwidth(buf[*st]) == 0) {
+	    // Skip over zero-width characters (mainly combining ones)
+	    (*st)++;
+	}
+	if (i > w) {
+	    // Take double-width characters into account
+	    *cpos -= i - w;
+	}
+    }
+}
+
+
+/***********************************************************************/
+// gettxline: Read a line of input from the keyboard (low-level)
+
+int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
+	       bool *restrict modified, bool multifield,
+	       const wchar_t *emptyval, const wchar_t *defaultval,
+	       const wchar_t *allowed, bool stripspc, int y, int x,
+	       int width, chtype attr)
+{
     bool done, redraw, mod;
-    int key, key2;
+    int len, pos, st;
+    int clen, cpos;
+    int rcode, ret;
+    wint_t key;
     chtype oldattr;
     chtype *chbuf;
     int chbufwidth;
@@ -1626,7 +1920,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
     assert(win != NULL);
     assert(buf != NULL);
     assert(bufsize > 2);
-    assert(width > 1);
+    assert(width > 2);
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
 
@@ -1637,9 +1931,17 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
     oldattr = getattrs(win);
     curs_set(CURS_ON);
 
-    len = strlen(buf);
-    pos = len;			// pos (string position) is from 0 to len
-    cpos = MIN(len, width - 1);	// cpos (cursor position) is from 0 to width-1
+    len = wcslen(buf);			// len is number of wide chars in buf
+    pos = len;				// pos (string position): 0 to len
+    clen = wcswidth(buf, bufsize);	// clen is number of column positions
+
+    if (clen < 0) {
+	err_exit("gettxline: illegal character in string: `%ls'", buf);
+    }
+
+    // Find the point from which buf should be displayed to screen
+    cpos_endl(buf, &cpos, &st, clen, width, len);
+
     redraw = true;
     done = false;
     mod = false;
@@ -1647,55 +1949,73 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
     while (! done) {
 	if (redraw) {
-	    /*
-	      Redisplay the visible part of the current input string.
-	      Blanks at the end of the input area are replaced with
-	      "attr", which may contain a '_' for non-colour mode.
-	    */
+	    /* Redisplay the visible part of the current input string.
+	       Blanks at the end of the input area are replaced with
+	       "attr", which may contain a '_' for non-colour mode. */
 	    mvwhline(win, y, x, ((attr & A_CHARTEXT) == 0) ?
 		     ' ' | attr : attr, width);
 	    mkchstr(chbuf, BUFSIZE, attr & ~A_CHARTEXT, 0, 0, 1, width,
-		    &chbufwidth, 1, "%s", buf + pos - cpos);
+		    &chbufwidth, 1, "%ls", buf + st);
 	    leftch(win, y, x, chbuf, 1, &chbufwidth);
 
 	    wmove(win, y, x + cpos);
 	    wrefresh(win);
 	}
 
-	key = wgetch(win);
-	if (key == ERR) {
-	    // Do nothing on ERR
-	    ;
-	} else if ((key == KEY_DEFAULTVAL1 || key == KEY_DEFAULTVAL2)
-		   && defaultval != NULL && len == 0) {
-	    // Initialise buffer with the default value
+	rcode = getwch(win, &key);
 
-	    strncpy(buf, defaultval, bufsize - 1);
-	    buf[bufsize - 1] = '\0';
+	if (rcode == OK) {
+	    // Ordinary wide character
 
-	    len = strlen(buf);
-	    pos = len;
-	    cpos = MIN(len, width - 1);
-	    mod = true;
-	    redraw = true;
-	} else if (key < 0400 && ! iscntrl(key)) {
-	    if (len >= bufsize - 1
-		|| (allowed != NULL && strchr(allowed, key) == NULL)) {
-		beep();
-	    } else {
-		// Process ordinary key press: insert it into the string
+	    if ((key == CHAR_DEFVAL1 || key == CHAR_DEFVAL2)
+		&& defaultval != NULL && len == 0) {
+		// Initialise buffer with the default value
 
-		memmove(buf + pos + 1, buf + pos, len - pos + 1);
-		buf[pos] = (char) key;
-		len++;
-		pos++;
-		if (cpos < width - 1) {
-		    cpos++;
+		wcsncpy(buf, defaultval, bufsize - 1);
+		buf[bufsize - 1] = L'\0';
+
+		len = wcslen(buf);
+		pos = len;
+		clen = wcswidth(buf, bufsize);
+
+		if (clen == -1) {
+		    err_exit("gettxline: illegal character in string: `%ls'",
+			     buf);
 		}
+
+		cpos_endl(buf, &cpos, &st, clen, width, len);
+
 		mod = true;
 		redraw = true;
+
+	    } else if (len >= bufsize - 1
+		       || (allowed != NULL && wcschr(allowed, key) == NULL)) {
+		beep();
+
+	    } else {
+		// Process an ordinary character: insert it into the string
+		int w = wcwidth(key);
+
+		if (w < 0) {
+		    // Non-printing character
+		    beep();
+
+		} else {
+		    wmemmove(buf + pos + 1, buf + pos, len - pos + 1);
+		    buf[pos] = (wchar_t) key;
+		    len++;
+		    pos++;
+
+		    clen += w;
+		    cpos_incr(buf, &cpos, &st, w, width);
+
+		    mod = true;
+		    redraw = true;
+		}
 	    }
-	} else {
+
+	} else if (rcode == KEY_CODE_YES) {
+	    // Function or control key
 	    switch (key) {
 
 	    // Terminating keys
@@ -1706,30 +2026,30 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		// Finish entering the string
 
 		if (stripspc) {
-		    // Strip leading spaces
 		    int i;
 
-		    for (i = 0; i < len && isspace(buf[i]); i++)
+		    // Strip leading spaces
+		    for (i = 0; i < len && iswspace(buf[i]); i++)
 			;
 		    if (i > 0) {
-			memmove(buf, buf + i, len - i + 1);
+			wmemmove(buf, buf + i, len - i + 1);
 			len -= i;
 			mod = true;
 		    }
 
 		    // Strip trailing spaces
-		    for (i = len; i > 0 && isspace(buf[i - 1]); i--)
+		    for (i = len; i > 0 && iswspace(buf[i - 1]); i--)
 			;
 		    if (i < len) {
-			buf[i] = '\0';
+			buf[i] = L'\0';
 			len = i;
 			mod = true;
 		    }
 		}
 
 		if (emptyval != NULL && len == 0) {
-		    strncpy(buf, emptyval, bufsize - 1);
-		    buf[bufsize - 1] = '\0';
+		    wcsncpy(buf, emptyval, bufsize - 1);
+		    buf[bufsize - 1] = L'\0';
 		    mod = true;
 		}
 
@@ -1739,8 +2059,8 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
 	    case KEY_CANCEL:
 	    case KEY_EXIT:
-	    case KEY_CTRL('G'):
 	    case KEY_CTRL('C'):
+	    case KEY_CTRL('G'):
 	    case KEY_CTRL('\\'):
 		// Cancel entering the string
 		ret = ERR;
@@ -1780,9 +2100,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		    beep();
 		} else {
 		    pos--;
-		    if (cpos > 0) {
-			cpos--;
-		    }
+		    cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]), width);
 		    redraw = true;
 		}
 		break;
@@ -1794,9 +2112,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		    beep();
 		} else {
 		    pos++;
-		    if (cpos < width - 1) {
-			cpos++;
-		    }
+		    cpos_incr(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
 		    redraw = true;
 		}
 		break;
@@ -1806,6 +2122,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		// Move cursor to start of string
 		pos = 0;
 		cpos = 0;
+		st = 0;
 		redraw = true;
 		break;
 
@@ -1813,40 +2130,39 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 	    case KEY_CTRL('E'):
 		// Move cursor to end of string
 		pos = len;
-		cpos = MIN(pos, width - 1);
+		cpos_endl(buf, &cpos, &st, clen, width, len);
 		redraw = true;
 		break;
 
 	    case KEY_CLEFT:
 		// Move cursor to start of current or previous word
-		while (pos > 0 && ! isalnum(buf[pos - 1])) {
+		while (pos > 0 && ! iswalnum(buf[pos - 1])) {
 		    pos--;
-		    if (cpos > 0) {
-			cpos--;
-		    }
+		    cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]), width);
 		}
-		while (pos > 0 && isalnum(buf[pos - 1])) {
+		while (pos > 0 && (iswalnum(buf[pos - 1])
+				   || (pos > 1 && wcwidth(buf[pos - 1]) == 0
+				       && iswalnum(buf[pos - 2])))) {
+		    /* Treat zero-width characters preceded by an
+		       alphanumeric character as alphanumeric. */
 		    pos--;
-		    if (cpos > 0) {
-			cpos--;
-		    }
+		    cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]), width);
 		}
 		redraw = true;
 		break;
 
 	    case KEY_CRIGHT:
 		// Move cursor to end of current or next word
-		while (pos < len && ! isalnum(buf[pos])) {
+		while (pos < len && ! iswalnum(buf[pos])) {
 		    pos++;
-		    if (cpos < width - 1) {
-			cpos++;
-		    }
+		    cpos_incr(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
 		}
-		while (pos < len && isalnum(buf[pos])) {
+		while (pos < len
+		       && (iswalnum(buf[pos]) || wcwidth(buf[pos]) == 0)) {
+		    /* Treat zero-width characters following an
+		       alphanumeric character as alphanumeric. */
 		    pos++;
-		    if (cpos < width - 1) {
-			cpos++;
-		    }
+		    cpos_incr(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
 		}
 		redraw = true;
 		break;
@@ -1860,12 +2176,12 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		if (pos == 0) {
 		    beep();
 		} else {
-		    memmove(buf + pos - 1, buf + pos, len - pos + 1);
+		    int w = wcwidth(buf[pos - 1]);
+		    wmemmove(buf + pos - 1, buf + pos, len - pos + 1);
 		    len--;
 		    pos--;
-		    if (cpos > 0) {
-			cpos--;
-		    }
+		    clen -= w;
+		    cpos_decr(buf, &cpos, &st, w, width);
 		    mod = true;
 		    redraw = true;
 		}
@@ -1877,9 +2193,11 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		if (pos == len) {
 		    beep();
 		} else {
-		    memmove(buf + pos, buf + pos + 1, len - pos);
+		    int w = wcwidth(buf[pos]);
+		    wmemmove(buf + pos, buf + pos + 1, len - pos);
 		    len--;
-		    // pos and cpos stay the same
+		    clen -= w;
+		    // pos, cpos and st stay the same
 		    mod = true;
 		    redraw = true;
 		}
@@ -1887,10 +2205,12 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
 	    case KEY_CLEAR:
 		// Delete the entire line
-		strcpy(buf, "");
+		wcscpy(buf, L"");
 		len = 0;
 		pos = 0;
+		clen = 0;
 		cpos = 0;
+		st = 0;
 		mod = true;
 		redraw = true;
 		break;
@@ -1900,10 +2220,17 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		if (pos == 0) {
 		    beep();
 		} else {
-		    memmove(buf, buf + pos, len - pos + 1);
+		    int i, ww;
+		    for (i = 0, ww = 0; i < pos; i++) {
+			ww += wcwidth(buf[i]);
+		    }
+
+		    wmemmove(buf, buf + pos, len - pos + 1);
 		    len -= pos;
 		    pos = 0;
+		    clen -= ww;
 		    cpos = 0;
+		    st = 0;
 		    mod = true;
 		    redraw = true;
 		}
@@ -1914,9 +2241,15 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		if (pos == len) {
 		    beep();
 		} else {
-		    buf[pos] = '\0';
+		    int i, ww;
+		    for (i = pos, ww = 0; i < len; i++) {
+			ww += wcwidth(buf[i]);
+		    }
+
+		    buf[pos] = L'\0';
 		    len = pos;
-		    // pos and cpos stay the same
+		    clen -= ww;
+		    // pos, cpos and st stay the same
 		    mod = true;
 		    redraw = true;
 		}
@@ -1927,28 +2260,28 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		if (pos == 0) {
 		    beep();
 		} else {
-		    /*
-		      Note the use of isspace() instead of isalnum():
-		      this makes ^W follow GNU Bash standards, which
-		      behaves differently from Meta-DEL.
-		    */
+		    /* Note the use of iswspace() instead of iswalnum():
+		       this makes ^W follow GNU Bash standards, which
+		       behaves differently from Meta-DEL. */
 		    int i = pos;
-		    while (i > 0 && isspace(buf[i - 1])) {
+		    int ww = 0;
+		    while (i > 0 && iswspace(buf[i - 1])) {
 			i--;
-			if (cpos > 0) {
-			    cpos--;
-			}
+			int w = wcwidth(buf[i]);
+			ww += w;
+			cpos_decr(buf, &cpos, &st, w, width);
 		    }
-		    while (i > 0 && ! isspace(buf[i - 1])) {
+		    while (i > 0 && ! iswspace(buf[i - 1])) {
 			i--;
-			if (cpos > 0) {
-			    cpos--;
-			}
+			int w = wcwidth(buf[i]);
+			ww += w;
+			cpos_decr(buf, &cpos, &st, w, width);
 		    }
 
-		    memmove(buf + i, buf + pos, len - pos + 1);
+		    wmemmove(buf + i, buf + pos, len - pos + 1);
 		    len -= pos - i;
 		    pos = i;
+		    clen -= ww;
 		    mod = true;
 		    redraw = true;
 		}
@@ -1961,20 +2294,21 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		if (pos == 0 || len <= 1) {
 		    beep();
 		} else if (pos == len) {
-		    char c = buf[pos - 1];
+		    wchar_t c = buf[pos - 1];
 		    buf[pos - 1] = buf[pos - 2];
 		    buf[pos - 2] = c;
 		    mod = true;
 		    redraw = true;
 		} else {
-		    char c = buf[pos];
+		    wchar_t c = buf[pos];
+		    int w = wcwidth(c);
+
 		    buf[pos] = buf[pos - 1];
 		    buf[pos - 1] = c;
 
 		    pos++;
-		    if (cpos < width - 1) {
-			cpos++;
-		    }
+		    cpos_incr(buf, &cpos, &st, w, width);
+
 		    mod = true;
 		    redraw = true;
 		}
@@ -1983,64 +2317,226 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 	    case KEY_ESC:
 		// Handle Meta-X-style and other function key presses
 		wtimeout(win, META_TIMEOUT);
-		key2 = wgetch(win);
+		rcode = getwch(win, &key);
 
-		if (key2 == ERR) {
-		    // <ESC> by itself: cancel entering the string
-		    ret = ERR;
-		    done = true;
-		} else if (key2 == 'O' || key2 == '[') {
+		if (rcode == OK) {
+		    // Ordinary wide character
+
 		    // Swallow any unknown VT100-style function keys
-		    key2 = wgetch(win);
-		    while (key2 != ERR && isascii(key2)
-			   && strchr("0123456789;", key2) != NULL
-			   && strchr("~ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-				     "abcdefghijklmnopqrstuvwxyz", key2)
-			   == NULL) {
-			key2 = wgetch(win);
+		    if (key == L'O' || key == L'[') {
+			rcode = getwch(win, &key);
+			while (rcode == OK
+			       && wcschr(L"0123456789;", key) != NULL
+			       && wcschr(L"~ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+					 L"abcdefghijklmnopqrstuvwxyz", key)
+			       == NULL) {
+			    rcode = getwch(win, &key);
+			}
+			beep();
+
+		    } else {
+			// Handle Meta-X-style keypress
+			switch (key) {
+
+			// Cursor movement keys
+
+			case L'B':
+			case L'b':
+			    // Move cursor to start of current or previous word
+			    while (pos > 0 && ! iswalnum(buf[pos - 1])) {
+				pos--;
+				cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]),
+					  width);
+			    }
+			    while (pos > 0 && (iswalnum(buf[pos - 1])
+					       || (pos > 1
+						   && wcwidth(buf[pos - 1]) == 0
+						   && iswalnum(buf[pos - 2])))) {
+				/* Treat zero-width characters preceded by an
+				   alphanumeric character as alphanumeric. */
+				pos--;
+				cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]),
+					  width);
+			    }
+			    redraw = true;
+			    break;
+
+			case L'F':
+			case L'f':
+			    // Move cursor to end of current or next word
+			    while (pos < len && ! iswalnum(buf[pos])) {
+				pos++;
+				cpos_incr(buf, &cpos, &st,
+					  wcwidth(buf[pos - 1]), width);
+			    }
+			    while (pos < len
+				   && (iswalnum(buf[pos])
+				       || wcwidth(buf[pos]) == 0)) {
+				/* Treat zero-width characters following an
+				   alphanumeric character as alphanumeric. */
+				pos++;
+				cpos_incr(buf, &cpos, &st,
+					  wcwidth(buf[pos - 1]), width);
+			    }
+			    redraw = true;
+			    break;
+
+			// Deletion keys
+
+			case L'D':
+			case L'd':
+			    // Delete the next word
+			    {
+				int i = pos;
+				int ww = 0;
+				while (i < len && ! iswalnum(buf[i])) {
+				    i++;
+				    ww += wcwidth(buf[i - 1]);
+				}
+				while (i < len
+				       && (iswalnum(buf[i])
+					   || wcwidth(buf[pos]) == 0)) {
+				    /* Treat zero-width characters
+				       following an alphanumeric
+				       character as alphanumeric. */
+				    i++;
+				    ww += wcwidth(buf[i - 1]);
+				}
+
+				wmemmove(buf + pos, buf + i, len - i + 1);
+				len -= (i - pos);
+				clen -= ww;
+				// pos, cpos and st stay the same
+				mod = true;
+				redraw = true;
+			    }
+			    break;
+
+			case L'\\':
+			case L' ':
+			    // Delete all surrounding spaces; if key == ' ',
+			    // also insert one space
+			    {
+				int i = pos;
+				int ww = 0;
+				while (pos > 0 && iswspace(buf[pos - 1])) {
+				    pos--;
+				    int w = wcwidth(buf[pos]);
+				    ww += w;
+				    cpos_decr(buf, &cpos, &st, w, width);
+				}
+				while (i < len && iswspace(buf[i])) {
+				    i++;
+				    ww += wcwidth(buf[i - 1]);
+				}
+
+				wmemmove(buf + pos, buf + i, len - i + 1);
+				len -= (i - pos);
+				clen -= ww;
+
+				if (key == L' ') {
+				    if (len >= bufsize - 1 || (allowed != NULL
+					&& wcschr(allowed, key) == NULL)) {
+					beep();
+				    } else {
+					wchar_t c = L' ';
+					wmemmove(buf + pos + 1, buf + pos,
+						 len - pos + 1);
+					buf[pos] = c;
+					len++;
+					pos++;
+
+					int w = wcwidth(c);
+					clen += w;
+					cpos_incr(buf, &cpos, &st, w, width);
+				    }
+				}
+
+				mod = true;
+				redraw = true;
+			    }
+			    break;
+
+			// Transformation keys
+
+			case L'U':
+			case L'u':
+			    // Convert word (from cursor onwards) to upper case
+			    while (pos < len && ! iswalnum(buf[pos])) {
+				pos++;
+				cpos_incr(buf, &cpos, &st,
+					  wcwidth(buf[pos - 1]), width);
+			    }
+			    while (pos < len
+				   && (iswalnum(buf[pos])
+				       || wcwidth(buf[pos]) == 0)) {
+				buf[pos] = towupper(buf[pos]);
+				pos++;
+				cpos_incr(buf, &cpos, &st,
+					  wcwidth(buf[pos - 1]), width);
+			    }
+			    mod = true;
+			    redraw = true;
+			    break;
+
+			case L'L':
+			case L'l':
+			    // Convert word (from cursor onwards) to lower case
+			    while (pos < len && ! iswalnum(buf[pos])) {
+				pos++;
+				cpos_incr(buf, &cpos, &st,
+					  wcwidth(buf[pos - 1]), width);
+			    }
+			    while (pos < len
+				   && (iswalnum(buf[pos])
+				       || wcwidth(buf[pos]) == 0)) {
+				buf[pos] = towlower(buf[pos]);
+				pos++;
+				cpos_incr(buf, &cpos, &st,
+					  wcwidth(buf[pos - 1]), width);
+			    }
+			    mod = true;
+			    redraw = true;
+			    break;
+
+			case L'C':
+			case L'c':
+			    // Convert current letter to upper case,
+			    // following letters to lower case
+			    {
+				bool first = true;
+				while (pos < len && ! iswalnum(buf[pos])) {
+				    pos++;
+				    cpos_incr(buf, &cpos, &st,
+					      wcwidth(buf[pos - 1]), width);
+				}
+				while (pos < len
+				       && (iswalnum(buf[pos])
+					   || wcwidth(buf[pos]) == 0)) {
+				    if (first) {
+					buf[pos] = towupper(buf[pos]);
+					first = false;
+				    } else {
+					buf[pos] = towlower(buf[pos]);
+				    }
+				    pos++;
+				    cpos_incr(buf, &cpos, &st,
+					      wcwidth(buf[pos - 1]), width);
+				}
+				mod = true;
+				redraw = true;
+			    }
+			    break;
+
+			default:
+			    beep();
+			}
 		    }
-		    beep();
-		} else {
-		    // Handle Meta-X-style keypress
-		    switch (key2) {
 
-		    // Cursor movement keys
+		} else if (rcode == KEY_CODE_YES) {
+		    // Function or control key (with preceding Meta key)
 
-		    case 'B':
-		    case 'b':
-			// Move cursor to start of current or previous word
-			while (pos > 0 && ! isalnum(buf[pos - 1])) {
-			    pos--;
-			    if (cpos > 0) {
-				cpos--;
-			    }
-			}
-			while (pos > 0 && isalnum(buf[pos - 1])) {
-			    pos--;
-			    if (cpos > 0) {
-				cpos--;
-			    }
-			}
-			redraw = true;
-			break;
-
-		    case 'F':
-		    case 'f':
-			// Move cursor to end of current or next word
-			while (pos < len && ! isalnum(buf[pos])) {
-			    pos++;
-			    if (cpos < width - 1) {
-				cpos++;
-			    }
-			}
-			while (pos < len && isalnum(buf[pos])) {
-			    pos++;
-			    if (cpos < width - 1) {
-				cpos++;
-			    }
-			}
-			redraw = true;
-			break;
+		    switch (key) {
 
 		    // Deletion keys
 
@@ -2049,154 +2545,30 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		    case KEY_DEL:
 			// Delete the previous word (different from ^W)
 			{
+			    int ww = 0;
 			    int i = pos;
-			    while (i > 0 && ! isalnum(buf[i - 1])) {
+			    while (i > 0 && ! iswalnum(buf[i - 1])) {
 				i--;
-				if (cpos > 0) {
-				    cpos--;
-				}
+				int w = wcwidth(buf[i]);
+				ww += w;
+				cpos_decr(buf, &cpos, &st, w, width);
 			    }
-			    while (i > 0 && isalnum(buf[i - 1])) {
+			    while (i > 0
+				   && (iswalnum(buf[i - 1])
+				       || (i > 1 && wcwidth(buf[i - 1]) == 0
+					   && iswalnum(buf[i - 2])))) {
+				/* Treat zero-width characters preceded by an
+				   alphanumeric character as alphanumeric. */
 				i--;
-				if (cpos > 0) {
-				    cpos--;
-				}
+				int w = wcwidth(buf[i]);
+				ww += w;
+				cpos_decr(buf, &cpos, &st, w, width);
 			    }
 
-			    memmove(buf + i, buf + pos, len - pos + 1);
+			    wmemmove(buf + i, buf + pos, len - pos + 1);
 			    len -= (pos - i);
 			    pos = i;
-			    mod = true;
-			    redraw = true;
-			}
-			break;
-
-		    case 'D':
-		    case 'd':
-			// Delete the next word
-			{
-			    int i = pos;
-			    while (i < len && ! isalnum(buf[i])) {
-				i++;
-			    }
-			    while (i < len && isalnum(buf[i])) {
-				i++;
-			    }
-
-			    memmove(buf + pos, buf + i, len - i + 1);
-			    len -= (i - pos);
-			    // pos and cpos stay the same
-			    mod = true;
-			    redraw = true;
-			}
-			break;
-
-		    case '\\':
-		    case ' ':
-			// Delete all surrounding spaces; if key2 == ' ',
-			// also insert one space
-			{
-			    int i = pos;
-			    while (pos > 0 && isspace(buf[pos - 1])) {
-				pos--;
-				if (cpos > 0) {
-				    cpos--;
-				}
-			    }
-			    while (i < len && isspace(buf[i])) {
-				i++;
-			    }
-
-			    memmove(buf + pos, buf + i, len - i + 1);
-			    len -= (i - pos);
-
-			    if (key2 == ' ') {
-				if (len >= bufsize - 1 || (allowed != NULL
-				    && strchr(allowed, key) == NULL)) {
-				    beep();
-				} else {
-				    memmove(buf + pos + 1, buf + pos,
-					    len - pos + 1);
-				    buf[pos] = ' ';
-				    len++;
-				    pos++;
-				    if (cpos < width - 1) {
-					cpos++;
-				    }
-				}
-			    }
-
-			    mod = true;
-			    redraw = true;
-			}
-			break;
-
-		    // Transformation keys
-
-		    case 'U':
-		    case 'u':
-			// Convert word (from cursor onwards) to upper case
-			while (pos < len && ! isalnum(buf[pos])) {
-			    pos++;
-			    if (cpos < width - 1) {
-				cpos++;
-			    }
-			}
-			while (pos < len && isalnum(buf[pos])) {
-			    buf[pos] = toupper(buf[pos]);
-			    pos++;
-			    if (cpos < width - 1) {
-				cpos++;
-			    }
-			}
-			mod = true;
-			redraw = true;
-			break;
-
-		    case 'L':
-		    case 'l':
-			// Convert word (from cursor onwards) to lower case
-			while (pos < len && ! isalnum(buf[pos])) {
-			    pos++;
-			    if (cpos < width - 1) {
-				cpos++;
-			    }
-			}
-			while (pos < len && isalnum(buf[pos])) {
-			    buf[pos] = tolower(buf[pos]);
-			    pos++;
-			    if (cpos < width - 1) {
-				cpos++;
-			    }
-			}
-			mod = true;
-			redraw = true;
-			break;
-
-		    case 'C':
-		    case 'c':
-			// Convert current letter to upper case, following
-			// letters to lower case
-			{
-			    bool first = true;
-			    while (pos < len && ! isalnum(buf[pos])) {
-				pos++;
-				if (cpos < width - 1) {
-				    cpos++;
-				}
-			    }
-			    while (pos < len && isalnum(buf[pos])) {
-				if (first) {
-				    buf[pos] = toupper(buf[pos]);
-				    first = false;
-				} else {
-				    buf[pos] = tolower(buf[pos]);
-				}
-				pos++;
-				if (cpos < width - 1) {
-				    cpos++;
-				}
-			    }
+			    clen -= ww;
 			    mod = true;
 			    redraw = true;
 			}
@@ -2213,6 +2585,12 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 		    default:
 			beep();
 		    }
+
+		} else {
+		    /* rcode == ERR (timeout): <ESC> by itself, so cancel
+		       entering the string. */
+		    ret = ERR;
+		    done = true;
 		}
 
 		wtimeout(win, -1);
@@ -2227,6 +2605,9 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 	    default:
 		beep();
 	    }
+	} else {
+	    // rcode == ERR: Do nothing
+	    ;
 	}
     }
 
@@ -2234,7 +2615,7 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 
     mvwhline(win, y, x, ' ' | oldattr, width);
     mkchstr(chbuf, BUFSIZE, oldattr | A_BOLD, 0, 0, 1, width,
-	    &chbufwidth, 1, "%s", buf);
+	    &chbufwidth, 1, "%ls", buf);
     leftch(win, y, x, chbuf, 1, &chbufwidth);
     wrefresh(win);
 
@@ -2250,19 +2631,20 @@ int gettxline (WINDOW *win, char *buf, int bufsize, bool *restrict modified,
 /***********************************************************************/
 // gettxstr: Read a string from the keyboard
 
-int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
-	      bool multifield, int y, int x, int width, chtype attr)
+int gettxstr (WINDOW *win, wchar_t *restrict *restrict bufptr,
+	      bool *restrict modified, bool multifield, int y, int x,
+	      int width, chtype attr)
 {
     assert(bufptr != NULL);
 
 
     // Allocate the result buffer if needed
     if (*bufptr == NULL) {
-	*bufptr = xmalloc(BUFSIZE);
+	*bufptr = xmalloc(BUFSIZE * sizeof(wchar_t));
 	**bufptr = '\0';
     }
 
-    return gettxline(win, *bufptr, BUFSIZE, modified, multifield, "", "",
+    return gettxline(win, *bufptr, BUFSIZE, modified, multifield, L"", L"",
 		     NULL, true, y, x, width, attr);
 }
 
@@ -2270,33 +2652,32 @@ int gettxstr (WINDOW *win, char **bufptr, bool *restrict modified,
 /***********************************************************************/
 // txinput_fixup: Copy strings with fixup
 
-void txinput_fixup (char *restrict dest, char *restrict src, bool isfloat)
+void txinput_fixup (wchar_t *restrict dest, wchar_t *restrict src, bool isfloat)
 {
-    struct lconv *lc = &lconvinfo;
-    char *p;
-
-
     assert(src != NULL);
     assert(dest != NULL);
 
-    strncpy(dest, src, BUFSIZE - 1);
+    wcsncpy(dest, src, BUFSIZE - 1);
     dest[BUFSIZE - 1] = '\0';
 
     // Replace mon_decimal_point with decimal_point if these are different
     if (isfloat) {
-	if (strcmp(lc->mon_decimal_point, "") != 0
-	    && strcmp(lc->decimal_point, "") != 0
-	    && strcmp(lc->mon_decimal_point, lc->decimal_point) != 0) {
-	    while ((p = strstr(dest, lc->mon_decimal_point)) != NULL) {
-		char *pn;
-		int len1 = strlen(lc->mon_decimal_point);
-		int len2 = strlen(lc->decimal_point);
+	if (*mon_decimal_point != L'\0' && *decimal_point != L'\0'
+	    && wcscmp(mon_decimal_point, decimal_point) != 0) {
 
-		// Make space for lc->decimal_point, if needed
-		memmove(p + len2, p + len1, strlen(p) - (len2 - len1) + 1);
+	    int len_dp  = wcslen(decimal_point);
+	    int len_mdp = wcslen(mon_decimal_point);
+	    wchar_t *p;
 
-		// Copy lc->decimal_point over p WITHOUT copying ending NUL
-		for (pn = lc->decimal_point; *pn != '\0'; pn++, p++) {
+	    while ((p = wcsstr(dest, mon_decimal_point)) != NULL) {
+		// Make space for decimal_point, if needed
+		if (len_mdp != len_dp) {
+		    wmemmove(p + len_dp, p + len_mdp,
+			     wcslen(p) - (len_dp - len_mdp) + 1);
+		}
+
+		// Copy decimal_point over p WITHOUT copying ending NUL
+		for (wchar_t *pn = decimal_point; *pn != L'\0'; pn++, p++) {
 		    *p = *pn;
 		}
 	    }
@@ -2304,16 +2685,20 @@ void txinput_fixup (char *restrict dest, char *restrict src, bool isfloat)
     }
 
     // Remove thousands separators if required
-    if (strcmp(lc->thousands_sep, "") != 0) {
-	while ((p = strstr(dest, lc->thousands_sep)) != NULL) {
-	    int len = strlen(lc->thousands_sep);
-	    memmove(p, p + len, strlen(p) - len + 1);
+    if (*thousands_sep != L'\0') {
+	int len = wcslen(thousands_sep);
+	wchar_t *p;
+
+	while ((p = wcsstr(dest, thousands_sep)) != NULL) {
+	    wmemmove(p, p + len, wcslen(p) - len + 1);
 	}
     }
-    if (strcmp(lc->mon_thousands_sep, "") != 0) {
-	while ((p = strstr(dest, lc->mon_thousands_sep)) != NULL) {
-	    int len = strlen(lc->thousands_sep);
-	    memmove(p, p + len, strlen(p) - len + 1);
+    if (*mon_thousands_sep != L'\0') {
+	int len = wcslen(mon_thousands_sep);
+	wchar_t *p;
+
+	while ((p = wcsstr(dest, mon_thousands_sep)) != NULL) {
+	    wmemmove(p, p + len, wcslen(p) - len + 1);
 	}
     }
 }
@@ -2328,8 +2713,8 @@ int gettxdouble (WINDOW *win, double *restrict result, double min,
 {
     struct lconv *lc = &lconvinfo;
 
-    char *buf, *bufcopy;
-    char *allowed, *emptystr, *defaultstr;
+    wchar_t *buf, *bufcopy;
+    wchar_t *allowed, *emptystr, *defaultstr;
     double val;
     bool done;
     int ret;
@@ -2338,22 +2723,22 @@ int gettxdouble (WINDOW *win, double *restrict result, double min,
     assert(result != NULL);
     assert(min <= max);
 
-    buf        = xmalloc(BUFSIZE);
-    bufcopy    = xmalloc(BUFSIZE);
-    allowed    = xmalloc(BUFSIZE);
-    emptystr   = xmalloc(BUFSIZE);
-    defaultstr = xmalloc(BUFSIZE);
+    buf        = xmalloc(BUFSIZE * sizeof(wchar_t));
+    bufcopy    = xmalloc(BUFSIZE * sizeof(wchar_t));
+    allowed    = xmalloc(BUFSIZE * sizeof(wchar_t));
+    emptystr   = xmalloc(BUFSIZE * sizeof(wchar_t));
+    defaultstr = xmalloc(BUFSIZE * sizeof(wchar_t));
 
-    *buf = '\0';
+    *buf = L'\0';
 
-    strcpy(allowed,  "0123456789+-Ee");
-    strncat(allowed, lc->decimal_point,     BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->mon_decimal_point, BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
+    wcscpy(allowed,  L"0123456789+-Ee");
+    wcsncat(allowed, decimal_point,     BUFSIZE - wcslen(allowed) - 1);
+    wcsncat(allowed, thousands_sep,     BUFSIZE - wcslen(allowed) - 1);
+    wcsncat(allowed, mon_decimal_point, BUFSIZE - wcslen(allowed) - 1);
+    wcsncat(allowed, mon_thousands_sep, BUFSIZE - wcslen(allowed) - 1);
 
-    snprintf(emptystr,   BUFSIZE, "%'1.*f", lc->frac_digits, emptyval);
-    snprintf(defaultstr, BUFSIZE, "%'1.*f", lc->frac_digits, defaultval);
+    swprintf(emptystr,   BUFSIZE, L"%'1.*f", lc->frac_digits, emptyval);
+    swprintf(defaultstr, BUFSIZE, L"%'1.*f", lc->frac_digits, defaultval);
 
     done = false;
     while (! done) {
@@ -2361,12 +2746,12 @@ int gettxdouble (WINDOW *win, double *restrict result, double min,
 			allowed, true, y, x, width, attr);
 
 	if (ret == OK) {
-	    char *p;
+	    wchar_t *p;
 
 	    txinput_fixup(bufcopy, buf, true);
-	    val = strtod(bufcopy, &p);
+	    val = wcstod(bufcopy, &p);
 
-	    if (*p == '\0' && val >= min && val <= max) {
+	    if (*p == L'\0' && val >= min && val <= max) {
 		*result = val;
 		done = true;
 	    } else {
@@ -2394,10 +2779,8 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 	       long int max, long int emptyval, long int defaultval,
 	       int y, int x, int width, chtype attr)
 {
-    struct lconv *lc = &lconvinfo;
-
-    char *buf, *bufcopy;
-    char *allowed, *emptystr, *defaultstr;
+    wchar_t *buf, *bufcopy;
+    wchar_t *allowed, *emptystr, *defaultstr;
     long int val;
     bool done;
     int ret;
@@ -2406,20 +2789,20 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
     assert(result != NULL);
     assert(min <= max);
 
-    buf        = xmalloc(BUFSIZE);
-    bufcopy    = xmalloc(BUFSIZE);
-    allowed    = xmalloc(BUFSIZE);
-    emptystr   = xmalloc(BUFSIZE);
-    defaultstr = xmalloc(BUFSIZE);
+    buf        = xmalloc(BUFSIZE * sizeof(wchar_t));
+    bufcopy    = xmalloc(BUFSIZE * sizeof(wchar_t));
+    allowed    = xmalloc(BUFSIZE * sizeof(wchar_t));
+    emptystr   = xmalloc(BUFSIZE * sizeof(wchar_t));
+    defaultstr = xmalloc(BUFSIZE * sizeof(wchar_t));
 
-    *buf = '\0';
+    *buf = L'\0';
 
-    strcpy(allowed, "0123456789+-");
-    strncat(allowed, lc->thousands_sep,     BUFSIZE - strlen(allowed) - 1);
-    strncat(allowed, lc->mon_thousands_sep, BUFSIZE - strlen(allowed) - 1);
+    wcscpy(allowed, L"0123456789+-");
+    wcsncat(allowed, thousands_sep,     BUFSIZE - wcslen(allowed) - 1);
+    wcsncat(allowed, mon_thousands_sep, BUFSIZE - wcslen(allowed) - 1);
 
-    snprintf(emptystr,   BUFSIZE, "%'1ld", emptyval);
-    snprintf(defaultstr, BUFSIZE, "%'1ld", defaultval);
+    swprintf(emptystr,   BUFSIZE, L"%'1ld", emptyval);
+    swprintf(defaultstr, BUFSIZE, L"%'1ld", defaultval);
 
     done = false;
     while (! done) {
@@ -2427,12 +2810,12 @@ int gettxlong (WINDOW *win, long int *restrict result, long int min,
 			allowed, true, y, x, width, attr);
 
 	if (ret == OK) {
-	    char *p;
+	    wchar_t *p;
 
 	    txinput_fixup(bufcopy, buf, false);
-	    val = strtol(bufcopy, &p, 10);
+	    val = wcstol(bufcopy, &p, 10);
 
-	    if (*p == '\0' && val >= min && val <= max) {
+	    if (*p == L'\0' && val >= min && val <= max) {
 		*result = val;
 		done = true;
 	    } else {
@@ -2490,21 +2873,32 @@ bool answer_yesno (WINDOW *win)
     curs_set(CURS_ON);
 
     while (true) {
-	int key = wgetch(win);
+	wint_t key;
+	int r = getwch(win, &key);
 
-	if (wcschr(keycode_yes, key) != NULL) {
-	    ret = true;
-	    break;
-	} else if (wcschr(keycode_no, key) != NULL) {
-	    ret = false;
-	    break;
-	} else
+	if (r == OK) {
+	    if (wcschr(keycode_yes, key) != NULL) {
+		ret = true;
+		break;
+	    } else if (wcschr(keycode_no, key) != NULL) {
+		ret = false;
+		break;
+	    } else {
+		beep();
+	    }
+	} else if (r == KEY_CODE_YES) {
+
 #ifdef HANDLE_RESIZE_EVENTS
-	if (key == KEY_RESIZE) {
-	    txresize();
-	} else
-#endif // HANDLE_RESIZE_EVENTS
-	{
+	    if (key == KEY_RESIZE) {
+		txresize();
+	    } else {
+		beep();
+	    }
+#else // ! HANDLE_RESIZE_EVENTS
+	    beep();
+#endif // ! HANDLE_RESIZE_EVENTS
+
+	} else {
 	    beep();
 	}
     }
@@ -2534,8 +2928,8 @@ bool answer_yesno (WINDOW *win)
 
 void wait_for_key (WINDOW *win, int y, chtype attr)
 {
-    int key;
-    bool done;
+    wint_t key;
+    int r;
 
 
     keypad(win, true);
@@ -2549,22 +2943,24 @@ void wait_for_key (WINDOW *win, int y, chtype attr)
 	   _("[ Press <SPACE> to continue ] "));
     wrefresh(win);
 
-    done = false;
-    while (! done) {
-	key = wgetch(win);
-	switch (key) {
-	case ERR:
-	    beep();
+    while (true) {
+	r = getwch(win, &key);
+	if (r == OK) {
 	    break;
+	} else if (r == KEY_CODE_YES) {
 
 #ifdef HANDLE_RESIZE_EVENTS
-	case KEY_RESIZE:
-	    txresize();
+	    if (key == KEY_RESIZE) {
+		txresize();
+	    } else {
+		break;
+	    }
+#else // ! HANDLE_RESIZE_EVENTS
 	    break;
-#endif // HANDLE_RESIZE_EVENTS
+#endif // ! HANDLE_RESIZE_EVENTS
 
-	default:
-	    done = true;
+	} else {
+	    beep();
 	}
     }
 }
