@@ -83,7 +83,7 @@ static bool add_currency_symbol = false;	// Do we need to add "$"?
 /***********************************************************************/
 // init_program_name: Make the program name canonical
 
-void init_program_name (char *argv0)
+void init_program_name (const char *argv0)
 {
     /* This implementation assumes a POSIX environment with an ASCII-safe
        character encoding (such as ASCII or UTF-8). */
@@ -109,7 +109,7 @@ const char *home_directory (void)
 {
     if (home_directory_str == NULL) {
 	// Use the HOME environment variable where possible
-	char *home = getenv("HOME");
+	const char *home = getenv("HOME");
 
 	if (home != NULL && *home != '\0') {
 	    home_directory_str = xstrdup(home);
@@ -354,7 +354,7 @@ void init_locale (void)
 /***********************************************************************/
 // l_strfmon: Convert monetary value to a string
 
-ssize_t l_strfmon (char *restrict s, size_t maxsize,
+ssize_t l_strfmon (char *restrict buf, size_t maxsize,
 		   const char *restrict format, double val)
 {
     /* The current implementation assumes MOD_POSIX_P_CS_PRECEDES is 1
@@ -365,7 +365,7 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
     assert(MOD_POSIX_P_CS_PRECEDES  == 1);
     assert(MOD_POSIX_P_SEP_BY_SPACE == 0);
 
-    ssize_t ret = strfmon(s, maxsize, format, val);
+    ssize_t ret = strfmon(buf, maxsize, format, val);
 
     if (ret > 0 && add_currency_symbol) {
 	if (strstr(format, "!") == NULL) {
@@ -382,7 +382,7 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 	    assert(maxsize > (unsigned int) symlen);
 
 	    // Count number of leading spaces
-	    for (p = s, spc = 0; *p == ' '; p++, spc++)
+	    for (p = buf, spc = 0; *p == ' '; p++, spc++)
 		;
 
 	    if (symlen <= spc) {
@@ -394,12 +394,12 @@ ssize_t l_strfmon (char *restrict s, size_t maxsize,
 	    } else {
 		// Make space for currency symbol, then copy it
 
-		memmove(s + symlen - spc, s, maxsize - (symlen - spc));
-		s[maxsize - 1] = '\0';
+		memmove(buf + symlen - spc, buf, maxsize - (symlen - spc));
+		buf[maxsize - 1] = '\0';
 
-		for ( ; *sym != '\0'; sym++, s++) {
+		for ( ; *sym != '\0'; sym++, buf++) {
 		    // Make sure terminating NUL character is NOT copied!
-		    *s = *sym;
+		    *buf = *sym;
 		}
 
 		ret = MIN((unsigned int) ret + symlen - spc, maxsize - 1);

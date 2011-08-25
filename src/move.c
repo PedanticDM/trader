@@ -263,7 +263,7 @@ selection_t get_move (void)
 		    key = towlower(key);
 		}
 
-		for (i = 0, found = false; keycode_game_move[i] != '\0'; i++) {
+		for (i = 0, found = false; keycode_game_move[i] != L'\0'; i++) {
 		    if (keycode_game_move[i] == key) {
 			found = true;
 			selection = i;
@@ -282,13 +282,13 @@ selection_t get_move (void)
 
 		if (! found) {
 		    switch (key) {
-		    case '1':
+		    case L'1':
 			curs_set(CURS_OFF);
 			show_status(current_player);
 			curs_set(CURS_ON);
 			break;
 
-		    case '2':
+		    case L'2':
 			selection = SEL_BANKRUPT;
 
 			curs_set(CURS_OFF);
@@ -297,7 +297,7 @@ selection_t get_move (void)
 			     _("^{<2>^} (Declare bankruptcy)"));
 			break;
 
-		    case '3':
+		    case L'3':
 			selection = SEL_SAVE;
 
 			curs_set(CURS_OFF);
@@ -396,12 +396,12 @@ selection_t get_move (void)
 
 		    if (gettxchar(curwin, &key) == OK) {
 			// Ordinary wide character
-			if (key >= '1' && key <= '9') {
+			if (key >= L'1' && key <= L'9') {
 			    left(curwin, getcury(curwin), getcurx(curwin),
 				 A_BOLD, 0, 0, 1, "%lc", key);
 			    wrefresh(curwin);
 
-			    choice = key - '0';
+			    choice = key - L'0';
 			    done = true;
 			} else {
 			    beep();
@@ -504,13 +504,13 @@ void process_move (selection_t selection)
 
 	assign_vals(x, y, left, right, up, down);
 
-	if (left == MAP_EMPTY && right == MAP_EMPTY &&
-	    up   == MAP_EMPTY && down  == MAP_EMPTY) {
+	if (   left == MAP_EMPTY && right == MAP_EMPTY
+	    && up   == MAP_EMPTY && down  == MAP_EMPTY) {
 	    // The position is out in the middle of nowhere...
 	    galaxy_map[x][y] = MAP_OUTPOST;
 
-	} else if (! IS_MAP_COMPANY(left)  && ! IS_MAP_COMPANY(right)
-		   && ! IS_MAP_COMPANY(up) && ! IS_MAP_COMPANY(down)) {
+	} else if (   ! IS_MAP_COMPANY(left) && ! IS_MAP_COMPANY(right)
+		   && ! IS_MAP_COMPANY(up)   && ! IS_MAP_COMPANY(down)) {
 	    // See if a company can be established
 	    try_start_new_company(x, y);
 
@@ -769,6 +769,9 @@ void merge_companies (map_val_t a, map_val_t b)
 {
     int aa = MAP_TO_COMPANY(a);
     int bb = MAP_TO_COMPANY(b);
+
+    assert(aa >= 0 && aa < MAX_COMPANIES);
+    assert(bb >= 0 && bb < MAX_COMPANIES);
 
     double val_aa = company[aa].share_price * company[aa].stock_issued *
 	company[aa].share_return;
@@ -1137,7 +1140,8 @@ void adjust_values (void)
     // Give the current player the companies' dividends
     for (int i = 0; i < MAX_COMPANIES; i++) {
 	if (company[i].on_map && company[i].stock_issued != 0) {
-	    player[current_player].cash += player[current_player].stock_owned[i]
+	    player[current_player].cash +=
+		player[current_player].stock_owned[i]
 		* company[i].share_price * company[i].share_return
 		+ ((double) player[current_player].stock_owned[i]
 		   / company[i].stock_issued) * company[i].share_price

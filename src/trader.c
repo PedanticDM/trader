@@ -248,8 +248,8 @@ void process_cmdline (int argc, char *argv[])
 
     if (optind < argc && argv[optind] != NULL) {
 	if (*argv[optind] == '-') {
-	    fprintf(stderr, _("%s: invalid operand `%s'\n"), program_name,
-		    argv[optind]);
+	    fprintf(stderr, _("%s: invalid operand `%s'\n"),
+		    program_name, argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
 

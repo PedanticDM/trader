@@ -70,7 +70,7 @@ extern wchar_t *mon_thousands_sep;	// Local monetary thousands separator
 
 /*
   Function:   init_program_name - Make the program name canonical
-  Parameters: argv0             - Same as passed to main()
+  Parameters: argv0             - Same as passed to main() as argv[0]
   Returns:    (nothing)
 
   This function modifies the argv0 pointer to eliminate any leading
@@ -78,7 +78,7 @@ extern wchar_t *mon_thousands_sep;	// Local monetary thousands separator
   basename of the program.  It also saves a copy that can be accessed via
   the program_name global variable.
 */
-extern void init_program_name (char *argv0);
+extern void init_program_name (const char *argv0);
 
 
 /*
@@ -239,7 +239,7 @@ extern void init_locale (void);
 
 /*
   Function:   l_strfmon - Convert monetary value to a string
-  Parameters: s         - Buffer to receive result
+  Parameters: buf       - Buffer to receive result
               maxsize   - Maximum size of buffer
               format    - strfmon() format to use
 	      val       - Monetary value to convert
@@ -251,7 +251,7 @@ extern void init_locale (void);
   function overcomes the limitation that the POSIX locale does not define
   anything for localeconv()->currency_symbol.
 */
-extern ssize_t l_strfmon (char *restrict s, size_t maxsize,
+extern ssize_t l_strfmon (char *restrict buf, size_t maxsize,
 			  const char *restrict format, double val);
 
 

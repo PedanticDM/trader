@@ -281,12 +281,12 @@ static int ask_number_players (void)
 
 	if (gettxchar(curwin, &key) == OK) {
 	    // Ordinary wide character
-	    if (key >= '1' && key <= MAX_PLAYERS + '0') {
+	    if (key >= L'1' && key <= MAX_PLAYERS + L'0') {
 		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
 		     0, 0, 1, "%lc", key);
 		wrefresh(curwin);
 
-		ret = key - '0';
+		ret = key - L'0';
 		done = true;
 	    } else if (wcschr(keycode_contgame, key) != NULL) {
 		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
@@ -356,12 +356,12 @@ int ask_game_number (void)
 
 	if (gettxchar(curwin, &key) == OK) {
 	    // Ordinary wide character
-	    if (key >= '1' && key <= '9') {
+	    if (key >= L'1' && key <= L'9') {
 		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
 		     0, 0, 1, "%lc", key);
 		wrefresh(curwin);
 
-		ret = key - '0';
+		ret = key - L'0';
 		done = true;
 	    } else {
 		beep();
@@ -574,8 +574,7 @@ void end_game (void)
 		 attr_title, attr_normal, attr_highlight, 0, attr_waitforkey,
 		 _("  Total Value  "),
 		 /* xgettext:c-format */
-		 _("Your total value was ^{%N^}."),
-		 total_value(0));
+		 _("Your total value was ^{%N^}."), total_value(0));
     } else {
 	// Sort players on the basis of total value
 	for (int i = 0; i < number_players; i++) {
@@ -655,7 +654,7 @@ void show_map (bool closewin)
 	for (int x = 0; x < MAX_X; x++) {
 	    chtype *mapstr = CHTYPE_MAP_VAL(galaxy_map[x][y]);
 
-	    while (*mapstr != '\0') {
+	    while (*mapstr != 0) {
 		waddch(curwin, *mapstr++);
 	    }
 	}

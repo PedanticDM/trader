@@ -111,7 +111,7 @@ typedef struct txwin {
 		     __stringify(_var), s);				\
 	}								\
 	(_var) = xwcsdup(buf);						\
-	(_var)[_checkpos] = '\0';					\
+	(_var)[_checkpos] = L'\0';					\
     } while (0)
 
 #define init_game_chstr(_chvar, _var, _attr, _err)			\
@@ -134,13 +134,13 @@ typedef struct txwin {
 	}								\
 									\
 	if (w == 1) {							\
-	    n = xwcrtomb(convbuf, ' ', &mbstate);			\
+	    n = xwcrtomb(convbuf, L' ', &mbstate);			\
 	    for (int i = 0; i < n; i++) {				\
 		*p++ = (unsigned char) convbuf[i] | attr_map_empty;	\
 	    }								\
 	}								\
 									\
-	n = xwcrtomb(convbuf, '\0', &mbstate);				\
+	n = xwcrtomb(convbuf, L'\0', &mbstate);				\
 	for (int i = 0; i < n; i++) {					\
 	    *p++ = (unsigned char) convbuf[i];				\
 	}								\
@@ -326,52 +326,52 @@ static int getwch (WINDOW *win, wint_t *wch);
 
 
 /*
-  Function:   cpos_endl - Adjust cpos and st for printing the ending part of buf
-  Parameters: buf       - Pointer to current editing buffer
-              cpos      - Pointer to current cursor position (result)
-              st        - Pointer to current starting offset for buf[] (result)
-              clen      - Current column width of entire string
-              width     - Width of editing field in column spaces
-              len       - Length of string being edited (wchar_t elements)
+  Function:   cpos_end - Adjust cpos and st for printing the ending part of buf
+  Parameters: buf      - Pointer to current editing buffer
+              cpos     - Pointer to current cursor position (result)
+              st       - Pointer to current starting offset for buf[] (result)
+              clen     - Current column width of entire string
+              width    - Width of editing field in column spaces
+              len      - Length of string being edited (wchar_t elements)
   Returns:    (nothing)
 
   This helper function adjusts *cpos and *st so that the cursor is placed
   at the end of the current editing buffer buf[].
 */
-static void cpos_endl (wchar_t *restrict buf, int *restrict cpos,
-		       int *restrict st, int clen, int width, int len);
+static void cpos_end (const wchar_t *restrict buf, int *restrict cpos,
+		      int *restrict st, int clen, int width, int len);
 
 
 /*
-  Function:   cpos_decr - Adjust cpos and st: scroll to the left by w columns
-  Parameters: buf       - Pointer to current editing buffer
-              cpos      - Pointer to current cursor position (result)
-              st        - Pointer to current starting offset for buf[] (result)
-              w         - Number of columns to scroll left
-              width     - Width of editing field in column spaces
+  Function:   cpos_dec - Adjust cpos and st: scroll to the left by w columns
+  Parameters: buf      - Pointer to current editing buffer
+              cpos     - Pointer to current cursor position (result)
+              st       - Pointer to current starting offset for buf[] (result)
+              w        - Number of columns to scroll left
+              width    - Width of editing field in column spaces
   Returns:    (nothing)
 
   This helper function adjusts *cpos and *st so that the cursor is moved
   to the left by w column positions.
 */
-static void cpos_decr (wchar_t *restrict buf, int *restrict cpos,
-		       int *restrict st, int w, int width);
+static void cpos_dec (const wchar_t *restrict buf, int *restrict cpos,
+		      int *restrict st, int w, int width);
 
 
 /*
-  Function:   cpos_incr - Adjust cpos and st: scroll to the right by w columns
-  Parameters: buf       - Pointer to current editing buffer
-              cpos      - Pointer to current cursor position (result)
-              st        - Pointer to current starting offset for buf[] (result)
-              w         - Number of columns to scroll right
-              width     - Width of editing field in column spaces
+  Function:   cpos_inc - Adjust cpos and st: scroll to the right by w columns
+  Parameters: buf      - Pointer to current editing buffer
+              cpos     - Pointer to current cursor position (result)
+              st       - Pointer to current starting offset for buf[] (result)
+              w        - Number of columns to scroll right
+              width    - Width of editing field in column spaces
   Returns:    (nothing)
 
   This helper function adjusts *cpos and *st so that the cursor is moved
   to the right by w column positions.
 */
-static void cpos_incr (wchar_t *restrict buf, int *restrict cpos,
-		       int *restrict st, int w, int width);
+static void cpos_inc (const wchar_t *restrict buf, int *restrict cpos,
+		      int *restrict st, int w, int width);
 
 
 /*
@@ -389,7 +389,7 @@ static void cpos_incr (wchar_t *restrict buf, int *restrict cpos,
   This function is used by gettxdouble() and gettxlong() to share some
   common code.
 */
-static void txinput_fixup (wchar_t *restrict dest, wchar_t *restrict src,
+static void txinput_fixup (wchar_t *restrict dest, const wchar_t *restrict src,
 			   bool isfloat);
 
 
@@ -864,11 +864,11 @@ int mkchstr_parse (const wchar_t *restrict format,
     memset(format_arg, 0, MAXFMTARGS * sizeof(format_arg[0]));
     memset(format_spec, 0, MAXFMTSPECS * sizeof(format_spec[0]));
 
-    while (*format != '\0') {
+    while (*format != L'\0') {
 	switch (*format++) {
-	case '^':
+	case L'^':
 	    // Switch to a different character rendition
-	    if (*format == '\0') {
+	    if (*format == L'\0') {
 		errno = EINVAL;
 		return -1;
 	    } else {
@@ -877,13 +877,13 @@ int mkchstr_parse (const wchar_t *restrict format,
 	    }
 	    break;
 
-	case '%':
+	case L'%':
 	    // Process a conversion specifier
-	    if (*format == '\0') {
+	    if (*format == L'\0') {
 		errno = EINVAL;
 		return -1;
-	    } else if (*format == '%') {
-		// Ignore "%%" specifier
+	    } else if (*format == L'%') {
+		// Ignore "%%" specifier for now
 		format++;
 	    } else {
 		const wchar_t *start = format;
@@ -893,10 +893,10 @@ int mkchstr_parse (const wchar_t *restrict format,
 		bool flag_other = false;	// Have we seen something else?
 		int count = 0;
 
-		while (inspec && *format != '\0') {
-		    wchar_t wc = *format++;
-		    switch (wc) {
-		    case '0':
+		while (inspec && *format != L'\0') {
+		    wchar_t c = *format++;
+		    switch (c) {
+		    case L'0':
 			// Zero flag, or part of numeric count
 			if (count == 0) {
 			    // Zero flag is NOT supported
@@ -907,20 +907,20 @@ int mkchstr_parse (const wchar_t *restrict format,
 			count *= 10;
 			break;
 
-		    case '1':
-		    case '2':
-		    case '3':
-		    case '4':
-		    case '5':
-		    case '6':
-		    case '7':
-		    case '8':
-		    case '9':
+		    case L'1':
+		    case L'2':
+		    case L'3':
+		    case L'4':
+		    case L'5':
+		    case L'6':
+		    case L'7':
+		    case L'8':
+		    case L'9':
 			// Part of some numeric count
-			count = count * 10 + (wc - L'0');
+			count = count * 10 + (c - L'0');
 			break;
 
-		    case '$':
+		    case L'$':
 			// Fixed-position argument
 			if (flag_posn || flag_other || count == 0) {
 			    errno = EINVAL;
@@ -937,7 +937,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			count = 0;
 			break;
 
-		    case '\'':
+		    case L'\'':
 			// Use locale-specific thousands group separator
 			if (format_spec->flag_group) {
 			    errno = EINVAL;
@@ -948,7 +948,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			flag_other = true;
 			break;
 
-		    case '!':
+		    case L'!':
 			// Omit the locale-specific currency symbol
 			if (format_spec->flag_nosym) {
 			    errno = EINVAL;
@@ -959,7 +959,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			flag_other = true;
 			break;
 
-		    case '.':
+		    case L'.':
 			// Precision flag
 			if (format_spec->flag_prec || count != 0) {
 			    errno = EINVAL;
@@ -970,7 +970,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			flag_other = true;
 			break;
 
-		    case 'l':
+		    case L'l':
 			// Long length modifier
 			if (format_spec->flag_long) {
 			    // "ll" is NOT supported
@@ -982,7 +982,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			flag_other = true;
 			break;
 
-		    case 'c':
+		    case L'c':
 			// Insert a character (char or wchar_t)
 			if (format_spec->flag_group || format_spec->flag_nosym
 			    || format_spec->flag_prec || count != 0) {
@@ -994,7 +994,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			    TYPE_WCHAR : TYPE_CHAR;
 			goto handlefmt;
 
-		    case 'd':
+		    case L'd':
 			// Insert an integer (int or long int)
 			if (format_spec->flag_nosym || format_spec->flag_prec
 			    || count != 0) {
@@ -1006,7 +1006,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			    TYPE_LONGINT : TYPE_INT;
 			goto handlefmt;
 
-		    case 'f':
+		    case L'f':
 			// Insert a floating-point number (double)
 			if (format_spec->flag_nosym || format_spec->flag_long ||
 			    (! format_spec->flag_prec && count != 0)) {
@@ -1019,7 +1019,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			arg_type = TYPE_DOUBLE;
 			goto handlefmt;
 
-		    case 'N':
+		    case L'N':
 			// Insert a monetary amount (double)
 			if (format_spec->flag_group || format_spec->flag_prec
 			    || format_spec->flag_long || count != 0) {
@@ -1030,7 +1030,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 			arg_type = TYPE_DOUBLE;
 			goto handlefmt;
 
-		    case 's':
+		    case L's':
 			// Insert a string (const char * or const wchar_t *)
 			if (format_spec->flag_group || format_spec->flag_nosym
 			    || format_spec->flag_prec || count != 0) {
@@ -1056,7 +1056,7 @@ int mkchstr_parse (const wchar_t *restrict format,
 
 			format_spec->len = format - start;
 			format_spec->arg_num = arg_num;
-			format_spec->spec = wc;
+			format_spec->spec = c;
 
 			arg_num++;
 			num_args = MAX(num_args, arg_num);
@@ -1147,11 +1147,11 @@ int mkchstr_add (wchar_t *restrict *restrict outbuf,
 	*line = 0;
     }
 
-    if (**str == '\n') {
+    if (**str == L'\n') {
 	// Start a new line
 
 	if (*line < maxlines - 1) {
-	    *(*outbuf)++ = '\n';
+	    *(*outbuf)++ = L'\n';
 	    *(*attrbuf)++ = 0;
 	    (*count)--;
 	}
@@ -1180,7 +1180,7 @@ int mkchstr_add (wchar_t *restrict *restrict outbuf,
 		// Break on the last space in this line
 		wspc = wcwidth(**lastspc);
 
-		**lastspc = '\n';
+		**lastspc = L'\n';
 		**spcattr = 0;
 
 		widthbuf[*line] = *widthspc;
@@ -1194,7 +1194,7 @@ int mkchstr_add (wchar_t *restrict *restrict outbuf,
 	    } else {
 		// Insert a new-line character (if not on last line)
 		if (*line < maxlines - 1) {
-		    *(*outbuf)++ = '\n';
+		    *(*outbuf)++ = L'\n';
 		    *(*attrbuf)++ = 0;
 		    (*count)--;
 		}
@@ -1212,7 +1212,7 @@ int mkchstr_add (wchar_t *restrict *restrict outbuf,
 		   will ever have combining diacritical marks following a
 		   (line-breaking) space! */
 		while (iswspace(**str)) {
-		    if (*(*str)++ == '\n') {
+		    if (*(*str)++ == L'\n') {
 			break;
 		    }
 		}
@@ -1257,7 +1257,7 @@ void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
     while (! done) {
 	// Make sure we always have enough space for ending shift sequence
 	memcpy(&mbcopy, &mbstate, sizeof(mbstate));
-	endsize = wcrtomb(endbuf, '\0', &mbcopy);
+	endsize = wcrtomb(endbuf, L'\0', &mbcopy);
 	if (endsize == (size_t) -1) {
 	    errno_exit(_("mkchstr_conv: NUL"));
 	}
@@ -1285,7 +1285,7 @@ void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
 	    break;
 	}
 
-	done = (*wcbuf == '\0');
+	done = (*wcbuf == L'\0');
 	wcbuf++;
 	attrbuf++;
     }
@@ -1352,15 +1352,15 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
     spcattr = NULL;			// Equivalent in attrbuf
     widthspc = 0;			// Width of line before last space
 
-    while (*wcformat != '\0' && count > 1 && line < maxlines) {
+    while (*wcformat != L'\0' && count > 1 && line < maxlines) {
 	switch (*wcformat) {
-	case '^':
+	case L'^':
 	    // Switch to a different character rendition
-	    if (*++wcformat == '\0') {
+	    if (*++wcformat == L'\0') {
 		goto error_inval;
 	    } else {
 		switch (*wcformat) {
-		case '^':
+		case L'^':
 		    if (mkchstr_add(&outbuf, &attrbuf, &count, curattr,
 				    maxlines, maxwidth, &line, &width,
 				    &lastspc, &spcattr, &widthspc, widthbuf,
@@ -1369,18 +1369,18 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    }
 		    break;
 
-		case '{':
+		case L'{':
 		    curattr = attr_alt1;
 		    wcformat++;
 		    break;
 
-		case '[':
+		case L'[':
 		    curattr = attr_alt2;
 		    wcformat++;
 		    break;
 
-		case '}':
-		case ']':
+		case L'}':
+		case L']':
 		    curattr = attr_norm;
 		    wcformat++;
 		    break;
@@ -1391,11 +1391,11 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	    }
 	    break;
 
-	case '%':
+	case L'%':
 	    // Process a conversion specifier
-	    if (*++wcformat == '\0') {
+	    if (*++wcformat == L'\0') {
 		goto error_inval;
-	    } else if (*wcformat == '%') {
+	    } else if (*wcformat == L'%') {
 		if (mkchstr_add(&outbuf, &attrbuf, &count, curattr, maxlines,
 				maxwidth, &line, &width, &lastspc, &spcattr,
 				&widthspc, widthbuf, widthbufsize, &wcformat)
@@ -1408,7 +1408,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		wint_t wc;
 
 		switch (spec->spec) {
-		case 'c':
+		case L'c':
 		    // Insert a character (char or wchar_t) into the output
 		    if (spec->flag_long) {
 			wc = format_arg[spec->arg_num].a.a_wchar;
@@ -1416,17 +1416,17 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			wc = btowc(format_arg[spec->arg_num].a.a_char);
 		    }
 
-		    if (wc == '\0' || wc == WEOF) {
+		    if (wc == L'\0' || wc == WEOF) {
 			wc = EILSEQ_REPL_WC;
 		    }
 
 		    fmtbuf[0] = wc;
-		    fmtbuf[1] = '\0';
+		    fmtbuf[1] = L'\0';
 
 		    str = fmtbuf;
 		    goto insertstr;
 
-		case 'd':
+		case L'd':
 		    // Insert an integer (int or long int) into the output
 		    if (spec->flag_long) {
 			if (swprintf(fmtbuf, BUFSIZE, spec->flag_group ?
@@ -1443,7 +1443,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    str = fmtbuf;
 		    goto insertstr;
 
-		case 'f':
+		case L'f':
 		    // Insert a floating-point number (double) into the output
 		    if (spec->flag_prec) {
 			if (swprintf(fmtbuf, BUFSIZE, spec->flag_group ?
@@ -1460,7 +1460,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    str = fmtbuf;
 		    goto insertstr;
 
-		case 'N':
+		case L'N':
 		    // Insert a monetary amount (double) into the output
 		    {
 			/* strfmon() is not available in a wide-char
@@ -1482,7 +1482,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 		    str = fmtbuf;
 		    goto insertstr;
 
-		case 's':
+		case L's':
 		    // Insert a string (const char * or const wchar_t *)
 		    if (spec->flag_long) {
 			str = format_arg[spec->arg_num].a.a_wstring;
@@ -1502,7 +1502,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		insertstr:
 		    // Insert the string pointed to by str
-		    while (*str != '\0' && count > 1 && line < maxlines) {
+		    while (*str != L'\0' && count > 1 && line < maxlines) {
 			if (mkchstr_add(&outbuf, &attrbuf, &count, curattr,
 					maxlines, maxwidth, &line, &width,
 					&lastspc, &spcattr, &widthspc,
@@ -1531,7 +1531,7 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 	}
     }
 
-    *outbuf = '\0';			// Terminating NUL character
+    *outbuf = L'\0';			// Terminating NUL character
     *attrbuf = 0;
 
     if (line >= 0 && line < maxlines) {
@@ -1578,7 +1578,7 @@ int leftch (WINDOW *win, int y, int x, const chtype *restrict chstr,
     assert(widthbuf != NULL);
 
     wmove(win, y, x);
-    for ( ; *chstr != '\0'; chstr++) {
+    for ( ; *chstr != 0; chstr++) {
 	if (*chstr == '\n') {
 	    wmove(win, getcury(win) + 1, x);
 	} else {
@@ -1605,7 +1605,7 @@ int centerch (WINDOW *win, int y, int offset, const chtype *restrict chstr,
     assert(widthbuf != NULL);
 
     wmove(win, y, (getmaxx(win) - widthbuf[ln]) / 2 + offset);
-    for ( ; *chstr != '\0'; chstr++) {
+    for ( ; *chstr != 0; chstr++) {
 	if (*chstr == '\n') {
 	    if (ln++ >= lines) {
 		return ERR;
@@ -1637,7 +1637,7 @@ int rightch (WINDOW *win, int y, int x, const chtype *restrict chstr,
     assert(widthbuf != NULL);
 
     wmove(win, y, x - widthbuf[ln]);
-    for ( ; *chstr != '\0'; chstr++) {
+    for ( ; *chstr != 0; chstr++) {
 	if (*chstr == '\n') {
 	    if (ln++ >= lines) {
 		return ERR;
@@ -1828,10 +1828,10 @@ int gettxchar (WINDOW *win, wint_t *wch)
 
 
 /***********************************************************************/
-// cpos_endl: Adjust cpos and st for printing the ending part of buf
+// cpos_end: Adjust cpos and st for printing the ending part of buf
 
-void cpos_endl (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
-		int clen, int width, int len)
+void cpos_end (const wchar_t *restrict buf, int *restrict cpos,
+	       int *restrict st, int clen, int width, int len)
 {
     *cpos = MIN(clen, width - 1);
 
@@ -1862,10 +1862,10 @@ void cpos_endl (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
 
 
 /***********************************************************************/
-// cpos_decr: Adjust cpos and st: scroll to the left by w columns
+// cpos_dec: Adjust cpos and st: scroll to the left by w columns
 
-void cpos_decr (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
-		int w, int width)
+void cpos_dec (const wchar_t *restrict buf, int *restrict cpos,
+	       int *restrict st, int w, int width)
 {
     if (*cpos > 0) {
 	// Cursor position is not yet in first column
@@ -1886,10 +1886,10 @@ void cpos_decr (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
 
 
 /***********************************************************************/
-// cpos_incr: Adjust cpos and st: scroll to the right by w columns
+// cpos_inc: Adjust cpos and st: scroll to the right by w columns
 
-void cpos_incr (wchar_t *restrict buf, int *restrict cpos, int *restrict st,
-		int w, int width)
+void cpos_inc (const wchar_t *restrict buf, int *restrict cpos,
+	       int *restrict st, int w, int width)
 {
     if (*cpos + w <= width - 1) {
 	// Cursor position is not yet in second-last column
@@ -1953,7 +1953,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
     }
 
     // Find the point from which buf should be displayed to screen
-    cpos_endl(buf, &cpos, &st, clen, width, len);
+    cpos_end(buf, &cpos, &st, clen, width, len);
 
     redraw = true;
     done = false;
@@ -1996,7 +1996,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			     buf);
 		}
 
-		cpos_endl(buf, &cpos, &st, clen, width, len);
+		cpos_end(buf, &cpos, &st, clen, width, len);
 
 		mod = true;
 		redraw = true;
@@ -2020,7 +2020,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    pos++;
 
 		    clen += w;
-		    cpos_incr(buf, &cpos, &st, w, width);
+		    cpos_inc(buf, &cpos, &st, w, width);
 
 		    mod = true;
 		    redraw = true;
@@ -2113,7 +2113,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    beep();
 		} else {
 		    pos--;
-		    cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]), width);
+		    cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]), width);
 		    redraw = true;
 		}
 		break;
@@ -2125,7 +2125,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    beep();
 		} else {
 		    pos++;
-		    cpos_incr(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
+		    cpos_inc(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
 		    redraw = true;
 		}
 		break;
@@ -2143,7 +2143,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 	    case KEY_CTRL('E'):
 		// Move cursor to end of string
 		pos = len;
-		cpos_endl(buf, &cpos, &st, clen, width, len);
+		cpos_end(buf, &cpos, &st, clen, width, len);
 		redraw = true;
 		break;
 
@@ -2151,7 +2151,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		// Move cursor to start of current or previous word
 		while (pos > 0 && ! iswalnum(buf[pos - 1])) {
 		    pos--;
-		    cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]), width);
+		    cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]), width);
 		}
 		while (pos > 0 && (iswalnum(buf[pos - 1])
 				   || (pos > 1 && wcwidth(buf[pos - 1]) == 0
@@ -2159,7 +2159,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    /* Treat zero-width characters preceded by an
 		       alphanumeric character as alphanumeric. */
 		    pos--;
-		    cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]), width);
+		    cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]), width);
 		}
 		redraw = true;
 		break;
@@ -2168,14 +2168,14 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		// Move cursor to end of current or next word
 		while (pos < len && ! iswalnum(buf[pos])) {
 		    pos++;
-		    cpos_incr(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
+		    cpos_inc(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
 		}
 		while (pos < len
 		       && (iswalnum(buf[pos]) || wcwidth(buf[pos]) == 0)) {
 		    /* Treat zero-width characters following an
 		       alphanumeric character as alphanumeric. */
 		    pos++;
-		    cpos_incr(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
+		    cpos_inc(buf, &cpos, &st, wcwidth(buf[pos - 1]), width);
 		}
 		redraw = true;
 		break;
@@ -2194,7 +2194,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    len--;
 		    pos--;
 		    clen -= w;
-		    cpos_decr(buf, &cpos, &st, w, width);
+		    cpos_dec(buf, &cpos, &st, w, width);
 		    mod = true;
 		    redraw = true;
 		}
@@ -2282,13 +2282,13 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			i--;
 			int w = wcwidth(buf[i]);
 			ww += w;
-			cpos_decr(buf, &cpos, &st, w, width);
+			cpos_dec(buf, &cpos, &st, w, width);
 		    }
 		    while (i > 0 && ! iswspace(buf[i - 1])) {
 			i--;
 			int w = wcwidth(buf[i]);
 			ww += w;
-			cpos_decr(buf, &cpos, &st, w, width);
+			cpos_dec(buf, &cpos, &st, w, width);
 		    }
 
 		    wmemmove(buf + i, buf + pos, len - pos + 1);
@@ -2320,7 +2320,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    buf[pos - 1] = c;
 
 		    pos++;
-		    cpos_incr(buf, &cpos, &st, w, width);
+		    cpos_inc(buf, &cpos, &st, w, width);
 
 		    mod = true;
 		    redraw = true;
@@ -2358,7 +2358,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    // Move cursor to start of current or previous word
 			    while (pos > 0 && ! iswalnum(buf[pos - 1])) {
 				pos--;
-				cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]),
+				cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]),
 					  width);
 			    }
 			    while (pos > 0 && (iswalnum(buf[pos - 1])
@@ -2368,7 +2368,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				/* Treat zero-width characters preceded by an
 				   alphanumeric character as alphanumeric. */
 				pos--;
-				cpos_decr(buf, &cpos, &st, wcwidth(buf[pos]),
+				cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]),
 					  width);
 			    }
 			    redraw = true;
@@ -2379,7 +2379,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    // Move cursor to end of current or next word
 			    while (pos < len && ! iswalnum(buf[pos])) {
 				pos++;
-				cpos_incr(buf, &cpos, &st,
+				cpos_inc(buf, &cpos, &st,
 					  wcwidth(buf[pos - 1]), width);
 			    }
 			    while (pos < len
@@ -2388,7 +2388,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				/* Treat zero-width characters following an
 				   alphanumeric character as alphanumeric. */
 				pos++;
-				cpos_incr(buf, &cpos, &st,
+				cpos_inc(buf, &cpos, &st,
 					  wcwidth(buf[pos - 1]), width);
 			    }
 			    redraw = true;
@@ -2436,7 +2436,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				    pos--;
 				    int w = wcwidth(buf[pos]);
 				    ww += w;
-				    cpos_decr(buf, &cpos, &st, w, width);
+				    cpos_dec(buf, &cpos, &st, w, width);
 				}
 				while (i < len && iswspace(buf[i])) {
 				    i++;
@@ -2461,7 +2461,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 
 					int w = wcwidth(c);
 					clen += w;
-					cpos_incr(buf, &cpos, &st, w, width);
+					cpos_inc(buf, &cpos, &st, w, width);
 				    }
 				}
 
@@ -2477,7 +2477,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    // Convert word (from cursor onwards) to upper case
 			    while (pos < len && ! iswalnum(buf[pos])) {
 				pos++;
-				cpos_incr(buf, &cpos, &st,
+				cpos_inc(buf, &cpos, &st,
 					  wcwidth(buf[pos - 1]), width);
 			    }
 			    while (pos < len
@@ -2485,7 +2485,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				       || wcwidth(buf[pos]) == 0)) {
 				buf[pos] = towupper(buf[pos]);
 				pos++;
-				cpos_incr(buf, &cpos, &st,
+				cpos_inc(buf, &cpos, &st,
 					  wcwidth(buf[pos - 1]), width);
 			    }
 			    mod = true;
@@ -2497,7 +2497,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    // Convert word (from cursor onwards) to lower case
 			    while (pos < len && ! iswalnum(buf[pos])) {
 				pos++;
-				cpos_incr(buf, &cpos, &st,
+				cpos_inc(buf, &cpos, &st,
 					  wcwidth(buf[pos - 1]), width);
 			    }
 			    while (pos < len
@@ -2505,7 +2505,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				       || wcwidth(buf[pos]) == 0)) {
 				buf[pos] = towlower(buf[pos]);
 				pos++;
-				cpos_incr(buf, &cpos, &st,
+				cpos_inc(buf, &cpos, &st,
 					  wcwidth(buf[pos - 1]), width);
 			    }
 			    mod = true;
@@ -2520,7 +2520,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				bool first = true;
 				while (pos < len && ! iswalnum(buf[pos])) {
 				    pos++;
-				    cpos_incr(buf, &cpos, &st,
+				    cpos_inc(buf, &cpos, &st,
 					      wcwidth(buf[pos - 1]), width);
 				}
 				while (pos < len
@@ -2533,7 +2533,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 					buf[pos] = towlower(buf[pos]);
 				    }
 				    pos++;
-				    cpos_incr(buf, &cpos, &st,
+				    cpos_inc(buf, &cpos, &st,
 					      wcwidth(buf[pos - 1]), width);
 				}
 				mod = true;
@@ -2564,7 +2564,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				i--;
 				int w = wcwidth(buf[i]);
 				ww += w;
-				cpos_decr(buf, &cpos, &st, w, width);
+				cpos_dec(buf, &cpos, &st, w, width);
 			    }
 			    while (i > 0
 				   && (iswalnum(buf[i - 1])
@@ -2575,7 +2575,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				i--;
 				int w = wcwidth(buf[i]);
 				ww += w;
-				cpos_decr(buf, &cpos, &st, w, width);
+				cpos_dec(buf, &cpos, &st, w, width);
 			    }
 
 			    wmemmove(buf + i, buf + pos, len - pos + 1);
@@ -2654,7 +2654,7 @@ int gettxstr (WINDOW *win, wchar_t *restrict *restrict bufptr,
     // Allocate the result buffer if needed
     if (*bufptr == NULL) {
 	*bufptr = xmalloc(BUFSIZE * sizeof(wchar_t));
-	**bufptr = '\0';
+	**bufptr = L'\0';
     }
 
     return gettxline(win, *bufptr, BUFSIZE, modified, multifield, L"", L"",
@@ -2665,13 +2665,14 @@ int gettxstr (WINDOW *win, wchar_t *restrict *restrict bufptr,
 /***********************************************************************/
 // txinput_fixup: Copy strings with fixup
 
-void txinput_fixup (wchar_t *restrict dest, wchar_t *restrict src, bool isfloat)
+void txinput_fixup (wchar_t *restrict dest, const wchar_t *restrict src,
+		    bool isfloat)
 {
     assert(src != NULL);
     assert(dest != NULL);
 
     wcsncpy(dest, src, BUFSIZE - 1);
-    dest[BUFSIZE - 1] = '\0';
+    dest[BUFSIZE - 1] = L'\0';
 
     // Replace mon_decimal_point with decimal_point if these are different
     if (isfloat) {

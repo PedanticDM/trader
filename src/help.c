@@ -61,7 +61,7 @@ static const char *help_text[HELP_TEXT_PAGES] = {
     ^^ - Print the circumflex accent (ASCII code U+005E)
     ^N - Switch to using the normal character rendition
     ^B - Switch to using the bold character rendition
-    ^B - Switch to using the highlight character rendition
+    ^H - Switch to using the highlight character rendition
     ^K - Switch to using the keycode character rendition (such as used for "<CTRL><C>")
     ^e - Switch to using the character rendition used for empty space
     ^o - Switch to using the character rendition used for outposts
@@ -288,149 +288,150 @@ void show_help (void)
 	memset(&mbstate, 0, sizeof(mbstate));
 	outp = outbuf;
 
-	while (*htxt != '\0' && count > maxchar * 2) {
+	while (*htxt != L'\0' && count > maxchar * 2) {
 	    switch (*htxt) {
-	    case '\n':
+	    case L'\n':
 		// Start a new line
 		*outp++ = '\n';
 		count--;
 		break;
 
-	    case '^':
+	    case L'^':
 		// Switch to a different character rendition
 		switch (*++htxt) {
-		case '^':
+		case L'^':
 		    wcbuf[0] = *htxt;
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
-		case 'N':
+		case L'N':
 		    curattr = attr_normal;
 		    break;
 
-		case 'B':
+		case L'B':
 		    curattr = attr_normal | A_BOLD;
 		    break;
 
-		case 'H':
+		case L'H':
 		    curattr = attr_highlight;
 		    break;
 
-		case 'K':
+		case L'K':
 		    curattr = attr_keycode;
 		    break;
 
-		case 'e':
+		case L'e':
 		    curattr = attr_map_empty;
 		    break;
 
-		case 'o':
+		case L'o':
 		    curattr = attr_map_outpost;
 		    break;
 
-		case 's':
+		case L's':
 		    curattr = attr_map_star;
 		    break;
 
-		case 'c':
+		case L'c':
 		    curattr = attr_map_company;
 		    break;
 
-		case 'k':
+		case L'k':
 		    curattr = attr_map_choice;
 		    break;
 
 		default:
-		    wcbuf[0] = '^';
+		    wcbuf[0] = L'^';
 		    wcbuf[1] = *htxt;
-		    wcbuf[2] = '\0';
+		    wcbuf[2] = L'\0';
 		    goto addwcbuf;
 		}
 		break;
 
-	    case '~':
+	    case L'~':
 		// Print a global constant
 		switch (*++htxt) {
-		case '~':
+		case L'~':
 		    wcbuf[0] = *htxt;
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
-		case 'x':
+		case L'x':
 		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", MAX_X);
 		    goto addwcbuf;
 
-		case 'y':
+		case L'y':
 		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", MAX_Y);
 		    goto addwcbuf;
 
-		case 'm':
+		case L'm':
 		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", NUMBER_MOVES);
 		    goto addwcbuf;
 
-		case 'c':
+		case L'c':
 		    swprintf(wcbuf, BIGBUFSIZE, L"%d", MAX_COMPANIES);
 		    goto addwcbuf;
 
-		case 't':
+		case L't':
 		    swprintf(wcbuf, BIGBUFSIZE, L"%2d", DEFAULT_MAX_TURN);
 		    goto addwcbuf;
 
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
+		case L'1':
+		case L'2':
+		case L'3':
+		case L'4':
+		case L'5':
+		case L'6':
+		case L'7':
+		case L'8':
+		case L'9':
 		    // N-th choice of move, as a key press
 		    wcbuf[0] = PRINTABLE_GAME_MOVE(*htxt - L'1');
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
-		case 'M':
+		case L'M':
 		    // Last choice of move, as a key press
 		    wcbuf[0] = PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1);
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
-		case '.':
+		case L'.':
 		    // Map representation of empty space
 		    wcbuf[0] = PRINTABLE_MAP_VAL(MAP_EMPTY);
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
-		case '+':
+		case L'+':
 		    // Map representation of an outpost
 		    wcbuf[0] = PRINTABLE_MAP_VAL(MAP_OUTPOST);
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
-		case '*':
+		case L'*':
 		    // Map representation of a star
 		    wcbuf[0] = PRINTABLE_MAP_VAL(MAP_STAR);
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
-		case 'A':
-		case 'B':
-		case 'C':
-		case 'D':
-		case 'E':
-		case 'F':
-		case 'G':
-		case 'H':
+		case L'A':
+		case L'B':
+		case L'C':
+		case L'D':
+		case L'E':
+		case L'F':
+		case L'G':
+		case L'H':
 		    // Map representation of company
 		    assert((*htxt - L'A') < MAX_COMPANIES);
 		    wcbuf[0] = PRINTABLE_MAP_VAL(COMPANY_TO_MAP(*htxt - L'A'));
-		    wcbuf[1] = '\0';
+		    wcbuf[1] = L'\0';
 		    goto addwcbuf;
 
 		default:
-		    wcbuf[0] = '~';
+		    wcbuf[0] = L'~';
 		    wcbuf[1] = *htxt;
+		    wcbuf[2] = L'\0';
 		    goto addwcbuf;
 		}
 		break;
@@ -438,10 +439,10 @@ void show_help (void)
 	    default:
 		// Print the character
 		wcbuf[0] = *htxt;
-		wcbuf[1] = '\0';
+		wcbuf[1] = L'\0';
 
 	    addwcbuf:
-		for (wchar_t *p = wcbuf; *p != '\0' && count > maxchar * 2; p++) {
+		for (wchar_t *p = wcbuf; *p != L'\0' && count > maxchar * 2; p++) {
 		    n = xwcrtomb(convbuf, *p, &mbstate);
 		    for (i = 0, cp = convbuf; i < n; i++, cp++, outp++, count--) {
 			*outp = (unsigned char) *cp | curattr;
@@ -453,14 +454,14 @@ void show_help (void)
 	}
 
 	// Add the terminating NUL (possibly with a preceding shift sequence)
-	n = xwcrtomb(convbuf, '\0', &mbstate);
+	n = xwcrtomb(convbuf, L'\0', &mbstate);
 	for (i = 0, cp = convbuf; i < n; i++, cp++, outp++, count--) {
 	    *outp = (unsigned char) *cp;
 	}
 	assert(count >= 0);
 
 	// Display the formatted text in outbuf
-	for (outp = outbuf; *outp != '\0'; outp++) {
+	for (outp = outbuf; *outp != 0; outp++) {
 	    if (*outp == '\n') {
 		wmove(curwin, getcury(curwin) + 1, 2);
 	    } else {

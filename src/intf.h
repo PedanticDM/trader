@@ -597,7 +597,7 @@ extern int gettxchar (WINDOW *win, wint_t *wch);
               attr       - Character rendition to use for input field
   Returns:    int        - Status code: OK, ERR or KEY_ keycode
 
-  This low-level function shows an input field width column spaces long
+  This low-level function shows an input field width column-spaces long
   using attr as the character rendition, then reads a line of input from
   the keyboard and places it into the preallocated buffer buf[] of size
   bufsize.  On entry, buf[] must contain a valid string; this string is
@@ -633,7 +633,7 @@ extern int gettxchar (WINDOW *win, wint_t *wch);
 
   If allowed is not NULL, only characters in that string are allowed to
   be entered into the input line.  For example, if allowed points to
-  "0123456789abcdefABCDEF", only those characters would be allowed (in
+  L"0123456789abcdefABCDEF", only those characters would be allowed (in
   this instance, allowing the user to type in a hexadecimal number).
 
   Note that the character rendition (attributes) in attr may contain a
@@ -667,7 +667,7 @@ extern int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
   malloc(); this buffer is used to store and return the input line.
 
   Apart from bufptr, all parameters are as used for gettxline().  The
-  gettxline() parameters emptyval and defaultval are passed as "",
+  gettxline() parameters emptyval and defaultval are passed as L"",
   allowed is NULL and stripspc is true.
 */
 extern int gettxstr (WINDOW *win, wchar_t *restrict *restrict bufptr,

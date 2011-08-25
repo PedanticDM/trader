@@ -208,7 +208,7 @@ void exchange_stock (void)
 		    key = towlower(key);
 		}
 
-		for (i = 0, found = false; keycode_company[i] != '\0'; i++) {
+		for (i = 0, found = false; keycode_company[i] != L'\0'; i++) {
 		    if (keycode_company[i] == key) {
 			found = true;
 			if (company[i].on_map) {
@@ -222,24 +222,24 @@ void exchange_stock (void)
 
 		if (! found) {
 		    switch (key) {
-		    case '1':
+		    case L'1':
 			curs_set(CURS_OFF);
 			show_status(current_player);
 			curs_set(CURS_ON);
 			break;
 
-		    case '2':
+		    case L'2':
 			curs_set(CURS_OFF);
 			show_map(true);
 			curs_set(CURS_ON);
 			break;
 
-		    case '3':
+		    case L'3':
 			selection = SEL_BANK;
 			break;
 
-		    case '4':
-		    case ' ':
+		    case L'4':
+		    case L' ':
 			selection = SEL_EXIT;
 			break;
 
@@ -379,9 +379,9 @@ void visit_bank (void)
 	if (gettxchar(curwin, &key) == OK) {
 	    // Ordinary wide character
 	    switch (key) {
-	    case '1':
-	    case '2':
-	    case '3':
+	    case L'1':
+	    case L'2':
+	    case L'3':
 		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
 		     0, 0, 1, "%lc", key);
 		wrefresh(curwin);
@@ -389,7 +389,7 @@ void visit_bank (void)
 		done = true;
 		break;
 
-	    case ' ':
+	    case L' ':
 		done = true;
 		break;
 
@@ -417,7 +417,7 @@ void visit_bank (void)
     curs_set(CURS_OFF);
 
     switch (key) {
-    case '1':
+    case L'1':
 	// Borrow money from the Bank
 	if (credit_limit == 0.0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
@@ -470,7 +470,7 @@ void visit_bank (void)
 	}
 	break;
 
-    case '2':
+    case L'2':
 	// Repay a debt
 	if (player[current_player].debt == 0.0) {
 	    txdlgbox(MAX_DLG_LINES, 50, 8, WCENTER, attr_error_window,
@@ -664,10 +664,10 @@ void trade_shares (int num, bool *bid_used)
 	if (gettxchar(curwin, &key) == OK) {
 	    // Ordinary wide character
 	    switch (key) {
-	    case '1':
-	    case '2':
-	    case '3':
-	    case '4':
+	    case L'1':
+	    case L'2':
+	    case L'3':
+	    case L'4':
 		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
 		     0, 0, 1, "%lc", key);
 		wrefresh(curwin);
@@ -675,7 +675,7 @@ void trade_shares (int num, bool *bid_used)
 		done = true;
 		break;
 
-	    case ' ':
+	    case L' ':
 		done = true;
 		break;
 
@@ -703,7 +703,7 @@ void trade_shares (int num, bool *bid_used)
     curs_set(CURS_OFF);
 
     switch (key) {
-    case '1':
+    case L'1':
 	// Buy stock in company
 	maxshares = player[current_player].cash / company[num].share_price;
 
@@ -748,7 +748,7 @@ void trade_shares (int num, bool *bid_used)
 	}
 	break;
 
-    case '2':
+    case L'2':
 	// Sell stock back to company
 	maxshares = player[current_player].stock_owned[num];
 	if (maxshares == 0) {
@@ -783,7 +783,7 @@ void trade_shares (int num, bool *bid_used)
 	}
 	break;
 
-    case '3':
+    case L'3':
 	// Bid company to issue more shares
 	maxshares = 0;
 	if (! *bid_used && randf() < ownership && randf() < BID_CHANCE) {
