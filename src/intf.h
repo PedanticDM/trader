@@ -578,7 +578,7 @@ extern int right (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
   returned.  ERR is never returned.  The key is NOT echoed to the
   terminal display, nor is the cursor visibility affected.
 */
-extern int gettxchar (WINDOW *win, wint_t *wch);
+extern int gettxchar (WINDOW *win, wint_t *restrict wch);
 
 
 /*

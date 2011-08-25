@@ -322,7 +322,7 @@ static void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
   This function is either a wrapper (with modifications) for wget_wch()
   from Curses, or an implementation of that function using wgetch().
 */
-static int getwch (WINDOW *win, wint_t *wch);
+static int getwch (WINDOW *win, wint_t *restrict wch);
 
 
 /*
@@ -1755,7 +1755,7 @@ int right (WINDOW *win, int y, int x, chtype attr_norm, chtype attr_alt1,
 
 #if defined(HAVE_CURSES_ENHANCED) || defined(HAVE_NCURSESW)
 
-int getwch (WINDOW *win, wint_t *wch)
+int getwch (WINDOW *win, wint_t *restrict wch)
 {
     int ret = wget_wch(win, wch);
 
@@ -1768,6 +1768,7 @@ int getwch (WINDOW *win, wint_t *wch)
 	       (due to the same codes being returned by getch()).  We do
 	       not use iswcntrl() as certain additional Unicode
 	       characters are also control characters (eg, U+2028) */
+	    *wch = (unsigned char) c;
 	    ret = KEY_CODE_YES;
 	}
     }
@@ -1777,10 +1778,79 @@ int getwch (WINDOW *win, wint_t *wch)
 
 #else // !defined(HAVE_CURSES_ENHANCED) && !defined(HAVE_NCURSESW)
 
-int getwch (WINDOW *win, wint_t *wch)
+int getwch (WINDOW *win, wint_t *restrict wch)
 {
-#error "Single-byte version of getwch() not yet implemented"
-"Single-byte version of getwch() not yet implemented"
+    static mbstate_t *mbstate;		// Current shift state
+
+    char buf[MB_LEN_MAX * 8];		// Allow space for redundant shifts
+    mbstate_t mbcopy;
+    int len, ret;
+    wchar_t val = 0;
+
+
+    if (mbstate == NULL) {
+	mbstate = xmalloc(sizeof(mbstate_t));
+	memset(mbstate, 0, sizeof(mbstate_t));
+    }
+
+    len = 0;
+    while (true) {
+	ret = wgetch(win);
+	if (ret == ERR) {
+	    break;
+	} else if (ret >= 0400) {
+	    // Assume any non-ASCII result is a function key
+	    if (len > 0) {
+		// Function key is interrupting an incomplete multibyte char!
+		ungetch(ret);
+		ret = ERR;
+	    } else {
+		val = ret;
+		ret = KEY_CODE_YES;
+	    }
+	    break;
+	} else if (len >= sizeof(buf) - 1) {
+	    // Too many characters
+	    ungetch(ret);
+	    ret = ERR;
+	    break;
+	} else {
+	    buf[len++] = ret;
+
+	    // Do we have a complete multibyte keypress?
+	    memcpy(&mbcopy, mbstate, sizeof(mbstate_t));
+	    size_t n = mbrtowc(&val, buf, len, &mbcopy);
+	    if (n == (size_t) -1) {
+		// Invalid character
+		ungetch(ret);
+		ret = ERR;
+		break;
+	    } else if (n == (size_t) -2) {
+		// Incomplete sequence: wait for more bytes to come
+		;
+	    } else {
+		// A valid multibyte sequence
+		memcpy(mbstate, &mbcopy, sizeof(mbstate_t));
+
+		char c = wctob(val);
+		if ((c >= 0 && c < ' ') || c == 0x7F) {
+		    /* Make control characters (and DEL) appear to be
+		       similar to function keys. */
+		    val = (unsigned char) c;
+		    ret = KEY_CODE_YES;
+		} else {
+		    // An ordinary key
+		    ret = OK;
+		}
+		break;
+	    }
+	}
+    }
+
+    if (wch != NULL) {
+	*wch = val;
+    }
+    return ret;
 }
 
 #endif // !defined(HAVE_CURSES_ENHANCED) && !defined(HAVE_NCURSESW)
@@ -1789,7 +1859,7 @@ int getwch (WINDOW *win, wint_t *wch)
 /***********************************************************************/
 // gettxchar: Read a character from the keyboard
 
-int gettxchar (WINDOW *win, wint_t *wch)
+int gettxchar (WINDOW *win, wint_t *restrict wch)
 {
     int ret;
 
