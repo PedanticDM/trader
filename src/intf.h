@@ -170,6 +170,36 @@ extern chtype attr_error_waitforkey;	// "Press any key", error window
 
 
 /************************************************************************
+*         Game printing macros and global variable declarations         *
+************************************************************************/
+
+// Macros and variables for printing the galaxy map
+
+#define MAP_TO_INDEX(m)							\
+    (((m) == MAP_EMPTY)   ? 0 :						\
+    (((m) == MAP_OUTPOST) ? 1 :						\
+    (((m) == MAP_STAR)    ? 2 :						\
+			    ((m) - MAP_A + 3))))
+
+#define PRINTABLE_MAP_VAL(m)	printable_map_val[MAP_TO_INDEX(m)]
+#define CHTYPE_MAP_VAL(m)	chtype_map_val[MAP_TO_INDEX(m)]
+
+extern wchar_t	*keycode_company;	// Keycodes for each company
+extern wchar_t	*printable_map_val;	// Printable output for each map value
+extern chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
+
+
+// Macros and variables for printing the current game moves
+
+#define PRINTABLE_GAME_MOVE(m)	(printable_game_move[m])
+#define CHTYPE_GAME_MOVE(m)	(chtype_game_move[m])
+
+extern wchar_t	*keycode_game_move;	// Keycodes for each game move
+extern wchar_t	*printable_game_move;	// Printable output for each game move
+extern chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
+
+
+/************************************************************************
 *              Basic text input/output function prototypes              *
 ************************************************************************/
 

@@ -180,6 +180,19 @@ chtype attr_error_waitforkey;	// "Press any key", error window
 
 
 /************************************************************************
+*               Game printing global variable definitions               *
+************************************************************************/
+
+wchar_t	*keycode_company;		// Keycodes for each company
+wchar_t	*printable_map_val;		// Printable output for each map value
+chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
+
+wchar_t	*keycode_game_move;		// Keycodes for each game move
+wchar_t	*printable_game_move;		// Printable output for each game move
+chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
+
+
+/************************************************************************
 *                       Module-specific variables                       *
 ************************************************************************/
 

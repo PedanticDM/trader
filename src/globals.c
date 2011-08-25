@@ -41,8 +41,8 @@ const char *company_name[MAX_COMPANIES] = {
     /* TRANSLATORS: The eight company names do NOT have to be literal
        translations of the English names.  In fact, if possible, the
        names should start with successive letters of your alphabet (in
-       English, "A" to "H").  No company name should be more than 24
-       characters (column positions, to be precise) long. */
+       English, for example, "A" to "H").  No company name should be more
+       than 24 characters (column positions, to be precise) long. */
     N_("Altair Starways"),
     N_("Betelgeuse, Ltd"),
     N_("Capella Freight Co"),
@@ -93,10 +93,10 @@ const char *default_printable_map_val =
 // Default printable output representations for each move
 const char *default_printable_game_move =
     /* TRANSLATORS: This string is used to display the game moves
-       (choices).  There must be exactly 20 characters before the ASCII
-       vertical line.  The first character corresponds to the first
-       character in the "input|GameMoves" string, and so on.  Do not
-       change or translate anything after the vertical line. */
+       (choices).  There must be exactly 20 characters (NUMBER_MOVES)
+       before the ASCII vertical line.  The first character corresponds
+       to the first character in the "input|GameMoves" string, and so on.
+       Do not change or translate anything after the vertical line. */
     N_("abcdefghijklmnopqrst|output|GameMoves");
 
 
@@ -127,13 +127,6 @@ company_info_t	company[MAX_COMPANIES];		// Array of companies
 player_info_t	player[MAX_PLAYERS];		// Array of players
 map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 move_rec_t	game_move[NUMBER_MOVES];	// Current moves
-
-wchar_t	*keycode_company;		// Keycodes for each company
-wchar_t	*keycode_game_move;		// Keycodes for each game move
-wchar_t	*printable_map_val;		// Printable output for each map value
-wchar_t	*printable_game_move;		// Printable output for each game move
-chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
-chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
 
 int	max_turn;			// Max. number of turns in game
 int	turn_number;			// Current turn (1 to max_turn)

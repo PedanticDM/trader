@@ -128,24 +128,12 @@ typedef enum map_val {
 #define MAP_TO_COMPANY(m)	((m) - MAP_A)
 #define IS_MAP_COMPANY(m)	((m) >= MAP_A && (m) <= MAP_LAST)
 
-#define MAP_TO_INDEX(m)							\
-    (((m) == MAP_EMPTY)   ? 0 :						\
-    (((m) == MAP_OUTPOST) ? 1 :						\
-    (((m) == MAP_STAR)    ? 2 :						\
-			    ((m) - MAP_A + 3))))
-
-#define PRINTABLE_MAP_VAL(m)	printable_map_val[MAP_TO_INDEX(m)]
-#define CHTYPE_MAP_VAL(m)	chtype_map_val[MAP_TO_INDEX(m)]
-
 
 // Information about a move
 typedef struct move_rec {
     int x;
     int y;
 } move_rec_t;
-
-#define PRINTABLE_GAME_MOVE(m)	(printable_game_move[m])
-#define CHTYPE_GAME_MOVE(m)	(chtype_game_move[m])
 
 
 // Player moves / selection values
@@ -194,13 +182,6 @@ extern company_info_t	company[MAX_COMPANIES];		// Array of companies
 extern player_info_t	player[MAX_PLAYERS];		// Array of players
 extern map_val_t	galaxy_map[MAX_X][MAX_Y];	// Map of the galaxy
 extern move_rec_t	game_move[NUMBER_MOVES];	// Current moves
-
-extern wchar_t	*keycode_company;	// Keycodes for each company
-extern wchar_t	*keycode_game_move;	// Keycodes for each game move
-extern wchar_t	*printable_map_val;	// Printable output for each map value
-extern wchar_t	*printable_game_move;	// Printable output for each game move
-extern chtype	*chtype_map_val[MAX_COMPANIES + 3];	// as chtype strings
-extern chtype	*chtype_game_move[NUMBER_MOVES];	// as chtype strings
 
 extern int	max_turn;		// Max. number of turns in game
 extern int	turn_number;		// Current turn (1 to max_turn)
