@@ -1949,10 +1949,12 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
     clen = wcswidth(buf, bufsize);	// clen is number of column positions
 
     if (clen < 0) {
-	err_exit("gettxline: illegal character in string: `%ls'", buf);
+	err_exit(_("gettxline: illegal character in string: `%ls'"), buf);
     }
 
-    // Find the point from which buf should be displayed to screen
+    /* Find the point from which buf should be displayed to screen.  cpos
+       is the cursor position (0 to width-1), st is the offset in buf[]
+       from which to start printing the string on the screen. */
     cpos_end(buf, &cpos, &st, clen, width, len);
 
     redraw = true;
@@ -1992,7 +1994,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		clen = wcswidth(buf, bufsize);
 
 		if (clen == -1) {
-		    err_exit("gettxline: illegal character in string: `%ls'",
+		    err_exit(_("gettxline: illegal character in string: `%ls'"),
 			     buf);
 		}
 
@@ -2154,8 +2156,8 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]), width);
 		}
 		while (pos > 0 && (iswalnum(buf[pos - 1])
-				   || (pos > 1 && wcwidth(buf[pos - 1]) == 0
-				       && iswalnum(buf[pos - 2])))) {
+		       || (pos > 1 && wcwidth(buf[pos - 1]) == 0
+			   && iswalnum(buf[pos - 2])))) {
 		    /* Treat zero-width characters preceded by an
 		       alphanumeric character as alphanumeric. */
 		    pos--;
@@ -2310,18 +2312,18 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		    wchar_t c = buf[pos - 1];
 		    buf[pos - 1] = buf[pos - 2];
 		    buf[pos - 2] = c;
+
+		    // pos, cpos and st stay the same
 		    mod = true;
 		    redraw = true;
 		} else {
 		    wchar_t c = buf[pos];
 		    int w = wcwidth(c);
-
 		    buf[pos] = buf[pos - 1];
 		    buf[pos - 1] = c;
 
 		    pos++;
 		    cpos_inc(buf, &cpos, &st, w, width);
-
 		    mod = true;
 		    redraw = true;
 		}
@@ -2359,17 +2361,16 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    while (pos > 0 && ! iswalnum(buf[pos - 1])) {
 				pos--;
 				cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]),
-					  width);
+					 width);
 			    }
 			    while (pos > 0 && (iswalnum(buf[pos - 1])
-					       || (pos > 1
-						   && wcwidth(buf[pos - 1]) == 0
-						   && iswalnum(buf[pos - 2])))) {
+				   || (pos > 1 && wcwidth(buf[pos - 1]) == 0
+				       && iswalnum(buf[pos - 2])))) {
 				/* Treat zero-width characters preceded by an
 				   alphanumeric character as alphanumeric. */
 				pos--;
 				cpos_dec(buf, &cpos, &st, wcwidth(buf[pos]),
-					  width);
+					 width);
 			    }
 			    redraw = true;
 			    break;
@@ -2380,16 +2381,15 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    while (pos < len && ! iswalnum(buf[pos])) {
 				pos++;
 				cpos_inc(buf, &cpos, &st,
-					  wcwidth(buf[pos - 1]), width);
+					 wcwidth(buf[pos - 1]), width);
 			    }
-			    while (pos < len
-				   && (iswalnum(buf[pos])
-				       || wcwidth(buf[pos]) == 0)) {
+			    while (pos < len && (iswalnum(buf[pos])
+				   || wcwidth(buf[pos]) == 0)) {
 				/* Treat zero-width characters following an
 				   alphanumeric character as alphanumeric. */
 				pos++;
 				cpos_inc(buf, &cpos, &st,
-					  wcwidth(buf[pos - 1]), width);
+					 wcwidth(buf[pos - 1]), width);
 			    }
 			    redraw = true;
 			    break;
@@ -2406,12 +2406,11 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				    i++;
 				    ww += wcwidth(buf[i - 1]);
 				}
-				while (i < len
-				       && (iswalnum(buf[i])
-					   || wcwidth(buf[pos]) == 0)) {
-				    /* Treat zero-width characters
-				       following an alphanumeric
-				       character as alphanumeric. */
+				while (i < len && (iswalnum(buf[i])
+				       || wcwidth(buf[pos]) == 0)) {
+				    /* Treat zero-width characters following
+				       an alphanumeric character as
+				       alphanumeric. */
 				    i++;
 				    ww += wcwidth(buf[i - 1]);
 				}
@@ -2427,7 +2426,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 
 			case L'\\':
 			case L' ':
-			    // Delete all surrounding spaces; if key == ' ',
+			    // Delete all surrounding spaces; if key == L' ',
 			    // also insert one space
 			    {
 				int i = pos;
@@ -2478,15 +2477,14 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    while (pos < len && ! iswalnum(buf[pos])) {
 				pos++;
 				cpos_inc(buf, &cpos, &st,
-					  wcwidth(buf[pos - 1]), width);
+					 wcwidth(buf[pos - 1]), width);
 			    }
-			    while (pos < len
-				   && (iswalnum(buf[pos])
-				       || wcwidth(buf[pos]) == 0)) {
+			    while (pos < len && (iswalnum(buf[pos])
+				   || wcwidth(buf[pos]) == 0)) {
 				buf[pos] = towupper(buf[pos]);
 				pos++;
 				cpos_inc(buf, &cpos, &st,
-					  wcwidth(buf[pos - 1]), width);
+					 wcwidth(buf[pos - 1]), width);
 			    }
 			    mod = true;
 			    redraw = true;
@@ -2498,15 +2496,14 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    while (pos < len && ! iswalnum(buf[pos])) {
 				pos++;
 				cpos_inc(buf, &cpos, &st,
-					  wcwidth(buf[pos - 1]), width);
+					 wcwidth(buf[pos - 1]), width);
 			    }
-			    while (pos < len
-				   && (iswalnum(buf[pos])
-				       || wcwidth(buf[pos]) == 0)) {
+			    while (pos < len && (iswalnum(buf[pos])
+				   || wcwidth(buf[pos]) == 0)) {
 				buf[pos] = towlower(buf[pos]);
 				pos++;
 				cpos_inc(buf, &cpos, &st,
-					  wcwidth(buf[pos - 1]), width);
+					 wcwidth(buf[pos - 1]), width);
 			    }
 			    mod = true;
 			    redraw = true;
@@ -2517,15 +2514,14 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 			    // Convert current letter to upper case,
 			    // following letters to lower case
 			    {
-				bool first = true;
 				while (pos < len && ! iswalnum(buf[pos])) {
 				    pos++;
 				    cpos_inc(buf, &cpos, &st,
-					      wcwidth(buf[pos - 1]), width);
+					     wcwidth(buf[pos - 1]), width);
 				}
-				while (pos < len
-				       && (iswalnum(buf[pos])
-					   || wcwidth(buf[pos]) == 0)) {
+				bool first = true;
+				while (pos < len && (iswalnum(buf[pos])
+				       || wcwidth(buf[pos]) == 0)) {
 				    if (first) {
 					buf[pos] = towupper(buf[pos]);
 					first = false;
@@ -2534,7 +2530,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				    }
 				    pos++;
 				    cpos_inc(buf, &cpos, &st,
-					      wcwidth(buf[pos - 1]), width);
+					     wcwidth(buf[pos - 1]), width);
 				}
 				mod = true;
 				redraw = true;
@@ -2566,10 +2562,9 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 				ww += w;
 				cpos_dec(buf, &cpos, &st, w, width);
 			    }
-			    while (i > 0
-				   && (iswalnum(buf[i - 1])
-				       || (i > 1 && wcwidth(buf[i - 1]) == 0
-					   && iswalnum(buf[i - 2])))) {
+			    while (i > 0 && (iswalnum(buf[i - 1])
+				   || (i > 1 && wcwidth(buf[i - 1]) == 0
+				       && iswalnum(buf[i - 2])))) {
 				/* Treat zero-width characters preceded by an
 				   alphanumeric character as alphanumeric. */
 				i--;
