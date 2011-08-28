@@ -41,7 +41,7 @@
 .if \n[.g] .mso www.tmac
 .\"
 .\" *********************************************************************
-.TH TRADER 6 "22nd July, 2011" "Unix-like systems"
+.TH TRADER 6 "29th August, 2011" "Unix-like systems"
 .SH NAME
 trader \- a game of interstellar trading
 .\" *********************************************************************
@@ -154,9 +154,11 @@ manual page for in-depth details).  It requires a text console or window
 of at least 80\(mu24 in size.
 .TP
 .BR LANG ", " LC_ALL ", etc."
-This version of Star Traders has rudimentary support for locales and will
-use appropriate settings.  In particular, numeric quantities will be
-displayed using \fBLC_NUMERIC\fR and monetary quantities will use
+This version of Star Traders has full support for locales and will use
+appropriate settings.  In particular, messages will be displayed using
+\fBLC_MESSAGES\fR and \fBLANGUAGE\fR (if Star Traders has been translated
+into that language).  In addition, numeric quantities will be displayed
+using \fBLC_NUMERIC\fR and monetary quantities will use
 \fBLC_MONETARY\fR.  See the
 .BR locale (7)
 or
@@ -172,10 +174,7 @@ inclusive.  The game file is scrambled to prevent you or others from
 casually cheating!
 .\" *********************************************************************
 .SH BUGS
-The current version of Star Traders does \fInot\fR handle locales with
-multibyte character sequences (such as UTF-8) correctly.  Each byte in a
-multibyte sequence is treated as a separate character.  Eight-bit locales
-(such as US-ASCII, ISO8859-1, etc.) work correctly.
+None yet known...
 .\" *********************************************************************
 .SH FEEDBACK
 Your comments, suggestions, corrections and enhancements are always
@@ -262,8 +261,9 @@ on 15th September, 1995.
 Star Traders was then to languish until almost 16 years later... when the
 game was rewritten once again, this time in the C programming language.
 Version 7.0 was released on 25th July, 2011 for Unix-like operating
-systems such as Linux.  Now you, too, can run this small piece of
-computing history!
+systems such as Linux, with subsequent releases to add features and
+correct bugs.  Now you, too, can run this small piece of computing
+history!
 .\" *********************************************************************
 .SH "SEE ALSO"
 .URL http://www.zap.org.au/software/trader/ "Star Traders home page"

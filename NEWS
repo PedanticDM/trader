@@ -15,11 +15,23 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
-Version 7.2 (not yet released)
-------------------------------
+Version 7.2 (29th August, 2011)
+-------------------------------
 
-@@@ To be written.  Internationalisation, multibyte strings, terminal
-resizing, signals, game file in UTF-8
+Star  Traders has  been internationalised!   As part  of this  update, all
+input and output routines have been rewritten to handle multibyte strings.
+English  (Australian, British,  Canadian  and US)  translations have  been
+included.  Translations  for other languages (and  corrections to existing
+languages) are more than welcome!
+
+Game files  are now stored  in UTF-8 format  (once decrypted!) and  can be
+loaded under  any locale with  automatic character set  translation.  This
+does mean,  however, that  game files  from versions 7.0  and 7.1  of Star
+Traders will not load under this release.
+
+The program now  better handles terminal resizing events  (for versions of
+Curses supporting  such events).   It also tries  to restore  the terminal
+environment correctly when receiving a terminating signal.
 
 
 Version 7.1 (29th July, 2011)
@@ -41,10 +53,10 @@ exercise for a  number of software tools and  libraries; the algorithms in
 the  original Pascal and  Visual Basic  versions are  reused for  the game
 logic.
 
-Note that the current version of Star Traders does NOT handle locales with
+Note that versions 7.0 and 7.1 of Star Traders did NOT handle locales with
 multibyte character sequences  (such as UTF-8) correctly.  Each  byte in a
-multibyte sequence is treated  as a separate character.  Eight-bit locales
-(such as US-ASCII, ISO8859-1, etc.) work correctly.
+such a  sequence was treated  as a separate character.   Eight-bit locales
+(such as US-ASCII, ISO8859-1, etc.) worked correctly.
 
 
 Early history
