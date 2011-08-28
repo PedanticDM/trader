@@ -36,6 +36,9 @@ top_builddir = ..
 # These options get passed to xgettext
 XGETTEXT_OPTIONS = --from-code=UTF-8 --keyword=_ --keyword=N_ --width=132
 
+# These options get passed to msgmerge
+MSGMERGE_OPTIONS = --width=132
+
 # Copyright holder that gets inserted into the header of the
 # $(DOMAIN).pot file.
 COPYRIGHT_HOLDER = John Zaitseff
