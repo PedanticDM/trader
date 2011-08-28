@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2011-08-28 14:55+1000\n"
-"PO-Revision-Date: 2011-08-28 16:50+1000\n"
+"PO-Revision-Date: 2011-08-28 17:03+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (British)\n"
 "Language: en_GB\n"
@@ -1535,12 +1535,12 @@ msgstr "%s: option ‘--%s’ requires an argument\n"
 #: lib/getopt.c:742 lib/getopt.c:745
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: unrecognized option ‘--%s’\n"
+msgstr "%s: unrecognised option ‘--%s’\n"
 
 #: lib/getopt.c:753 lib/getopt.c:756
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
-msgstr "%s: unrecognized option ‘%c%s’\n"
+msgstr "%s: unrecognised option ‘%c%s’\n"
 
 #: lib/getopt.c:805 lib/getopt.c:808
 #, c-format
