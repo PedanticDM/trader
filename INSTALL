@@ -35,7 +35,9 @@ and installation:
     older systems may also work without modification.
 
 3.  A working X/Open Curses-compatible  library, such as Ncurses.  Ncurses
-    is preferred over system-native libraries, if present.
+    is preferred  over system-native libraries, if  present.  Locales with
+    multibyte character sequences (such as UTF-8) require a wide-character
+    version of Curses, such as NcursesW, to work correctly.
 
 4.  The GNU Gettext library, version 0.18.1 or later, to allow the game to
     use languages other than English;  this is also called Native Language
