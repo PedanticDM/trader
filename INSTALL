@@ -103,8 +103,8 @@ separate build directory, then run  configure.  For example, if you placed
 the Star Traders  source code tree in $HOME/src/trader-7.2,  you could run
 something like:
 
-    mkdir /tmp/trader-build-7.2
-    cd /tmp/trader-build-7.2
+    mkdir $HOME/build/trader-build-7.2
+    cd $HOME/build/trader-build-7.2
     $HOME/src/trader-7.2/configure
 
 Once again, the Autoconf manual describes these options (and many others):
