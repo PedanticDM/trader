@@ -124,7 +124,7 @@ typedef struct txwin {
 	c = (_var);							\
 	if ((w = wcwidth(c)) < 1) {					\
 	    err_exit(_("%s: character has illegal width: `%lc'"),	\
-		     __stringify(_err), c);				\
+		     __stringify(_err), (wint_t) c);			\
 	}								\
 									\
 	memset(&mbstate, 0, sizeof(mbstate));				\
