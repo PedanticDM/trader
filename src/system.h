@@ -98,7 +98,7 @@
 
 // X/Open-compatible Curses library
 
-#define _XOPEN_SOURCE_EXTENDED 1	// Required by old versions of NcursesW
+#define _XOPEN_SOURCE_EXTENDED	1	// Required by old versions of NcursesW
 
 #if defined(HAVE_NCURSESW_CURSES_H)
 #  include <ncursesw/curses.h>
