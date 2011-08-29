@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2011-08-28 14:55+1000\n"
+"POT-Creation-Date: 2011-08-29 10:48+1000\n"
 "PO-Revision-Date: 2011-08-28 16:50+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English\n"
@@ -1409,7 +1409,7 @@ msgstr "Page %d of %d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:473 src/intf.c:3022
+#: src/help.c:473 src/intf.c:3024
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Press <SPACE> to continue ] "
 
@@ -1442,16 +1442,16 @@ msgstr "terminal size is too small (%d x %d required)"
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: src/intf.c:1262
+#: src/intf.c:1264
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
-#: src/intf.c:1565
+#: src/intf.c:1567
 #, c-format
 msgid "mkchstr: `%s'"
 msgstr "mkchstr: ‘%s’"
 
-#: src/intf.c:2022 src/intf.c:2067
+#: src/intf.c:2024 src/intf.c:2069
 #, c-format
 msgid "gettxline: illegal character in string: `%ls'"
 msgstr "gettxline: illegal character in string: ‘%ls’"
@@ -1460,12 +1460,12 @@ msgstr "gettxline: illegal character in string: ‘%ls’"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2939
+#: src/intf.c:2941
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "Yy"
 
-#: src/intf.c:2941
+#: src/intf.c:2943
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1473,12 +1473,12 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:2992
+#: src/intf.c:2994
 msgctxt "answer"
 msgid "Yes"
 msgstr "Yes"
 
-#: src/intf.c:2994
+#: src/intf.c:2996
 msgctxt "answer"
 msgid "No"
 msgstr "No"
