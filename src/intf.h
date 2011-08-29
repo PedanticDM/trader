@@ -365,7 +365,7 @@ extern int txdlgbox (int maxlines, int ncols, int begin_y, int begin_x,
     %%      - Insert the ASCII percent sign (ASCII code U+0025)
 
     %c      - Insert the next parameter as a character (type char)
-    %lc     - Insert the next parameter as a wide char (type wchar_t)
+    %lc     - Insert the next parameter as a wide char (type wint_t)
     %s      - Insert the next parameter as a string (type char *)
     %ls     - Insert the next parameter as a wide string (type wchar_t *)
     %d      - Insert the next parameter as an integer (type int)

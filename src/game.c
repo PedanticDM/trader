@@ -290,7 +290,7 @@ static int ask_number_players (void)
 		done = true;
 	    } else if (wcschr(keycode_contgame, key) != NULL) {
 		left(curwin, getcury(curwin), getcurx(curwin), A_BOLD,
-		     0, 0, 1, "%lc", *keycode_contgame);
+		     0, 0, 1, "%lc", (wint_t) *keycode_contgame);
 		wrefresh(curwin);
 
 		ret = 0;

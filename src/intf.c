@@ -156,7 +156,7 @@ typedef struct txwin {
 enum argument_type {
     TYPE_NONE,			// No type yet assigned
     TYPE_CHAR,			// char
-    TYPE_WCHAR,			// wchar_t
+    TYPE_WCHAR,			// wint_t
     TYPE_INT,			// int
     TYPE_LONGINT,		// long int
     TYPE_DOUBLE,		// double
@@ -168,7 +168,7 @@ struct argument {
     enum argument_type a_type;
     union a {
 	char		a_char;
-	wchar_t		a_wchar;
+	wint_t		a_wchar;
 	int		a_int;
 	long int	a_longint;
 	double		a_double;
@@ -1092,9 +1092,10 @@ int mkchstr_parse (const wchar_t *restrict format,
 	    break;
 
 	case TYPE_WCHAR:
-	    format_arg->a.a_wchar = (wchar_t) (sizeof(wchar_t) < sizeof(int) ?
-					       va_arg(args, int) :
-					       va_arg(args, wchar_t));
+	    format_arg->a.a_wchar =
+		(wint_t) (sizeof(wint_t) < sizeof(int) ?
+			  va_arg(args, int) :
+			  va_arg(args, wint_t));
 	    break;
 
 	case TYPE_INT:

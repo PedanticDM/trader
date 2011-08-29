@@ -243,7 +243,8 @@ selection_t get_move (void)
 	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
 	      attr_choice, 1,
 	      _("Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
-	      PRINTABLE_GAME_MOVE(0), PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
+	      (wint_t) PRINTABLE_GAME_MOVE(0),
+	      (wint_t) PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
 
 	curs_set(CURS_ON);
 	wrefresh(curwin);
@@ -274,7 +275,8 @@ selection_t get_move (void)
 			     /* TRANSLATORS: "Move" refers to the choice of
 				moves made by the current player (out of a
 				selection of 20 moves). */
-			     _("Move ^{%lc^}"), PRINTABLE_GAME_MOVE(i));
+			     _("Move ^{%lc^}"),
+			     (wint_t) PRINTABLE_GAME_MOVE(i));
 
 			break;
 		    }
