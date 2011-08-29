@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2011-08-29 10:48+1000\n"
+"POT-Creation-Date: 2011-08-29 14:13+1000\n"
 "PO-Revision-Date: 2011-08-28 17:01+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (Canadian)\n"
@@ -302,7 +302,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Cc"
 
-#: src/game.c:341 src/move.c:380
+#: src/game.c:341 src/move.c:382
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 
@@ -371,7 +371,7 @@ msgstr "  Game Winner  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:847
+#: src/game.c:606 src/move.c:849
 msgctxt "subtitle"
 msgid "Player"
 msgstr "Player"
@@ -536,51 +536,51 @@ msgstr "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 #. TRANSLATORS: "Move" refers to the choice of
 #. moves made by the current player (out of a
 #. selection of 20 moves).
-#: src/move.c:277
+#: src/move.c:278
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Move ^{%lc^}"
 
-#: src/move.c:297
+#: src/move.c:299
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Declare bankruptcy)"
 
-#: src/move.c:306
+#: src/move.c:308
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Save and end the game)"
 
-#: src/move.c:327
+#: src/move.c:329
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Quit the game)"
 
-#: src/move.c:342
+#: src/move.c:344
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Are you sure? [^{Y^}/^{N^}] "
 
-#: src/move.c:359 src/move.c:437
+#: src/move.c:361 src/move.c:439
 #, c-format
 msgid "Saving game %d... "
 msgstr "Saving game %d... "
 
-#: src/move.c:667 src/move.c:674 src/move.c:1018 src/move.c:1052
+#: src/move.c:669 src/move.c:676 src/move.c:1020 src/move.c:1054
 msgid "  Bankruptcy Court  "
 msgstr "  Bankruptcy Court  "
 
-#: src/move.c:668
+#: src/move.c:670
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "%ls has been declared bankrupt by the Interstellar Trading Bank."
 
-#: src/move.c:675
+#: src/move.c:677
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls has declared bankruptcy."
 
-#: src/move.c:743
+#: src/move.c:745
 msgid "  New Company  "
 msgstr "  New Company  "
 
-#: src/move.c:744
+#: src/move.c:746
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -589,7 +589,7 @@ msgstr ""
 "A new company has been formed!\n"
 "Its name is ^{%ls^}."
 
-#: src/move.c:803
+#: src/move.c:805
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -598,7 +598,7 @@ msgstr ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
 "Please note the following transactions:\n"
 
-#: src/move.c:809
+#: src/move.c:811
 msgid "  Company Merger  "
 msgstr "  Company Merger  "
 
@@ -609,14 +609,14 @@ msgstr "  Company Merger  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:829
+#: src/move.c:831
 msgctxt "label"
 msgid "Old stock: "
 msgstr "Old stock: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed another due to a merger.
-#: src/move.c:840
+#: src/move.c:842
 msgctxt "label"
 msgid "New Stock: "
 msgstr "New Stock: "
@@ -626,7 +626,7 @@ msgstr "New Stock: "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:854
+#: src/move.c:856
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -635,7 +635,7 @@ msgstr "Bonus (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:859
+#: src/move.c:861
 msgctxt "subtitle"
 msgid "Total"
 msgstr "Total"
@@ -644,7 +644,7 @@ msgstr "Total"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:866
+#: src/move.c:868
 msgctxt "subtitle"
 msgid "New"
 msgstr "New"
@@ -652,12 +652,12 @@ msgstr "New"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:872
+#: src/move.c:874
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Old"
 
-#: src/move.c:1019
+#: src/move.c:1021
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -668,7 +668,7 @@ msgstr ""
 "\n"
 "^{All assets have been taken to repay outstanding loans.^}"
 
-#: src/move.c:1041
+#: src/move.c:1043
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -687,7 +687,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1069
+#: src/move.c:1071
 msgctxt "label"
 msgid "Amount paid per share: "
 msgstr "Amount paid per share: "
@@ -696,16 +696,16 @@ msgstr "Amount paid per share: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1077
+#: src/move.c:1079
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Old share value:       "
 
-#: src/move.c:1170 src/exch.c:320
+#: src/move.c:1172 src/exch.c:320
 msgid "  Interstellar Trading Bank  "
 msgstr "  Interstellar Trading Bank  "
 
-#: src/move.c:1172
+#: src/move.c:1174
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
@@ -1409,7 +1409,7 @@ msgstr "Page %d of %d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:473 src/intf.c:3024
+#: src/help.c:473 src/intf.c:3025
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Press <SPACE> to continue ] "
 
@@ -1442,16 +1442,16 @@ msgstr "terminal size is too small (%d x %d required)"
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: src/intf.c:1264
+#: src/intf.c:1265
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
-#: src/intf.c:1567
+#: src/intf.c:1568
 #, c-format
 msgid "mkchstr: `%s'"
 msgstr "mkchstr: ‘%s’"
 
-#: src/intf.c:2024 src/intf.c:2069
+#: src/intf.c:2025 src/intf.c:2070
 #, c-format
 msgid "gettxline: illegal character in string: `%ls'"
 msgstr "gettxline: illegal character in string: ‘%ls’"
@@ -1460,12 +1460,12 @@ msgstr "gettxline: illegal character in string: ‘%ls’"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2941
+#: src/intf.c:2942
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "Yy"
 
-#: src/intf.c:2943
+#: src/intf.c:2944
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1473,12 +1473,12 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:2994
+#: src/intf.c:2995
 msgctxt "answer"
 msgid "Yes"
 msgstr "Yes"
 
-#: src/intf.c:2996
+#: src/intf.c:2997
 msgctxt "answer"
 msgid "No"
 msgstr "No"
