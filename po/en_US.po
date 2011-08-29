@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.2\n"
+"Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2011-08-29 14:13+1000\n"
-"PO-Revision-Date: 2011-08-28 16:50+1000\n"
+"PO-Revision-Date: 2011-08-30 08:27+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English\n"
 "Language: en_US\n"
