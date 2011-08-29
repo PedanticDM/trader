@@ -152,9 +152,8 @@ void exchange_stock (void)
 
 	    for (line = 6, i = 0; i < MAX_COMPANIES; i++) {
 		if (company[i].on_map) {
-		    mvwaddch(curwin, line, 2, PRINTABLE_MAP_VAL(COMPANY_TO_MAP(i))
-			     | attr_choice);
-
+		    left(curwin, line, 2, attr_choice, 0, 0, 1, "%lc",
+			 (wint_t) PRINTABLE_MAP_VAL(COMPANY_TO_MAP(i)));
 		    left(curwin, line, 4, attr_normal, 0, 0, 1, "%ls",
 			 company[i].name);
 

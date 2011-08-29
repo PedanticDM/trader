@@ -219,8 +219,12 @@ selection_t get_move (void)
 
     // Display current move choices on the galaxy map
     for (int i = 0; i < NUMBER_MOVES; i++) {
-	mvwaddchstr(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2,
-		    CHTYPE_GAME_MOVE(i));
+	chtype *movestr = CHTYPE_GAME_MOVE(i);
+
+	wmove(curwin, game_move[i].y + 3, game_move[i].x * 2 + 2);
+	while (*movestr != 0) {
+	    waddch(curwin, *movestr++);
+	}
     }
     wrefresh(curwin);
 
