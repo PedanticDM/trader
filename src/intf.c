@@ -1092,7 +1092,9 @@ int mkchstr_parse (const wchar_t *restrict format,
 	    break;
 
 	case TYPE_WCHAR:
-	    format_arg->a.a_wchar = va_arg(args, wchar_t);
+	    format_arg->a.a_wchar = (wchar_t) (sizeof(wchar_t) < sizeof(int) ?
+					       va_arg(args, int) :
+					       va_arg(args, wchar_t));
 	    break;
 
 	case TYPE_INT:
