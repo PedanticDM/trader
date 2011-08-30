@@ -1993,6 +1993,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 	       const wchar_t *allowed, bool stripspc, int y, int x,
 	       int width, chtype attr)
 {
+    wchar_t *keycode_defval;
     bool done, redraw, mod;
     int len, pos, st;
     int clen, cpos;
@@ -2009,6 +2010,14 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
     assert(width > 2);
 
     chbuf = xmalloc(BUFSIZE * sizeof(chtype));
+
+    keycode_defval = xmalloc(BUFSIZE * sizeof(wchar_t));
+    /* TRANSLATORS: This string specifies the keycodes used to insert the
+       default value into the input string, if entered as the very first
+       character.  Ideally, it should contain an easily-accessible
+       keycode that would NOT be used in ordinary input.  Digits, ".",
+       ",", "+" and "-" are definitely NOT acceptable. */
+    xmbstowcs(keycode_defval, pgettext("input|DefaultValue", "=;"), BUFSIZE);
 
     keypad(win, true);
     meta(win, true);
@@ -2055,8 +2064,8 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 	if (rcode == OK) {
 	    // Ordinary wide character
 
-	    if ((key == CHAR_DEFVAL1 || key == CHAR_DEFVAL2)
-		&& defaultval != NULL && len == 0) {
+	    if (defaultval != NULL && len == 0
+		&& wcschr(keycode_defval, key) != NULL) {
 		// Initialise buffer with the default value
 
 		wcsncpy(buf, defaultval, bufsize - 1);
@@ -2705,6 +2714,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
     }
 
     free(chbuf);
+    free(keycode_defval);
     return ret;
 }
 

@@ -101,10 +101,6 @@ typedef enum curs_type {
 
 #define KEY_CTRL(x)	((x) - 0100)	// ASCII control character
 
-// Keycodes for inserting the default value in input routines
-#define CHAR_DEFVAL1	L'='
-#define CHAR_DEFVAL2	L';'
-
 // Control-arrow key combinations, as returned by Ncurses
 #ifndef KEY_CDOWN
 #  define KEY_CDOWN	01007		// CTRL + Down Arrow
