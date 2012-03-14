@@ -1,14 +1,14 @@
 # *************************************************************************
 # *                                                                       *
 # *           English (Canadian) Translations for Star Traders            *
-# *                Copyright (C) 1990-2011, John Zaitseff                 *
+# *                Copyright (C) 1990-2012, John Zaitseff                 *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same licence as Star Traders.
 #
 # Contributors:
-#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011.
+#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-12.
 #
 msgid ""
 msgstr ""
