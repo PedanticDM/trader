@@ -52,6 +52,7 @@ po.m4
 printf-posix.m4
 progtest.m4
 size_max.m4
+ssize_t.m4
 stdbool.m4
 stddef_h.m4
 stdint.m4
@@ -60,6 +61,7 @@ stdio_h.m4
 stdlib_h.m4
 string_h.m4
 strstr.m4
+sys_socket_h.m4
 sys_stat_h.m4
 sys_time_h.m4
 threadlib.m4
