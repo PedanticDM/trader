@@ -671,6 +671,8 @@ void bankrupt_player (bool forced)
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
 		 attr_error_waitforkey, _("  Bankruptcy Court  "),
+		 /* TRANSLATORS: %ls is the name of the player being made
+		    bankrupt. */
 		 _("%ls has been declared bankrupt "
 		   "by the Interstellar Trading Bank."),
 		 player[current_player].name);
@@ -678,6 +680,8 @@ void bankrupt_player (bool forced)
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
 		 attr_error_waitforkey, _("  Bankruptcy Court  "),
+		 /* TRANSLATORS: %ls is the name of the player that has
+		    declared themselves bankrupt. */
 		 _("%ls has declared bankruptcy."),
 		 player[current_player].name);
     }
@@ -1022,6 +1026,8 @@ void adjust_values (void)
 			 attr_error_title, attr_error_highlight,
 			 attr_error_normal, 0, attr_error_waitforkey,
 			 _("  Bankruptcy Court  "),
+			 /* TRANSLATORS: %ls is the name of the company
+			    that has been made bankrupt. */
 			 _("%ls has been declared bankrupt "
 			   "by the Interstellar Trading Bank.\n\n"
 			   "^{All assets have been taken "
@@ -1044,6 +1050,12 @@ void adjust_values (void)
 
 		lines = mkchstr(chbuf, BUFSIZE, attr_error_highlight,
 				attr_error_normal, 0, 6, 60 - 4, widthbuf, 6,
+				/* TRANSLATORS: %ls is the name of the
+				   company that has been made
+				   bankrupt. %.2f is a number between
+				   0.00 and 100.00 representing the
+				   percentage of company value payed by
+				   the bank to players. */
 				_("%ls has been declared bankrupt by the "
 				  "Interstellar Trading Bank.\n\n"
 				  "^{The Bank has agreed to pay stock holders ^}"
