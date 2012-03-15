@@ -15,10 +15,13 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
-Version 7.3 (not yet released)
+Version 7.3 (16th March, 2012)
 ------------------------------
 
-@@@ Minor bug fixes.  Russian translation.
+Star Traders has been  translated into Russian.  In addition,  a number of
+bugs with internationalisation  have been fixed.  The  "default value" key
+(originally "=" or ";" as the first key-press in any input field) has been
+incorporated into the language translation files.
 
 
 Version 7.2 (29th August, 2011)
