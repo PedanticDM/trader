@@ -671,8 +671,7 @@ void bankrupt_player (bool forced)
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
 		 attr_error_waitforkey, _("  Bankruptcy Court  "),
-		 /* TRANSLATORS: %ls is the name of the player being made
-		    bankrupt. */
+		 /* TRANSLATORS: %ls is the player's name. */
 		 _("%ls has been declared bankrupt "
 		   "by the Interstellar Trading Bank."),
 		 player[current_player].name);
@@ -680,8 +679,7 @@ void bankrupt_player (bool forced)
 	txdlgbox(MAX_DLG_LINES, 50, 7, WCENTER, attr_error_window,
 		 attr_error_title, attr_error_highlight, 0, 0,
 		 attr_error_waitforkey, _("  Bankruptcy Court  "),
-		 /* TRANSLATORS: %ls is the name of the player that has
-		    declared themselves bankrupt. */
+		 /* TRANSLATORS: %ls is the player's name. */
 		 _("%ls has declared bankruptcy."),
 		 player[current_player].name);
     }
@@ -846,7 +844,7 @@ void merge_companies (map_val_t a, map_val_t b)
 
     right(curwin, lines + 4, x, attr_normal, 0, 0, 1,
 	  /* TRANSLATORS: "New stock" refers to the company that has
-	     absorbed another due to a merger. */
+	     absorbed the other due to a merger. */
 	  pgettext("label", "New Stock: "));
     leftch(curwin, lines + 4, x, chbuf_aa, 1, &width_aa);
 
@@ -1026,8 +1024,7 @@ void adjust_values (void)
 			 attr_error_title, attr_error_highlight,
 			 attr_error_normal, 0, attr_error_waitforkey,
 			 _("  Bankruptcy Court  "),
-			 /* TRANSLATORS: %ls is the name of the company
-			    that has been made bankrupt. */
+			 /* TRANSLATORS: %ls represents the company name. */
 			 _("%ls has been declared bankrupt "
 			   "by the Interstellar Trading Bank.\n\n"
 			   "^{All assets have been taken "
@@ -1050,12 +1047,7 @@ void adjust_values (void)
 
 		lines = mkchstr(chbuf, BUFSIZE, attr_error_highlight,
 				attr_error_normal, 0, 6, 60 - 4, widthbuf, 6,
-				/* TRANSLATORS: %ls is the name of the
-				   company that has been made
-				   bankrupt. %.2f is a number between
-				   0.00 and 100.00 representing the
-				   percentage of company value payed by
-				   the bank to players. */
+				/* TRANSLATORS: %ls represents the company name. */
 				_("%ls has been declared bankrupt by the "
 				  "Interstellar Trading Bank.\n\n"
 				  "^{The Bank has agreed to pay stock holders ^}"

@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-15 09:02+1100\n"
-"PO-Revision-Date: 2012-03-15 09:06+1100\n"
+"POT-Creation-Date: 2012-03-16 10:10+1100\n"
+"PO-Revision-Date: 2012-03-16 10:12+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English\n"
 "Language: en_US\n"
@@ -219,8 +219,9 @@ msgstr "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
 #. vertical line.  The first ("." in English) is used for empty
 #. space, the second ("+") for outposts, the third ("*") for stars,
 #. the remaining for the eight companies.  Do not change or translate
-#. anything after the vertical line.
-#: src/globals.c:90
+#. anything after the vertical line.  Double-width characters ARE
+#. handled correctly.
+#: src/globals.c:91
 msgid ".+*ABCDEFGH|output|MapVals"
 msgstr ".+*ABCDEFGH|output|MapVals"
 
@@ -229,7 +230,8 @@ msgstr ".+*ABCDEFGH|output|MapVals"
 #. before the ASCII vertical line.  The first character corresponds
 #. to the first character in the "input|GameMoves" string, and so on.
 #. Do not change or translate anything after the vertical line.
-#: src/globals.c:100
+#. Double-width characters ARE handled correctly.
+#: src/globals.c:102
 msgid "abcdefghijklmnopqrst|output|GameMoves"
 msgstr "abcdefghijklmnopqrst|output|GameMoves"
 
@@ -238,35 +240,35 @@ msgstr "abcdefghijklmnopqrst|output|GameMoves"
 #. on the gender of the player, it may be simpler to list cardinal
 #. numbers instead (eg, "No. 1").  Up to five characters are allowed
 #. (see ORDINAL_COLS in src/intf.h).
-#: src/globals.c:111
+#: src/globals.c:113
 msgid "1st"
 msgstr "1st"
 
-#: src/globals.c:112
+#: src/globals.c:114
 msgid "2nd"
 msgstr "2nd"
 
-#: src/globals.c:113
+#: src/globals.c:115
 msgid "3rd"
 msgstr "3rd"
 
-#: src/globals.c:114
+#: src/globals.c:116
 msgid "4th"
 msgstr "4th"
 
-#: src/globals.c:115
+#: src/globals.c:117
 msgid "5th"
 msgstr "5th"
 
-#: src/globals.c:116
+#: src/globals.c:118
 msgid "6th"
 msgstr "6th"
 
-#: src/globals.c:117
+#: src/globals.c:119
 msgid "7th"
 msgstr "7th"
 
-#: src/globals.c:118
+#: src/globals.c:120
 msgid "8th"
 msgstr "8th"
 
@@ -371,7 +373,7 @@ msgstr "  Game Winner  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:857
+#: src/game.c:606 src/move.c:855
 msgctxt "subtitle"
 msgid "Player"
 msgstr "Player"
@@ -562,29 +564,27 @@ msgstr "Are you sure? [^{Y^}/^{N^}] "
 msgid "Saving game %d... "
 msgstr "Saving game %d... "
 
-#: src/move.c:673 src/move.c:682 src/move.c:1028 src/move.c:1070
+#: src/move.c:673 src/move.c:681 src/move.c:1026 src/move.c:1062
 msgid "  Bankruptcy Court  "
 msgstr "  Bankruptcy Court  "
 
-#. TRANSLATORS: %ls is the name of the player being made
-#. bankrupt.
-#: src/move.c:676
+#. TRANSLATORS: %ls is the player's name.
+#: src/move.c:675
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "%ls has been declared bankrupt by the Interstellar Trading Bank."
 
-#. TRANSLATORS: %ls is the name of the player that has
-#. declared themselves bankrupt.
-#: src/move.c:685
+#. TRANSLATORS: %ls is the player's name.
+#: src/move.c:683
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls has declared bankruptcy."
 
-#: src/move.c:753
+#: src/move.c:751
 msgid "  New Company  "
 msgstr "  New Company  "
 
-#: src/move.c:754
+#: src/move.c:752
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -593,7 +593,7 @@ msgstr ""
 "A new company has been formed!\n"
 "Its name is ^{%ls^}."
 
-#: src/move.c:813
+#: src/move.c:811
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -602,7 +602,7 @@ msgstr ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
 "Please note the following transactions:\n"
 
-#: src/move.c:819
+#: src/move.c:817
 msgid "  Company Merger  "
 msgstr "  Company Merger  "
 
@@ -613,14 +613,14 @@ msgstr "  Company Merger  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:839
+#: src/move.c:837
 msgctxt "label"
 msgid "Old stock: "
 msgstr "Old stock: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
-#. absorbed another due to a merger.
-#: src/move.c:850
+#. absorbed the other due to a merger.
+#: src/move.c:848
 msgctxt "label"
 msgid "New Stock: "
 msgstr "New Stock: "
@@ -630,7 +630,7 @@ msgstr "New Stock: "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:864
+#: src/move.c:862
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -639,7 +639,7 @@ msgstr "Bonus (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:869
+#: src/move.c:867
 msgctxt "subtitle"
 msgid "Total"
 msgstr "Total"
@@ -648,7 +648,7 @@ msgstr "Total"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:876
+#: src/move.c:874
 msgctxt "subtitle"
 msgid "New"
 msgstr "New"
@@ -656,14 +656,13 @@ msgstr "New"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:882
+#: src/move.c:880
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Old"
 
-#. TRANSLATORS: %ls is the name of the company
-#. that has been made bankrupt.
-#: src/move.c:1031
+#. TRANSLATORS: %ls represents the company name.
+#: src/move.c:1028
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -674,13 +673,8 @@ msgstr ""
 "\n"
 "^{All assets have been taken to repay outstanding loans.^}"
 
-#. TRANSLATORS: %ls is the name of the
-#. company that has been made
-#. bankrupt. %.2f is a number between
-#. 0.00 and 100.00 representing the
-#. percentage of company value payed by
-#. the bank to players.
-#: src/move.c:1059
+#. TRANSLATORS: %ls represents the company name.
+#: src/move.c:1051
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -699,7 +693,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1087
+#: src/move.c:1079
 msgctxt "label"
 msgid "Amount paid per share: "
 msgstr "Amount paid per share: "
@@ -708,16 +702,16 @@ msgstr "Amount paid per share: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1095
+#: src/move.c:1087
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Old share value:       "
 
-#: src/move.c:1188 src/exch.c:319
+#: src/move.c:1180 src/exch.c:319
 msgid "  Interstellar Trading Bank  "
 msgstr "  Interstellar Trading Bank  "
 
-#: src/move.c:1190
+#: src/move.c:1182
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"

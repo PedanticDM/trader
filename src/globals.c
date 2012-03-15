@@ -86,7 +86,8 @@ const char *default_printable_map_val =
        vertical line.  The first ("." in English) is used for empty
        space, the second ("+") for outposts, the third ("*") for stars,
        the remaining for the eight companies.  Do not change or translate
-       anything after the vertical line. */
+       anything after the vertical line.  Double-width characters ARE
+       handled correctly. */
     N_(".+*ABCDEFGH|output|MapVals");
 
 
@@ -96,7 +97,8 @@ const char *default_printable_game_move =
        (choices).  There must be exactly 20 characters (NUMBER_MOVES)
        before the ASCII vertical line.  The first character corresponds
        to the first character in the "input|GameMoves" string, and so on.
-       Do not change or translate anything after the vertical line. */
+       Do not change or translate anything after the vertical line.
+       Double-width characters ARE handled correctly. */
     N_("abcdefghijklmnopqrst|output|GameMoves");
 
 
