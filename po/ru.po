@@ -10,14 +10,15 @@
 #
 # Contributors:
 #   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-12.
+#   Vladimir B. Tsarkov <lipetsk-gnu-lug@bk.ru>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-22 19:26+1100\n"
-"PO-Revision-Date: 2012-03-16 10:12+1100\n"
-"Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
+"POT-Creation-Date: 2012-03-16 13:23+1100\n"
+"PO-Revision-Date: 2012-03-18 12:05+1100\n"
+"Last-Translator: Vladimir B. Tsarkov <lipetsk-gnu-lug@bk.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -66,13 +67,14 @@ msgstr ""
 "Звёздные торговцы / Star Traders (%s) %s\n"
 "Copyright (C) %s, John Zaitseff.\n"
 "\n"
-"«Звёздные торговцы» — это простая игра межзвёздной торговли, где целю игры\n"
+"«Звёздные торговцы» — это простая игра о межзвёздной торговле, где целью игры\n"
 "является создание компаний, покупка и продажа акций, заимствования денег и\n"
 "погашение кредита, чтобы стать самым богатым игроком-победителем.\n"
 "\n"
-"Это свободное программное обеспечение.  Вы можете продавать и распространять\n"
-"его в пределах лицензии GNU General Public License версии 3 или новее.  Нет\n"
-"НИКАКИХ ГАРАНТИЙ до степени, разрешённой законом.  Для более подробной\n"
+"Это свободное программное обеспечение, распространяемое согласно \n"
+"GNU General Public License версии 3 или новее. Вы можете модифицировать и/или\n"
+"распространять его на этих условиях. На программу не предоставляется\n"
+"НИКАКИХ ГАРАНТИЙ до степени, разрешённой законом. Для получения более подробной\n"
 "информации, обратитесь к веб-странице <http://www.gnu.org/licenses/gpl.html>.\n"
 
 #: src/trader.c:308
@@ -91,7 +93,7 @@ msgid ""
 "Play Star Traders, a simple game of interstellar trading.\n"
 "\n"
 msgstr ""
-"Играть в «Звёздные торговцы», простая игра межзвёздной торговли.\n"
+"Играть в «Звёздные торговцы», простую игру о межзвёздной торговли.\n"
 "\n"
 
 #: src/trader.c:315
@@ -309,7 +311,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Пп"
 
-#: src/game.c:341 src/move.c:390
+#: src/game.c:341 src/move.c:386
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Введите номер игры [^{1^}-^{9^}], или ^{<CTRL><C>^}, чтобы отменить: "
 
@@ -348,12 +350,12 @@ msgstr[2] "Игра закончена после %d-го хода."
 
 #: src/game.c:575
 msgid "  Total Value  "
-msgstr "  Общая стоимость  "
+msgstr "  Общий доход  "
 
 #: src/game.c:577
 #, c-format
 msgid "Your total value was ^{%N^}."
-msgstr "Ваша общая стоимость выразилась в сумме ^{%N^}."
+msgstr "Ваша общий доход равен ^{%N^}."
 
 #: src/game.c:588
 #, c-format
@@ -371,7 +373,7 @@ msgid ""
 "with a value of ^{%N^}."
 msgstr ""
 "Победитель игры — ^{%ls^}!\n"
-"Общая стоимость этого игрока выразилась в сумме ^{%N^}."
+"Общий доход этого игрока равен ^{%N^}."
 
 #: src/game.c:597
 msgid "  Game Winner  "
@@ -379,7 +381,7 @@ msgstr "  Победитель игры  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:859
+#: src/game.c:606 src/move.c:855
 msgctxt "subtitle"
 msgid "Player"
 msgstr "Игрок"
@@ -391,7 +393,7 @@ msgstr "Игрок"
 #, c-format
 msgctxt "subtitle"
 msgid "Total Value (%ls)"
-msgstr "Общая стоимость (%ls)"
+msgstr "Общий доход (%ls)"
 
 #: src/game.c:645 src/game.c:695 src/exch.c:100
 #, c-format
@@ -503,7 +505,7 @@ msgstr ""
 #: src/game.c:796
 msgctxt "label"
 msgid "Total value:   "
-msgstr "Общая стоимость:       "
+msgstr "Общий доход:       "
 
 #: src/game.c:800 src/exch.c:322
 msgctxt "label"
@@ -541,60 +543,56 @@ msgstr "^{<CTRL><C>^} Выйти из игры"
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Введите выбор [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 
-#. TRANSLATORS: A game usually consists of
-#. DEFAULT_MAX_TURN (50) turns.  On each
-#. turn, the computer randomly selects
-#. NUMBER_MOVES (20) moves (positions on the
-#. map); each player selects just one move
-#. per turn.  "Move" refers to the player's
-#. choice.
-#: src/move.c:286
+#. TRANSLATORS: "Move" refers to the choice of
+#. moves made by the current player (out of a
+#. selection of 20 moves).
+#: src/move.c:282
 #, c-format
 msgid "Move ^{%lc^}"
-msgstr "Заход ^{%lc^}"
+msgstr "Ход ^{%lc^}"
 
-#: src/move.c:307
+#: src/move.c:303
 msgid "^{<2>^} (Declare bankruptcy)"
-msgstr "^{<2>^} (Объявить банкротство)"
+msgstr "^{<2>^} (Объявить о банкротстве)"
 
-#: src/move.c:316
+#: src/move.c:312
 msgid "^{<3>^} (Save and end the game)"
-msgstr "^{<3>^} (Сохранить и закончить игру)"
+msgstr "^{<3>^} (Сохранить и выйти из игры)"
 
-#: src/move.c:337
+#: src/move.c:333
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Выйти из игры)"
 
-#: src/move.c:352
+#: src/move.c:348
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Вы уверены? [^{Д^}/^{Н^}] "
 
-#: src/move.c:369 src/move.c:447
+#: src/move.c:365 src/move.c:443
 #, c-format
 msgid "Saving game %d... "
 msgstr "Сохраняется игра №%d... "
 
-#: src/move.c:677 src/move.c:685 src/move.c:1030 src/move.c:1066
+#: src/move.c:673 src/move.c:681 src/move.c:1026 src/move.c:1062
 msgid "  Bankruptcy Court  "
 msgstr "  Арбитражный суд  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:679
+#: src/move.c:675
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "Межзвёздный торговый банк объявляет, что игрок %ls обанкротился."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:687
+#: src/move.c:683
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls объявляет своё банкротство."
 
-#: src/move.c:755
+#: src/move.c:751
 msgid "  New Company  "
 msgstr "  Новая фирма  "
 
-#: src/move.c:756
+#: src/move.c:752
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -603,14 +601,14 @@ msgstr ""
 "Сформировано новое торговое предприятие!\n"
 "Оно называется ^{%ls^}."
 
-#: src/move.c:815
+#: src/move.c:811
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
 "Please note the following transactions:\n"
 msgstr "Фирма ^{%ls^} только-что была поглощена фирмой ^{%ls^}. Обратите внимание на следующие транзакции:\n"
 
-#: src/move.c:821
+#: src/move.c:817
 msgid "  Company Merger  "
 msgstr "  Слияние компаний  "
 
@@ -621,14 +619,14 @@ msgstr "  Слияние компаний  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:841
+#: src/move.c:837
 msgctxt "label"
 msgid "Old stock: "
 msgstr "Старые акции: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:852
+#: src/move.c:848
 msgctxt "label"
 msgid "New Stock: "
 msgstr "Новые акции:  "
@@ -638,7 +636,7 @@ msgstr "Новые акции:  "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:866
+#: src/move.c:862
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -647,7 +645,7 @@ msgstr "Бонус (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:871
+#: src/move.c:867
 msgctxt "subtitle"
 msgid "Total"
 msgstr "Итог"
@@ -656,7 +654,7 @@ msgstr "Итог"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:878
+#: src/move.c:874
 msgctxt "subtitle"
 msgid "New"
 msgstr "Новые"
@@ -664,13 +662,13 @@ msgstr "Новые"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:884
+#: src/move.c:880
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Старые"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1032
+#: src/move.c:1028
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -679,10 +677,10 @@ msgid ""
 msgstr ""
 "Межзвёздный торговый банк объявляет, что фирма %ls обанкротилась.\n"
 "\n"
-"^{Все активы схвачены банком, чтобы погасить долги фирма.^}"
+"^{Все активы использованы банком, чтобы погасить долги фирмы.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1055
+#: src/move.c:1051
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -702,7 +700,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1083
+#: src/move.c:1079
 msgctxt "label"
 msgid "Amount paid per share: "
 msgstr "Выплаченная сумма за акцию: "
@@ -711,16 +709,16 @@ msgstr "Выплаченная сумма за акцию: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1091
+#: src/move.c:1087
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Старая цена акции:          "
 
-#: src/move.c:1184 src/exch.c:319
+#: src/move.c:1180 src/exch.c:319
 msgid "  Interstellar Trading Bank  "
 msgstr "  Межзвёздный торговый банк  "
 
-#: src/move.c:1186
+#: src/move.c:1182
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
@@ -831,7 +829,7 @@ msgstr "  Нет долга  "
 
 #: src/exch.c:478
 msgid "You have no debt to repay."
-msgstr "У Вас нет долга погасить."
+msgstr "У Вас нет долгов для погашения."
 
 #: src/exch.c:482
 msgid "  No Cash  "
@@ -839,7 +837,7 @@ msgstr "  Нет наличных  "
 
 #: src/exch.c:483
 msgid "You have no cash with which to repay the debt!"
-msgstr "У Вас нет наличных, чем бы погашать долг!"
+msgstr "У Вас нет наличных для погашения долга!"
 
 #: src/exch.c:503
 msgid "How much do you wish to repay? "
@@ -931,7 +929,7 @@ msgstr "Введите выбор [^{1^}-^{4^}]: "
 
 #: src/exch.c:712
 msgid "  No Shares Available  "
-msgstr "  Акции не доступны  "
+msgstr "  Акции недоступны  "
 
 #: src/exch.c:713
 msgid "No more shares are available for purchase."
@@ -1093,7 +1091,7 @@ msgstr "%s: файл сохранён в другой версии игры «З
 #: src/fileio.c:332
 #, c-format
 msgid "%s: saved under an incompatible character encoding"
-msgstr "%s: файл использовает несовместимую кодировку"
+msgstr "%s: в файле используется неподдерживаемая кодировка символов"
 
 #: src/fileio.c:340
 #, c-format
@@ -1116,7 +1114,7 @@ msgid ""
 "\n"
 "^{Directory %s: %s^}"
 msgstr ""
-"Не возможно сохранить игру №%d.\n"
+"Невозможно сохранить игру №%d.\n"
 "\n"
 "^{Папка %s: %s^}"
 
@@ -1210,12 +1208,12 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
-"^B«Звёздные торговцы»^N  ―  это  простая  игра  межзвёздной торговли.  Цель игры\n"
-"состоится  в том,  чтобы стать  самым  богатым  игроком - победителем.   Это\n"
-"делается  путём создания межзвёздных  судоходных маршрутов,  расширения этих\n"
-"маршрутов, и  покупки и  продажи акций соответствующих  акционерных обществ.\n"
+"^B«Звёздные торговцы»^N  ―  это  простая  игра о межзвёздной торговле.  Цель игры\n"
+"состоит  в том,  чтобы стать  самым  богатым  игроком - победителем.   Это\n"
+"делается  путём создания межзвёздных  маршрутов доставки товаров,  расширения этих\n"
+"маршрутов, а также  покупке  и  продаже акций соответствующих  акционерных обществ.\n"
 "Кроме того, возврат на каждую  акцию (в процентах) изменяется.  Игроки также\n"
-"могут  занять  денги у  Межзвёздного  торгового  банка, чтобы  финансировать\n"
+"могут  занять  деньги у  Межзвёздного  торгового  банка, чтобы  финансировать\n"
 "дополнительные покупки на фондовой бирже.\n"
 "\n"
 "Карта галактики представлена сеткой размером ^B~x^N на ^B~y^N.  Типичная часть карты\n"
@@ -1245,21 +1243,21 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
-"Компьютер выбирает ^B~m^N заходов наугад (обозначенные от ^k~1^N до ^k~M^N)  и помещает их\n"
+"Компьютер выбирает ^B~m^N ходов наугад (обозначенные от ^k~1^N до ^k~M^N)  и помещает их\n"
 "на карте.  Для выбора любого из выделенных позиций, нажмите на соответствую-\n"
 "щую букву.  Например, некоторые из заходов на карте могут быть:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Показаны заходы от ^k~1^N до ^k~5^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Показаны ходы от ^k~1^N до ^k~5^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
 "\n"
-"Избрание позиции, что ^Bне рядом^N со звездой (как, например, заходы ^k~1^N, ^k~3^N или ^k~5^N)\n"
+"Избрание позиции, что ^Bне рядом^N со звездой (как, например, ходы ^k~1^N, ^k~3^N или ^k~5^N)\n"
 "создаст  ^Bфорпост^N  не принадлежащий  к какой-либо  компании.  Таким  образом,\n"
-"избрание захода ^k~3^N на выше-указанной карте создаст форпост, обозначено симво-\n"
+"выбор хода ^k~3^N на выше-указанной карте создаст форпост, обозначено симво-\n"
 "лом ^o ~+ ^N.\n"
 
 #: src/help.c:140
@@ -1280,20 +1278,20 @@ msgid ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
-"Если избрать позицию рядом со звездой (или рядом с форпостом), будет сформи-\n"
+"При выборе позиции рядом со звездой (или рядом с форпостом), будет сформи-\n"
 "ровано  новое торговое предприятие,  и код этой новой фирмы  явится на карте\n"
 "галактики.  В качестве награды за создание компании, Вы получите первые пять\n"
 "акций.  До ^B~c-и^N компаний могут быть созданы таким образом.\n"
 "\n"
-"Если, наоборот,  избрать позицию рядом с уже-существующей  компанией, эта же\n"
-"фирма расширит свою деятельность  на одну клетку.  Это увеличивает стоимость\n"
-"её  акций и,  следовательно,  Вашего возвращения.   Таким образом,  избрание\n"
-"захода ^k~6^N или ^k~8^N  на ниже-указанной карте расширяет судоходные маршруты компа-\n"
+"При выборе позиции рядом с уже  существующей  компанией, эта компания\n"
+"расширит свою деятельность  на одну клетку.  Это увеличивает стоимость\n"
+"её  акций и,  следовательно,  Вашего дохода.   Таким образом,  избрание\n"
+"хода ^k~6^N или ^k~8^N  на указанной ниже карте расширяет судоходные маршруты компа-\n"
 "нии ^B~B^N:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Заход ^k~6^N или ^k~8^N расширяет фирму ^B~B^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Ход ^k~6^N или ^k~8^N расширяет фирму ^B~B^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
@@ -1315,18 +1313,18 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Избрание позиции рядом со звездой увеличивает стоимость Ваших акций примерно\n"
-"в пять раз больше,  чем расширение фирмы клеткой не рядом со звездой.  Таким\n"
-"образом, заходу ^k~6^N следует отдать предпочтение, чем заходу ^k~8^N.\n"
+"Выбор позиции рядом со звездой увеличивает стоимость Ваших акций примерно\n"
+"в пять раз, по сравнению с расширением фирмы клеткой не рядом со звездой.  Таким\n"
+"образом, ходу ^k~6^N следует отдать предпочтение, чем ходу ^k~8^N.\n"
 "\n"
 "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Заход ^k~6^N предпочтительней захода ^k~8^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Ход ^k~6^N предпочтительней захода ^k~8^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 "\n"
-"Вы также можете расширить любую  компанию, избрав позицию рядом с форпостом.\n"
-"Такие форпосты будут поглощены этой фирмой.  Таким образом, заход ^k~1^N расширит\n"
+"Вы также можете расширить любую  компанию, выбрав позицию рядом с форпостом.\n"
+"Такие форпосты будут поглощены этой фирмой.  Таким образом, ход ^k~1^N расширит\n"
 "судоходные маршруты компании ^B~C^N  на ^Bдве^N клетки.  Притом, поглощение форпостов\n"
 "около звёзд  имеет  большую ценность:  цена акций  фирмы  поднимется гораздо\n"
 "больше, чем поглощение форпостов не рядом звёзд.\n"
@@ -1350,21 +1348,21 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
-"Если две фирмы  разделяются на карте только одной  клеткой, то избрания этой\n"
+"Если две фирмы  разделяются на карте только одной  клеткой, то выбор этой\n"
 "клетки  (если есть такая возможность)  ^Bобъединяет^N эти фирмы в одну компанию.\n"
-"Например, избрание захода ^k~5^N  на ниже-указанной карте объединит  компании ^B~A^N и\n"
+"Например, выбор хода ^k~5^N  на указанной ниже карте объединит  компании ^B~A^N и\n"
 "^B~B^N.   В таком  случае, фирма  с большей  общей  стоимостью поглощает  вторую.\n"
 "Здесь, например, компания ^B~B^N может быть поглотит компанию ^B~A^N.  Фирма ^B~A^N прекра-\n"
 "щает  своё существование,  хотя она может  появиться позднее  как совершенно\n"
 "новое акционерное общество в будущей части игры.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N        Заход ^k~5^N сливает компании ^B~A^N и ^B~B^N.\n"
+"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N        Ход ^k~5^N сливает компании ^B~A^N и ^B~B^N.\n"
 "        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N\n"
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
 "\n"
-"При слиянии компаний, игрокам выдаются акции в доминирующей фирме пропорцио-\n"
-"нально владением акций в поглощённом предприятии.  Кроме того, выплачивается\n"
+"При слиянии компаний, игрокам выдаются акции доминирующей фирмы (пропорцио-\n"
+"нально количеству акций, которые игрок имел в поглощённом предприятии).  Кроме того, выплачивается\n"
 "бонус, пропорционально владению старой компании.\n"
 
 #: src/help.c:195
@@ -1386,21 +1384,21 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
-"После выбора захода, Вы входите  в ^BМежзвёздную фондовую биржу^N.  Здесь можете\n"
+"После выбора хода, Вы оказываетесь на ^BМежзвёздной фондовую бирже^N.  Здесь  Вы можете\n"
 "приобретать акции, продавать их, занимать деньги у торгового банка или пога-\n"
 "шать  часть своего долга  (если применимо).   Обратите внимание,  что каждая\n"
 "компания выпускает ограниченное количество акций ― нельзя  просто бесконечно\n"
-"покупать!   Однако же, можно  предлагать фирме  выпустить новых  акций.  Чем\n"
-"больше Ваше владение в компании, тем больше шансов успеха на выдачу акций.\n"
+"покупать!   Однако, можно  предлагать фирме  выпустить больше  акций.  Чем\n"
+"больше Ваше владение в компании, тем больше шансов получить больше акций.\n"
 "\n"
 "Игра  обычно заканчивается  после  ^B~t^N ходов.  Однако,  можно  закончить игру\n"
-"раньше, нажав ^K<CTRL><C>^N вместо избрание захода.  Кроме того, отдельные игро-\n"
+"раньше, нажав ^K<CTRL><C>^N вместо избрание хода.  Кроме того, отдельные игро-\n"
 "ки могут объявить себя банкротом  в любой момент.   Если Ваш долг достаточно\n"
 "велик, банк  может сделать  это за Вас!   Если  не хватает времени закончить\n"
 "игру, можете сохранить её и продолжить позже.\n"
 "\n"
-"^BПобедителем игры^N является игрок  с самой большой  общей стоимостью, то есть,\n"
-"общая сумма  наличных денег, акций и  долга.  ^HУдачи Вам^N ― да победит  лучший\n"
+"^BПобедителем игры^N является игрок  с самым большим доходом, то есть,\n"
+"общей суммой  наличных денег, акций и  долга.  ^HУдачи Вам^N ― да победит  лучший\n"
 "игрок!\n"
 
 #: src/help.c:215
