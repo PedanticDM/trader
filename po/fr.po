@@ -1,14 +1,20 @@
-# French translation of trader.
-# Copyright (C) 2012 Free Software Foundation, Inc.
-# This file is distributed under the same license as the trader package.
+# *************************************************************************
+# *                                                                       *
+# *                 French Translations for Star Traders                  *
+# *          Copyright (C) 2012, Free Software Foundation, Inc.           *
+# *                                                                       *
+# *************************************************************************
 #
-# Frédéric Marchal <fmarchal@perso.be>, 2012.
+# This file is distributed under the same licence as Star Traders.
+#
+# Contributors:
+#   Frédéric Marchal <fmarchal@perso.be>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-22 19:26+1100\n"
-"PO-Revision-Date: 2012-03-22 13:41+0100\n"
+"PO-Revision-Date: 2012-03-23 10:38+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -16,7 +22,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 1.0\n"
 
 #: src/trader.c:235
 #, c-format
@@ -59,14 +64,16 @@ msgstr ""
 "Star Traders (%s) %s\n"
 "Copyright (C) %s, John Zaitseff.\n"
 "\n"
-"Star Traders est un simple jeu de commerce interstellaire où l'objectif du jeu\n"
-"est de créer des compagnies, acheter et vendre des parts, emprunter et rembourser\n"
-"de l'argent dans le but de devenir le joueur le plus riche (le gagnant).\n"
+"Star Traders est un simple jeu de commerce interstellaire où l'objectif\n"
+"du jeu est de créer des compagnies, acheter et vendre des parts, emprunter\n"
+"et rembourser de l'argent dans le but de devenir le joueur le plus riche\n"
+"(le gagnant).\n"
 "\n"
 "Ce programme est un logiciel libre distribué selon les termes de la GNU\n"
-"General Public License, version 3 ou suivante.  Vous êtes autorisé à le modifier\n"
-"ou le distribuer sous certaines conditions.  Ce programme ne vient avec AUCUNE\n"
-"GARANTIE, dans les limites permises par la loi; voyez la licence pour plus de détails.\n"
+"General Public License, version 3 ou suivante.  Vous êtes autorisé à le\n"
+"modifier ou le distribuer sous certaines conditions.  Ce programme ne\n"
+"vient avec AUCUNE GARANTIE, dans les limites permises par la loi; voyez\n"
+"la licence pour plus de détails.\n"
 
 #: src/trader.c:308
 #, c-format
@@ -495,22 +502,22 @@ msgstr ""
 #: src/game.c:796
 msgctxt "label"
 msgid "Total value:   "
-msgstr "Valeur totale:"
+msgstr "Valeur totale:    "
 
 #: src/game.c:800 src/exch.c:322
 msgctxt "label"
 msgid "Current cash:  "
-msgstr "Liquidité:    "
+msgstr "Liquidité:        "
 
 #: src/game.c:807 src/exch.c:330
 msgctxt "label"
 msgid "Current debt:  "
-msgstr "Dette:        "
+msgstr "Dette:            "
 
 #: src/game.c:813 src/exch.c:335
 msgctxt "label"
 msgid "Interest rate: "
-msgstr "Taux intérêt: "
+msgstr "Taux intérêt:     "
 
 #: src/move.c:239 src/exch.c:182
 msgid "^{<1>^} Display stock portfolio"
@@ -814,7 +821,7 @@ msgstr "La banque ne vous prêtera plus d'argent."
 
 #: src/exch.c:445
 msgid "How much do you wish to borrow? "
-msgstr "Combien voulez-vous emprunter? "
+msgstr "Combien voulez-vous emprunter ? "
 
 #: src/exch.c:477
 msgid "  No Debt  "
@@ -873,7 +880,7 @@ msgstr "Prix par action:   "
 #: src/exch.c:611
 msgctxt "label|Stock A"
 msgid "Return:          "
-msgstr "Retour:             "
+msgstr "Retour:            "
 
 #. TRANSLATORS: "Current holdings" is the number of shares the
 #. current player owns in this particular company.
@@ -893,7 +900,7 @@ msgstr "Possessions: "
 #: src/exch.c:631
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
-msgstr "% détenu:    "
+msgstr "%% détenu:    "
 
 #: src/exch.c:636
 msgctxt "label|Stock B"
@@ -1061,7 +1068,7 @@ msgstr ""
 #: src/fileio.c:316
 #, c-format
 msgid "%s: missing header in game file"
-msgstr "%s en-tête manquant dans le fichier du jeu"
+msgstr "%s: en-tête manquant dans le fichier du jeu"
 
 #: src/fileio.c:319
 #, c-format
@@ -1081,7 +1088,7 @@ msgstr "%s: enregistré par une version différente de Star Traders"
 #: src/fileio.c:332
 #, c-format
 msgid "%s: saved under an incompatible character encoding"
-msgstr "%s: Enregistré avec un encodage des caractères incompatible"
+msgstr "%s: enregistré avec un encodage des caractères incompatible"
 
 #: src/fileio.c:340
 #, c-format
@@ -1214,7 +1221,6 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N represente un ^Bespace vide^N,\n"
 "        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N represente une ^Bétoile^N.\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
 #: src/help.c:122
 msgid ""
@@ -1236,7 +1242,7 @@ msgid ""
 msgstr ""
 "L'ordinateur  choisi ^B~m^N  déplacements  au hasard  (numérotés ^k~1^N à ^k~M^N),  et les\n"
 "places sur  la carte.  Pour  sélectionner  une des positions,  pressez cette\n"
-"lettre. Par exemple, certains déplacements sur la carte pourraient être:\n"
+"lettre.  Par exemple, certains déplacements sur la carte pourraient être:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1246,9 +1252,10 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
 "\n"
-"Choisir une position qui n'est ^Bpas^N  près d'une étoile (telles que ^k~1^N, ^k~3^N ou ^k~5^N)\n"
-"créera un ^Bavant poste^N,  n'appartenant à aucune compagnie.  Ainsi, si le mouvement ^k~3^N\n"
-"est sélectionné sur la carte ci-dessus, un ^o ~+ ^N sera placé à cette position.\n"
+"Choisir une position qui n'est ^Bpas^N près  d'une étoile (telles que ^k~1^N, ^k~3^N ou ^k~5^N)\n"
+"créera  un ^Bavant poste^N,  n'appartenant  à  aucune compagnie.   Ainsi, si  le\n"
+"mouvement ^k~3^N  est sélectionné  sur la  carte ci-dessus,  un ^o ~+ ^N sera  placé à\n"
+"cette position.\n"
 
 #: src/help.c:140
 msgid ""
@@ -1269,15 +1276,15 @@ msgid ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
 "Si, à l'inverse, une position  près d'une étoile (ou d'un autre avant poste)\n"
-"est sélectionné,  une ^Bcompagnie^N sera formée et sa lettre apparaîtra sur la\n"
+"est sélectionné,  une ^Bcompagnie^N sera formée  et sa lettre apparaîtra  sur la\n"
 "carte.  Cinq parts vous sont octroyées en récompense  pour la création d'une\n"
-"compagnie. Jusqu'à ^B~c^N compagnies peuvent être créées de cette manière.\n"
+"compagnie.  Jusqu'à ^B~c^N compagnies peuvent être créées de cette manière.\n"
 "\n"
 "Si  une position  à côté  d'une  compagnie  existante  est sélectionnée,  la\n"
 "compagnies étendra ses opérations de un carré.  Cela augmente le coût de ses\n"
 "actions et,  par conséquent,  de votre retour.  Donc, si la carte  est comme\n"
-"montrée ci-dessous,  sélectionner  ^k~6^N or ^k~8^N  augmente  les voies  de\n"
-"commerce de la compagnies ^B~B^N:\n"
+"montrée ci-dessous, sélectionner ^k~6^N or ^k~8^N augmente les voies de commerce de la\n"
+"compagnies ^B~B^N:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1303,8 +1310,8 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Sélectionner  des positions  près  des étoiles  augmente  la valeur  de vos\n"
-"actions cinq fois plus qu'une extension loin d'une étoile. Le mouvement ^k~6^N\n"
+"Sélectionner  des positions  près  des étoiles  augmente  la valeur  de  vos\n"
+"actions cinq fois  plus qu'une extension loin d'une  étoile.  Le mouvement ^k~6^N\n"
 "devrait être préféré au mouvement ^k~8^N.\n"
 "\n"
 "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1313,13 +1320,12 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 "\n"
-"Vous pouvez  également étendre n'importe  quelle compagnie  en sélectionnant\n"
-"des positions près des avant postes.\n"
-"Ces avants postes seront englobés par la compagnie.  Ainsi, le mouvement ^k~1^N\n"
-"aura étendu la compagnie ^B~C^N de ^Bdeux^N carrés.  En bonus,  les avants postes\n"
-"près  des étoiles  sont plus  précieux:  le prix des actions  de la compagnie\n"
-"augmentera d'un montant  plus important que celui  des avants postes éloignés\n"
-"des étoiles.\n"
+"Vous pouvez  également étendre  n'importe quelle compagnie  en sélectionnant\n"
+"des positions près des avant  postes.  Ces avants postes seront englobés par\n"
+"la compagnie.   Ainsi, le  mouvement ^k~1^N  aura étendu la  compagnie ^B~C^N  de ^Bdeux^N\n"
+"carrés.  En bonus, les avants postes près des étoiles sont plus précieux: le\n"
+"prix des actions de la  compagnie augmentera d'un montant plus important que\n"
+"celui des avants postes éloignés des étoiles.\n"
 
 #: src/help.c:176
 msgid ""
@@ -1340,25 +1346,21 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
-"Si deux  compagnies sont  séparées sur  la carte  par un  carré, alors elles\n"
-"peuvent  être ^Bfusionnées^N  en une  seule compagnie  en sélectionnant  cette\n"
-"position  (si disponible).   Par  exemple,  sur  la  carte  ci-dessous,  les\n"
-"compagnies ^B~A^N et ^B~B^N peuvent être fusionnées en sélectionnant ^k~5^N.\n"
-"Lorsque  cela  se produit,  la compagnie  avec  le plus  d'avoirs  prend  le\n"
-"contrôle de l'autre.  Ici, la compagnie ^B~B^N pourrait prendre le contrôle de\n"
-"la compagnie ^B~A^N. La compagnie ^B~A^N cesse d'exister bien qu'elle pourrait\n"
-"réapparaître comme une toute nouvelle compagnie plus tard dans le jeu.\n"
+"Si deux  compagnies sont  séparées sur  la carte par  un carré,  alors elles\n"
+"peuvent  être  ^Bfusionnées^N en  une  seule  compagnie  en sélectionnant  cette\n"
+"position  (si  disponible).   Par  exemple,  sur la  carte  ci-dessous,  les\n"
+"compagnies ^B~A^N et ^B~B^N peuvent  être fusionnées en sélectionnant ^k~5^N.  Lorsque cela\n"
+"se produit, la compagnie avec le plus d'avoirs prend le contrôle de l'autre.\n"
+"Ici,  la compagnie ^B~B^N  pourrait  prendre  le contrôle  de la compagnie ^B~A^N.  La\n"
+"compagnie ^B~A^N  cesse d'exister  bien qu'elle  pourrait réapparaître  comme une\n"
+"toute nouvelle compagnie plus tard dans le jeu.\n"
+"\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
 "        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N        Mouv. ^k~5^N fusionne ^B~A^N et ^B~B^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
-"\n"
-"Quand  des compagnies fusionnent,  les joueurs reçoivent  des parts  dans la\n"
-"compagnie  dominante  proportionnellement  à  la  valeur  qu'ils possédaient\n"
-"dans l'ancienne compagnie.  En plus, un bonus en liquide est payé au prorata\n"
-"de la part dans l'ancienne société.\n"
 
 #: src/help.c:195
 msgid ""
@@ -1379,6 +1381,12 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
+"Quand  des compagnies fusionnent,  les joueurs reçoivent  des parts  dans la\n"
+"compagnie dominante proportionnellement  à la valeur qu'ils possédaient dans\n"
+"l'ancienne compagnie.  En  plus, un bonus en liquide est  payé au prorata de\n"
+"la part dans l'ancienne société.\n"
+"\n"
+"\n"
 "Dès que  vous  sélectionnez  votre  mouvement,  vous entrez  dans  la ^BBourse\n"
 "Interstellaire^N.  Ici, vous pouvez acheter des actions, les vendre, emprunter\n"
 "à  la Banque du Commerce  ou rembourser certaines  de vos dettes (si vous en\n"
@@ -1386,24 +1394,23 @@ msgstr ""
 "pouvez pas  en acheter pour toujours !  Vous pouvez,  en revanche,  demander\n"
 "pour  que  des actions  supplémentaires  soient émises.  Vous avez  plus  de\n"
 "chances de réussite si vous possédez une plus grande part de la compagnie.\n"
-"\n"
-"Le jeu  se termine  habituellement après ^B~t^N tours.  Cependant, vous pouvez\n"
-"terminer le jeu plus tôt en pressant ^K<CTRL><C>^N  lorsqu'il vous est demandé\n"
-"de choisir  un mouvement.  Certains  joueurs peuvent  aussi se déclarer eux-\n"
-"mêmes  en banqueroute  à n'importe  quel moment.  Si votre  dette  est assez\n"
-"grande, la banque peut même le faire pour vous !\n"
-"\n"
-"Si  vous  ne  terminez  pas  votre  jeu  pendant  le temps  que vous avez de\n"
-"disponible, vous pouvez enregistrer le jeu et le continuer plus tard.\n"
-"\n"
-"\n"
-"Le ^Bgagnant du jeu^N  est la personne  avec le plus grand  revenu net (valeur\n"
-"totale du liquide,  des actions  et des dettes).  ^HBonne chance^N  et que  le\n"
-"meilleur gagne !\n"
 
 #: src/help.c:215
 msgid "@ Help text, page 7"
-msgstr "@ Texte d'aide, page 7"
+msgstr ""
+"Le jeu  se termine  habituellement après  ^B~t^N tours.  Cependant,  vous pouvez\n"
+"terminer le jeu plus tôt en pressant ^K<CTRL><C>^N lorsqu'il vous est demandé de\n"
+"choisir un mouvement.  Certains  joueurs peuvent aussi se déclarer eux-mêmes\n"
+"en banqueroute à n'importe quel moment.  Si votre dette est assez grande, la\n"
+"banque peut même le faire pour vous !\n"
+"\n"
+"Si  vous ne  terminez  pas  votre jeu  pendant  le temps  que  vous avez  de\n"
+"disponible, vous pouvez enregistrer le jeu et le continuer plus tard.\n"
+"\n"
+"\n"
+"Le ^Bgagnant  du jeu^N  est la personne  avec le  plus grand revenu  net (valeur\n"
+"totale  du liquide,  des actions  et des  dettes).  ^HBonne chance^N  et  que le\n"
+"meilleur gagne !"
 
 #: src/help.c:216
 msgid "@ Help text, page 8"
