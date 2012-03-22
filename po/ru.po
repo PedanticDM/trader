@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-16 13:23+1100\n"
+"POT-Creation-Date: 2012-03-22 19:26+1100\n"
 "PO-Revision-Date: 2012-03-18 12:05+1100\n"
 "Last-Translator: Vladimir B. Tsarkov <lipetsk-gnu-lug@bk.ru>\n"
 "Language-Team: Russian\n"
@@ -311,7 +311,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Пп"
 
-#: src/game.c:341 src/move.c:386
+#: src/game.c:341 src/move.c:390
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Введите номер игры [^{1^}-^{9^}], или ^{<CTRL><C>^}, чтобы отменить: "
 
@@ -381,7 +381,7 @@ msgstr "  Победитель игры  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:855
+#: src/game.c:606 src/move.c:859
 msgctxt "subtitle"
 msgid "Player"
 msgstr "Игрок"
@@ -543,56 +543,60 @@ msgstr "^{<CTRL><C>^} Выйти из игры"
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Введите выбор [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 
-#. TRANSLATORS: "Move" refers to the choice of
-#. moves made by the current player (out of a
-#. selection of 20 moves).
-#: src/move.c:282
+#. TRANSLATORS: A game usually consists of
+#. DEFAULT_MAX_TURN (50) turns.  On each
+#. turn, the computer randomly selects
+#. NUMBER_MOVES (20) moves (positions on the
+#. map); each player selects just one move
+#. per turn.  "Move" refers to the player's
+#. choice.
+#: src/move.c:286
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Ход ^{%lc^}"
 
-#: src/move.c:303
+#: src/move.c:307
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Объявить о банкротстве)"
 
-#: src/move.c:312
+#: src/move.c:316
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Сохранить и выйти из игры)"
 
-#: src/move.c:333
+#: src/move.c:337
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Выйти из игры)"
 
-#: src/move.c:348
+#: src/move.c:352
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Вы уверены? [^{Д^}/^{Н^}] "
 
-#: src/move.c:365 src/move.c:443
+#: src/move.c:369 src/move.c:447
 #, c-format
 msgid "Saving game %d... "
 msgstr "Сохраняется игра №%d... "
 
-#: src/move.c:673 src/move.c:681 src/move.c:1026 src/move.c:1062
+#: src/move.c:677 src/move.c:685 src/move.c:1030 src/move.c:1066
 msgid "  Bankruptcy Court  "
 msgstr "  Арбитражный суд  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:675
+#: src/move.c:679
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "Межзвёздный торговый банк объявляет, что игрок %ls обанкротился."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:683
+#: src/move.c:687
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls объявляет своё банкротство."
 
-#: src/move.c:751
+#: src/move.c:755
 msgid "  New Company  "
 msgstr "  Новая фирма  "
 
-#: src/move.c:752
+#: src/move.c:756
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -601,14 +605,14 @@ msgstr ""
 "Сформировано новое торговое предприятие!\n"
 "Оно называется ^{%ls^}."
 
-#: src/move.c:811
+#: src/move.c:815
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
 "Please note the following transactions:\n"
 msgstr "Фирма ^{%ls^} только-что была поглощена фирмой ^{%ls^}. Обратите внимание на следующие транзакции:\n"
 
-#: src/move.c:817
+#: src/move.c:821
 msgid "  Company Merger  "
 msgstr "  Слияние компаний  "
 
@@ -619,14 +623,14 @@ msgstr "  Слияние компаний  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:837
+#: src/move.c:841
 msgctxt "label"
 msgid "Old stock: "
 msgstr "Старые акции: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:848
+#: src/move.c:852
 msgctxt "label"
 msgid "New Stock: "
 msgstr "Новые акции:  "
@@ -636,7 +640,7 @@ msgstr "Новые акции:  "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:862
+#: src/move.c:866
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -645,7 +649,7 @@ msgstr "Бонус (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:867
+#: src/move.c:871
 msgctxt "subtitle"
 msgid "Total"
 msgstr "Итог"
@@ -654,7 +658,7 @@ msgstr "Итог"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:874
+#: src/move.c:878
 msgctxt "subtitle"
 msgid "New"
 msgstr "Новые"
@@ -662,13 +666,13 @@ msgstr "Новые"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:880
+#: src/move.c:884
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Старые"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1028
+#: src/move.c:1032
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -680,7 +684,7 @@ msgstr ""
 "^{Все активы использованы банком, чтобы погасить долги фирмы.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1051
+#: src/move.c:1055
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -700,7 +704,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1079
+#: src/move.c:1083
 msgctxt "label"
 msgid "Amount paid per share: "
 msgstr "Выплаченная сумма за акцию: "
@@ -709,16 +713,16 @@ msgstr "Выплаченная сумма за акцию: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1087
+#: src/move.c:1091
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Старая цена акции:          "
 
-#: src/move.c:1180 src/exch.c:319
+#: src/move.c:1184 src/exch.c:319
 msgid "  Interstellar Trading Bank  "
 msgstr "  Межзвёздный торговый банк  "
 
-#: src/move.c:1182
+#: src/move.c:1186
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
