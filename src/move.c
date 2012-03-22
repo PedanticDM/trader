@@ -276,9 +276,13 @@ selection_t get_move (void)
 			curs_set(CURS_OFF);
 			left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
 			     attr_choice, 0, 1,
-			     /* TRANSLATORS: "Move" refers to the choice of
-				moves made by the current player (out of a
-				selection of 20 moves). */
+			     /* TRANSLATORS: A game usually consists of
+				DEFAULT_MAX_TURN (50) turns.  On each
+				turn, the computer randomly selects
+				NUMBER_MOVES (20) moves (positions on the
+				map); each player selects just one move
+				per turn.  "Move" refers to the player's
+				choice. */
 			     _("Move ^{%lc^}"),
 			     (wint_t) PRINTABLE_GAME_MOVE(i));
 
