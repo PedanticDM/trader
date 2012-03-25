@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-25 19:03+1100\n"
-"PO-Revision-Date: 2012-03-23 10:38+1100\n"
+"POT-Creation-Date: 2012-03-25 19:12+1100\n"
+"PO-Revision-Date: 2012-03-25 19:16+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -1480,7 +1480,7 @@ msgstr ""
 "chances de réussite si vous possédez une plus grande part de la compagnie.\n"
 
 #: src/help.c:215
-msgid "@ Help text, page 7"
+msgid "@ Help text, page 7\n"
 msgstr ""
 "Le jeu  se termine  habituellement après  ^B~t^N tours.  Cependant,  vous pouvez\n"
 "terminer le jeu plus tôt en pressant ^K<CTRL><C>^N lorsqu'il vous est demandé de\n"
@@ -1494,19 +1494,19 @@ msgstr ""
 "\n"
 "Le ^Bgagnant  du jeu^N  est la personne  avec le  plus grand revenu  net (valeur\n"
 "totale  du liquide,  des actions  et des  dettes).  ^HBonne chance^N  et  que le\n"
-"meilleur gagne !"
+"meilleur gagne !\n"
 
 #: src/help.c:216
-msgid "@ Help text, page 8"
-msgstr "@ Texte d'aide, page 8"
+msgid "@ Help text, page 8\n"
+msgstr "@ Texte d'aide, page 8\n"
 
 #: src/help.c:217
-msgid "@ Help text, page 9"
-msgstr "@ Texte d'aide, page 9"
+msgid "@ Help text, page 9\n"
+msgstr "@ Texte d'aide, page 9\n"
 
 #: src/help.c:218
-msgid "@ Help text, page 10"
-msgstr "@ Texte d'aide, page 10"
+msgid "@ Help text, page 10\n"
+msgstr "@ Texte d'aide, page 10\n"
 
 #: src/help.c:270
 #, c-format

@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-25 19:03+1100\n"
-"PO-Revision-Date: 2012-03-23 09:22+1100\n"
+"POT-Creation-Date: 2012-03-25 19:12+1100\n"
+"PO-Revision-Date: 2012-03-25 19:16+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -1491,20 +1491,20 @@ msgstr ""
 "победит лучший игрок!\n"
 
 #: src/help.c:215
-msgid "@ Help text, page 7"
-msgstr "@"
+msgid "@ Help text, page 7\n"
+msgstr "@\n"
 
 #: src/help.c:216
-msgid "@ Help text, page 8"
-msgstr "@"
+msgid "@ Help text, page 8\n"
+msgstr "@\n"
 
 #: src/help.c:217
-msgid "@ Help text, page 9"
-msgstr "@"
+msgid "@ Help text, page 9\n"
+msgstr "@\n"
 
 #: src/help.c:218
-msgid "@ Help text, page 10"
-msgstr "@"
+msgid "@ Help text, page 10\n"
+msgstr "@\n"
 
 #: src/help.c:270
 #, c-format

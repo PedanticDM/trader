@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.3\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-25 19:03+1100\n"
-"PO-Revision-Date: 2012-03-16 10:12+1100\n"
+"POT-Creation-Date: 2012-03-25 19:12+1100\n"
+"PO-Revision-Date: 2012-03-25 19:14+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (Canadian)\n"
 "Language: en_CA\n"
@@ -1476,20 +1476,20 @@ msgstr ""
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 
 #: src/help.c:215
-msgid "@ Help text, page 7"
-msgstr "@ Help text, page 7"
+msgid "@ Help text, page 7\n"
+msgstr "@ Help text, page 7\n"
 
 #: src/help.c:216
-msgid "@ Help text, page 8"
-msgstr "@ Help text, page 8"
+msgid "@ Help text, page 8\n"
+msgstr "@ Help text, page 8\n"
 
 #: src/help.c:217
-msgid "@ Help text, page 9"
-msgstr "@ Help text, page 9"
+msgid "@ Help text, page 9\n"
+msgstr "@ Help text, page 9\n"
 
 #: src/help.c:218
-msgid "@ Help text, page 10"
-msgstr "@ Help text, page 10"
+msgid "@ Help text, page 10\n"
+msgstr "@ Help text, page 10\n"
 
 #: src/help.c:270
 #, c-format

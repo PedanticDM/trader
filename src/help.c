@@ -212,10 +212,10 @@ static const char *help_text[HELP_TEXT_PAGES] = {
 	"")
 
 #ifdef ENABLE_NLS
-    , N_("@ Help text, page 7")
-    , N_("@ Help text, page 8")
-    , N_("@ Help text, page 9")
-    , N_("@ Help text, page 10")
+    , N_("@ Help text, page 7\n")
+    , N_("@ Help text, page 8\n")
+    , N_("@ Help text, page 9\n")
+    , N_("@ Help text, page 10\n")
 #endif
 };
 
