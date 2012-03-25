@@ -34,7 +34,13 @@ subdir = po
 top_builddir = ..
 
 # These options get passed to xgettext
-XGETTEXT_OPTIONS = --from-code=UTF-8 --keyword=_ --keyword=N_ --width=132
+XGETTEXT_OPTIONS = --from-code=UTF-8 --keyword=_ --keyword=N_ --width=132 \
+	--flag='err_exit:1:c-format'  --flag='errno_exit:1:c-format' \
+	--flag='txdlgbox:11:c-format' --flag='txdlgbox:12:c-format'  \
+	--flag='mkchstr:10:c-format'  --flag='vmkchstr:10:c-format'  \
+	--flag='left:8:c-format'      \
+	--flag='center:8:c-format'    \
+	--flag='right:8:c-format'
 
 # These options get passed to msgmerge
 MSGMERGE_OPTIONS = --width=132
