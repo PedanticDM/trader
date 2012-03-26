@@ -14,10 +14,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.3\n"
+"Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-25 19:12+1100\n"
-"PO-Revision-Date: 2012-03-25 19:16+1100\n"
+"POT-Creation-Date: 2012-03-27 09:12+1100\n"
+"PO-Revision-Date: 2012-03-27 08:20+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -607,7 +607,7 @@ msgstr "Вы уверены? [^{Д^}/^{Н^}] "
 msgid "Saving game %d... "
 msgstr "Сохраняется игра №%d... "
 
-#: src/move.c:677 src/move.c:685 src/move.c:1030 src/move.c:1066
+#: src/move.c:677 src/move.c:685 src/move.c:1043 src/move.c:1080
 #, c-format
 msgid "  Bankruptcy Court  "
 msgstr "  Арбитражный суд  "
@@ -711,7 +711,7 @@ msgid "Old"
 msgstr "Старые"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1032
+#: src/move.c:1045
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -723,7 +723,7 @@ msgstr ""
 "^{Все активы использованы банком, чтобы погасить долги фирмы.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1055
+#: src/move.c:1069
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -743,7 +743,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1083
+#: src/move.c:1097
 #, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
@@ -753,18 +753,27 @@ msgstr "Выплаченная сумма за акцию: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1091
+#: src/move.c:1105
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Старая цена акции:          "
 
-#: src/move.c:1184 src/exch.c:319
+#: src/move.c:1188 src/move.c:1223 src/exch.c:319
 #, c-format
 msgid "  Interstellar Trading Bank  "
 msgstr "  Межзвёздный торговый банк  "
 
-#: src/move.c:1186
+#: src/move.c:1190
+#, c-format
+msgid ""
+"You were forced to borrow %N\n"
+"to cover losses from company shares."
+msgstr ""
+"Вам пришлось взять %N в кредит,\n"
+"чтобы покрыть убытки от акций компаний."
+
+#: src/move.c:1225
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
