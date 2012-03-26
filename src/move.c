@@ -786,9 +786,9 @@ void merge_companies (map_val_t a, map_val_t b)
     assert(bb >= 0 && bb < MAX_COMPANIES);
 
     double val_aa = company[aa].share_price * company[aa].stock_issued *
-	company[aa].share_return;
+	(1.0 + company[aa].share_return);
     double val_bb = company[bb].share_price * company[bb].stock_issued *
-	company[bb].share_return;
+	(1.0 + company[bb].share_return);
 
     double bonus;
     long int old_stock, new_stock, total_new;
@@ -891,9 +891,9 @@ void merge_companies (map_val_t a, map_val_t b)
 	    new_stock = (double) old_stock * MERGE_STOCK_RATIO;
 	    total_new += new_stock;
 
-	    bonus = (company[bb].stock_issued == 0) ? 0.0 :
-		10.0 * ((double) player[i].stock_owned[bb]
-			/ company[bb].stock_issued) * company[bb].share_price;
+	    bonus = (company[bb].stock_issued == 0) ? 0.0 : MERGE_BONUS_RATE
+		* ((double) player[i].stock_owned[bb]
+		   / company[bb].stock_issued) * company[bb].share_price;
 
 	    player[i].stock_owned[aa] += new_stock;
 	    player[i].stock_owned[bb] = 0;
@@ -921,7 +921,9 @@ void merge_companies (map_val_t a, map_val_t b)
     // Adjust the company records appropriately
     company[aa].stock_issued += total_new;
     company[aa].max_stock    += total_new;
-    company[aa].share_price  += company[bb].share_price / (randf() + 1.5);
+    company[aa].share_price  += company[bb].share_price
+	* (randf() * (MERGE_PRICE_ADJUST_MAX - MERGE_PRICE_ADJUST_MIN)
+	   + MERGE_PRICE_ADJUST_MIN);
 
     company[bb].stock_issued = 0;
     company[bb].max_stock    = 0;
@@ -1001,11 +1003,22 @@ void inc_share_price (int num, double inc)
 {
     assert(num >= 0 && num < MAX_COMPANIES);
 
-    company[num].share_price += inc * (1.0 + randf() * SHARE_PRICE_INC_EXTRA);
-    company[num].max_stock   += inc / (randf() * 10.0 + 5.0);
+    company[num].share_price += inc * (randf()
+	* (PRICE_INC_ADJUST_MAX - PRICE_INC_ADJUST_MIN) + PRICE_INC_ADJUST_MIN);
+    company[num].max_stock   += inc * (randf()
+	* (MAX_STOCK_RATIO_MAX  - MAX_STOCK_RATIO_MIN)  + MAX_STOCK_RATIO_MIN);
 
-    if (randf() < GROWING_RETURN_CHANGE) {
-	company[num].share_return *= randf() + GROWING_RETURN_INC;
+    if (randf() < CHANGE_RETURN_GROWING) {
+	double change = randf() * GROWING_MAX_CHANGE;
+	if (randf() < DEC_RETURN_GROWING) {
+	    change = -change;
+	}
+
+	company[num].share_return += change;
+	if (   company[num].share_return > MAX_COMPANY_RETURN
+	    || company[num].share_return < MIN_COMPANY_RETURN) {
+	    company[num].share_return -= 2.0 * change;
+	}
     }
 }
 
@@ -1022,7 +1035,7 @@ void adjust_values (void)
     if (randf() > (1.0 - COMPANY_BANKRUPTCY)) {
 	which = randi(MAX_COMPANIES);
 
-	if (company[which].on_map) {
+	if (company[which].on_map && company[which].share_return <= 0.0) {
 	    if (randf() < ALL_ASSETS_TAKEN) {
 		txdlgbox(MAX_DLG_LINES, 60, 6, WCENTER, attr_error_window,
 			 attr_error_title, attr_error_highlight,
@@ -1045,7 +1058,8 @@ void adjust_values (void)
 
 		for (int i = 0; i < number_players; i++) {
 		    if (player[i].in_game) {
-			player[i].cash += player[i].stock_owned[which] * rate;
+			player[i].cash += player[i].stock_owned[which]
+			    * company[which].share_price * rate;
 		    }
 		}
 
@@ -1127,19 +1141,21 @@ void adjust_values (void)
     if (randf() < CHANGE_COMPANY_RETURN) {
 	which = randi(MAX_COMPANIES);
 	if (company[which].on_map) {
-	    company[which].share_return *= randf() + COMPANY_RETURN_INC;
-	}
-    }
+	    double change = randf() * RETURN_MAX_CHANGE;
+	    if (randf() < DEC_COMPANY_RETURN) {
+		    change = -change;
+	    }
 
-    // Make sure that a company's return is not too large
-    for (int i = 0; i < MAX_COMPANIES; i++) {
-	if (company[i].on_map && company[i].share_return > MAX_COMPANY_RETURN) {
-	    company[i].share_return /= randf() + RETURN_DIVIDER;
+	    company[which].share_return += change;
+	    if (   company[which].share_return > MAX_COMPANY_RETURN
+		|| company[which].share_return < MIN_COMPANY_RETURN) {
+		company[which].share_return -= 2.0 * change;
+	    }
 	}
     }
 
     // Increase or decrease share price
-    if (randf() < INC_SHARE_PRICE) {
+    if (randf() < CHANGE_SHARE_PRICE) {
 	which = randi(MAX_COMPANIES);
 	if (company[which].on_map) {
 	    double change = randf() * company[which].share_price
@@ -1163,12 +1179,35 @@ void adjust_values (void)
 	}
     }
 
+    // Has the player lost money due to negative share returns?
+    if (player[current_player].cash < 0.0) {
+	double borrowed = -player[current_player].cash;
+
+	txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
+		 attr_error_title, attr_error_highlight, 0, 0,
+		 attr_error_waitforkey, _("  Interstellar Trading Bank  "),
+		 /* xgettext:c-format */
+		 _("You were forced to borrow %N\n"
+		   "to cover losses from company shares."),
+		 borrowed);
+	txrefresh();
+
+	player[current_player].cash = 0.0;
+	player[current_player].debt += borrowed;
+    }
+
     // Change the interest rate
     if (randf() < CHANGE_INTEREST_RATE) {
-	interest_rate *= randf() + INTEREST_RATE_INC;
-    }
-    if (interest_rate > MAX_INTEREST_RATE) {
-	interest_rate /= randf() + INTEREST_RATE_DIVIDER;
+	double change = randf() * INTEREST_MAX_CHANGE;
+	if (randf() < DEC_INTEREST_RATE) {
+	    change = -change;
+	}
+
+	interest_rate += change;
+	if (   interest_rate > MAX_INTEREST_RATE
+	    || interest_rate < MIN_INTEREST_RATE) {
+	    interest_rate -= 2.0 * change;
+	}
     }
 
     // Calculate current player's debt
@@ -1198,7 +1237,7 @@ void adjust_values (void)
 	}
 
 	// Shall we declare them bankrupt?
-	if (total_value(current_player) <= 0.0 && randf() < PROB_BANKRUPTCY) {
+	if (total_value(current_player) <= 0.0 && randf() < MAKE_BANKRUPT) {
 	    bankrupt_player(true);
 	}
     }
