@@ -18,6 +18,7 @@ at http://www.zap.org.au/services/svn/.
 Version 7.4 (not yet released)
 ------------------------------
 
+@@@ Revised game algorithms: negative returns now allowed.
 @@@ Updated Russian translation; thanks to Vladimir B. Tsarkov.
 @@@ French translation; thanks to Frédéric Marchal.
 
