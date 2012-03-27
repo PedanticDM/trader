@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-27 09:12+1100\n"
-"PO-Revision-Date: 2012-03-27 08:03+1100\n"
+"PO-Revision-Date: 2012-03-28 07:13+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -537,12 +537,12 @@ msgstr "Dette:            "
 #, c-format
 msgctxt "label"
 msgid "Interest rate: "
-msgstr "Taux intérêt:     "
+msgstr "Taux d'intérêt:   "
 
 #: src/move.c:239 src/exch.c:182
 #, c-format
 msgid "^{<1>^} Display stock portfolio"
-msgstr "^{<1>^} Afficher le portefeuille d'actions"
+msgstr "^{<1>^} Afficher portefeuille d'actions"
 
 #: src/move.c:241
 #, c-format
@@ -983,7 +983,7 @@ msgstr "Liquidités:  "
 #: src/exch.c:647
 #, c-format
 msgid "^{<1>^} Buy stock from company"
-msgstr "^{<1>^} Acheter des actions de la société"
+msgstr "^{<1>^} Acheter actions de la société"
 
 #: src/exch.c:649
 #, c-format
@@ -993,7 +993,7 @@ msgstr "^{<2>^} Vendre des actions à la société"
 #: src/exch.c:651
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Demander à la société d'émettre plus d'actions"
+msgstr "^{<3>^} Demander émettre plus d'actions"
 
 #: src/exch.c:653
 #, c-format
