@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-28 11:42+1100\n"
+"POT-Creation-Date: 2012-03-29 07:37+1100\n"
 "PO-Revision-Date: 2012-03-27 08:01+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (Australian)\n"
@@ -1506,7 +1506,11 @@ msgstr "@ Help text, page 10\n"
 msgid "  How to Play  "
 msgstr "  How to Play  "
 
-#: src/help.c:272
+#. TRANSLATORS: The first %d is the current page number,
+#. the second is the number of pages your help text takes
+#. (6, in English).  You can replace the second %d with a
+#. fixed word, if you like.
+#: src/help.c:276
 #, c-format
 msgid "Page %d of %d"
 msgstr "Page %d of %d"
@@ -1514,7 +1518,7 @@ msgstr "Page %d of %d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:473 src/intf.c:3035
+#: src/help.c:477 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Press <SPACE> to continue ] "
@@ -1525,7 +1529,7 @@ msgstr "[ Press <SPACE> to continue ] "
 #. <BACKSPACE>, and almost any other key instead of
 #. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
 #. <CTRL><G> or <CTRL><\>).
-#: src/help.c:480
+#: src/help.c:484
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
