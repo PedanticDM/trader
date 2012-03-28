@@ -11,15 +11,16 @@
 # Contributors:
 #   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-12.
 #   Vladimir B. Tsarkov <lipetsk-gnu-lug@bk.ru>, 2012.
+#   Pavel Maryanov <acid@jack.kiev.ua>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-28 18:12+1100\n"
-"PO-Revision-Date: 2012-03-28 18:13+1100\n"
-"Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
-"Language-Team: Russian\n"
+"PO-Revision-Date: 2012-03-29 06:30+1100\n"
+"Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
+"Language-Team: Russian <gnu@mx.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -253,35 +254,35 @@ msgstr "абвгдежзийклмнопрсту|output|GameMoves"
 #. (see ORDINAL_COLS in src/intf.h).
 #: src/globals.c:114
 msgid "1st"
-msgstr "1-ый"
+msgstr "1-й"
 
 #: src/globals.c:115
 msgid "2nd"
-msgstr "2-ой"
+msgstr "2-й"
 
 #: src/globals.c:116
 msgid "3rd"
-msgstr "3-ий"
+msgstr "3-й"
 
 #: src/globals.c:117
 msgid "4th"
-msgstr "4-ый"
+msgstr "4-й"
 
 #: src/globals.c:118
 msgid "5th"
-msgstr "5-ый"
+msgstr "5-й"
 
 #: src/globals.c:119
 msgid "6th"
-msgstr "6-ой"
+msgstr "6-й"
 
 #: src/globals.c:120
 msgid "7th"
-msgstr "7-ой"
+msgstr "7-й"
 
 #: src/globals.c:121
 msgid "8th"
-msgstr "8-ой"
+msgstr "8-й"
 
 #: src/game.c:117 src/game.c:152
 #, c-format
@@ -329,7 +330,7 @@ msgstr "Ваше имя: "
 #: src/game.c:425
 #, c-format
 msgid "Do you need any instructions? [^{Y^}/^{N^}] "
-msgstr "Показать ли Вам справку о том, как играть? [^{Д^}/^{Н^}] "
+msgstr "Показать справку о том, как играть? [^{Д^}/^{Н^}] "
 
 #: src/game.c:443
 #, c-format
@@ -344,7 +345,7 @@ msgstr "Игрок №%d: "
 #: src/game.c:529
 #, c-format
 msgid "Does any player need instructions? [^{Y^}/^{N^}] "
-msgstr "Показать ли справку о том, как играть? [^{Д^}/^{Н^}] "
+msgstr "Показать справку о том, как играть? [^{Д^}/^{Н^}] "
 
 #: src/game.c:563
 #, c-format
@@ -783,7 +784,7 @@ msgstr ""
 "Ваш долг составляет %N!\n"
 "\n"
 "^{Межзвёздный торговый банк конфисковал^}\n"
-"%N^{ из Ваших наличных денег.^}"
+"%N^{ из ваших наличных денег.^}"
 
 #: src/exch.c:98
 #, c-format
@@ -887,12 +888,12 @@ msgstr "  Недостаточный предел кредита  "
 #: src/exch.c:425
 #, c-format
 msgid "The Bank will not lend you any more money."
-msgstr "Банк не готов предоставлять Вам больше денег."
+msgstr "Банк не готов предоставлять вам больше денег."
 
 #: src/exch.c:445
 #, c-format
 msgid "How much do you wish to borrow? "
-msgstr "Сколько Вы хотите взять в кредит? "
+msgstr "Сколько вы хотите взять в кредит? "
 
 #: src/exch.c:477
 #, c-format
@@ -902,7 +903,7 @@ msgstr "  Нет долга  "
 #: src/exch.c:478
 #, c-format
 msgid "You have no debt to repay."
-msgstr "У Вас нет долга для погашения."
+msgstr "У вас нет долга для погашения."
 
 #: src/exch.c:482
 #, c-format
@@ -912,12 +913,12 @@ msgstr "  Нет наличных  "
 #: src/exch.c:483
 #, c-format
 msgid "You have no cash with which to repay the debt!"
-msgstr "У Вас нет наличных для погашения долга!"
+msgstr "У вас нет наличных для погашения долга!"
 
 #: src/exch.c:503
 #, c-format
 msgid "How much do you wish to repay? "
-msgstr "Сколько Вы хотите вернуть? "
+msgstr "Сколько вы хотите вернуть? "
 
 #. TRANSLATORS: %ls represents the company name.
 #: src/exch.c:579
@@ -1036,21 +1037,21 @@ msgid ""
 "You do not have enough cash\n"
 "to purchase additional shares."
 msgstr ""
-"У Вас недостаточно наличных денег, чтобы\n"
+"У вас недостаточно наличных денег, чтобы\n"
 "приобрести дополнительные акции."
 
 #: src/exch.c:729
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
-msgstr[0] "Вы можете приобрести до ^{%'ld-ой^} акции."
-msgstr[1] "Вы можете приобрести до ^{%'ld-х^} акций."
+msgstr[0] "Вы можете приобрести до ^{%'ld^} акции."
+msgstr[1] "Вы можете приобрести до ^{%'ld^} акций."
 msgstr[2] "Вы можете приобрести до ^{%'ld^} акций."
 
 #: src/exch.c:735
 #, c-format
 msgid "How many shares do you wish to purchase? "
-msgstr "Сколько акций Вы хотите приобрести? "
+msgstr "Сколько акций вы хотите приобрести? "
 
 #: src/exch.c:756
 #, c-format
@@ -1060,25 +1061,25 @@ msgstr "  Нет акций  "
 #: src/exch.c:757
 #, c-format
 msgid "You do not have any shares to sell."
-msgstr "У Вас нет ни одной акции для продажи."
+msgstr "У вас нет ни одной акции для продажи."
 
 #: src/exch.c:764
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
-msgstr[0] "Вы можете продать до ^{%'ld-ой^} акции."
-msgstr[1] "Вы можете продать до ^{%'ld-х^} акций."
+msgstr[0] "Вы можете продать до ^{%'ld^} акции."
+msgstr[1] "Вы можете продать до ^{%'ld^} акций."
 msgstr[2] "Вы можете продать до ^{%'ld^} акций."
 
 #: src/exch.c:770
 #, c-format
 msgid "How many shares do you wish to sell? "
-msgstr "Сколько акций Вы хотите продать? "
+msgstr "Сколько акций вы хотите продать? "
 
 #: src/exch.c:798
 #, c-format
 msgid "  No Shares Issued  "
-msgstr "  Акции не выпущенны  "
+msgstr "  Акции не выпущены  "
 
 #. TRANSLATORS: %ls represents the company name.
 #: src/exch.c:800
@@ -1091,7 +1092,7 @@ msgstr "Фирма %ls отказалась выпустить больше ак
 #: src/exch.c:805
 #, c-format
 msgid "  Shares Issued  "
-msgstr "  Акции выпущенны  "
+msgstr "  Акции выпущены  "
 
 #. TRANSLATORS: %ls represents the company name.
 #: src/exch.c:807
@@ -1104,7 +1105,7 @@ msgid_plural ""
 "^{%'ld^} more shares."
 msgstr[0] ""
 "Фирма %ls выпустила\n"
-"ещё ^{%'ld-у^} акцию."
+"ещё ^{%'ld^} акцию."
 msgstr[1] ""
 "Фирма %ls выпустила\n"
 "ещё ^{%'ld^} акции."
@@ -1215,7 +1216,7 @@ msgid ""
 "\n"
 "^{Directory %s: %s^}"
 msgstr ""
-"Невозможно сохранить игру №%d.\n"
+"Не удалось сохранить игру №%d.\n"
 "\n"
 "^{Папка %s: %s^}"
 
@@ -1226,7 +1227,7 @@ msgid ""
 "\n"
 "^{File %s: %s^}"
 msgstr ""
-"Невозможно сохранить игру №%d.\n"
+"Не удалось сохранить игру №%d.\n"
 "\n"
 "^{Файл %s: %s^}"
 
@@ -1380,12 +1381,12 @@ msgid ""
 msgstr ""
 "При выборе позиции  рядом со звездой (или рядом с форпостом),  будет сформи-\n"
 "ровано ^Bновое торговое предприятие^N,  и код этой новой фирмы появится на карте\n"
-"галактики.  В качестве награды за создание компании, Вы получите первые пять\n"
+"галактики.  В качестве награды за создание компании, вы получите первые пять\n"
 "акций.  До ^B~c-и^N компаний могут быть созданы таким образом.\n"
 "\n"
 "При выборе позиции рядом с уже существующей компанией, эта компания расширит\n"
 "свою деятельность  на одну  клетку.  Это увеличивает  стоимость её  акций и,\n"
-"следовательно, Вашего дохода.  Таким образом,  выбор позиции ^k~6^N или ^k~8^N на ука-\n"
+"следовательно, вашего дохода.  Таким образом,  выбор позиции ^k~6^N или ^k~8^N на ука-\n"
 "занной ниже карте расширяет маршруты компании ^B~B^N:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1412,7 +1413,7 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Выбор позиции рядом со звездой  увеличивает стоимость Ваших акций примерно в\n"
+"Выбор позиции рядом со звездой  увеличивает стоимость ваших акций примерно в\n"
 "пять  раз, по сравнению  с расширением  фирмы клеткой  не рядом  со звездой.\n"
 "Таким образом, позиция ^k~6^N является более предпочтительной, чем позиция ^k~8^N.\n"
 "\n"
@@ -1483,21 +1484,21 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
-"После выбора позиции, Вы оказываетесь на  ^BМежзвёздной фондовой бирже^N.  Здесь\n"
-"Вы можете приобретать акции, продавать их, занимать деньги у торгового банка\n"
+"После выбора позиции, вы оказываетесь на  ^BМежзвёздной фондовой бирже^N.  Здесь\n"
+"вы можете приобретать акции, продавать их, занимать деньги у торгового банка\n"
 "или погашать  часть своего долга  (если применимо).  Обратите  внимание, что\n"
 "каждая компания выпускает ограниченное количество акций ― нельзя просто бес-\n"
 "конечно покупать!   Однако,  можно предлагать фирме выпустить  больше акций.\n"
-"Чем больше Ваше владение в фирме, тем больше шансов получить больше акций.\n"
+"Чем больше ваше владение в фирме, тем больше шансов получить больше акций.\n"
 "\n"
 "Игра обычно заканчивается  после ^B~t-и^N ходов.  Однако,  можно  закончить игру\n"
 "раньше, нажав ^K<CTRL><C>^N вместо выбора позиции.  Кроме того, отдельные игроки\n"
-"могут  объявить себя  банкротом  в любой момент.   Если Ваш  долг достаточно\n"
-"велик, банк  может сделать  это за Вас!   Если не хватает  времени закончить\n"
-"игру, Вы можете сохранить её и продолжить позже.\n"
+"могут  объявить себя  банкротом  в любой момент.   Если ваш  долг достаточно\n"
+"велик, банк  может сделать  это за вас!   Если не хватает  времени закончить\n"
+"игру, вы можете сохранить её и продолжить позже.\n"
 "\n"
 "^BПобедителем игры^N  является игрок с самой большой  нетто-стоимостью, то есть,\n"
-"разностью между активами (наличные деньги + акции) и долгом.  ^HУдачи Вам^N ― да\n"
+"разностью между активами (наличные деньги + акции) и долгом.  ^HУдачи вам^N ― да\n"
 "победит лучший игрок!\n"
 
 #: src/help.c:215
