@@ -5,10 +5,10 @@
 # Frédéric Marchal <fmarchal@perso.be>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.3\n"
+"Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-16 13:23+1100\n"
-"PO-Revision-Date: 2012-03-27 10:37+0100\n"
+"POT-Creation-Date: 2012-03-27 10:37+1100\n"
+"PO-Revision-Date: 2012-03-28 08:55+0200\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: src/trader.c:235
 #, c-format
@@ -160,35 +161,35 @@ msgstr "Page d'accueil de Star Traders: <%s>.\n"
 #. than 24 characters (column positions, to be precise) long.
 #: src/globals.c:46
 msgid "Altair Starways"
-msgstr ""
+msgstr "Altaïr Télécom"
 
 #: src/globals.c:47
 msgid "Betelgeuse, Ltd"
-msgstr ""
+msgstr "Bételgeuse SARL"
 
 #: src/globals.c:48
 msgid "Capella Freight Co"
-msgstr ""
+msgstr "Capella Transport"
 
 #: src/globals.c:49
 msgid "Denebola Shippers"
-msgstr ""
+msgstr "Denebola et associés"
 
 #: src/globals.c:50
 msgid "Eridani Expediters"
-msgstr ""
+msgstr "Eltanin Export"
 
 #: src/globals.c:51
 msgid "Fornax Express"
-msgstr ""
+msgstr "Furibundus Express"
 
 #: src/globals.c:52
 msgid "Gemeni Inc"
-msgstr ""
+msgstr "Gémeaux et fils"
 
 #: src/globals.c:53
 msgid "Hercules and Co"
-msgstr ""
+msgstr "Hercules S.A."
 
 #. TRANSLATORS: This string specifies the keycodes (keyboard input
 #. codes) used to enter the Stock Transaction window for each
@@ -277,6 +278,7 @@ msgid "Loading game %d... "
 msgstr "Chargement du jeu %d... "
 
 #: src/game.c:226
+#, c-format
 msgid "  First Player  "
 msgstr "  Premier Joueur  "
 
@@ -303,19 +305,23 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Cc"
 
-#: src/game.c:341 src/move.c:386
+#: src/game.c:341 src/move.c:390
+#, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Entrez le numéro de jeu [^{1^}-^{9^}] ou ^{<CTRL><C>^} pour annuler: "
 
 #: src/game.c:406
+#, c-format
 msgid "Please enter your name: "
 msgstr "Veuillez entrer votre nom: "
 
 #: src/game.c:425
+#, c-format
 msgid "Do you need any instructions? [^{Y^}/^{N^}] "
 msgstr "Avez-vous besoin des instructions ? [^{O^}/^{N^}] "
 
 #: src/game.c:443
+#, c-format
 msgid "  Enter Player Names  "
 msgstr "  Entrez les noms des joueurs  "
 
@@ -325,10 +331,12 @@ msgid "Player %d: "
 msgstr "Joueur %d: "
 
 #: src/game.c:529
+#, c-format
 msgid "Does any player need instructions? [^{Y^}/^{N^}] "
 msgstr "L'un des joueurs a-t-il besoin des instructions ? [^{O^}/^{N^}] "
 
 #: src/game.c:563
+#, c-format
 msgid "  Game Over  "
 msgstr "  Jeu terminé  "
 
@@ -340,6 +348,7 @@ msgstr[0] "Le jeu est terminé après un tour."
 msgstr[1] "Le jeu est terminé après %d tours."
 
 #: src/game.c:575
+#, c-format
 msgid "  Total Value  "
 msgstr "  Valeur totale  "
 
@@ -367,12 +376,14 @@ msgstr ""
 "avec une valeur de ^{%N^}."
 
 #: src/game.c:597
+#, c-format
 msgid "  Game Winner  "
 msgstr "  Gagnant du jeu  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:855
+#: src/game.c:606 src/move.c:859
+#, c-format
 msgctxt "subtitle"
 msgid "Player"
 msgstr "Joueurs"
@@ -397,26 +408,31 @@ msgid "  Turn: ^{%d^}  "
 msgstr "  Tour: ^{%d^}  "
 
 #: src/game.c:649
+#, c-format
 msgid "  ^[*** Last Turn ***^]  "
 msgstr "  ^[*** Dernier tour ***^]  "
 
 #: src/game.c:693
+#, c-format
 msgid "  Stock Portfolio  "
 msgstr "  Portefeuille d'actions  "
 
 #. TRANSLATORS: The current player is bankrupt (has no
 #. shares or cash, ie, whose total value is zero)
 #: src/game.c:702
+#, c-format
 msgid "^[* * *   B A N K R U P T   * * *^]"
 msgstr "^[* * *   B A N Q U E R O U T E   * * *^]"
 
 #: src/game.c:717 src/exch.c:112
+#, c-format
 msgid "No companies on the map"
 msgstr "Aucune compagnie sur la carte"
 
 #. TRANSLATORS: "Company" is a two-line column label in
 #. a table containing a list of companies.
 #: src/game.c:725 src/exch.c:120
+#, c-format
 msgctxt "subtitle"
 msgid ""
 "\n"
@@ -446,6 +462,7 @@ msgstr ""
 #. maximum column width is 10 characters (see
 #. STOCK_OWNED_COLS in src/intf.h).
 #: src/game.c:739
+#, c-format
 msgctxt "subtitle"
 msgid ""
 "Holdings\n"
@@ -494,38 +511,46 @@ msgstr ""
 #. Note that some of these labels are used for both the
 #. Player Status window and the Trading Bank window.
 #: src/game.c:796
+#, c-format
 msgctxt "label"
 msgid "Total value:   "
 msgstr "Valeur totale:    "
 
 #: src/game.c:800 src/exch.c:322
+#, c-format
 msgctxt "label"
 msgid "Current cash:  "
 msgstr "Liquidité:        "
 
 #: src/game.c:807 src/exch.c:330
+#, c-format
 msgctxt "label"
 msgid "Current debt:  "
 msgstr "Dette:            "
 
 #: src/game.c:813 src/exch.c:335
+#, c-format
 msgctxt "label"
 msgid "Interest rate: "
 msgstr "Taux d'intérêt:   "
 
 #: src/move.c:239 src/exch.c:182
+#, c-format
 msgid "^{<1>^} Display stock portfolio"
 msgstr "^{<1>^} Afficher portefeuille d'actions"
 
 #: src/move.c:241
+#, c-format
 msgid "^{<2>^} Declare bankruptcy"
 msgstr "^{<2>^} Déclarer en banqueroute"
 
 #: src/move.c:243
+#, c-format
 msgid "^{<3>^} Save and end the game"
 msgstr "^{<3>^} Enregistrer et terminer le jeu"
 
 #: src/move.c:245
+#, c-format
 msgid "^{<CTRL><C>^} Quit the game"
 msgstr "^{<CTRL><C>^} Quitter le jeu"
 
@@ -534,56 +559,66 @@ msgstr "^{<CTRL><C>^} Quitter le jeu"
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Mouvement [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 
-#. TRANSLATORS: "Move" refers to the choice of
-#. moves made by the current player (out of a
-#. selection of 20 moves).
-#: src/move.c:282
+#. TRANSLATORS: A game usually consists of
+#. DEFAULT_MAX_TURN (50) turns.  On each
+#. turn, the computer randomly selects
+#. NUMBER_MOVES (20) moves (positions on the
+#. map); each player selects just one move
+#. per turn.  "Move" refers to the player's
+#. choice.
+#: src/move.c:286
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Mouvement ^{%lc^}"
 
-#: src/move.c:303
+#: src/move.c:307
+#, c-format
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Déclarer en banqueroute)"
 
-#: src/move.c:312
+#: src/move.c:316
+#, c-format
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Enregistrer et terminer le jeu)"
 
-#: src/move.c:333
+#: src/move.c:337
+#, c-format
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Quitter le jeu)"
 
-#: src/move.c:348
+#: src/move.c:352
+#, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Êtes-vous sûr ? [^{O^}/^{N^}] "
 
-#: src/move.c:365 src/move.c:443
+#: src/move.c:369 src/move.c:447
 #, c-format
 msgid "Saving game %d... "
 msgstr "Enregistrement du jeu %d... "
 
-#: src/move.c:673 src/move.c:681 src/move.c:1026 src/move.c:1062
+#: src/move.c:677 src/move.c:685 src/move.c:1043 src/move.c:1080
+#, c-format
 msgid "  Bankruptcy Court  "
 msgstr "  Tribunal des faillites  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:675
+#: src/move.c:679
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "%ls a été déclaré en banqueroute par la Banque Interstellaire du Commerce."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:683
+#: src/move.c:687
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls s'est déclaré en banqueroute."
 
-#: src/move.c:751
+#: src/move.c:755
+#, c-format
 msgid "  New Company  "
 msgstr "  Nouvelle compagnie  "
 
-#: src/move.c:752
+#: src/move.c:756
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -592,7 +627,7 @@ msgstr ""
 "Une nouvelle compagnie a été formée !\n"
 "Son nom est ^{%ls^}."
 
-#: src/move.c:811
+#: src/move.c:815
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -601,7 +636,8 @@ msgstr ""
 "^{%ls^} vient de fusionner dans ^{%ls^}.\n"
 "Veuillez noter les transactions suivantes:\n"
 
-#: src/move.c:817
+#: src/move.c:821
+#, c-format
 msgid "  Company Merger  "
 msgstr "  Fusion de société  "
 
@@ -612,14 +648,16 @@ msgstr "  Fusion de société  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:837
+#: src/move.c:841
+#, c-format
 msgctxt "label"
 msgid "Old stock: "
 msgstr "Anciennes actions: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:848
+#: src/move.c:852
+#, c-format
 msgctxt "label"
 msgid "New Stock: "
 msgstr "Nouvelles actions: "
@@ -629,7 +667,7 @@ msgstr "Nouvelles actions: "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:862
+#: src/move.c:866
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -638,7 +676,8 @@ msgstr "Bonus (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:867
+#: src/move.c:871
+#, c-format
 msgctxt "subtitle"
 msgid "Total"
 msgstr "Total"
@@ -647,7 +686,8 @@ msgstr "Total"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:874
+#: src/move.c:878
+#, c-format
 msgctxt "subtitle"
 msgid "New"
 msgstr "Nouv."
@@ -655,13 +695,14 @@ msgstr "Nouv."
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:880
+#: src/move.c:884
+#, c-format
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Anc."
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1028
+#: src/move.c:1045
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -673,7 +714,7 @@ msgstr ""
 "^{Tous les avoirs ont été saisis pour rembourser les emprunts en cours.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1051
+#: src/move.c:1069
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -692,7 +733,8 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1079
+#: src/move.c:1097
+#, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
 msgstr "Montant payé par action: "
@@ -701,16 +743,27 @@ msgstr "Montant payé par action: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1087
+#: src/move.c:1105
+#, c-format
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Valeur d'action préc.:   "
 
-#: src/move.c:1180 src/exch.c:319
+#: src/move.c:1188 src/move.c:1223 src/exch.c:319
+#, c-format
 msgid "  Interstellar Trading Bank  "
 msgstr "  Banque Interstellaire du Commerce  "
 
-#: src/move.c:1182
+#: src/move.c:1190
+#, c-format
+msgid ""
+"You were forced to borrow %N\n"
+"to cover losses from company shares."
+msgstr ""
+"Vous avez été obligé d'emprunter %N\n"
+"pour couvrir les pertes dans les actions."
+
+#: src/move.c:1225
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
@@ -720,6 +773,7 @@ msgstr ""
 "^{La banque a mis sous séquestre ^}%N^{ de vos liquidités.^}"
 
 #: src/exch.c:98
+#, c-format
 msgid "  Interstellar Stock Exchange  "
 msgstr "  Bourse Interstellaire  "
 
@@ -729,6 +783,7 @@ msgstr "  Bourse Interstellaire  "
 #. maximum column width is 10 characters (see
 #. STOCK_LEFT_COLS in src/intf.h).
 #: src/exch.c:127
+#, c-format
 msgctxt "subtitle"
 msgid ""
 "Shares\n"
@@ -743,6 +798,7 @@ msgstr ""
 #. given company.  The maximum column width is 10
 #. characters (see STOCK_ISSUED_COLS in src/intf.h).
 #: src/exch.c:134
+#, c-format
 msgctxt "subtitle"
 msgid ""
 "Shares\n"
@@ -752,18 +808,22 @@ msgstr ""
 "émises"
 
 #: src/exch.c:184
+#, c-format
 msgid "^{<2>^} Display galaxy map"
 msgstr "^{<2>^} Afficher la carte de la galaxy"
 
 #: src/exch.c:186
+#, c-format
 msgid "^{<3>^} Visit the Trading Bank"
 msgstr "^{<3>^} Visiter la Banque du Commerce"
 
 #: src/exch.c:188
+#, c-format
 msgid "^{<4>^} Exit the Stock Exchange"
 msgstr "^{<4>^} Quitter la Bourse"
 
 #: src/exch.c:191
+#, c-format
 msgid "Enter selection [^[Company letter^]/^{1^}-^{4^}]: "
 msgstr "Faites un choix [^[Lettre société^]/^{1^}-^{4^}]: "
 
@@ -777,6 +837,7 @@ msgstr "Faites un choix [^[Lettre société^]/^{1^}-^{4^}]: "
 #. Note that some of these labels are used for both the Player
 #. Status window and the Trading Bank window.
 #: src/exch.c:349
+#, c-format
 msgctxt "label"
 msgid "Credit limit:  "
 msgstr "Limite de crédit: "
@@ -786,50 +847,62 @@ msgstr "Limite de crédit: "
 #. (ie, padded with trailing spaces as required).  The maximum
 #. length is 72 characters.
 #: src/exch.c:364
+#, c-format
 msgid "^{<1>^} Borrow money      "
 msgstr "^{<1>^} Emprunter de l'argent"
 
 #: src/exch.c:366
+#, c-format
 msgid "^{<2>^} Repay debt        "
 msgstr "^{<2>^} Rembourser dette     "
 
 #: src/exch.c:368
+#, c-format
 msgid "^{<3>^} Exit from the Bank"
 msgstr "^{<3>^} Quitter la banque    "
 
 #: src/exch.c:371
+#, c-format
 msgid "Enter selection [^{1^}-^{3^}]: "
 msgstr "Sélection [^{1^}-^{3^}]: "
 
 #: src/exch.c:424
+#, c-format
 msgid "  Insufficient Credit Limit  "
 msgstr "  Limite de crédit insuffisante  "
 
 #: src/exch.c:425
+#, c-format
 msgid "The Bank will not lend you any more money."
 msgstr "La banque ne vous prêtera plus d'argent."
 
 #: src/exch.c:445
+#, c-format
 msgid "How much do you wish to borrow? "
 msgstr "Combien voulez-vous emprunter ? "
 
 #: src/exch.c:477
+#, c-format
 msgid "  No Debt  "
 msgstr "  Pas de dette  "
 
 #: src/exch.c:478
+#, c-format
 msgid "You have no debt to repay."
 msgstr "Vous n'avez aucune dette à rembourser."
 
 #: src/exch.c:482
+#, c-format
 msgid "  No Cash  "
 msgstr "  Pas de liquidité  "
 
 #: src/exch.c:483
+#, c-format
 msgid "You have no cash with which to repay the debt!"
 msgstr "Vous n'avez pas de liquidité pour rembourser votre dette !"
 
 #: src/exch.c:503
+#, c-format
 msgid "How much do you wish to repay? "
 msgstr "Combien voulez-vous rembourser ? "
 
@@ -848,6 +921,7 @@ msgstr "  Transaction d'actions chez %ls  "
 #. routines to work correctly.  The maximum length of each
 #. label is 22 characters.
 #: src/exch.c:590
+#, c-format
 msgctxt "label|Stock A"
 msgid "Shares issued:   "
 msgstr "Actions émises:    "
@@ -855,6 +929,7 @@ msgstr "Actions émises:    "
 #. TRANSLATORS: "Shares left" is the number of shares that are
 #. left to be purchased in the current company.
 #: src/exch.c:598
+#, c-format
 msgctxt "label|Stock A"
 msgid "Shares left:     "
 msgstr "Actions restantes: "
@@ -862,12 +937,14 @@ msgstr "Actions restantes: "
 #. TRANSLATORS: "Price per share" is the cost of each share in
 #. the current company.
 #: src/exch.c:605
+#, c-format
 msgctxt "label|Stock A"
 msgid "Price per share: "
 msgstr "Prix par action:   "
 
 #. TRANSLATORS: "Return" is the share return as a percentage.
 #: src/exch.c:611
+#, c-format
 msgctxt "label|Stock A"
 msgid "Return:          "
 msgstr "Retour:            "
@@ -881,6 +958,7 @@ msgstr "Retour:            "
 #. correctly.  The maximum length of each label is 18
 #. characters.
 #: src/exch.c:624
+#, c-format
 msgctxt "label|Stock B"
 msgid "Current holdings: "
 msgstr "Possessions: "
@@ -888,48 +966,59 @@ msgstr "Possessions: "
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
 #: src/exch.c:631
+#, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
 msgstr "%% détenu:    "
 
 #: src/exch.c:636
+#, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
 msgstr "Liquidités:  "
 
 #: src/exch.c:647
+#, c-format
 msgid "^{<1>^} Buy stock from company"
 msgstr "^{<1>^} Acheter actions de la société"
 
 #: src/exch.c:649
+#, c-format
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Vendre des actions à la société"
 
 #: src/exch.c:651
+#, c-format
 msgid "^{<3>^} Bid company to issue more shares"
 msgstr "^{<3>^} Demander émettre plus d'actions"
 
 #: src/exch.c:653
+#, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
 msgstr "^{<4>^} Quitter vers la bourse"
 
 #: src/exch.c:656
+#, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
 msgstr "Sélection [^{1^}-^{4^}]: "
 
 #: src/exch.c:712
+#, c-format
 msgid "  No Shares Available  "
 msgstr "  Pas d'action disponible  "
 
 #: src/exch.c:713
+#, c-format
 msgid "No more shares are available for purchase."
 msgstr "Plus aucune action à acheter."
 
 #: src/exch.c:717
+#, c-format
 msgid "  Insufficient Cash  "
 msgstr "  Pas assez de liquide  "
 
 #: src/exch.c:718
+#, c-format
 msgid ""
 "You do not have enough cash\n"
 "to purchase additional shares."
@@ -945,14 +1034,17 @@ msgstr[0] "Vous pouvez acheter ^{une^} action."
 msgstr[1] "Vous pouvez acheter jusqu'à ^{%'ld^} actions."
 
 #: src/exch.c:735
+#, c-format
 msgid "How many shares do you wish to purchase? "
 msgstr "Combien d'actions souhaitez-vous acheter ? "
 
 #: src/exch.c:756
+#, c-format
 msgid "  No Shares  "
 msgstr "  Pas d'action  "
 
 #: src/exch.c:757
+#, c-format
 msgid "You do not have any shares to sell."
 msgstr "Vous n'avez aucune action à vendre."
 
@@ -964,10 +1056,12 @@ msgstr[0] "Vous pouvez vendre ^{une^} action."
 msgstr[1] "Vous pouvez vendre jusqu'à ^{%'ld^} actions."
 
 #: src/exch.c:770
+#, c-format
 msgid "How many shares do you wish to sell? "
 msgstr "Combien d'actions souhaitez-vous vendre ? "
 
 #: src/exch.c:798
+#, c-format
 msgid "  No Shares Issued  "
 msgstr "  Aucune action émise  "
 
@@ -982,6 +1076,7 @@ msgstr ""
 "d'émettre plus d'actions."
 
 #: src/exch.c:805
+#, c-format
 msgid "  Shares Issued  "
 msgstr "  Actions émises  "
 
@@ -1032,6 +1127,7 @@ msgid "%s: could not convert string"
 msgstr "%s: la chaîne n'a pas pu être convertie"
 
 #: src/fileio.c:255
+#, c-format
 msgid "  Game Not Found  "
 msgstr "  Jeu pas trouvé  "
 
@@ -1041,6 +1137,7 @@ msgid "Game %d has not been saved to disk."
 msgstr "Le jeu %d n'a pas été enregistré sur disque."
 
 #: src/fileio.c:263
+#, c-format
 msgid "  Game Not Loaded  "
 msgstr "  Jeu pas chargé  "
 
@@ -1091,6 +1188,7 @@ msgid "%s: illegal field on line %d"
 msgstr "%s: champ illégal à la ligne %d"
 
 #: src/fileio.c:466 src/fileio.c:487
+#, c-format
 msgid "  Game Not Saved  "
 msgstr "  Jeu pas enregistré  "
 
@@ -1386,7 +1484,7 @@ msgstr ""
 "chances de réussite si vous possédez une plus grande part de la compagnie.\n"
 
 #: src/help.c:215
-msgid "@ Help text, page 7"
+msgid "@ Help text, page 7\n"
 msgstr ""
 "Le jeu  se termine  habituellement après  ^B~t^N tours.  Cependant,  vous pouvez\n"
 "terminer le jeu plus tôt en pressant ^K<CTRL><C>^N lorsqu'il vous est demandé de\n"
@@ -1400,21 +1498,22 @@ msgstr ""
 "\n"
 "Le ^Bgagnant  du jeu^N  est la personne  avec le  plus grand revenu  net (valeur\n"
 "totale  du liquide,  des actions  et des  dettes).  ^HBonne chance^N  et  que le\n"
-"meilleur gagne !"
+"meilleur gagne !\n"
 
 #: src/help.c:216
-msgid "@ Help text, page 8"
-msgstr "@ Texte d'aide, page 8"
+msgid "@ Help text, page 8\n"
+msgstr "@ Texte d'aide, page 8\n"
 
 #: src/help.c:217
-msgid "@ Help text, page 9"
-msgstr "@ Texte d'aide, page 9"
+msgid "@ Help text, page 9\n"
+msgstr "@ Texte d'aide, page 9\n"
 
 #: src/help.c:218
-msgid "@ Help text, page 10"
-msgstr "@ Texte d'aide, page 10"
+msgid "@ Help text, page 10\n"
+msgstr "@ Texte d'aide, page 10\n"
 
 #: src/help.c:270
+#, c-format
 msgid "  How to Play  "
 msgstr "  Comment jouer  "
 
@@ -1427,6 +1526,7 @@ msgstr "Page %d sur %d"
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
 #: src/help.c:473 src/intf.c:3035
+#, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Appuyez <ESPACE> pour continuer ] "
 
@@ -1437,6 +1537,7 @@ msgstr "[ Appuyez <ESPACE> pour continuer ] "
 #. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
 #. <CTRL><G> or <CTRL><\>).
 #: src/help.c:480
+#, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Appuyez <ESPACE> pour continuer ou <RetArr> pour la page précédente ] "
 
@@ -1456,10 +1557,12 @@ msgid "terminal size is too small (%d x %d required)"
 msgstr "la taille du terminal est trop petite (%d x %d requis)"
 
 #: src/intf.c:610
+#, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
 #: src/intf.c:1265
+#, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
@@ -1520,6 +1623,7 @@ msgid ": "
 msgstr ": "
 
 #: src/utils.c:238
+#, c-format
 msgid "out of memory"
 msgstr "pas assez de mémoire"
 
@@ -1529,6 +1633,7 @@ msgid "xmbstowcs: `%s'"
 msgstr "xmbstowcs: « %s »"
 
 #: src/utils.c:611
+#, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
