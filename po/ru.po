@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-27 09:12+1100\n"
+"POT-Creation-Date: 2012-03-28 11:42+1100\n"
 "PO-Revision-Date: 2012-03-27 08:20+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: Russian\n"
@@ -167,37 +167,38 @@ msgstr ""
 #. TRANSLATORS: The eight company names do NOT have to be literal
 #. translations of the English names.  In fact, if possible, the
 #. names should start with successive letters of your alphabet (in
-#. English, for example, "A" to "H").  No company name should be more
-#. than 24 characters (column positions, to be precise) long.
-#: src/globals.c:46
+#. English, for example, "A" to "H"), and, ideally, be related to
+#. constellations or stars in our galaxy.  No company name should be
+#. more than 24 characters (column positions, to be precise) long.
+#: src/globals.c:47
 msgid "Altair Starways"
 msgstr "Альтаирские торговцы"
 
-#: src/globals.c:47
+#: src/globals.c:48
 msgid "Betelgeuse, Ltd"
 msgstr "ОАО «Бетельгейзе»"
 
-#: src/globals.c:48
+#: src/globals.c:49
 msgid "Capella Freight Co"
 msgstr "Возчики вегавские"
 
-#: src/globals.c:49
+#: src/globals.c:50
 msgid "Denebola Shippers"
 msgstr "Грузоотправители Гидры"
 
-#: src/globals.c:50
+#: src/globals.c:51
 msgid "Eridani Expediters"
 msgstr "Диспетчеры Денеболы"
 
-#: src/globals.c:51
+#: src/globals.c:52
 msgid "Fornax Express"
 msgstr "Единодушные трейдеры"
 
-#: src/globals.c:52
+#: src/globals.c:53
 msgid "Gemeni Inc"
 msgstr "Живой брокер Капеллы"
 
-#: src/globals.c:53
+#: src/globals.c:54
 msgid "Hercules and Co"
 msgstr "Звёздные линии Земли"
 
@@ -209,7 +210,7 @@ msgstr "Звёздные линии Земли"
 #. possible, these should be successive letters in your alphabet (in
 #. English, "A" to "H").  Do NOT use digits or control characters.
 #. Do not change or translate anything after the vertical line.
-#: src/globals.c:67
+#: src/globals.c:68
 msgid "ABCDEFGH|input|Companies"
 msgstr "АБВГДЕЖЗ|input|Companies"
 
@@ -220,7 +221,7 @@ msgstr "АБВГДЕЖЗ|input|Companies"
 #. should be successive letters in your alphabet.  Do NOT use digits
 #. or control characters.  Do not change or translate anything after
 #. the vertical line.
-#: src/globals.c:79
+#: src/globals.c:80
 msgid "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
 msgstr "АБВГДЕЖЗИЙКЛМНОПРСТУ|input|GameMoves"
 
@@ -231,7 +232,7 @@ msgstr "АБВГДЕЖЗИЙКЛМНОПРСТУ|input|GameMoves"
 #. the remaining for the eight companies.  Do not change or translate
 #. anything after the vertical line.  Double-width characters ARE
 #. handled correctly.
-#: src/globals.c:91
+#: src/globals.c:92
 msgid ".+*ABCDEFGH|output|MapVals"
 msgstr ".+*АБВГДЕЖЗ|output|MapVals"
 
@@ -241,7 +242,7 @@ msgstr ".+*АБВГДЕЖЗ|output|MapVals"
 #. to the first character in the "input|GameMoves" string, and so on.
 #. Do not change or translate anything after the vertical line.
 #. Double-width characters ARE handled correctly.
-#: src/globals.c:102
+#: src/globals.c:103
 msgid "abcdefghijklmnopqrst|output|GameMoves"
 msgstr "абвгдежзийклмнопрсту|output|GameMoves"
 
@@ -250,35 +251,35 @@ msgstr "абвгдежзийклмнопрсту|output|GameMoves"
 #. on the gender of the player, it may be simpler to list cardinal
 #. numbers instead (eg, "No. 1").  Up to five characters are allowed
 #. (see ORDINAL_COLS in src/intf.h).
-#: src/globals.c:113
+#: src/globals.c:114
 msgid "1st"
 msgstr "1-ый"
 
-#: src/globals.c:114
+#: src/globals.c:115
 msgid "2nd"
 msgstr "2-ой"
 
-#: src/globals.c:115
+#: src/globals.c:116
 msgid "3rd"
 msgstr "3-ий"
 
-#: src/globals.c:116
+#: src/globals.c:117
 msgid "4th"
 msgstr "4-ый"
 
-#: src/globals.c:117
+#: src/globals.c:118
 msgid "5th"
 msgstr "5-ый"
 
-#: src/globals.c:118
+#: src/globals.c:119
 msgid "6th"
 msgstr "6-ой"
 
-#: src/globals.c:119
+#: src/globals.c:120
 msgid "7th"
 msgstr "7-ой"
 
-#: src/globals.c:120
+#: src/globals.c:121
 msgid "8th"
 msgstr "8-ой"
 
