@@ -20,8 +20,9 @@ Version 7.4 (not yet released)
 
 @@@ Revised game algorithms: negative returns now allowed.
 @@@ configure now warns if NcursesW not found.
-@@@ Updated Russian translation; thanks to Vladimir B. Tsarkov.
+@@@ Updated Russian translation; thanks to Vladimir B. Tsarkov and Pavel Maryanov.
 @@@ French translation; thanks to Frédéric Marchal.
+@@@ German translation; thanks to Philipp Thomas.
 
 
 Version 7.3 (16th March, 2012)
