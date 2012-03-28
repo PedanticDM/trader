@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-28 11:42+1100\n"
-"PO-Revision-Date: 2012-03-28 07:13+1100\n"
+"POT-Creation-Date: 2012-03-28 18:12+1100\n"
+"PO-Revision-Date: 2012-03-28 18:21+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -167,35 +167,35 @@ msgstr "Page d'accueil de Star Traders: <%s>.\n"
 #. more than 24 characters (column positions, to be precise) long.
 #: src/globals.c:47
 msgid "Altair Starways"
-msgstr ""
+msgstr "Altaïr Télécom"
 
 #: src/globals.c:48
 msgid "Betelgeuse, Ltd"
-msgstr ""
+msgstr "Bételgeuse SARL"
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
-msgstr ""
+msgstr "Capella Transport"
 
 #: src/globals.c:50
 msgid "Denebola Shippers"
-msgstr ""
+msgstr "Denebola et associés"
 
 #: src/globals.c:51
 msgid "Eridani Expediters"
-msgstr ""
+msgstr "Eltanin Export"
 
 #: src/globals.c:52
 msgid "Fornax Express"
-msgstr ""
+msgstr "Furibundus Express"
 
 #: src/globals.c:53
 msgid "Gemeni Inc"
-msgstr ""
+msgstr "Gémeaux et fils"
 
 #: src/globals.c:54
 msgid "Hercules and Co"
-msgstr ""
+msgstr "Hercules S.A."
 
 #. TRANSLATORS: This string specifies the keycodes (keyboard input
 #. codes) used to enter the Stock Transaction window for each
@@ -766,6 +766,8 @@ msgid ""
 "You were forced to borrow %N\n"
 "to cover losses from company shares."
 msgstr ""
+"Vous avez été obligé d'emprunter %N\n"
+"pour couvrir les pertes dans les actions."
 
 #: src/move.c:1225
 #, c-format
