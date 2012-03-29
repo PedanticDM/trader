@@ -346,7 +346,7 @@ bool load_game (int num)
     load_game_read_int(n,                n == MAX_Y);
     load_game_read_int(max_turn,         max_turn >= 1);
     load_game_read_int(turn_number,      turn_number >= 1 && turn_number <= max_turn);
-    load_game_read_int(number_players,   number_players >= 1 && number_players < MAX_PLAYERS);
+    load_game_read_int(number_players,   number_players >= 1 && number_players <= MAX_PLAYERS);
     load_game_read_int(current_player,   current_player >= 0 && current_player < number_players);
     load_game_read_int(first_player,     first_player >= 0 && first_player < number_players);
     load_game_read_int(n,                n == MAX_COMPANIES);
