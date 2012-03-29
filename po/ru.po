@@ -6,7 +6,7 @@
 # *                                                                       *
 # *************************************************************************
 #
-# This file is distributed under the same licence as Star Traders.
+# This file is distributed under the same license as the trader package.
 #
 # Contributors:
 #   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-12.
@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-29 07:37+1100\n"
-"PO-Revision-Date: 2012-03-29 18:56+1100\n"
+"PO-Revision-Date: 2012-03-30 07:15+1100\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@mx.ru>\n"
 "Language: ru\n"

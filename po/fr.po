@@ -5,7 +5,7 @@
 # *                                                                       *
 # *************************************************************************
 #
-# This file is distributed under the same licence as Star Traders.
+# This file is distributed under the same license as the trader package.
 #
 # Contributors:
 #   Frédéric Marchal <fmarchal@perso.be>, 2012.
@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-29 07:37+1100\n"
-"PO-Revision-Date: 2012-03-28 18:21+1100\n"
+"PO-Revision-Date: 2012-03-30 07:15+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
