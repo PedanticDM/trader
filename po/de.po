@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-29 07:37+1100\n"
-"PO-Revision-Date: 2012-03-31 08:12+1100\n"
+"PO-Revision-Date: 2012-03-31 09:48+1100\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -839,7 +839,7 @@ msgstr "^{<4>^} Die Börse verlassen"
 #: src/exch.c:191
 #, c-format
 msgid "Enter selection [^[Company letter^]/^{1^}-^{4^}]: "
-msgstr "Auswahl eigeben [^[Firmenbuchstabe^]/^{1^}-^{4^}]: "
+msgstr "Auswahl eingeben [^[Firmenbuchstabe^]/^{1^}-^{4^}]: "
 
 #. TRANSLATORS: The "Total value", "Current cash", "Current
 #. debt", "Interest rate" and "Credit limit" labels MUST all be
