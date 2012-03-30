@@ -1,14 +1,21 @@
-# German messages for trader
-# Copyright (C) 2012 John Zaitseff
+# *************************************************************************
+# *                                                                       *
+# *                 German Translations for Star Traders                  *
+# *                   Copyright (C) 2012, John Zaitseff                   *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
-# Philipp Thomas <pth@suse.com>, 2012.
+#
+# Contributors:
+#   Philipp Thomas <pth@suse.de>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-27 10:37+1100\n"
-"PO-Revision-Date: 2012-03-28 16:15+0200\n"
+"PO-Revision-Date: 2012-03-30 14:03+0200\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -56,18 +63,18 @@ msgid ""
 "NO WARRANTY, to the extent permitted by law; see the License for details.\n"
 msgstr ""
 "Star Traders (%s) %s\n"
-"Copyright (C) %s, John Zaitseff.\n"
+"Copyright © %s, John Zaitseff.\n"
 "\n"
-"Star Traders ist ein einfaches Spiel um interstellaren Handel. Das Ziel\n"
+"Star Traders ist ein einfaches Spiel um interstellaren Handel.  Das Ziel\n"
 "des Spiels ist es, Firmen zu gründen, Aktien zu kaufen und verkaufen und\n"
 "Geld zu leihen und zurück zu zahlen um der reichste Spieler und damit der\n"
 "Gewinner zu werden.\n"
 "\n"
-"Dieses Programm ist freie Software und wird unter den Bedingungen der\n"
-"GNU General Public License, Version 3 oder später vertrieben. Sie\n"
-"können es modifizieren und/oder es unter bestimmten Bedingungen vertreiben.\n"
-"Dieses Programm hat KEINERLEI GARANTIE, soweit die Gesetzgebung dies\n"
-"zulässt; bitte lesen Sie die Lizenz für die Details.\n"
+"Dieses Programm ist freie Software und wird unter den Bedingungen der GNU\n"
+"General Public License, Version 3 oder später vertrieben.  Sie können es\n"
+"modifizieren und/oder es unter bestimmten Bedingungen vertreiben.  Dieses\n"
+"Programm hat KEINERLEI GARANTIE, soweit die Gesetzgebung dies zulässt;\n"
+"bitte lesen Sie die Lizenz für die Details.\n"
 
 #: src/trader.c:308
 #, c-format
@@ -85,8 +92,7 @@ msgid ""
 "Play Star Traders, a simple game of interstellar trading.\n"
 "\n"
 msgstr ""
-"Spielen Sie Star Trader, ein einfaches Spiel um interstellaren\n"
-"Handel.\n"
+"Spielen Sie Star Trader, ein einfaches Spiel um interstellaren Handel.\n"
 "\n"
 
 #: src/trader.c:315
@@ -113,9 +119,9 @@ msgid ""
 "playing that game.  If GAME is not specified, start a new game.\n"
 "\n"
 msgstr ""
-"Wenn SPIEL als Zahl zwischen 1 und 9 angegeben wird, wird dieses\n"
-"Spiel geladen und fort geführt. Wird SPIEL nicht angegeben, wird ein\n"
-"neues Spiel gestartet.\n"
+"Wenn SPIEL als Zahl zwischen 1 und 9 angegeben wird, wird dieses Spiel\n"
+"geladen und fort geführt.  Wird SPIEL nicht angegeben, wird ein neues\n"
+"Spiel gestartet.\n"
 "\n"
 
 #. TRANSLATORS: The first %s is the proper name of the package
@@ -130,7 +136,7 @@ msgid "Report bugs to %s <%s>.\n"
 msgstr ""
 "Berichten Sie Fehler (in Englisch) an %s <%s>.\n"
 "Fehler in der Übersetzung berichten Sie bitte an\n"
-"translation-team-de@lists.sourceforge.net .\n"
+"<translation-team-de@lists.sourceforge.net>.\n"
 
 #. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
@@ -143,7 +149,7 @@ msgid "Report bugs to <%s>.\n"
 msgstr ""
 "Berichten Sie Fehler (in Englisch) an <%s>.\n"
 "Fehler in der Übersetzung berichten Sie bitte an\n"
-"translation-team-de@lists.sourceforge.net .\n"
+"<translation-team-de@lists.sourceforge.net>.\n"
 
 #. TRANSLATORS: The first %s is for packagers and may be
 #. something like "Debian".
@@ -172,7 +178,7 @@ msgstr "Beteleuse GmbH"
 
 #: src/globals.c:48
 msgid "Capella Freight Co"
-msgstr "Kapella Fracht"
+msgstr "Capella Fracht KG"
 
 #: src/globals.c:49
 msgid "Denebola Shippers"
@@ -278,7 +284,7 @@ msgstr "Nr. 8"
 #: src/game.c:117 src/game.c:152
 #, c-format
 msgid "Loading game %d... "
-msgstr "Spiel %d wird geladen..."
+msgstr "Spiel %d wird geladen... "
 
 #: src/game.c:226
 #, c-format
@@ -297,8 +303,8 @@ msgstr "Der Spieler der anfängt ist ^{%ls^}."
 #, c-format
 msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
 msgstr ""
-"Geben Sie die Anzahl der Spieler [^{1^}-^{%d^}] ein oder ^{<W>^} um ein Spiel\n"
-"fortzusetzen: "
+"Geben Sie die Anzahl der Spieler [^{1^}-^{%d^}] ein\n"
+"oder ^{<W>^} um ein Spiel fortzusetzen: "
 
 #. TRANSLATORS: This string specifies the keycodes used to continue a
 #. game; these must NOT contain any numeric digit from 1 to 9.  The
@@ -314,8 +320,8 @@ msgstr "Ww"
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr ""
-"Geben Sie die Spielnummer [^{1^}-^{9^}] ein oder ^{<STRG><C>^} um\n"
-"abzubrechen: "
+"Geben Sie die Spielnummer [^{1^}-^{9^}] ein\n"
+"oder ^{<STRG><C>^} um abzubrechen: "
 
 #: src/game.c:406
 #, c-format
@@ -460,7 +466,7 @@ msgid ""
 "Ownership\n"
 "(%%)"
 msgstr ""
-"Besitzanteil\n"
+"Besitz\n"
 "(%%)"
 
 #. TRANSLATORS: "Holdings" is a two-line column label
@@ -521,25 +527,25 @@ msgstr ""
 #, c-format
 msgctxt "label"
 msgid "Total value:   "
-msgstr "Gesamtwert:    "
+msgstr "Gesamtwert:  "
 
 #: src/game.c:800 src/exch.c:322
 #, c-format
 msgctxt "label"
 msgid "Current cash:  "
-msgstr "Bargeld:       "
+msgstr "Bargeld:     "
 
 #: src/game.c:807 src/exch.c:330
 #, c-format
 msgctxt "label"
 msgid "Current debt:  "
-msgstr "Schulden:      "
+msgstr "Schulden:    "
 
 #: src/game.c:813 src/exch.c:335
 #, c-format
 msgctxt "label"
 msgid "Interest rate: "
-msgstr "Zinssatz:      "
+msgstr "Zinssatz:    "
 
 #: src/move.c:239 src/exch.c:182
 #, c-format
@@ -554,7 +560,7 @@ msgstr "^{<2>^} Bankrott erklären"
 #: src/move.c:243
 #, c-format
 msgid "^{<3>^} Save and end the game"
-msgstr "{<3>^} Abspeichern und Spiel beenden"
+msgstr "^{<3>^} Abspeichern und Spiel beenden"
 
 #: src/move.c:245
 #, c-format
@@ -618,7 +624,7 @@ msgstr "%ls wurde von der Interstellaren Handelsbank für bankrott erklärt."
 #: src/move.c:687
 #, c-format
 msgid "%ls has declared bankruptcy."
-msgstr "%ls hat Bankrott erklärt"
+msgstr "%ls hat Bankrott erklärt."
 
 #: src/move.c:755
 #, c-format
@@ -640,13 +646,13 @@ msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
 "Please note the following transactions:\n"
 msgstr ""
-"^{%ls^} wurde gerade verschmolzen mit ^{%ls^}.\n"
+"^{%ls^} wurde gerade fusioniert mit ^{%ls^}.\n"
 "Bitte beachten Sie die folgenden Transaktionen:\n"
 
 #: src/move.c:821
 #, c-format
 msgid "  Company Merger  "
-msgstr "  Firmenverschmelzung  "
+msgstr "  Firmenfusionierung  "
 
 #. TRANSLATORS: "Old stock" refers to the company that has
 #. just ceased existence due to a merger.
@@ -810,7 +816,9 @@ msgctxt "subtitle"
 msgid ""
 "Shares\n"
 "issued"
-msgstr "Ausgegeb.Aktien"
+msgstr ""
+"Ausgegeb.\n"
+"Aktien"
 
 #: src/exch.c:184
 #, c-format
@@ -820,7 +828,7 @@ msgstr "^{<2>^} Karte der Galaxie anzeigen"
 #: src/exch.c:186
 #, c-format
 msgid "^{<3>^} Visit the Trading Bank"
-msgstr "^{<3>^}  Die Handelsbank aufsuchen"
+msgstr "^{<3>^} Die Handelsbank aufsuchen"
 
 #: src/exch.c:188
 #, c-format
@@ -845,7 +853,7 @@ msgstr "Auswahl eigeben [^[Firmenbuchstabe^]/^{1^}-^{4^}]: "
 #, c-format
 msgctxt "label"
 msgid "Credit limit:  "
-msgstr "Kreditlimit:   "
+msgstr "Kreditlimit: "
 
 #. TRANSLATORS: The "Borrow money", "Repay debt" and "Exit
 #. from the Bank" menu options must all be the same length
@@ -854,17 +862,17 @@ msgstr "Kreditlimit:   "
 #: src/exch.c:364
 #, c-format
 msgid "^{<1>^} Borrow money      "
-msgstr "^{<1>^} Geld leihen         "
+msgstr "^{<1>^} Geld leihen        "
 
 #: src/exch.c:366
 #, c-format
 msgid "^{<2>^} Repay debt        "
-msgstr "^{<2>^} Kredit zurückzahlen "
+msgstr "^{<2>^} Kredit zurückzahlen"
 
 #: src/exch.c:368
 #, c-format
 msgid "^{<3>^} Exit from the Bank"
-msgstr "^{<3>^} Die Bank verlassen  "
+msgstr "^{<3>^} Die Bank verlassen "
 
 #: src/exch.c:371
 #, c-format
@@ -966,7 +974,7 @@ msgstr "Rendite:             "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current holdings: "
-msgstr "Derzeitiger Anteil:  "
+msgstr "Akt. Anteil:  "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
@@ -974,13 +982,13 @@ msgstr "Derzeitiger Anteil:  "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
-msgstr "Prozentualer Anteil: "
+msgstr "Prozent. Anteil: "
 
 #: src/exch.c:636
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
-msgstr "Derzeitiges Bargeld: "
+msgstr "Akt. Bargeld:    "
 
 #: src/exch.c:647
 #, c-format
@@ -995,7 +1003,7 @@ msgstr "^{<2>^} Aktien der Firma verkaufen"
 #: src/exch.c:651
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Firma bitten, mehr Aktien auszugeben"
+msgstr "^{<3>^} Ausgabe weiterer Aktien erbitten"
 
 #: src/exch.c:653
 #, c-format
@@ -1298,17 +1306,17 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
-"^BStar Traders^N ist ein einfaches Spiel über instellaren Handel. Das Ziel des\n"
+"^BStar Traders^N ist  ein  einfaches  Spiel um  instellaren Handel. Das Ziel des\n"
 "Spieles  ist  das Anhäufen des grösstmöglichen Reichtums. Dies wird erreicht\n"
 "durch  das  Aufbauen interstellarer Handelsrouten, ihrer Erweiterung und dem\n"
-"Kauf von  Aktien  der Firmen, die sei kontrollieren. Aktien steigen im Wert,\n"
+"Kauf von  Aktien  der Firmen, die sie kontrollieren. Aktien steigen im Wert,\n"
 "wenn sich die Tätigkeit  der Firma  erweitert.  Ausserdem  erhöht sich damit\n"
 "auch die  prozentuale Dividende. Die Spieler können  sich ausserdem Geld von\n"
 "der  Interstellaren  Handelsbank  leihen,  um  weitere Akteinkäufe zu finan-\n"
 "zieren.\n"
 "\n"
-"Die Karte der Galaxie  wird dargetellt durch ein ^B~x^N x ^B~y^N Raster. Ein\n"
-"typischer Teil von ihr könnte so aussehen:\n"
+"Die  Karte der  Galaxie wird  dargetellt durch ein ^B~x^N x ^B~y^N Raster. Ein typi-\n"
+"scher Teil von ihr könnte so aussehen:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N steht für ^Bleeren Raum^N,\n"
@@ -1335,10 +1343,9 @@ msgid ""
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
 "Der Computer wählt zufällig ^B~m^N Züge (bezeichnet mit ^k~1^N bis ^k~M^N)  trägt  sie auf\n"
-"der  Karte  ein. Um eine der hervorgehobenen Positionen auszuwählen, drücken\n"
+"der Karte  ein.  Um eine der hervorgehobenen Positionen auszuwählen, drücken\n"
 "Sie  den  entsprechenden  Buchstaben.  Einige der Züge auf der Karte könnten\n"
 "z.B. so aussehen:\n"
-"\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
@@ -1346,11 +1353,10 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
-"\n"
-"Die  Wahl  einer  Position  die ^Bnicht^N  bei einem Stern ist (so wie Züge ^k~1^N, ^k~3^N oder\n"
-"^k~5^N), ertstellt einen Aussenposten, der zu keiner Firma gehört. Wenn daher auf\n"
-"der obigen Karte Zug ^k~3^N gewählt wird, würde ein ^o ~+ ^N an dieser Position erschei-\n"
-"nen.\n"
+"Die Wahl einer Position die ^Bnicht^N bei einem Stern ist (so wie Züge ^k~1^N, ^k~3^N oder\n"
+"^k~5^N), erstellt einen Aussenposten, der zu keiner Firma gehört.   Wenn daher auf\n"
+"der  obigen  Karte  Zug ^k~3^N gewählt wird, würde ein ^o + ^N an dieser Position er-\n"
+"scheinen.\n"
 
 #: src/help.c:140
 msgid ""
@@ -1370,6 +1376,21 @@ msgid ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
+"Wird andererseits eine Position in der Nähe eines Sterns (oder eines anderen\n"
+"Handelspostens)  gewählt, wird  eine  ^BFirma^N  gegründet und ihr Buchstabe er-\n"
+"scheint auf der Karte. Als Belohnung für die Firmengründung erhalten Sie die\n"
+"ersten fünf Aktien. Bis zu ^B~c^N Firmen können so gegründet werden.\n"
+"\n"
+"Wird eine Position in der Nachbarschaft einer Firma gewählt, erweitert diese\n"
+"ihr Geschäft um ein Feld. Dies erhöht den Preis ihrer Aktien und damit Ihren\n"
+"Gewinnanteil. Wäre  die Konstellation also  wie unten, würde  die Wahl von ^k~6^N\n"
+"oder ^k~8^N die Frachtroute der Firma ^B~B^N's ausweiten:\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Zug ^k~6^N oder ^k~8^N vergrössert Firma ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
 #: src/help.c:158
 msgid ""
@@ -1389,6 +1410,22 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
+"Die Wahl  von Positionen neben  Sternen erhöht den Wert Ihrer Aktien um etwa\n"
+"das fünffache einer Position nicht neben einem Stern. Daher sollte Zug ^k~6^N den\n"
+"Vorzug vor Zug ^k~8^N erhalten.\n"
+"\n"
+"        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Zug ^k~6^N ist besser als ^k~8^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
+"\n"
+"Sie  können auch  eine Firma erweitern  indem Sie eine Position neben eienm.\n"
+"Aussenposten wählen. Dieser Aussenposten wird dann von der Firma übernommen.\n"
+"Daher wird Zug ^k~1^N Firma ^B~C^N um ^Bzwei^N Felder erweitern. Ausserdem sind Aussenpos-\n"
+"ten neben einem Stern wertvoller: die  Aktien der Firma werden sich um einen\n"
+"größeren  Betrag  erhöhen als bei Aussenposten, die  nicht neben einem Stern\n"
+"liegen.\n"
 
 #: src/help.c:176
 msgid ""
@@ -1409,6 +1446,23 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
+"Wenn zwei Firmen nur durch ein  Feld auf der Karte getrennt sind, können sie\n"
+"zu einer Firma ^Bfusionieren^N, wenn man diese Position wählt (so verfügbar). So\n"
+"können z.B. auf der Karte unten  die Firmen ^B~A^N und ^B~B^N durch  Wahl von ^k~5^N fusio-\n"
+"niert  werden. Wenn  dies geschieht, übernimmt  die Firma,  deren Besitz den\n"
+"größeren  Wert hat  die andere. Hier  kann  Firma ^B~B^N die  Firma ^B~A^N übernehmen.\n"
+"Firma ^B~A^N hört auf zu  existieren, kann aber als neue Firma wieder auftauchen.\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N      Zug ^k~5^N fusioniert Firmen ^B~A^N und ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
+"\n"
+"Wenn Firmen fusionieren, bekommen die Spieler Anteile an der dominanten Fir-\n"
+"ma proportional  zu ihrem  Anteil an der alten Firma. Ausserdem erhalten Sie\n"
+"sie einen  Bargeldbonus  proportional zum  prozentualen Anteil  an der alten\n"
+"Firma.\n"
 
 #: src/help.c:195
 msgid ""
@@ -1429,32 +1483,48 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
+"Wenn Sie Ihren Zug gewählt haben, betreten Sie die ^BInterstellare Börse^N. Hier\n"
+"können Sie Aktien kaufen oder verkaufen, sich von der Handelsbank Geld lei-\n"
+"hen oder einen  Teil ihrer  Schulden (so vorhanden)  zurückzahlen. Beachten\n"
+"Sie, daß jede  Firma eine beschränkte Zahl von Aktien ausgibt -- Sie können\n"
+"nicht endlos kaufen! Sie können aber die  Firma bitten, weitere Aktien aus-\n"
+"zugeben. Je größer ihr Anteil an der Firma, desdo höher die Chance, das dem\n"
+"statt gegeben wird.\n"
+"\n"
+"Das Spiel endet normalerweise nach ^B~t^N Runden. Sie können aber das Spiel\n"
+"vorzeitig beenden, indem Sie ^K<STRG><C>^N drücken, wenn Sie nach Ihrem Zug\n"
+"gefragt werden. Ausserdem  kann ein Spieler  jederzeit  Bankrott  erklären.\n"
+"Wenn Ihre Schulden  hoch genug sind, macht das  eventuell die Bank für Sie!\n"
+"Reicht die  Zeit nicht  aus, um das Spiel  zu beenden, können Sie es abspei\n"
+"chern und später fortsetzen.\n"
+"Der ^BGewinner des Spiels^N ist die Person mit dem größten Nettowert (Summe\n"
+"aus Bargeld, Aktien und Schulden). ^HViel Glück^N, möge der Beste gewinnen!\n"
 
 #: src/help.c:215
 msgid "@ Help text, page 7\n"
-msgstr ""
+msgstr "@ Hilfe, Seite 7\n"
 
 #: src/help.c:216
 msgid "@ Help text, page 8\n"
-msgstr ""
+msgstr "@ Hilfe, Seite 8\n"
 
 #: src/help.c:217
 msgid "@ Help text, page 9\n"
-msgstr ""
+msgstr "@ Hilfe, Seite 9\n"
 
 #: src/help.c:218
 msgid "@ Help text, page 10\n"
-msgstr ""
+msgstr "@ Hilfe, Seite 10\n"
 
 #: src/help.c:270
 #, c-format
 msgid "  How to Play  "
-msgstr ""
+msgstr "  Spielanleitung  "
 
 #: src/help.c:272
 #, c-format
 msgid "Page %d of %d"
-msgstr ""
+msgstr "Seite %d von %d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
@@ -1462,7 +1532,7 @@ msgstr ""
 #: src/help.c:473 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
-msgstr ""
+msgstr "[ <LEERTASTE> drücken um fortzufahren ] "
 
 #. TRANSLATORS: The specific use of <SPACE> and
 #. <BACKSPACE> is not essential: you can use <DEL>,
@@ -1473,37 +1543,37 @@ msgstr ""
 #: src/help.c:480
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
-msgstr ""
+msgstr " [ <LEERTASTE> für nächste, <RÜCKSCHRITT> für vorherige Seite ] "
 
 #: src/intf.c:110
 #, c-format
 msgid "%s: string has incorrect format: `%s'"
-msgstr ""
+msgstr "%s: Die Zeichenkette hat ein falsches Format: „%s“"
 
 #: src/intf.c:126
 #, c-format
 msgid "%s: character has illegal width: `%lc'"
-msgstr ""
+msgstr "%s: Das Zeichen hat eine unzulässige Breite: „%lc“"
 
 #: src/intf.c:434
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
-msgstr ""
+msgstr "Das Terminal ist zu klein (Mindestgröße ist %d x %d)"
 
 #: src/intf.c:610
 #, c-format
 msgid "Star Traders"
-msgstr ""
+msgstr "Star Traders"
 
 #: src/intf.c:1265
 #, c-format
 msgid "mkchstr_conv: NUL"
-msgstr ""
+msgstr "mkchstr_conv: NULL"
 
 #: src/intf.c:1568
 #, c-format
 msgid "mkchstr: `%s'"
-msgstr ""
+msgstr "mkchstr: „%s“"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
 #. default value into the input string, if entered as the very first
@@ -1513,12 +1583,12 @@ msgstr ""
 #: src/intf.c:2020
 msgctxt "input|DefaultValue"
 msgid "=;"
-msgstr ""
+msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
 msgid "gettxline: illegal character in string: `%ls'"
-msgstr ""
+msgstr "gettxline: unzulässiges Zeichen in Zeichenkette „%ls“"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
 #. "input|No" contain the keycodes used to determine whether a
@@ -1527,12 +1597,12 @@ msgstr ""
 #: src/intf.c:2952
 msgctxt "input|Yes"
 msgid "Yy"
-msgstr ""
+msgstr "Jj"
 
 #: src/intf.c:2954
 msgctxt "input|No"
 msgid "Nn"
-msgstr ""
+msgstr "Nn"
 
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
@@ -1540,93 +1610,93 @@ msgstr ""
 #: src/intf.c:3005
 msgctxt "answer"
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: src/intf.c:3007
 msgctxt "answer"
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: src/utils.c:199 src/utils.c:220
 #, c-format
 msgid "%s: "
-msgstr ""
+msgstr "%s: "
 
 #: src/utils.c:225
 msgid ": "
-msgstr ""
+msgstr ": "
 
 #: src/utils.c:238
 #, c-format
 msgid "out of memory"
-msgstr ""
+msgstr "Kein frier Speicer mehr vorhanden"
 
 #: src/utils.c:571
 #, c-format
 msgid "xmbstowcs: `%s'"
-msgstr ""
+msgstr "xmbstowcs: „%s“"
 
 #: src/utils.c:611
 #, c-format
 msgid "xwcrtomb: NUL"
-msgstr ""
+msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:616
 #, c-format
 msgid "xwcrtomb: `%lc'"
-msgstr ""
+msgstr "xwcrtomb: „%lc“"
 
 #: lib/getopt.c:547 lib/getopt.c:576
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr ""
+msgstr "%s: Option „%s“ ist mehrdeutig; möglich wären:"
 
 #: lib/getopt.c:624 lib/getopt.c:628
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr ""
+msgstr "%s: Option „--%s“ akzeptiert keine Argumente\n"
 
 #: lib/getopt.c:637 lib/getopt.c:642
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr ""
+msgstr "%s: Option „%c%s“ akzeptiert keine Argumente\n"
 
 #: lib/getopt.c:685 lib/getopt.c:704
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
-msgstr ""
+msgstr "%s: Option „--%s“ erfordert ein Argumente\n"
 
 #: lib/getopt.c:742 lib/getopt.c:745
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
-msgstr ""
+msgstr "%s: unbekannte Option „--%s“\n"
 
 #: lib/getopt.c:753 lib/getopt.c:756
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
-msgstr ""
+msgstr "%s: unbekannte Option „%c%s“\n"
 
 #: lib/getopt.c:805 lib/getopt.c:808
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
-msgstr ""
+msgstr "%s: ungültige Option -- „%c“\n"
 
 #: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr ""
+msgstr "%s: die Option erfordert ein Argument -- „%c“\n"
 
 #: lib/getopt.c:934 lib/getopt.c:950
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
-msgstr ""
+msgstr "%s: Option „-W %s“ ist mehrdeutig\n"
 
 #: lib/getopt.c:974 lib/getopt.c:992
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr ""
+msgstr "%s: Option „-W %s“ akzeptiert keine Argumente\n"
 
 #: lib/getopt.c:1013 lib/getopt.c:1031
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
-msgstr ""
+msgstr "%s: Option „-W %s“ erfordert ein Argument\n"
