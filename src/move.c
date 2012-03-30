@@ -236,6 +236,10 @@ selection_t get_move (void)
 	box(curwin, 0, 0);
 
 	left(curwin, 2, 2, attr_normal, attr_keycode, 0, 1,
+	     /* TRANSLATORS: Each label may be up to 37 characters wide
+		(for <1> and <2>) or 38 characters wide (for <3> and
+		<CTRL><C>).  The sequences "^{" and "^}" change the
+		character rendition (attributes) and take up no space. */
 	     _("^{<1>^} Display stock portfolio"));
 	left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
 	     _("^{<2>^} Declare bankruptcy"));
@@ -246,6 +250,11 @@ selection_t get_move (void)
 
 	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
 	      attr_choice, 1,
+	      /* TRANSLATORS: The maximum column width is 38 characters,
+		 including the trailing space.  The sequences "^{", "^}",
+		 "^[" and "^]" do not take up any room.  "%lc" takes up
+		 either one or two columns, depending on the appropriate
+		 "output|GameMoves" string in the current PO file. */
 	      _("Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
 	      (wint_t) PRINTABLE_GAME_MOVE(0),
 	      (wint_t) PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));

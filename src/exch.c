@@ -181,6 +181,8 @@ void exchange_stock (void)
 	left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
 	     _("^{<1>^} Display stock portfolio"));
 	left(curwin, 4, 2, attr_normal, attr_keycode, 0, 1,
+	     /* TRANSLATORS: Each label may be up to 37 characters wide
+		(for <1> and <2>) or 38 characters wide (for <3> and <4>). */
 	     _("^{<2>^} Display galaxy map"));
 	left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
 	     _("^{<3>^} Visit the Trading Bank"));
@@ -644,6 +646,8 @@ void trade_shares (int num, bool *bid_used)
     newtxwin(7, WIN_COLS - 4, 14, WCENTER, true, attr_normal_window);
 
     left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
+	     /* TRANSLATORS: Each label may be up to 35 characters wide
+		(for <1> and <2>) or 36 characters wide (for <3> and <4>). */
 	 _("^{<1>^} Buy stock from company"));
     left(curwin, 4, 2, attr_normal, attr_keycode, 0, 1,
 	 _("^{<2>^} Sell stock back to company"));
