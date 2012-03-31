@@ -18,12 +18,26 @@ at http://www.zap.org.au/services/svn/.
 Version 7.4 (not yet released)
 ------------------------------
 
-@@@ Revised game algorithms: negative returns now allowed.
-@@@ configure now warns if NcursesW not found.
-@@@ Updated Russian translation; thanks to Vladimir B. Tsarkov and Pavel Maryanov.
-@@@ Finish translation; thanks to Jorma Karvonen.
-@@@ French translation; thanks to Frédéric Marchal.
-@@@ German translation; thanks to Philipp Thomas.
+For the  first time since  the CP/M-80 version  of Star Traders,  the game
+algorithms  have  been carefully  reviewed  and  revised.  In  particular,
+companies may now have negative returns, making players lose money on such
+shares.  This  may encourage  players to use  the "Sell shares"  option at
+appropriate times...   In addition, changes  in share prices,  returns and
+bank interest  rates have  been made much  "smoother", less prone  to wild
+variations.  These  new algorithms were  first modelled using  Gnuplot and
+Perl before being implemented in C.
+
+The "configure" script now prints  a prominent warning if a wide-character
+version of Curses,  such as NcursesW, is not  available when compiling the
+game.  It  is a warning and not  an error as single-byte  locales (such as
+US-ASCII and ISO8859-1)  do not require NcursesW, even  if the compilation
+environment itself is a multibyte one (such as UTF-8).
+
+The Russian translation has been  updated, with thanks to Vladimir Tsarkov
+and Pavel Maryanov.  Translations for French, German and Finnish have been
+added (in that order), with thanks to Frédéric Marchal, Philipp Thomas and
+Jorma  Karvonen.  Special thanks  also to  the Translation  Project, which
+brings free (open-source) software developers and translators together.
 
 
 Version 7.3 (16th March, 2012)
