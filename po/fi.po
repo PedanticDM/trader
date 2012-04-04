@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-31 10:55+1100\n"
-"PO-Revision-Date: 2012-03-31 14:31+1100\n"
+"PO-Revision-Date: 2012-04-04 17:20+1000\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -104,7 +104,7 @@ msgid ""
 "      --max-turn=NUM   set the number of turns to NUM\n"
 "\n"
 msgstr ""
-"Options:\n"
+"Valitsimet:\n"
 "  -V, --version        tulosta versiotiedot ja poistu\n"
 "  -h, --help           näytä tämä opaste ja poistu\n"
 "      --no-color       älä käytä väriä tekstin näyttämiseen\n"
@@ -479,7 +479,7 @@ msgid ""
 "Holdings\n"
 "(shares)"
 msgstr ""
-"Omistusosuudet\n"
+"Omistusosa\n"
 "(osakkeet)"
 
 #. TRANSLATORS: "Return" is a two-line column label in
@@ -946,7 +946,7 @@ msgstr "  Osakekantasiirto yrityksessä %ls  "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares issued:   "
-msgstr "Myydyt osakkeet:      "
+msgstr "Myydyt osakkeet: "
 
 #. TRANSLATORS: "Shares left" is the number of shares that are
 #. left to be purchased in the current company.
@@ -954,7 +954,7 @@ msgstr "Myydyt osakkeet:      "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares left:     "
-msgstr "Jäljellä olevat osakkeet: "
+msgstr "Loput osakkeet:  "
 
 #. TRANSLATORS: "Price per share" is the cost of each share in
 #. the current company.
@@ -962,14 +962,14 @@ msgstr "Jäljellä olevat osakkeet: "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Price per share: "
-msgstr "Hinta per osake:      "
+msgstr "Hinta per osake: "
 
 #. TRANSLATORS: "Return" is the share return as a percentage.
 #: src/exch.c:613
 #, c-format
 msgctxt "label|Stock A"
 msgid "Return:          "
-msgstr "Tuotto:               "
+msgstr "Tuotto:          "
 
 #. TRANSLATORS: "Current holdings" is the number of shares the
 #. current player owns in this particular company.
@@ -983,7 +983,7 @@ msgstr "Tuotto:               "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current holdings: "
-msgstr "Nykyinen omistusosuus: "
+msgstr "Nykyomistusosuus: "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
@@ -1009,12 +1009,12 @@ msgstr "^{<1>^} Osta osakekanta yritykseltä"
 #: src/exch.c:653
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
-msgstr "^{<2>^} Myy osakekanta takaisin yritykselle"
+msgstr "^{<2>^} Myy osakekanta taas yritykselle"
 
 #: src/exch.c:655
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Pyydä yritystä myymään lisää osakkeita"
+msgstr "^{<3>^} Pyydä lisäosakkeita yritykseltä"
 
 #: src/exch.c:657
 #, c-format
@@ -1358,7 +1358,7 @@ msgstr ""
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Siirtoa ^k~1^N to ^k~5^N näytetty.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Siirtoa ^k~1^N kohteeseen ^k~5^N näytetty.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
@@ -1432,9 +1432,9 @@ msgstr ""
 "\n"
 "Voit  myös laajentaa  mitä  tahansa yritystä  valitsemalla sijainnit  niiden\n"
 "etuvartion  vierestä. Yritys  nielee sellaiset  etuvartiot.  Siten  siirto ^k~1^N\n"
-"laajentaa Yritystä ^k~C^N  ^Btwo^N neliöllä.  Bonuksena  tähtien viereiset etuvartiot\n"
-"ovat arvokkaampia: yrityksen osakkeen hinta nousee suuremmalla summalla kuin\n"
-"se nousisi niillä etuvartioilla, jotka eivät ole tähtien vieressä.\n"
+"laajentaa Yritystä ^k~C^N ^Bkahdella^N neliöllä.  Bonuksena tähtien viereiset etuvar-\n"
+"tiot ovat arvokkaampia: yrityksen osakkeen hinta nousee suuremmalla summalla\n"
+"kuin se nousisi niillä etuvartioilla, jotka eivät ole tähtien vieressä.\n"
 
 #: src/help.c:176
 msgid ""
@@ -1555,7 +1555,7 @@ msgstr "[ Paina <VÄLIYÖNTIÄ> jatkaaksesi ] "
 #: src/help.c:484
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
-msgstr "[ Paina <VÄLILYÖNTIÄ> jatkaaksesi tai <PALUUNÄPPÄINTÄ> siirtyäksesi edelliselle sivulle ] "
+msgstr "[ Paina <VÄLILYÖNTIÄ> jatkaaksesi tai <←> siirtyäksesi edelliselle sivulle ] "
 
 #: src/intf.c:110
 #, c-format
@@ -1609,12 +1609,12 @@ msgstr "gettxline: virheellinen merkki merkkijonossa: ”%ls”"
 #: src/intf.c:2952
 msgctxt "input|Yes"
 msgid "Yy"
-msgstr "YyKk"
+msgstr "Kk"
 
 #: src/intf.c:2954
 msgctxt "input|No"
 msgid "Nn"
-msgstr "NnEe"
+msgstr "Ee"
 
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
