@@ -1,15 +1,21 @@
-# Finnish translation for trader.
-# Copyright © 2012 John Zaitseff
-# Copyright © 2012 Free Software Foundation, Inc.
+# *                                                                       *
+# *                 Finnish Translations for Star Traders                 *
+# *                   Copyright (C) 2012, John Zaitseff                   *
+# *          Copyright (C) 2012, Free Software Foundation, Inc.           *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
-# Jorma Karvonen <karvonen.jorma@gmail.com>, 2012.
+#
+# Contributors:
+#   Jorma Karvonen <karvonen.jorma@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-27 10:37+1100\n"
-"PO-Revision-Date: 2012-03-30 07:45+0200\n"
+"PO-Revision-Date: 2012-04-04 09:53+1100\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -64,8 +70,8 @@ msgstr ""
 "takaisin rahaa, tarkoituksena tulla varakkaimmaksi pelaajaksi (voittaja).\n"
 "\n"
 "Tämä ohjelma on vapaa ohjelmisto, jota jaetaan GNU General Public License-\n"
-"lisenssin, versio 3 tai myöhäisempi ehtojen alaisena.  Voit vapaasti\n"
-"muokata ja/tai jakaa sitä edelleen tiettyjen ehtojen mukaisesti.  Tällä ohjelmalla\n"
+"lisenssin, versio 3 tai myöhäisempi ehtojen alaisena.  Voit vapaasti muokata\n"
+"ja/tai jakaa sitä edelleen tiettyjen ehtojen mukaisesti.  Tällä ohjelmalla\n"
 "EI OLE TAKUUTA, lain sallimassa laajuudessa; katso yksityiskohdat lisenssistä.\n"
 
 #: src/trader.c:308
@@ -97,7 +103,7 @@ msgid ""
 "      --max-turn=NUM   set the number of turns to NUM\n"
 "\n"
 msgstr ""
-"Options:\n"
+"Valitsimet:\n"
 "  -V, --version        tulosta versiotiedot ja poistu\n"
 "  -h, --help           näytä tämä opaste ja poistu\n"
 "      --no-color       älä käytä väriä tekstin näyttämiseen\n"
@@ -125,8 +131,9 @@ msgstr ""
 #, c-format
 msgid "Report bugs to %s <%s>.\n"
 msgstr ""
-"Ilmoita vioista (englanniksi) osoitteeseen %s <%s>.\n"
-"Ilmoita käännösvirheistä osoitteeseen <translation-team-fi@lists.sourceforge.net>.\n"
+"Ilmoita vioista (englanniksi) osoitteeseen %s\n"
+"<%s>.  Ilmoita käännösvirheistä osoitteeseen\n"
+"<translation-team-fi@lists.sourceforge.net>.\n"
 
 #. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
@@ -138,7 +145,8 @@ msgstr ""
 msgid "Report bugs to <%s>.\n"
 msgstr ""
 "Ilmoita vioista (englanniksi) osoitteeseen <%s>.\n"
-"Ilmoita käännösvirheistä osoitteeseen <translation-team-fi@lists.sourceforge.net>.\n"
+"Ilmoita käännösvirheistä osoitteeseen\n"
+"<translation-team-fi@lists.sourceforge.net>.\n"
 
 #. TRANSLATORS: The first %s is for packagers and may be
 #. something like "Debian".
@@ -147,7 +155,8 @@ msgstr ""
 msgid "Report %s bugs to <%s>.\n"
 msgstr ""
 "Ilmoita %s-vioista (englanniksi) osoitteeseen <%s>.\n"
-"Ilmoita käännösvirheistä osoitteeseen <translation-team-fi@lists.sourceforge.net>.\n"
+"Ilmoita käännösvirheistä osoitteeseen\n"
+"<translation-team-fi@lists.sourceforge.net>.\n"
 
 #: src/trader.c:349
 #, c-format
@@ -318,7 +327,7 @@ msgstr "Kirjoita nimesi: "
 #: src/game.c:425
 #, c-format
 msgid "Do you need any instructions? [^{Y^}/^{N^}] "
-msgstr "Tarvitsetko lisäohjeita? [^{Y^}^{K^}/^{N^}^{E^}] "
+msgstr "Tarvitsetko lisäohjeita? [^{K^}/^{E^}] "
 
 #: src/game.c:443
 #, c-format
@@ -333,7 +342,7 @@ msgstr "Pelaaja %d: "
 #: src/game.c:529
 #, c-format
 msgid "Does any player need instructions? [^{Y^}/^{N^}] "
-msgstr "Tarvitseeko kukaan pelaaja ohjeita? [^{Y^}/^{N^}] "
+msgstr "Tarvitseeko kukaan pelaaja ohjeita? [^{K^}/^{E^}] "
 
 #: src/game.c:563
 #, c-format
@@ -468,7 +477,7 @@ msgid ""
 "Holdings\n"
 "(shares)"
 msgstr ""
-"Omistusosuudet\n"
+"Omistusosa\n"
 "(osakkeet)"
 
 #. TRANSLATORS: "Return" is a two-line column label in
@@ -514,19 +523,19 @@ msgstr ""
 #, c-format
 msgctxt "label"
 msgid "Total value:   "
-msgstr "Kokonaisarvo:  "
+msgstr "Kokonaisarvo:   "
 
 #: src/game.c:800 src/exch.c:322
 #, c-format
 msgctxt "label"
 msgid "Current cash:  "
-msgstr "Käteiskassa:   "
+msgstr "Käteiskassa:    "
 
 #: src/game.c:807 src/exch.c:330
 #, c-format
 msgctxt "label"
 msgid "Current debt:  "
-msgstr "Velat:         "
+msgstr "Velat:          "
 
 #: src/game.c:813 src/exch.c:335
 #, c-format
@@ -589,7 +598,7 @@ msgstr "^{<CTRL><C>^} (Poistu pelistä)"
 #: src/move.c:352
 #, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
-msgstr "Oletko varma? [^{Y^}^{K^}/^{N^}^{E^}] "
+msgstr "Oletko varma? [^{K^}/^{E^}] "
 
 #: src/move.c:369 src/move.c:447
 #, c-format
@@ -660,7 +669,7 @@ msgstr "Vanha osakekanta: "
 #, c-format
 msgctxt "label"
 msgid "New Stock: "
-msgstr "Uusi osakekanta: "
+msgstr "Uusi osakekanta:  "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
 #. each player after two companies merge.  %ls is the currency
@@ -747,7 +756,7 @@ msgstr "Maksettu summa per osake: "
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
-msgstr "Vanha osakearvo:       "
+msgstr "Vanha osakearvo:          "
 
 #: src/move.c:1188 src/move.c:1223 src/exch.c:319
 #, c-format
@@ -840,7 +849,7 @@ msgstr "Kirjoita valinta [^[Yrityskirjain^]/^{1^}-^{4^}]: "
 #, c-format
 msgctxt "label"
 msgid "Credit limit:  "
-msgstr "Luottoraja:    "
+msgstr "Luottoraja:     "
 
 #. TRANSLATORS: The "Borrow money", "Repay debt" and "Exit
 #. from the Bank" menu options must all be the same length
@@ -849,12 +858,12 @@ msgstr "Luottoraja:    "
 #: src/exch.c:364
 #, c-format
 msgid "^{<1>^} Borrow money      "
-msgstr "^{<1>^} Lainarahat        "
+msgstr "^{<1>^} Lainarahat     "
 
 #: src/exch.c:366
 #, c-format
 msgid "^{<2>^} Repay debt        "
-msgstr "^{<2>^} Maksetut velat    "
+msgstr "^{<2>^} Maksetut velat "
 
 #: src/exch.c:368
 #, c-format
@@ -879,7 +888,7 @@ msgstr "Pankki ei enää lainaa sinulle rahaa."
 #: src/exch.c:445
 #, c-format
 msgid "How much do you wish to borrow? "
-msgstr "Kuinka paljon haluat lainata?"
+msgstr "Kuinka paljon haluat lainata? "
 
 #: src/exch.c:477
 #, c-format
@@ -904,7 +913,7 @@ msgstr "Sinulla ei ole käteistä, jolla voisit maksaa velan!"
 #: src/exch.c:503
 #, c-format
 msgid "How much do you wish to repay? "
-msgstr "Kuinka paljon haluat maksaa?"
+msgstr "Kuinka paljon haluat maksaa? "
 
 #. TRANSLATORS: %ls represents the company name.
 #: src/exch.c:579
@@ -924,7 +933,7 @@ msgstr "  Osakekantasiirto yrityksessä %ls  "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares issued:   "
-msgstr "Myydyt osakkeet:  "
+msgstr "Myydyt osakkeet:   "
 
 #. TRANSLATORS: "Shares left" is the number of shares that are
 #. left to be purchased in the current company.
@@ -932,7 +941,7 @@ msgstr "Myydyt osakkeet:  "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares left:     "
-msgstr "Jäljellä olevat osakkeet: "
+msgstr "Loput osakkeet:  "
 
 #. TRANSLATORS: "Price per share" is the cost of each share in
 #. the current company.
@@ -961,7 +970,7 @@ msgstr "Tuotto:          "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current holdings: "
-msgstr "Nykyinen omistusosuus: "
+msgstr "Nykyomistusosuus: "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
@@ -975,7 +984,7 @@ msgstr "Omistusprosentti: "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
-msgstr "Käteiskassa:     "
+msgstr "Käteiskassa:      "
 
 #: src/exch.c:647
 #, c-format
@@ -985,12 +994,12 @@ msgstr "^{<1>^} Osta osakekanta yritykseltä"
 #: src/exch.c:649
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
-msgstr "^{<2>^} Myy osakekanta takaisin yritykselle"
+msgstr "^{<2>^} Myy osakekanta taas yritykselle"
 
 #: src/exch.c:651
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Pyydä yritystä myymään lisää osakkeita"
+msgstr "^{<3>^} Pyydä lisäosakkeita yritykseltä"
 
 #: src/exch.c:653
 #, c-format
@@ -1058,7 +1067,7 @@ msgstr[1] "Voit myydä ^{%'ld^} osaketta."
 #: src/exch.c:770
 #, c-format
 msgid "How many shares do you wish to sell? "
-msgstr "Kuinka monta osaketta haluat myydä?"
+msgstr "Kuinka monta osaketta haluat myydä? "
 
 #: src/exch.c:798
 #, c-format
@@ -1293,16 +1302,15 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
-"^BTähtikauppiaat^N  on yksinkertainen tähtienvälisen kaupan peli.  Pelin\n"
-"tarkoitus on kerätä suurin mahdollinen omaisuus.  Tämä tehdään luomalla\n"
-"tähtienvälisiä laivausväyliä, laajentamalla niitä ja ostamalla osakkeita\n"
-"niitä valvovista yrityksistä.  Osakkeet nousevat arvossa kun yritystoiminnot\n"
-"laajenevat.  Sen lisäksi jokaisen osakkeen tuotto (prosentteina) myös\n"
-"vaihtuu.  Pelaajat voivat myös lainata Tähtienvälisestä Kauppapankista\n"
-"lisäostojen rahoittamiseksi osakepörssissä.\n"
+"^BTähtikauppiaat^N on yksinkertainen  tähtienvälisen kaupan peli.  Pelin tarkoi-\n"
+"tus on kerätä suurin mahdollinen omaisuus.  Tämä tehdään luomalla tähtienvä-\n"
+"lisiä laivausväyliä, laajentamalla niitä ja ostamalla osakkeita niitä valvo-\n"
+"vista yrityksistä.   Osakkeet nousevat arvossa  kun yritystoiminnot laajene-\n"
+"vat.   Sen lisäksi  jokaisen  osakkeen tuotto  (prosentteina) myös  vaihtuu.\n"
+"Pelaajat  voivat myös  lainata  Tähtienvälisestä Kauppapankista  lisäostojen\n"
+"rahoittamiseksi osakepörssissä.\n"
 "\n"
-"Rasteri ^B~x^N x ^B~y^N edustaa galaksikarttaa.  Sen tyypillinen lohko\n"
-"voi olla:\n"
+"Rasteri ^B~x^N x ^B~y^N edustaa galaksikarttaa.  Sen tyypillinen lohko voi olla:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N edustaa ^Btyhjää avaruutta^N,\n"
@@ -1328,21 +1336,21 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
-"Tietokone valitsee ^B~m^N siirtoa  (nimiöity ^k~1^N ... ^k~M^N) satunnaisesti, ja sijoittaa\n"
-"ne kartalle.  Minkä tahansa korostetun sijainnin valitsemiseksi, paina kirjainta.\n"
-"Esimerkiksi, jotkut siirrot kartalla voivat olla:\n"
+"Tietokone valitsee ^B~m^N siirtoa (nimiöity ^k~1^N ... ^k~M^N) satunnaisesti, ja sijoittaa\n"
+"ne kartalle.  Minkä tahansa  korostetun sijainnin valitsemiseksi, paina kir-\n"
+"jainta.  Esimerkiksi, jotkut siirrot kartalla voivat olla:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Siirtoa ^k~1^N to ^k~5^N näytetty.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Siirtoa ^k~1^N kohteeseen ^k~5^N näytetty.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
 "\n"
-"Sellaisen sijainnin valitseminen, joka ^Bei^N ole tähden vieressä (sellaiset siirrot kuten\n"
-"^k~1^N, ^k~3^N tai ^k~5^N) asettaa ^Betuvartion^N,  mikä ei kuulu millekään\n"
-"yritykselle.  Siten jos siirto ^k~3^N valitaan siirtokartalta, ^o ~+ ^N sijoitettaisiin\n"
+"Sellaisen  sijainnin valitseminen,  joka ^Bei^N  ole tähden  vieressä (sellaiset\n"
+"siirrot kuten ^k~1^N, ^k~3^N tai ^k~5^N)  asettaa ^Betuvartion^N,  mikä ei kuulu millekään yri-\n"
+"tykselle.  Siten  jos siirto ^k~3^N valitaan  siirtokartalta, ^o ~+ ^N sijoitettaisiin\n"
 "tuohon sijaintiin.\n"
 
 #: src/help.c:140
@@ -1363,15 +1371,15 @@ msgid ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
-"Jos toisaalta valitaan sijainti tähden (tai toisen etuvartion) vierestä, niin\n"
-"^Byritys^N muodostettaisiin ja sen kirjain ilmaantuisi kartalle.\n"
-"Palkkiona yrityksen luomisesta sinulle myönnetään viisi ensimmäistä osaketta.\n"
-"Aina ^B~c^N yritystä voidaan luoda tällä tavalla.\n"
+"Jos  toisaalta valitaan  sijainti tähden  (tai toisen  etuvartion) vierestä,\n"
+"niin ^Byritys^N muodostettaisiin ja sen kirjain ilmaantuisi kartalle.  Palkkiona\n"
+"yrityksen luomisesta sinulle myönnetään  viisi ensimmäistä osaketta.  Aina ^B~c^N\n"
+"yritystä voidaan luoda tällä tavalla.\n"
 "\n"
 "Jos valitaan sijainti olemassa olevan yrityksen vierestä, yritys laajentaisi\n"
-"toimintaansa yhdellä neliöllä.  Tämä kasvattaa sen osakkeiden hintaa ja\n"
-"siten tuottoasi.  Siten,  jos alla oleva kartta näytetään,  valitsemalla ^k~6^N\n"
-"tai ^k~8^N kasvatat Yrityksen ^B~B^N laivausväylää:\n"
+"toimintaansa  yhdellä neliöllä.   Tämä  kasvattaa sen  osakkeiden hintaa  ja\n"
+"siten tuottoasi.  Siten, jos alla oleva kartta näytetään, valitsemalla ^k~6^N tai\n"
+"^k~8^N kasvatat Yrityksen ^B~B^N laivausväylää:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1397,8 +1405,8 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Sijaintien valitseminen tähtien vierestä kasvattaa osakekantasi arvoa viisi\n"
-"kertaa niin paljon kuin laajentaminen, joka ei ole tähden vieressä.  Siten\n"
+"Sijaintien valitseminen tähtien  vierestä kasvattaa osakekantasi arvoa viisi\n"
+"kertaa niin paljon  kuin laajentaminen, joka ei ole  tähden vieressä.  Siten\n"
 "siirto ^k~6^N olisi etusijainen siirtoon ^k~8^N verrattuna.\n"
 "\n"
 "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1407,12 +1415,11 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 "\n"
-"Voit myös laajentaa mitä tahansa yritystä valitsemalla sijainnit niiden\n"
-"etuvartion vierestä. Yritys nielee sellaiset etuvartiot.  Siten siirto\n"
-"^k~1^N  laajentaa Yritystä ^B~C^N ^Btwo^N neliöllä.  Bonuksena tähtien viereiset\n"
-"etuvartiot ovat arvokkaampia:  yrityksen osakkeen hinta nousee suuremmalla\n"
-"summalla kuin se nousisi niillä etuvartioilla, jotka eivät ole tähtien\n"
-"vieressä.\n"
+"Voit  myös laajentaa  mitä  tahansa yritystä  valitsemalla sijainnit  niiden\n"
+"etuvartion  vierestä. Yritys  nielee sellaiset  etuvartiot.  Siten  siirto ^k~1^N\n"
+"laajentaa Yritystä ^k~C^N  ^Bkahdella^N neliöllä.  Bonuksena  tähtien viereiset etuvartiot\n"
+"ovat arvokkaampia: yrityksen osakkeen hinta nousee suuremmalla summalla kuin\n"
+"se nousisi niillä etuvartioilla, jotka eivät ole tähtien vieressä.\n"
 
 #: src/help.c:176
 msgid ""
@@ -1433,12 +1440,12 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
-"Jos vain neliö erottaa kaksi yritystä kartalla, ne voidaan ^Byhdistää^N yhdeksi\n"
-"yrityksesksi valitsemalla tuo sijainti (jos se on käytettävissä).\n"
-"Esimerkiksi alla olevalla kartalla yritykset ^B~A^N ja ^B~B^N  voidaan yhdistää\n"
-"valitsemalla ^k~5^N. Kun tämä tapahtuu, varakkaampi yritys ottaa haltuunsa\n"
-"toisen.  Tässä Yritys ^B~B^N saattaisi otta haltuunsa Yrityksen ^B~A^N. Yritys ^B~A^N\n"
-"lakkaa olemasta, vaikka se voi ilmaantua kokonaan uutena yrityksenä myöhemmin.\n"
+"Jos vain neliö erottaa kaksi  yritystä kartalla, ne voidaan ^Byhdistää^N yhdeksi\n"
+"yrityksesksi  valitsemalla tuo sijainti  (jos se on käytettävissä).  Esimer-\n"
+"kiksi alla olevalla kartalla  yritykset ^B~A^N ja ^B~B^N voidaan yhdistää valitsemalla\n"
+"^k~5^N.   Kun tämä tapahtuu,  varakkaampi yritys  ottaa haltuunsa  toisen.  Tässä\n"
+"Yritys ^B~B^N  saattaisi otta haltuunsa  Yrityksen ^B~A^N.  Yritys ^B~A^N  lakkaa olemasta,\n"
+"vaikka se voi ilmaantua kokonaan uutena yrityksenä myöhemmin.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
@@ -1446,9 +1453,9 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
 "\n"
-"Kun yritykset yhdistyvät, pelaajille annetaan osakkeita hallitsevassa\n"
-"yrityksessä suhteessa summaan, jonka he omistivat vanhassa yrityksessä.\n"
-"Myös käteisbonus maksetaan, suhteessa vanhan yrityksen omistusprosenttiin.\n"
+"Kun yritykset  yhdistyvät, pelaajille annetaan  osakkeita hallitsevassa yri-\n"
+"tyksessä suhteessa  summaan, jonka he omistivat  vanhassa yrityksessä.  Myös\n"
+"käteisbonus maksetaan, suhteessa vanhan yrityksen omistusprosenttiin.\n"
 
 #: src/help.c:195
 msgid ""
@@ -1469,23 +1476,22 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
-"Heti kun valitset siirtosi, siirryt ^BTähtien väliseen osakepörssiin^N.  Täällä\n"
-"voit ostaa osakkeita,  myydä niitä, lainata Kauppapankilta tai maksaa\n"
-"joitakin velkojasi (jos sellaisia on).  Huomaa, että jokainen yritys myy\n"
-"rajoitetun määrän osakkeita -- et voi jatka ostamista loputtomiin!  Voit\n"
-"kuitenkin pyytää lisää osakkeita myytäväksi.  Sinulla on paremmat\n"
-"onnistumismahdollisuudet, jos omistat laajemman osuuden yrityksestä.\n"
+"Heti kun valitset siirtosi,  siirryt ^BTähtien väliseen osakepörssiin^N.  Täällä\n"
+"voit ostaa osakkeita, myydä  niitä, lainata Kauppapankilta tai maksaa joita-\n"
+"kin velkojasi (jos  sellaisia on).  Huomaa, että jokainen  yritys myy rajoi-\n"
+"tetun määrän  osakkeita -- et voi jatka  ostamista  loputtomiin!   Voit kui-\n"
+"tenkin pyytää  lisää osakkeita myytäväksi.  Sinulla  on paremmat onnistumis-\n"
+"mahdollisuudet, jos omistat laajemman osuuden yrityksestä.\n"
 "\n"
-"Peli tavallisesti loppuu ^B~t^N kierroksen jälkeen. Voit kuitenkin lopettaa\n"
-"pelin aikaisemmin painamalla ^K<CTRL><C>^N,  kun sinua pyydetään valitsemaan\n"
-"siirto. Yksittäiset pelaajat voivat myös hakea itsensä konkurssiin milloin\n"
-"tahansa. Jos velkasi ovat kyllin suuria, pankki voi tehdä tämän sinulle!\n"
-"Jos et päätä peliäsi käytettävissä olevana aikana, voit tallentaa pelisi ja\n"
+"Peli  tavallisesti loppuu  ^B~t^N kierroksen  jälkeen.  Voit  kuitenkin lopettaa\n"
+"pelin  aikaisemmin  painamalla ^K<CTRL><C>^N,  kun  sinua pyydetään  valitsemaan\n"
+"siirto. Yksittäiset  pelaajat voivat myös hakea  itsensä konkurssiin milloin\n"
+"tahansa.  Jos  velkasi ovat kyllin  suuria, pankki voi tehdä  tämän sinulle!\n"
+"Jos et päätä peliäsi käytettävissä  olevana aikana, voit tallentaa pelisi ja\n"
 "jatkaa myöhemmin.\n"
 "\n"
-"\n"
-"^BPelin voittaja^N  on henkilö, jolla on suurin nettovarallisuus (yhteensä\n"
-"käteisarvo, osakekanta ja velat). ^HHyvää onnea^N ja paras pelaaja voittakoon!\n"
+"^BPelin  voittaja^N  on  henkilö,  jolla on  suurin  nettovarallisuus  (yhteensä\n"
+"käteisarvo, osakekanta ja velat).  ^HHyvää onnea^N ja paras pelaaja voittakoon!\n"
 
 #: src/help.c:215
 msgid "@ Help text, page 7\n"
@@ -1530,7 +1536,7 @@ msgstr "[ Paina <VÄLIYÖNTIÄ> jatkaaksesi ] "
 #: src/help.c:480
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
-msgstr "[ Paina <VÄLILYÖNTIÄ> jatkaaksesi tai <PALUUNÄPPÄINTÄ> siirtyäksesi edelliselle sivulle ] "
+msgstr "[ Paina <VÄLILYÖNTIÄ> jatkaaksesi tai <←> siirtyäksesi edelliselle sivulle ] "
 
 #: src/intf.c:110
 #, c-format
@@ -1584,12 +1590,12 @@ msgstr "gettxline: virheellinen merkki merkkijonossa: ”%ls”"
 #: src/intf.c:2952
 msgctxt "input|Yes"
 msgid "Yy"
-msgstr "YyKk"
+msgstr "Kk"
 
 #: src/intf.c:2954
 msgctxt "input|No"
 msgid "Nn"
-msgstr "NnEe"
+msgstr "Ee"
 
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
