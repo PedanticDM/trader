@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-31 10:55+1100\n"
+"POT-Creation-Date: 2012-04-14 12:18+1000\n"
 "PO-Revision-Date: 2012-04-04 17:20+1000\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -1298,7 +1298,17 @@ msgstr ""
 #. that would translate to just one character (or maybe two) in the
 #. output text).
 #.
-#: src/help.c:103
+#. Formatting the help text is probably the most complicated and tedious
+#. part of translating Star Traders.  The author and maintainer of this
+#. game is more than happy to help you with this task: if you are able
+#. to provide a translation, even if it is not formatted correctly, the
+#. maintainer will perform the necessary adjustments for word-wrapping
+#. and justification.  In addition, remember that you have up to 10
+#. pages in which to display your help text: the translation does not
+#. need to correspond exactly to the original text.  This text will not
+#. be changing any time soon!
+#.
+#: src/help.c:113
 msgid ""
 "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
 "game is to amass  the greatest amount  of wealth  possible.  This is done by\n"
@@ -1333,7 +1343,7 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
-#: src/help.c:122
+#: src/help.c:132
 msgid ""
 "The computer selects ^B~m^N moves  (labeled ^k~1^N to ^k~M^N)  at random, and places these\n"
 "on the map.  To select  any of the highlighted positions, press that letter.\n"
@@ -1368,7 +1378,7 @@ msgstr ""
 "tykselle.  Siten  jos siirto ^k~3^N valitaan  siirtokartalta, ^o ~+ ^N sijoitettaisiin\n"
 "tuohon sijaintiin.\n"
 
-#: src/help.c:140
+#: src/help.c:150
 msgid ""
 "If, on the other hand, a position  next to  a star  (or another outpost)  is\n"
 "selected, a ^Bcompany^N would be formed  and its letter would appear on the map.\n"
@@ -1402,7 +1412,7 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
-#: src/help.c:158
+#: src/help.c:168
 msgid ""
 "Selecting positions next to stars increases the value of your stock by about\n"
 "five times as much  as an extension  not next to a star.  Thus move ^k~6^N should\n"
@@ -1436,7 +1446,7 @@ msgstr ""
 "tiot ovat arvokkaampia: yrityksen osakkeen hinta nousee suuremmalla summalla\n"
 "kuin se nousisi niillä etuvartioilla, jotka eivät ole tähtien vieressä.\n"
 
-#: src/help.c:176
+#: src/help.c:186
 msgid ""
 "If two companies  are separated on the map by only one square, then they can\n"
 "be ^Bmerged^N into  one company  by selecting that position (if available).  For\n"
@@ -1472,7 +1482,7 @@ msgstr ""
 "tyksessä suhteessa  summaan, jonka he omistivat  vanhassa yrityksessä.  Myös\n"
 "käteisbonus maksetaan, suhteessa vanhan yrityksen omistusprosenttiin.\n"
 
-#: src/help.c:195
+#: src/help.c:205
 msgid ""
 "Once you select your move, you enter  the ^BInterstellar Stock Exchange^N.  Here\n"
 "you may  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
@@ -1508,23 +1518,23 @@ msgstr ""
 "^BPelin  voittaja^N  on  henkilö,  jolla on  suurin  nettovarallisuus  (yhteensä\n"
 "käteisarvo, osakekanta ja velat).  ^HHyvää onnea^N ja paras pelaaja voittakoon!\n"
 
-#: src/help.c:215
+#: src/help.c:225
 msgid "@ Help text, page 7\n"
 msgstr "@ Opasteteksti, sivu 7\n"
 
-#: src/help.c:216
+#: src/help.c:226
 msgid "@ Help text, page 8\n"
 msgstr "@ Opasteteksti, sivu 8\n"
 
-#: src/help.c:217
+#: src/help.c:227
 msgid "@ Help text, page 9\n"
 msgstr "@ Opasteteksti, sivu 9\n"
 
-#: src/help.c:218
+#: src/help.c:228
 msgid "@ Help text, page 10\n"
 msgstr "@ Opasteteksti, sivu 10\n"
 
-#: src/help.c:270
+#: src/help.c:280
 #, c-format
 msgid "  How to Play  "
 msgstr "  Kuinka pelata  "
@@ -1533,7 +1543,7 @@ msgstr "  Kuinka pelata  "
 #. the second is the number of pages your help text takes
 #. (6, in English).  You can replace the second %d with a
 #. fixed word, if you like.
-#: src/help.c:276
+#: src/help.c:286
 #, c-format
 msgid "Page %d of %d"
 msgstr "Sivu %d / %d"
@@ -1541,7 +1551,7 @@ msgstr "Sivu %d / %d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:477 src/intf.c:3035
+#: src/help.c:487 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Paina <VÄLIYÖNTIÄ> jatkaaksesi ] "
@@ -1552,7 +1562,7 @@ msgstr "[ Paina <VÄLIYÖNTIÄ> jatkaaksesi ] "
 #. <BACKSPACE>, and almost any other key instead of
 #. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
 #. <CTRL><G> or <CTRL><\>).
-#: src/help.c:484
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Paina <VÄLILYÖNTIÄ> jatkaaksesi tai <←> siirtyäksesi edelliselle sivulle ] "

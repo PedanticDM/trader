@@ -99,6 +99,16 @@ static const char *help_text[HELP_TEXT_PAGES] = {
     the galaxy map, use something like "^k~1^N" (a six-character sequence
     that would translate to just one character (or maybe two) in the
     output text).
+
+    Formatting the help text is probably the most complicated and tedious
+    part of translating Star Traders.  The author and maintainer of this
+    game is more than happy to help you with this task: if you are able
+    to provide a translation, even if it is not formatted correctly, the
+    maintainer will perform the necessary adjustments for word-wrapping
+    and justification.  In addition, remember that you have up to 10
+    pages in which to display your help text: the translation does not
+    need to correspond exactly to the original text.  This text will not
+    be changing any time soon!
   */
     N_( ""
 	"^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
