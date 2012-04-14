@@ -1,14 +1,21 @@
-# Translation of trader to Croatian.
-# Copyright (C) 2012 John Zaitseff
+# *************************************************************************
+# *                                                                       *
+# *                Croatian Translations for Star Traders                 *
+# *                   Copyright (C) 2012, John Zaitseff                   *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
-# Tomislav Krznar <tomislav.krznar@gmail.com>, 2012.
+#
+# Contributors:
+#   Tomislav Krznar <tomislav.krznar@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-03-31 10:55+1100\n"
-"PO-Revision-Date: 2012-04-14 02:19+0200\n"
+"PO-Revision-Date: 2012-04-14 12:08+1000\n"
 "Last-Translator: Tomislav Krznar <tomislav.krznar@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
@@ -82,7 +89,9 @@ msgstr "Uporaba: %s [OPCIJA ...] [IGRA]\n"
 msgid ""
 "Play Star Traders, a simple game of interstellar trading.\n"
 "\n"
-msgstr "Igrajte Star Traders, jednostavnu igru međuzvjezdanog trgovanja.\n"
+msgstr ""
+"Igrajte Star Traders, jednostavnu igru međuzvjezdanog trgovanja.\n"
+"\n"
 
 #: src/trader.c:315
 #, c-format
@@ -108,8 +117,8 @@ msgid ""
 "playing that game.  If GAME is not specified, start a new game.\n"
 "\n"
 msgstr ""
-"Ako je IGRA navedena kao broj između 1 i 9, učitaj i nastavi\n"
-"igranje te igre.  Ako IGRA nije navedena, pokreni novu igru.\n"
+"Ako je IGRA navedena kao broj između 1 i 9, učitaj i nastavi igranje te\n"
+"igre.  Ako IGRA nije navedena, pokreni novu igru.\n"
 "\n"
 
 #. TRANSLATORS: The first %s is the proper name of the package
@@ -595,7 +604,7 @@ msgstr "^{<CTRL><C>^} (Izađi iz igre)"
 #: src/move.c:361
 #, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
-msgstr "Jeste li sigurni? [^{Y^}/^{N^}] "
+msgstr "Jeste li sigurni? [^{D^}/^{N^}] "
 
 #: src/move.c:378 src/move.c:456
 #, c-format
