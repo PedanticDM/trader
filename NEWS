@@ -34,10 +34,11 @@ US-ASCII and ISO8859-1)  do not require NcursesW, even  if the compilation
 environment itself is a multibyte one (such as UTF-8).
 
 The Russian translation has been  updated, with thanks to Vladimir Tsarkov
-and Pavel Maryanov.  Translations for French, German and Finnish have been
-added (in that order), with thanks to Frédéric Marchal, Philipp Thomas and
-Jorma  Karvonen.  Special thanks  also to  the Translation  Project, which
-brings free (open-source) software developers and translators together.
+and Pavel Maryanov.  Translations for French, German, Finnish and Croatian
+have been added (in that  order), with thanks to Frédéric Marchal, Philipp
+Thomas,  Jorma Karvonen and  Tomislav Krznar.  Special thanks also  to the
+Translation Project,  which brings free  (open-source) software developers
+and translators together.
 
 
 Version 7.3 (16th March, 2012)
