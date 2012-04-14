@@ -83,7 +83,7 @@ void exchange_stock (void)
 	return;
     }
 
-    newtxwin(17, WIN_COLS, 1, WCENTER, false, 0);
+    newtxwin(16, WIN_COLS, 1, WCENTER, false, 0);
     w = getmaxx(curwin);
 
     while (selection != SEL_EXIT) {
@@ -176,7 +176,7 @@ void exchange_stock (void)
 	wrefresh(curwin);
 
 	// Show menu of choices for the player
-	newtxwin(6, WIN_COLS, 18, WCENTER, true, attr_normal_window);
+	newtxwin(7, WIN_COLS, 17, WCENTER, true, attr_normal_window);
 
 	left(curwin, 3, 2, attr_normal, attr_keycode, 0, 1,
 	     _("^{<1>^} Display stock portfolio"));
