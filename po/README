@@ -7,3 +7,12 @@
 
 This directory,  po, contains translations  for text strings used  in Star
 Traders.  The GNU Gettext project is used for this purpose.
+
+
+**************************************************************************
+*                      Upstream Translation Project                      *
+**************************************************************************
+
+This version of the directory contains files received from the Translation
+Project (www.translationproject.org).   These are  merged into  the master
+branch as appropriate.
