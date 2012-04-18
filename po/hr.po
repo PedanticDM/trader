@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.4-pre1\n"
+"Project-Id-Version: trader 7.4-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-04-14 14:02+1000\n"
-"PO-Revision-Date: 2012-04-14 12:08+1000\n"
+"PO-Revision-Date: 2012-04-19 07:51+1000\n"
 "Last-Translator: Tomislav Krznar <tomislav.krznar@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
@@ -27,22 +27,22 @@ msgstr ""
 #: src/trader.c:235
 #, c-format
 msgid "%s: invalid value for --max-turn: `%s'\n"
-msgstr "%s: neispravna vrijednost za --max-turn: `%s'\n"
+msgstr "%s: neispravna vrijednost za --max-turn: „%s”\n"
 
 #: src/trader.c:251
 #, c-format
 msgid "%s: invalid operand `%s'\n"
-msgstr "%s: neispravan operand `%s'\n"
+msgstr "%s: neispravan operand „%s”\n"
 
 #: src/trader.c:260
 #, c-format
 msgid "%s: invalid game number `%s'\n"
-msgstr "%s: neispravan broj igre `%s'\n"
+msgstr "%s: neispravan broj igre „%s”\n"
 
 #: src/trader.c:269
 #, c-format
 msgid "%s: extra operand `%s'\n"
-msgstr "%s: operand viška `%s'\n"
+msgstr "%s: operand viška „%s”\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
 #. name of the author.  The IPA pronunciation in this comment is in
@@ -65,7 +65,7 @@ msgstr ""
 "Star Traders (%s) %s\n"
 "Copyright (C) %s, John Zaitseff.\n"
 "\n"
-"\"Star Traders\" (Međuzvjezdani trgovci) je jednostavna igra međuzvjezadnog\n"
+"„Star Traders” (Međuzvjezdani trgovci) je jednostavna igra međuzvjezadnog\n"
 "trgovanja, gdje je cilj igre stvarati tvrtke, kupovati i prodavati dionice\n"
 "te posuđivati i vraćati novac kako biste postali najbogatiji igrač (pobjednik).\n"
 "\n"
@@ -77,7 +77,7 @@ msgstr ""
 #: src/trader.c:308
 #, c-format
 msgid "%s: Try `%s --help' for more information.\n"
-msgstr "%s: Pokušajte `%s --help' za više informacija.\n"
+msgstr "%s: Pokušajte „%s --help” za više informacija.\n"
 
 #: src/trader.c:311
 #, c-format
@@ -166,35 +166,35 @@ msgstr "Star Traders početna stranica: <%s>.\n"
 #. more than 24 characters (column positions, to be precise) long.
 #: src/globals.c:47
 msgid "Altair Starways"
-msgstr "Altair Starways"
+msgstr "Altair zvjezdani putovi"
 
 #: src/globals.c:48
 msgid "Betelgeuse, Ltd"
-msgstr "Betelgeuse, Ltd"
+msgstr "Betelgeuse d.o.o."
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
-msgstr "Capella Freight Co"
+msgstr "Capella usluge prijevoza"
 
 #: src/globals.c:50
 msgid "Denebola Shippers"
-msgstr "Denebola Shippers"
+msgstr "Denebola brodovi"
 
 #: src/globals.c:51
 msgid "Eridani Expediters"
-msgstr "Eridani Expediters"
+msgstr "Eridani istraživanje"
 
 #: src/globals.c:52
 msgid "Fornax Express"
-msgstr "Fornax Express"
+msgstr "Fornax express"
 
 #: src/globals.c:53
 msgid "Gemeni Inc"
-msgstr "Gemeni Inc"
+msgstr "Gemeni d.d."
 
 #: src/globals.c:54
 msgid "Hercules and Co"
-msgstr "Hercules and Co"
+msgstr "Heraklo i prijatelji"
 
 #. TRANSLATORS: This string specifies the keycodes (keyboard input
 #. codes) used to enter the Stock Transaction window for each
@@ -217,7 +217,7 @@ msgstr "ABCDEFGH|input|Companies"
 #. the vertical line.
 #: src/globals.c:80
 msgid "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
-msgstr "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
+msgstr "ABCDEFGHIJKLMNOPRSTU|input|GameMoves"
 
 #. TRANSLATORS: This string is used to display the galaxy map to
 #. screen.  There must be exactly 11 characters before the ASCII
@@ -238,7 +238,7 @@ msgstr ".+*ABCDEFGH|output|MapVals"
 #. Double-width characters ARE handled correctly.
 #: src/globals.c:103
 msgid "abcdefghijklmnopqrst|output|GameMoves"
-msgstr "abcdefghijklmnopqrst|output|GameMoves"
+msgstr "abcdefghijklmnoprstu|output|GameMoves"
 
 #. TRANSLATORS: The ordinal strings "1st" to "8th" are used in the
 #. Game Winner dialog box at the end of the game.  If ordinals depend
@@ -620,7 +620,7 @@ msgstr "  Stečajni upravitelj  "
 #: src/move.c:688
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
-msgstr "Međuzvjezdana trgovinska banka je proglasila bankrot igrača %ls."
+msgstr "Međuzvjezdana trgovačka banka je proglasila bankrot igrača %ls."
 
 #. TRANSLATORS: %ls is the player's name.
 #: src/move.c:696
@@ -724,7 +724,7 @@ msgid ""
 "\n"
 "^{All assets have been taken to repay outstanding loans.^}"
 msgstr ""
-"Međuzvjezdana trgovinska banka je proglasila bankrot tvrtke %ls.\n"
+"Međuzvjezdana trgovačka banka je proglasila bankrot tvrtke %ls.\n"
 "\n"
 "^{Sva imovina je oduzeta zbog otplate tekućih pozajmica.^}"
 
@@ -736,7 +736,7 @@ msgid ""
 "\n"
 "^{The Bank has agreed to pay stock holders ^}%.2f%%^{ of the share value on each share owned.^}"
 msgstr ""
-"Međuzvjezdana trgovinska banka je proglasila bankrot tvrtke %ls.\n"
+"Međuzvjezdana trgovačka banka je proglasila bankrot tvrtke %ls.\n"
 "\n"
 "^{Banka je pristala isplatiti vlasnicima dionica ^}%.2f%%^{ vrijednosti svake dionice.^}"
 
@@ -837,7 +837,7 @@ msgstr "^{<3>^} Posjetite trgovačku banku"
 #: src/exch.c:190
 #, c-format
 msgid "^{<4>^} Exit the Stock Exchange"
-msgstr "^{<4>^} Izađite iz burze"
+msgstr "^{<4>^} Izađite iz Burze"
 
 #: src/exch.c:193
 #, c-format
@@ -1009,12 +1009,12 @@ msgstr "^{<2>^} Prodajte dionicu natrag tvrtci"
 #: src/exch.c:655
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Zatražite izdavanje novih dionica tvrtke"
+msgstr "^{<3>^} Zatražite izdavanje dionica"
 
 #: src/exch.c:657
 #, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
-msgstr "^{<4>^} Izađite u burzu"
+msgstr "^{<4>^} Izađite u Burzu"
 
 #: src/exch.c:660
 #, c-format
@@ -1128,12 +1128,12 @@ msgstr "%s: nedostaje polje u retku %d"
 #: src/fileio.c:60
 #, c-format
 msgid "%s: illegal field on line %d: `%s'"
-msgstr "%s: nedozvoljeno polje u retku %d: `%s'"
+msgstr "%s: nedozvoljeno polje u retku %d: „%s”"
 
 #: src/fileio.c:64
 #, c-format
 msgid "%s: illegal value on line %d: `%s'"
-msgstr "%s: nedozvoljena vrijednost u retku %d: `%s'"
+msgstr "%s: nedozvoljena vrijednost u retku %d: „%s”"
 
 #: src/fileio.c:96 src/fileio.c:135 src/fileio.c:393
 #, c-format
@@ -1327,6 +1327,22 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
+"^B„Star Traders”^N (Međuzvjezdani trgovci) je jednostavna igra međuzvjezdanog\n"
+"trgovanja. Cilj igre je skupiti što je moguće veće bogatstvo. Ovo činite\n"
+"stvaranjem međuzvjezdanih trgovačkih putova, njihovim proširivanjem i\n"
+"kupovanjem udjela u tvrtkama koje upravljaju njima. Vrijednost dionica se\n"
+"povećava širenjem poslovanja tvrtki, kao i njihova dobit (izražena u\n"
+"postocima). Igrači također mogu posuđivati novce od Međuzvjezdane trgovačke\n"
+"banke za financiranje kupovanja dodatnih dionica na Burzi.\n"
+"\n"
+"Karta galaksije prikazana je mrežom ^B~x^N x ^B~y^N. Uobičajeni prikaz dijela\n"
+"galaksije može biti:\n"
+"\n"
+"        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N označava ^Bprazan prostor^N,\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N označava ^Bzvijezdu^N.\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
 #: src/help.c:132
 msgid ""
@@ -1346,6 +1362,21 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
+"Računalo slučajno bira ^B~m^N poteza (označenih s ^k~1^N do ^k~M^N) i postavlja ih na\n"
+"kartu.  Za odabir jednog od označenih položaja pritisnite to slovo.\n"
+"Na primjer, neki potezi na karti mogu biti:\n"
+"\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Prikazani su potezi ^k~1^N do ^k~5^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
+"\n"
+"\n"
+"Odabir položaja koji ^Bnije^N uz zvijezdu (npr. položaji ^k~1^N, ^k~3^N ili ^k~5^N) će\n"
+"postaviti ^Bizvidnicu^N, koja ne pripada nijednoj tvrtci.  Tako će odabir poteza\n"
+"^k~3^N na gornjoj karti postaviti ^o ~+ ^N na taj položaj.\n"
 
 #: src/help.c:150
 msgid ""
@@ -1365,6 +1396,21 @@ msgid ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
+"S druge strane, ako je odabran položaj pokraj zvijezde (ili druge izvidnice),\n"
+"osnovat će se ^Btvrtka^N i njezino će se početno slovo pojaviti na karti.\n"
+"Kao nagradu za osnivanje tvrtke dobit ćete prvih pet njezinih dionica.\n"
+"Na ovaj način možete osnovati ^B~c^N tvrtki.\n"
+"\n"
+"Ako je odabran položaj pokraj postojeće tvrtke, ona će proširiti svoje\n"
+"poslovanje za jedno polje. ovo povećava cijenu njezinih dionica i vaše\n"
+"prihode. Na primjer, ako je mapa kao što je prikazana dolje, biranjem ^k~6^N\n"
+"ili ^k~8^N će se povećati trgovački put tvrtke ^B~B^N:\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Potez ^k~6^N ili ^k~8^N povećava tvrtku ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
 #: src/help.c:168
 msgid ""
@@ -1384,6 +1430,21 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
+"Odabir položaja pokraj zvijezde povećava vrijednost vaših dionica oko pet\n"
+"puta više nego širenje u polje koje nije pokraj zvijezde. Zato se potez ^k~6^N\n"
+"preferira u odnosu na potez ^k~8^N.\n"
+"\n"
+"        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Potez ^k~6^N se preferira\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N        u odnosu na ^k~8^N.\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
+"\n"
+"Također možete proširiti tvrtku biranjem položaja pokraj izvidnica. Takve\n"
+"izvidnice će se spojiti u tvrtku. Tako će potez ^k~1^N proširiti tvrtku ^B~C^N\n"
+"za ^Bdva^N polja. Kao bonus, izvidnice pokraj zvijezda su još vrijednije:\n"
+"vrijednost dionice tvrtke će se više povećati nego u slučaju izvidnica koje\n"
+"se ne nalaze uz zvijezde.\n"
 
 #: src/help.c:186
 msgid ""
@@ -1404,6 +1465,22 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
+"Ako su dvije tvrtke na karti odvojene samo jednim poljem, mogu se ^Bspojiti^N\n"
+"u jednu tvrtku odabirom tog položaja (ako je dostupan). Na primjer, na donjoj\n"
+"karti, tvrtke ^B~A^N i ^B~B^N se mogu spojiti odabirom ^k~5^N. Kad se to\n"
+"dogodi, tvrtka koja ima veću vrijednost preuzima tvrtku manje vrijednosti.\n"
+"Ovdje tvrtka ^B~B^N može preuzeti tvrtku ^B~A^N. Tvrtka ^B~A^N prestaje postojati,\n"
+"iako se poslije može pojaviti kao potpuno nova tvrtka.\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N        Potez ^k~5^N spaja tvrtke ^B~A^N i ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
+"\n"
+"Nakon spajanja tvrtki, igrači dobivaju broj dionica dominantne tvrtke\n"
+"proporcionalan udjelu u staroj tvrtci. Također se isplaćuje gotovinski bonus\n"
+"proporcionalan postotku udjela u staroj tvrtci.\n"
 
 #: src/help.c:205
 msgid ""
@@ -1424,22 +1501,38 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
+"Kada odaberete svoj potez, ulazite u ^BMeđuzvjezdanu burzu^N. Ovdje možete\n"
+"kupovati dionice, prodavati ih, posuđivati novce od Trgovačke banke ili\n"
+"otplatiti dio vašeg duga (ako postoji). Primijetite da svaka tvrtka izdaje\n"
+"ograničen broj dionica -- ne možete kupovati cijelo vrijeme! Međutim, možete\n"
+"tražiti od tvrtke izdavanje novih dionica. Ako imate veću količinu udjela\n"
+"u tvrtci, veće su vam šanse za uspjeh.\n"
+"\n"
+"Igra uobičajeno završava nakon ^B~t^N poteza. Međutim, možete završiti ranije\n"
+"pritiskom ^K<CTRL><C>^N umjesto odabira poteza. Također pojedini igrači mogu\n"
+"objaviti bankrot u svakom trenutku. Ako je vaš dug prevelik, Banka to može\n"
+"učiniti umjesto vas! Ako ste prezauzeti za dovršavanje igre, možete je\n"
+"spremiti i nastaviti kasnije.\n"
+"\n"
+"\n"
+"^BPobjednik igre^N je osoba koja ima najveću ukupnu vrijednost (ukupna\n"
+"vrijednost gotovine, dionica i duga). ^HSretno^N i neka najbolji pobijedi!\n"
 
 #: src/help.c:225
 msgid "@ Help text, page 7\n"
-msgstr ""
+msgstr "@ Tekst pomoći, stranica 7\n"
 
 #: src/help.c:226
 msgid "@ Help text, page 8\n"
-msgstr ""
+msgstr "@ Tekst pomoći, stranica 8\n"
 
 #: src/help.c:227
 msgid "@ Help text, page 9\n"
-msgstr ""
+msgstr "@ Tekst pomoći, stranica 9\n"
 
 #: src/help.c:228
 msgid "@ Help text, page 10\n"
-msgstr ""
+msgstr "@ Tekst pomoći, stranica 10\n"
 
 #: src/help.c:280
 #, c-format
@@ -1477,12 +1570,12 @@ msgstr "[ Pritisnite <RAZMAKNICU> za nastavak ili <BACKSPACE> za povratak ] "
 #: src/intf.c:110
 #, c-format
 msgid "%s: string has incorrect format: `%s'"
-msgstr "%s: niz znakova ima nepravilan oblik: `%s'"
+msgstr "%s: niz znakova ima nepravilan oblik: „%s”"
 
 #: src/intf.c:126
 #, c-format
 msgid "%s: character has illegal width: `%lc'"
-msgstr "%s: znak ima nedozvoljenu širinu: `%lc'"
+msgstr "%s: znak ima nedozvoljenu širinu: „%lc”"
 
 #: src/intf.c:434
 #, c-format
@@ -1502,7 +1595,7 @@ msgstr "mkchstr_conv: NUL"
 #: src/intf.c:1568
 #, c-format
 msgid "mkchstr: `%s'"
-msgstr "mkchstr: `%s'"
+msgstr "mkchstr: „%s”"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
 #. default value into the input string, if entered as the very first
@@ -1517,7 +1610,7 @@ msgstr "=;"
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
 msgid "gettxline: illegal character in string: `%ls'"
-msgstr "gettxline: nedozvoljen znak u nizu: `%ls'"
+msgstr "gettxline: nedozvoljen znak u nizu: „%ls”"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
 #. "input|No" contain the keycodes used to determine whether a
@@ -1563,7 +1656,7 @@ msgstr "nema dovoljno memorije"
 #: src/utils.c:571
 #, c-format
 msgid "xmbstowcs: `%s'"
-msgstr "xmbstowcs: `%s'"
+msgstr "xmbstowcs: „%s”"
 
 #: src/utils.c:611
 #, c-format
@@ -1573,59 +1666,59 @@ msgstr "xwcrtomb: NUL"
 #: src/utils.c:616
 #, c-format
 msgid "xwcrtomb: `%lc'"
-msgstr "xwcrtomb: `%lc'"
+msgstr "xwcrtomb: „%lc”"
 
 #: lib/getopt.c:547 lib/getopt.c:576
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: opcija '%s' je višeznačna; mogućnosti:"
+msgstr "%s: opcija „%s” je višeznačna; mogućnosti:"
 
 #: lib/getopt.c:624 lib/getopt.c:628
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: opcija '--%s' ne dozvoljava argument\n"
+msgstr "%s: opcija „--%s” ne dozvoljava argument\n"
 
 #: lib/getopt.c:637 lib/getopt.c:642
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: opcija '%c%s' ne dozvoljava argument\n"
+msgstr "%s: opcija „%c%s” ne dozvoljava argument\n"
 
 #: lib/getopt.c:685 lib/getopt.c:704
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: opcija '--%s' zahtijeva argument\n"
+msgstr "%s: opcija „--%s” zahtijeva argument\n"
 
 #: lib/getopt.c:742 lib/getopt.c:745
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: neprepoznata opcija '--%s'\n"
+msgstr "%s: neprepoznata opcija „--%s”\n"
 
 #: lib/getopt.c:753 lib/getopt.c:756
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
-msgstr "%s: neprepoznata opcija '%c%s'\n"
+msgstr "%s: neprepoznata opcija „%c%s”\n"
 
 #: lib/getopt.c:805 lib/getopt.c:808
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
-msgstr "%s: neispravna opcija -- '%c'\n"
+msgstr "%s: neispravna opcija -- „%c”\n"
 
 #: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr "%s: opcija zahtijeva argument -- '%c'\n"
+msgstr "%s: opcija zahtijeva argument -- „%c”\n"
 
 #: lib/getopt.c:934 lib/getopt.c:950
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: opcija '-W %s' je višeznačna\n"
+msgstr "%s: opcija „-W %s” je višeznačna\n"
 
 #: lib/getopt.c:974 lib/getopt.c:992
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: opcija '-W %s' ne dozvoljava argument\n"
+msgstr "%s: opcija „-W %s” ne dozvoljava argument\n"
 
 #: lib/getopt.c:1013 lib/getopt.c:1031
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: opcija '-W %s' zahtijeva argument\n"
+msgstr "%s: opcija „-W %s” zahtijeva argument\n"
