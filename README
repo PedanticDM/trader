@@ -14,7 +14,8 @@ Installation
 ============
 
 Full instructions  for installing  Star Traders  are contained in the file
-INSTALL; the short version is:
+INSTALL.  Please note that that file does NOT contain generic GNU Autoconf
+instructions!  For the impatient, the short version is:
 
     ./configure
     make
