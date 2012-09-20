@@ -48,7 +48,7 @@ and installation:
     systems, these files are part of XXX-dev packages.
 
 6.  The GNU Perfect Hash Function  Generator, gperf.  This utility program
-    is required for parts of the GNU Portability Library.
+    may be required for parts of the GNU Portability Library.
 
 
 Installation
