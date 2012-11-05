@@ -15,6 +15,14 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
+Version 7.5 (not yet released)
+------------------------------
+
+Added a translation for Norwegian Bokmaal, with thanks to Johnny A. Solbu.
+Updated auxiliary files to the  latest versions available  from the Gnulib
+GNU Portability Library and the GNU Autoconf project.
+
+
 Version 7.4 (9th May, 2012)
 ---------------------------
 
