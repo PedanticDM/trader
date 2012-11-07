@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-11-05 20:12+1100\n"
-"PO-Revision-Date: 2012-11-06 21:44+1100\n"
+"POT-Creation-Date: 2012-05-09 13:57+1000\n"
+"PO-Revision-Date: 2012-11-06 16:05+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -106,7 +106,7 @@ msgid ""
 msgstr ""
 "Valg:\n"
 "  -V, --version        vis versjonsinformasjon og avslutt\n"
-"  -h, --help           vis denne hjelpen og avslutte\n"
+"  -h, --help           vis denne hjelpen og avslutt\n"
 "      --no-color       ikke bruk farger for visning av tekst\n"
 "      --max-turn=NUM   sette antall runder til NUM\n"
 "\n"
@@ -131,7 +131,10 @@ msgstr ""
 #: src/trader.c:334
 #, c-format
 msgid "Report bugs to %s <%s>.\n"
-msgstr "Rapporter feil til %s <%s>.\n"
+msgstr ""
+"Rapporter feil, på engelsk, til %s <%s>.\n"
+"Oversettelsesfeil kan rapporteres til\n"
+"<i18n-nb@lister.ping.uio.no>\n"
 
 #. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
@@ -141,7 +144,10 @@ msgstr "Rapporter feil til %s <%s>.\n"
 #: src/trader.c:341
 #, c-format
 msgid "Report bugs to <%s>.\n"
-msgstr "Rapporter feil til <%s>.\n"
+msgstr ""
+"Rapporter feil, på engelsk, til <%s>.\n"
+"Oversettelsesfeil kan rapporteres til\n"
+"<i18n-nb@lister.ping.uio.no>\n"
 
 #. TRANSLATORS: The first %s is for packagers and may be
 #. something like "Debian".
@@ -167,11 +173,11 @@ msgstr "Altair Starways"
 
 #: src/globals.c:48
 msgid "Betelgeuse, Ltd"
-msgstr "Betelgeuse, Ltd"
+msgstr "Betelgeuse, A/S"
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
-msgstr "Capella Freight Co"
+msgstr "Capella Freight A/S"
 
 #: src/globals.c:50
 msgid "Denebola Shippers"
@@ -187,7 +193,7 @@ msgstr "Fornax Express"
 
 #: src/globals.c:53
 msgid "Gemeni Inc"
-msgstr "Gemeni Inc"
+msgstr "Gemeni A/S"
 
 #: src/globals.c:54
 msgid "Hercules and Co"
@@ -295,7 +301,7 @@ msgstr "Spilleren som begynner er ^{%ls^}."
 #: src/game.c:259
 #, c-format
 msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
-msgstr "Angi antall spillere [^{1^}-^{%d^}] eller ^{<C>^} for å fortsette et spill: "
+msgstr "Angi antall spillere [^{1^}-^{%d^}] eller ^{<F>^} for å fortsette et spill: "
 
 #. TRANSLATORS: This string specifies the keycodes used to continue a
 #. game; these must NOT contain any numeric digit from 1 to 9.  The
@@ -305,7 +311,7 @@ msgstr "Angi antall spillere [^{1^}-^{%d^}] eller ^{<C>^} for å fortsette et sp
 #: src/game.c:276
 msgctxt "input|ContinueGame"
 msgid "Cc"
-msgstr "Cc"
+msgstr "Ff"
 
 #: src/game.c:341 src/move.c:399
 #, c-format
@@ -780,7 +786,7 @@ msgid ""
 "Your debt has amounted to %N!\n"
 "^{The Bank has impounded ^}%N^{ from your cash.^}"
 msgstr ""
-"Din gjeld har utgjort %N!\n"
+"Gjelden din er kommet opp i %N!\n"
 "^{Banken har beslaglagt ^}%N^{ fra kontantbeholdningen.^}"
 
 #: src/exch.c:98
@@ -974,7 +980,7 @@ msgstr "Utbytte:        "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current holdings: "
-msgstr "Nåværende aksjepost: "
+msgstr "Aksjeportefølge: "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
@@ -988,7 +994,7 @@ msgstr "Eierandel: "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
-msgstr "Nåværende kontanter: "
+msgstr "Kontanter:       "
 
 #. TRANSLATORS: Each label may be up to 35 characters wide
 #. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
@@ -1005,7 +1011,7 @@ msgstr "^{<2>^} Selg aksjer tilbake til selskap"
 #: src/exch.c:655
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Oppmode firmaet til å utstede flere aksjer"
+msgstr "^{<3>^} Be firmaet utstede flere aksjer"
 
 #: src/exch.c:657
 #, c-format
@@ -1353,8 +1359,8 @@ msgid ""
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
 "Datamaskinen velger ^B~m^N trekk  (merket ^k~1^N to ^k~M^N)  vilkårlig, og legger disse på\n"
-"kartet. Å velge  noen av de markerte stedene, trykk på bokstaven. For eksem-\n"
-"pel kan noen av trekkene på kartet være:\n"
+"kartet. Å velge  noen av de markerte stedene, trykk på bokstaven.\n"
+"Noen av trekkene på kartet kan for eksempel være:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1506,8 +1512,8 @@ msgstr ""
 "du har tilgjengelig, kan du lagre spillet og fortsette senere.\n"
 "\n"
 "\n"
-"^BVinneren av spillet^N  er den personen med størst formue  (total verdi av kon-\n"
-"tanter, aksjer og gjeld). ^HLykke til^N, må den beste vinne!\n"
+"^BVinneren av spillet^N  er den personen med størst formue  (totalverdi av\n"
+"kontanter, aksjer og gjeld). ^HLykke til^N, må den beste vinne!\n"
 
 #: src/help.c:225
 msgid "@ Help text, page 7\n"
@@ -1556,7 +1562,7 @@ msgstr "[ Trykk Linjeskift for å fortsette ] "
 #: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
-msgstr "[ Trykk Linjeskrift for å fortsette eller <BACKSPACE> for forrige side ] "
+msgstr "[ Trykk <MELLOMROM> for å fortsette eller <BACKSPACE> for forrige side ] "
 
 #: src/intf.c:110
 #, c-format
