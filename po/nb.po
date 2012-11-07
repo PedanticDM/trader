@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.4\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-05-09 13:57+1000\n"
-"PO-Revision-Date: 2012-11-06 16:05+0100\n"
+"PO-Revision-Date: 2012-11-07 20:38+1100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -133,8 +133,7 @@ msgstr ""
 msgid "Report bugs to %s <%s>.\n"
 msgstr ""
 "Rapporter feil, på engelsk, til %s <%s>.\n"
-"Oversettelsesfeil kan rapporteres til\n"
-"<i18n-nb@lister.ping.uio.no>\n"
+"Oversettelsesfeil kan rapporteres til <i18n-nb@lister.ping.uio.no>.\n"
 
 #. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
@@ -146,8 +145,7 @@ msgstr ""
 msgid "Report bugs to <%s>.\n"
 msgstr ""
 "Rapporter feil, på engelsk, til <%s>.\n"
-"Oversettelsesfeil kan rapporteres til\n"
-"<i18n-nb@lister.ping.uio.no>\n"
+"Oversettelsesfeil kan rapporteres til <i18n-nb@lister.ping.uio.no>.\n"
 
 #. TRANSLATORS: The first %s is for packagers and may be
 #. something like "Debian".
@@ -173,7 +171,7 @@ msgstr "Altair Starways"
 
 #: src/globals.c:48
 msgid "Betelgeuse, Ltd"
-msgstr "Betelgeuse, A/S"
+msgstr "Betelgeuse A/S"
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
@@ -988,7 +986,7 @@ msgstr "Aksjeportefølge: "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
-msgstr "Eierandel: "
+msgstr "Eierandel:       "
 
 #: src/exch.c:638
 #, c-format
@@ -1359,8 +1357,8 @@ msgid ""
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
 "Datamaskinen velger ^B~m^N trekk  (merket ^k~1^N to ^k~M^N)  vilkårlig, og legger disse på\n"
-"kartet. Å velge  noen av de markerte stedene, trykk på bokstaven.\n"
-"Noen av trekkene på kartet kan for eksempel være:\n"
+"kartet. Å velge  noen av  de markerte  stedene, trykk  på bokstaven. Noen av\n"
+"trekkene på kartet kan for eksempel være:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1512,7 +1510,7 @@ msgstr ""
 "du har tilgjengelig, kan du lagre spillet og fortsette senere.\n"
 "\n"
 "\n"
-"^BVinneren av spillet^N  er den personen med størst formue  (totalverdi av\n"
+"^BVinneren  av  spillet^N  er  den personen  med  størst  formue  (totalverdi av\n"
 "kontanter, aksjer og gjeld). ^HLykke til^N, må den beste vinne!\n"
 
 #: src/help.c:225
