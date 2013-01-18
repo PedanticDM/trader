@@ -52,6 +52,7 @@ sys_stat.in.h
 sys_time.in.h
 sys_types.in.h
 time.in.h
+unistd.c
 unistd.in.h
 unistr.in.h
 unitypes.in.h
@@ -63,6 +64,7 @@ wcsdup.c
 wctob.c
 wctomb-impl.h
 wctomb.c
+wctype-h.c
 wctype.in.h
 wmemcpy-impl.h
 wmemcpy.c

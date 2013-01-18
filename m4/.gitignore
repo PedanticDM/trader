@@ -5,6 +5,7 @@ codeset.m4
 config-h.m4
 configmake.m4
 extensions.m4
+extern-inline.m4
 fcntl-o.m4
 getopt.m4
 gettext.m4
