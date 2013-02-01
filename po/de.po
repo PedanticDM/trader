@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 German Translations for Star Traders                  *
-# *                   Copyright (C) 2012, John Zaitseff                   *
+# *                 Copyright (C) 2012-13, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.4\n"
+"Project-Id-Version: trader 7.5\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-05-09 07:02+1000\n"
-"PO-Revision-Date: 2012-05-09 07:07+1000\n"
+"PO-Revision-Date: 2013-02-02 10:43+1100\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"

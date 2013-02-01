@@ -1,7 +1,7 @@
 **************************************************************************
 *                                                                        *
 *              Star Traders: A Game of Interstellar Trading              *
-*                 Copyright (C) 1990-2012, John Zaitseff                 *
+*                 Copyright (C) 1990-2013, John Zaitseff                 *
 *                                                                        *
 **************************************************************************
 
@@ -102,12 +102,12 @@ You can also run configure  in a separate build-only directory tree.  This
 feature requires GNU Make and allows you to keep the source code tree from
 being modified by  the compilation process.  To use  this option, create a
 separate build directory, then run  configure.  For example, if you placed
-the Star Traders  source code tree in $HOME/src/trader-7.4,  you could run
+the Star Traders  source code tree in $HOME/src/trader-7.5,  you could run
 something like:
 
-    mkdir $HOME/build/trader-build-7.4
-    cd $HOME/build/trader-build-7.4
-    $HOME/src/trader-7.4/configure
+    mkdir $HOME/build/trader-build-7.5
+    cd $HOME/build/trader-build-7.5
+    $HOME/src/trader-7.5/configure
 
 Once again, the Autoconf manual describes these options (and many others):
 

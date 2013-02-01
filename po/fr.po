@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 French Translations for Star Traders                  *
-# *          Copyright (C) 2012, Free Software Foundation, Inc.           *
+# *         Copyright (C) 2012-13, Free Software Foundation, Inc.         *
 # *                                                                       *
 # *************************************************************************
 #
@@ -11,10 +11,10 @@
 #   Frédéric Marchal <fmarchal@perso.be>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.4\n"
+"Project-Id-Version: trader 7.5\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-05-09 07:02+1000\n"
-"PO-Revision-Date: 2012-05-09 07:05+1000\n"
+"PO-Revision-Date: 2013-02-02 10:46+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"

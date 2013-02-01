@@ -1,7 +1,7 @@
 dnl *********************************************************************
 dnl *                                                                   *
 dnl *           Star Traders: A Game of Interstellar Trading            *
-dnl *              Copyright (C) 1990-2012, John Zaitseff               *
+dnl *              Copyright (C) 1990-2013, John Zaitseff               *
 dnl *                                                                   *
 dnl *********************************************************************
 dnl
@@ -26,7 +26,7 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-AC_INIT([Star Traders], [7.4], [J.Zaitseff@zap.org.au], [trader], [http://www.zap.org.au/software/trader/])
+AC_INIT([Star Traders], [7.5], [J.Zaitseff@zap.org.au], [trader], [http://www.zap.org.au/software/trader/])
 AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 
 AC_PREREQ([2.67])
