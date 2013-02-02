@@ -1,17 +1,24 @@
-# Danish translation of trader.
-# Copyright (C) 2012 John Zaitseff
+# *************************************************************************
+# *                                                                       *
+# *                 Danish Translations for Star Traders                  *
+# *                 Copyright (C) 2012-13, John Zaitseff                  *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
-# Joe Hansen <joedalton2@yahoo.dk>, 2012.
+#
+# Contributors:
+#   Joe Hansen <joedalton2@yahoo.dk>, 2012-13.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.4\n"
+"Project-Id-Version: trader 7.5\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-05-09 13:57+1000\n"
-"PO-Revision-Date: 2012-12-31 00:00+0000\n"
+"POT-Creation-Date: 2013-01-18 18:12+1100\n"
+"PO-Revision-Date: 2013-02-02 14:26+1100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -111,8 +118,8 @@ msgid ""
 "playing that game.  If GAME is not specified, start a new game.\n"
 "\n"
 msgstr ""
-"Hvis GAME er angivet som et tal mellem 1 og 9, indlæs og fortsæt\n"
-"med at spille. Hvis GAME ikke er angivet, så start et nyt spil.\n"
+"Hvis SPIL er angivet som et tal mellem 1 og 9, indlæs og fortsæt\n"
+"med at spille. Hvis SPIL ikke er angivet, så start et nyt spil.\n"
 "\n"
 
 #. TRANSLATORS: The first %s is the proper name of the package
@@ -862,17 +869,17 @@ msgstr "Kreditbegr.:   "
 #: src/exch.c:366
 #, c-format
 msgid "^{<1>^} Borrow money      "
-msgstr "^{<1>^} Lån penge         "
+msgstr "^{<1>^} Lån penge        "
 
 #: src/exch.c:368
 #, c-format
 msgid "^{<2>^} Repay debt        "
-msgstr "^{<2>^} Tilbagebetal gæld "
+msgstr "^{<2>^} Tilbagebetal gæld"
 
 #: src/exch.c:370
 #, c-format
 msgid "^{<3>^} Exit from the Bank"
-msgstr "^{<3>^} Forlad banken     "
+msgstr "^{<3>^} Forlad banken    "
 
 #: src/exch.c:373
 #, c-format
@@ -882,7 +889,7 @@ msgstr "Indtast valg [^{1^}-^{3^}]: "
 #: src/exch.c:426
 #, c-format
 msgid "  Insufficient Credit Limit  "
-msgstr "  Kreditten er ikke tilstrækkelig "
+msgstr "  Kreditten er ikke tilstrækkelig  "
 
 #: src/exch.c:427
 #, c-format
@@ -902,7 +909,7 @@ msgstr "  Ingen gæld  "
 #: src/exch.c:480
 #, c-format
 msgid "You have no debt to repay."
-msgstr "Du har ingen gæld at tilbagebetale"
+msgstr "Du har ingen gæld at tilbagebetale."
 
 #: src/exch.c:484
 #, c-format
@@ -937,7 +944,7 @@ msgstr "  Aktietransaktion i %ls  "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares issued:   "
-msgstr "Udstedte aktier: "
+msgstr "Udstedte aktier:  "
 
 #. TRANSLATORS: "Shares left" is the number of shares that are
 #. left to be purchased in the current company.
@@ -945,7 +952,7 @@ msgstr "Udstedte aktier: "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares left:     "
-msgstr "Tilbagev. aktier "
+msgstr "Tilbagev. aktier: "
 
 #. TRANSLATORS: "Price per share" is the cost of each share in
 #. the current company.
@@ -953,14 +960,14 @@ msgstr "Tilbagev. aktier "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Price per share: "
-msgstr "Pris per aktie:  "
+msgstr "Pris per aktie:   "
 
 #. TRANSLATORS: "Return" is the share return as a percentage.
 #: src/exch.c:613
 #, c-format
 msgctxt "label|Stock A"
 msgid "Return:          "
-msgstr "Forrentning:     "
+msgstr "Forrentning:      "
 
 #. TRANSLATORS: "Current holdings" is the number of shares the
 #. current player owns in this particular company.
@@ -1093,7 +1100,7 @@ msgstr ""
 #: src/exch.c:809
 #, c-format
 msgid "  Shares Issued  "
-msgstr "  Aktier udstedt "
+msgstr "  Aktier udstedt  "
 
 #. TRANSLATORS: %ls represents the company name.
 #: src/exch.c:811
@@ -1318,20 +1325,20 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
-"^BStar Traders^N er et simpelt spil med rumhandel. Formålet i spillet er at     \n"
-"samle den størst mulige mængde af rigdom. Dette gøres ved at oprette        \n"
-"interstellare handelsruter, udvide dem og købe aktier i firmaerne der       \n"
-"kontrollerer dem. Aktier stiger i værdi efterhånden som firmaets handel     \n"
-"udvides. Derudover ændres aktiernes udbytte (som en procent) sig også.      \n"
-"Spillere kan også låne fra Den Interstellare Handelsbank for at finansiere  \n"
-"yderligere køb på aktiebørsen.\n"
+"^BStar Traders^N  er et  simpelt spil  med rumhandel. Formålet  i spillet  er at\n"
+"samle den størst mulige mængde  af rigdom. Dette gøres ved at oprette inter-\n"
+"stellare handelsruter,  udvide dem og købe aktier i firmaerne der kontrolle-\n"
+"rer dem. Aktier  stiger i værdi  efterhånden  som firmaets  handel  udvides.\n"
+"Derudover  ændres aktiernes udbytte (som en procent)  sig også. Spillere kan\n"
+"også låne fra Den Interstellare Handelsbank for at finansiere yderligere køb\n"
+"på aktiebørsen.\n"
 "\n"
-"Galaksens kort er repræsenteret ved et ^B~x^N x ^B~y^N-gitter. Et typisk afsnit kan \n"
+"Galaksens kort er repræsenteret  ved et ^B~x^N x ^B~y^N-gitter. Et typisk afsnit kan\n"
 "se således ud:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N repræsent. ^Bempty space^N,\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N repræsent. ^Bstar^N.  \n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N repræsent. ^Bstar^N.\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
@@ -1353,9 +1360,9 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
-"Computeren vælger ^B~m^N handlinger (navngivet ^k~1^N til ^k~M^N) vilkårligt, og placerer \n"
-"dem på kortet. For at vælge et af de fremhævede placeringer, så tryk på bogstavet.\n"
-"For eksempel kan nogle af handlingerne på kortet være:\n"
+"Computeren vælger ^B~m^N handlinger (navngivet ^k~1^N til ^k~M^N) vilkårligt,  og placerer\n"
+"dem på kortet. For at vælge et af de fremhævede placeringer, så tryk på bog-\n"
+"stavet. For eksempel kan nogle af handlingerne på kortet være:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1365,9 +1372,10 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
 "\n"
-"Valg af en position som ^Bikke^N er ved siden af en stjerne (såsom handlingerne ^k~1^N, ^k~3^N \n"
-"eller ^k~5^N) vil oprette en ^Bforpost^N, der ikke tilhører noget firma. Hvis handling\n"
-"^k~3^N vælges på kortet ovenfor vil en ^o ~+ ^N derfor blive placeret på den placering.\n"
+"Valg af en position som ^Bikke^N er ved siden af en stjerne  (såsom handlingerne\n"
+"^k~1^N, ^k~3^N eller ^k~5^N)  vil oprette en ^Bforpost^N,  der ikke tilhører  noget firma. Hvis\n"
+"handling 3 vælges på kortet ovenfor  vil en ^o ~+ ^N derfor blive placeret på den\n"
+"placering.\n"
 
 #: src/help.c:150
 msgid ""
@@ -1387,14 +1395,15 @@ msgid ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
-"Hvis på den anden side, en placering ved siden af en stjerne (eller en anden forpost)\n"
-"er valgt, så vil et ^Bfirma^N blive dannet og dets bogstav vil fremkomme på kortet.\n"
-"Som belønning for at oprette firmaet, modtager du de første fem aktier.\n"
-"Op til ^B~c^N firmaer kan oprettes på denne måde.\n"
+"Hvis på den anden side, en placering ved siden af en stjerne (eller en anden\n"
+"forpost) er valgt,  så vil et  ^Bfirma^N  blive dannet og dets bogstav vil frem-\n"
+"komme på kortet. Som belønning for at oprette firmaet, modtager du de første\n"
+"fem aktier. Op til ^B~c^N firmaer kan oprettes på denne måde.\n"
 "\n"
-"Hvis en placering ved siden af et eksisterende firma vælges vil firmaet udvide sine\n"
-"handlinger med et felt. Dette øger prisen for dets aktier og dermed din forrentning\n"
-"Hvis kortet var vist som nedenfor vil valg af ^k~6^N eller ^k~8^N øge<nfirmaet ^B~B^N's handelsrute:\n"
+"Hvis en placering  ved siden  af et eksisterende  firma  vælges  vil firmaet\n"
+"udvide  sine handlinger  med et felt. Dette øger prisen  for dets aktier  og\n"
+"dermed  din  forrentning. Hvis kortet  var vist  som nedenfor  vil valg af ^k~6^N\n"
+"eller ^k~8^N øge firmaet ^B~B^N handelsrute:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1420,9 +1429,10 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Valg af placeringer ved siden af stjerner øger værdien af din aktie med omkring\n"
-"fem gange så meget som en udvidelse der ligger et andet sted. Valget ^k~6^N bør\n"
-"derfor foretrækkes for ^k~8^N.\n"
+"Valg af placeringer ved siden af stjerner  øger værdien af din aktie med om-\n"
+"kring fem gange så meget som en udvidelse der ligger et andet sted. Valget ^k~6^N\n"
+"bør derfor foretrækkes for ^k~8^N.\n"
+"\n"
 "\n"
 "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1430,11 +1440,11 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 "\n"
+"\n"
 "Du kan også udvide et firma ved at vælge placeringer ved siden af forposter.\n"
-"Sådanne forposter vil blive opslugt af det firma. Handling ^k~1^N vil\n"
-"udvide firma ^B~C^N med ^Bto^N felter. Som en bonus er forposter ved stjerner\n"
-"mere værdifulde: Firmaets aktiepris vil øges mere end forposter placeret andre\n"
-"steder.\n"
+"Sådanne forposter  vil blive  opslugt  af det firma. Handling  ^k~1^N  vil udvide\n"
+"firma ^B~C^N med  ^Bto^N  felter. Som en bonus er forposter  ved stjerner mere værdi-\n"
+"fulde: Firmaets aktiepris vil øges mere end forposter placeret andre steder.\n"
 
 #: src/help.c:186
 msgid ""
@@ -1455,12 +1465,12 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
-"Hvis to firmaer er adskilt på kortet af kun et felt, så kan de ^Bfusioneres^N\n"
-"til et firma ved at vælge placeringen (hvis tilgængelig). For eksempel,\n"
-"på kortet nedenfor, kan firmaerne ^B~A^N og ^B~B^N fusioneres ved at vælge\n"
-"^k~5^N. Når dette sker overtager firmaet med den største værdi det mindre firma.\n"
-"Her kan firma ^B~B^N overtage firma ^B~A^N. Firmaet ^B~A^N ophører med at eksistere,\n"
-"selvom det kan returnere som et fuldstændig nyt firma på et senere tidspunkt.\n"
+"Hvis to firmaer  er adskilt på kortet  af kun et felt,  så kan de ^Bfusioneres^N\n"
+"til et firma  ved at vælge  placeringen (hvis tilgængelig). For eksempel, på\n"
+"kortet nedenfor, kan firmaerne  ^B~A^N og ^B~B^N  fusioneres ved at vælge ^k~5^N. Når dette\n"
+"sker overtager  firmaet  med den største  værdi  det mindre  firma.  Her kan\n"
+"firma ^B~B^N overtage firma ^B~A^N. Firmaet ^B~A^N ophører med at eksistere, selvom det kan\n"
+"returnere som et fuldstændig nyt firma på et senere tidspunkt.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
@@ -1469,8 +1479,8 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
 "\n"
 "Når firmaer fusionerer, får spillerne tildelt aktier i det dominerende firma\n"
-"proportionelt med mængden ejet i det gamle firma. Derudover tildeles en\n"
-"kontantbonus, også proportionel til ejerskabet af det gamle firma.\n"
+"proportionelt med mængden ejet i det gamle firma. Derudover tildeles en kon-\n"
+"tantbonus, også proportionel til ejerskabet af det gamle firma.\n"
 
 #: src/help.c:205
 msgid ""
@@ -1492,27 +1502,26 @@ msgid ""
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
 "Når du har valgt din handling, så kommer du til ^BDen Interstellare Aktiebørs^N.\n"
-"Her kan du købe aktier, sælge dem, låne fra Handelsbanken eller betale tilbage\n"
-"på din gæld (hvis du har gæld). Bemærk at hver firma udsteder et begrænset   \n"
-"antal aktier - du kan ikke bare købe ind! Du kan dog anmode om, at der bliver\n"
-"udstedt flere aktier. Du har en højere sandsynlighed for at få succes, hvis  \n"
-"du ejer en større andel af firmaet.\n"
-"\n"
-"Spillet slutter normalt efter ^B~t^N runder. Du kan dog afslutte spillet    \n"
-"tidligere ved at trykke på ^K<CTRL><C>^N, når du bliver bedt om en handling.\n"
-"Individuelle spillere kan også erklære sig selv konkurs på ethvert tidspunkt.\n"
-"Hvis din gæld er stor nok risikerer du, at din bank gør det for dig! Hvis du\n"
-"ikke gør spillet færdig i din tilgængelige tid, kan du gemme spillet og\n"
-"fortsætte senere.\n"
+"Her kan du købe aktier, sælge dem, låne fra Handelsbanken  eller betale til-\n"
+"bage  på din  gæld  (hvis du  har gæld). Bemærk  at hver  firma  udsteder et\n"
+"begrænset antal aktier — du kan ikke bare købe ind! Du kan dog anmode om, at\n"
+"der bliver udstedt  flere aktier. Du har  en højere sandsynlighed  for at få\n"
+"succes, hvis du ejer en større andel af firmaet.\n"
 "\n"
 "\n"
-"^BVinderen af spillet^N er personen med den største samlede nettoformue (samlet\n"
-"værdi for kontanter og aktier minus gæld). ^HHeld og lykke^N og må den bedste\n"
-"person vinde!\n"
+"Spillet slutter normalt efter  ^B~t^N runder. Du kan dog afslutte spillet tidli-\n"
+"gere ved at trykke på ^K<CTRL><C>^N,  når du bliver bedt om en handling. Indivi-\n"
+"duelle spillere kan også erklære sig selv konkurs på ethvert tidspunkt. Hvis\n"
+"din gæld er stor nok risikerer du, at din bank gør det for dig! Hvis du ikke\n"
+"gør spillet færdig i din tilgængelige tid, kan du gemme spillet og fortsætte\n"
+"senere.\n"
 
 #: src/help.c:225
 msgid "@ Help text, page 7\n"
-msgstr "@ Hjælpetekst, side 7\n"
+msgstr ""
+"^BVinderen af spillet^N  er personen med den største samlede nettoformue (samlet\n"
+"værdi  for kontanter og aktier  minus gæld). ^HHeld og lykke^N  og må den bedste\n"
+"person vinde!\n"
 
 #: src/help.c:226
 msgid "@ Help text, page 8\n"
@@ -1538,7 +1547,7 @@ msgstr "  Sådan spiller du  "
 #: src/help.c:286
 #, c-format
 msgid "Page %d of %d"
-msgstr "Side %d af %d"
+msgstr "Side  %d af %d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
@@ -1557,7 +1566,7 @@ msgstr "[ Tryk <MELLEMRUM> for at fortsætte ] "
 #: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
-msgstr "[ Tryk <MELLEMRUM> for at fortsætte eller <BACKSPACE (SLET TILBAGE)> for den forrige side ] "
+msgstr "[ Tryk <MELLEMRUM> for at fortsætte eller <BACKSPACE> for den forrige side ] "
 
 #: src/intf.c:110
 #, c-format
@@ -1663,7 +1672,7 @@ msgstr "xwcrtomb: »%lc«"
 #: lib/getopt.c:547 lib/getopt.c:576
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: tilvalg »%s« er tvetydigt: muligheder:"
+msgstr "%s: tilvalg »%s« er tvetydigt; muligheder:"
 
 #: lib/getopt.c:624 lib/getopt.c:628
 #, c-format
@@ -1698,7 +1707,7 @@ msgstr "%s: ugyldigt tilvalg -- »%c«\n"
 #: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr "%s: tilvalg kræver et argument -- '%c'\n"
+msgstr "%s: tilvalg kræver et argument -- »%c«\n"
 
 #: lib/getopt.c:934 lib/getopt.c:950
 #, c-format
