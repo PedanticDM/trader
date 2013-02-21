@@ -18,10 +18,10 @@ at http://www.zap.org.au/services/svn/.
 Version 7.5 (not yet released)
 ------------------------------
 
-Added translations for  Norwegian Bokmål and Danish (in that order),  with
-thanks to Johnny A. Solbu and  Joe Hansen.  Updated auxiliary files to the
-latest versions available from the  Gnulib GNU Portability Library and the
-GNU Autoconf project.
+Added translations  for Norwegian Bokmål,  Danish  and  Esperanto (in that
+order),  with thanks to  Johnny A. Solbu,  Joe Hansen  and  Felipe Castro.
+Updated auxiliary files  to the latest versions  available from the Gnulib
+GNU Portability Library and the GNU Autoconf project.
 
 
 Version 7.4 (9th May, 2012)
