@@ -1,14 +1,22 @@
-# Esperanto translation of trader.
-# Copyright (C) 2013 Free Software Foundation, Inc.
+# *************************************************************************
+# *                                                                       *
+# *                Esperanto Translations for Star Traders                *
+# *                   Copyright (C) 2013, John Zaitseff                   *
+# *          Copyright (C) 2013, Free Software Foundation, Inc.           *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
-# Felipe Castro <fefcas@gmail.com>, 2013.
+#
+# Contributors:
+#   Felipe Castro <fefcas@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-05-09 13:57+1000\n"
-"PO-Revision-Date: 2013-02-20 15:32-0300\n"
+"PO-Revision-Date: 2013-02-21 22:20+1100\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -30,7 +38,7 @@ msgstr "%s: malvalida argumento '%s'\n"
 #: src/trader.c:260
 #, c-format
 msgid "%s: invalid game number `%s'\n"
-msgstr "%s: malvalida lud-numero '%s'\n"
+msgstr "%s: malvalida seanc-numero '%s'\n"
 
 #: src/trader.c:269
 #, c-format
@@ -58,15 +66,15 @@ msgstr ""
 "Star Traders (%s) %s\n"
 "Kopirajto (C) %s, John Zaitseff.\n"
 "\n"
-"Star Traders estas simpla ludo pri interstelara komerco, kie la celo\n"
-"de la ludo estas krei kompaniojn, aĉeti kaj vendi akciojn, pruntepreni kaj\n"
-"repagi monon, por fariĝi la plej riĉa ludanto (la venkanto).\n"
+"Star Traders estas simpla ludo pri interstelara komerco, kie la celo de la\n"
+"ludo estas krei kompaniojn, aĉeti kaj vendi akciojn, pruntepreni kaj repagi\n"
+"monon, por fariĝi la plej riĉa ludanto (la venkanto).\n"
 "\n"
 "Tiu ĉi programo estas libera programaro, kiu estas disdonata sub la kondiĉoj\n"
 "de la GNU-a Ĝenerala Publika Permesilo, versio 3 aŭ posta.  Vi estas bonvena\n"
-"por modifi kaj/aŭ disdoni ĝin sub kelkaj kondiĉoj.  Tiu ĉi programo venas\n"
-"kun NENIU GARANTIO, laŭ plejamplekse permesite de la leĝo; konsultu la\n"
-"Permesilon por pli da detaloj.\n"
+"por modifi kaj/aŭ disdoni ĝin sub kelkaj kondiĉoj.  Tiu ĉi programo venas kun\n"
+"NENIU GARANTIO, laŭ plejamplekse permesite de la leĝo; konsultu la Permesilon\n"
+"por pli da detaloj.\n"
 
 #: src/trader.c:308
 #, c-format
@@ -76,7 +84,7 @@ msgstr "%s: Provu '%s --help' por pli da informoj.\n"
 #: src/trader.c:311
 #, c-format
 msgid "Usage: %s [OPTION ...] [GAME]\n"
-msgstr "Uzmaniero: %s [MODIFILO ...] [LUDO]\n"
+msgstr "Uzmaniero: %s [MODIFILO ...] [SEANCO]\n"
 
 #: src/trader.c:312
 #, c-format
@@ -111,8 +119,8 @@ msgid ""
 "playing that game.  If GAME is not specified, start a new game.\n"
 "\n"
 msgstr ""
-"Se LUDO estas indikita kiel numero inter 1 kaj 9, ŝargi kaj daŭrigi\n"
-"la ludadon.  Se LUDO ne estas indikita, ekigi novan seancon.\n"
+"Se SEANCO estas indikita kiel numero inter 1 kaj 9, ŝargi kaj daŭrigi\n"
+"ludadon de tiu seanco.  Se SEANCO ne aperas, ekigi novan seancon.\n"
 "\n"
 
 #. TRANSLATORS: The first %s is the proper name of the package
@@ -168,7 +176,7 @@ msgstr "Betelĝuza, Klr"
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
-msgstr "Kapela Frajto Ko"
+msgstr "Capella Frajto Ko"
 
 #: src/globals.c:50
 msgid "Denebola Shippers"
@@ -274,7 +282,7 @@ msgstr "8a"
 #: src/game.c:117 src/game.c:152
 #, c-format
 msgid "Loading game %d... "
-msgstr "Ŝargado de la ludo %d..."
+msgstr "Ŝargado de la seanco %d... "
 
 #: src/game.c:226
 #, c-format
@@ -292,7 +300,7 @@ msgstr "La unua ludanto kiu moviĝos estas ^{%ls^}."
 #: src/game.c:259
 #, c-format
 msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
-msgstr "Indiku nombron da ludantoj [^{1^}-^{%d^}] aŭ ^{<D>^} por daŭrigi ludon: "
+msgstr "Indiku nombron da ludantoj [^{1^}-^{%d^}] aŭ ^{<D>^} por daŭrigi seancon: "
 
 #. TRANSLATORS: This string specifies the keycodes used to continue a
 #. game; these must NOT contain any numeric digit from 1 to 9.  The
@@ -307,7 +315,7 @@ msgstr "Dd"
 #: src/game.c:341 src/move.c:399
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
-msgstr "Indiku lud-numeron [^{1^}-^{9^}] aŭ ^{<CTRL><C>^} por nuligi: "
+msgstr "Indiku seanc-numeron [^{1^}-^{9^}] aŭ ^{<CTRL><C>^} por nuligi: "
 
 #: src/game.c:406
 #, c-format
@@ -317,7 +325,7 @@ msgstr "Bonvolu indiki vian nomon: "
 #: src/game.c:425
 #, c-format
 msgid "Do you need any instructions? [^{Y^}/^{N^}] "
-msgstr "Ĉu vi bezonas instrukciojn?  [^{J^}/^{N^}] "
+msgstr "Ĉu vi bezonas instrukciojn? [^{J^}/^{N^}] "
 
 #: src/game.c:443
 #, c-format
@@ -550,7 +558,7 @@ msgstr "^{<2>^} Deklari bankroton"
 #: src/move.c:247
 #, c-format
 msgid "^{<3>^} Save and end the game"
-msgstr "^{<3>^} Konservi kaj eliri"
+msgstr "^{<3>^} Konservi seancon kaj eliri"
 
 #: src/move.c:249
 #, c-format
@@ -602,7 +610,7 @@ msgstr "Ĉu vi certas? [^{J^}/^{N^}] "
 #: src/move.c:378 src/move.c:456
 #, c-format
 msgid "Saving game %d... "
-msgstr "Konservado de la ludo %d... "
+msgstr "Konservado de la seanco %d... "
 
 #: src/move.c:686 src/move.c:694 src/move.c:1052 src/move.c:1089
 #, c-format
@@ -633,7 +641,7 @@ msgid ""
 "Its name is ^{%ls^}."
 msgstr ""
 "Nova kompanio naskiĝis!\n"
-"Ĝi nomiĝas  ^{%ls^}."
+"Ĝi nomiĝas ^{%ls^}."
 
 #: src/move.c:824
 #, c-format
@@ -997,7 +1005,7 @@ msgstr "^{<1>^} Aĉeti akcion el kompanio"
 #: src/exch.c:653
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
-msgstr "^{<2>^} Vendi akcion returne al kompanio"
+msgstr "^{<2>^} Vendi akcion reen al kompanio"
 
 #: src/exch.c:655
 #, c-format
@@ -1012,7 +1020,7 @@ msgstr "^{<4>^} Eliri la akci-interŝanĝejon"
 #: src/exch.c:660
 #, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
-msgstr "Indiku elekton  [^{1^}-^{4^}]: "
+msgstr "Indiku elekton [^{1^}-^{4^}]: "
 
 #: src/exch.c:716
 #, c-format
@@ -1048,7 +1056,7 @@ msgstr[1] "Vi povas aĉeti ĝis ^{%'ld^} akciojn."
 #: src/exch.c:739
 #, c-format
 msgid "How many shares do you wish to purchase? "
-msgstr "Kiom da akcioj vi deziras aĉeti?"
+msgstr "Kiom da akcioj vi deziras aĉeti? "
 
 #: src/exch.c:760
 #, c-format
@@ -1070,7 +1078,7 @@ msgstr[1] "Vi povas vendi ĝis ^{%'ld^} akciojn."
 #: src/exch.c:774
 #, c-format
 msgid "How many shares do you wish to sell? "
-msgstr "Kiom da akcioj vi deziras vendi?"
+msgstr "Kiom da akcioj vi deziras vendi? "
 
 #: src/exch.c:802
 #, c-format
@@ -1167,17 +1175,17 @@ msgstr ""
 #: src/fileio.c:316
 #, c-format
 msgid "%s: missing header in game file"
-msgstr "%s: mankas kaplinio en lud-dosiero"
+msgstr "%s: mankas kaplinio en seanc-dosiero"
 
 #: src/fileio.c:319
 #, c-format
 msgid "%s: not a valid game file"
-msgstr "%s: ne estas valida lud-dosiero"
+msgstr "%s: ne estas valida seanc-dosiero"
 
 #: src/fileio.c:322 src/fileio.c:329
 #, c-format
 msgid "%s: missing subheader in game file"
-msgstr "%s: mankas subkaplinio en lud-dosiero"
+msgstr "%s: mankas subkaplinio en seanc-dosiero"
 
 #: src/fileio.c:325
 #, c-format
@@ -1315,15 +1323,15 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
-"^BStar Traders^N estas simpla ludo pri  interstelara  komerco.  Ĝia  celo  estas\n"
-"amasigi la plej grandan kvanton da riĉeco ebla. Tion oni atingas  per kreado\n"
+"^BStar Traders^N  estas simpla ludo  pri interstelara  komerco.  Ĝia celo  estas\n"
+"amasigi la plej grandan kvanton da riĉeco ebla.  Tion oni atingas per kreado\n"
 "de interstelaraj ŝipaj vojoj, pligrandigante ilin kaj aĉetante akciojn en la\n"
-"kompanioj kiuj regas  ilin.  Akcioj  plivaloriĝas  laŭ  la  progreso  de  la\n"
-"operacioj de la kompanio.  Cetere, la rendimento  de  ĉiu  akcio  (procente)\n"
-"ankaŭ ŝanĝas.  Ludantoj povas ankaŭ pruntepreni el la  Interstelara  Komerca\n"
+"kompanioj  kiuj  regas  ilin.  Akcioj  plivaloriĝas  laŭ  la progreso  de la\n"
+"operacioj  de la kompanio.  Cetere,  la rendimento  de ĉiu akcio  (procente)\n"
+"ankaŭ ŝanĝas.  Ludantoj povas  ankaŭ pruntepreni  el la Interstelara Komerca\n"
 "Banko por financi aldonajn aĉetojn en la akci-interŝanĝejo.\n"
 "\n"
-"La galaksi-mapo estas reprezentata per krado ^B~x^N x ^B~y^N.  Ordinara areo  de  ĝi\n"
+"La galaksi-mapo estas reprezentata  per krado  ^B~x^N x ^B~y^N.  Ordinara areo de ĝi\n"
 "povas esti:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1350,9 +1358,9 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
-"La komputilo elektas hazarde ^B~m^N movojn  (etikeditaj per ^k~1^N al ^k~M^N),  kaj  metas\n"
-"ilin sur la mapo.  Por elekti iun el la reliefigitaj  pozicioj,  premu  tiun\n"
-"literon. Ekzemple, kelkaj el la movoj sur la mapo povas esti:\n"
+"La komputilo elektas hazarde  ^B~m^N movojn  (etikeditaj per ^k~1^N al ^k~M^N),  kaj metas\n"
+"ilin sur la mapo.  Por elekti iun  el la reliefigitaj  pozicioj,  premu tiun\n"
+"literon.  Ekzemple, kelkaj el la movoj sur la mapo povas esti:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1362,9 +1370,9 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
 "\n"
-"Elekti pozicion kiu ^Bne^N estas proksime de stelo (kiel la movoj  ^k~1^N,  ^k~3^N  aŭ  ^k~5^N)\n"
-"rezultas en difino de ^Bpikedo^N, ne apartenanta al iu ajn kompanio.  Do, se  la\n"
-"movo ^k~3^N estus elektata en la supra mapo, ^o ~+ ^N estus metota ĉe tiu  pozicio.\n"
+"Elekti  pozicion  kiu ^Bne^N estas proksime  de stelo  (kiel la movoj ^k~1^N, ^k~3^N aŭ ^k~5^N)\n"
+"rezultas en difino de ^Bpikedo^N,  ne apartenanta al iu ajn kompanio.  Do, se la\n"
+"movo ^k~3^N estus elektata en la supra mapo, ^o ~+ ^N estus metota ĉe tiu pozicio.\n"
 
 #: src/help.c:150
 msgid ""
@@ -1384,19 +1392,19 @@ msgid ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
-"Alimaniere, se pozicio proksime de stelo aŭ de alia pikedo  estus  elektata,\n"
-"^Bkompanio^N estus kreota kaj  ĝia  litero  estus  aperonta  en  la  mapo.  Kiel\n"
-"premio por kreo de kompanio, vi ricevas la unuajn kvin akciojn.\n"
-"Ĝis ^B~c^N kompanioj povas esti tiel kreataj.\n"
+"Alimaniere, se pozicio proksime de stelo aŭ  de alia pikedo  estus elektata,\n"
+"^Bkompanio^N  estus  kreota kaj  ĝia litero  estus  aperonta  en la  mapo.  Kiel\n"
+"premio  por kreo  de kompanio,  vi ricevas  la unuajn  kvin  akciojn.  Ĝis ^B~c^N\n"
+"kompanioj povas esti tiel kreataj.\n"
 "\n"
-"Se pozicio proksime de kompanio estus elektata, la  kompanio  pliampleksigus\n"
-"ĝiajn operaciojn je unu kvadrato. Tio pliigus la koston de ĝiaj  akcioj  kaj\n"
-"tiel ankaŭ la rendimento pliiĝus.  Do, se la mapo estus kiel montrate  sube,\n"
-"elekto de ^k~6^N aŭ ^k~8^N pligrandigas la ŝip-vojon de la Kompanio ^B~B^N:\n"
+"Se pozicio  proksime de kompanio estus elektata, la kompanio  pliampleksigus\n"
+"ĝiajn operaciojn je unu kvadrato.  Tio pliigus la koston  de ĝiaj akcioj kaj\n"
+"tiel ankaŭ la rendimento pliiĝus.  Do, se la mapo  estus kiel montrate sube,\n"
+"elekto de ^k~6^N aŭ ^k~8^N pligrandigas la ŝip-vojon de la kompanio ^B~B^N:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Movoj ^k~6^N aŭ ^k~8^N pligrandigas Kompanion ^B~B^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Movoj ^k~6^N aŭ ^k~8^N pligrandigas kompanion ^B~B^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
@@ -1418,9 +1426,9 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Elekto de pozicio proksime de steloj plivalorigas viajn  akciojn  proksimume\n"
-"kvinoble ol  pozicio  ne  proksime  de  stelo.  Do  la  movo  ^k~6^N  devus  esti\n"
-"preferata ol la movo ^k~8^N.\n"
+"Elekto de pozicio proksime  de steloj plivalorigas viajn  akciojn proksimume\n"
+"kvinoble ol pozicio ne proksime de stelo.  Do la movo ^k~6^N devus esti preferata\n"
+"ol la movo ^k~8^N.\n"
 "\n"
 "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1428,11 +1436,11 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 "\n"
-"Vi povas ankaŭ pligrandigi iun ajn kompanion elektante poziciojn  proksimajn\n"
-"de pikedoj.  Tiaj pikedoj estos englutitaj de tiu kompanio.  Do, la  movo  ^k~1^N\n"
-"pligrandigos la Kompanion ^B~C^N per ^Bdu^N kvadratoj.  Kiel premio, pikedoj proksimaj\n"
-"al steloj estas pli valoraj: la akci-prezo de la kompanio altiĝas pli ol  se\n"
-"la pikedo ne estas proksima de steloj.\n"
+"Vi povas ankaŭ pligrandigi iun ajn kompanion elektante  poziciojn proksimajn\n"
+"de pikedoj.  Tiaj pikedoj  estos englutitaj  de tiu kompanio.  Do, la movo ^k~1^N\n"
+"pligrandigos la kompanion ^B~C^N per  ^Bdu^N  kvadratoj.  Kiel premio, pikedoj  prok-\n"
+"simaj al steloj estas pli valoraj:  la akci-prezo de la kompanio altiĝas pli\n"
+"ol se la pikedo ne estas proksima de steloj.\n"
 
 #: src/help.c:186
 msgid ""
@@ -1453,11 +1461,11 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
-"Se du kompanioj estas apartitaj en la mapo per nur unu  kvadrato,  tiam  ili\n"
-"povas esti ^Bkunfanditaj^N en unu kompanio per elekto de  tiu  pozicio  (nur  se\n"
-"disponebla).  Ekzemple, en la suba mapo, kompanioj ^B~A^N kaj ^B~B^N povas kunfandiĝi\n"
-"per elekto de ^k~5^N.  Kiam tio okazas, la kompanio kun pli da havaĵoj akiras la\n"
-"alian.  Ĉi tie, la kompanio ^B~B^N povus akiri la kompanion ^B~A^N.  Kompanio ^B~A^N ĉesas\n"
+"Se du kompanioj  estas apartitaj en la mapo per nur  unu kvadrato,  tiam ili\n"
+"povas  esti ^Bkunfanditaj^N  en unu kompanio  per elekto  de tiu pozicio (nur se\n"
+"disponebla).  Ekzemple, en la suba mapo, kompanioj ^B~A^N kaj ^B~B^N  povas kunfandiĝi\n"
+"per elekto de ^k~5^N.  Kiam tio okazas, la kompanio  kun pli da havaĵoj akiras la\n"
+"alian.  Ĉi tie, la kompanio ^B~B^N  povus akiri la kompanion ^B~A^N.  Kompanio ^B~A^N ĉesas\n"
 "ekzisti, kvankam ĝi povos reaperi kiel entute nova kompanio pli poste.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1466,9 +1474,9 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
 "\n"
-"Kiam kompanioj kunfandiĝas, la ludantoj ricevas akciojn  de  la  mastrumanta\n"
+"Kiam kompanioj  kunfandiĝas,  la ludantoj ricevas akciojn  de la mastrumanta\n"
 "kompanio proporcie al la kvanto posedita en la malnova kompanio.  Kaj premio\n"
-"estas ankaŭ pagita, proporcie al la procenta posedo de la malnova kompanio.\n"
+"estas ankaŭ pagita, proporcie al la procenta posedo de la malnova kompanio.\n"
 
 #: src/help.c:205
 msgid ""
@@ -1489,21 +1497,21 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
-"Tuj post kiam vi elektas vian movon, vi eniras la ^BInterstelaran akcian inter-\n"
-"ŝanĝejon^N.  Tie vi povas aĉeti akciojn, vendi ilin, pruntepreni el la Komerca\n"
-"Banko aŭ repagi iom el via ŝuldo (se ekzistanta).  Rimarku ke  ĉiu  kompanio\n"
-"disponigas limigitan nombron da akcioj -- vi ne povas aĉeti senfine!  Tamen,\n"
-"vi povas peti ke pli da akcioj estu vendataj.  Vi pli ŝancas sukcesi  se  vi\n"
-"posedas pli grandan proporcion de la kompanio.\n"
+"Tuj post  kiam vi  elektas  vian movon,  vi eniras la  ^BInterstelaran  akcian\n"
+"interŝanĝejon^N.  Tie vi  povas aĉeti akciojn,  vendi ilin,  pruntepreni el la\n"
+"Komerca Banko  aŭ repagi  iom el via ŝuldo  (se ekzistanta).  Rimarku ke ĉiu\n"
+"kompanio  disponigas limigitan  nombron da akcioj -- vi ne  povas aĉeti sen-\n"
+"fine!  Tamen, vi povas  peti ke pli da akcioj  estu vendataj.  Vi pli ŝancas\n"
+"sukcesi se vi posedas pli grandan proporcion de la kompanio.\n"
 "\n"
-"La ludo ordinare finas post ^B~t^N cikloj.  Tamen, vi povas fini  la  ludon  pli\n"
-"frue premante ^K<CTRL><C>^N kiam aldemandita  elekti  movon.  Krome,  individuaj\n"
-"ludantoj povas sin deklari bankrotaj iam ajn.  Se  via  ŝuldo  estas  sufiĉe\n"
-"granda, la Banko povas fari tion por vi!  Se vi ne plenumas la ludon  en  la\n"
-"tempo kiun vi disponas, vi povas konservi ĝin kaj daŭrigi poste.\n"
+"La ludo  ordinare finas  post ^B~t^N cikloj.  Tamen, vi povas fini  la ludon pli\n"
+"frue premante  ^K<CTRL><C>^N  kiam aldemandita elekti movon.  Krome,  individuaj\n"
+"ludantoj  povas sin deklari  bankrotaj iam ajn.  Se via  ŝuldo estas  sufiĉe\n"
+"granda, la banko  povas fari tion por vi!  Se vi ne plenumas  la ludon en la\n"
+"tempo kiun vi disponas, vi povas konservi seancon kaj daŭrigi ĝin poste.\n"
 "\n"
 "\n"
-"La ^Bvenkanto de la ludo^N estas tiu kun la plej granda  totalo  (entuta  valoro\n"
+"La ^Bvenkanto de la ludo^N  estas tiu kun la plej  granda totalo  (entuta valoro\n"
 "de mono, akcioj kaj ŝuldo).  ^HBonan ŝancon^N kaj ke la plej lerta venku!\n"
 
 #: src/help.c:225
