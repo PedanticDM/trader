@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: trader 7.5\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-05-09 13:57+1000\n"
-"PO-Revision-Date: 2013-02-21 22:20+1100\n"
+"PO-Revision-Date: 2013-02-22 06:38+1100\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -38,7 +38,7 @@ msgstr "%s: malvalida argumento '%s'\n"
 #: src/trader.c:260
 #, c-format
 msgid "%s: invalid game number `%s'\n"
-msgstr "%s: malvalida lud-numero '%s'\n"
+msgstr "%s: malvalida seanc-numero '%s'\n"
 
 #: src/trader.c:269
 #, c-format
@@ -84,7 +84,7 @@ msgstr "%s: Provu '%s --help' por pli da informoj.\n"
 #: src/trader.c:311
 #, c-format
 msgid "Usage: %s [OPTION ...] [GAME]\n"
-msgstr "Uzmaniero: %s [MODIFILO ...] [LUDO]\n"
+msgstr "Uzmaniero: %s [MODIFILO ...] [SEANCO]\n"
 
 #: src/trader.c:312
 #, c-format
@@ -119,8 +119,8 @@ msgid ""
 "playing that game.  If GAME is not specified, start a new game.\n"
 "\n"
 msgstr ""
-"Se LUDO estas indikita kiel numero inter 1 kaj 9, ŝargi kaj daŭrigi\n"
-"la ludadon.  Se LUDO ne estas indikita, ekigi novan seancon.\n"
+"Se SEANCO estas indikita kiel numero inter 1 kaj 9, ŝargi kaj daŭrigi\n"
+"ludadon de tiu seanco.  Se SEANCO ne aperas, ekigi novan seancon.\n"
 "\n"
 
 #. TRANSLATORS: The first %s is the proper name of the package
@@ -176,7 +176,7 @@ msgstr "Betelĝuza, Klr"
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
-msgstr "Kapela Frajto Ko"
+msgstr "Capella Frajto Ko"
 
 #: src/globals.c:50
 msgid "Denebola Shippers"
@@ -282,7 +282,7 @@ msgstr "8a"
 #: src/game.c:117 src/game.c:152
 #, c-format
 msgid "Loading game %d... "
-msgstr "Ŝargado de la ludo %d... "
+msgstr "Ŝargado de la seanco %d... "
 
 #: src/game.c:226
 #, c-format
@@ -300,7 +300,7 @@ msgstr "La unua ludanto kiu moviĝos estas ^{%ls^}."
 #: src/game.c:259
 #, c-format
 msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
-msgstr "Indiku nombron da ludantoj [^{1^}-^{%d^}] aŭ ^{<D>^} por daŭrigi ludon: "
+msgstr "Indiku nombron da ludantoj [^{1^}-^{%d^}] aŭ ^{<D>^} por daŭrigi seancon: "
 
 #. TRANSLATORS: This string specifies the keycodes used to continue a
 #. game; these must NOT contain any numeric digit from 1 to 9.  The
@@ -315,7 +315,7 @@ msgstr "Dd"
 #: src/game.c:341 src/move.c:399
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
-msgstr "Indiku lud-numeron [^{1^}-^{9^}] aŭ ^{<CTRL><C>^} por nuligi: "
+msgstr "Indiku seanc-numeron [^{1^}-^{9^}] aŭ ^{<CTRL><C>^} por nuligi: "
 
 #: src/game.c:406
 #, c-format
@@ -558,7 +558,7 @@ msgstr "^{<2>^} Deklari bankroton"
 #: src/move.c:247
 #, c-format
 msgid "^{<3>^} Save and end the game"
-msgstr "^{<3>^} Konservi kaj eliri"
+msgstr "^{<3>^} Konservi seancon kaj eliri"
 
 #: src/move.c:249
 #, c-format
@@ -610,7 +610,7 @@ msgstr "Ĉu vi certas? [^{J^}/^{N^}] "
 #: src/move.c:378 src/move.c:456
 #, c-format
 msgid "Saving game %d... "
-msgstr "Konservado de la ludo %d... "
+msgstr "Konservado de la seanco %d... "
 
 #: src/move.c:686 src/move.c:694 src/move.c:1052 src/move.c:1089
 #, c-format
@@ -1005,7 +1005,7 @@ msgstr "^{<1>^} Aĉeti akcion el kompanio"
 #: src/exch.c:653
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
-msgstr "^{<2>^} Vendi akcion returne al kompanio"
+msgstr "^{<2>^} Vendi akcion reen al kompanio"
 
 #: src/exch.c:655
 #, c-format
@@ -1175,17 +1175,17 @@ msgstr ""
 #: src/fileio.c:316
 #, c-format
 msgid "%s: missing header in game file"
-msgstr "%s: mankas kaplinio en lud-dosiero"
+msgstr "%s: mankas kaplinio en seanc-dosiero"
 
 #: src/fileio.c:319
 #, c-format
 msgid "%s: not a valid game file"
-msgstr "%s: ne estas valida lud-dosiero"
+msgstr "%s: ne estas valida seanc-dosiero"
 
 #: src/fileio.c:322 src/fileio.c:329
 #, c-format
 msgid "%s: missing subheader in game file"
-msgstr "%s: mankas subkaplinio en lud-dosiero"
+msgstr "%s: mankas subkaplinio en seanc-dosiero"
 
 #: src/fileio.c:325
 #, c-format
@@ -1400,11 +1400,11 @@ msgstr ""
 "Se pozicio  proksime de kompanio estus elektata, la kompanio  pliampleksigus\n"
 "ĝiajn operaciojn je unu kvadrato.  Tio pliigus la koston  de ĝiaj akcioj kaj\n"
 "tiel ankaŭ la rendimento pliiĝus.  Do, se la mapo  estus kiel montrate sube,\n"
-"elekto de ^k~6^N aŭ ^k~8^N pligrandigas la ŝip-vojon de la Kompanio ^B~B^N:\n"
+"elekto de ^k~6^N aŭ ^k~8^N pligrandigas la ŝip-vojon de la kompanio ^B~B^N:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Movoj ^k~6^N aŭ ^k~8^N pligrandigas Kompanion ^B~B^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Movoj ^k~6^N aŭ ^k~8^N pligrandigas kompanion ^B~B^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
@@ -1438,7 +1438,7 @@ msgstr ""
 "\n"
 "Vi povas ankaŭ pligrandigi iun ajn kompanion elektante  poziciojn proksimajn\n"
 "de pikedoj.  Tiaj pikedoj  estos englutitaj  de tiu kompanio.  Do, la movo ^k~1^N\n"
-"pligrandigos la Kompanion ^B~C^N per  ^Bdu^N  kvadratoj.  Kiel premio, pikedoj  prok-\n"
+"pligrandigos la kompanion ^B~C^N per  ^Bdu^N  kvadratoj.  Kiel premio, pikedoj  prok-\n"
 "simaj al steloj estas pli valoraj:  la akci-prezo de la kompanio altiĝas pli\n"
 "ol se la pikedo ne estas proksima de steloj.\n"
 
@@ -1507,8 +1507,8 @@ msgstr ""
 "La ludo  ordinare finas  post ^B~t^N cikloj.  Tamen, vi povas fini  la ludon pli\n"
 "frue premante  ^K<CTRL><C>^N  kiam aldemandita elekti movon.  Krome,  individuaj\n"
 "ludantoj  povas sin deklari  bankrotaj iam ajn.  Se via  ŝuldo estas  sufiĉe\n"
-"granda, la Banko  povas fari tion por vi!  Se vi ne plenumas  la ludon en la\n"
-"tempo kiun vi disponas, vi povas konservi ĝin kaj daŭrigi poste.\n"
+"granda, la banko  povas fari tion por vi!  Se vi ne plenumas  la ludon en la\n"
+"tempo kiun vi disponas, vi povas konservi seancon kaj daŭrigi ĝin poste.\n"
 "\n"
 "\n"
 "La ^Bvenkanto de la ludo^N  estas tiu kun la plej  granda totalo  (entuta valoro\n"
