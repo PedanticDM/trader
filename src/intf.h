@@ -622,10 +622,10 @@ extern int gettxchar (WINDOW *win, wint_t *restrict wch);
   way (including if the user made any changed, spaces were stripped or if
   emptyval was copied into buf[]).
 
-  If either KEY_DEFVAL1 or KEY_DEFVAL2 is pressed when the input line is
-  empty, the string pointed to by defaultval (if not NULL) is placed in
-  the buffer as if typed by the user.  Editing is NOT terminated in this
-  case.
+  If a key matching any character in the string "input|DefaultValue" (by
+  default, "=;") is pressed when the input line is empty, the string
+  pointed to by defaultval (if not NULL) is placed in the buffer as if
+  typed by the user.  Editing is NOT terminated in this case.
 
   If allowed is not NULL, only characters in that string are allowed to
   be entered into the input line.  For example, if allowed points to
