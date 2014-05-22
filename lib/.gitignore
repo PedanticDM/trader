@@ -6,6 +6,8 @@ c-strcase.h
 c-strcasecmp.c
 c-strncasecmp.c
 config.charset
+crc.c
+crc.h
 getopt.c
 getopt.in.h
 getopt1.c

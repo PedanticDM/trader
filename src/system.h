@@ -75,6 +75,7 @@
 
 // Headers defined by the GNU C Library
 
+#include <crc.h>
 #include <getopt.h>
 
 
