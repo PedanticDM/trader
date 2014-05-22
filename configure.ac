@@ -1,7 +1,7 @@
 dnl *********************************************************************
 dnl *                                                                   *
 dnl *           Star Traders: A Game of Interstellar Trading            *
-dnl *              Copyright (C) 1990-2013, John Zaitseff               *
+dnl *              Copyright (C) 1990-2014, John Zaitseff               *
 dnl *                                                                   *
 dnl *********************************************************************
 dnl

@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                Croatian Translations for Star Traders                 *
-# *                 Copyright (C) 2012-13, John Zaitseff                  *
+# *                 Copyright (C) 2012-14, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.5\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2012-05-09 07:02+1000\n"
-"PO-Revision-Date: 2013-02-02 10:47+1100\n"
+"PO-Revision-Date: 2014-05-22 11:00+1000\n"
 "Last-Translator: Tomislav Krznar <tomislav.krznar@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
