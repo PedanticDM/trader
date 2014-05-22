@@ -51,12 +51,13 @@ static const unsigned char game_file_crypt_key[] = {
 
 #define load_game_scanf(_fmt, _var, _cond)				\
     do {								\
-	if (fgets(buf, BUFSIZE, file) == NULL) {			\
+	if (fgets(bigbuf, BIGBUFSIZE, file) == NULL) {			\
 	    err_exit(_("%s: missing field on line %d"),			\
 		     filename, lineno);					\
 	}								\
-	if (sscanf(unscramble(crypt_key, buf, BUFSIZE), _fmt "\n",	\
-		   &(_var)) != 1) {					\
+	if (sscanf(unscramble(&crypt_key, bigbuf, BIGBUFSIZE,		\
+			      buf, BUFSIZE), _fmt "\n", &(_var))	\
+		!= 1) {							\
 	    err_exit(_("%s: illegal field on line %d: `%s'"),		\
 		     filename, lineno, buf);				\
 	}								\
@@ -88,11 +89,12 @@ static const unsigned char game_file_crypt_key[] = {
 	char *s;							\
 	int len;							\
 									\
-	if (fgets(buf, BUFSIZE, file) == NULL) {			\
+	if (fgets(bigbuf, BIGBUFSIZE, file) == NULL) {			\
 	    err_exit(_("%s: missing field on line %d"),			\
 		     filename, lineno);					\
 	}								\
-	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) == 0) {		\
+	if (strlen(unscramble(&crypt_key, bigbuf, BIGBUFSIZE,		\
+			      buf, BUFSIZE)) == 0) {			\
 	    err_exit(_("%s: illegal value on line %d"),			\
 		     filename, lineno);					\
 	}								\
@@ -127,11 +129,12 @@ static const unsigned char game_file_crypt_key[] = {
 	char *s;							\
 	int len;							\
 									\
-	if (fgets(buf, BUFSIZE, file) == NULL) {			\
+	if (fgets(bigbuf, BIGBUFSIZE, file) == NULL) {			\
 	    err_exit(_("%s: missing field on line %d"),			\
 		     filename, lineno);					\
 	}								\
-	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) == 0) {		\
+	if (strlen(unscramble(&crypt_key, bigbuf, BIGBUFSIZE,		\
+			      buf, BUFSIZE)) == 0) {			\
 	    err_exit(_("%s: illegal value on line %d"),			\
 		     filename, lineno);					\
 	}								\
@@ -157,8 +160,8 @@ static const unsigned char game_file_crypt_key[] = {
 #define save_game_printf(_fmt, _var)					\
     do {								\
 	snprintf(buf, BUFSIZE, _fmt "\n", _var);			\
-	scramble(crypt_key, buf, BUFSIZE);				\
-	fprintf(file, "%s", buf);					\
+	scramble(&crypt_key, buf, BUFSIZE, bigbuf, BIGBUFSIZE);		\
+	fprintf(file, "%s", bigbuf);					\
     } while (0)
 
 #define save_game_write_int(_var)					\
@@ -224,10 +227,11 @@ bool load_game (int num)
     int saved_errno, lineno;
     char *prev_locale;
 
-    char *buf;
+    char *buf, *bigbuf;
     wchar_t *wcbuf;
 
-    int crypt_key;
+    unsigned char crypt_key;
+    int crypt_key_input;
     int n, i, j;
 
 #ifdef USE_UTF8_GAME_FILE
@@ -239,6 +243,7 @@ bool load_game (int num)
     assert(num >= 1 && num <= 9);
 
     buf = xmalloc(BUFSIZE);
+    bigbuf = xmalloc(BIGBUFSIZE);
     wcbuf = xmalloc(BUFSIZE * sizeof(wchar_t));
 
     filename = game_filename(num);
@@ -267,6 +272,7 @@ bool load_game (int num)
 	}
 
 	free(buf);
+	free(bigbuf);
 	free(wcbuf);
 	free(filename);
 	return false;
@@ -336,9 +342,10 @@ bool load_game (int num)
     lineno = 4;
 
     // Read in the game file encryption key
-    if (fscanf(file, "%i\n", &crypt_key) != 1) {
+    if (fscanf(file, "%i\n", &crypt_key_input) != 1) {
 	err_exit(_("%s: illegal or missing field on line %d"), filename, lineno);
     }
+    crypt_key = (unsigned char) crypt_key_input;
     lineno++;
 
     // Read in various game variables
@@ -377,10 +384,11 @@ bool load_game (int num)
 
     // Read in galaxy map
     for (int x = 0; x < MAX_X; x++) {
-	if (fgets(buf, BUFSIZE, file) == NULL) {
+	if (fgets(bigbuf, BIGBUFSIZE, file) == NULL) {
 	    err_exit(_("%s: missing field on line %d"), filename, lineno);
 	}
-	if (strlen(unscramble(crypt_key, buf, BUFSIZE)) != MAX_Y + 1) {
+	if (strlen(unscramble(&crypt_key, bigbuf, BIGBUFSIZE, buf, BUFSIZE))
+		!= MAX_Y + 1) {
 	    err_exit(_("%s: illegal field on line %d"), filename, lineno);
 	}
 
@@ -414,6 +422,7 @@ bool load_game (int num)
 #endif
 
     free(buf);
+    free(bigbuf);
     free(wcbuf);
     free(filename);
     free(prev_locale);
@@ -428,13 +437,14 @@ bool load_game (int num)
 bool save_game (int num)
 {
     const char *data_dir;
-    char *buf, *filename;
+    char *buf, *bigbuf;
+    char *filename;
     FILE *file;
     char *codeset;
     int saved_errno;
     char *prev_locale;
     struct stat statbuf;
-    int crypt_key;
+    unsigned char crypt_key;
     int i, j, x, y;
 
 #ifdef USE_UTF8_GAME_FILE
@@ -446,6 +456,7 @@ bool save_game (int num)
     assert(num >= 1 && num <= 9);
 
     buf = xmalloc(BUFSIZE);
+    bigbuf = xmalloc(BIGBUFSIZE);
 
     crypt_key = option_dont_encrypt ? 0 :
 	game_file_crypt_key[randi(GAME_FILE_CRYPT_KEY_SIZE)];
@@ -469,6 +480,7 @@ bool save_game (int num)
 			 strerror(saved_errno));
 
 		free(buf);
+		free(bigbuf);
 		return false;
 	    }
 	}
@@ -489,6 +501,7 @@ bool save_game (int num)
 		   "^{File %s: %s^}"), num, filename, strerror(saved_errno));
 
 	free(buf);
+	free(bigbuf);
 	free(filename);
 	return false;
     }
@@ -568,8 +581,8 @@ bool save_game (int num)
 	*p++ = '\n';
 	*p = '\0';
 
-	scramble(crypt_key, buf, BUFSIZE);
-	fprintf(file, "%s", buf);
+	scramble(&crypt_key, buf, BUFSIZE, bigbuf, BIGBUFSIZE);
+	fprintf(file, "%s", bigbuf);
     }
 
     // Write out a dummy sentinal value
@@ -589,6 +602,7 @@ bool save_game (int num)
 #endif
 
     free(buf);
+    free(bigbuf);
     free(filename);
     free(prev_locale);
     return true;

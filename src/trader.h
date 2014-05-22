@@ -62,7 +62,7 @@
 #endif
 
 #define BUFSIZE			1024	// For various string buffers
-#define BIGBUFSIZE		2048	// For buffers known to be larger
+#define BIGBUFSIZE		4096	// For buffers known to be larger
 
 
 #endif /* included_TRADER_H */

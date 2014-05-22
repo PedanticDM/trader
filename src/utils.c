@@ -62,6 +62,27 @@ wchar_t *mon_thousands_sep;		// Local monetary thousands separator
 #define MOD_POSIX_P_CS_PRECEDES		1
 #define MOD_POSIX_P_SEP_BY_SPACE	0
 
+// Constants used for scrambling and unscrambling game data
+#define SCRAMBLE_PAD_CHAR	'.'
+#define UNSCRAMBLE_INVALID	(-1)
+#define UNSCRAMBLE_PAD_CHAR	(-2)
+
+static const char scramble_index[] =
+    "0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz-_";
+
+static const char unscramble_index[] = {
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -2, -1,
+     0,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1,
+    -1, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38,
+    40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, -1, -1, -1, -1, 63,
+    -1, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39,
+    41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, -1, -1, -1, -1, -1
+};
+
+#define UNSCRAMBLE_INDEX_SIZE (sizeof(unscramble_index) / sizeof(unscramble_index[0]))
+
 
 /************************************************************************
 *                       Module-specific variables                       *
@@ -421,7 +442,9 @@ ssize_t l_strfmon (char *restrict buf, size_t maxsize,
 /***********************************************************************/
 // scramble: Scramble (encrypt) the buffer
 
-char *scramble (int key, char *restrict buf, int bufsize)
+char *scramble (unsigned char *restrict key,
+		char *restrict inbuf, int inbufsize,
+		char *restrict outbuf, int outbufsize)
 {
     /* The algorithm used here is reversable: scramble(scramble(...))
        will (or, at least, should!) return the same as the original
@@ -429,11 +452,13 @@ char *scramble (int key, char *restrict buf, int bufsize)
        function assumes all other characters are permitted in files.
        This is true on all POSIX systems. */
 
-    if (buf != NULL && key != 0) {
-	char *p = buf;
-	unsigned char k = ~key;
+    assert(outbuf != NULL);
 
-	for (int i = 0; i < bufsize && *p != '\0'; i++, k++, p++) {
+    if (inbuf != NULL && key != NULL && *key != 0) {
+	char *p = inbuf;
+	unsigned char k = ~*key;
+
+	for (int i = 0; i < inbufsize && *p != '\0'; i++, k++, p++) {
 	    char c = *p;
 	    char r = c ^ k;	// Simple encryption: XOR on a moving key
 
@@ -444,16 +469,20 @@ char *scramble (int key, char *restrict buf, int bufsize)
 	}
     }
 
-    return buf;
+    strcpy(outbuf, inbuf);
+
+    return outbuf;
 }
 
 
 /***********************************************************************/
 // unscramble: Unscramble (decrypt) the buffer
 
-char *unscramble (int key, char *restrict buf, int bufsize)
+char *unscramble (unsigned char *restrict key,
+		  char *restrict inbuf, int inbufsize,
+		  char *restrict outbuf, int outbufsize)
 {
-    return scramble(key, buf, bufsize);
+    return scramble(key, inbuf, inbufsize, outbuf, outbufsize);
 }
 
 

@@ -265,41 +265,54 @@ extern ssize_t l_strfmon (char *restrict buf, size_t maxsize,
 */
 
 /*
-  Function:   scramble - Scramble (encrypt) the buffer
-  Parameters: key      - Encryption key
-              buf      - Pointer to buffer to encrypt
-              bufsize  - Size of buffer
-  Returns:    char *   - Pointer to buffer
+  Function:   scramble   - Scramble (encrypt) the buffer
+  Parameters: key        - Pointer to encryption/decryption key
+              inbuf      - Pointer to input buffer to encrypt
+              inbufsize  - Size of input buffer
+              outbuf     - Pointer to output buffer
+              outbufsize - Size of output buffer
+  Returns:    char *     - Pointer to output buffer
 
-  This function scrambles (encrypts) the buffer *buf using a trivial
-  in-place encryption algorithm.  If key is zero, or buf is NULL or
-  bufsize is less than 1, no encryption takes place.
+  This function scrambles (encrypts) the buffer *inbuf using a trivial
+  encryption algorithm and places the result in *outbuf.  If key is NULL
+  or *key is zero, no encryption takes place: the input buffer is copied
+  to the output buffer as-is.
 
-  The buffer should contain a C-style string terminated by '\0'.  The
-  characters '\r', '\n' and '\0' are guaranteed to remain the same before
-  and after encryption.  At most bufsize bytes are encrypted; buf is
-  returned as the result.
+  The input buffer should contain a C-style string terminated by '\0'.
+  The characters '\r', '\n' and '\0' are guaranteed to remain the same
+  before and after encryption.  Note that inbuf and outbuf MUST point to
+  different buffers, and that outbuf typically must be four times larger
+  than inbuf.  At most inbufsize bytes are encrypted; outbuf is returned
+  as the result.
 */
-extern char *scramble (int key, char *restrict buf, int bufsize);
+extern char *scramble (unsigned char *restrict key,
+		       char *restrict inbuf, int inbufsize,
+		       char *restrict outbuf, int outbufsize);
 
 
 /*
   Function:   unscramble - Unscramble (decrypt) the buffer
-  Parameters: key        - Encryption/decryption key
-              buf        - Pointer to buffer to decrypt
-              bufsize    - Size of buffer
-  Returns:    char *     - Pointer to buffer
+  Parameters: key        - Pointer to encryption/decryption key
+              inbuf      - Pointer to input buffer to decrypt
+              inbufsize  - Size of input buffer
+              outbuf     - Pointer to output buffer
+              outbufsize - Size of output buffer
+  Returns:    char *     - Pointer to output buffer
 
   This function does the reverse of scramble(): it unscrambles (decrypts)
-  the buffer *buf using an in-place algorithm.  If key is zero, or buf is
-  NULL or bufsize is less than 1, no decryption takes place.
+  the buffer *inbuf using a trivial algorithm and places the result in
+  *outbuf.  If key is NULL or *key is zero, no decryption takes place:
+  the input buffer is copied to the output buffer as-is.
 
   The buffer should contain a C-style string terminated by '\0'.  As for
   scramble(), the characters '\r', '\n' and '\0' will not be changed (nor
-  will any encrypted character map back to these values).  At most
-  bufsize bytes are decrypted; buf is returned as the result.
+  will any encrypted character map back to these values).  Note that
+  inbuf and outbuf MUST point to different buffers.  At most bufsize
+  bytes are decrypted; outbuf is returned as the result.
 */
-extern char *unscramble (int key, char *restrict buf, int bufsize);
+extern char *unscramble (unsigned char *restrict key,
+			 char *restrict inbuf, int inbufsize,
+			 char *restrict outbuf, int outbufsize);
 
 
 /************************************************************************
