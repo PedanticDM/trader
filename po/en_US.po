@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.5\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-05-09 07:02+1000\n"
+"POT-Creation-Date: 2014-05-23 19:00+1000\n"
 "PO-Revision-Date: 2014-05-22 10:58+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English\n"
@@ -1110,103 +1110,103 @@ msgstr[1] ""
 "%ls has issued\n"
 "^{%'ld^} more shares."
 
-#: src/fileio.c:55 src/fileio.c:92 src/fileio.c:131 src/fileio.c:381
+#: src/fileio.c:43 src/fileio.c:83 src/fileio.c:126 src/fileio.c:387
 #, c-format
 msgid "%s: missing field on line %d"
 msgstr "%s: missing field on line %d"
 
-#: src/fileio.c:60
-#, c-format
-msgid "%s: illegal field on line %d: `%s'"
-msgstr "%s: illegal field on line %d: ‘%s’"
-
-#: src/fileio.c:64
-#, c-format
-msgid "%s: illegal value on line %d: `%s'"
-msgstr "%s: illegal value on line %d: ‘%s’"
-
-#: src/fileio.c:96 src/fileio.c:135 src/fileio.c:393
-#, c-format
-msgid "%s: illegal value on line %d"
-msgstr "%s: illegal value on line %d"
-
-#: src/fileio.c:103
-#, c-format
-msgid "%s: illegal characters on line %d"
-msgstr "%s: illegal characters on line %d"
-
-#: src/fileio.c:184
-#, c-format
-msgid "%s: could not convert string"
-msgstr "%s: could not convert string"
-
-#: src/fileio.c:255
-#, c-format
-msgid "  Game Not Found  "
-msgstr "  Game Not Found  "
-
-#: src/fileio.c:256
-#, c-format
-msgid "Game %d has not been saved to disk."
-msgstr "Game %d has not been saved to disk."
-
-#: src/fileio.c:263
-#, c-format
-msgid "  Game Not Loaded  "
-msgstr "  Game Not Loaded  "
-
-#: src/fileio.c:264
-#, c-format
-msgid ""
-"Game %d could not be loaded from disk.\n"
-"\n"
-"^{File %s: %s^}"
-msgstr ""
-"Game %d could not be loaded from disk.\n"
-"\n"
-"^{File %s: %s^}"
-
-#: src/fileio.c:316
-#, c-format
-msgid "%s: missing header in game file"
-msgstr "%s: missing header in game file"
-
-#: src/fileio.c:319
-#, c-format
-msgid "%s: not a valid game file"
-msgstr "%s: not a valid game file"
-
-#: src/fileio.c:322 src/fileio.c:329
-#, c-format
-msgid "%s: missing subheader in game file"
-msgstr "%s: missing subheader in game file"
-
-#: src/fileio.c:325
-#, c-format
-msgid "%s: saved under a different version of Star Traders"
-msgstr "%s: saved under a different version of Star Traders"
-
-#: src/fileio.c:332
-#, c-format
-msgid "%s: saved under an incompatible character encoding"
-msgstr "%s: saved under an incompatible character encoding"
-
-#: src/fileio.c:340
-#, c-format
-msgid "%s: illegal or missing field on line %d"
-msgstr "%s: illegal or missing field on line %d"
-
-#: src/fileio.c:384
+#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390 src/fileio.c:393
 #, c-format
 msgid "%s: illegal field on line %d"
 msgstr "%s: illegal field on line %d"
 
-#: src/fileio.c:466 src/fileio.c:487
+#: src/fileio.c:51
+#, c-format
+msgid "%s: illegal field on line %d: `%s'"
+msgstr "%s: illegal field on line %d: ‘%s’"
+
+#: src/fileio.c:55
+#, c-format
+msgid "%s: illegal value on line %d: `%s'"
+msgstr "%s: illegal value on line %d: ‘%s’"
+
+#: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
+#, c-format
+msgid "%s: illegal value on line %d"
+msgstr "%s: illegal value on line %d"
+
+#: src/fileio.c:98
+#, c-format
+msgid "%s: illegal characters on line %d"
+msgstr "%s: illegal characters on line %d"
+
+#: src/fileio.c:183
+#, c-format
+msgid "%s: could not convert string"
+msgstr "%s: could not convert string"
+
+#: src/fileio.c:257
+#, c-format
+msgid "  Game Not Found  "
+msgstr "  Game Not Found  "
+
+#: src/fileio.c:258
+#, c-format
+msgid "Game %d has not been saved to disk."
+msgstr "Game %d has not been saved to disk."
+
+#: src/fileio.c:265
+#, c-format
+msgid "  Game Not Loaded  "
+msgstr "  Game Not Loaded  "
+
+#: src/fileio.c:266
+#, c-format
+msgid ""
+"Game %d could not be loaded from disk.\n"
+"\n"
+"^{File %s: %s^}"
+msgstr ""
+"Game %d could not be loaded from disk.\n"
+"\n"
+"^{File %s: %s^}"
+
+#: src/fileio.c:319
+#, c-format
+msgid "%s: missing header in game file"
+msgstr "%s: missing header in game file"
+
+#: src/fileio.c:322
+#, c-format
+msgid "%s: not a valid game file"
+msgstr "%s: not a valid game file"
+
+#: src/fileio.c:325 src/fileio.c:332
+#, c-format
+msgid "%s: missing subheader in game file"
+msgstr "%s: missing subheader in game file"
+
+#: src/fileio.c:328
+#, c-format
+msgid "%s: saved under a different version of Star Traders"
+msgstr "%s: saved under a different version of Star Traders"
+
+#: src/fileio.c:335
+#, c-format
+msgid "%s: saved under an incompatible character encoding"
+msgstr "%s: saved under an incompatible character encoding"
+
+#: src/fileio.c:343
+#, c-format
+msgid "%s: illegal or missing field on line %d"
+msgstr "%s: illegal or missing field on line %d"
+
+#: src/fileio.c:479 src/fileio.c:501
 #, c-format
 msgid "  Game Not Saved  "
 msgstr "  Game Not Saved  "
 
-#: src/fileio.c:467
+#: src/fileio.c:480
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1217,7 +1217,7 @@ msgstr ""
 "\n"
 "^{Directory %s: %s^}"
 
-#: src/fileio.c:488
+#: src/fileio.c:502
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1629,31 +1629,31 @@ msgctxt "answer"
 msgid "No"
 msgstr "No"
 
-#: src/utils.c:199 src/utils.c:220
+#: src/utils.c:378 src/utils.c:399
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:225
+#: src/utils.c:404
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:238
+#: src/utils.c:417
 #, c-format
 msgid "out of memory"
 msgstr "out of memory"
 
-#: src/utils.c:571
+#: src/utils.c:1041
 #, c-format
 msgid "xmbstowcs: `%s'"
 msgstr "xmbstowcs: ‘%s’"
 
-#: src/utils.c:611
+#: src/utils.c:1081
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:616
+#: src/utils.c:1086
 #, c-format
 msgid "xwcrtomb: `%lc'"
 msgstr "xwcrtomb: ‘%lc’"
