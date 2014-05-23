@@ -15,8 +15,16 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
-Version 7.5 (not yet released)
-------------------------------
+Version 7.5 (24th May, 2014)
+----------------------------
+
+Rewrote the  file input and output  routines  so that saved games  are now
+stored  in a much more reliable  (scrambled) ASCII format.  However, saved
+games from older versions will no longer load:  the workaround is to start
+the older version of  Star Traders with the "--dont-encrypt"  command line
+option, load the relevant game and save it again straight away, change the
+second line in the game file  from "File API 7.2"  to "File API 7.5", then
+run the new version of Star Traders.
 
 Added translations  for Norwegian Bokmål,  Danish  and  Esperanto (in that
 order),  with thanks to  Johnny A. Solbu,  Joe Hansen  and  Felipe Castro.
