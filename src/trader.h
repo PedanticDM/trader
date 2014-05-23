@@ -53,7 +53,7 @@
 ************************************************************************/
 
 #define GAME_FILE_HEADER	"Star Traders Saved Game"
-#define GAME_FILE_API_VERSION	"File API 7.2"	// For game loads and saves
+#define GAME_FILE_API_VERSION	"File API 7.5"	// For game loads and saves
 #define GAME_FILE_SENTINEL	42		// End of game file sentinel
 
 #ifdef USE_UTF8_GAME_FILE
@@ -62,7 +62,7 @@
 #endif
 
 #define BUFSIZE			1024	// For various string buffers
-#define BIGBUFSIZE		4096	// For buffers known to be larger
+#define BIGBUFSIZE		2048	// For buffers known to be larger
 
 
 #endif /* included_TRADER_H */

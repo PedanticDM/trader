@@ -260,59 +260,58 @@ extern ssize_t l_strfmon (char *restrict buf, size_t maxsize,
 ************************************************************************/
 
 /*
-  The functions described here are simple in the extreme: they are only
-  designed to stop casual cheating!
+  The functions described here are NOT cryptographically secure: they are
+  only designed to stop casual cheating!
 */
 
 /*
-  Function:   scramble   - Scramble (encrypt) the buffer
-  Parameters: key        - Pointer to encryption/decryption key
-              inbuf      - Pointer to input buffer to encrypt
-              inbufsize  - Size of input buffer
-              outbuf     - Pointer to output buffer
-              outbufsize - Size of output buffer
-  Returns:    char *     - Pointer to output buffer
+  Function:   scramble - Scramble (encrypt) the buffer
+  Parameters: dest     - Pointer to output buffer
+              src      - Pointer to input buffer to encrypt
+              size     - Size of output buffer
+              key      - Pointer to encryption/decryption key
+  Returns:    char *   - Pointer to output buffer
 
-  This function scrambles (encrypts) the buffer *inbuf using a trivial
-  encryption algorithm and places the result in *outbuf.  If key is NULL
-  or *key is zero, no encryption takes place: the input buffer is copied
-  to the output buffer as-is.
+  This function scrambles (encrypts) the buffer *src and places the
+  result in *dest.  It uses *key to keep a running encryption key.  If
+  the key is NULL, no encryption is performed.
 
   The input buffer should contain a C-style string terminated by '\0'.
-  The characters '\r', '\n' and '\0' are guaranteed to remain the same
-  before and after encryption.  Note that inbuf and outbuf MUST point to
-  different buffers, and that outbuf typically must be four times larger
-  than inbuf.  At most inbufsize bytes are encrypted; outbuf is returned
-  as the result.
+  The output buffer will be terminated with '\n\0', even if the input
+  does not have a terminating '\n'.  The pointer dest is returned as the
+  output.
+
+  Note that src and dest MUST point to different buffers, and that *dest
+  typically must be twice as large as *src.  In addition, *key MUST be
+  initialised to zero before calling scramble() for the first time.
 */
-extern char *scramble (unsigned char *restrict key,
-		       char *restrict inbuf, int inbufsize,
-		       char *restrict outbuf, int outbufsize);
+extern char *scramble (char *restrict dest, const char *restrict src,
+		       size_t size, unsigned int *restrict key);
 
 
 /*
   Function:   unscramble - Unscramble (decrypt) the buffer
-  Parameters: key        - Pointer to encryption/decryption key
-              inbuf      - Pointer to input buffer to decrypt
-              inbufsize  - Size of input buffer
-              outbuf     - Pointer to output buffer
-              outbufsize - Size of output buffer
-  Returns:    char *     - Pointer to output buffer
+  Parameters: dest       - Pointer to output buffer
+              src        - Pointer to input buffer to decrypt
+              size       - Size of output buffer
+              key        - Pointer to encryption/decryption key
+  Returns:    char *     - Pointer to output buffer or NULL on error
 
   This function does the reverse of scramble(): it unscrambles (decrypts)
-  the buffer *inbuf using a trivial algorithm and places the result in
-  *outbuf.  If key is NULL or *key is zero, no decryption takes place:
-  the input buffer is copied to the output buffer as-is.
+  the buffer *src and places the result in *dest.  If key is NULL, no
+  decryption takes place: the input buffer is copied to the output buffer
+  without changes.
 
-  The buffer should contain a C-style string terminated by '\0'.  As for
-  scramble(), the characters '\r', '\n' and '\0' will not be changed (nor
-  will any encrypted character map back to these values).  Note that
-  inbuf and outbuf MUST point to different buffers.  At most bufsize
-  bytes are decrypted; outbuf is returned as the result.
+  The buffer should contain a C-style string terminated by '\0'.  Note
+  that src and dest MUST point to different buffers.  The pointer dest is
+  returned as the output, unless there is an error in the data (such as a
+  corrupted checksum), in which case NULL is returned.
+
+  Note that *key MUST be initialised to zero before calling unscramble()
+  for the first time.
 */
-extern char *unscramble (unsigned char *restrict key,
-			 char *restrict inbuf, int inbufsize,
-			 char *restrict outbuf, int outbufsize);
+extern char *unscramble (char *restrict dest, const char *restrict src,
+			 size_t size, unsigned int *restrict key);
 
 
 /************************************************************************
