@@ -32,5 +32,6 @@ EXTRA_DIST = \
 	ax_append_flag.m4	\
 	ax_cflags_warn_all.m4	\
 	ax_c___attribute__.m4	\
+	ax_require_defined.m4	\
 	ax_with_curses.m4	\
 	gnulib-cache.m4
