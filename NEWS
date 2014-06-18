@@ -18,7 +18,8 @@ at http://www.zap.org.au/services/svn/.
 Version 7.6 (not yet released)
 ------------------------------
 
-(Nothing yet...)
+A minor release to fix compilation bugs under Cygwin: the libiconv library
+must be listed AFTER the GNU Portability Library on that platform.
 
 
 Version 7.5 (24th May, 2014)

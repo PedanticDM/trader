@@ -43,6 +43,6 @@ trader_SOURCES	= \
 
 trader_CPPFLAGS	= -I$(top_builddir)/lib -I$(top_srcdir)/lib	\
 		  -DLOCALEDIR=\"$(localedir)\"
-trader_LDADD	= @CURSES_LIB@ @LIBICONV@ $(top_builddir)/lib/libgnu.a @LIBINTL@
+trader_LDADD	= @CURSES_LIB@ $(top_builddir)/lib/libgnu.a @LIBICONV@ @LIBINTL@
 
 EXTRA_DIST	= README
