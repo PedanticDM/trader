@@ -45,7 +45,7 @@ and installation:
     it), you may pass "--disable-nls" to the configure script.
 
 5.  Development libraries and header files  for all of the above.  On many
-    systems, these files are part of XXX-dev packages.
+    systems, these files are part of XXX-dev or XXX-devel packages.
 
 6.  The GNU Perfect Hash Function  Generator, gperf.  This utility program
     may be required for parts of the GNU Portability Library.
