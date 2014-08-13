@@ -74,8 +74,8 @@
 #define DEC_SHARE_PRICE		0.65	// 65% x 35% chance of decrementing same
 #define PRICE_CHANGE_RATE	0.25	// Up to 25% of share price is used to incr./decr.
 #define INITIAL_RETURN		0.05	// Initial return per share: 5%
-#define MIN_COMPANY_RETURN	-0.10	// Minimum return per share (yes, negative!)
-#define MAX_COMPANY_RETURN	0.20	// Maximum return per share
+#define MIN_COMPANY_RETURN	-0.15	// Minimum return per share (yes, negative!)
+#define MAX_COMPANY_RETURN	0.25	// Maximum return per share
 #define CHANGE_COMPANY_RETURN	0.50	// Chance of randomly changing return
 #define DEC_COMPANY_RETURN	0.50	// Chance such change will decrease return
 #define RETURN_MAX_CHANGE	0.03	// Maximum that company return will change
