@@ -21,6 +21,11 @@ Version 7.6 (not yet released)
 A minor release to fix compilation bugs under Cygwin: the libiconv library
 must be listed AFTER the GNU Portability Library on that platform.
 
+In addition, the minimum and maximum share return values were changed from
+-10% to -15%  and 20% to 25%  respectively.   This gives more incentive to
+borrow money from the  Interstellar Trading Bank,  whose interest rate can
+reach a maximum of 20%.
+
 
 Version 7.5 (24th May, 2014)
 ----------------------------
