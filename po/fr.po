@@ -12,10 +12,10 @@
 #   Frédéric Marchal <fmarchal@perso.be>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.5\n"
+"Project-Id-Version: trader 7.6\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2014-05-23 19:00+1000\n"
-"PO-Revision-Date: 2014-05-22 11:00+1000\n"
+"POT-Creation-Date: 2014-08-13 11:39+1000\n"
+"PO-Revision-Date: 2014-08-13 11:52+1000\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
