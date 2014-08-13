@@ -15,8 +15,8 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
-Version 7.6 (not yet released)
-------------------------------
+Version 7.6 (13th August, 2014)
+-------------------------------
 
 A minor release to fix compilation bugs under Cygwin: the libiconv library
 must be listed AFTER the GNU Portability Library on that platform.
