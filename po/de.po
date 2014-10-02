@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2014-10-03 07:29+1000\n"
+"POT-Creation-Date: 2014-10-03 08:41+1000\n"
 "PO-Revision-Date: 2014-08-13 11:51+1000\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -317,7 +317,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Ww"
 
-#: src/game.c:341 src/move.c:399
+#: src/game.c:341 src/move.c:413
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr ""
@@ -396,7 +396,7 @@ msgstr "  Gewinner des Spiels  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:868
+#: src/game.c:606 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -552,32 +552,34 @@ msgstr "Zinssatz:    "
 #. (for <1> and <2>) or 38 characters wide (for <3> and
 #. <CTRL><C>).  The sequences "^{" and "^}" change the
 #. character rendition (attributes) and take up no space.
-#: src/move.c:243 src/exch.c:182
+#: src/move.c:246 src/exch.c:182
 #, c-format
 msgid "^{<1>^} Display stock portfolio"
 msgstr "^{<1>^} Aktienbesitz anzeigen"
 
-#: src/move.c:245
+#: src/move.c:248
 #, c-format
 msgid "^{<2>^} Declare bankruptcy"
 msgstr "^{<2>^} Bankrott erklären"
 
-#: src/move.c:247
+#: src/move.c:250
 #, c-format
 msgid "^{<3>^} Save and end the game"
 msgstr "^{<3>^} Abspeichern und Spiel beenden"
 
-#: src/move.c:249
+#: src/move.c:252
 #, c-format
 msgid "^{<CTRL><C>^} Quit the game"
 msgstr "^{<STRG><C>^} Beenden des Spiels"
 
-#. TRANSLATORS: The maximum column width is 38 characters,
-#. including the trailing space.  The sequences "^{", "^}",
+#. TRANSLATORS: The maximum column width is either 38
+#. characters (including the trailing space), or 76
+#. characters minus the length of the longest of the four
+#. strings above this one.  The sequences "^{", "^}",
 #. "^[" and "^]" do not take up any room.  "%lc" takes up
 #. either one or two columns, depending on the appropriate
 #. "output|GameMoves" string in the current PO file.
-#: src/move.c:258
+#: src/move.c:263
 #, c-format
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Spielzug wählen [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<STRG><C>^}]: "
@@ -589,59 +591,59 @@ msgstr "Spielzug wählen [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<STRG><C>^}]: "
 #. map); each player selects just one move
 #. per turn.  "Move" refers to the player's
 #. choice.
-#: src/move.c:295
+#: src/move.c:309
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Spielzug ^{%lc^}"
 
-#: src/move.c:316
+#: src/move.c:330
 #, c-format
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Bankrott erklären)"
 
-#: src/move.c:325
+#: src/move.c:339
 #, c-format
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Abspeichern und Spiel beenden)"
 
-#: src/move.c:346
+#: src/move.c:360
 #, c-format
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<STRG><C>^} (Spiel beenden)"
 
-#: src/move.c:361
+#: src/move.c:375
 #, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Sind Sie sicher? [^{J^}/^{N^}] "
 
-#: src/move.c:378 src/move.c:456
+#: src/move.c:392 src/move.c:470
 #, c-format
 msgid "Saving game %d... "
 msgstr "Spiel %d wird gespeichert... "
 
-#: src/move.c:686 src/move.c:694 src/move.c:1052 src/move.c:1089
+#: src/move.c:700 src/move.c:708 src/move.c:1066 src/move.c:1103
 #, c-format
 msgid "  Bankruptcy Court  "
 msgstr "  Amtsgericht  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:688
+#: src/move.c:702
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "%ls wurde von der Interstellaren Handelsbank für bankrott erklärt."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:696
+#: src/move.c:710
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls hat Bankrott erklärt."
 
-#: src/move.c:764
+#: src/move.c:778
 #, c-format
 msgid "  New Company  "
 msgstr "  Neue Firma  "
 
-#: src/move.c:765
+#: src/move.c:779
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -650,7 +652,7 @@ msgstr ""
 "Eine neue Firma wurde gegründet!\n"
 "Ihr Name ist ^{%ls^}."
 
-#: src/move.c:824
+#: src/move.c:838
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -659,7 +661,7 @@ msgstr ""
 "^{%ls^} wurde gerade fusioniert mit ^{%ls^}.\n"
 "Bitte beachten Sie die folgenden Transaktionen:\n"
 
-#: src/move.c:830
+#: src/move.c:844
 #, c-format
 msgid "  Company Merger  "
 msgstr "  Firmenfusionierung  "
@@ -671,7 +673,7 @@ msgstr "  Firmenfusionierung  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:850
+#: src/move.c:864
 #, c-format
 msgctxt "label"
 msgid "Old stock: "
@@ -679,7 +681,7 @@ msgstr "Alte Aktien: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:861
+#: src/move.c:875
 #, c-format
 msgctxt "label"
 msgid "New Stock: "
@@ -690,7 +692,7 @@ msgstr "Neue Aktien: "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:875
+#: src/move.c:889
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -699,7 +701,7 @@ msgstr "Bonus (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:880
+#: src/move.c:894
 #, c-format
 msgctxt "subtitle"
 msgid "Total"
@@ -709,7 +711,7 @@ msgstr "Gesamt"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:887
+#: src/move.c:901
 #, c-format
 msgctxt "subtitle"
 msgid "New"
@@ -718,14 +720,14 @@ msgstr "Neu"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:893
+#: src/move.c:907
 #, c-format
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Alt"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1054
+#: src/move.c:1068
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -737,7 +739,7 @@ msgstr ""
 "^{Aller Besitz wurde für die Rückzahlung ausstehender Kredite verwendet.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1078
+#: src/move.c:1092
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -756,7 +758,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1106
+#: src/move.c:1120
 #, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
@@ -766,18 +768,18 @@ msgstr "Anteil pro Aktie bezahlt: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1114
+#: src/move.c:1128
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Alter Wert:               "
 
-#: src/move.c:1197 src/move.c:1232 src/exch.c:321
+#: src/move.c:1211 src/move.c:1246 src/exch.c:321
 #, c-format
 msgid "  Interstellar Trading Bank  "
 msgstr "  Interstellare Handelsbank  "
 
-#: src/move.c:1199
+#: src/move.c:1213
 #, c-format
 msgid ""
 "You were forced to borrow %N\n"
@@ -786,7 +788,7 @@ msgstr ""
 "Sie mussten sich %N leihen,\n"
 "um die Verluste ihrer Firmenanteile zu decken."
 
-#: src/move.c:1234
+#: src/move.c:1248
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
