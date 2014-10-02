@@ -485,12 +485,13 @@ void show_help (void)
 
 	center(curwin, getmaxy(curwin) - 2, 0, attr_waitforkey, 0, 0, 1,
 	       (curpage == 0) ? _("[ Press <SPACE> to continue ] ") :
-	       /* TRANSLATORS: The specific use of <SPACE> and
-		  <BACKSPACE> is not essential: you can use <DEL>,
-		  <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
-		  <BACKSPACE>, and almost any other key instead of
-		  <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
-		  <CTRL><G> or <CTRL><\>). */
+	       /* TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
+		  is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
+		  <LEFT> or <BACK-TAB> instead of <BACKSPACE>, and almost
+		  any other key instead of <SPACE> (other than <ESC>,
+		  <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
+		  Note that the maximum label length is 76 characters,
+		  including the trailing space. */
 	       _("[ Press <SPACE> to continue or <BACKSPACE> "
 		 "for the previous page ] "));
 	wrefresh(curwin);

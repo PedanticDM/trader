@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2014-10-03 08:41+1000\n"
+"POT-Creation-Date: 2014-10-03 08:55+1000\n"
 "PO-Revision-Date: 2014-08-13 11:52+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English\n"
@@ -1548,13 +1548,14 @@ msgstr "Page %d of %d"
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Press <SPACE> to continue ] "
 
-#. TRANSLATORS: The specific use of <SPACE> and
-#. <BACKSPACE> is not essential: you can use <DEL>,
-#. <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
-#. <BACKSPACE>, and almost any other key instead of
-#. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
-#. <CTRL><G> or <CTRL><\>).
-#: src/help.c:494
+#. TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
+#. is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
+#. <LEFT> or <BACK-TAB> instead of <BACKSPACE>, and almost
+#. any other key instead of <SPACE> (other than <ESC>,
+#. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
+#. Note that the maximum label length is 76 characters,
+#. including the trailing space.
+#: src/help.c:495
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
