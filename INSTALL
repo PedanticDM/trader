@@ -186,3 +186,66 @@ type:
 where "/path/to/gnulib-tool"  is, of course, the  directory containing the
 Gnulib "gnulib-tool" script.   You should be ready to  run "./configure &&
 make && make install" now.
+
+
+For Translators
+===============
+
+Thank you for even considering to translate  Star Traders into your native
+language!  You may use  either  a released version of  Star Traders, or an
+unreleased one, as discussed  in the Subversion Repository  section above.
+In either case, you may find the following workflow useful.
+
+First, run "./build-aux/bootstrap" if needed (only for unreleased versions
+of Star Traders).
+
+Next, configure and install Star Traders into your home directory:
+
+    ./configure --prefix=$HOME/opt/trader
+    make
+    make install
+
+If you are adding a new translation, add its GNU Gettext  language code to
+the file po/LINGUAS, then create the template file for that language ("zz"
+is used here):
+
+    (cd po; msginit --locale=zz --width=132)
+
+Now, modify the PO file  for your language using  your favourite editor or
+translation tool.   Please note that  the generated PO file  has extensive
+documentation in its translator comments.   If anything is unclear, please
+feel free  to ask the author and maintainer; contact details are available
+in the README file.
+
+To test your PO file, compile and run Star Traders (replace "zz" with your
+language code, of course):
+
+    make && make -C po zz.gmo && make install
+    LANGUAGE=zz $HOME/opt/trader/bin/trader
+
+The "make -C po zz.gmo" forces  the rebuilding of the GMO output file; the
+"LANGUAGE=zz" parameter sets the language of the messages to use.
+
+This process of  editing and testing the PO file  can be done iteratively,
+of course:  make a change, recompile, run the program  to see the changes,
+repeat as needed.
+
+Once you have finished your translation, please submit the PO file to the
+Translation Project.  The relevant web page for Star Traders is:
+
+    http://translationproject.org/domain/trader.html
+
+More information for translators is available at:
+
+    http://translationproject.org/html/translators.html
+
+To clean up your install directory, simply run:
+
+    rm -fr $HOME/opt/trader
+
+By the way,  as mentioned in the translator comments,  formatting the help
+text is probably the most complicated and tedious part of translating Star
+Traders.  The  author and maintainer  of this game  is more than  happy to
+help you with this task: if you are able to provide a translation, even if
+it is not  formatted correctly, the maintainer  will perform the necessary
+adjustments for word-wrapping and justification.
