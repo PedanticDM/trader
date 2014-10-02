@@ -231,6 +231,9 @@ selection_t get_move (void)
     // Show menu of choices for the player
     newtxwin(5, WIN_COLS, 19, WCENTER, false, 0);
     while (selection == SEL_NONE) {
+	chtype *promptbuf = xmalloc(BUFSIZE * sizeof(chtype));
+	int promptend, promptwidth;
+
 	wbkgdset(curwin, attr_normal_window);
 	werase(curwin);
 	box(curwin, 0, 0);
@@ -248,19 +251,31 @@ selection_t get_move (void)
 	left(curwin, 3, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
 	     _("^{<CTRL><C>^} Quit the game"));
 
-	right(curwin, 1, getmaxx(curwin) / 2, attr_normal, attr_keycode,
-	      attr_choice, 1,
-	      /* TRANSLATORS: The maximum column width is 38 characters,
-		 including the trailing space.  The sequences "^{", "^}",
-		 "^[" and "^]" do not take up any room.  "%lc" takes up
-		 either one or two columns, depending on the appropriate
-		 "output|GameMoves" string in the current PO file. */
-	      _("Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
-	      (wint_t) PRINTABLE_GAME_MOVE(0),
-	      (wint_t) PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
+	mkchstr(promptbuf, BUFSIZE, attr_normal, attr_keycode, attr_choice,
+		1, getmaxx(curwin) - 4, &promptwidth, 1,
+		/* TRANSLATORS: The maximum column width is either 38
+		   characters (including the trailing space), or 76
+		   characters minus the length of the longest of the four
+		   strings above this one.  The sequences "^{", "^}",
+		   "^[" and "^]" do not take up any room.  "%lc" takes up
+		   either one or two columns, depending on the
+		   appropriate "output|GameMoves" string in the current
+		   PO file. */
+		_("Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
+		(wint_t) PRINTABLE_GAME_MOVE(0),
+		(wint_t) PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
+
+	if (promptwidth > getmaxx(curwin) / 2 - 2) {
+	    promptend = promptwidth + 2;
+	    leftch(curwin, 1, 2, promptbuf, 1, &promptwidth);
+	} else {
+	    promptend = getmaxx(curwin) / 2;
+	    rightch(curwin, 1, promptend, promptbuf, 1, &promptwidth);
+	}
 
 	curs_set(CURS_ON);
 	wrefresh(curwin);
+	free(promptbuf);
 
 	// Get the actual selection made by the player
 	while (selection == SEL_NONE) {
@@ -283,8 +298,8 @@ selection_t get_move (void)
 			selection = i;
 
 			curs_set(CURS_OFF);
-			left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
-			     attr_choice, 0, 1,
+			left(curwin, 1, promptend, attr_normal, attr_choice,
+			     0, 1,
 			     /* TRANSLATORS: A game usually consists of
 				DEFAULT_MAX_TURN (50) turns.  On each
 				turn, the computer randomly selects
@@ -311,7 +326,7 @@ selection_t get_move (void)
 			selection = SEL_BANKRUPT;
 
 			curs_set(CURS_OFF);
-			left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			left(curwin, 1, promptend, attr_normal,
 			     attr_normal | A_BOLD, 0, 1,
 			     _("^{<2>^} (Declare bankruptcy)"));
 			break;
@@ -320,7 +335,7 @@ selection_t get_move (void)
 			selection = SEL_SAVE;
 
 			curs_set(CURS_OFF);
-			left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+			left(curwin, 1, promptend, attr_normal,
 			     attr_normal | A_BOLD, 0, 1,
 			     _("^{<3>^} (Save and end the game)"));
 			break;
@@ -341,7 +356,7 @@ selection_t get_move (void)
 		    selection = SEL_QUIT;
 
 		    curs_set(CURS_OFF);
-		    left(curwin, 1, getmaxx(curwin) / 2, attr_normal,
+		    left(curwin, 1, promptend, attr_normal,
 			 attr_normal | A_BOLD, 0, 1,
 			 _("^{<CTRL><C>^} (Quit the game)"));
 		    break;
@@ -357,7 +372,7 @@ selection_t get_move (void)
 	mvwhline(curwin, 3, 2, ' ' | attr_normal, getmaxx(curwin) - 4);
 
 	// Ask the player to confirm their choice
-	right(curwin, 2, getmaxx(curwin) / 2, attr_normal, attr_keycode, 0, 1,
+	right(curwin, 2, promptend, attr_normal, attr_keycode, 0, 1,
 	      _("Are you sure? [^{Y^}/^{N^}] "));
 	wrefresh(curwin);
 
