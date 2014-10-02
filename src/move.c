@@ -258,9 +258,8 @@ selection_t get_move (void)
 		   characters minus the length of the longest of the four
 		   strings above this one.  The sequences "^{", "^}",
 		   "^[" and "^]" do not take up any room.  "%lc" takes up
-		   either one or two columns, depending on the
-		   appropriate "output|GameMoves" string in the current
-		   PO file. */
+		   either one or two columns, depending on the appropriate
+		   "output|GameMoves" string in the current PO file. */
 		_("Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "),
 		(wint_t) PRINTABLE_GAME_MOVE(0),
 		(wint_t) PRINTABLE_GAME_MOVE(NUMBER_MOVES - 1));
