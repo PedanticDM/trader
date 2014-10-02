@@ -12,9 +12,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.6\n"
+"Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2014-08-13 11:39+1000\n"
+"POT-Creation-Date: 2014-10-03 07:29+1000\n"
 "PO-Revision-Date: 2014-08-13 11:52+1000\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
