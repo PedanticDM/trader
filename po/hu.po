@@ -1,14 +1,21 @@
-# Hungarian translation for trader.
-# Copyright (C) 2014 John Zaitseff
+# *************************************************************************
+# *                                                                       *
+# *                Hungarian Translations for Star Traders                *
+# *                 Copyright (C) 2012-14, John Zaitseff                  *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
 #
-# Balázs Úr <urbalazs@gmail.com>, 2014.
+# Contributors:
+#   Balázs Úr <urbalazs@gmail.com>, 2014.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.6\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2014-08-13 12:13+1000\n"
-"PO-Revision-Date: 2014-09-24 22:46+0200\n"
+"PO-Revision-Date: 2014-11-06 20:34+1000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -59,14 +66,16 @@ msgstr ""
 "Star Traders (%s) %s\n"
 "Copyright (C) %s, John Zaitseff.\n"
 "\n"
-"A Star Traders egy egyszerű csillagközi kereskedelmi játék, ahol a játék célja\n"
-"társaságok létrehozása, részvények vásárlása és eladása, pénz kölcsönkérése és\n"
-"visszafizetése azért, hogy a leggazdagabb játékossá (győztessé) váljon.\n"
+"A Star Traders egy egyszerű csillagközi kereskedelmi játék, ahol a játék\n"
+"célja társaságok létrehozása, részvények vásárlása és eladása, pénz\n"
+"kölcsönkérése és visszafizetése azért, hogy a leggazdagabb játékossá\n"
+"(győztessé) váljon.\n"
 "\n"
-"Ez a program szabad szoftver, amely a GNU General Public License 3-as vagy\n"
-"későbbi változata szerint terjesztett. Bizonyos feltételek mellett\n"
-"terjeszthető, illetve módosítható. Ehhez a program NINCS GARANCIA, a törvény\n"
-"által megengedett mértékben; a részletekért tekintse meg a licencet.\n"
+"Ez a program szabad szoftver, amely a GNU General Public License 3-as\n"
+"vagy későbbi változata szerint terjesztett. Bizonyos feltételek mellett\n"
+"terjeszthető, illetve módosítható. Ehhez a program NINCS GARANCIA, a\n"
+"törvény által megengedett mértékben; a részletekért tekintse meg a\n"
+"licencet.\n"
 
 #: src/trader.c:308
 #, c-format
@@ -288,7 +297,7 @@ msgstr "Az első játékos, aki következik: ^{%ls^}."
 #: src/game.c:259
 #, c-format
 msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
-msgstr "Adja meg a játékosok számát [^{1^}-^{%d^}] vagy ^{<C>^} egy játék folytatásához: "
+msgstr "Adja meg a játékosok számát [^{1^}-^{%d^}] vagy ^{<F>^} egy játék folytatásához: "
 
 #. TRANSLATORS: This string specifies the keycodes used to continue a
 #. game; these must NOT contain any numeric digit from 1 to 9.  The
@@ -298,7 +307,7 @@ msgstr "Adja meg a játékosok számát [^{1^}-^{%d^}] vagy ^{<C>^} egy játék 
 #: src/game.c:276
 msgctxt "input|ContinueGame"
 msgid "Cc"
-msgstr "Cc"
+msgstr "Ff"
 
 #: src/game.c:341 src/move.c:399
 #, c-format
@@ -847,7 +856,7 @@ msgstr "Kijelölés megadása [^[Társaság betűje^]/^{1^}-^{4^}]: "
 #, c-format
 msgctxt "label"
 msgid "Credit limit:  "
-msgstr "Hitelkeret:  "
+msgstr "Hitelkeret:         "
 
 #. TRANSLATORS: The "Borrow money", "Repay debt" and "Exit
 #. from the Bank" menu options must all be the same length
@@ -1321,6 +1330,7 @@ msgstr ""
 "hozama  (százalékosan)  is változik.  A játékosok a Csillagközi Kereskedelmi\n"
 "Banktól  is  kérhetnek  kölcsön  az  Értéktőzsdén  való  további  vásárlások\n"
 "finanszírozásához.\n"
+"\n"
 "A galaxis térképét egy ^B~x^N x ^B~y^N méretű rács ábrázolja.  Egy tipikus szelvénye\n"
 "az alábbi lehet:\n"
 "\n"
@@ -1328,7 +1338,6 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N az ^Büres teret^N jelenti,\n"
 "        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N egy ^Bcsillagot^N ábrázol.\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
 #: src/help.c:132
 msgid ""
@@ -1461,10 +1470,9 @@ msgstr ""
 "egy későbbi szakaszban.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N      Az ^k~5^N lépés egyesíti az ^B~A^N és a ^B~B^N társaságot.\n"
+"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N      Az ^k~5^N lépés egyesíti az ^B~A^N és a ^B~B^N társaságot.\n"
+"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N\n"
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
-"        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
 "\n"
 "Ha a társaságok egyesülnek, a játékosok a túlsúlyban lévő társaságban a régi\n"
 "társaságban birtokolt mennyiséggel  arányosan kapnak részvényeket.  Készpénz\n"
