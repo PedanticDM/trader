@@ -1,7 +1,7 @@
 **************************************************************************
 *                                                                        *
 *              Star Traders: A Game of Interstellar Trading              *
-*                 Copyright (C) 1990-2014, John Zaitseff                 *
+*                 Copyright (C) 1990-2015, John Zaitseff                 *
 *                                                                        *
 **************************************************************************
 
@@ -15,8 +15,8 @@ consult the Subversion repository for "trader" on The ZAP Group web server
 at http://www.zap.org.au/services/svn/.
 
 
-Version 7.7 (18th November, 2014)
----------------------------------
+Version 7.7 (19th August, 2015)
+-------------------------------
 
 Added the  Hungarian translation, with  thanks to  Balázs Úr.   Minor code
 changes were made  to accommodate this language.  Also added documentation
