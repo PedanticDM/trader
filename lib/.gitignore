@@ -38,6 +38,7 @@ memchr.valgrind
 ref-add.sin
 ref-del.sin
 stdbool.in.h
+stddef.h
 stddef.in.h
 stdint.in.h
 stdio.in.h
