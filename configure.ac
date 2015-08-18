@@ -29,7 +29,7 @@ dnl along with this program.  If not, see http://www.gnu.org/licenses/.
 AC_INIT([Star Traders], [7.7], [J.Zaitseff@zap.org.au], [trader], [http://www.zap.org.au/software/trader/])
 AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 
-AC_PREREQ([2.67])
+AC_PREREQ([2.69])
 AC_CONFIG_SRCDIR([src/trader.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
@@ -51,7 +51,7 @@ AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18.1])
+AM_GNU_GETTEXT_VERSION([0.19.1])
 
 gl_INIT
 
