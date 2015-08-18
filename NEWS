@@ -18,7 +18,7 @@ at http://www.zap.org.au/services/svn/.
 Version 7.8 (not yet released)
 ------------------------------
 
-Updated to GNU Gettext 0.19.1.
+Updated all references to GNU Gettext to version 0.19.5.
 
 
 Version 7.7 (18th August, 2015)
