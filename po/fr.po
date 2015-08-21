@@ -9,13 +9,13 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Frédéric Marchal <fmarchal@perso.be>, 2012.
+#   Frédéric Marchal <fmarchal@perso.be>, 2012, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-18 07:58+1000\n"
-"PO-Revision-Date: 2015-08-18 08:08+1000\n"
+"PO-Revision-Date: 2015-08-22 06:53+1000\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"

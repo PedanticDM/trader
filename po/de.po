@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Philipp Thomas <pth@suse.de>, 2012.
+#   Philipp Thomas <pth@suse.de>, 2012, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-18 07:58+1000\n"
-"PO-Revision-Date: 2015-08-18 08:06+1000\n"
+"PO-Revision-Date: 2015-08-22 06:41+1000\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -65,14 +65,14 @@ msgstr ""
 "Star Traders (%s) %s\n"
 "Copyright © %s, John Zaitseff.\n"
 "\n"
-"Star Traders ist ein einfaches Spiel um interstellaren Handel. Das Ziel\n"
+"Star Traders ist ein einfaches Spiel um interstellaren Handel.  Das Ziel\n"
 "des Spiels ist es, Firmen zu gründen, Aktien zu kaufen und verkaufen und\n"
 "Geld zu leihen und zurück zu zahlen um der reichste Spieler und damit der\n"
 "Gewinner zu werden.\n"
 "\n"
 "Dieses Programm ist freie Software und wird unter den Bedingungen der GNU\n"
-"General Public License, Version 3 oder später vertrieben. Sie können es\n"
-"modifizieren und/oder es unter bestimmten Bedingungen vertreiben. Dieses\n"
+"General Public License, Version 3 oder später vertrieben.  Sie können es\n"
+"modifizieren und/oder es unter bestimmten Bedingungen vertreiben.  Dieses\n"
 "Programm hat KEINERLEI GARANTIE, soweit die Gesetzgebung dies zulässt;\n"
 "bitte lesen Sie die Lizenz für die Details.\n"
 
