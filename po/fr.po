@@ -1,14 +1,19 @@
 # French translation of trader.
 # Copyright (C) 2015 Free Software Foundation, Inc.
 # This file is distributed under the same license as the trader package.
-#
 # Frédéric Marchal <fmarchal@perso.be>, 2015.
+#
+# Attention: ce fichier ne doit pas contenir d'espace insécable car le
+# programme est compilé avec ncurses qui n'affiche pas correctement
+# l'espace insécable. De plus, il est garanti qu'il n'y aura pas de
+# retour à la ligne forcé. Les ponctuations qui requierent un espace
+# insécable ne seront pas reportées à la ligne suivante.
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-18 09:44+1000\n"
-"PO-Revision-Date: 2015-08-22 08:01+0200\n"
+"PO-Revision-Date: 2015-08-22 20:20+0200\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
