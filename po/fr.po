@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-18 09:44+1000\n"
-"PO-Revision-Date: 2015-08-20 11:57+0200\n"
+"PO-Revision-Date: 2015-08-22 08:01+0200\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -892,7 +892,7 @@ msgstr "La banque ne vous prêtera plus d'argent."
 #: src/exch.c:447
 #, c-format
 msgid "How much do you wish to borrow? "
-msgstr "Combien voulez-vous emprunter ? "
+msgstr "Combien voulez-vous emprunter ? "
 
 #: src/exch.c:479
 #, c-format
