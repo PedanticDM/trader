@@ -555,7 +555,7 @@ void visit_bank (void)
 void trade_shares (int num, bool *bid_used)
 {
     bool done;
-    int ret, w, x;
+    int ret, w, x, mid;
     long int maxshares, val;
     double ownership;
     chtype *chbuf;
@@ -614,27 +614,30 @@ void trade_shares (int num, bool *bid_used)
     right(curwin, 6, width + SHARE_PRICE_COLS + 2, attr_normal, attr_highlight,
 	  0, 1, "^{%.2f%%^}", company[num].share_return * 100.0);
 
-    left(curwin, 3, w / 2, attr_normal, 0, 0, 1,
-	 /* TRANSLATORS: "Current holdings" is the number of shares the
-	    current player owns in this particular company.
+    mkchstr(chbuf, BUFSIZE, attr_normal, 0, 0, 1, w / 2, &width, 1,
+	    /* TRANSLATORS: "Current holdings" is the number of shares
+	       the current player owns in this particular company.
 
-	    Note that the labels "Current holdings", "Percentage owned"
-	    and "Current cash" MUST all be the same length and contain at
-	    least one trailing space for the display routines to work
-	    correctly.  The maximum length of each label is 18
-	    characters. */
-	 pgettext("label|Stock B", "Current holdings: "));
+	       Note that the labels "Current holdings", "Percentage owned"
+	       and "Current cash" MUST all be the same length and contain at
+	       least one trailing space for the display routines to work
+	       correctly.  The maximum length of each label is 18
+	       characters. */
+	    pgettext("label|Stock B", "Current holdings: "));
+    mid = MIN(w / 2, w - width - TRADE_VALUE_COLS - 4);
+
+    leftch(curwin, 3, mid, chbuf, 1, &width);
     right(curwin, 3, w - 2, attr_normal, attr_highlight, 0, 1, " ^{%'ld^} ",
 	  player[current_player].stock_owned[num]);
 
-    left(curwin, 4, w / 2, attr_normal, 0, 0, 1,
+    left(curwin, 4, mid, attr_normal, 0, 0, 1,
 	 /* TRANSLATORS: "Percentage owned" is the current player's
 	    percentage ownership in this particular company. */
 	 pgettext("label|Stock B", "Percentage owned: "));
     right(curwin, 4, w - 2, attr_normal, attr_highlight, 0, 1, " ^{%.2f%%^} ",
 	  ownership * 100.0);
 
-    left(curwin, 6, w / 2, attr_highlight, 0, 0, 1,
+    left(curwin, 6, mid, attr_highlight, 0, 0, 1,
 	 pgettext("label|Stock B", "Current cash:     "));
     whline(curwin, ' ' | attr_title, TRADE_VALUE_COLS + 2);
     right(curwin, 6, w - 2, attr_title, 0, 0, 1, " %N ",

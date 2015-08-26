@@ -20,12 +20,13 @@ Version 7.8 (not yet released)
 
 Changed the name of the seventh company from "Gemeni Inc" to "Gemini Inc":
 a spelling mistake  that has been present  since 1990!   Special thanks to
-Anders Jonsson for pointing this out.  Also updated all references  to GNU
-Gettext to version 0.19.5.
+Anders Jonsson for pointing this out.
 
-Added the Swedish translation, with thanks to Anders Jonsson.  Updated the
-translations for German, French and Norwegian Bokmål (in that order), with
-thanks to Philipp Thomas, Frédéric Marchal and Johnny A. Solbu.
+Added the Swedish translation,  with thanks to Anders Jonsson.  Minor code
+changes were made to accommodate this language.  Incorporated changes made
+by the translators for German, French and Norwegian Bokmål, in that order,
+with thanks to Philipp Thomas, Frédéric Marchal and Johnny A. Solbu.  Also
+updated all references to GNU Gettext to version 0.19.5.
 
 
 Version 7.7 (18th August, 2015)
