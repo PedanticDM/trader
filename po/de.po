@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 German Translations for Star Traders                  *
-# *                   Copyright (C) 2012, John Zaitseff                   *
+# *                 Copyright (C) 2012-15, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-18 09:44+1000\n"
-"PO-Revision-Date: 2015-08-20 08:00+0200\n"
+"PO-Revision-Date: 2015-08-24 11:45+0200\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -852,7 +852,7 @@ msgstr "^{<4>^} Die Börse verlassen"
 #: src/exch.c:193
 #, c-format
 msgid "Enter selection [^[Company letter^]/^{1^}-^{4^}]: "
-msgstr "Auswahl eigeben [^[Firmenbuchstabe^]/^{1^}-^{4^}]: "
+msgstr "Auswahl eingeben [^[Firmenbuchstabe^]/^{1^}-^{4^}]: "
 
 #. TRANSLATORS: The "Total value", "Current cash", "Current
 #. debt", "Interest rate" and "Credit limit" labels MUST all be
@@ -988,7 +988,7 @@ msgstr "Rendite:             "
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current holdings: "
-msgstr "Akt. Anteil:  "
+msgstr "Akt. Anteil:     "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
@@ -1334,22 +1334,21 @@ msgid ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
 "^BStar Traders^N ist  ein  einfaches  Spiel um  instellaren Handel. Das Ziel des\n"
-"Spieles  ist  das Anhäufen des grösstmöglichen Reichtums. Dies wird erreicht\n"
-"durch  das  Aufbauen interstellarer Handelsrouten, ihrer Erweiterung und dem\n"
-"Kauf von  Aktien  der Firmen, die sie kontrollieren. Aktien steigen im Wert,\n"
-"wenn sich die Tätigkeit  der Firma  erweitert.  Ausserdem  erhöht sich damit\n"
+"Spieles ist das Anhäufen des  grösstmöglichen  Reichtums. Dies wird erreicht\n"
+"durch  das Aufbauen interstellarer Handelsrouten,  ihrer Erweiterung und dem\n"
+"Kauf von Aktien  der Firmen, die sie kontrollieren. Aktien  steigen im Wert,\n"
+"wenn sich die Tätigkeit  der Firma  erweitert. Ausserdem  erhöht  sich damit\n"
 "auch die  prozentuale Dividende. Die Spieler können  sich ausserdem Geld von\n"
 "der  Interstellaren  Handelsbank  leihen,  um  weitere Akteinkäufe zu finan-\n"
 "zieren.\n"
 "\n"
-"Die  Karte der  Galaxie wird  dargetellt durch ein ^B~x^N x ^B~y^N Raster. Ein typi-\n"
+"Die Karte der Galaxie  wird dargetellt durch ein  ^B~x^N x ^B~y^N  Raster. Ein typi-\n"
 "scher Teil von ihr könnte so aussehen:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N steht für ^Bleeren Raum^N,\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N    ^s ~* ^N steht für einen ^BStern^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N steht für einen ^BStern^N.\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
 #: src/help.c:132
 msgid ""
@@ -1370,8 +1369,8 @@ msgid ""
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
 "Der Computer wählt zufällig ^B~m^N Züge (bezeichnet mit ^k~1^N bis ^k~M^N)  trägt  sie auf\n"
-"der Karte  ein.  Um eine der hervorgehobenen Positionen auszuwählen, drücken\n"
-"Sie  den  entsprechenden  Buchstaben.  Einige der Züge auf der Karte könnten\n"
+"der Karte  ein. Um eine der hervorgehobenen  Positionen auszuwählen, drücken\n"
+"Sie  den  entsprechenden  Buchstaben. Einige der Züge  auf der Karte könnten\n"
 "z.B. so aussehen:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1381,8 +1380,8 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
 "Die Wahl einer Position die ^Bnicht^N bei einem Stern ist (so wie Züge ^k~1^N, ^k~3^N oder\n"
-"^k~5^N), erstellt einen Aussenposten, der zu keiner Firma gehört.   Wenn daher auf\n"
-"der  obigen  Karte  Zug ^k~3^N gewählt wird, würde ein ^o + ^N an dieser Position er-\n"
+"^k~5^N), erstellt einen Aussenposten,  der zu keiner Firma gehört. Wenn daher auf\n"
+"der obigen Karte Zug ^k~3^N gewählt wird,  würde ein  ^o + ^N  an dieser Position er-\n"
 "scheinen.\n"
 
 #: src/help.c:150
@@ -1481,10 +1480,9 @@ msgstr ""
 "Firma ^B~A^N hört auf zu  existieren, kann aber als neue Firma wieder auftauchen.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N      Zug ^k~5^N fusioniert Firmen ^B~A^N und ^B~B^N.\n"
+"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N        Zug ^k~5^N fusioniert Firmen ^B~A^N und ^B~B^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N\n"
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
-"        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
 "\n"
 "Wenn Firmen fusionieren, bekommen die Spieler Anteile an der dominanten Fir-\n"
 "ma proportional  zu ihrem  Anteil an der alten Firma. Ausserdem erhalten Sie\n"
@@ -1511,25 +1509,26 @@ msgid ""
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
 "Wenn Sie Ihren Zug gewählt haben, betreten Sie die ^BInterstellare Börse^N. Hier\n"
-"können Sie Aktien kaufen oder verkaufen, sich von der Handelsbank Geld lei-\n"
-"hen oder einen  Teil ihrer  Schulden (so vorhanden)  zurückzahlen. Beachten\n"
-"Sie, daß jede  Firma eine beschränkte Zahl von Aktien ausgibt -- Sie können\n"
-"nicht endlos kaufen! Sie können aber die  Firma bitten, weitere Aktien aus-\n"
-"zugeben. Je größer ihr Anteil an der Firma, desdo höher die Chance, das dem\n"
+"können Sie Aktien kaufen oder  verkaufen, sich von der Handelsbank Geld lei-\n"
+"hen  oder einen Teil  ihrer Schulden  (so vorhanden)  zurückzahlen. Beachten\n"
+"Sie, daß jede  Firma eine beschränkte Zahl von Aktien  ausgibt -- Sie können\n"
+"nicht endlos kaufen! Sie können aber die  Firma  bitten, weitere Aktien aus-\n"
+"zugeben. Je größer ihr Anteil an  der Firma, desdo höher die Chance, das dem\n"
 "statt gegeben wird.\n"
 "\n"
-"Das Spiel endet normalerweise nach ^B~t^N Runden. Sie können aber das Spiel\n"
-"vorzeitig beenden, indem Sie ^K<STRG><C>^N drücken, wenn Sie nach Ihrem Zug\n"
-"gefragt werden. Ausserdem  kann ein Spieler  jederzeit  Bankrott  erklären.\n"
-"Wenn Ihre Schulden  hoch genug sind, macht das  eventuell die Bank für Sie!\n"
-"Reicht die  Zeit nicht  aus, um das Spiel  zu beenden, können Sie es abspei\n"
+"\n"
+"Das  Spiel endet normalerweise  nach ^B~t^N  Runden. Sie  können aber  das Spiel\n"
+"vorzeitig  beenden, indem  Sie ^K<STRG><C>^N  drücken, wenn  Sie nach  Ihrem Zug\n"
+"gefragt  werden. Ausserdem  kann  ein Spieler  jederzeit Bankrott  erklären.\n"
+"Wenn Ihre  Schulden hoch genug sind,  macht das eventuell die  Bank für Sie!\n"
+"Reicht die  Zeit nicht aus,  um das Spiel  zu beenden, können Sie  es abspei\n"
 "chern und später fortsetzen.\n"
-"Der ^BGewinner des Spiels^N ist die Person mit dem größten Nettowert (Summe\n"
-"aus Bargeld, Aktien und Schulden). ^HViel Glück^N, möge der Beste gewinnen!\n"
 
 #: src/help.c:225
 msgid "@ Help text, page 7\n"
-msgstr "@ Hilfe, Seite 7\n"
+msgstr ""
+"Der ^BGewinner des Spiels^N ist die  Person mit dem größten Nettowert (Summe aus\n"
+"Bargeld, Aktien und Schulden). ^HViel Glück^N, möge der Beste gewinnen!\n"
 
 #: src/help.c:226
 msgid "@ Help text, page 8\n"
@@ -1575,7 +1574,7 @@ msgstr "[ <LEERTASTE> drücken um fortzufahren ] "
 #: src/help.c:495
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
-msgstr " [ <LEERTASTE> für nächste, <RÜCKSCHRITT> für vorherige Seite ] "
+msgstr "[ <LEERTASTE> für nächste, <RÜCKSCHRITT> für vorherige Seite ] "
 
 #: src/intf.c:110
 #, c-format
