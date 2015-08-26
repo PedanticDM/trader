@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.7\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2015-08-18 09:44+1000\n"
-"PO-Revision-Date: 2015-08-25 14:47+0200\n"
+"POT-Creation-Date: 2015-08-26 19:28+1000\n"
+"PO-Revision-Date: 2015-08-26 19:29+1000\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -183,7 +183,7 @@ msgid "Fornax Express"
 msgstr "Fornax Express"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
+msgid "Gemini Inc"
 msgstr "Gemini Inc"
 
 #: src/globals.c:54
@@ -1118,8 +1118,7 @@ msgstr[1] ""
 msgid "%s: missing field on line %d"
 msgstr "%s: saknat fält på rad %d"
 
-#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390
-#: src/fileio.c:393
+#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390 src/fileio.c:393
 #, c-format
 msgid "%s: illegal field on line %d"
 msgstr "%s: ogiltigt fält på rad %d"
