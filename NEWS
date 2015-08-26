@@ -18,9 +18,14 @@ at http://www.zap.org.au/services/svn/.
 Version 7.8 (not yet released)
 ------------------------------
 
-Updated  all references  to GNU  Gettext  to version 0.19.5.   Updated the
-translations for German, French and Norwegian Bokmål (in that order), with
-thanks to Philipp Thomas, Frédéric Marchal and Johnny A. Solbu.
+Changed the name of the seventh company from "Gemeni Inc" to "Gemini Inc":
+a spelling mistake  that has been present  since 1990!   Special thanks to
+Anders Jonsson for pointing this out.  Also updated all references  to GNU
+Gettext to version 0.19.5.
+
+Updated the translations for German,  French and Norwegian Bokmål (in that
+order),  with  thanks  to  Philipp Thomas,  Frédéric  Marchal  and  Johnny
+A. Solbu.
 
 
 Version 7.7 (18th August, 2015)

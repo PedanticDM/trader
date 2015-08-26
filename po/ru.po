@@ -196,7 +196,7 @@ msgid "Fornax Express"
 msgstr "Единодушные трейдеры"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
+msgid "Gemini Inc"
 msgstr "Живой брокер Капеллы"
 
 #: src/globals.c:54

@@ -50,7 +50,7 @@ const char *company_name[MAX_COMPANIES] = {
     N_("Denebola Shippers"),
     N_("Eridani Expediters"),
     N_("Fornax Express"),
-    N_("Gemeni Inc"),
+    N_("Gemini Inc"),
     N_("Hercules and Co")
 };
 

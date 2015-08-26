@@ -194,7 +194,7 @@ msgid "Fornax Express"
 msgstr "Fornax Express"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
+msgid "Gemini Inc"
 msgstr "Gemini OHG"
 
 #: src/globals.c:54
