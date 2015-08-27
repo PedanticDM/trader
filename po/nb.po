@@ -192,7 +192,7 @@ msgstr "Fornax Express"
 
 #: src/globals.c:53
 msgid "Gemini Inc"
-msgstr "Gemeni A/S"
+msgstr "Gemini A/S"
 
 #: src/globals.c:54
 msgid "Hercules and Co"
