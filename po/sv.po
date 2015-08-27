@@ -1,14 +1,21 @@
-# Swedish translation of trader.
-# Copyright © 2015 John Zaitseff
+# *************************************************************************
+# *                                                                       *
+# *                 Swedish Translations for Star Traders                 *
+# *                   Copyright (C) 2015, John Zaitseff                   *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015.
+#
+# Contributors:
+#   Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.7\n"
+"Project-Id-Version: trader 7.8-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2015-08-18 09:44+1000\n"
-"PO-Revision-Date: 2015-08-25 14:47+0200\n"
+"POT-Creation-Date: 2015-08-26 23:17+1000\n"
+"PO-Revision-Date: 2015-08-27 10:05+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -60,13 +67,13 @@ msgstr ""
 "Copyright © %s, John Zaitseff.\n"
 "\n"
 "Star Traders är ett enkelt spel om interstellär handel, där spelets målet är\n"
-"att bilda företag, köpa och sälja aktier, låna och betala tillbaka pengar\n"
-"för att bli den rikaste spelaren (vinnaren).\n"
+"att bilda företag, köpa och sälja aktier, låna och betala tillbaka pengar för\n"
+"att bli den rikaste spelaren (vinnaren).\n"
 "\n"
-"Detta program är fri programvara som distribueras under villkoren i\n"
-"GNU General Public License, version 3 eller senare.  Du är välkommen att\n"
-"ändra och/eller distribuera det under vissa villkor.  Detta program har\n"
-"INGEN GARANTI så långt lagen tillåter; se licensen för detaljer.\n"
+"Detta program är fri programvara som distribueras under villkoren i GNU General\n"
+"Public License, version 3 eller senare.  Du är välkommen att ändra och/eller\n"
+"distribuera det under vissa villkor.  Detta program har INGEN GARANTI så långt\n"
+"lagen tillåter; se licensen för detaljer.\n"
 
 #: src/trader.c:308
 #, c-format
@@ -183,7 +190,7 @@ msgid "Fornax Express"
 msgstr "Fornax Express"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
+msgid "Gemini Inc"
 msgstr "Gemini Inc"
 
 #: src/globals.c:54
@@ -570,7 +577,7 @@ msgstr "^{<CTRL><C>^} Avsluta spelet"
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Välj drag [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 
-# SKillnad mellan turn och move?
+# Skillnad mellan turn och move?
 #. TRANSLATORS: A game usually consists of
 #. DEFAULT_MAX_TURN (50) turns.  On each
 #. turn, the computer randomly selects
@@ -672,7 +679,7 @@ msgstr "Gammal aktie: "
 #, c-format
 msgctxt "label"
 msgid "New Stock: "
-msgstr "Ny aktie: "
+msgstr "Ny aktie:     "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
 #. each player after two companies merge.  %ls is the currency
@@ -749,7 +756,7 @@ msgstr ""
 #, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
-msgstr "Betalat per aktie:        "
+msgstr "Betalat per aktie:  "
 
 #. TRANSLATORS: "Old share value" refers to the
 #. share price of a company before it was forced
@@ -759,7 +766,7 @@ msgstr "Betalat per aktie:        "
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
-msgstr "Gammalt aktievärde:       "
+msgstr "Gammalt aktievärde: "
 
 #: src/move.c:1211 src/move.c:1246 src/exch.c:321
 #, c-format
@@ -913,7 +920,9 @@ msgstr "  Inga kontanter  "
 #: src/exch.c:485
 #, c-format
 msgid "You have no cash with which to repay the debt!"
-msgstr "Du har inga kontanter att återbetala skulden med!"
+msgstr ""
+"Du har inga kontanter att\n"
+"återbetala skulden med!"
 
 #: src/exch.c:505
 #, c-format
@@ -938,7 +947,7 @@ msgstr "  Aktieöverföring i %ls  "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares issued:   "
-msgstr "Aktier utfärdade:   "
+msgstr "Aktier utfärdade: "
 
 #. TRANSLATORS: "Shares left" is the number of shares that are
 #. left to be purchased in the current company.
@@ -946,7 +955,7 @@ msgstr "Aktier utfärdade:   "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares left:     "
-msgstr "Aktier kvar:        "
+msgstr "Aktier kvar:      "
 
 #. TRANSLATORS: "Price per share" is the cost of each share in
 #. the current company.
@@ -954,7 +963,7 @@ msgstr "Aktier kvar:        "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Price per share: "
-msgstr "Pris per aktie:     "
+msgstr "Pris per aktie:   "
 
 # Return on investment?
 #. TRANSLATORS: "Return" is the share return as a percentage.
@@ -962,10 +971,10 @@ msgstr "Pris per aktie:     "
 #, c-format
 msgctxt "label|Stock A"
 msgid "Return:          "
-msgstr "Avkastning:         "
+msgstr "Avkastning:       "
 
-#. TRANSLATORS: "Current holdings" is the number of shares the
-#. current player owns in this particular company.
+#. TRANSLATORS: "Current holdings" is the number of shares
+#. the current player owns in this particular company.
 #.
 #. Note that the labels "Current holdings", "Percentage owned"
 #. and "Current cash" MUST all be the same length and contain at
@@ -980,13 +989,13 @@ msgstr "Aktuellt innehav:   "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
-#: src/exch.c:633
+#: src/exch.c:636
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
 msgstr "Procent ägt:        "
 
-#: src/exch.c:638
+#: src/exch.c:641
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
@@ -994,96 +1003,96 @@ msgstr "Aktuella kontanter: "
 
 #. TRANSLATORS: Each label may be up to 35 characters wide
 #. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
-#: src/exch.c:651
+#: src/exch.c:654
 #, c-format
 msgid "^{<1>^} Buy stock from company"
 msgstr "^{<1>^} Köp aktier från företag"
 
-#: src/exch.c:653
+#: src/exch.c:656
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Återsälj aktier till företag"
 
-#: src/exch.c:655
+#: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
 msgstr "^{<3>^} Be företag utfärda fler aktier"
 
-#: src/exch.c:657
+#: src/exch.c:660
 #, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
 msgstr "^{<4>^} Gå ut till aktiemarknaden"
 
-#: src/exch.c:660
+#: src/exch.c:663
 #, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
 msgstr "Ange val [^{1^}-^{4^}]: "
 
-#: src/exch.c:716
+#: src/exch.c:719
 #, c-format
 msgid "  No Shares Available  "
 msgstr "  Inga aktier tillgängliga  "
 
-#: src/exch.c:717
+#: src/exch.c:720
 #, c-format
 msgid "No more shares are available for purchase."
 msgstr "Inga fler aktier finns tillgängliga för inköp."
 
-#: src/exch.c:721
+#: src/exch.c:724
 #, c-format
 msgid "  Insufficient Cash  "
 msgstr "  Otillräckliga kontanter  "
 
-#: src/exch.c:722
+#: src/exch.c:725
 #, c-format
 msgid ""
 "You do not have enough cash\n"
 "to purchase additional shares."
 msgstr ""
-"Du har för lite kontanter\n"
-"för att köpa ytterligare aktier."
+"Du har för lite kontanter för\n"
+"att köpa ytterligare aktier."
 
-#: src/exch.c:733
+#: src/exch.c:736
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
 msgstr[0] "Du kan köpa ^{en^} aktie."
 msgstr[1] "Du kan köpa upp till ^{%'ld^} aktier."
 
-#: src/exch.c:739
+#: src/exch.c:742
 #, c-format
 msgid "How many shares do you wish to purchase? "
 msgstr "Hur många aktier vill du köpa? "
 
-#: src/exch.c:760
+#: src/exch.c:763
 #, c-format
 msgid "  No Shares  "
 msgstr "  Inga aktier  "
 
-#: src/exch.c:761
+#: src/exch.c:764
 #, c-format
 msgid "You do not have any shares to sell."
 msgstr "Du har inga aktier att sälja."
 
-#: src/exch.c:768
+#: src/exch.c:771
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
 msgstr[0] "Du kan sälja ^{en^} aktie."
 msgstr[1] "Du kan sälja upp till ^{%'ld^} aktier."
 
-#: src/exch.c:774
+#: src/exch.c:777
 #, c-format
 msgid "How many shares do you wish to sell? "
 msgstr "Hur många aktier vill du sälja? "
 
-#: src/exch.c:802
+#: src/exch.c:805
 #, c-format
 msgid "  No Shares Issued  "
 msgstr "  Inga aktier utfärdade  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:804
+#: src/exch.c:807
 #, c-format
 msgid ""
 "%ls has refused\n"
@@ -1092,13 +1101,13 @@ msgstr ""
 "%ls har vägrat\n"
 "att utfärda fler aktier."
 
-#: src/exch.c:809
+#: src/exch.c:812
 #, c-format
 msgid "  Shares Issued  "
 msgstr "  Aktier utfärdade  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:811
+#: src/exch.c:814
 #, c-format
 msgid ""
 "%ls has issued\n"
@@ -1321,16 +1330,16 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
-"^BStar Traders^N  är ett enkelt spel om interstellär handel.  Målet i spelet\n"
-"är att samla sig på största möjliga rikedom. Detta görs genom att\n"
-"skapa interstellära transportrutter, utöka dem och köpa aktier i\n"
-"företagen som kontrollerar dem.  Aktier ökar i värde då företagens verksamhet\n"
-"expanderar.  Dessutom ändras även avkastningen på varje aktie (i procent).\n"
-"Spelare kan också låna från den interstellära handelsbanken för att\n"
-"finansiera ytterligare inköp på aktiemarknaden.\n"
+"^BStar Traders^N  är ett enkelt spel  om interstellär handel.  Målet i spelet är\n"
+"att samla sig på största möjliga rikedom.  Detta görs genom att skapa inter-\n"
+"stellära transportrutter, utöka dem och köpa aktier i företagen som kontrol-\n"
+"lerar dem.  Aktier ökar i värde  då företagens verksamhet expanderar.  Dess-\n"
+"utom ändras även avkastningen på varje aktie (i procent).  Spelare kan också\n"
+"låna från  den  interstellära handelsbanken  för att finansiera  ytterligare\n"
+"inköp på aktiemarknaden.\n"
 "\n"
-"Kartan över galaxen  representeras  av ett rutnät med storleken ^B~x^N x ^B~y^N.\n"
-"En typisk del av den kan vara:\n"
+"Kartan över galaxen  representeras av ett rutnät  med storleken ^B~x^N x ^B~y^N.  En\n"
+"typisk del av den kan vara:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N representerar ^Btom rymd^N,\n"
@@ -1356,9 +1365,9 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
-"Datorn väljer slumpmässigt ^B~m^N drag  (märkta ^k~1^N till ^k~M^N), och placerar dessa\n"
-"på kartan.  Tryck motsvarande bokstav för att välja någon av de markerade\n"
-"positionerna. Till exempel kan några av dragen på kartan vara:\n"
+"Datorn väljer slumpmässigt ^B~m^N drag (märkta ^k~1^N till ^k~M^N),  och placerar dessa på\n"
+"kartan.  Tryck motsvarande bokstav för att välja någon av de markerade posi-\n"
+"tionerna.  Till exempel kan några av dragen på kartan vara:\n"
 "\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1368,9 +1377,9 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
 "\n"
-"Att välja en position som ^Binte^N är intill en stjärna (som dragen ^k~1^N, ^k~3^N eller ^k~5^N)\n"
-"kommer skapa en ^Butpost^N som inte tillhör något företag.  Om drag ^k~3^N väljs på\n"
-"kartan ovan så kommer ett ^o ~+ ^N placeras på den positionen.\n"
+"Att välja en position  som ^Binte^N är intill en stjärna  (som dragen ^k~1^N, ^k~3^N eller\n"
+"^k~5^N) kommer skapa en ^Butpost^N  som inte tillhör  något företag.  Om drag ^k~3^N väljs\n"
+"på kartan ovan så kommer ett ^o ~+ ^N placeras på den positionen.\n"
 
 #: src/help.c:150
 msgid ""
@@ -1390,15 +1399,15 @@ msgid ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
-"Om å andra sidan en position  intill  en stjärna  (eller annan utpost)\n"
-"väljs kommer ett ^Bföretag^N skapas, och dess bokstav dyker upp på kartan.\n"
-"Som belöning för att ha grundat företaget får du de fem första aktierna.\n"
-"Upp till ^B~c^N företag kan skapas på detta sätt.\n"
+"Om å andra sidan  en position intill en stjärna  (eller annan utpost)  väljs\n"
+"kommer ett ^Bföretag^N skapas,  och dess bokstav dyker upp på kartan.  Som belö-\n"
+"ning för att ha grundat företaget får du de fem första aktierna.  Upp till ^B~c^N\n"
+"företag kan skapas på detta sätt.\n"
 "\n"
-"Om en position intill ett existerande företag väljs kommer företaget\n"
-"öka sitt område med en ruta.  Detta ökar priset på dess aktier\n"
-"och därmed din avkastning.  Följaktligen, om kartan ser ut som nedan, bygger\n"
-"valet ^k~6^N eller ^k~8^N ut företag ^B~B^N:s transportrutt:\n"
+"Om en position  intill ett  existerande företag  väljs kommer  företaget öka\n"
+"sitt område med en ruta.  Detta ökar  priset på dess aktier  och därmed  din\n"
+"avkastning.  Följaktligen, om kartan ser  ut som nedan, bygger valet ^k~6^N eller\n"
+"^k~8^N ut företag ^B~B^N:s transportrutt:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1424,9 +1433,9 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Att välja positioner intill stjärnor ökar värdet av dina aktier ungefär\n"
-"fem gånger så mycket som en utökning inte intill en stjärna.  Därför skulle\n"
-"drag ^k~6^N föredras framför drag ^k~8^N.\n"
+"Att välja positioner intill stjärnor  ökar värdet av dina aktier ungefär fem\n"
+"gånger så mycket som en utökning inte intill en stjärna.  Därför skulle drag\n"
+"^k~6^N föredras framför drag ^k~8^N.\n"
 "\n"
 "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1434,11 +1443,11 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 "\n"
-"Du kan också utöka ett företag genom att välja positioner intill utposter.\n"
-"Sådana utposter kommer tas upp av det företaget.  Därför kommer drag  ^k~1^N\n"
-"utöka företag ^B~C^N med ^Btvå^N rutor.  Som en bonus är utposter intill stjärnor mer\n"
-"värdefulla: företagets aktiepris kommer öka med mer än vad det skulle för\n"
-"utposter som ej ligger intill stjärnor.\n"
+"Du kan också utöka  ett företag genom att välja positioner  intill utposter.\n"
+"Sådana utposter kommer tas upp av det företaget.  Därför kommer drag ^k~1^N utöka\n"
+"företag ^B~C^N med ^Btvå^N rutor.   Som en bonus är utposter intill stjärnor mer vär-\n"
+"defulla:  företagets aktiepris kommer öka  med mer än vad det skulle för ut-\n"
+"poster som ej ligger intill stjärnor.\n"
 
 #: src/help.c:186
 msgid ""
@@ -1459,22 +1468,22 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
-"Om två företag skiljs åt på kartan av endast en ruta kan de ^Bslås samman^N\n"
-"till ett företag genom att välja den positionen (om tillgänglig).  Till\n"
-"exempel kan på kartan nedan företagen ^B~A^N och ^B~B^N  slås samman genom att välja ^k~5^N.\n"
-"Då detta ske tar företaget med större tillgångsvärde över det andra.\n"
-"Här tar företag ^B~B^N kanske över företag ^B~A^N.  Företag ^B~A^N slutar att existera\n"
-"men det kan dyka upp på nytt som ett helt nytt företag senare.\n"
+"Om två företag skiljs åt på kartan av endast en ruta kan de ^Bslås samman^N till\n"
+"ett företag genom att välja den positionen  (om tillgänglig).   Till exempel\n"
+"kan på kartan  nedan  företagen ^B~A^N och ^B~B^N  slås samman genom  att välja ^k~5^N.  Då\n"
+"detta sker tar företaget med större tillgångsvärde  över det andra.  Här tar\n"
+"företag ^B~B^N kanske över företag ^B~A^N.  Företag ^B~A^N slutar att existera  men det kan\n"
+"dyka upp på nytt som ett helt nytt företag senare.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
 "        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N        Drag ^k~5^N slår samman företagen ^B~A^N och ^B~B^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
-"        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
 "\n"
 "När företag slås samman tilldelas spelare aktier i det dominerande företaget\n"
-"i proportion till mängden ägd i det gamla företaget.  En kontantbonus betalas\n"
-"också ut proportionellt till den ägda procentandelen av det gamla företaget.\n"
+"i proportion till mängden  ägd i det gamla företaget.  En kontantbonus beta-\n"
+"las också ut proportionellt till den ägda procentandelen  av det gamla före-\n"
+"taget.\n"
 
 #: src/help.c:205
 msgid ""
@@ -1495,21 +1504,21 @@ msgid ""
 "The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
 "value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
 msgstr ""
-"När du valt ditt drag går du in i ^BInterstellära aktiemarknaden^N.  Här\n"
-"kan du köpa aktier, sälja dem, låna från handelsbanken eller betala\n"
-"tillbaka delar av din skuld (om du har någon).  Notera att varje företag\n"
-"utfärdar ett begränsat antal aktier -- du kan inte köpa för alltid!  Du kan\n"
-"dock be om utfärdande av mer aktier.  Du har större chans att lyckas om\n"
-"du äger en större del av företaget.\n"
+"När du valt ditt drag går du in i ^BInterstellära aktiemarknaden^N.   Här kan du\n"
+"köpa aktier, sälja dem,  låna från handelsbanken eller betala tillbaka delar\n"
+"av din skuld  (om du har någon).  Notera att varje  företag utfärdar ett be-\n"
+"gränsat antal aktier -- du kan inte köpa  för alltid!  Du kan dock be om ut-\n"
+"färdande av mer aktier.  Du har större chans att lyckas om du äger en större\n"
+"del av företaget.\n"
 "\n"
-"Spelet slutar vanligen efter ^B~t^N omgångar.  Du kan dock avsluta spelet\n"
-"tidigare genom att trycka ^K<CTRL><C>^N  när du frågas om ett drag.  Enskilda\n"
-"spelare kan förklara sig bankrutt när som helst.  Om din skuld är stor nog kan\n"
-"banken göra detta åt dig!  Om du inte slutför spelet på den tid du har\n"
-"tillgänglig kan du spara spelet och fortsätta det senare.\n"
+"Spelet slutar vanligen efter ^B~t^N omgångar.   Du kan dock avsluta spelet tidi-\n"
+"gare genom att trycka ^K<CTRL><C>^N när du frågas om ett drag.  Enskilda spelare\n"
+"kan förklara sig bankrutt när som helst.   Om din skuld är stor nog kan ban-\n"
+"ken göra detta åt dig!   Om du inte slutför spelet  på den tid du  har till-\n"
+"gänglig kan du spara spelet och fortsätta det senare.\n"
 "\n"
-"^BSpelets vinnare^N  är personen med det största egna kapitalet  (totalt värde\n"
-"i kontanter, aktier och skulder).  ^HLycka till^N och må bästa person vinna!\n"
+"^BSpelets vinnare^N  är personen med det största egna kapitalet  (totalt värde i\n"
+"kontanter, aktier och skulder).  ^HLycka till^N och må bästa person vinna!\n"
 
 #: src/help.c:225
 msgid "@ Help text, page 7\n"
