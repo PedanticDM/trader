@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Balázs Úr <urbalazs@gmail.com>, 2014.
 #
+#   Balázs Úr <urbalazs@gmail.com>, 2014, 2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.6\n"
+"Project-Id-Version: trader 7.8-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2014-08-13 12:13+1000\n"
-"PO-Revision-Date: 2014-11-06 20:34+1000\n"
+"POT-Creation-Date: 2015-08-26 23:17+1000\n"
+"PO-Revision-Date: 2015-08-30 09:46+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: src/trader.c:235
 #, c-format
@@ -188,8 +188,8 @@ msgid "Fornax Express"
 msgstr "Fornax Express"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
-msgstr "Gemeni Zrt."
+msgid "Gemini Inc"
+msgstr "Gemini Zrt."
 
 #: src/globals.c:54
 msgid "Hercules and Co"
@@ -309,7 +309,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Ff"
 
-#: src/game.c:341 src/move.c:399
+#: src/game.c:341 src/move.c:413
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Adja meg a játék számát [^{1^}-^{9^}] vagy ^{<CTRL><C>^} a megszakításhoz: "
@@ -386,7 +386,7 @@ msgstr "  A játék győztese  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:868
+#: src/game.c:606 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -542,32 +542,34 @@ msgstr "Kamatláb:           "
 #. (for <1> and <2>) or 38 characters wide (for <3> and
 #. <CTRL><C>).  The sequences "^{" and "^}" change the
 #. character rendition (attributes) and take up no space.
-#: src/move.c:243 src/exch.c:182
+#: src/move.c:246 src/exch.c:182
 #, c-format
 msgid "^{<1>^} Display stock portfolio"
 msgstr "^{<1>^} Részvényportfólió megjelenítése"
 
-#: src/move.c:245
+#: src/move.c:248
 #, c-format
 msgid "^{<2>^} Declare bankruptcy"
 msgstr "^{<2>^} Csőd jelentése"
 
-#: src/move.c:247
+#: src/move.c:250
 #, c-format
 msgid "^{<3>^} Save and end the game"
 msgstr "^{<3>^} Mentés és a játék befejezése"
 
-#: src/move.c:249
+#: src/move.c:252
 #, c-format
 msgid "^{<CTRL><C>^} Quit the game"
 msgstr "^{<CTRL><C>^} Kilépés a játékból"
 
-#. TRANSLATORS: The maximum column width is 38 characters,
-#. including the trailing space.  The sequences "^{", "^}",
+#. TRANSLATORS: The maximum column width is either 38
+#. characters (including the trailing space), or 76
+#. characters minus the length of the longest of the four
+#. strings above this one.  The sequences "^{", "^}",
 #. "^[" and "^]" do not take up any room.  "%lc" takes up
 #. either one or two columns, depending on the appropriate
 #. "output|GameMoves" string in the current PO file.
-#: src/move.c:258
+#: src/move.c:263
 #, c-format
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Lépés kiválasztása [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
@@ -579,59 +581,59 @@ msgstr "Lépés kiválasztása [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 #. map); each player selects just one move
 #. per turn.  "Move" refers to the player's
 #. choice.
-#: src/move.c:295
+#: src/move.c:309
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Lépés ^{%lc^}"
 
-#: src/move.c:316
+#: src/move.c:330
 #, c-format
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Csőd jelentése)"
 
-#: src/move.c:325
+#: src/move.c:339
 #, c-format
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Mentés és a játék befejezése)"
 
-#: src/move.c:346
+#: src/move.c:360
 #, c-format
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Kilépés a játékból)"
 
-#: src/move.c:361
+#: src/move.c:375
 #, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Biztos benne? [^{I^}/^{N^}] "
 
-#: src/move.c:378 src/move.c:456
+#: src/move.c:392 src/move.c:470
 #, c-format
 msgid "Saving game %d... "
 msgstr "%d. játék mentése... "
 
-#: src/move.c:686 src/move.c:694 src/move.c:1052 src/move.c:1089
+#: src/move.c:700 src/move.c:708 src/move.c:1066 src/move.c:1103
 #, c-format
 msgid "  Bankruptcy Court  "
 msgstr "  Csődbíróság  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:688
+#: src/move.c:702
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "%ls - fizetésképtelenné nyilvánította a Csillagközi Kereskedelmi Bank."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:696
+#: src/move.c:710
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls fizetésképtelenné lett nyilvánítva."
 
-#: src/move.c:764
+#: src/move.c:778
 #, c-format
 msgid "  New Company  "
 msgstr "  Új társaság  "
 
-#: src/move.c:765
+#: src/move.c:779
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -640,7 +642,7 @@ msgstr ""
 "Egy új társaság alakult!\n"
 "A neve: ^{%ls^}."
 
-#: src/move.c:824
+#: src/move.c:838
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -649,7 +651,7 @@ msgstr ""
 "^{%ls^} épp most egyesült a következővel: ^{%ls^}.\n"
 "Vegye figyelembe a következő tranzakciókat:\n"
 
-#: src/move.c:830
+#: src/move.c:844
 #, c-format
 msgid "  Company Merger  "
 msgstr "  Társaság egyesítő  "
@@ -661,7 +663,7 @@ msgstr "  Társaság egyesítő  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:850
+#: src/move.c:864
 #, c-format
 msgctxt "label"
 msgid "Old stock: "
@@ -669,7 +671,7 @@ msgstr "Régi részvény: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:861
+#: src/move.c:875
 #, c-format
 msgctxt "label"
 msgid "New Stock: "
@@ -680,7 +682,7 @@ msgstr "Új részvény:   "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:875
+#: src/move.c:889
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -689,7 +691,7 @@ msgstr "Bónusz (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:880
+#: src/move.c:894
 #, c-format
 msgctxt "subtitle"
 msgid "Total"
@@ -699,7 +701,7 @@ msgstr "Összesen"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:887
+#: src/move.c:901
 #, c-format
 msgctxt "subtitle"
 msgid "New"
@@ -708,14 +710,14 @@ msgstr "Új"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:893
+#: src/move.c:907
 #, c-format
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Régi"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1054
+#: src/move.c:1068
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -727,7 +729,7 @@ msgstr ""
 "^{Minden eszközt lefoglaltak a fennálló hitelek visszafizetésére.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1078
+#: src/move.c:1092
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -747,7 +749,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1106
+#: src/move.c:1120
 #, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
@@ -757,18 +759,18 @@ msgstr "Részvényenkénti kifizetés: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1114
+#: src/move.c:1128
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Régi részvényérték:        "
 
-#: src/move.c:1197 src/move.c:1232 src/exch.c:321
+#: src/move.c:1211 src/move.c:1246 src/exch.c:321
 #, c-format
 msgid "  Interstellar Trading Bank  "
 msgstr "  Csillagközi Kereskedelmi Bank  "
 
-#: src/move.c:1199
+#: src/move.c:1213
 #, c-format
 msgid ""
 "You were forced to borrow %N\n"
@@ -777,7 +779,7 @@ msgstr ""
 "Kénytelen volt %N kölcsönt felvenni a\n"
 "társaságok részvényei utáni veszteségek fedezésére."
 
-#: src/move.c:1234
+#: src/move.c:1248
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
@@ -965,8 +967,8 @@ msgctxt "label|Stock A"
 msgid "Return:          "
 msgstr "Haszon:               "
 
-#. TRANSLATORS: "Current holdings" is the number of shares the
-#. current player owns in this particular company.
+#. TRANSLATORS: "Current holdings" is the number of shares
+#. the current player owns in this particular company.
 #.
 #. Note that the labels "Current holdings", "Percentage owned"
 #. and "Current cash" MUST all be the same length and contain at
@@ -981,13 +983,13 @@ msgstr "Jelenlegi vagyon: "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
-#: src/exch.c:633
+#: src/exch.c:636
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
 msgstr "Birtokolt arány:  "
 
-#: src/exch.c:638
+#: src/exch.c:641
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
@@ -995,47 +997,47 @@ msgstr "Jelenlegi pénz:   "
 
 #. TRANSLATORS: Each label may be up to 35 characters wide
 #. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
-#: src/exch.c:651
+#: src/exch.c:654
 #, c-format
 msgid "^{<1>^} Buy stock from company"
 msgstr "^{<1>^} Részvény vétele a társaságtól"
 
-#: src/exch.c:653
+#: src/exch.c:656
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Részvény eladása a társaságnak"
 
-#: src/exch.c:655
+#: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
 msgstr "^{<3>^} További részvények kibocsátása"
 
-#: src/exch.c:657
+#: src/exch.c:660
 #, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
 msgstr "^{<4>^} Kilépés az értéktőzsdére"
 
-#: src/exch.c:660
+#: src/exch.c:663
 #, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
 msgstr "Kijelölés megadása [^{1^}-^{4^}]: "
 
-#: src/exch.c:716
+#: src/exch.c:719
 #, c-format
 msgid "  No Shares Available  "
 msgstr "  Nincsenek elérhető részvények  "
 
-#: src/exch.c:717
+#: src/exch.c:720
 #, c-format
 msgid "No more shares are available for purchase."
 msgstr "Nincsenek elérhető részvények a vásárláshoz."
 
-#: src/exch.c:721
+#: src/exch.c:724
 #, c-format
 msgid "  Insufficient Cash  "
 msgstr "  Nincs elég készpénz  "
 
-#: src/exch.c:722
+#: src/exch.c:725
 #, c-format
 msgid ""
 "You do not have enough cash\n"
@@ -1044,47 +1046,47 @@ msgstr ""
 "Nincs elegendő készpénze további\n"
 "részvények vásárlásához."
 
-#: src/exch.c:733
+#: src/exch.c:736
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
 msgstr[0] "^{Egy^} részvényt vehet."
 msgstr[1] "Legfeljebb ^{%'ld^} részvényt vehet."
 
-#: src/exch.c:739
+#: src/exch.c:742
 #, c-format
 msgid "How many shares do you wish to purchase? "
 msgstr "Hány részvényt szeretne vásárolni? "
 
-#: src/exch.c:760
+#: src/exch.c:763
 #, c-format
 msgid "  No Shares  "
 msgstr "  Nincsenek részvények  "
 
-#: src/exch.c:761
+#: src/exch.c:764
 #, c-format
 msgid "You do not have any shares to sell."
 msgstr "Nincsen egyetlen eladható részvénye sem."
 
-#: src/exch.c:768
+#: src/exch.c:771
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
 msgstr[0] "^{Egy^} részvényt adhat el."
 msgstr[1] "Legfeljebb ^{%'ld^} részvényt adhat el."
 
-#: src/exch.c:774
+#: src/exch.c:777
 #, c-format
 msgid "How many shares do you wish to sell? "
 msgstr "Hány részvényt szeretne eladni? "
 
-#: src/exch.c:802
+#: src/exch.c:805
 #, c-format
 msgid "  No Shares Issued  "
 msgstr "  Nincsenek kibocsátott részvények  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:804
+#: src/exch.c:807
 #, c-format
 msgid ""
 "%ls has refused\n"
@@ -1093,13 +1095,13 @@ msgstr ""
 "%ls visszautasította\n"
 "a további részvények kibocsátását."
 
-#: src/exch.c:809
+#: src/exch.c:812
 #, c-format
 msgid "  Shares Issued  "
 msgstr "  Kibocsátott részvények  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:811
+#: src/exch.c:814
 #, c-format
 msgid ""
 "%ls has issued\n"
@@ -1552,13 +1554,14 @@ msgstr "%d / %d oldal"
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Nyomja le a <SZÓKÖZT> a folytatáshoz ] "
 
-#. TRANSLATORS: The specific use of <SPACE> and
-#. <BACKSPACE> is not essential: you can use <DEL>,
-#. <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
-#. <BACKSPACE>, and almost any other key instead of
-#. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
-#. <CTRL><G> or <CTRL><\>).
-#: src/help.c:494
+#. TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
+#. is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
+#. <LEFT> or <BACK-TAB> instead of <BACKSPACE>, and almost
+#. any other key instead of <SPACE> (other than <ESC>,
+#. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
+#. Note that the maximum label length is 76 characters,
+#. including the trailing space.
+#: src/help.c:495
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Nyomja le a <SZÓKÖZT> a folytatáshoz vagy <BACKSPACE>-t az előző oldalhoz] "
@@ -1664,57 +1667,62 @@ msgstr "xwcrtomb: NUL"
 msgid "xwcrtomb: `%lc'"
 msgstr "xwcrtomb: „%lc”"
 
-#: lib/getopt.c:547 lib/getopt.c:576
+#: lib/getopt.c:575 lib/getopt.c:604
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: a(z) „%s” kapcsoló nem egyértelmű; lehetőségek:"
 
-#: lib/getopt.c:624 lib/getopt.c:628
+#: lib/getopt.c:619
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: a(z) „%s” kapcsoló nem egyértelmű\n"
+
+#: lib/getopt.c:654 lib/getopt.c:658
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: a(z) „--%s” kapcsoló nem enged meg argumentumot\n"
 
-#: lib/getopt.c:637 lib/getopt.c:642
+#: lib/getopt.c:667 lib/getopt.c:672
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: a(z) „%c%s” kapcsoló nem enged meg argumentumot\n"
 
-#: lib/getopt.c:685 lib/getopt.c:704
+#: lib/getopt.c:715 lib/getopt.c:734
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
 msgstr "%s: a(z) „--%s” kapcsolóhoz egy argumentum szükséges\n"
 
-#: lib/getopt.c:742 lib/getopt.c:745
+#: lib/getopt.c:772 lib/getopt.c:775
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: ismeretlen „--%s” kapcsoló\n"
 
-#: lib/getopt.c:753 lib/getopt.c:756
+#: lib/getopt.c:783 lib/getopt.c:786
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: ismeretlen „%c%s” kapcsoló\n"
 
-#: lib/getopt.c:805 lib/getopt.c:808
+#: lib/getopt.c:835 lib/getopt.c:838
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: érvénytelen kapcsoló -- „%c”\n"
 
-#: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
+#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: a kapcsoló egy argumentumot igényel -- „%c”\n"
 
-#: lib/getopt.c:934 lib/getopt.c:950
+#: lib/getopt.c:964 lib/getopt.c:980
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: a „-W %s” kapcsoló nem egyértelmű\n"
 
-#: lib/getopt.c:974 lib/getopt.c:992
+#: lib/getopt.c:1004 lib/getopt.c:1022
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: a „-W %s” kapcsoló nem enged meg argumentumot\n"
 
-#: lib/getopt.c:1013 lib/getopt.c:1031
+#: lib/getopt.c:1043 lib/getopt.c:1061
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: a „-W %s” kapcsolóhoz egy argumentum szükséges\n"
