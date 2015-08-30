@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Balázs Úr <urbalazs@gmail.com>, 2014.
+#   Balázs Úr <urbalazs@gmail.com>, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.8\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-26 21:10+1000\n"
-"PO-Revision-Date: 2015-08-18 08:09+1000\n"
+"PO-Revision-Date: 2015-08-30 20:26+1000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -23,7 +23,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
 
 #: src/trader.c:235
 #, c-format
@@ -1674,7 +1673,7 @@ msgstr "%s: a(z) „%s” kapcsoló nem egyértelmű; lehetőségek:"
 #: lib/getopt.c:619
 #, c-format
 msgid "%s: option '%s' is ambiguous\n"
-msgstr "%s: a „%s” kapcsoló nem egyértelmű\n"
+msgstr "%s: a(z) „%s” kapcsoló nem egyértelmű\n"
 
 #: lib/getopt.c:654 lib/getopt.c:658
 #, c-format
