@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.4-pre1\n"
+"Project-Id-Version: trader 7.8-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-03-27 10:37+1100\n"
-"PO-Revision-Date: 2012-04-04 09:53+1100\n"
+"POT-Creation-Date: 2015-08-26 23:17+1000\n"
+"PO-Revision-Date: 2015-09-19 13:47+0300\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -166,37 +166,38 @@ msgstr "Tähtikauppiaiden kotisivu: <%s>.\n"
 #. TRANSLATORS: The eight company names do NOT have to be literal
 #. translations of the English names.  In fact, if possible, the
 #. names should start with successive letters of your alphabet (in
-#. English, for example, "A" to "H").  No company name should be more
-#. than 24 characters (column positions, to be precise) long.
-#: src/globals.c:46
+#. English, for example, "A" to "H"), and, ideally, be related to
+#. constellations or stars in our galaxy.  No company name should be
+#. more than 24 characters (column positions, to be precise) long.
+#: src/globals.c:47
 msgid "Altair Starways"
 msgstr "Altair Starways"
 
-#: src/globals.c:47
+#: src/globals.c:48
 msgid "Betelgeuse, Ltd"
 msgstr "Betelgeuse, Ltd"
 
-#: src/globals.c:48
+#: src/globals.c:49
 msgid "Capella Freight Co"
 msgstr "Capella Freight Co"
 
-#: src/globals.c:49
+#: src/globals.c:50
 msgid "Denebola Shippers"
 msgstr "Denebola Shippers"
 
-#: src/globals.c:50
+#: src/globals.c:51
 msgid "Eridani Expediters"
 msgstr "Eridani Expediters"
 
-#: src/globals.c:51
+#: src/globals.c:52
 msgid "Fornax Express"
 msgstr "Fornax Express"
 
-#: src/globals.c:52
-msgid "Gemeni Inc"
-msgstr "Gemeni Inc"
-
 #: src/globals.c:53
+msgid "Gemini Inc"
+msgstr "Gemini Inc"
+
+#: src/globals.c:54
 msgid "Hercules and Co"
 msgstr "Hercules and Co"
 
@@ -208,7 +209,7 @@ msgstr "Hercules and Co"
 #. possible, these should be successive letters in your alphabet (in
 #. English, "A" to "H").  Do NOT use digits or control characters.
 #. Do not change or translate anything after the vertical line.
-#: src/globals.c:67
+#: src/globals.c:68
 msgid "ABCDEFGH|input|Companies"
 msgstr "ABCDEFGH|input|Companies"
 
@@ -219,7 +220,7 @@ msgstr "ABCDEFGH|input|Companies"
 #. should be successive letters in your alphabet.  Do NOT use digits
 #. or control characters.  Do not change or translate anything after
 #. the vertical line.
-#: src/globals.c:79
+#: src/globals.c:80
 msgid "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
 msgstr "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
 
@@ -230,7 +231,7 @@ msgstr "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
 #. the remaining for the eight companies.  Do not change or translate
 #. anything after the vertical line.  Double-width characters ARE
 #. handled correctly.
-#: src/globals.c:91
+#: src/globals.c:92
 msgid ".+*ABCDEFGH|output|MapVals"
 msgstr ".+*ABCDEFGH|output|MapVals"
 
@@ -240,7 +241,7 @@ msgstr ".+*ABCDEFGH|output|MapVals"
 #. to the first character in the "input|GameMoves" string, and so on.
 #. Do not change or translate anything after the vertical line.
 #. Double-width characters ARE handled correctly.
-#: src/globals.c:102
+#: src/globals.c:103
 msgid "abcdefghijklmnopqrst|output|GameMoves"
 msgstr "abcdefghijklmnopqrst|output|GameMoves"
 
@@ -249,35 +250,35 @@ msgstr "abcdefghijklmnopqrst|output|GameMoves"
 #. on the gender of the player, it may be simpler to list cardinal
 #. numbers instead (eg, "No. 1").  Up to five characters are allowed
 #. (see ORDINAL_COLS in src/intf.h).
-#: src/globals.c:113
+#: src/globals.c:114
 msgid "1st"
 msgstr "1."
 
-#: src/globals.c:114
+#: src/globals.c:115
 msgid "2nd"
 msgstr "2."
 
-#: src/globals.c:115
+#: src/globals.c:116
 msgid "3rd"
 msgstr "3."
 
-#: src/globals.c:116
+#: src/globals.c:117
 msgid "4th"
 msgstr "4."
 
-#: src/globals.c:117
+#: src/globals.c:118
 msgid "5th"
 msgstr "5."
 
-#: src/globals.c:118
+#: src/globals.c:119
 msgid "6th"
 msgstr "6."
 
-#: src/globals.c:119
+#: src/globals.c:120
 msgid "7th"
 msgstr "7."
 
-#: src/globals.c:120
+#: src/globals.c:121
 msgid "8th"
 msgstr "8."
 
@@ -314,7 +315,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Cc"
 
-#: src/game.c:341 src/move.c:390
+#: src/game.c:341 src/move.c:413
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Kirjoita pelin numero [^{1^}-^{9^}] tai ^{<CTRL><C>^} peruuttamiseksi: "
@@ -391,7 +392,7 @@ msgstr "  Pelin voittaja  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:859
+#: src/game.c:606 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -525,45 +526,56 @@ msgctxt "label"
 msgid "Total value:   "
 msgstr "Kokonaisarvo:   "
 
-#: src/game.c:800 src/exch.c:322
+#: src/game.c:800 src/exch.c:324
 #, c-format
 msgctxt "label"
 msgid "Current cash:  "
 msgstr "Käteiskassa:    "
 
-#: src/game.c:807 src/exch.c:330
+#: src/game.c:807 src/exch.c:332
 #, c-format
 msgctxt "label"
 msgid "Current debt:  "
 msgstr "Velat:          "
 
-#: src/game.c:813 src/exch.c:335
+#: src/game.c:813 src/exch.c:337
 #, c-format
 msgctxt "label"
 msgid "Interest rate: "
 msgstr "Korkoprosentti: "
 
-#: src/move.c:239 src/exch.c:182
+#. TRANSLATORS: Each label may be up to 37 characters wide
+#. (for <1> and <2>) or 38 characters wide (for <3> and
+#. <CTRL><C>).  The sequences "^{" and "^}" change the
+#. character rendition (attributes) and take up no space.
+#: src/move.c:246 src/exch.c:182
 #, c-format
 msgid "^{<1>^} Display stock portfolio"
 msgstr "^{<1>^} Näytä osakesalkku"
 
-#: src/move.c:241
+#: src/move.c:248
 #, c-format
 msgid "^{<2>^} Declare bankruptcy"
 msgstr "^{<2>^} Julista konkurssi"
 
-#: src/move.c:243
+#: src/move.c:250
 #, c-format
 msgid "^{<3>^} Save and end the game"
 msgstr "^{<3>^} Tallenna ja lopeta peli"
 
-#: src/move.c:245
+#: src/move.c:252
 #, c-format
 msgid "^{<CTRL><C>^} Quit the game"
 msgstr "^{<CTRL><C>^} Poistu pelistä"
 
-#: src/move.c:249
+#. TRANSLATORS: The maximum column width is either 38
+#. characters (including the trailing space), or 76
+#. characters minus the length of the longest of the four
+#. strings above this one.  The sequences "^{", "^}",
+#. "^[" and "^]" do not take up any room.  "%lc" takes up
+#. either one or two columns, depending on the appropriate
+#. "output|GameMoves" string in the current PO file.
+#: src/move.c:263
 #, c-format
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Valitse siirto [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
@@ -575,59 +587,59 @@ msgstr "Valitse siirto [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 #. map); each player selects just one move
 #. per turn.  "Move" refers to the player's
 #. choice.
-#: src/move.c:286
+#: src/move.c:309
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Siirto ^{%lc^}"
 
-#: src/move.c:307
+#: src/move.c:330
 #, c-format
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Julista konkurssi)"
 
-#: src/move.c:316
+#: src/move.c:339
 #, c-format
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Tallenna ja lopeta peli)"
 
-#: src/move.c:337
+#: src/move.c:360
 #, c-format
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Poistu pelistä)"
 
-#: src/move.c:352
+#: src/move.c:375
 #, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Oletko varma? [^{K^}/^{E^}] "
 
-#: src/move.c:369 src/move.c:447
+#: src/move.c:392 src/move.c:470
 #, c-format
 msgid "Saving game %d... "
 msgstr "Tallennetaan peliä %d... "
 
-#: src/move.c:677 src/move.c:685 src/move.c:1043 src/move.c:1080
+#: src/move.c:700 src/move.c:708 src/move.c:1066 src/move.c:1103
 #, c-format
 msgid "  Bankruptcy Court  "
 msgstr "  Konkurssioikeus  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:679
+#: src/move.c:702
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "Tähtienvälinen Kauppapankki on julistanut yrityksen %ls konkurssiin."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:687
+#: src/move.c:710
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls on julistettu konkurssiin."
 
-#: src/move.c:755
+#: src/move.c:778
 #, c-format
 msgid "  New Company  "
 msgstr "  Uusi yritys  "
 
-#: src/move.c:756
+#: src/move.c:779
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -636,7 +648,7 @@ msgstr ""
 "Uusi yritys on muodostettu!\n"
 "Sen nimi on ^{%ls^}."
 
-#: src/move.c:815
+#: src/move.c:838
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -645,7 +657,7 @@ msgstr ""
 "^{%ls^} on juuri yhdistetty yritykseen ^{%ls^}.\n"
 "Huomaa seuraavat rahansiirrot:\n"
 
-#: src/move.c:821
+#: src/move.c:844
 #, c-format
 msgid "  Company Merger  "
 msgstr "  Yritysyhdistäjä  "
@@ -657,7 +669,7 @@ msgstr "  Yritysyhdistäjä  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:841
+#: src/move.c:864
 #, c-format
 msgctxt "label"
 msgid "Old stock: "
@@ -665,7 +677,7 @@ msgstr "Vanha osakekanta: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:852
+#: src/move.c:875
 #, c-format
 msgctxt "label"
 msgid "New Stock: "
@@ -676,7 +688,7 @@ msgstr "Uusi osakekanta:  "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:866
+#: src/move.c:889
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -685,7 +697,7 @@ msgstr "Bonus (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:871
+#: src/move.c:894
 #, c-format
 msgctxt "subtitle"
 msgid "Total"
@@ -695,7 +707,7 @@ msgstr "Yhteensä"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:878
+#: src/move.c:901
 #, c-format
 msgctxt "subtitle"
 msgid "New"
@@ -704,14 +716,14 @@ msgstr "Uusi"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:884
+#: src/move.c:907
 #, c-format
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Vanha"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1045
+#: src/move.c:1068
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -723,7 +735,7 @@ msgstr ""
 "^{Kaikki varat on otettu maksamattomien lainojen maksamiseen.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1069
+#: src/move.c:1092
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -742,7 +754,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1097
+#: src/move.c:1120
 #, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
@@ -752,18 +764,18 @@ msgstr "Maksettu summa per osake: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1105
+#: src/move.c:1128
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Vanha osakearvo:          "
 
-#: src/move.c:1188 src/move.c:1223 src/exch.c:319
+#: src/move.c:1211 src/move.c:1246 src/exch.c:321
 #, c-format
 msgid "  Interstellar Trading Bank  "
 msgstr "  Tähtienvälinen Kauppapankki  "
 
-#: src/move.c:1190
+#: src/move.c:1213
 #, c-format
 msgid ""
 "You were forced to borrow %N\n"
@@ -772,7 +784,7 @@ msgstr ""
 "Sinun oli pakko lainata %N\n"
 "kattaaksesi tappiot yrityksen osakkeista."
 
-#: src/move.c:1225
+#: src/move.c:1248
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
@@ -816,22 +828,24 @@ msgstr ""
 "Osakkeita\n"
 "myyty"
 
-#: src/exch.c:184
+#. TRANSLATORS: Each label may be up to 37 characters wide
+#. (for <1> and <2>) or 38 characters wide (for <3> and <4>).
+#: src/exch.c:186
 #, c-format
 msgid "^{<2>^} Display galaxy map"
 msgstr "^{<2>^} Näytä galaksikartta"
 
-#: src/exch.c:186
+#: src/exch.c:188
 #, c-format
 msgid "^{<3>^} Visit the Trading Bank"
 msgstr "^{<3>^} Vieraile Kauppapankissa"
 
-#: src/exch.c:188
+#: src/exch.c:190
 #, c-format
 msgid "^{<4>^} Exit the Stock Exchange"
 msgstr "^{<4>^} Poistu osakepörssistä"
 
-#: src/exch.c:191
+#: src/exch.c:193
 #, c-format
 msgid "Enter selection [^[Company letter^]/^{1^}-^{4^}]: "
 msgstr "Kirjoita valinta [^[Yrityskirjain^]/^{1^}-^{4^}]: "
@@ -845,7 +859,7 @@ msgstr "Kirjoita valinta [^[Yrityskirjain^]/^{1^}-^{4^}]: "
 #.
 #. Note that some of these labels are used for both the Player
 #. Status window and the Trading Bank window.
-#: src/exch.c:349
+#: src/exch.c:351
 #, c-format
 msgctxt "label"
 msgid "Credit limit:  "
@@ -855,68 +869,68 @@ msgstr "Luottoraja:     "
 #. from the Bank" menu options must all be the same length
 #. (ie, padded with trailing spaces as required).  The maximum
 #. length is 72 characters.
-#: src/exch.c:364
+#: src/exch.c:366
 #, c-format
 msgid "^{<1>^} Borrow money      "
 msgstr "^{<1>^} Lainarahat     "
 
-#: src/exch.c:366
+#: src/exch.c:368
 #, c-format
 msgid "^{<2>^} Repay debt        "
 msgstr "^{<2>^} Maksetut velat "
 
-#: src/exch.c:368
+#: src/exch.c:370
 #, c-format
 msgid "^{<3>^} Exit from the Bank"
 msgstr "^{<3>^} Poistu pankista"
 
-#: src/exch.c:371
+#: src/exch.c:373
 #, c-format
 msgid "Enter selection [^{1^}-^{3^}]: "
 msgstr "Kirjoita valinta [^{1^}-^{3^}]: "
 
-#: src/exch.c:424
+#: src/exch.c:426
 #, c-format
 msgid "  Insufficient Credit Limit  "
 msgstr "  Riittämätön luottoraja  "
 
-#: src/exch.c:425
+#: src/exch.c:427
 #, c-format
 msgid "The Bank will not lend you any more money."
 msgstr "Pankki ei enää lainaa sinulle rahaa."
 
-#: src/exch.c:445
+#: src/exch.c:447
 #, c-format
 msgid "How much do you wish to borrow? "
 msgstr "Kuinka paljon haluat lainata? "
 
-#: src/exch.c:477
+#: src/exch.c:479
 #, c-format
 msgid "  No Debt  "
 msgstr "  Ei velkaa  "
 
-#: src/exch.c:478
+#: src/exch.c:480
 #, c-format
 msgid "You have no debt to repay."
 msgstr "Sinulla ei ole maksettavia velkoja."
 
-#: src/exch.c:482
+#: src/exch.c:484
 #, c-format
 msgid "  No Cash  "
 msgstr "  Ei käteistä  "
 
-#: src/exch.c:483
+#: src/exch.c:485
 #, c-format
 msgid "You have no cash with which to repay the debt!"
 msgstr "Sinulla ei ole käteistä, jolla voisit maksaa velan!"
 
-#: src/exch.c:503
+#: src/exch.c:505
 #, c-format
 msgid "How much do you wish to repay? "
 msgstr "Kuinka paljon haluat maksaa? "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:579
+#: src/exch.c:581
 #, c-format
 msgid "  Stock Transaction in %ls  "
 msgstr "  Osakekantasiirto yrityksessä %ls  "
@@ -929,7 +943,7 @@ msgstr "  Osakekantasiirto yrityksessä %ls  "
 #. and must have at least one trailing space for the output
 #. routines to work correctly.  The maximum length of each
 #. label is 22 characters.
-#: src/exch.c:590
+#: src/exch.c:592
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares issued:   "
@@ -937,7 +951,7 @@ msgstr "Myydyt osakkeet:   "
 
 #. TRANSLATORS: "Shares left" is the number of shares that are
 #. left to be purchased in the current company.
-#: src/exch.c:598
+#: src/exch.c:600
 #, c-format
 msgctxt "label|Stock A"
 msgid "Shares left:     "
@@ -945,28 +959,28 @@ msgstr "Loput osakkeet:  "
 
 #. TRANSLATORS: "Price per share" is the cost of each share in
 #. the current company.
-#: src/exch.c:605
+#: src/exch.c:607
 #, c-format
 msgctxt "label|Stock A"
 msgid "Price per share: "
 msgstr "Hinta per osake: "
 
 #. TRANSLATORS: "Return" is the share return as a percentage.
-#: src/exch.c:611
+#: src/exch.c:613
 #, c-format
 msgctxt "label|Stock A"
 msgid "Return:          "
 msgstr "Tuotto:          "
 
-#. TRANSLATORS: "Current holdings" is the number of shares the
-#. current player owns in this particular company.
+#. TRANSLATORS: "Current holdings" is the number of shares
+#. the current player owns in this particular company.
 #.
 #. Note that the labels "Current holdings", "Percentage owned"
 #. and "Current cash" MUST all be the same length and contain at
 #. least one trailing space for the display routines to work
 #. correctly.  The maximum length of each label is 18
 #. characters.
-#: src/exch.c:624
+#: src/exch.c:626
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current holdings: "
@@ -974,59 +988,61 @@ msgstr "Nykyomistusosuus: "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
-#: src/exch.c:631
+#: src/exch.c:636
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
 msgstr "Omistusprosentti: "
 
-#: src/exch.c:636
+#: src/exch.c:641
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
 msgstr "Käteiskassa:      "
 
-#: src/exch.c:647
+#. TRANSLATORS: Each label may be up to 35 characters wide
+#. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
+#: src/exch.c:654
 #, c-format
 msgid "^{<1>^} Buy stock from company"
 msgstr "^{<1>^} Osta osakekanta yritykseltä"
 
-#: src/exch.c:649
+#: src/exch.c:656
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Myy osakekanta taas yritykselle"
 
-#: src/exch.c:651
+#: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
 msgstr "^{<3>^} Pyydä lisäosakkeita yritykseltä"
 
-#: src/exch.c:653
+#: src/exch.c:660
 #, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
 msgstr "^{<4>^} Poistu osakepörssistä"
 
-#: src/exch.c:656
+#: src/exch.c:663
 #, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
 msgstr "Kirjoita valinta [^{1^}-^{4^}]: "
 
-#: src/exch.c:712
+#: src/exch.c:719
 #, c-format
 msgid "  No Shares Available  "
 msgstr "  Osakkeita ei ole saatavilla  "
 
-#: src/exch.c:713
+#: src/exch.c:720
 #, c-format
 msgid "No more shares are available for purchase."
 msgstr "Osakkeita ei ole enää saatavilla ostoa varten."
 
-#: src/exch.c:717
+#: src/exch.c:724
 #, c-format
 msgid "  Insufficient Cash  "
 msgstr "  Riittämättömästi käteistä  "
 
-#: src/exch.c:718
+#: src/exch.c:725
 #, c-format
 msgid ""
 "You do not have enough cash\n"
@@ -1035,47 +1051,47 @@ msgstr ""
 "Sinulla ei ole riittävästi käteistä\n"
 "lisäosakkeiden ostamiseen."
 
-#: src/exch.c:729
+#: src/exch.c:736
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
 msgstr[0] "Voit osataa ^{yhden^} osakkeen."
 msgstr[1] "Voit ostaa aina ^{%'ld^} osaketta."
 
-#: src/exch.c:735
+#: src/exch.c:742
 #, c-format
 msgid "How many shares do you wish to purchase? "
 msgstr "Kuinka monta osaketta haluat ostaa? "
 
-#: src/exch.c:756
+#: src/exch.c:763
 #, c-format
 msgid "  No Shares  "
 msgstr "  Ei osakkeita  "
 
-#: src/exch.c:757
+#: src/exch.c:764
 #, c-format
 msgid "You do not have any shares to sell."
 msgstr "Sinulla ei ole myytäviä osakkeita."
 
-#: src/exch.c:764
+#: src/exch.c:771
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
 msgstr[0] "Voit myydä ^{yhden^} osakkeen."
 msgstr[1] "Voit myydä ^{%'ld^} osaketta."
 
-#: src/exch.c:770
+#: src/exch.c:777
 #, c-format
 msgid "How many shares do you wish to sell? "
 msgstr "Kuinka monta osaketta haluat myydä? "
 
-#: src/exch.c:798
+#: src/exch.c:805
 #, c-format
 msgid "  No Shares Issued  "
 msgstr "  Ei myytäviä osakkeita  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:800
+#: src/exch.c:807
 #, c-format
 msgid ""
 "%ls has refused\n"
@@ -1084,13 +1100,13 @@ msgstr ""
 "%ls on kieltäytynyt\n"
 "myymästä lisää osakkeita."
 
-#: src/exch.c:805
+#: src/exch.c:812
 #, c-format
 msgid "  Shares Issued  "
 msgstr "  Myydyt osakkeet  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:807
+#: src/exch.c:814
 #, c-format
 msgid ""
 "%ls has issued\n"
@@ -1105,52 +1121,58 @@ msgstr[1] ""
 "%ls on myynyt\n"
 "^{%'ld^} osaketta lisää."
 
-#: src/fileio.c:55 src/fileio.c:92 src/fileio.c:131 src/fileio.c:381
+#: src/fileio.c:43 src/fileio.c:83 src/fileio.c:126 src/fileio.c:387
 #, c-format
 msgid "%s: missing field on line %d"
 msgstr "%s: kenttä puuttuu rivillä %d"
 
-#: src/fileio.c:60
+#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390
+#: src/fileio.c:393
+#, c-format
+msgid "%s: illegal field on line %d"
+msgstr "%s: virheellinen kenttä rivillä %d"
+
+#: src/fileio.c:51
 #, c-format
 msgid "%s: illegal field on line %d: `%s'"
 msgstr "%s: virheellinen kenttä rivillä %d: ”%s”"
 
-#: src/fileio.c:64
+#: src/fileio.c:55
 #, c-format
 msgid "%s: illegal value on line %d: `%s'"
 msgstr "%s: virheellinen arvo rivillä %d: ”%s”"
 
-#: src/fileio.c:96 src/fileio.c:135 src/fileio.c:393
+#: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
 #, c-format
 msgid "%s: illegal value on line %d"
 msgstr "%s: virheellinen arvo rivillä %d"
 
-#: src/fileio.c:103
+#: src/fileio.c:98
 #, c-format
 msgid "%s: illegal characters on line %d"
 msgstr "%s: virheelliset merkit rivillä %d"
 
-#: src/fileio.c:184
+#: src/fileio.c:183
 #, c-format
 msgid "%s: could not convert string"
 msgstr "%s: ei voitu muuntaa merkkijonoa"
 
-#: src/fileio.c:255
+#: src/fileio.c:257
 #, c-format
 msgid "  Game Not Found  "
 msgstr "  Peliä ei löytynyt  "
 
-#: src/fileio.c:256
+#: src/fileio.c:258
 #, c-format
 msgid "Game %d has not been saved to disk."
 msgstr "Peliä %d ei ole tallennetu levylle."
 
-#: src/fileio.c:263
+#: src/fileio.c:265
 #, c-format
 msgid "  Game Not Loaded  "
 msgstr "  Peliä ei ladattu  "
 
-#: src/fileio.c:264
+#: src/fileio.c:266
 #, c-format
 msgid ""
 "Game %d could not be loaded from disk.\n"
@@ -1161,47 +1183,42 @@ msgstr ""
 "\n"
 "^{Tiedosto %s: %s^}"
 
-#: src/fileio.c:316
+#: src/fileio.c:319
 #, c-format
 msgid "%s: missing header in game file"
 msgstr "%s: pelitiedostosta puuttuu otsake"
 
-#: src/fileio.c:319
+#: src/fileio.c:322
 #, c-format
 msgid "%s: not a valid game file"
 msgstr "%s: ei ole kelvollinen pelitiedosto"
 
-#: src/fileio.c:322 src/fileio.c:329
+#: src/fileio.c:325 src/fileio.c:332
 #, c-format
 msgid "%s: missing subheader in game file"
 msgstr "%s: pelitiedostosta puuttuu aliotsake"
 
-#: src/fileio.c:325
+#: src/fileio.c:328
 #, c-format
 msgid "%s: saved under a different version of Star Traders"
 msgstr "%s: tallennettu Tähtikauppiaiden eri versiona"
 
-#: src/fileio.c:332
+#: src/fileio.c:335
 #, c-format
 msgid "%s: saved under an incompatible character encoding"
 msgstr "%s: tallennettu yhteensopimattomana merkkikoodauksena"
 
-#: src/fileio.c:340
+#: src/fileio.c:343
 #, c-format
 msgid "%s: illegal or missing field on line %d"
 msgstr "%s: virheellinen tai puuttuva kenttä rivillä %d"
 
-#: src/fileio.c:384
-#, c-format
-msgid "%s: illegal field on line %d"
-msgstr "%s: virheellinen kenttä rivillä %d"
-
-#: src/fileio.c:466 src/fileio.c:487
+#: src/fileio.c:479 src/fileio.c:501
 #, c-format
 msgid "  Game Not Saved  "
 msgstr "  Peliä ei tallennettu  "
 
-#: src/fileio.c:467
+#: src/fileio.c:480
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1212,7 +1229,7 @@ msgstr ""
 "\n"
 "^{Hakemisto %s: %s^}"
 
-#: src/fileio.c:488
+#: src/fileio.c:502
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1283,7 +1300,17 @@ msgstr ""
 #. that would translate to just one character (or maybe two) in the
 #. output text).
 #.
-#: src/help.c:103
+#. Formatting the help text is probably the most complicated and tedious
+#. part of translating Star Traders.  The author and maintainer of this
+#. game is more than happy to help you with this task: if you are able
+#. to provide a translation, even if it is not formatted correctly, the
+#. maintainer will perform the necessary adjustments for word-wrapping
+#. and justification.  In addition, remember that you have up to 10
+#. pages in which to display your help text: the translation does not
+#. need to correspond exactly to the original text.  This text will not
+#. be changing any time soon!
+#.
+#: src/help.c:113
 msgid ""
 "^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
 "game is to amass  the greatest amount  of wealth  possible.  This is done by\n"
@@ -1318,7 +1345,7 @@ msgstr ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
-#: src/help.c:122
+#: src/help.c:132
 msgid ""
 "The computer selects ^B~m^N moves  (labeled ^k~1^N to ^k~M^N)  at random, and places these\n"
 "on the map.  To select  any of the highlighted positions, press that letter.\n"
@@ -1353,7 +1380,7 @@ msgstr ""
 "tykselle.  Siten  jos siirto ^k~3^N valitaan  siirtokartalta, ^o ~+ ^N sijoitettaisiin\n"
 "tuohon sijaintiin.\n"
 
-#: src/help.c:140
+#: src/help.c:150
 msgid ""
 "If, on the other hand, a position  next to  a star  (or another outpost)  is\n"
 "selected, a ^Bcompany^N would be formed  and its letter would appear on the map.\n"
@@ -1387,7 +1414,7 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
-#: src/help.c:158
+#: src/help.c:168
 msgid ""
 "Selecting positions next to stars increases the value of your stock by about\n"
 "five times as much  as an extension  not next to a star.  Thus move ^k~6^N should\n"
@@ -1421,7 +1448,7 @@ msgstr ""
 "ovat arvokkaampia: yrityksen osakkeen hinta nousee suuremmalla summalla kuin\n"
 "se nousisi niillä etuvartioilla, jotka eivät ole tähtien vieressä.\n"
 
-#: src/help.c:176
+#: src/help.c:186
 msgid ""
 "If two companies  are separated on the map by only one square, then they can\n"
 "be ^Bmerged^N into  one company  by selecting that position (if available).  For\n"
@@ -1457,7 +1484,7 @@ msgstr ""
 "tyksessä suhteessa  summaan, jonka he omistivat  vanhassa yrityksessä.  Myös\n"
 "käteisbonus maksetaan, suhteessa vanhan yrityksen omistusprosenttiin.\n"
 
-#: src/help.c:195
+#: src/help.c:205
 msgid ""
 "Once you select your move, you enter  the ^BInterstellar Stock Exchange^N.  Here\n"
 "you may  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
@@ -1493,28 +1520,32 @@ msgstr ""
 "^BPelin  voittaja^N  on  henkilö,  jolla on  suurin  nettovarallisuus  (yhteensä\n"
 "käteisarvo, osakekanta ja velat).  ^HHyvää onnea^N ja paras pelaaja voittakoon!\n"
 
-#: src/help.c:215
+#: src/help.c:225
 msgid "@ Help text, page 7\n"
 msgstr "@ Opasteteksti, sivu 7\n"
 
-#: src/help.c:216
+#: src/help.c:226
 msgid "@ Help text, page 8\n"
 msgstr "@ Opasteteksti, sivu 8\n"
 
-#: src/help.c:217
+#: src/help.c:227
 msgid "@ Help text, page 9\n"
 msgstr "@ Opasteteksti, sivu 9\n"
 
-#: src/help.c:218
+#: src/help.c:228
 msgid "@ Help text, page 10\n"
 msgstr "@ Opasteteksti, sivu 10\n"
 
-#: src/help.c:270
+#: src/help.c:280
 #, c-format
 msgid "  How to Play  "
 msgstr "  Kuinka pelata  "
 
-#: src/help.c:272
+#. TRANSLATORS: The first %d is the current page number,
+#. the second is the number of pages your help text takes
+#. (6, in English).  You can replace the second %d with a
+#. fixed word, if you like.
+#: src/help.c:286
 #, c-format
 msgid "Page %d of %d"
 msgstr "Sivu %d / %d"
@@ -1522,18 +1553,19 @@ msgstr "Sivu %d / %d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:473 src/intf.c:3035
+#: src/help.c:487 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Paina <VÄLIYÖNTIÄ> jatkaaksesi ] "
 
-#. TRANSLATORS: The specific use of <SPACE> and
-#. <BACKSPACE> is not essential: you can use <DEL>,
-#. <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
-#. <BACKSPACE>, and almost any other key instead of
-#. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
-#. <CTRL><G> or <CTRL><\>).
-#: src/help.c:480
+#. TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
+#. is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
+#. <LEFT> or <BACK-TAB> instead of <BACKSPACE>, and almost
+#. any other key instead of <SPACE> (other than <ESC>,
+#. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
+#. Note that the maximum label length is 76 characters,
+#. including the trailing space.
+#: src/help.c:495
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Paina <VÄLILYÖNTIÄ> jatkaaksesi tai <←> siirtyäksesi edelliselle sivulle ] "
@@ -1610,86 +1642,91 @@ msgctxt "answer"
 msgid "No"
 msgstr "Ei"
 
-#: src/utils.c:199 src/utils.c:220
+#: src/utils.c:378 src/utils.c:399
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:225
+#: src/utils.c:404
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:238
+#: src/utils.c:417
 #, c-format
 msgid "out of memory"
 msgstr "muisti loppui"
 
-#: src/utils.c:571
+#: src/utils.c:1041
 #, c-format
 msgid "xmbstowcs: `%s'"
 msgstr "xmbstowcs: ”%s”"
 
-#: src/utils.c:611
+#: src/utils.c:1081
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:616
+#: src/utils.c:1086
 #, c-format
 msgid "xwcrtomb: `%lc'"
 msgstr "xwcrtomb: ”%lc”"
 
-#: lib/getopt.c:547 lib/getopt.c:576
+#: lib/getopt.c:575 lib/getopt.c:604
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: valitsin ’%s’ ei ole yksiselitteinen; mahdollisuudet:"
 
-#: lib/getopt.c:624 lib/getopt.c:628
+#: lib/getopt.c:619
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: valitsin ’%s’ ei ole yksiselitteinen\n"
+
+#: lib/getopt.c:654 lib/getopt.c:658
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: valitsin ’--%s’ ei salli argumenttia\n"
 
-#: lib/getopt.c:637 lib/getopt.c:642
+#: lib/getopt.c:667 lib/getopt.c:672
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: valitsin ’%c%s’ ei salli argumenttia\n"
 
-#: lib/getopt.c:685 lib/getopt.c:704
+#: lib/getopt.c:715 lib/getopt.c:734
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
 msgstr "%s: valitsin ’--%s’ vaatii argumentin\n"
 
-#: lib/getopt.c:742 lib/getopt.c:745
+#: lib/getopt.c:772 lib/getopt.c:775
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: tunnistamaton valitsin ’--%s’\n"
 
-#: lib/getopt.c:753 lib/getopt.c:756
+#: lib/getopt.c:783 lib/getopt.c:786
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: tunnistamaton valitsin ’%c%s’\n"
 
-#: lib/getopt.c:805 lib/getopt.c:808
+#: lib/getopt.c:835 lib/getopt.c:838
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: virheellinen valitsin -- ’%c’\n"
 
-#: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
+#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: valitsin vaatii argumentin -- ’%c’\n"
 
-#: lib/getopt.c:934 lib/getopt.c:950
+#: lib/getopt.c:964 lib/getopt.c:980
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: valitsin ’-W %s’ ei ole yksiselitteinen\n"
 
-#: lib/getopt.c:974 lib/getopt.c:992
+#: lib/getopt.c:1004 lib/getopt.c:1022
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: valitsin ’-W %s’ ei salli argumenttia\n"
 
-#: lib/getopt.c:1013 lib/getopt.c:1031
+#: lib/getopt.c:1043 lib/getopt.c:1061
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: valitsin ’-W %s’ vaatii argumentin\n"
