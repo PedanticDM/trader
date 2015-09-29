@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Joe Hansen <joedalton2@yahoo.dk>, 2012-13.
+#   Joe Hansen <joedalton2@yahoo.dk>, 2012-15.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.9\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-26 21:10+1000\n"
-"PO-Revision-Date: 2015-09-30 09:48+1000\n"
+"PO-Revision-Date: 2015-09-30 09:50+1000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -175,7 +175,7 @@ msgstr "Bredevang ApS"
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
-msgstr "Capellefragtfirmaet"
+msgstr "Capelle - fragtfirmaet"
 
 #: src/globals.c:50
 msgid "Denebola Shippers"
@@ -299,7 +299,7 @@ msgstr "Den første spiller er ^{%ls^}."
 #: src/game.c:259
 #, c-format
 msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
-msgstr "Indtast antallet af spillere [^{1^}-^{%d^}] eller ^{<C>^} for at fortsætte et spil: "
+msgstr "Indtast antallet af spillere [^{1^}-^{%d^}] eller ^{<F>^} for at fortsætte et spil: "
 
 #. TRANSLATORS: This string specifies the keycodes used to continue a
 #. game; these must NOT contain any numeric digit from 1 to 9.  The
@@ -309,7 +309,7 @@ msgstr "Indtast antallet af spillere [^{1^}-^{%d^}] eller ^{<C>^} for at fortsæ
 #: src/game.c:276
 msgctxt "input|ContinueGame"
 msgid "Cc"
-msgstr "Cc"
+msgstr "Ff"
 
 #: src/game.c:341 src/move.c:413
 #, c-format
@@ -1011,10 +1011,12 @@ msgstr "^{<1>^} Køb aktie fra firma"
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Sælg aktie tilbage fra firma"
 
+# burde være Anmod firma om at udstede flere aktier
+# men så bliver aktier forkortet væk
 #: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Anmod firma om at udstede flere aktier"
+msgstr "^{<3>^} Anmod firma om flere aktier"
 
 #: src/exch.c:660
 #, c-format
@@ -1329,8 +1331,8 @@ msgid ""
 msgstr ""
 "^BStar Traders^N  er et  simpelt spil  med rumhandel. Formålet  i spillet  er at\n"
 "samle den størst mulige mængde  af rigdom. Dette gøres ved at oprette inter-\n"
-"stellare handelsruter,  udvide dem og købe aktier i firmaerne der kontrolle-\n"
-"rer dem. Aktier  stiger i værdi  efterhånden  som firmaets  handel  udvides.\n"
+"stellare handelsruter,  udvide dem og  købe aktier i  firmaerne der kontrol-\n"
+"lerer dem. Aktier  stiger i værdi  efterhånden  som firmaets handel udvides.\n"
 "Derudover  ændres aktiernes udbytte (som en procent)  sig også. Spillere kan\n"
 "også låne fra Den Interstellare Handelsbank for at finansiere yderligere køb\n"
 "på aktiebørsen.\n"
@@ -1339,8 +1341,8 @@ msgstr ""
 "se således ud:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N repræsent. ^Bempty space^N,\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N repræsent. ^Bstar^N.\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N repræsenterer ^Bledig plads^N,\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N repræsent. ^Bstjerne^N.\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
@@ -1405,7 +1407,7 @@ msgstr ""
 "Hvis en placering  ved siden  af et eksisterende  firma  vælges  vil firmaet\n"
 "udvide  sine handlinger  med et felt. Dette øger prisen  for dets aktier  og\n"
 "dermed  din  forrentning. Hvis kortet  var vist  som nedenfor  vil valg af ^k~6^N\n"
-"eller ^k~8^N øge firmaet ^B~B^N handelsrute:\n"
+"eller ^k~8^N øge firmaet ^B~B^Ns handelsrute:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
@@ -1549,7 +1551,7 @@ msgstr "  Sådan spiller du  "
 #: src/help.c:286
 #, c-format
 msgid "Page %d of %d"
-msgstr "Side  %d af %d"
+msgstr "Side %d af %d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
@@ -1559,6 +1561,7 @@ msgstr "Side  %d af %d"
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Tryk <MELLEMRUM> for at fortsætte ] "
 
+# Der er en begrænsning her, kun 76 tegn må bruges
 #. TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
 #. is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
 #. <LEFT> or <BACK-TAB> instead of <BACKSPACE>, and almost
@@ -1569,7 +1572,7 @@ msgstr "[ Tryk <MELLEMRUM> for at fortsætte ] "
 #: src/help.c:495
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
-msgstr "[ Tryk <MELLEMRUM> for at fortsætte eller <BACKSPACE> for den forrige side ] "
+msgstr "[ Tryk <MELLEMRUM> for at fortsætte eller <←> for den forrige side ] "
 
 #: src/intf.c:110
 #, c-format
