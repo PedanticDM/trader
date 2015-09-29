@@ -102,12 +102,12 @@ You can also run configure  in a separate build-only directory tree.  This
 feature requires GNU Make and allows you to keep the source code tree from
 being modified by  the compilation process.  To use  this option, create a
 separate build directory, then run  configure.  For example, if you placed
-the Star Traders  source code tree in $HOME/src/trader-7.8,  you could run
+the Star Traders  source code tree in $HOME/src/trader-7.9,  you could run
 something like:
 
-    mkdir $HOME/build/trader-build-7.8
-    cd $HOME/build/trader-build-7.8
-    $HOME/src/trader-7.8/configure
+    mkdir $HOME/build/trader-build-7.9
+    cd $HOME/build/trader-build-7.9
+    $HOME/src/trader-7.9/configure
 
 Once again, the Autoconf manual describes these options (and many others):
 
