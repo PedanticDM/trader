@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 Danish Translations for Star Traders                  *
-# *                 Copyright (C) 2012-13, John Zaitseff                  *
+# *                 Copyright (C) 2012-15, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.8-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-26 23:17+1000\n"
-"PO-Revision-Date: 2015-09-29 00:00+0000\n"
+"PO-Revision-Date: 2015-09-30 09:51+1000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -309,7 +309,7 @@ msgstr "Indtast antallet af spillere [^{1^}-^{%d^}] eller ^{<F>^} for at fortsæ
 #: src/game.c:276
 msgctxt "input|ContinueGame"
 msgid "Cc"
-msgstr ""
+msgstr "Ff"
 
 #: src/game.c:341 src/move.c:413
 #, c-format
@@ -1343,7 +1343,7 @@ msgstr ""
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N repræsenterer ^Bledig plads^N,\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N repræsent. ^Bstjerne^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N repræsenterer ^Bstjerne^N.\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 
@@ -1552,7 +1552,7 @@ msgstr "  Sådan spiller du  "
 #: src/help.c:286
 #, c-format
 msgid "Page %d of %d"
-msgstr "Side  %d af %d"
+msgstr "Side %d af %d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
@@ -1735,7 +1735,3 @@ msgstr "%s: tilvalg »-W %s« tillader ikke et argument\n"
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: tilvalg »-W %s« kræver et argument\n"
-
-#~ msgctxt "input|ContinueGame"
-#~ msgid "Ff"
-#~ msgstr "Ff"
