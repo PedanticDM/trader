@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2016 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=. --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --no-conditional-dependencies --no-libtool --macro-prefix=gl assert btowc config-h crc getopt-gnu gettext gettext-h gettimeofday locale mbrtowc mbsrtowcs stdbool stdio striconv string strstr sys_stat sys_time unistd wchar wcrtomb wcsdup wctob wctype-h
+#   gnulib-tool --import --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --no-conditional-dependencies --no-libtool --macro-prefix=gl assert btowc config-h crc getopt-gnu gettext gettext-h gettimeofday locale mbrtowc mbsrtowcs stdbool stdio striconv string strstr sys_stat sys_time unistd wchar wcrtomb wcsdup wctob wctype-h
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
