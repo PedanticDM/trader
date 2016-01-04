@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 Danish Translations for Star Traders                  *
-# *                 Copyright (C) 2012-15, John Zaitseff                  *
+# *                 Copyright (C) 2012-16, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.9\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2015-08-26 21:10+1000\n"
-"PO-Revision-Date: 2015-10-01 06:23+1000\n"
+"PO-Revision-Date: 2016-01-05 09:15+1100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
