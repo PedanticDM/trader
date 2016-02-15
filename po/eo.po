@@ -1,22 +1,22 @@
 # *************************************************************************
 # *                                                                       *
 # *                Esperanto Translations for Star Traders                *
-# *                   Copyright (C) 2013, John Zaitseff                   *
-# *          Copyright (C) 2013, Free Software Foundation, Inc.           *
+# *                   Copyright (C) 2013, 2016 John Zaitseff              *
+# *          Copyright (C) 2013, 2016 Free Software Foundation, Inc.      *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Felipe Castro <fefcas@gmail.com>, 2013.
+#   Felipe Castro <fefcas@gmail.com>, 2013, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.4\n"
+"Project-Id-Version: trader 7.9\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-05-09 13:57+1000\n"
-"PO-Revision-Date: 2013-02-21 22:20+1100\n"
+"POT-Creation-Date: 2016-01-05 10:52+1100\n"
+"PO-Revision-Date: 2016-02-14 22:32-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -24,6 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: src/trader.c:235
 #, c-format
@@ -191,7 +192,7 @@ msgid "Fornax Express"
 msgstr "Fornakso Ekspresa"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
+msgid "Gemini Inc"
 msgstr "Ĝemeloj Enk"
 
 #: src/globals.c:54
@@ -312,7 +313,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Dd"
 
-#: src/game.c:341 src/move.c:399
+#: src/game.c:341 src/move.c:413
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Indiku seanc-numeron [^{1^}-^{9^}] aŭ ^{<CTRL><C>^} por nuligi: "
@@ -389,7 +390,7 @@ msgstr "  Lud-venkanto  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:868
+#: src/game.c:606 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -545,32 +546,34 @@ msgstr "Interezo:    "
 #. (for <1> and <2>) or 38 characters wide (for <3> and
 #. <CTRL><C>).  The sequences "^{" and "^}" change the
 #. character rendition (attributes) and take up no space.
-#: src/move.c:243 src/exch.c:182
+#: src/move.c:246 src/exch.c:182
 #, c-format
 msgid "^{<1>^} Display stock portfolio"
 msgstr "^{<1>^} Montri la akci-portalon"
 
-#: src/move.c:245
+#: src/move.c:248
 #, c-format
 msgid "^{<2>^} Declare bankruptcy"
 msgstr "^{<2>^} Deklari bankroton"
 
-#: src/move.c:247
+#: src/move.c:250
 #, c-format
 msgid "^{<3>^} Save and end the game"
 msgstr "^{<3>^} Konservi seancon kaj eliri"
 
-#: src/move.c:249
+#: src/move.c:252
 #, c-format
 msgid "^{<CTRL><C>^} Quit the game"
 msgstr "^{<CTRL><C>^} Eliri la ludon"
 
-#. TRANSLATORS: The maximum column width is 38 characters,
-#. including the trailing space.  The sequences "^{", "^}",
+#. TRANSLATORS: The maximum column width is either 38
+#. characters (including the trailing space), or 76
+#. characters minus the length of the longest of the four
+#. strings above this one.  The sequences "^{", "^}",
 #. "^[" and "^]" do not take up any room.  "%lc" takes up
 #. either one or two columns, depending on the appropriate
 #. "output|GameMoves" string in the current PO file.
-#: src/move.c:258
+#: src/move.c:263
 #, c-format
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Elektu movon [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
@@ -582,59 +585,59 @@ msgstr "Elektu movon [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 #. map); each player selects just one move
 #. per turn.  "Move" refers to the player's
 #. choice.
-#: src/move.c:295
+#: src/move.c:309
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Movo ^{%lc^}"
 
-#: src/move.c:316
+#: src/move.c:330
 #, c-format
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Deklari bankroton)"
 
-#: src/move.c:325
+#: src/move.c:339
 #, c-format
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Konservi kaj eliri)"
 
-#: src/move.c:346
+#: src/move.c:360
 #, c-format
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Eliri la ludon)"
 
-#: src/move.c:361
+#: src/move.c:375
 #, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Ĉu vi certas? [^{J^}/^{N^}] "
 
-#: src/move.c:378 src/move.c:456
+#: src/move.c:392 src/move.c:470
 #, c-format
 msgid "Saving game %d... "
 msgstr "Konservado de la seanco %d... "
 
-#: src/move.c:686 src/move.c:694 src/move.c:1052 src/move.c:1089
+#: src/move.c:700 src/move.c:708 src/move.c:1066 src/move.c:1103
 #, c-format
 msgid "  Bankruptcy Court  "
 msgstr "  Bankrota kortumo  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:688
+#: src/move.c:702
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "%ls estis deklarata de la Interstelara Komerca Banko kiel bankrota."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:696
+#: src/move.c:710
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls deklaris bankroton."
 
-#: src/move.c:764
+#: src/move.c:778
 #, c-format
 msgid "  New Company  "
 msgstr "  Nova kompanio  "
 
-#: src/move.c:765
+#: src/move.c:779
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -643,7 +646,7 @@ msgstr ""
 "Nova kompanio naskiĝis!\n"
 "Ĝi nomiĝas ^{%ls^}."
 
-#: src/move.c:824
+#: src/move.c:838
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -652,7 +655,7 @@ msgstr ""
 "^{%ls^} ĵus kunfandiĝis al ^{%ls^}.\n"
 "Bonvolu rimarki la jenajn transakciojn:\n"
 
-#: src/move.c:830
+#: src/move.c:844
 #, c-format
 msgid "  Company Merger  "
 msgstr "  Kompani-kunfandisto  "
@@ -664,7 +667,7 @@ msgstr "  Kompani-kunfandisto  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:850
+#: src/move.c:864
 #, c-format
 msgctxt "label"
 msgid "Old stock: "
@@ -672,7 +675,7 @@ msgstr "Malnova akcio: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:861
+#: src/move.c:875
 #, c-format
 msgctxt "label"
 msgid "New Stock: "
@@ -683,7 +686,7 @@ msgstr "Nova akcio:    "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:875
+#: src/move.c:889
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -692,7 +695,7 @@ msgstr "Premio (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:880
+#: src/move.c:894
 #, c-format
 msgctxt "subtitle"
 msgid "Total"
@@ -702,7 +705,7 @@ msgstr "Totalo"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:887
+#: src/move.c:901
 #, c-format
 msgctxt "subtitle"
 msgid "New"
@@ -711,14 +714,14 @@ msgstr "Nova"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:893
+#: src/move.c:907
 #, c-format
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Malnova"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1054
+#: src/move.c:1068
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -730,7 +733,7 @@ msgstr ""
 "^{Ĉiuj havaĵoj estis prenataj por repagi gravajn pruntojn.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1078
+#: src/move.c:1092
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -749,7 +752,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1106
+#: src/move.c:1120
 #, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
@@ -759,18 +762,18 @@ msgstr "Kvanto pagita por akcio: "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1114
+#: src/move.c:1128
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Malnova akci-valoro:     "
 
-#: src/move.c:1197 src/move.c:1232 src/exch.c:321
+#: src/move.c:1211 src/move.c:1246 src/exch.c:321
 #, c-format
 msgid "  Interstellar Trading Bank  "
 msgstr "  Interstelara Komerca Banko  "
 
-#: src/move.c:1199
+#: src/move.c:1213
 #, c-format
 msgid ""
 "You were forced to borrow %N\n"
@@ -779,7 +782,7 @@ msgstr ""
 "Vi estis devigata pruntepreni %N\n"
 "por kovri perdojn el kompani-akcioj."
 
-#: src/move.c:1234
+#: src/move.c:1248
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
@@ -967,8 +970,8 @@ msgctxt "label|Stock A"
 msgid "Return:          "
 msgstr "Rendimento:      "
 
-#. TRANSLATORS: "Current holdings" is the number of shares the
-#. current player owns in this particular company.
+#. TRANSLATORS: "Current holdings" is the number of shares
+#. the current player owns in this particular company.
 #.
 #. Note that the labels "Current holdings", "Percentage owned"
 #. and "Current cash" MUST all be the same length and contain at
@@ -983,13 +986,13 @@ msgstr "Nunaj havaĵoj:    "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
-#: src/exch.c:633
+#: src/exch.c:636
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
 msgstr "Elcento posedita: "
 
-#: src/exch.c:638
+#: src/exch.c:641
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
@@ -997,47 +1000,47 @@ msgstr "Nuna mono:        "
 
 #. TRANSLATORS: Each label may be up to 35 characters wide
 #. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
-#: src/exch.c:651
+#: src/exch.c:654
 #, c-format
 msgid "^{<1>^} Buy stock from company"
 msgstr "^{<1>^} Aĉeti akcion el kompanio"
 
-#: src/exch.c:653
+#: src/exch.c:656
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Vendi akcion reen al kompanio"
 
-#: src/exch.c:655
+#: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
 msgstr "^{<3>^} Peti kompanion vendi pli akciojn"
 
-#: src/exch.c:657
+#: src/exch.c:660
 #, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
 msgstr "^{<4>^} Eliri la akci-interŝanĝejon"
 
-#: src/exch.c:660
+#: src/exch.c:663
 #, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
 msgstr "Indiku elekton [^{1^}-^{4^}]: "
 
-#: src/exch.c:716
+#: src/exch.c:719
 #, c-format
 msgid "  No Shares Available  "
 msgstr "  Neniu akcio disponeblas  "
 
-#: src/exch.c:717
+#: src/exch.c:720
 #, c-format
 msgid "No more shares are available for purchase."
 msgstr "Neniu plia akcio disponeblas por aĉeto."
 
-#: src/exch.c:721
+#: src/exch.c:724
 #, c-format
 msgid "  Insufficient Cash  "
 msgstr "  Nesufiĉe da mono  "
 
-#: src/exch.c:722
+#: src/exch.c:725
 #, c-format
 msgid ""
 "You do not have enough cash\n"
@@ -1046,47 +1049,47 @@ msgstr ""
 "Vi ne havas sufiĉe da mono\n"
 "por aĉeti aldonajn akciojn."
 
-#: src/exch.c:733
+#: src/exch.c:736
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
 msgstr[0] "Vi povas aĉeti ^{unu^} akcion."
 msgstr[1] "Vi povas aĉeti ĝis ^{%'ld^} akciojn."
 
-#: src/exch.c:739
+#: src/exch.c:742
 #, c-format
 msgid "How many shares do you wish to purchase? "
 msgstr "Kiom da akcioj vi deziras aĉeti? "
 
-#: src/exch.c:760
+#: src/exch.c:763
 #, c-format
 msgid "  No Shares  "
 msgstr "  Neniu akcio  "
 
-#: src/exch.c:761
+#: src/exch.c:764
 #, c-format
 msgid "You do not have any shares to sell."
 msgstr "Vi havas neniun akcio por vendi."
 
-#: src/exch.c:768
+#: src/exch.c:771
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
 msgstr[0] "Vi povas vendi ^{unu^} akcion."
 msgstr[1] "Vi povas vendi ĝis ^{%'ld^} akciojn."
 
-#: src/exch.c:774
+#: src/exch.c:777
 #, c-format
 msgid "How many shares do you wish to sell? "
 msgstr "Kiom da akcioj vi deziras vendi? "
 
-#: src/exch.c:802
+#: src/exch.c:805
 #, c-format
 msgid "  No Shares Issued  "
 msgstr "  Neniu akcio vendita  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:804
+#: src/exch.c:807
 #, c-format
 msgid ""
 "%ls has refused\n"
@@ -1095,13 +1098,13 @@ msgstr ""
 "%ls rifuzis\n"
 "disponigi pli da akcioj."
 
-#: src/exch.c:809
+#: src/exch.c:812
 #, c-format
 msgid "  Shares Issued  "
 msgstr "  Akcioj venditaj  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:811
+#: src/exch.c:814
 #, c-format
 msgid ""
 "%ls has issued\n"
@@ -1116,52 +1119,58 @@ msgstr[1] ""
 "%ls disponigis\n"
 "^{%'ld^} pliajn akciojn."
 
-#: src/fileio.c:55 src/fileio.c:92 src/fileio.c:131 src/fileio.c:381
+#: src/fileio.c:43 src/fileio.c:83 src/fileio.c:126 src/fileio.c:387
 #, c-format
 msgid "%s: missing field on line %d"
 msgstr "%s: mankas kampon en linio %d"
 
-#: src/fileio.c:60
+#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390
+#: src/fileio.c:393
+#, c-format
+msgid "%s: illegal field on line %d"
+msgstr "%s: malpermesata kampo en linio %d"
+
+#: src/fileio.c:51
 #, c-format
 msgid "%s: illegal field on line %d: `%s'"
 msgstr "%s: malpermesata kampo en linio %d: '%s'"
 
-#: src/fileio.c:64
+#: src/fileio.c:55
 #, c-format
 msgid "%s: illegal value on line %d: `%s'"
 msgstr "%s: malpermesata valoro en linio %d: '%s'"
 
-#: src/fileio.c:96 src/fileio.c:135 src/fileio.c:393
+#: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
 #, c-format
 msgid "%s: illegal value on line %d"
 msgstr "%s: malpermesata valoro en linio %d"
 
-#: src/fileio.c:103
+#: src/fileio.c:98
 #, c-format
 msgid "%s: illegal characters on line %d"
 msgstr "%s: malpermesataj signoj en linio %d"
 
-#: src/fileio.c:184
+#: src/fileio.c:183
 #, c-format
 msgid "%s: could not convert string"
 msgstr "%s: ne eblis konverti ĉenon"
 
-#: src/fileio.c:255
+#: src/fileio.c:257
 #, c-format
 msgid "  Game Not Found  "
 msgstr "  Seanco ne trovita  "
 
-#: src/fileio.c:256
+#: src/fileio.c:258
 #, c-format
 msgid "Game %d has not been saved to disk."
 msgstr "La seanco %d ne estas konservita en la disko."
 
-#: src/fileio.c:263
+#: src/fileio.c:265
 #, c-format
 msgid "  Game Not Loaded  "
 msgstr "  Seanco ne ŝargita  "
 
-#: src/fileio.c:264
+#: src/fileio.c:266
 #, c-format
 msgid ""
 "Game %d could not be loaded from disk.\n"
@@ -1172,47 +1181,42 @@ msgstr ""
 "\n"
 "^{Dosiero %s: %s^}"
 
-#: src/fileio.c:316
+#: src/fileio.c:319
 #, c-format
 msgid "%s: missing header in game file"
 msgstr "%s: mankas kaplinio en seanc-dosiero"
 
-#: src/fileio.c:319
+#: src/fileio.c:322
 #, c-format
 msgid "%s: not a valid game file"
 msgstr "%s: ne estas valida seanc-dosiero"
 
-#: src/fileio.c:322 src/fileio.c:329
+#: src/fileio.c:325 src/fileio.c:332
 #, c-format
 msgid "%s: missing subheader in game file"
 msgstr "%s: mankas subkaplinio en seanc-dosiero"
 
-#: src/fileio.c:325
+#: src/fileio.c:328
 #, c-format
 msgid "%s: saved under a different version of Star Traders"
 msgstr "%s: konservita sub malsama versio de Star Traders"
 
-#: src/fileio.c:332
+#: src/fileio.c:335
 #, c-format
 msgid "%s: saved under an incompatible character encoding"
 msgstr "%s: konservita sub nekongrua signa enkodigo"
 
-#: src/fileio.c:340
+#: src/fileio.c:343
 #, c-format
 msgid "%s: illegal or missing field on line %d"
 msgstr "%s: malpermesata aŭ mankanta kampo en linio %d"
 
-#: src/fileio.c:384
-#, c-format
-msgid "%s: illegal field on line %d"
-msgstr "%s: malpermesata kampo en linio %d"
-
-#: src/fileio.c:466 src/fileio.c:487
+#: src/fileio.c:479 src/fileio.c:501
 #, c-format
 msgid "  Game Not Saved  "
 msgstr "  Seanco ne konservita  "
 
-#: src/fileio.c:467
+#: src/fileio.c:480
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1223,7 +1227,7 @@ msgstr ""
 "\n"
 "^{Dosierujo %s: %s^}"
 
-#: src/fileio.c:488
+#: src/fileio.c:502
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1552,13 +1556,14 @@ msgstr "Paĝo %d el %d"
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Premu <SPACOn> por daŭrigi ] "
 
-#. TRANSLATORS: The specific use of <SPACE> and
-#. <BACKSPACE> is not essential: you can use <DEL>,
-#. <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
-#. <BACKSPACE>, and almost any other key instead of
-#. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
-#. <CTRL><G> or <CTRL><\>).
-#: src/help.c:494
+#. TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
+#. is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
+#. <LEFT> or <BACK-TAB> instead of <BACKSPACE>, and almost
+#. any other key instead of <SPACE> (other than <ESC>,
+#. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
+#. Note that the maximum label length is 76 characters,
+#. including the trailing space.
+#: src/help.c:495
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Premu <SPACOn> por daŭrigi aŭ <RETROPAŜOn> por la antaŭa paĝo ] "
@@ -1635,86 +1640,91 @@ msgctxt "answer"
 msgid "No"
 msgstr "Ne"
 
-#: src/utils.c:199 src/utils.c:220
+#: src/utils.c:378 src/utils.c:399
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:225
+#: src/utils.c:404
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:238
+#: src/utils.c:417
 #, c-format
 msgid "out of memory"
 msgstr "memoro plenpleniĝas"
 
-#: src/utils.c:571
+#: src/utils.c:1041
 #, c-format
 msgid "xmbstowcs: `%s'"
 msgstr "xmbstowcs: '%s'"
 
-#: src/utils.c:611
+#: src/utils.c:1081
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:616
+#: src/utils.c:1086
 #, c-format
 msgid "xwcrtomb: `%lc'"
 msgstr "xwcrtomb: '%lc'"
 
-#: lib/getopt.c:547 lib/getopt.c:576
+#: lib/getopt.c:575 lib/getopt.c:604
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: la modifilo '%s' estas plursenca; eblecoj:"
 
-#: lib/getopt.c:624 lib/getopt.c:628
+#: lib/getopt.c:619
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: la modifilo '%s' estas plursenca\n"
+
+#: lib/getopt.c:654 lib/getopt.c:658
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: la modifilo '--%s' ne permesas argumenton\n"
 
-#: lib/getopt.c:637 lib/getopt.c:642
+#: lib/getopt.c:667 lib/getopt.c:672
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: la modifilo '%c%s' ne permesas argumenton\n"
 
-#: lib/getopt.c:685 lib/getopt.c:704
+#: lib/getopt.c:715 lib/getopt.c:734
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
 msgstr "%s: la modifilo '--%s' postulas argumenton\n"
 
-#: lib/getopt.c:742 lib/getopt.c:745
+#: lib/getopt.c:772 lib/getopt.c:775
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: nerekonata modifilo '--%s'\n"
 
-#: lib/getopt.c:753 lib/getopt.c:756
+#: lib/getopt.c:783 lib/getopt.c:786
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: nerekonata modifilo '%c%s'\n"
 
-#: lib/getopt.c:805 lib/getopt.c:808
+#: lib/getopt.c:835 lib/getopt.c:838
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: malvalida modifilo -- '%c'\n"
 
-#: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
+#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: la modifilo postulas argumenton -- '%c'\n"
 
-#: lib/getopt.c:934 lib/getopt.c:950
+#: lib/getopt.c:964 lib/getopt.c:980
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: la modifilo '-W %s' estas plursenca\n"
 
-#: lib/getopt.c:974 lib/getopt.c:992
+#: lib/getopt.c:1004 lib/getopt.c:1022
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: la modifilo '-W %s' ne permesas argumenton\n"
 
-#: lib/getopt.c:1013 lib/getopt.c:1031
+#: lib/getopt.c:1043 lib/getopt.c:1061
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: la modifilo '-W %s' postulas argumenton\n"
