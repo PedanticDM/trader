@@ -39,7 +39,7 @@ and installation:
     multibyte character sequences (such as UTF-8) require a wide-character
     version of Curses, such as NcursesW, to work correctly.
 
-4.  The GNU Gettext library, version 0.19.5 or later, to allow the game to
+4.  The GNU Gettext library, version 0.18.3 or later, to allow the game to
     use languages other than English;  this is also called Native Language
     Support.  If you do not have  this library (and do not wish to install
     it), you may pass "--disable-nls" to the configure script.

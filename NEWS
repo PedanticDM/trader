@@ -18,6 +18,9 @@ at http://www.zap.org.au/services/svn/.
 Version 7.10 (not yet released)
 -------------------------------
 
+Downgraded GNU Gettext to version 0.18.3, as the current Gnulib macros are
+from that version.
+
 Added the Serbian translation, with thanks to Мирослав Николић.
 
 
