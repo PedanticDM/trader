@@ -72,6 +72,7 @@ AC_CONFIG_FILES([
 	Makefile
 	lib/Makefile
 	src/Makefile
+	data/Makefile
 	doc/Makefile
 	po/Makefile.in
 	m4/Makefile
