@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2016-01-05 10:52+1100\n"
-"PO-Revision-Date: 2016-03-11 13:17+1100\n"
+"PO-Revision-Date: 2016-03-26 15:58+1100\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
@@ -723,7 +723,7 @@ msgid ""
 "\n"
 "^{All assets have been taken to repay outstanding loans.^}"
 msgstr ""
-"Међузвездана Трговачка Банка је објавила стечај играчу %ls.\n"
+"Међузвездана Трговачка Банка је објавила стечај предузећу %ls.\n"
 "\n"
 "^{Сва добра су одузета зарад отплаћивања основних зајмова.^}"
 
@@ -735,7 +735,7 @@ msgid ""
 "\n"
 "^{The Bank has agreed to pay stock holders ^}%.2f%%^{ of the share value on each share owned.^}"
 msgstr ""
-"Међузвездана Трговачка Банка је објавила стечај играчу %ls.\n"
+"Међузвездана Трговачка Банка је објавила стечај предузећу %ls.\n"
 "\n"
 "^{Банка је пристала да исплати акционарима ^}%.2f%%^{ од вредности акције по свакој поседованој акцији.^}"
 
@@ -1008,7 +1008,7 @@ msgstr "^{<2>^} Препродајте удео предузећу"
 #: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
-msgstr "^{<3>^} Тражите од предузећа да изда акције"
+msgstr "^{<3>^} Тражите предузећу да изда акције"
 
 #: src/exch.c:660
 #, c-format
