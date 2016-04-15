@@ -117,7 +117,7 @@ void exchange_stock (void)
 	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2,
 		 /* TRANSLATORS: "Company" is a two-line column label in
 		    a table containing a list of companies. */
-		 pgettext("subtitle", "\nCompany"));
+		 pgettext("subtitle", " \nCompany"));
 	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2,
 		  /* TRANSLATORS: "Shares left" is a two-line column
 		     label in a table containing the number of shares

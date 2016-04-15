@@ -279,11 +279,10 @@ void show_help (void)
 
 	center(curwin, 1, 0, attr_title, 0, 0, 1, _("  How to Play  "));
 	center(curwin, 2, 0, attr_normal, attr_highlight, 0, 1,
-	       /* TRANSLATORS: The first %d is the current page number,
-		  the second is the number of pages your help text takes
-		  (6, in English).  You can replace the second %d with a
-		  fixed word, if you like. */
-	       _("Page %d of %d"), curpage + 1, numpages);
+	       /* TRANSLATORS: The parameter %1$d is the current page
+		  number, %2$d is the number of pages your help text
+		  takes (6, in English). */
+	       _("Page %1$d of %2$d"), curpage + 1, numpages);
 	wmove(curwin, 4, 2);
 
 	// Process the help text string

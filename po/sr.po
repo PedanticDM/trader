@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2016-01-05 10:52+1100\n"
-"PO-Revision-Date: 2016-03-26 15:58+1100\n"
+"POT-Creation-Date: 2016-04-16 07:05+1000\n"
+"PO-Revision-Date: 2016-04-16 07:21+1000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
@@ -438,10 +438,10 @@ msgstr "Нема предузећа на карти"
 #, c-format
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
-"\n"
+" \n"
 "Предузеће"
 
 #. TRANSLATORS: "Ownership" is a two-line column label
@@ -1124,8 +1124,7 @@ msgstr[2] ""
 msgid "%s: missing field on line %d"
 msgstr "%s: недостаје поље у %d. реду"
 
-#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390
-#: src/fileio.c:393
+#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390 src/fileio.c:393
 #, c-format
 msgid "%s: illegal field on line %d"
 msgstr "%s: недозвољено поље у %d. реду"
@@ -1335,7 +1334,7 @@ msgstr ""
 "такође мења.  Играчи  такође могу позајмити новац  од Међузвездане Трговачке\n"
 "Банке да би финансирали додатне куповине на берзи.\n"
 "\n"
-"Карта галаксије је представљена мрежом величине  ^B~x^N x ^B~y^N.  Уобичајени приказ\n"
+"Карта галаксије је представљена мрежом величине  ^B~x^N × ^B~y^N.  Уобичајени приказ\n"
 "одељка галаксије може бити:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1539,19 +1538,18 @@ msgstr "@ Текст помоћи, 10. страница\n"
 msgid "  How to Play  "
 msgstr "  Како да играте  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
 #, c-format
-msgid "Page %d of %d"
-msgstr "%d. страница од %d"
+msgid "Page %1$d of %2$d"
+msgstr "%1$d. страница од %2$d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Притисните <РАЗМАК> да наставите ] "
@@ -1563,7 +1561,7 @@ msgstr "[ Притисните <РАЗМАК> да наставите ] "
 #. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
 #. Note that the maximum label length is 76 characters,
 #. including the trailing space.
-#: src/help.c:495
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Притисните <РАЗМАК> да наставите или <ПОВРАТНИЦУ> за претходну страницу ] "

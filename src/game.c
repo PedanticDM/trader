@@ -722,7 +722,7 @@ void show_status (int num)
 	    left(curwin, 4, 4, attr_subtitle, 0, 0, 2,
 		 /* TRANSLATORS: "Company" is a two-line column label in
 		    a table containing a list of companies. */
-		 pgettext("subtitle", "\nCompany"));
+		 pgettext("subtitle", " \nCompany"));
 	    right(curwin, 4, w - 4, attr_subtitle, 0, 0, 2,
 		  /* TRANSLATORS: "Ownership" is a two-line column label
 		     in a table containing the current player's

@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2016-01-05 09:38+1100\n"
-"PO-Revision-Date: 2016-03-11 09:25+1100\n"
+"POT-Creation-Date: 2016-04-16 07:05+1000\n"
+"PO-Revision-Date: 2016-04-16 07:29+1000\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -446,10 +446,10 @@ msgstr "Kartalla ei ole yrityksiä"
 #, c-format
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
-"\n"
+" \n"
 "Yritys"
 
 #. TRANSLATORS: "Ownership" is a two-line column label
@@ -1541,19 +1541,18 @@ msgstr "@ Opasteteksti, sivu 10\n"
 msgid "  How to Play  "
 msgstr "  Kuinka pelata  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
 #, c-format
-msgid "Page %d of %d"
-msgstr "Sivu %d / %d"
+msgid "Page %1$d of %2$d"
+msgstr "Sivu  %1$d / %2$d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Paina <VÄLIYÖNTIÄ> jatkaaksesi ] "
@@ -1565,7 +1564,7 @@ msgstr "[ Paina <VÄLIYÖNTIÄ> jatkaaksesi ] "
 #. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
 #. Note that the maximum label length is 76 characters,
 #. including the trailing space.
-#: src/help.c:495
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Paina <VÄLILYÖNTIÄ> jatkaaksesi tai <←> siirtyäksesi edelliselle sivulle ] "
