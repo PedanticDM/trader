@@ -21,9 +21,6 @@ Version 7.10 (not yet released)
 Added a data directory that will contain a desktop file and appropriate
 icons.
 
-Downgraded GNU Gettext to version 0.18.3, as the current Gnulib macros are
-from that version.
-
 Added the Serbian translation, with thanks to Мирослав Николић.
 
 
