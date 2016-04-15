@@ -16,6 +16,7 @@ glibc21.m4
 gnulib-common.m4
 gnulib-comp.m4
 gnulib-tool.m4
+hard-locale.m4
 iconv.m4
 iconv_h.m4
 iconv_open.m4
