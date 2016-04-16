@@ -30,6 +30,8 @@ TAGS
 /build-aux/snippet/unused-parameter.h
 /build-aux/snippet/warn-on-use.h
 
+/data/trader.desktop
+
 /po/POTFILES
 /po/en@quot.insert-header
 /po/en@quot.po
