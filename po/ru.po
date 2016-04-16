@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2016-04-16 07:05+1000\n"
-"PO-Revision-Date: 2016-04-16 07:21+1000\n"
+"POT-Creation-Date: 2016-04-16 12:31+1000\n"
+"PO-Revision-Date: 2016-04-16 12:52+1000\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@mx.ru>\n"
 "Language: ru\n"
@@ -26,6 +26,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: data/trader.desktop.in:3 src/intf.c:610
+#, c-format
+msgid "Star Traders"
+msgstr "Звёздные торговцы"
+
+#: data/trader.desktop.in:4
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr "Играть в «Звёздные торговцы», простую игру о межзвёздной торговле"
+
+#: data/trader.desktop.in:5
+msgid "game;interstellar;trading;strategy;"
+msgstr "игра;межзвёздная;торговля;стратегия;"
+
+#: data/trader.desktop.in:6
+msgid "trader"
+msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
@@ -1589,11 +1606,6 @@ msgstr "%s: символ имеет неверную ширину: «%lc»"
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "размеры терминала слишком малы (нужны %d на %d)"
-
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Звёздные торговцы"
 
 #: src/intf.c:1265
 #, c-format

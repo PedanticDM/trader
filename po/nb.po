@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2016-04-16 07:05+1000\n"
-"PO-Revision-Date: 2016-04-16 07:20+1000\n"
+"POT-Creation-Date: 2016-04-16 12:31+1000\n"
+"PO-Revision-Date: 2016-04-16 12:50+1000\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -23,6 +23,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/trader.desktop.in:3 src/intf.c:610
+#, c-format
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: data/trader.desktop.in:4
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr "Spill Star Traders, et enkelt spill med interstellar handel"
+
+#: data/trader.desktop.in:5
+msgid "game;interstellar;trading;strategy;"
+msgstr ""
+
+#: data/trader.desktop.in:6
+msgid "trader"
+msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
@@ -1578,11 +1595,6 @@ msgstr "%s: tegn har ugyldig bredde: «%lc»"
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "terminal størrelsen er for liten (%d x %d kreves)"
-
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Star Traders"
 
 #: src/intf.c:1265
 #, c-format
