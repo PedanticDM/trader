@@ -1,7 +1,7 @@
 [Desktop Entry]
-_Name=Star Traders
-_Comment=Play Star Traders, a simple game of interstellar trading
-_Keywords=game;interstellar;trading;strategy;
+Name=Star Traders
+Comment=Play Star Traders, a simple game of interstellar trading
+Keywords=game;interstellar;trading;strategy;
 Icon=trader
 Exec=trader
 TryExec=trader
