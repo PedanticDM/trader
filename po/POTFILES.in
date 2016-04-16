@@ -37,6 +37,8 @@ src/help.c
 src/intf.c
 src/utils.c
 
+# Data files from Star Traders
+data/trader.desktop.in
 
 # Source files from the Gnulib GNU Portability Library
 lib/getopt.c
