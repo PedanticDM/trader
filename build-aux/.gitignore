@@ -1,0 +1,15 @@
+/ar-lib
+/compile
+/config.guess
+/config.rpath
+/config.sub
+/depcomp
+/install-sh
+/missing
+
+/snippet/
+/snippet/_Noreturn.h
+/snippet/arg-nonnull.h
+/snippet/c++defs.h
+/snippet/unused-parameter.h
+/snippet/warn-on-use.h

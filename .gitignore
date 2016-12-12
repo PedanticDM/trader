@@ -15,21 +15,6 @@ TAGS
 /configure
 /stamp-h1
 
-/build-aux/ar-lib
-/build-aux/compile
-/build-aux/config.guess
-/build-aux/config.rpath
-/build-aux/config.sub
-/build-aux/depcomp
-/build-aux/install-sh
-/build-aux/missing
-
-/build-aux/snippet/_Noreturn.h
-/build-aux/snippet/arg-nonnull.h
-/build-aux/snippet/c++defs.h
-/build-aux/snippet/unused-parameter.h
-/build-aux/snippet/warn-on-use.h
-
 /data/trader.desktop
 
 /po/POTFILES
