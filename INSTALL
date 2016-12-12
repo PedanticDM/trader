@@ -155,19 +155,18 @@ to  remove the  Makefiles that  know the  path to  which those  files were
 installed!
 
 
-Subversion Repository
-=====================
+Git Repository
+==============
 
-You can always  download the latest version of  Star Traders directly from
-the Subversion repository on the ZAP Group server:
+You can always  download the latest version of Star Traders  directly from
+the Git repository on the ZAP Group server:
 
-    svn co http://svn.zap.org.au/svn/trader/unix/trunk/ trader
+    git clone git://git.zap.org.au/data/git/trader.git
 
 Released versions of Star Traders include all scripts and files needed for
-installation.  If you are checking out the source code from the Subversion
-repository, however,  you will need  to update these files  yourself.  You
-will need  the following additional tools  installed on your  system to do
-so:
+installation.  If you are cloning the source code from the Git repository,
+however,  you will need to update these files yourself.  You will need the
+following additional tools installed on your system to do so:
 
 1.  Autoconf (http://www.gnu.org/software/autoconf/)
 2.  Automake (http://www.gnu.org/software/automake/)
@@ -193,8 +192,8 @@ For Translators
 
 Thank you for even considering to translate  Star Traders into your native
 language!  You may use  either  a released version of  Star Traders, or an
-unreleased one, as discussed  in the Subversion Repository  section above.
-In either case, you may find the following workflow useful.
+unreleased one,  as discussed  in the  Git Repository  section  above.  In
+either case, you may find the following workflow useful.
 
 First, run "./build-aux/bootstrap" if needed (only for unreleased versions
 of Star Traders).

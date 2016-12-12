@@ -10,9 +10,9 @@ is to  create companies, buy and  sell shares, borrow and  repay money, in
 order to become the wealthiest player (the winner).
 
 The following history is presented in reverse chronological order.  If you
-would like to  see a list of detailed changes to  this project, you should
-consult the Subversion repository for "trader" on The ZAP Group web server
-at http://www.zap.org.au/services/svn/.
+would like to see  a list of detailed changes to this project,  you should
+browse  the Git repository on  The ZAP Group  web server  at the following
+location: http://www.zap.org.au/gitweb/trader.git
 
 
 Version 7.10 (not yet released)
