@@ -1,0 +1,1725 @@
+# *************************************************************************
+# *                                                                       *
+# *                Croatian Translations for Star Traders                 *
+# *                   Copyright (C) 2012, John Zaitseff                   *
+# *                                                                       *
+# *************************************************************************
+#
+# This file is distributed under the same license as the trader package.
+#
+# Contributors:
+#   Tomislav Krznar <tomislav.krznar@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: trader 7.4-pre2\n"
+"Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
+"POT-Creation-Date: 2012-04-14 14:31+1000\n"
+"PO-Revision-Date: 2012-04-19 09:21+1000\n"
+"Last-Translator: Tomislav Krznar <tomislav.krznar@gmail.com>\n"
+"Language-Team: Croatian <lokalizacija@linux.hr>\n"
+"Language: hr\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+#: src/trader.c:235
+#, c-format
+msgid "%s: invalid value for --max-turn: `%s'\n"
+msgstr "%s: neispravna vrijednost za --max-turn: „%s”\n"
+
+#: src/trader.c:251
+#, c-format
+msgid "%s: invalid operand `%s'\n"
+msgstr "%s: neispravan operand „%s”\n"
+
+#: src/trader.c:260
+#, c-format
+msgid "%s: invalid game number `%s'\n"
+msgstr "%s: neispravan broj igre „%s”\n"
+
+#: src/trader.c:269
+#, c-format
+msgid "%s: extra operand `%s'\n"
+msgstr "%s: operand viška „%s”\n"
+
+#. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
+#. name of the author.  The IPA pronunciation in this comment is in
+#. UTF-8 encoding.
+#: src/trader.c:284
+#, c-format
+msgid ""
+"Star Traders (%s) %s\n"
+"Copyright (C) %s, John Zaitseff.\n"
+"\n"
+"Star Traders is a simple game of interstellar trading, where the object\n"
+"of the game is to create companies, buy and sell shares, borrow and repay\n"
+"money, in order to become the wealthiest player (the winner).\n"
+"\n"
+"This program is free software that is distributed under the terms of the\n"
+"GNU General Public License, version 3 or later.  You are welcome to\n"
+"modify and/or distribute it under certain conditions.  This program has\n"
+"NO WARRANTY, to the extent permitted by law; see the License for details.\n"
+msgstr ""
+"Star Traders (%s) %s\n"
+"Copyright (C) %s, John Zaitseff.\n"
+"\n"
+"„Star Traders” (Međuzvjezdani trgovci) je jednostavna igra međuzvjezadnog\n"
+"trgovanja, gdje je cilj igre stvarati tvrtke, kupovati i prodavati dionice\n"
+"te posuđivati i vraćati novac kako biste postali najbogatiji igrač (pobjednik).\n"
+"\n"
+"Ovaj program je slobodan softver distribuiran pod uvjetima GNU Opće Javne\n"
+"Licence, inačica 3 ili novija.  Slobodno ga smijete uređivati i distribuirati\n"
+"pod određenim uvjetima.  Ovaj program NEMA JAMSTAVA, do krajnje mjere\n"
+"dozvoljene zakonom; pogledajte Licencu za pojedinosti.\n"
+
+#: src/trader.c:308
+#, c-format
+msgid "%s: Try `%s --help' for more information.\n"
+msgstr "%s: Pokušajte „%s --help” za više informacija.\n"
+
+#: src/trader.c:311
+#, c-format
+msgid "Usage: %s [OPTION ...] [GAME]\n"
+msgstr "Uporaba: %s [OPCIJA ...] [IGRA]\n"
+
+#: src/trader.c:312
+#, c-format
+msgid ""
+"Play Star Traders, a simple game of interstellar trading.\n"
+"\n"
+msgstr ""
+"Igrajte Star Traders, jednostavnu igru međuzvjezdanog trgovanja.\n"
+"\n"
+
+#: src/trader.c:315
+#, c-format
+msgid ""
+"Options:\n"
+"  -V, --version        output version information and exit\n"
+"  -h, --help           display this help and exit\n"
+"      --no-color       don't use color for displaying text\n"
+"      --max-turn=NUM   set the number of turns to NUM\n"
+"\n"
+msgstr ""
+"Opcije:\n"
+"  -V, --version        ispiši informacije o inačici i izađi\n"
+"  -h, --help           prikaži ovu pomoć i izađi\n"
+"      --no-color       ne koristi boje za prikaz teksta\n"
+"      --max-turn=BROJ  postavi broj poteza na BROJ\n"
+"\n"
+
+#: src/trader.c:322
+#, c-format
+msgid ""
+"If GAME is specified as a number between 1 and 9, load and continue\n"
+"playing that game.  If GAME is not specified, start a new game.\n"
+"\n"
+msgstr ""
+"Ako je IGRA navedena kao broj između 1 i 9, učitaj i nastavi igranje te\n"
+"igre.  Ako IGRA nije navedena, pokreni novu igru.\n"
+"\n"
+
+#. TRANSLATORS: The first %s is the proper name of the package
+#. author, John Zaitseff [IPA d͡ʒɒn ˈzaɪ̯t͡səf]; the second %s is
+#. the e-mail address for reporting bugs.  Please add ANOTHER
+#. line with the (translated) text "Report translation bugs to
+#. <ADDRESS>\n", with ADDRESS replaced with either an e-mail
+#. address or web URL for reporting bugs in your translation.
+#: src/trader.c:334
+#, c-format
+msgid "Report bugs to %s <%s>.\n"
+msgstr ""
+"Prijavite greške: %s <%s>.\n"
+"Prijavite greške prijevoda: <lokalizacija@linux.hr>.\n"
+
+#. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
+#. with the previous string, please add ANOTHER line with the
+#. (translated) text "Report translation bugs to <ADDRESS>\n",
+#. with ADDRESS replaced with either an e-mail address or web URL
+#. for reporting bugs in your translation.
+#: src/trader.c:341
+#, c-format
+msgid "Report bugs to <%s>.\n"
+msgstr ""
+"Prijavite greške na <%s>.\n"
+"Prijavite greške prijevoda na <lokalizacija@linux.hr>.\n"
+
+#. TRANSLATORS: The first %s is for packagers and may be
+#. something like "Debian".
+#: src/trader.c:346
+#, c-format
+msgid "Report %s bugs to <%s>.\n"
+msgstr "Prijavite greške %s na <%s>.\n"
+
+#: src/trader.c:349
+#, c-format
+msgid "Star Traders home page: <%s>.\n"
+msgstr "Star Traders početna stranica: <%s>.\n"
+
+#. TRANSLATORS: The eight company names do NOT have to be literal
+#. translations of the English names.  In fact, if possible, the
+#. names should start with successive letters of your alphabet (in
+#. English, for example, "A" to "H"), and, ideally, be related to
+#. constellations or stars in our galaxy.  No company name should be
+#. more than 24 characters (column positions, to be precise) long.
+#: src/globals.c:47
+msgid "Altair Starways"
+msgstr "Altair zvjezdani putovi"
+
+#: src/globals.c:48
+msgid "Betelgeuse, Ltd"
+msgstr "Betelgeuse d.o.o."
+
+#: src/globals.c:49
+msgid "Capella Freight Co"
+msgstr "Capella usluge prijevoza"
+
+#: src/globals.c:50
+msgid "Denebola Shippers"
+msgstr "Denebola brodovi"
+
+#: src/globals.c:51
+msgid "Eridani Expediters"
+msgstr "Eridani istraživanje"
+
+#: src/globals.c:52
+msgid "Fornax Express"
+msgstr "Fornax express"
+
+#: src/globals.c:53
+msgid "Gemeni Inc"
+msgstr "Gemeni d.d."
+
+#: src/globals.c:54
+msgid "Hercules and Co"
+msgstr "Heraklo i prijatelji"
+
+#. TRANSLATORS: This string specifies the keycodes (keyboard input
+#. codes) used to enter the Stock Transaction window for each
+#. company.  There must be exactly eight characters, one for each
+#. company in order, before the ASCII vertical line "|"; these must
+#. be EITHER all in upper-case or all in lower-case.  If at all
+#. possible, these should be successive letters in your alphabet (in
+#. English, "A" to "H").  Do NOT use digits or control characters.
+#. Do not change or translate anything after the vertical line.
+#: src/globals.c:68
+msgid "ABCDEFGH|input|Companies"
+msgstr "ABCDEFGH|input|Companies"
+
+#. TRANSLATORS: This string specifies the keycodes used to select a
+#. game move.  There must be exactly 20 characters, one for each
+#. move, before the ASCII vertical line "|"; these must be EITHER all
+#. in upper-case or all in lower-case.  If at all possible, these
+#. should be successive letters in your alphabet.  Do NOT use digits
+#. or control characters.  Do not change or translate anything after
+#. the vertical line.
+#: src/globals.c:80
+msgid "ABCDEFGHIJKLMNOPQRST|input|GameMoves"
+msgstr "ABCDEFGHIJKLMNOPRSTU|input|GameMoves"
+
+#. TRANSLATORS: This string is used to display the galaxy map to
+#. screen.  There must be exactly 11 characters before the ASCII
+#. vertical line.  The first ("." in English) is used for empty
+#. space, the second ("+") for outposts, the third ("*") for stars,
+#. the remaining for the eight companies.  Do not change or translate
+#. anything after the vertical line.  Double-width characters ARE
+#. handled correctly.
+#: src/globals.c:92
+msgid ".+*ABCDEFGH|output|MapVals"
+msgstr ".+*ABCDEFGH|output|MapVals"
+
+#. TRANSLATORS: This string is used to display the game moves
+#. (choices).  There must be exactly 20 characters (NUMBER_MOVES)
+#. before the ASCII vertical line.  The first character corresponds
+#. to the first character in the "input|GameMoves" string, and so on.
+#. Do not change or translate anything after the vertical line.
+#. Double-width characters ARE handled correctly.
+#: src/globals.c:103
+msgid "abcdefghijklmnopqrst|output|GameMoves"
+msgstr "abcdefghijklmnoprstu|output|GameMoves"
+
+#. TRANSLATORS: The ordinal strings "1st" to "8th" are used in the
+#. Game Winner dialog box at the end of the game.  If ordinals depend
+#. on the gender of the player, it may be simpler to list cardinal
+#. numbers instead (eg, "No. 1").  Up to five characters are allowed
+#. (see ORDINAL_COLS in src/intf.h).
+#: src/globals.c:114
+msgid "1st"
+msgstr "1. "
+
+#: src/globals.c:115
+msgid "2nd"
+msgstr "2. "
+
+#: src/globals.c:116
+msgid "3rd"
+msgstr "3. "
+
+#: src/globals.c:117
+msgid "4th"
+msgstr "4. "
+
+#: src/globals.c:118
+msgid "5th"
+msgstr "5. "
+
+#: src/globals.c:119
+msgid "6th"
+msgstr "6. "
+
+#: src/globals.c:120
+msgid "7th"
+msgstr "7. "
+
+#: src/globals.c:121
+msgid "8th"
+msgstr "8. "
+
+#: src/game.c:117 src/game.c:152
+#, c-format
+msgid "Loading game %d... "
+msgstr "Učitavam igru %d... "
+
+#: src/game.c:226
+#, c-format
+msgid "  First Player  "
+msgstr "  Prvi igrač  "
+
+#: src/game.c:227
+#, c-format
+msgid "The first player to go is ^{%ls^}."
+msgstr "Prvi igrač na potezu je ^{%ls^}."
+
+#. TRANSLATORS: The keycode <C> should be modified to
+#. match that (or those) specified with msgctxt
+#. "input|ContinueGame".
+#: src/game.c:259
+#, c-format
+msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
+msgstr "Unesite broj igrača [^{1^}-^{%d^}] ili ^{<N>^} za nastavak igre: "
+
+#. TRANSLATORS: This string specifies the keycodes used to continue a
+#. game; these must NOT contain any numeric digit from 1 to 9.  The
+#. first character (keyboard input code) is used to print the user's
+#. response if one of those keys is pressed.  Both upper and
+#. lower-case versions should be present.
+#: src/game.c:276
+msgctxt "input|ContinueGame"
+msgid "Cc"
+msgstr "Nn"
+
+#: src/game.c:341 src/move.c:399
+#, c-format
+msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
+msgstr "Unesite broj igre [^{1^}-^{9^}] ili ^{<CTRL><C>^} za otkazivanje: "
+
+#: src/game.c:406
+#, c-format
+msgid "Please enter your name: "
+msgstr "Molim unesite vaše ime: "
+
+#: src/game.c:425
+#, c-format
+msgid "Do you need any instructions? [^{Y^}/^{N^}] "
+msgstr "Trebate li upute? [^{D^}/^{N^}] "
+
+#: src/game.c:443
+#, c-format
+msgid "  Enter Player Names  "
+msgstr "  Unesite imena igrača  "
+
+#: src/game.c:451
+#, c-format, range: 1..8
+msgid "Player %d: "
+msgstr "Igrač %d: "
+
+#: src/game.c:529
+#, c-format
+msgid "Does any player need instructions? [^{Y^}/^{N^}] "
+msgstr "Trebaju li ostali igrači upute? [^{D^}/^{N^}] "
+
+#: src/game.c:563
+#, c-format
+msgid "  Game Over  "
+msgstr "  Igra gotova  "
+
+#: src/game.c:564
+#, c-format
+msgid "The game is over after one turn."
+msgid_plural "The game is over after %d turns."
+msgstr[0] "Igra je gotova nakon %d poteza."
+msgstr[1] "Igra je gotova nakon %d poteza."
+msgstr[2] "Igra je gotova nakon %d poteza."
+
+#: src/game.c:575
+#, c-format
+msgid "  Total Value  "
+msgstr "  Ukupna vrijednost  "
+
+#: src/game.c:577
+#, c-format
+msgid "Your total value was ^{%N^}."
+msgstr "Vaša ukupna vrijednost je ^{%N^}."
+
+#: src/game.c:588
+#, c-format
+msgid ""
+"The winner is ^{%ls^}\n"
+"who is ^[*** BANKRUPT ***^]"
+msgstr ""
+"Pobjednik je ^{%ls^}\n"
+"koji je ^[*** BANKROTIRAO ***^]"
+
+#: src/game.c:591
+#, c-format
+msgid ""
+"The winner is ^{%ls^}\n"
+"with a value of ^{%N^}."
+msgstr ""
+"Pobjednik je ^{%ls^}\n"
+"koji ima vrijednost ^{%N^}."
+
+#: src/game.c:597
+#, c-format
+msgid "  Game Winner  "
+msgstr "  Pobjednik igre  "
+
+#. TRANSLATORS: "Player" is used as a column title in a
+#. table containing all player names.
+#: src/game.c:606 src/move.c:868
+#, c-format
+msgctxt "subtitle"
+msgid "Player"
+msgstr "Igrač"
+
+#. TRANSLATORS: "Total Value" refers to the total worth
+#. (shares, cash and debt) of any given player.  %ls is the
+#. currency symbol of the current locale.
+#: src/game.c:611
+#, c-format
+msgctxt "subtitle"
+msgid "Total Value (%ls)"
+msgstr "Ukupna vrijednost (%ls)"
+
+#: src/game.c:645 src/game.c:695 src/exch.c:100
+#, c-format
+msgid "Player: ^{%ls^}"
+msgstr "Igrač: ^{%ls^}"
+
+#: src/game.c:648
+#, c-format
+msgid "  Turn: ^{%d^}  "
+msgstr "  Potez: ^{%d^}  "
+
+#: src/game.c:649
+#, c-format
+msgid "  ^[*** Last Turn ***^]  "
+msgstr "  ^[*** Posljednji potez ***^]  "
+
+#: src/game.c:693
+#, c-format
+msgid "  Stock Portfolio  "
+msgstr "  Portfelj dionica  "
+
+#. TRANSLATORS: The current player is bankrupt (has no
+#. shares or cash, ie, whose total value is zero)
+#: src/game.c:702
+#, c-format
+msgid "^[* * *   B A N K R U P T   * * *^]"
+msgstr "^[* * *   B A N K R O T   * * *^]"
+
+#: src/game.c:717 src/exch.c:112
+#, c-format
+msgid "No companies on the map"
+msgstr "Nema tvrtki na mapi"
+
+#. TRANSLATORS: "Company" is a two-line column label in
+#. a table containing a list of companies.
+#: src/game.c:725 src/exch.c:120
+#, c-format
+msgctxt "subtitle"
+msgid ""
+"\n"
+"Company"
+msgstr ""
+"\n"
+"Tvrtka"
+
+#. TRANSLATORS: "Ownership" is a two-line column label
+#. in a table containing the current player's
+#. percentage ownership in any given company.  The
+#. maximum column width is 10 characters (see
+#. OWNERSHIP_COLS in src/intf.h).
+#: src/game.c:732
+#, c-format
+msgctxt "subtitle"
+msgid ""
+"Ownership\n"
+"(%%)"
+msgstr ""
+"Vlasništvo\n"
+"(%%)"
+
+#. TRANSLATORS: "Holdings" is a two-line column label
+#. in a table containing the number of shares the
+#. current player owns in any given company.  The
+#. maximum column width is 10 characters (see
+#. STOCK_OWNED_COLS in src/intf.h).
+#: src/game.c:739
+#, c-format
+msgctxt "subtitle"
+msgid ""
+"Holdings\n"
+"(shares)"
+msgstr ""
+"Udio\n"
+"(dionice)"
+
+#. TRANSLATORS: "Return" is a two-line column label in
+#. a table containing the share return as a percentage
+#. in any given company.  The maximum column width is
+#. 10 characters (see SHARE_RETURN_COLS in src/intf.h).
+#: src/game.c:746 src/exch.c:141
+#, c-format
+msgctxt "subtitle"
+msgid ""
+"Return\n"
+"(%%)"
+msgstr ""
+"Dobit\n"
+"(%%)"
+
+#. TRANSLATORS: "Price per share" is a two-line column
+#. label in a table containing the price per share in
+#. any given company.  %ls is the currency symbol in
+#. the current locale.  The maximum column width is 12
+#. characters INCLUDING the currency symbol (see
+#. SHARE_PRICE_COLS in src/intf.h).
+#: src/game.c:755 src/exch.c:150
+#, c-format
+msgctxt "subtitle"
+msgid ""
+"Price per\n"
+"share (%ls)"
+msgstr ""
+"Cijena po\n"
+"dionici (%ls)"
+
+#. TRANSLATORS: The "Total value", "Current cash",
+#. "Current debt" and "Interest rate" labels MUST all be
+#. the same length (ie, right-padded with spaces as
+#. needed) and must have at least one trailing space so
+#. that the display routines work correctly.  The maximum
+#. length of each label is 36 characters.
+#.
+#. Note that some of these labels are used for both the
+#. Player Status window and the Trading Bank window.
+#: src/game.c:796
+#, c-format
+msgctxt "label"
+msgid "Total value:   "
+msgstr "Ukupna vrijednost:    "
+
+#: src/game.c:800 src/exch.c:324
+#, c-format
+msgctxt "label"
+msgid "Current cash:  "
+msgstr "Trenutna gotovina:    "
+
+#: src/game.c:807 src/exch.c:332
+#, c-format
+msgctxt "label"
+msgid "Current debt:  "
+msgstr "Trenutni dug:         "
+
+#: src/game.c:813 src/exch.c:337
+#, c-format
+msgctxt "label"
+msgid "Interest rate: "
+msgstr "Kamatna stopa:        "
+
+#. TRANSLATORS: Each label may be up to 37 characters wide
+#. (for <1> and <2>) or 38 characters wide (for <3> and
+#. <CTRL><C>).  The sequences "^{" and "^}" change the
+#. character rendition (attributes) and take up no space.
+#: src/move.c:243 src/exch.c:182
+#, c-format
+msgid "^{<1>^} Display stock portfolio"
+msgstr "^{<1>^} Prikaži portfelj dionica"
+
+#: src/move.c:245
+#, c-format
+msgid "^{<2>^} Declare bankruptcy"
+msgstr "^{<2>^} Objavi bankrot"
+
+#: src/move.c:247
+#, c-format
+msgid "^{<3>^} Save and end the game"
+msgstr "^{<3>^} Spremi i završi igru"
+
+#: src/move.c:249
+#, c-format
+msgid "^{<CTRL><C>^} Quit the game"
+msgstr "^{<CTRL><C>^} Izađi iz igre"
+
+#. TRANSLATORS: The maximum column width is 38 characters,
+#. including the trailing space.  The sequences "^{", "^}",
+#. "^[" and "^]" do not take up any room.  "%lc" takes up
+#. either one or two columns, depending on the appropriate
+#. "output|GameMoves" string in the current PO file.
+#: src/move.c:258
+#, c-format
+msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
+msgstr "Odaberite potez [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
+
+#. TRANSLATORS: A game usually consists of
+#. DEFAULT_MAX_TURN (50) turns.  On each
+#. turn, the computer randomly selects
+#. NUMBER_MOVES (20) moves (positions on the
+#. map); each player selects just one move
+#. per turn.  "Move" refers to the player's
+#. choice.
+#: src/move.c:295
+#, c-format
+msgid "Move ^{%lc^}"
+msgstr "Potez ^{%lc^}"
+
+#: src/move.c:316
+#, c-format
+msgid "^{<2>^} (Declare bankruptcy)"
+msgstr "^{<2>^} (Objavi bankrot)"
+
+#: src/move.c:325
+#, c-format
+msgid "^{<3>^} (Save and end the game)"
+msgstr "^{<3>^} (Spremi i završi igru)"
+
+#: src/move.c:346
+#, c-format
+msgid "^{<CTRL><C>^} (Quit the game)"
+msgstr "^{<CTRL><C>^} (Izađi iz igre)"
+
+#: src/move.c:361
+#, c-format
+msgid "Are you sure? [^{Y^}/^{N^}] "
+msgstr "Jeste li sigurni? [^{D^}/^{N^}] "
+
+#: src/move.c:378 src/move.c:456
+#, c-format
+msgid "Saving game %d... "
+msgstr "Spremam igru %d... "
+
+#: src/move.c:686 src/move.c:694 src/move.c:1052 src/move.c:1089
+#, c-format
+msgid "  Bankruptcy Court  "
+msgstr "  Stečajni upravitelj  "
+
+#. TRANSLATORS: %ls is the player's name.
+#: src/move.c:688
+#, c-format
+msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
+msgstr "Međuzvjezdana trgovačka banka je proglasila bankrot igrača %ls."
+
+#. TRANSLATORS: %ls is the player's name.
+#: src/move.c:696
+#, c-format
+msgid "%ls has declared bankruptcy."
+msgstr "%ls je objavio bankrot."
+
+#: src/move.c:764
+#, c-format
+msgid "  New Company  "
+msgstr "  Nova tvrtka  "
+
+#: src/move.c:765
+#, c-format
+msgid ""
+"A new company has been formed!\n"
+"Its name is ^{%ls^}."
+msgstr ""
+"Osnovana je nova tvrtka!\n"
+"Njezino ime je ^{%ls^}."
+
+#: src/move.c:824
+#, c-format
+msgid ""
+"^{%ls^} has just merged into ^{%ls^}.\n"
+"Please note the following transactions:\n"
+msgstr ""
+"Tvrtku ^{%ls^} je upravo preuzela tvrtka ^{%ls^}.\n"
+"Molim obratite pažnju na sljedeće transakcije:\n"
+
+#: src/move.c:830
+#, c-format
+msgid "  Company Merger  "
+msgstr "  Udruživanje tvrtki  "
+
+#. TRANSLATORS: "Old stock" refers to the company that has
+#. just ceased existence due to a merger.
+#.
+#. Note that the "Old stock" and "New stock" labels MUST be
+#. the same length and must contain a trailing space for the
+#. display routines to work correctly.  The maximum length of
+#. each label is 36 characters.
+#: src/move.c:850
+#, c-format
+msgctxt "label"
+msgid "Old stock: "
+msgstr "Stare dionice: "
+
+#. TRANSLATORS: "New stock" refers to the company that has
+#. absorbed the other due to a merger.
+#: src/move.c:861
+#, c-format
+msgctxt "label"
+msgid "New Stock: "
+msgstr "Nove dionice:  "
+
+#. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
+#. each player after two companies merge.  %ls is the currency
+#. symbol in the current locale.  The maximum column width is
+#. 12 characters INCLUDING the currency symbol (see
+#. MERGE_BONUS_COLS in src/intf.h).
+#: src/move.c:875
+#, c-format
+msgctxt "subtitle"
+msgid "Bonus (%ls)"
+msgstr "Bonus (%ls)"
+
+#. TRANSLATORS: "Total" refers to the total number of shares in
+#. the new company after a merger.  The maximum column width is
+#. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
+#: src/move.c:880
+#, c-format
+msgctxt "subtitle"
+msgid "Total"
+msgstr "Ukupno"
+
+#. TRANSLATORS: "New" refers to how many (new) shares each
+#. player receives in the surviving company after a merger.
+#. The maximum column width is 8 characters (see
+#. MERGE_NEW_STOCK_COLS in src/intf.h).
+#: src/move.c:887
+#, c-format
+msgctxt "subtitle"
+msgid "New"
+msgstr "Nove"
+
+#. TRANSLATORS: "Old" refers to how many shares each player had
+#. in the company ceasing existence.  The maximum column width
+#. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
+#: src/move.c:893
+#, c-format
+msgctxt "subtitle"
+msgid "Old"
+msgstr "Stare"
+
+#. TRANSLATORS: %ls represents the company name.
+#: src/move.c:1054
+#, c-format
+msgid ""
+"%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
+"\n"
+"^{All assets have been taken to repay outstanding loans.^}"
+msgstr ""
+"Međuzvjezdana trgovačka banka je proglasila bankrot tvrtke %ls.\n"
+"\n"
+"^{Sva imovina je oduzeta zbog otplate tekućih pozajmica.^}"
+
+#. TRANSLATORS: %ls represents the company name.
+#: src/move.c:1078
+#, c-format
+msgid ""
+"%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
+"\n"
+"^{The Bank has agreed to pay stock holders ^}%.2f%%^{ of the share value on each share owned.^}"
+msgstr ""
+"Međuzvjezdana trgovačka banka je proglasila bankrot tvrtke %ls.\n"
+"\n"
+"^{Banka je pristala isplatiti vlasnicima dionica ^}%.2f%%^{ vrijednosti svake dionice.^}"
+
+#. TRANSLATORS: The label "Amount paid per share"
+#. refers to payment made by the Interstellar
+#. Trading Bank to each player upon company
+#. bankruptcy.  This label MUST be the same
+#. length as "Old share value" and MUST have at
+#. least one trailing space for the display
+#. routines to work correctly.  The maximum
+#. length is 28 characters.
+#: src/move.c:1106
+#, c-format
+msgctxt "label"
+msgid "Amount paid per share: "
+msgstr "Isplata po dionici:       "
+
+#. TRANSLATORS: "Old share value" refers to the
+#. share price of a company before it was forced
+#. into bankruptcy by the Bank.  This label must be
+#. the same width as "Amount paid per share".
+#: src/move.c:1114
+#, c-format
+msgctxt "label"
+msgid "Old share value:       "
+msgstr "Stara vrijednost dionice: "
+
+#: src/move.c:1197 src/move.c:1232 src/exch.c:321
+#, c-format
+msgid "  Interstellar Trading Bank  "
+msgstr "  Međuzvjezdana trgovačka banka  "
+
+#: src/move.c:1199
+#, c-format
+msgid ""
+"You were forced to borrow %N\n"
+"to cover losses from company shares."
+msgstr ""
+"Prisiljeni ste posuditi %N\n"
+"za pokrivanje gubitaka dionica tvrtke."
+
+#: src/move.c:1234
+#, c-format
+msgid ""
+"Your debt has amounted to %N!\n"
+"^{The Bank has impounded ^}%N^{ from your cash.^}"
+msgstr ""
+"Vaš dug se povećao na %N!\n"
+"^{Banka je zaplijenila ^}%N^{ vaše gotovine.^}"
+
+#: src/exch.c:98
+#, c-format
+msgid "  Interstellar Stock Exchange  "
+msgstr "  Međuzvjezdana burza  "
+
+#. TRANSLATORS: "Shares left" is a two-line column
+#. label in a table containing the number of shares
+#. left to be purchased in any given company.  The
+#. maximum column width is 10 characters (see
+#. STOCK_LEFT_COLS in src/intf.h).
+#: src/exch.c:127
+#, c-format
+msgctxt "subtitle"
+msgid ""
+"Shares\n"
+"left"
+msgstr ""
+"Preostalo\n"
+"dionica"
+
+#. TRANSLATORS: "Shares issued" is a two-line column
+#. label in a table containing the number of shares
+#. already sold (ie, bought by all players) in any
+#. given company.  The maximum column width is 10
+#. characters (see STOCK_ISSUED_COLS in src/intf.h).
+#: src/exch.c:134
+#, c-format
+msgctxt "subtitle"
+msgid ""
+"Shares\n"
+"issued"
+msgstr ""
+"Izdano\n"
+"dionica"
+
+#. TRANSLATORS: Each label may be up to 37 characters wide
+#. (for <1> and <2>) or 38 characters wide (for <3> and <4>).
+#: src/exch.c:186
+#, c-format
+msgid "^{<2>^} Display galaxy map"
+msgstr "^{<2>^} Prikaži mapu galaksije"
+
+#: src/exch.c:188
+#, c-format
+msgid "^{<3>^} Visit the Trading Bank"
+msgstr "^{<3>^} Posjetite trgovačku banku"
+
+#: src/exch.c:190
+#, c-format
+msgid "^{<4>^} Exit the Stock Exchange"
+msgstr "^{<4>^} Izađite iz Burze"
+
+#: src/exch.c:193
+#, c-format
+msgid "Enter selection [^[Company letter^]/^{1^}-^{4^}]: "
+msgstr "Unesite odabir [^[Slovo tvrtke^]/^{1^}-^{4^}]: "
+
+#. TRANSLATORS: The "Total value", "Current cash", "Current
+#. debt", "Interest rate" and "Credit limit" labels MUST all be
+#. the same length (ie, right-padded with spaces as needed) and
+#. must have at least one trailing space so that the display
+#. routines work correctly.  The maximum length of each label
+#. is 36 characters.
+#.
+#. Note that some of these labels are used for both the Player
+#. Status window and the Trading Bank window.
+#: src/exch.c:351
+#, c-format
+msgctxt "label"
+msgid "Credit limit:  "
+msgstr "Kreditno ograničenje: "
+
+#. TRANSLATORS: The "Borrow money", "Repay debt" and "Exit
+#. from the Bank" menu options must all be the same length
+#. (ie, padded with trailing spaces as required).  The maximum
+#. length is 72 characters.
+#: src/exch.c:366
+#, c-format
+msgid "^{<1>^} Borrow money      "
+msgstr "^{<1>^} Posudite novac  "
+
+#: src/exch.c:368
+#, c-format
+msgid "^{<2>^} Repay debt        "
+msgstr "^{<2>^} Otplatite dug   "
+
+#: src/exch.c:370
+#, c-format
+msgid "^{<3>^} Exit from the Bank"
+msgstr "^{<3>^} Izađite iz banke"
+
+#: src/exch.c:373
+#, c-format
+msgid "Enter selection [^{1^}-^{3^}]: "
+msgstr "Unesite odabir [^{1^}-^{3^}]: "
+
+#: src/exch.c:426
+#, c-format
+msgid "  Insufficient Credit Limit  "
+msgstr "  Nedovoljno kreditno ograničenje  "
+
+#: src/exch.c:427
+#, c-format
+msgid "The Bank will not lend you any more money."
+msgstr "Banka vam više neće posuđivati novac."
+
+#: src/exch.c:447
+#, c-format
+msgid "How much do you wish to borrow? "
+msgstr "Koliko želite posuditi? "
+
+#: src/exch.c:479
+#, c-format
+msgid "  No Debt  "
+msgstr "  Nema duga  "
+
+#: src/exch.c:480
+#, c-format
+msgid "You have no debt to repay."
+msgstr "Nemate dug za otplatu."
+
+#: src/exch.c:484
+#, c-format
+msgid "  No Cash  "
+msgstr "  Nema gotovine  "
+
+#: src/exch.c:485
+#, c-format
+msgid "You have no cash with which to repay the debt!"
+msgstr "Nemate gotovinu kojom možete otplatiti dug!"
+
+#: src/exch.c:505
+#, c-format
+msgid "How much do you wish to repay? "
+msgstr "Koliko želite otplatiti? "
+
+#. TRANSLATORS: %ls represents the company name.
+#: src/exch.c:581
+#, c-format
+msgid "  Stock Transaction in %ls  "
+msgstr "  Trgovanje dionicama u %ls  "
+
+#. TRANSLATORS: "Shares issued" represents the number of
+#. shares already sold by the company to all players.
+#.
+#. Note that the labels "Shares issued", "Shares left",
+#. "Price per share" and "Return" must all be the same length
+#. and must have at least one trailing space for the output
+#. routines to work correctly.  The maximum length of each
+#. label is 22 characters.
+#: src/exch.c:592
+#, c-format
+msgctxt "label|Stock A"
+msgid "Shares issued:   "
+msgstr "Izdano dionica:    "
+
+#. TRANSLATORS: "Shares left" is the number of shares that are
+#. left to be purchased in the current company.
+#: src/exch.c:600
+#, c-format
+msgctxt "label|Stock A"
+msgid "Shares left:     "
+msgstr "Preostalo dionica: "
+
+#. TRANSLATORS: "Price per share" is the cost of each share in
+#. the current company.
+#: src/exch.c:607
+#, c-format
+msgctxt "label|Stock A"
+msgid "Price per share: "
+msgstr "Cijena dionice:    "
+
+#. TRANSLATORS: "Return" is the share return as a percentage.
+#: src/exch.c:613
+#, c-format
+msgctxt "label|Stock A"
+msgid "Return:          "
+msgstr "Dobit:             "
+
+#. TRANSLATORS: "Current holdings" is the number of shares the
+#. current player owns in this particular company.
+#.
+#. Note that the labels "Current holdings", "Percentage owned"
+#. and "Current cash" MUST all be the same length and contain at
+#. least one trailing space for the display routines to work
+#. correctly.  The maximum length of each label is 18
+#. characters.
+#: src/exch.c:626
+#, c-format
+msgctxt "label|Stock B"
+msgid "Current holdings: "
+msgstr "Trenutni udjeli: "
+
+#. TRANSLATORS: "Percentage owned" is the current player's
+#. percentage ownership in this particular company.
+#: src/exch.c:633
+#, c-format
+msgctxt "label|Stock B"
+msgid "Percentage owned: "
+msgstr "Vlasništvo (%%):  "
+
+#: src/exch.c:638
+#, c-format
+msgctxt "label|Stock B"
+msgid "Current cash:     "
+msgstr "Gotovina:        "
+
+#. TRANSLATORS: Each label may be up to 35 characters wide
+#. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
+#: src/exch.c:651
+#, c-format
+msgid "^{<1>^} Buy stock from company"
+msgstr "^{<1>^} Kupite dionicu od tvrtke"
+
+#: src/exch.c:653
+#, c-format
+msgid "^{<2>^} Sell stock back to company"
+msgstr "^{<2>^} Prodajte dionicu natrag tvrtci"
+
+#: src/exch.c:655
+#, c-format
+msgid "^{<3>^} Bid company to issue more shares"
+msgstr "^{<3>^} Zatražite izdavanje dionica"
+
+#: src/exch.c:657
+#, c-format
+msgid "^{<4>^} Exit to the Stock Exchange"
+msgstr "^{<4>^} Izađite u Burzu"
+
+#: src/exch.c:660
+#, c-format
+msgid "Enter selection [^{1^}-^{4^}]: "
+msgstr "Unesite odabir [^{1^}-^{4^}]: "
+
+#: src/exch.c:716
+#, c-format
+msgid "  No Shares Available  "
+msgstr "  Nema dostupnih dionica  "
+
+#: src/exch.c:717
+#, c-format
+msgid "No more shares are available for purchase."
+msgstr "Nema više dionica dostupnih za kupovinu."
+
+#: src/exch.c:721
+#, c-format
+msgid "  Insufficient Cash  "
+msgstr "  Nedovoljno gotovine  "
+
+#: src/exch.c:722
+#, c-format
+msgid ""
+"You do not have enough cash\n"
+"to purchase additional shares."
+msgstr ""
+"Nemate dovoljno gotovine\n"
+"za kupovinu dodatnih dionica."
+
+#: src/exch.c:733
+#, c-format
+msgid "You can purchase ^{one^} share."
+msgid_plural "You can purchase up to ^{%'ld^} shares."
+msgstr[0] "Možete kupiti ^{%'ld^} dionicu."
+msgstr[1] "Možete kupiti ^{%'ld^} dionice."
+msgstr[2] "Možete kupiti ^{%'ld^} dionica."
+
+#: src/exch.c:739
+#, c-format
+msgid "How many shares do you wish to purchase? "
+msgstr "Koliko dionica želite kupiti? "
+
+#: src/exch.c:760
+#, c-format
+msgid "  No Shares  "
+msgstr "  Nema dionica  "
+
+#: src/exch.c:761
+#, c-format
+msgid "You do not have any shares to sell."
+msgstr "Nemate nijednu dionicu za prodaju."
+
+#: src/exch.c:768
+#, c-format
+msgid "You can sell ^{one^} share."
+msgid_plural "You can sell up to ^{%'ld^} shares."
+msgstr[0] "Možete prodati ^{%'ld^} dionicu."
+msgstr[1] "Možete prodati ^{%'ld^} dionice."
+msgstr[2] "Možete prodati ^{%'ld^} dionica."
+
+#: src/exch.c:774
+#, c-format
+msgid "How many shares do you wish to sell? "
+msgstr "Koliko dionica želite prodati? "
+
+#: src/exch.c:802
+#, c-format
+msgid "  No Shares Issued  "
+msgstr "  Nema izdanih dionica  "
+
+#. TRANSLATORS: %ls represents the company name.
+#: src/exch.c:804
+#, c-format
+msgid ""
+"%ls has refused\n"
+"to issue more shares."
+msgstr ""
+"Tvrtka %ls je odbila\n"
+"izdati nove dionice."
+
+#: src/exch.c:809
+#, c-format
+msgid "  Shares Issued  "
+msgstr "  Izdano dionica  "
+
+#. TRANSLATORS: %ls represents the company name.
+#: src/exch.c:811
+#, c-format
+msgid ""
+"%ls has issued\n"
+"^{one^} more share."
+msgid_plural ""
+"%ls has issued\n"
+"^{%'ld^} more shares."
+msgstr[0] ""
+"Tvrtka %ls je izdala\n"
+"^{%'ld^} novu dionicu."
+msgstr[1] ""
+"Tvrtka %ls je izdala\n"
+"^{%'ld^} nove dionice."
+msgstr[2] ""
+"Tvrtka %ls je izdala\n"
+"^{%'ld^} novih dionica."
+
+#: src/fileio.c:55 src/fileio.c:92 src/fileio.c:131 src/fileio.c:381
+#, c-format
+msgid "%s: missing field on line %d"
+msgstr "%s: nedostaje polje u retku %d"
+
+#: src/fileio.c:60
+#, c-format
+msgid "%s: illegal field on line %d: `%s'"
+msgstr "%s: nedozvoljeno polje u retku %d: „%s”"
+
+#: src/fileio.c:64
+#, c-format
+msgid "%s: illegal value on line %d: `%s'"
+msgstr "%s: nedozvoljena vrijednost u retku %d: „%s”"
+
+#: src/fileio.c:96 src/fileio.c:135 src/fileio.c:393
+#, c-format
+msgid "%s: illegal value on line %d"
+msgstr "%s: nedozvoljena vrijednost u retku %d"
+
+#: src/fileio.c:103
+#, c-format
+msgid "%s: illegal characters on line %d"
+msgstr "%s: nedozvoljeni znak u retku %d"
+
+#: src/fileio.c:184
+#, c-format
+msgid "%s: could not convert string"
+msgstr "%s: ne mogu pretvoriti niz znakova"
+
+#: src/fileio.c:255
+#, c-format
+msgid "  Game Not Found  "
+msgstr "  Igra nije pronađena  "
+
+#: src/fileio.c:256
+#, c-format
+msgid "Game %d has not been saved to disk."
+msgstr "Igra %d nije spremljena na disk."
+
+#: src/fileio.c:263
+#, c-format
+msgid "  Game Not Loaded  "
+msgstr "  Igra nije učitana  "
+
+#: src/fileio.c:264
+#, c-format
+msgid ""
+"Game %d could not be loaded from disk.\n"
+"\n"
+"^{File %s: %s^}"
+msgstr ""
+"Igru %d nije moguće učitati s diska.\n"
+"\n"
+"^{Datoteka %s: %s^}"
+
+#: src/fileio.c:316
+#, c-format
+msgid "%s: missing header in game file"
+msgstr "%s: nedostaje zaglavlje u datoteci igre"
+
+#: src/fileio.c:319
+#, c-format
+msgid "%s: not a valid game file"
+msgstr "%s: nije ispravna datoteka igre"
+
+#: src/fileio.c:322 src/fileio.c:329
+#, c-format
+msgid "%s: missing subheader in game file"
+msgstr "%s: nedostaje podzaglavlje u datoteci igre"
+
+#: src/fileio.c:325
+#, c-format
+msgid "%s: saved under a different version of Star Traders"
+msgstr "%s: spremljena različitom inačicom igre Star Traders"
+
+#: src/fileio.c:332
+#, c-format
+msgid "%s: saved under an incompatible character encoding"
+msgstr "%s: spremljena s nekompatibilnim kodiranjem znakova"
+
+#: src/fileio.c:340
+#, c-format
+msgid "%s: illegal or missing field on line %d"
+msgstr "%s: nedozvoljeno ili nedostaje polje u retku %d"
+
+#: src/fileio.c:384
+#, c-format
+msgid "%s: illegal field on line %d"
+msgstr "%s: nedozvoljeno polje u retku %d"
+
+#: src/fileio.c:466 src/fileio.c:487
+#, c-format
+msgid "  Game Not Saved  "
+msgstr "  Igra nije spremljena  "
+
+#: src/fileio.c:467
+#, c-format
+msgid ""
+"Game %d could not be saved to disk.\n"
+"\n"
+"^{Directory %s: %s^}"
+msgstr ""
+"Igru %d nije moguće spremiti na disk.\n"
+"\n"
+"^{Direktorij %s: %s^}"
+
+#: src/fileio.c:488
+#, c-format
+msgid ""
+"Game %d could not be saved to disk.\n"
+"\n"
+"^{File %s: %s^}"
+msgstr ""
+"Igru %d nije moguće spremiti na disk.\n"
+"\n"
+"^{Datoteka %s: %s^}"
+
+#. TRANSLATORS: The help text for Star Traders is marked up using a
+#. custom mark-up format NOT used anywhere else in the source code.
+#.
+#. Each string is a single page of text that is displayed in an area 76
+#. columns wide by 16 lines high.  Each line is delimited by "\n".  NO
+#. word-wrapping is performed: you must place the "\n" characters in the
+#. appropriate place.  Ideally, each line within the string should be
+#. also (manually) space-justified or centred.  TAB characters and other
+#. control codes must NOT be used.  If a string starts with "@" as the
+#. very first character, that string is ignored (as are all strings
+#. following): this allows a variable number of help text pages (from
+#. one to ten).  Multibyte strings are handled correctly (even those
+#. requiring shift sequences!).
+#.
+#. The ASCII circumflex accent character "^" switches to a different
+#. character rendition (also called attributes), depending on the
+#. character following the "^":
+#.
+#. ^^ - Print the circumflex accent (ASCII code U+005E)
+#. ^N - Switch to using the normal character rendition
+#. ^B - Switch to using the bold character rendition
+#. ^H - Switch to using the highlight character rendition
+#. ^K - Switch to using the keycode character rendition (such as used for "<CTRL><C>")
+#. ^e - Switch to using the character rendition used for empty space
+#. ^o - Switch to using the character rendition used for outposts
+#. ^s - Switch to using the character rendition used for stars
+#. ^c - Switch to using the character rendition used for companies
+#. ^k - Switch to using the character rendition used for keyboard choices on the galaxy map
+#.
+#. The help text parsing routines also understand the following "value
+#. escapes" introduced by the ASCII tilde character "~"; these act like
+#. "%" conversion specifiers in printf():
+#.
+#. ~~       - Print the tilde character (ASCII code U+007E) [*]
+#. ~x       - Print the width of the galaxy map (MAX_X) [**]
+#. ~y       - Print the height of the galaxy map (MAX_Y) [**]
+#. ~m       - Print the number of moves available (NUMBER_MOVES) [**]
+#. ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
+#. ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+#. ~1 to ~9 - Print the keycode for the N-th choice of move [***]
+#. ~M       - Print the keycode for the last choice of move [***]
+#. ~A to ~H - Print the character used to represent the company on the galaxy map [***]
+#. ~.       - Print the character used to represent empty space on the map [***]
+#. ~+       - Print the character used to represent outposts on the map [***]
+#. ~*       - Print the character used to represent stars on the map [***]
+#.
+#. [*]   Takes one character space (column space) in the output
+#. [**]  Takes two column spaces in the output
+#. [***] Takes one or two column spaces in the output, depending on the
+#. appropriate strings in the current PO file.
+#.
+#. Note that all keycodes and map representation characters use locale-
+#. specific characters; double-width characters ARE supported.  Note
+#. also that the tilde value escapes do NOT change the current character
+#. rendition: a circumflex accent escape is needed for that.  For
+#. example, to display the first choice of move as it would be shown on
+#. the galaxy map, use something like "^k~1^N" (a six-character sequence
+#. that would translate to just one character (or maybe two) in the
+#. output text).
+#.
+#. Formatting the help text is probably the most complicated and tedious
+#. part of translating Star Traders.  The author and maintainer of this
+#. game is more than happy to help you with this task: if you are able
+#. to provide a translation, even if it is not formatted correctly, the
+#. maintainer will perform the necessary adjustments for word-wrapping
+#. and justification.  In addition, remember that you have up to 10
+#. pages in which to display your help text: the translation does not
+#. need to correspond exactly to the original text.  This text will not
+#. be changing any time soon!
+#.
+#: src/help.c:113
+msgid ""
+"^BStar Traders^N  is a simple game  of  interstellar trading.  The object of the\n"
+"game is to amass  the greatest amount  of wealth  possible.  This is done by\n"
+"creating interstellar  shipping lanes, expanding them  and buying shares  in\n"
+"the companies  controlling  them.  Shares  appreciate  in value  as  company\n"
+"operations expand.  In addition, the return  on each share (as a percentage)\n"
+"also changes.  Players may also borrow from the Interstellar Trading Bank to\n"
+"finance additional purchases on the Stock Exchange.\n"
+"\n"
+"The map of the galaxy  is represented  by a ^B~x^N x ^B~y^N grid.  A typical section\n"
+"of it may be:\n"
+"\n"
+"        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N represents ^Bempty space^N,\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N represents a ^Bstar^N.\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
+msgstr ""
+"^B„Star Traders”^N  (Međuzvjezdani trgovci)  je jednostavna  igra međuzvjezdanog\n"
+"trgovanja.  Cilj igre  je skupiti što je moguće  veće bogatstvo.  Ovo činite\n"
+"stvaranjem  međuzvjezdanih  trgovačkih   putova,  njihovim  proširivanjem  i\n"
+"kupovanjem udjela  u tvrtkama koje upravljaju njima.   Vrijednost dionica se\n"
+"povećava  širenjem  poslovanja  tvrtki,  kao  i njihova  dobit  (izražena  u\n"
+"postocima).  Igrači također mogu posuđivati novce od Međuzvjezdane trgovačke\n"
+"banke za financiranje kupovanja dodatnih dionica na Burzi.\n"
+"\n"
+"Karta  galaksije  prikazana  je mrežom  ^B~x^N x ^B~y^N.  Uobičajeni  prikaz  dijela\n"
+"galaksije može biti:\n"
+"\n"
+"        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N označava ^Bprazan prostor^N,\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N označava ^Bzvijezdu^N.\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
+
+#: src/help.c:132
+msgid ""
+"The computer selects ^B~m^N moves  (labeled ^k~1^N to ^k~M^N)  at random, and places these\n"
+"on the map.  To select  any of the highlighted positions, press that letter.\n"
+"For example, some of the moves on the map may be:\n"
+"\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Moves ^k~1^N to ^k~5^N shown.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
+"\n"
+"\n"
+"Selecting a position  that is  ^Bnot^N  next to a star (such as moves ^k~1^N, ^k~3^N or ^k~5^N)\n"
+"will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
+"selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
+msgstr ""
+"Računalo slučajno  bira  ^B~m^N poteza  (označenih s ^k~1^N do ^k~M^N)  i postavlja  ih na\n"
+"kartu.   Za odabir  jednog od  označenih položaja  pritisnite  to slovo.  Na\n"
+"primjer, neki potezi na karti mogu biti:\n"
+"\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^k~3^e ~. ~. ~. ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^k~5^e ~. ~. ^N        Prikazani su potezi ^k~1^N do ^k~5^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
+"\n"
+"\n"
+"Odabir  položaja koji  ^Bnije^N  uz zvijezdu  (npr. položaji  ^k~1^N,  ^k~3^N  ili  ^k~5^N)  će\n"
+"postaviti ^Bizvidnicu^N, koja ne pripada nijednoj tvrtci.  Tako će odabir poteza\n"
+"^k~3^N na gornjoj karti postaviti ^o ~+ ^N na taj položaj.\n"
+
+#: src/help.c:150
+msgid ""
+"If, on the other hand, a position  next to  a star  (or another outpost)  is\n"
+"selected, a ^Bcompany^N would be formed  and its letter would appear on the map.\n"
+"As a reward for creating the company, you are granted the first five shares.\n"
+"Up to ^B~c^N companies can be created in this way.\n"
+"\n"
+"If a position  next to  an existing company  is selected, the company  would\n"
+"expand its operations  by one square.  This increases the cost of its shares\n"
+"and hence  your return.  Thus,  if the map  was as shown below,  selecting ^k~6^N\n"
+"or ^k~8^N increases Company ^B~B^N's shipping lane:\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N or ^k~8^N increases Company ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
+msgstr ""
+"S  druge  strane,  ako  je   odabran  položaj  pokraj  zvijezde  (ili  druge\n"
+"izvidnice), osnovat će  se ^Btvrtka^N i njezino će se  početno slovo pojaviti na\n"
+"karti.   Kao nagradu  za  osnivanje  tvrtke dobit  ćete  prvih pet  njezinih\n"
+"dionica.  Na ovaj način možete osnovati ^B~c^N tvrtki.\n"
+"\n"
+"Ako  je odabran  položaj pokraj  postojeće  tvrtke, ona  će proširiti  svoje\n"
+"poslovanje  za jedno  polje.  Ovo  povećava cijenu  njezinih dionica  i vaše\n"
+"prihode.  Na primjer, ako je mapa kao što je prikazana dolje, biranjem ^k~6^N ili\n"
+"^k~8^N će se povećati trgovački put tvrtke ^B~B^N:\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Potez ^k~6^N ili ^k~8^N povećava tvrtku ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
+
+#: src/help.c:168
+msgid ""
+"Selecting positions next to stars increases the value of your stock by about\n"
+"five times as much  as an extension  not next to a star.  Thus move ^k~6^N should\n"
+"be preferred to move ^k~8^N.\n"
+"\n"
+"        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~6^N is preferred to ^k~8^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
+"\n"
+"You may also expand  any company  by selecting positions  next to  outposts.\n"
+"Such outposts  will be swallowed up  by  that company.  Thus,  move  ^k~1^N  will\n"
+"extend  Company ^B~C^N by ^Btwo^N squares.  As a bonus,  outposts  next to  stars are\n"
+"more valuable:  the company's share price  will increase by a greater amount\n"
+"than it would for outposts not next to stars.\n"
+msgstr ""
+"Odabir položaja  pokraj zvijezde povećava  vrijednost vaših dionica  oko pet\n"
+"puta više nego  širenje u polje koje nije pokraj zvijezde.   Zato se potez ^k~6^N\n"
+"preferira u odnosu na potez ^k~8^N.\n"
+"\n"
+"        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ^k~1^e ^o~+^e ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Potez ^k~6^N se preferira u odnosu na ^k~8^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
+"\n"
+"Također možete  proširiti tvrtku biranjem položaja  pokraj izvidnica.  Takve\n"
+"izvidnice će se spojiti u tvrtku.  Tako će potez ^k~1^N proširiti tvrtku ^B~C^N za ^Bdva^N\n"
+"polja.  Kao  bonus, izvidnice pokraj zvijezda su još vrijednije:  vrijednost\n"
+"dionice  tvrtke  će se više  povećati nego  u slučaju  izvidnica koje  se ne\n"
+"nalaze uz zvijezde.\n"
+
+#: src/help.c:186
+msgid ""
+"If two companies  are separated on the map by only one square, then they can\n"
+"be ^Bmerged^N into  one company  by selecting that position (if available).  For\n"
+"example, on the map below, companies ^B~A^N and ^B~B^N  can be merged  by selecting ^k~5^N.\n"
+"When this occurs, the company  with the greater assets value  takes over the\n"
+"other one.  Here, Company ^B~B^N might take over  Company ^B~A^N.  Company ^B~A^N ceases to\n"
+"exist, although it may reappear as an entirely new company at a later stage.\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N        Move ^k~5^N merges companies ^B~A^N and ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
+"\n"
+"When  companies  merge, players are granted  shares in the  dominant company\n"
+"proportional to the amount  owned in the old company.  As well, a cash bonus\n"
+"is also paid, proportional to the percentage of the old company owned.\n"
+msgstr ""
+"Ako su dvije tvrtke na karti  odvojene samo jednim poljem, mogu se ^Bspojiti^N u\n"
+"jednu tvrtku odabirom tog položaja (ako je dostupan).  Na primjer, na donjoj\n"
+"karti,  tvrtke ^B~A^N i ^B~B^N  se mogu spojiti odabirom ^k~5^N.  Kad se  to dogodi, tvrtka\n"
+"koja ima veću vrijednost preuzima  tvrtku manje vrijednosti.  Ovdje tvrtka ^B~B^N\n"
+"može preuzeti  tvrtku ^B~A^N.  Tvrtka ^B~A^N prestaje postojati,  iako se poslije može\n"
+"pojaviti kao potpuno nova tvrtka.\n"
+"\n"
+"        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
+"        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N\n"
+"        ^e ~. ^s~*^e ~. ~. ^c~A^e ~. ^c~B^e ^c~B^e ^c~B^e ^N        Potez ^k~5^N spaja tvrtke ^B~A^N i ^B~B^N.\n"
+"        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
+"        ^e ~. ~. ~. ~. ^s~*^e ~. ^o~+^e ~. ~. ^N\n"
+"\n"
+"Nakon  spajanja  tvrtki,  igrači  dobivaju broj  dionica  dominantne  tvrtke\n"
+"proporcionalan  udjelu u  staroj  tvrtci.  Također  se isplaćuje  gotovinski\n"
+"bonus proporcionalan postotku udjela u staroj tvrtci.\n"
+
+#: src/help.c:205
+msgid ""
+"Once you select your move, you enter  the ^BInterstellar Stock Exchange^N.  Here\n"
+"you may  purchase shares,  sell them, borrow from  the Trading Bank or repay\n"
+"some of your debt (if applicable).  Note that each company  issues a limited\n"
+"number of shares -- you cannot go on buying for ever!  You may, however, bid\n"
+"for more shares to be issued.  You have a better chance of succeeding if you\n"
+"own a larger proportion of the company.\n"
+"\n"
+"The game usually ends after ^B~t^N turns.  However, you may  end the game sooner\n"
+"by pressing  ^K<CTRL><C>^N  when asked  to select  a move.  As  well, individual\n"
+"players can declare themselves bankrupt at  any time.  If your debt is large\n"
+"enough, the Bank  may do this for you!  If you  do not complete your game in\n"
+"the time you have available, you may save the game and continue it later.\n"
+"\n"
+"\n"
+"The ^Bwinner of the game^N  is the person  with the greatest  net  worth  (total\n"
+"value of cash, stock and debt).  ^HGood luck^N and may the best person win!\n"
+msgstr ""
+"Kada  odaberete svoj  potez, ulazite  u  ^BMeđuzvjezdanu burzu^N.   Ovdje možete\n"
+"kupovati  dionice,  prodavati ih, posuđivati  novce od  Trgovačke  banke ili\n"
+"otplatiti dio vašeg duga  (ako postoji).  Primijetite da svaka tvrtka izdaje\n"
+"ograničen  broj dionica  --  ne možete  kupovati  cijelo vrijeme!   Međutim,\n"
+"možete tražiti od  tvrtke izdavanje novih dionica.  Ako  imate veću količinu\n"
+"udjela u tvrtci, veće su vam šanse za uspjeh.\n"
+"\n"
+"Igra uobičajeno  završava nakon ^B~t^N poteza.  Međutim,  možete završiti ranije\n"
+"pritiskom  ^K<CTRL><C>^N  umjesto odabira poteza.  Također pojedini  igrači mogu\n"
+"objaviti bankrot u svakom trenutku.  Ako  je vaš dug prevelik, Banka to može\n"
+"učiniti  umjesto vas!   Ako ste  prezauzeti za  dovršavanje igre,  možete je\n"
+"spremiti i nastaviti kasnije.\n"
+"\n"
+"\n"
+"^BPobjednik  igre^N  je  osoba   koja  ima  najveću  ukupnu  vrijednost  (ukupna\n"
+"vrijednost gotovine, dionica i duga).  ^HSretno^N i neka najbolji pobijedi!\n"
+
+#: src/help.c:225
+msgid "@ Help text, page 7\n"
+msgstr "@ Tekst pomoći, stranica 7\n"
+
+#: src/help.c:226
+msgid "@ Help text, page 8\n"
+msgstr "@ Tekst pomoći, stranica 8\n"
+
+#: src/help.c:227
+msgid "@ Help text, page 9\n"
+msgstr "@ Tekst pomoći, stranica 9\n"
+
+#: src/help.c:228
+msgid "@ Help text, page 10\n"
+msgstr "@ Tekst pomoći, stranica 10\n"
+
+#: src/help.c:280
+#, c-format
+msgid "  How to Play  "
+msgstr "  Upute za igranje  "
+
+#. TRANSLATORS: The first %d is the current page number,
+#. the second is the number of pages your help text takes
+#. (6, in English).  You can replace the second %d with a
+#. fixed word, if you like.
+#: src/help.c:286
+#, c-format
+msgid "Page %d of %d"
+msgstr "Stranica %d od %d"
+
+#. TRANSLATORS: The reason the user is not asked "Press any
+#. key to continue" is historical: many, many people used to
+#. ask "where is the <ANY> key?" :-)
+#: src/help.c:487 src/intf.c:3035
+#, c-format
+msgid "[ Press <SPACE> to continue ] "
+msgstr "[ Pritisnite <RAZMAKNICU> za nastavak ] "
+
+#. TRANSLATORS: The specific use of <SPACE> and
+#. <BACKSPACE> is not essential: you can use <DEL>,
+#. <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
+#. <BACKSPACE>, and almost any other key instead of
+#. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
+#. <CTRL><G> or <CTRL><\>).
+#: src/help.c:494
+#, c-format
+msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
+msgstr "[ Pritisnite <RAZMAKNICU> za nastavak ili <BACKSPACE> za povratak ] "
+
+#: src/intf.c:110
+#, c-format
+msgid "%s: string has incorrect format: `%s'"
+msgstr "%s: niz znakova ima nepravilan oblik: „%s”"
+
+#: src/intf.c:126
+#, c-format
+msgid "%s: character has illegal width: `%lc'"
+msgstr "%s: znak ima nedozvoljenu širinu: „%lc”"
+
+#: src/intf.c:434
+#, c-format
+msgid "terminal size is too small (%d x %d required)"
+msgstr "veličina terminala je premalena (potrebno je %d x %d)"
+
+#: src/intf.c:610
+#, c-format
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: src/intf.c:1265
+#, c-format
+msgid "mkchstr_conv: NUL"
+msgstr "mkchstr_conv: NUL"
+
+#: src/intf.c:1568
+#, c-format
+msgid "mkchstr: `%s'"
+msgstr "mkchstr: „%s”"
+
+#. TRANSLATORS: This string specifies the keycodes used to insert the
+#. default value into the input string, if entered as the very first
+#. character.  Ideally, it should contain an easily-accessible
+#. keycode that would NOT be used in ordinary input.  Digits, ".",
+#. ",", "+" and "-" are definitely NOT acceptable.
+#: src/intf.c:2020
+msgctxt "input|DefaultValue"
+msgid "=;"
+msgstr "=;"
+
+#: src/intf.c:2034 src/intf.c:2079
+#, c-format
+msgid "gettxline: illegal character in string: `%ls'"
+msgstr "gettxline: nedozvoljen znak u nizu: „%ls”"
+
+#. TRANSLATORS: The strings with msgctxt "input|Yes" and
+#. "input|No" contain the keycodes used to determine whether a
+#. user is answering "Yes" or "No" in response to some question.
+#. Both upper and lower-case versions should be present.
+#: src/intf.c:2952
+msgctxt "input|Yes"
+msgid "Yy"
+msgstr "Dd"
+
+#: src/intf.c:2954
+msgctxt "input|No"
+msgid "Nn"
+msgstr "Nn"
+
+#. TRANSLATORS: The strings "Yes" and "No" are printed as a
+#. response to user input in answer to questions like "Are you
+#. sure? [Y/N] "
+#: src/intf.c:3005
+msgctxt "answer"
+msgid "Yes"
+msgstr "Da"
+
+#: src/intf.c:3007
+msgctxt "answer"
+msgid "No"
+msgstr "Ne"
+
+#: src/utils.c:199 src/utils.c:220
+#, c-format
+msgid "%s: "
+msgstr "%s: "
+
+#: src/utils.c:225
+msgid ": "
+msgstr ": "
+
+#: src/utils.c:238
+#, c-format
+msgid "out of memory"
+msgstr "nema dovoljno memorije"
+
+#: src/utils.c:571
+#, c-format
+msgid "xmbstowcs: `%s'"
+msgstr "xmbstowcs: „%s”"
+
+#: src/utils.c:611
+#, c-format
+msgid "xwcrtomb: NUL"
+msgstr "xwcrtomb: NUL"
+
+#: src/utils.c:616
+#, c-format
+msgid "xwcrtomb: `%lc'"
+msgstr "xwcrtomb: „%lc”"
+
+#: lib/getopt.c:547 lib/getopt.c:576
+#, c-format
+msgid "%s: option '%s' is ambiguous; possibilities:"
+msgstr "%s: opcija „%s” je višeznačna; mogućnosti:"
+
+#: lib/getopt.c:624 lib/getopt.c:628
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: opcija „--%s” ne dozvoljava argument\n"
+
+#: lib/getopt.c:637 lib/getopt.c:642
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: opcija „%c%s” ne dozvoljava argument\n"
+
+#: lib/getopt.c:685 lib/getopt.c:704
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: opcija „--%s” zahtijeva argument\n"
+
+#: lib/getopt.c:742 lib/getopt.c:745
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: neprepoznata opcija „--%s”\n"
+
+#: lib/getopt.c:753 lib/getopt.c:756
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: neprepoznata opcija „%c%s”\n"
+
+#: lib/getopt.c:805 lib/getopt.c:808
+#, c-format
+msgid "%s: invalid option -- '%c'\n"
+msgstr "%s: neispravna opcija -- „%c”\n"
+
+#: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
+#, c-format
+msgid "%s: option requires an argument -- '%c'\n"
+msgstr "%s: opcija zahtijeva argument -- „%c”\n"
+
+#: lib/getopt.c:934 lib/getopt.c:950
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: opcija „-W %s” je višeznačna\n"
+
+#: lib/getopt.c:974 lib/getopt.c:992
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: opcija „-W %s” ne dozvoljava argument\n"
+
+#: lib/getopt.c:1013 lib/getopt.c:1031
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: opcija „-W %s” zahtijeva argument\n"
