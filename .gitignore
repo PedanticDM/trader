@@ -1,10 +1,10 @@
 *.o
 *.a
 *.gmo
-.deps/
 Makefile
 Makefile.in
 TAGS
+.deps/
 
 /aclocal.m4
 /autom4te.cache
