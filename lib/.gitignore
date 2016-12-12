@@ -86,10 +86,12 @@ Makefile.am
 /iconv_open-irix.h
 /iconv_open-osf.h
 /iconv_open-solaris.h
+/limits.h
 /locale.h
 /ref-add.sed
 /ref-del.sed
 /stddef.h
+/stdint.h
 /stdio.h
 /stdlib.h
 /string.h
