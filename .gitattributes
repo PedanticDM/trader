@@ -1,0 +1,9 @@
+Makefile.am		ident
+/configure.ac		ident
+/build-aux/bootstrap	ident
+/doc/trader.*		ident
+/po/LINGUAS		ident
+/po/Makevars		ident
+/po/POTFILES.in		ident
+/src/*.c		ident
+/src/*.h		ident
