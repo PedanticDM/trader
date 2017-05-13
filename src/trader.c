@@ -1,7 +1,7 @@
 /************************************************************************
 *                                                                       *
 *             Star Traders: A Game of Interstellar Trading              *
-*                Copyright (C) 1990-2016, John Zaitseff                 *
+*                Copyright (C) 1990-2017, John Zaitseff                 *
 *                                                                       *
 ************************************************************************/
 
@@ -293,7 +293,7 @@ This program is free software that is distributed under the terms of the\n\
 GNU General Public License, version 3 or later.  You are welcome to\n\
 modify and/or distribute it under certain conditions.  This program has\n\
 NO WARRANTY, to the extent permitted by law; see the License for details.\n\
-"), program_name, PACKAGE_VERSION, "1990-2016");
+"), program_name, PACKAGE_VERSION, "1990-2017");
 
     exit(EXIT_SUCCESS);
 }

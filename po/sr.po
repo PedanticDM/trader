@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 Serbian Translation for Star Traders                  *
-# *                   Copyright (C) 2016, John Zaitseff                   *
+# *                 Copyright (C) 2016-17, John Zaitseff                  *
 # *          Copyright (C) 2016, Free Software Foundation, Inc.           *
 # *                                                                       *
 # *************************************************************************
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2016-04-16 12:31+1000\n"
-"PO-Revision-Date: 2016-04-16 12:52+1000\n"
+"PO-Revision-Date: 2017-05-14 06:20+1000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
