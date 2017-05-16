@@ -1,5 +1,6 @@
 Makefile.am
 
+/_Noreturn.h
 /btowc.c
 /c-ctype.c
 /c-ctype.h
@@ -9,6 +10,11 @@ Makefile.am
 /config.charset
 /crc.c
 /crc.h
+/getopt-cdefs.in.h
+/getopt-core.h
+/getopt-ext.h
+/getopt-pfx-core.h
+/getopt-pfx-ext.h
 /getopt.c
 /getopt.in.h
 /getopt1.c
@@ -30,6 +36,8 @@ Makefile.am
 /localcharset.c
 /localcharset.h
 /locale.in.h
+/localtime-buffer.c
+/localtime-buffer.h
 /mbrtowc.c
 /mbsinit.c
 /mbsrtowcs-impl.h
