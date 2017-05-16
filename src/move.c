@@ -37,10 +37,10 @@
 
 // Calculate positions near (x,y), taking the edge of the galaxy into account
 
-#define GALAXY_MAP_LEFT(x, y)	(((x) <= 0)     ? MAP_EMPTY : galaxy_map[(x) - 1][(y)])
-#define GALAXY_MAP_RIGHT(x, y)	(((x) >= MAX_X) ? MAP_EMPTY : galaxy_map[(x) + 1][(y)])
-#define GALAXY_MAP_UP(x, y)	(((y) <= 0)     ? MAP_EMPTY : galaxy_map[(x)][(y) - 1])
-#define GALAXY_MAP_DOWN(x, y)	(((y) >= MAX_Y) ? MAP_EMPTY : galaxy_map[(x)][(y) + 1])
+#define GALAXY_MAP_LEFT(x, y)	(((x) <= 0)           ? MAP_EMPTY : galaxy_map[(x) - 1][(y)])
+#define GALAXY_MAP_RIGHT(x, y)	(((x) >= (MAX_X - 1)) ? MAP_EMPTY : galaxy_map[(x) + 1][(y)])
+#define GALAXY_MAP_UP(x, y)	(((y) <= 0)           ? MAP_EMPTY : galaxy_map[(x)][(y) - 1])
+#define GALAXY_MAP_DOWN(x, y)	(((y) >= (MAX_Y - 1)) ? MAP_EMPTY : galaxy_map[(x)][(y) + 1])
 
 #define assign_vals(x, y, left, right, up, down)			\
     do {								\
