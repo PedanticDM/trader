@@ -30,10 +30,11 @@ AC_INIT([Star Traders], [7.10], [J.Zaitseff@zap.org.au], [trader], [http://www.z
 AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 
 AC_PREREQ([2.69])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/trader.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([1.11 -Wall -Werror foreign dist-bzip2])
+AM_INIT_AUTOMAKE([1.15 -Wall -Werror foreign dist-xz])
 AC_CONFIG_LIBOBJ_DIR([lib])
 
 AC_PROG_CC
