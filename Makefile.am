@@ -28,7 +28,7 @@
 
 
 # Subdirectories to recurse into
-SUBDIRS = lib src data doc po m4
+SUBDIRS = lib src po data doc m4
 
 # Additional files to distribute
 EXTRA_DIST = build-aux/bootstrap
