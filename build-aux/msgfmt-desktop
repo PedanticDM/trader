@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Create or update desktop files using msgfmt(1)
+# $Id$
+
+# Usage:
+#   msgfmt-desktop -d PODIR INPUT OUTPUT
+
+set -e
+
+if [ x"$1" != x"-d" ]; then
+    echo "$0: Missing parameters" 1>&2
+    exit 1
+fi
+
+PODIR="$2"
+INPUT="$3"
+OUTPUT="$4"
+
+if ! msgfmt --desktop -d "$PODIR" --template "$INPUT" -o "$OUTPUT"; then
+    echo "$0: Using cp(1) program instead"
+    cp "$INPUT" "$OUTPUT"
+fi

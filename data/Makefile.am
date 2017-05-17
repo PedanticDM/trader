@@ -35,4 +35,4 @@ EXTRA_DIST = \
 
 
 trader.desktop: trader.desktop.in
-	msgfmt --desktop -d $(top_srcdir)/po --template $< -o $@
+	$(top_srcdir)/build-aux/msgfmt-desktop -d $(top_srcdir)/po $< $@
