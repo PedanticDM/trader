@@ -26,4 +26,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
-EXTRA_DIST     = README
+
+dist_desktop_DATA = trader.desktop
+
+EXTRA_DIST = \
+	README			\
+	trader.desktop.in
+
+
+trader.desktop: trader.desktop.in
+	msgfmt --desktop -d $(top_srcdir)/po --template $< -o $@
