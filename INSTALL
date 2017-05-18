@@ -39,7 +39,7 @@ and installation:
     multibyte character sequences (such as UTF-8) require a wide-character
     version of Curses, such as NcursesW, to work correctly.
 
-4.  The GNU Gettext library, version 0.19.5 or later, to allow the game to
+4.  The GNU Gettext library, version 0.19.8 or later, to allow the game to
     use languages other than English;  this is also called Native Language
     Support.  If you do not have  this library (and do not wish to install
     it), you may pass "--disable-nls" to the configure script.
@@ -93,7 +93,7 @@ can specify the compiler flags to use by passing the CFLAGS variable:
 
     ./configure CFLAGS="-g -O2 -Wall"
 
-The "configure" script  has many other options.  You may  obtain a list of
+The  configure script  has many other options.   You may obtain  a list of
 these by running:
 
     ./configure --help
@@ -168,8 +168,8 @@ installation.  If you are cloning the source code from the Git repository,
 however,  you will need to update these files yourself.  You will need the
 following additional tools installed on your system to do so:
 
-1.  Autoconf (http://www.gnu.org/software/autoconf/)
-2.  Automake (http://www.gnu.org/software/automake/)
+1.  Autoconf v2.69 or later (http://www.gnu.org/software/autoconf/)
+2.  Automake v1.15 or later (http://www.gnu.org/software/automake/)
 3.  GNU Portability Library (http://www.gnu.org/software/gnulib/)
 
 The  GNU Portability Library  may  be installed  by retrieving  the latest
