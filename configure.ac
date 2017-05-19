@@ -35,6 +35,7 @@ AC_CONFIG_SRCDIR([src/trader.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.15 -Wall -Werror foreign dist-xz])
+AM_MAINTAINER_MODE([enable])
 AC_CONFIG_LIBOBJ_DIR([lib])
 
 AC_PROG_CC
