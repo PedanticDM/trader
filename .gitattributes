@@ -2,6 +2,7 @@ Makefile.am			ident
 /configure.ac			ident
 /build-aux/bootstrap		ident
 /build-aux/msgfmt-desktop	ident
+/data/trader.svg		ident
 /doc/trader.*			ident
 /po/LINGUAS			ident
 /po/Makevars			ident
