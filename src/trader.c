@@ -232,7 +232,7 @@ void process_cmdline (int argc, char *argv[])
 		option_max_turn = strtol(optarg, &p, 10);
 
 		if (option_max_turn < MIN_MAX_TURN || p == NULL || *p != '\0') {
-		    fprintf(stderr, _("%s: invalid value for --max-turn: `%s'\n"),
+		    fprintf(stderr, _("%s: invalid value for --max-turn: '%s'\n"),
 			    program_name, optarg);
 		    show_usage(EXIT_FAILURE);
 		}
@@ -248,7 +248,7 @@ void process_cmdline (int argc, char *argv[])
 
     if (optind < argc && argv[optind] != NULL) {
 	if (*argv[optind] == '-') {
-	    fprintf(stderr, _("%s: invalid operand `%s'\n"),
+	    fprintf(stderr, _("%s: invalid operand '%s'\n"),
 		    program_name, argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
@@ -257,7 +257,7 @@ void process_cmdline (int argc, char *argv[])
 	    && *argv[optind] >= '1' && *argv[optind] <= '9') {
 	    game_num = *argv[optind] - '0';
 	} else {
-	    fprintf(stderr, _("%s: invalid game number `%s'\n"),
+	    fprintf(stderr, _("%s: invalid game number '%s'\n"),
 		    program_name, argv[optind]);
 	    show_usage(EXIT_FAILURE);
 	}
@@ -266,7 +266,7 @@ void process_cmdline (int argc, char *argv[])
     }
 
     if (optind < argc && argv[optind] != NULL) {
-	fprintf(stderr, _("%s: extra operand `%s'\n"),
+	fprintf(stderr, _("%s: extra operand '%s'\n"),
 		program_name, argv[optind]);
 	show_usage(EXIT_FAILURE);
     }
@@ -305,7 +305,7 @@ NO WARRANTY, to the extent permitted by law; see the License for details.\n\
 void show_usage (int status)
 {
     if (status != EXIT_SUCCESS) {
-	fprintf(stderr, _("%s: Try `%s --help' for more information.\n"),
+	fprintf(stderr, _("%s: Try '%s --help' for more information.\n"),
 		program_name, program_name);
     } else {
 	printf(_("Usage: %s [OPTION ...] [GAME]\n"), program_name);

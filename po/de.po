@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-17 09:45+1000\n"
-"PO-Revision-Date: 2017-05-17 10:06+1000\n"
+"POT-Creation-Date: 2017-05-20 09:41+1000\n"
+"PO-Revision-Date: 2017-05-20 09:48+1000\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -43,22 +43,22 @@ msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: ungültiger Wert für --max-turn: „%s“\n"
 
 #: src/trader.c:251
 #, c-format
-msgid "%s: invalid operand `%s'\n"
+msgid "%s: invalid operand '%s'\n"
 msgstr "%s: ungültiger Operand „%s“\n"
 
 #: src/trader.c:260
 #, c-format
-msgid "%s: invalid game number `%s'\n"
+msgid "%s: invalid game number '%s'\n"
 msgstr "%s: ungültige Spielnummer „%s“\n"
 
 #: src/trader.c:269
 #, c-format
-msgid "%s: extra operand `%s'\n"
+msgid "%s: extra operand '%s'\n"
 msgstr "%s: zusätzlicher Operand „%s“\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
@@ -95,7 +95,7 @@ msgstr ""
 
 #: src/trader.c:308
 #, c-format
-msgid "%s: Try `%s --help' for more information.\n"
+msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: Versuchen Sie „%s --help“ für ausführlichere Informationen.\n"
 
 #: src/trader.c:311
@@ -1154,12 +1154,12 @@ msgstr "%s: unzulässiges Feld in Zeile %d"
 
 #: src/fileio.c:51
 #, c-format
-msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: unzulässiges Feld in Zeile %d: „%s“"
 
 #: src/fileio.c:55
 #, c-format
-msgid "%s: illegal value on line %d: `%s'"
+msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: unzulässiger Wert in Zeile %d: „%s“"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
@@ -1593,12 +1593,12 @@ msgstr "[ <LEERTASTE> für nächste, <RÜCKSCHRITT> für vorherige Seite ] "
 
 #: src/intf.c:110
 #, c-format
-msgid "%s: string has incorrect format: `%s'"
+msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: Die Zeichenkette hat ein falsches Format: „%s“"
 
 #: src/intf.c:126
 #, c-format
-msgid "%s: character has illegal width: `%lc'"
+msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: Das Zeichen hat eine unzulässige Breite: „%lc“"
 
 #: src/intf.c:434
@@ -1613,7 +1613,7 @@ msgstr "mkchstr_conv: NULL"
 
 #: src/intf.c:1568
 #, c-format
-msgid "mkchstr: `%s'"
+msgid "mkchstr: '%s'"
 msgstr "mkchstr: „%s“"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
@@ -1628,7 +1628,7 @@ msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
-msgid "gettxline: illegal character in string: `%ls'"
+msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: unzulässiges Zeichen in Zeichenkette „%ls“"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
@@ -1674,7 +1674,7 @@ msgstr "Kein frier Speicer mehr vorhanden"
 
 #: src/utils.c:1041
 #, c-format
-msgid "xmbstowcs: `%s'"
+msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s“"
 
 #: src/utils.c:1081
@@ -1684,7 +1684,7 @@ msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
 #, c-format
-msgid "xwcrtomb: `%lc'"
+msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc“"
 
 #: lib/getopt.c:278

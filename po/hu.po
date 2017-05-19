@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-17 09:45+1000\n"
-"PO-Revision-Date: 2017-05-17 10:11+1000\n"
+"POT-Creation-Date: 2017-05-20 09:41+1000\n"
+"PO-Revision-Date: 2017-05-20 09:50+1000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -43,22 +43,22 @@ msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: érvénytelen érték a --max-turn kapcsolóhoz: „%s”\n"
 
 #: src/trader.c:251
 #, c-format
-msgid "%s: invalid operand `%s'\n"
+msgid "%s: invalid operand '%s'\n"
 msgstr "%s: érvénytelen operandus: „%s”\n"
 
 #: src/trader.c:260
 #, c-format
-msgid "%s: invalid game number `%s'\n"
+msgid "%s: invalid game number '%s'\n"
 msgstr "%s: érvénytelen játékszám: „%s”\n"
 
 #: src/trader.c:269
 #, c-format
-msgid "%s: extra operand `%s'\n"
+msgid "%s: extra operand '%s'\n"
 msgstr "%s: extra operandus: „%s”\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
@@ -95,7 +95,7 @@ msgstr ""
 
 #: src/trader.c:308
 #, c-format
-msgid "%s: Try `%s --help' for more information.\n"
+msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: További információkért próbálja a(z) „%s --help” parancsot.\n"
 
 #: src/trader.c:311
@@ -1144,12 +1144,12 @@ msgstr "%s: szabálytalan mező a(z) %d. sorban"
 
 #: src/fileio.c:51
 #, c-format
-msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: szabálytalan mező a(z) %d. sorban: „%s”"
 
 #: src/fileio.c:55
 #, c-format
-msgid "%s: illegal value on line %d: `%s'"
+msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: szabálytalan érték a(z) %d. sorban: „%s”"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
@@ -1582,12 +1582,12 @@ msgstr "[ Nyomja le a <SZÓKÖZT> a folytatáshoz vagy <BACKSPACE>-t az előző 
 
 #: src/intf.c:110
 #, c-format
-msgid "%s: string has incorrect format: `%s'"
+msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: a szövegnek helytelen formátuma van: „%s”"
 
 #: src/intf.c:126
 #, c-format
-msgid "%s: character has illegal width: `%lc'"
+msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: a karakternek szabálytalan szélessége van: „%lc”"
 
 #: src/intf.c:434
@@ -1602,7 +1602,7 @@ msgstr "mkchstr_conv: NUL"
 
 #: src/intf.c:1568
 #, c-format
-msgid "mkchstr: `%s'"
+msgid "mkchstr: '%s'"
 msgstr "mkchstr: „%s”"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
@@ -1617,7 +1617,7 @@ msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
-msgid "gettxline: illegal character in string: `%ls'"
+msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: érvénytelen karakter a szövegben: „%ls”"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
@@ -1663,7 +1663,7 @@ msgstr "nincs elég memória"
 
 #: src/utils.c:1041
 #, c-format
-msgid "xmbstowcs: `%s'"
+msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s”"
 
 #: src/utils.c:1081
@@ -1673,7 +1673,7 @@ msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
 #, c-format
-msgid "xwcrtomb: `%lc'"
+msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc”"
 
 #: lib/getopt.c:278

@@ -1038,7 +1038,7 @@ size_t xmbstowcs (wchar_t *restrict dest, const char *restrict src, size_t len)
 		// Illegal sequence detected: replace it and try again
 		*p = EILSEQ_REPL;
 	    } else {
-		errno_exit(_("xmbstowcs: `%s'"), src);
+		errno_exit(_("xmbstowcs: '%s'"), src);
 	    }
 	} else if (p != NULL) {
 	    // Multibyte string was too long: truncate dest
@@ -1083,7 +1083,7 @@ size_t xwcrtomb (char *restrict dest, wchar_t wc, mbstate_t *restrict mbstate)
 	    dest[n] = EILSEQ_REPL;
 	    dest[n++] = '\0';
 	} else {
-	    errno_exit(_("xwcrtomb: `%lc'"), (wint_t) wc);
+	    errno_exit(_("xwcrtomb: '%lc'"), (wint_t) wc);
 	}
     }
 

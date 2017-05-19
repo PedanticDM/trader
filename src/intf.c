@@ -107,7 +107,7 @@ typedef struct txwin {
 	char *s = gettext(_default);					\
 	if (xmbstowcs(buf, s, BUFSIZE) < (_checkpos) + 1		\
 	    || buf[_checkpos] != L'|') {				\
-	    err_exit(_("%s: string has incorrect format: `%s'"),	\
+	    err_exit(_("%s: string has incorrect format: '%s'"),	\
 		     __stringify(_var), s);				\
 	}								\
 	(_var) = xwcsdup(buf);						\
@@ -123,7 +123,7 @@ typedef struct txwin {
 									\
 	c = (_var);							\
 	if ((w = wcwidth(c)) < 1) {					\
-	    err_exit(_("%s: character has illegal width: `%lc'"),	\
+	    err_exit(_("%s: character has illegal width: '%lc'"),	\
 		     __stringify(_err), (wint_t) c);			\
 	}								\
 									\
@@ -1565,7 +1565,7 @@ error:
     free(orig_outbuf);
     errno = saved_errno;
 
-    errno_exit(_("mkchstr: `%s'"), format);
+    errno_exit(_("mkchstr: '%s'"), format);
 }
 
 
@@ -2031,7 +2031,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
     clen = wcswidth(buf, bufsize);	// clen is number of column positions
 
     if (clen < 0) {
-	err_exit(_("gettxline: illegal character in string: `%ls'"), buf);
+	err_exit(_("gettxline: illegal character in string: '%ls'"), buf);
     }
 
     /* Find the point from which buf should be displayed to screen.  cpos
@@ -2076,7 +2076,7 @@ int gettxline (WINDOW *win, wchar_t *restrict buf, int bufsize,
 		clen = wcswidth(buf, bufsize);
 
 		if (clen == -1) {
-		    err_exit(_("gettxline: illegal character in string: `%ls'"),
+		    err_exit(_("gettxline: illegal character in string: '%ls'"),
 			     buf);
 		}
 

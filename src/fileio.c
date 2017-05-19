@@ -48,11 +48,11 @@
 		     filename, lineno);					\
 	}								\
 	if (sscanf(buf, _fmt "\n", &(_var)) != 1) {			\
-	    err_exit(_("%s: illegal field on line %d: `%s'"),		\
+	    err_exit(_("%s: illegal field on line %d: '%s'"),		\
 		     filename, lineno, buf);				\
 	}								\
 	if (! (_cond)) {						\
-	    err_exit(_("%s: illegal value on line %d: `%s'"),		\
+	    err_exit(_("%s: illegal value on line %d: '%s'"),		\
 		     filename, lineno, buf);				\
 	}								\
 	lineno++;							\
