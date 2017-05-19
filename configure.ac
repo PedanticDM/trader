@@ -70,6 +70,7 @@ AS_IF([test "x$ax_cv_curses_enhanced" != xyes], [
 ])
 
 AC_SUBST([desktopdir],['${datadir}/applications'])
+AC_SUBST([iconsdir],['${datadir}/icons/hicolor'])
 
 AC_CONFIG_FILES([
 	Makefile

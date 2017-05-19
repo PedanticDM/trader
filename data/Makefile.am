@@ -27,7 +27,31 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.
 
 
-dist_desktop_DATA = trader.desktop
+dist_desktop_DATA       = trader.desktop
+
+icons16dir              = ${iconsdir}/16x16/apps
+icons22dir              = ${iconsdir}/22x22/apps
+icons24dir              = ${iconsdir}/24x24/apps
+icons32dir              = ${iconsdir}/32x32/apps
+icons48dir              = ${iconsdir}/48x48/apps
+icons64dir              = ${iconsdir}/64x64/apps
+icons96dir              = ${iconsdir}/96x96/apps
+icons128dir             = ${iconsdir}/128x128/apps
+icons256dir             = ${iconsdir}/256x256/apps
+icons512dir             = ${iconsdir}/512x512/apps
+iconsscalabledir        = ${iconsdir}/scalable/apps
+
+dist_icons16_DATA       = icons-16/trader.png
+dist_icons22_DATA       = icons-22/trader.png
+dist_icons24_DATA       = icons-24/trader.png
+dist_icons32_DATA       = icons-32/trader.png
+dist_icons48_DATA       = icons-48/trader.png
+dist_icons64_DATA       = icons-64/trader.png
+dist_icons96_DATA       = icons-96/trader.png
+dist_icons128_DATA      = icons-128/trader.png
+dist_icons256_DATA      = icons-256/trader.png
+dist_icons512_DATA      = icons-512/trader.png
+dist_iconsscalable_DATA = trader.svg
 
 EXTRA_DIST = \
 	README			\
