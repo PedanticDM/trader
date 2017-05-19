@@ -46,10 +46,14 @@ with this program.  If not, see http://www.gnu.org/licenses/.
       <stop offset="0.7" stop-color="#FFFF80" />
       <stop offset="1"   stop-color="#FFFF00" />
     </radialGradient>
+    <filter id="f-glow" x="-0.1" y="-0.1" width="1.2" height="1.2" style="color-interpolation-filters:sRGB">
+      <feGaussianBlur stdDeviation="6" />
+    </filter>
   </defs>
 
   <g id="space">
-    <circle cx="256" cy="256" r="254" fill="url(#f-space)" stroke="#00002F" stroke-width="4" />
+    <circle cx="256" cy="256" r="250" opacity="0.4" fill="#FFFFFF" stroke="none" filter="url(#f-glow)" />
+    <circle cx="256" cy="256" r="250" fill="url(#f-space)" stroke="none" />
   </g>
 
   <g id="galaxy">
