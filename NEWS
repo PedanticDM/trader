@@ -28,6 +28,10 @@ pages, this is page N".  All translations have been updated as a result.
 
 Added the Serbian translation, with thanks to Мирослав Николић.
 
+Migrated the source code repository  from Subversion  to Git.  Updated the
+documentation to suit,  and also listed  specific required version numbers
+for the Autoconf and Automake tools.
+
 
 Version 7.9 (5th January, 2016)
 -------------------------------
