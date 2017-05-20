@@ -24,7 +24,8 @@ Updated translatable strings  to overcome a limitation of  msgfmt(1): if a
 string starts or  ends with a new-line character,  its translation must do
 so as well.  This has an impact on labels in particular.  Also changed the
 help text string  "Page N of M"  to allow  translations of the form  "Of M
-pages, this is page N".  All translations have been updated as a result.
+pages, this is page N".  In addition,  newer versions of lib/getopt.c have
+different strings.  All translations have been updated as a result.
 
 Added the Serbian translation, with thanks to Мирослав Николић.
 
