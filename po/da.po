@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 Danish Translations for Star Traders                  *
-# *                 Copyright (C) 2012-15, John Zaitseff                  *
+# *                 Copyright (C) 2012-17, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.10-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-20 12:28+1000\n"
-"PO-Revision-Date: 2017-05-21 09:51+1000\n"
+"PO-Revision-Date: 2017-05-21 21:57+1000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -40,7 +40,7 @@ msgstr "spil;interstellar;handel;strategi;"
 
 #: data/trader.desktop.in:6
 msgid "trader"
-msgstr "handelsmand"
+msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
@@ -1356,7 +1356,7 @@ msgstr ""
 "også låne fra Den Interstellare Handelsbank for at finansiere yderligere køb\n"
 "på aktiebørsen.\n"
 "\n"
-"Galaksens kort er repræsenteret  ved et ^B~x^N x ^B~y^N-gitter. Et typisk afsnit kan\n"
+"Galaksens kort er repræsenteret  ved et ^B~x^N × ^B~y^N-gitter. Et typisk afsnit kan\n"
 "se således ud:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
