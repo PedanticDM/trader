@@ -1,7 +1,7 @@
 # French translation of trader.
-# Copyright (C) 2015 Free Software Foundation, Inc.
+# Copyright (C) 2017 Free Software Foundation, Inc.
 # This file is distributed under the same license as the trader package.
-# Frédéric Marchal <fmarchal@perso.be>, 2015.
+# Frédéric Marchal <fmarchal@perso.be>, 2017.
 #
 # Attention: ce fichier ne doit pas contenir d'espace insécable car le
 # programme est compilé avec ncurses qui n'affiche pas correctement
@@ -10,38 +10,55 @@
 # insécable ne seront pas reportées à la ligne suivante.
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.8-pre1\n"
+"Project-Id-Version: trader 7.10-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2015-08-26 23:17+1000\n"
-"PO-Revision-Date: 2015-08-27 13:14+0200\n"
+"POT-Creation-Date: 2017-05-20 12:28+1000\n"
+"PO-Revision-Date: 2017-05-21 15:20+0200\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: data/trader.desktop.in:3 src/intf.c:610
+#, c-format
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: data/trader.desktop.in:4
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr "Jouer à Star Traders, un simple jeu de commerce interstellaire"
+
+#: data/trader.desktop.in:5
+msgid "game;interstellar;trading;strategy;"
+msgstr "jeu;interstellaire;commerce;stratégie;"
+
+#: data/trader.desktop.in:6
+msgid "trader"
+msgstr "commerce"
 
 #: src/trader.c:235
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
-msgstr "%s: valeur invalide pour --max-turn: « %s »\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
+msgstr "%s: valeur invalide pour --max-turn: « %s »\n"
 
 #: src/trader.c:251
 #, c-format
-msgid "%s: invalid operand `%s'\n"
-msgstr "%s: opérande invalide « %s »\n"
+msgid "%s: invalid operand '%s'\n"
+msgstr "%s: opérande invalide « %s »\n"
 
 #: src/trader.c:260
 #, c-format
-msgid "%s: invalid game number `%s'\n"
-msgstr "%s: numéro de jeu invalide « %s »\n"
+msgid "%s: invalid game number '%s'\n"
+msgstr "%s: numéro de jeu invalide « %s »\n"
 
 #: src/trader.c:269
 #, c-format
-msgid "%s: extra operand `%s'\n"
-msgstr "%s: opérande surnuméraire « %s »\n"
+msgid "%s: extra operand '%s'\n"
+msgstr "%s: opérande surnuméraire « %s »\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
 #. name of the author.  The IPA pronunciation in this comment is in
@@ -77,8 +94,8 @@ msgstr ""
 
 #: src/trader.c:308
 #, c-format
-msgid "%s: Try `%s --help' for more information.\n"
-msgstr "%s: Essayez « %s --help » pour plus d'informations.\n"
+msgid "%s: Try '%s --help' for more information.\n"
+msgstr "%s: Essayez « %s --help » pour plus d'informations.\n"
 
 #: src/trader.c:311
 #, c-format
@@ -441,10 +458,10 @@ msgstr "Aucune compagnie sur la carte"
 #, c-format
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
-"\n"
+" \n"
 "Compagnies"
 
 #. TRANSLATORS: "Ownership" is a two-line column label
@@ -1130,13 +1147,13 @@ msgstr "%s: champ illégal à la ligne %d"
 
 #: src/fileio.c:51
 #, c-format
-msgid "%s: illegal field on line %d: `%s'"
-msgstr "%s: champ illégal à la ligne %d: « %s »"
+msgid "%s: illegal field on line %d: '%s'"
+msgstr "%s: champ illégal à la ligne %d: « %s »"
 
 #: src/fileio.c:55
 #, c-format
-msgid "%s: illegal value on line %d: `%s'"
-msgstr "%s: valeur illégale à la ligne %d: « %s »"
+msgid "%s: illegal value on line %d: '%s'"
+msgstr "%s: valeur illégale à la ligne %d: « %s »"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
 #, c-format
@@ -1549,19 +1566,18 @@ msgstr "@ Texte d'aide, page 10\n"
 msgid "  How to Play  "
 msgstr "  Comment jouer  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
 #, c-format
-msgid "Page %d of %d"
-msgstr "Page %d sur %d"
+msgid "Page %1$d of %2$d"
+msgstr "Page %1$d sur %2$d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Appuyez <ESPACE> pour continuer ] "
@@ -1573,30 +1589,25 @@ msgstr "[ Appuyez <ESPACE> pour continuer ] "
 #. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
 #. Note that the maximum label length is 76 characters,
 #. including the trailing space.
-#: src/help.c:495
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Appuyez <ESPACE> pour continuer ou <RetArr> pour la page précédente ] "
 
 #: src/intf.c:110
 #, c-format
-msgid "%s: string has incorrect format: `%s'"
-msgstr "%s: la chaîne a un format incorrect: « %s »"
+msgid "%s: string has incorrect format: '%s'"
+msgstr "%s: la chaîne a un format incorrect: « %s »"
 
 #: src/intf.c:126
 #, c-format
-msgid "%s: character has illegal width: `%lc'"
-msgstr "%s: caractère avec une largeur illégale: « %lc »"
+msgid "%s: character has illegal width: '%lc'"
+msgstr "%s: caractère avec une largeur illégale: « %lc »"
 
 #: src/intf.c:434
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "la taille du terminal est trop petite (%d x %d requis)"
-
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Star Traders"
 
 #: src/intf.c:1265
 #, c-format
@@ -1605,8 +1616,8 @@ msgstr "mkchstr_conv: NUL"
 
 #: src/intf.c:1568
 #, c-format
-msgid "mkchstr: `%s'"
-msgstr "mkchstr: « %s »"
+msgid "mkchstr: '%s'"
+msgstr "mkchstr: « %s »"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
 #. default value into the input string, if entered as the very first
@@ -1620,8 +1631,8 @@ msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
-msgid "gettxline: illegal character in string: `%ls'"
-msgstr "gettxline: caractère illégal dans la chaîne: « %ls »"
+msgid "gettxline: illegal character in string: '%ls'"
+msgstr "gettxline: caractère illégal dans la chaîne: « %ls »"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
 #. "input|No" contain the keycodes used to determine whether a
@@ -1666,8 +1677,8 @@ msgstr "pas assez de mémoire"
 
 #: src/utils.c:1041
 #, c-format
-msgid "xmbstowcs: `%s'"
-msgstr "xmbstowcs: « %s »"
+msgid "xmbstowcs: '%s'"
+msgstr "xmbstowcs: « %s »"
 
 #: src/utils.c:1081
 #, c-format
@@ -1676,65 +1687,55 @@ msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
 #, c-format
-msgid "xwcrtomb: `%lc'"
-msgstr "xwcrtomb: « %lc »"
+msgid "xwcrtomb: '%lc'"
+msgstr "xwcrtomb: « %lc »"
 
-#: lib/getopt.c:575 lib/getopt.c:604
+#: lib/getopt.c:278
 #, c-format
-msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: option « %s » est ambiguë; les possibilités sont:"
+msgid "%s: option '%s%s' is ambiguous\n"
+msgstr "%s: l'option « %s%s » est ambiguë\n"
 
-#: lib/getopt.c:619
+#: lib/getopt.c:284
 #, c-format
-msgid "%s: option '%s' is ambiguous\n"
-msgstr "%s: option « %s » est ambiguë\n"
+msgid "%s: option '%s%s' is ambiguous; possibilities:"
+msgstr "%s: l'option « %s%s » est ambiguë; les possibilités sont:"
 
-#: lib/getopt.c:654 lib/getopt.c:658
+#: lib/getopt.c:319
 #, c-format
-msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: option « --%s » n'accepte pas d'argument\n"
+msgid "%s: unrecognized option '%s%s'\n"
+msgstr "%s: option « %s%s » non reconnue\n"
 
-#: lib/getopt.c:667 lib/getopt.c:672
+#: lib/getopt.c:345
 #, c-format
-msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: option « %c%s » n'accepte pas d'argument\n"
+msgid "%s: option '%s%s' doesn't allow an argument\n"
+msgstr "%s: l'option « %s%s » n'accepte pas d'argument\n"
 
-#: lib/getopt.c:715 lib/getopt.c:734
+#: lib/getopt.c:360
 #, c-format
-msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: option « --%s » exige un argument\n"
+msgid "%s: option '%s%s' requires an argument\n"
+msgstr "%s: l'option « %s%s » exige un argument\n"
 
-#: lib/getopt.c:772 lib/getopt.c:775
-#, c-format
-msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: option « --%s » non reconnue\n"
-
-#: lib/getopt.c:783 lib/getopt.c:786
-#, c-format
-msgid "%s: unrecognized option '%c%s'\n"
-msgstr "%s: option « %c%s » non reconnue\n"
-
-#: lib/getopt.c:835 lib/getopt.c:838
+#: lib/getopt.c:621
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
-msgstr "%s: option invalide -- « %c »\n"
+msgstr "%s: option invalide -- « %c »\n"
 
-#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
+#: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr "%s: option exige un argument -- « %c »\n"
+msgstr "%s: l'option exige un argument -- « %c »\n"
 
-#: lib/getopt.c:964 lib/getopt.c:980
-#, c-format
-msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: option « -W %s » est ambiguë\n"
+#~ msgid "%s: option '--%s' doesn't allow an argument\n"
+#~ msgstr "%s: option « --%s » n'accepte pas d'argument\n"
 
-#: lib/getopt.c:1004 lib/getopt.c:1022
-#, c-format
-msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: option « -W %s » n'accepte pas d'argument\n"
+#~ msgid "%s: unrecognized option '--%s'\n"
+#~ msgstr "%s: option « --%s » non reconnue\n"
 
-#: lib/getopt.c:1043 lib/getopt.c:1061
-#, c-format
-msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: option « -W %s » exige un argument\n"
+#~ msgid "%s: option '-W %s' is ambiguous\n"
+#~ msgstr "%s: option « -W %s » est ambiguë\n"
+
+#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
+#~ msgstr "%s: option « -W %s » n'accepte pas d'argument\n"
+
+#~ msgid "%s: option '-W %s' requires an argument\n"
+#~ msgstr "%s: option « -W %s » exige un argument\n"
