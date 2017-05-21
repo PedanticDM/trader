@@ -8,20 +8,21 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Joe Hansen <joedalton2@yahoo.dk>, 2012-15.
+#   Joe Hansen <joedalton2@yahoo.dk>, 2012-15, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.10\n"
+"Project-Id-Version: trader 7.10-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-20 12:28+1000\n"
-"PO-Revision-Date: 2017-05-20 09:48+1000\n"
+"PO-Revision-Date: 2017-05-21 21:56+1000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/trader.desktop.in:3 src/intf.c:610
@@ -35,7 +36,7 @@ msgstr "Spil Star Traders, et simpelt spil med rumhandel"
 
 #: data/trader.desktop.in:5
 msgid "game;interstellar;trading;strategy;"
-msgstr ""
+msgstr "spil;interstellar;handel;strategi;"
 
 #: data/trader.desktop.in:6
 msgid "trader"
@@ -1689,27 +1690,27 @@ msgstr "xwcrtomb: »%lc«"
 #: lib/getopt.c:278
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
-msgstr "%s: tilvalg »%s%s« er tvetydigt\n"
+msgstr "%s: tilvalget »%s%s« er tvetydigt\n"
 
 #: lib/getopt.c:284
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
-msgstr "%s: tilvalg »%s%s« er tvetydigt; muligheder:"
+msgstr "%s: tilvalget »%s%s« er tvetydigt; muligheder:"
 
 #: lib/getopt.c:319
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
-msgstr "%s: tilvalg blev ikke genkendt »%s%s«\n"
+msgstr "%s: tilvalget blev ikke genkendt »%s%s«\n"
 
 #: lib/getopt.c:345
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
-msgstr "%s: tilvalg »%s%s« tillader ikke et argument\n"
+msgstr "%s: tilvalget »%s%s« tillader ikke et argument\n"
 
 #: lib/getopt.c:360
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
-msgstr "%s: tilvalg »%s%s« kræver et argument\n"
+msgstr "%s: tilvalget »%s%s« kræver et argument\n"
 
 #: lib/getopt.c:621
 #, c-format
@@ -1719,4 +1720,4 @@ msgstr "%s: ugyldigt tilvalg -- »%c«\n"
 #: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr "%s: tilvalg kræver et argument -- »%c«\n"
+msgstr "%s: tilvalget kræver et argument -- »%c«\n"
