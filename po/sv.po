@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 Swedish Translations for Star Traders                 *
-# *                   Copyright (C) 2015, John Zaitseff                   *
+# *                 Copyright (C) 2015-17, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.10-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-20 12:28+1000\n"
-"PO-Revision-Date: 2017-05-21 17:41+0200\n"
+"PO-Revision-Date: 2017-05-22 07:17+1000\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -24,7 +24,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
 
 #: data/trader.desktop.in:3 src/intf.c:610
 #, c-format
@@ -1356,7 +1355,7 @@ msgstr ""
 "låna från  den  interstellära handelsbanken  för att finansiera  ytterligare\n"
 "inköp på aktiemarknaden.\n"
 "\n"
-"Kartan över galaxen  representeras av ett rutnät  med storleken ^B~x^N x ^B~y^N.  En\n"
+"Kartan över galaxen  representeras av ett rutnät  med storleken ^B~x^N × ^B~y^N.  En\n"
 "typisk del av den kan vara:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1525,7 +1524,7 @@ msgstr ""
 "När du valt ditt drag går du in i ^BInterstellära aktiemarknaden^N.   Här kan du\n"
 "köpa aktier, sälja dem,  låna från handelsbanken eller betala tillbaka delar\n"
 "av din skuld  (om du har någon).  Notera att varje  företag utfärdar ett be-\n"
-"gränsat antal aktier -- du kan inte köpa  för alltid!  Du kan dock be om ut-\n"
+"gränsat antal aktier — du kan inte köpa  för alltid!  Du kan dock  be om ut-\n"
 "färdande av mer aktier.  Du har större chans att lyckas om du äger en större\n"
 "del av företaget.\n"
 "\n"
@@ -1719,18 +1718,3 @@ msgstr "%s: ogiltig flagga -- ”%c”\n"
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: flaggan kräver ett argument -- ”%c”\n"
-
-#~ msgid "%s: option '--%s' doesn't allow an argument\n"
-#~ msgstr "%s: flaggan ”--%s” tar inget argument\n"
-
-#~ msgid "%s: unrecognized option '--%s'\n"
-#~ msgstr "%s: okänd flagga ”--%s”\n"
-
-#~ msgid "%s: option '-W %s' is ambiguous\n"
-#~ msgstr "%s: flaggan ”-W %s” är tvetydig\n"
-
-#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: flaggan ”-W %s” tar inget argument\n"
-
-#~ msgid "%s: option '-W %s' requires an argument\n"
-#~ msgstr "%s: flaggan ”-W %s” kräver ett argument\n"
