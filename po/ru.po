@@ -15,9 +15,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.10\n"
+"Project-Id-Version: trader 7.10-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-20 12:28+1000\n"
+"POT-Creation-Date: 2017-05-23 07:57+1000\n"
 "PO-Revision-Date: 2017-05-20 09:51+1000\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@mx.ru>\n"
@@ -27,20 +27,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: data/trader.desktop.in:3 src/intf.c:610
+#. TRANSLATORS: The name of the game.  You may choose to translate it into
+#. your own language (recommended) or keep it the same as the English
+#. version.  Feel free to look through other translations to see how
+#. others have done this.
+#: data/trader.desktop.in:22 src/intf.c:610
 #, c-format
 msgid "Star Traders"
 msgstr "Звёздные торговцы"
 
-#: data/trader.desktop.in:4
+#: data/trader.desktop.in:23
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "Играть в «Звёздные торговцы», простую игру о межзвёздной торговле"
 
-#: data/trader.desktop.in:5
+#. TRANSLATORS: A list of keywords describing Star Traders.  By all means
+#. add your own keywords!
+#: data/trader.desktop.in:26
 msgid "game;interstellar;trading;strategy;"
 msgstr "игра;межзвёздная;торговля;стратегия;"
 
-#: data/trader.desktop.in:6
+#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
+#. Entry Specification states it is translatable, but unless you provide a
+#. matching icon, please leave it as "trader": this will use trader.svg
+#. and the various trader.png files in the data source code directory.
+#: data/trader.desktop.in:31
 msgid "trader"
 msgstr "trader"
 
