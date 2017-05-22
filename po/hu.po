@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                Hungarian Translations for Star Traders                *
-# *                 Copyright (C) 2012-14, John Zaitseff                  *
+# *                 Copyright (C) 2012-17, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -9,41 +9,58 @@
 #
 # Contributors:
 #
-#   Balázs Úr <urbalazs@gmail.com>, 2014, 2015.
+#   Balázs Úr <urbalazs@gmail.com>, 2014, 2015, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.8-pre1\n"
+"Project-Id-Version: trader 7.10-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2015-08-26 23:17+1000\n"
-"PO-Revision-Date: 2015-08-30 09:46+0200\n"
+"POT-Creation-Date: 2017-05-20 12:28+1000\n"
+"PO-Revision-Date: 2017-05-22 21:04+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.2\n"
 
+#: data/trader.desktop.in:3 src/intf.c:610
+#, c-format
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: data/trader.desktop.in:4
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr "A Star Traders, egy egyszerű csillagközi kereskedelmi játék indítása"
+
+#: data/trader.desktop.in:5
+msgid "game;interstellar;trading;strategy;"
+msgstr "játék;csillagközi;kereskedés;stratégia;"
+
+#: data/trader.desktop.in:6
+msgid "trader"
+msgstr "kereskedő"
+
 #: src/trader.c:235
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: érvénytelen érték a --max-turn kapcsolóhoz: „%s”\n"
 
 #: src/trader.c:251
 #, c-format
-msgid "%s: invalid operand `%s'\n"
+msgid "%s: invalid operand '%s'\n"
 msgstr "%s: érvénytelen operandus: „%s”\n"
 
 #: src/trader.c:260
 #, c-format
-msgid "%s: invalid game number `%s'\n"
+msgid "%s: invalid game number '%s'\n"
 msgstr "%s: érvénytelen játékszám: „%s”\n"
 
 #: src/trader.c:269
 #, c-format
-msgid "%s: extra operand `%s'\n"
+msgid "%s: extra operand '%s'\n"
 msgstr "%s: extra operandus: „%s”\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
@@ -80,7 +97,7 @@ msgstr ""
 
 #: src/trader.c:308
 #, c-format
-msgid "%s: Try `%s --help' for more information.\n"
+msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: További információkért próbálja a(z) „%s --help” parancsot.\n"
 
 #: src/trader.c:311
@@ -440,10 +457,10 @@ msgstr "Nincsenek társaságok a térképen"
 #, c-format
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
-"\n"
+" \n"
 "Társaság"
 
 #. TRANSLATORS: "Ownership" is a two-line column label
@@ -1130,12 +1147,12 @@ msgstr "%s: szabálytalan mező a(z) %d. sorban"
 
 #: src/fileio.c:51
 #, c-format
-msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: szabálytalan mező a(z) %d. sorban: „%s”"
 
 #: src/fileio.c:55
 #, c-format
-msgid "%s: illegal value on line %d: `%s'"
+msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: szabálytalan érték a(z) %d. sorban: „%s”"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
@@ -1538,19 +1555,18 @@ msgstr "@ Súgószöveg, 10. oldal\n"
 msgid "  How to Play  "
 msgstr "  A játék menete  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
 #, c-format
-msgid "Page %d of %d"
-msgstr "%d / %d oldal"
+msgid "Page %1$d of %2$d"
+msgstr "%1$d / %2$d oldal"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Nyomja le a <SZÓKÖZT> a folytatáshoz ] "
@@ -1562,30 +1578,25 @@ msgstr "[ Nyomja le a <SZÓKÖZT> a folytatáshoz ] "
 #. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
 #. Note that the maximum label length is 76 characters,
 #. including the trailing space.
-#: src/help.c:495
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Nyomja le a <SZÓKÖZT> a folytatáshoz vagy <BACKSPACE>-t az előző oldalhoz] "
 
 #: src/intf.c:110
 #, c-format
-msgid "%s: string has incorrect format: `%s'"
+msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: a szövegnek helytelen formátuma van: „%s”"
 
 #: src/intf.c:126
 #, c-format
-msgid "%s: character has illegal width: `%lc'"
+msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: a karakternek szabálytalan szélessége van: „%lc”"
 
 #: src/intf.c:434
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "a terminál mérete túl kicsi (%d x %d szükséges)"
-
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Star Traders"
 
 #: src/intf.c:1265
 #, c-format
@@ -1594,7 +1605,7 @@ msgstr "mkchstr_conv: NUL"
 
 #: src/intf.c:1568
 #, c-format
-msgid "mkchstr: `%s'"
+msgid "mkchstr: '%s'"
 msgstr "mkchstr: „%s”"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
@@ -1609,7 +1620,7 @@ msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
-msgid "gettxline: illegal character in string: `%ls'"
+msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: érvénytelen karakter a szövegben: „%ls”"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
@@ -1655,7 +1666,7 @@ msgstr "nincs elég memória"
 
 #: src/utils.c:1041
 #, c-format
-msgid "xmbstowcs: `%s'"
+msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s”"
 
 #: src/utils.c:1081
@@ -1665,65 +1676,40 @@ msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
 #, c-format
-msgid "xwcrtomb: `%lc'"
+msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc”"
 
-#: lib/getopt.c:575 lib/getopt.c:604
+#: lib/getopt.c:278
 #, c-format
-msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: a(z) „%s” kapcsoló nem egyértelmű; lehetőségek:"
+msgid "%s: option '%s%s' is ambiguous\n"
+msgstr "%s: a(z) „%s%s” kapcsoló nem egyértelmű\n"
 
-#: lib/getopt.c:619
+#: lib/getopt.c:284
 #, c-format
-msgid "%s: option '%s' is ambiguous\n"
-msgstr "%s: a(z) „%s” kapcsoló nem egyértelmű\n"
+msgid "%s: option '%s%s' is ambiguous; possibilities:"
+msgstr "%s: a(z) „%s%s” kapcsoló nem egyértelmű; lehetőségek:"
 
-#: lib/getopt.c:654 lib/getopt.c:658
+#: lib/getopt.c:319
 #, c-format
-msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: a(z) „--%s” kapcsoló nem enged meg argumentumot\n"
+msgid "%s: unrecognized option '%s%s'\n"
+msgstr "%s: ismeretlen „%s%s” kapcsoló\n"
 
-#: lib/getopt.c:667 lib/getopt.c:672
+#: lib/getopt.c:345
 #, c-format
-msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: a(z) „%c%s” kapcsoló nem enged meg argumentumot\n"
+msgid "%s: option '%s%s' doesn't allow an argument\n"
+msgstr "%s: a(z) „%s%s” kapcsoló nem enged meg argumentumot\n"
 
-#: lib/getopt.c:715 lib/getopt.c:734
+#: lib/getopt.c:360
 #, c-format
-msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: a(z) „--%s” kapcsolóhoz egy argumentum szükséges\n"
+msgid "%s: option '%s%s' requires an argument\n"
+msgstr "%s: a(z) „%s%s” kapcsolóhoz egy argumentum szükséges\n"
 
-#: lib/getopt.c:772 lib/getopt.c:775
-#, c-format
-msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: ismeretlen „--%s” kapcsoló\n"
-
-#: lib/getopt.c:783 lib/getopt.c:786
-#, c-format
-msgid "%s: unrecognized option '%c%s'\n"
-msgstr "%s: ismeretlen „%c%s” kapcsoló\n"
-
-#: lib/getopt.c:835 lib/getopt.c:838
+#: lib/getopt.c:621
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: érvénytelen kapcsoló -- „%c”\n"
 
-#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
+#: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: a kapcsoló egy argumentumot igényel -- „%c”\n"
-
-#: lib/getopt.c:964 lib/getopt.c:980
-#, c-format
-msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: a „-W %s” kapcsoló nem egyértelmű\n"
-
-#: lib/getopt.c:1004 lib/getopt.c:1022
-#, c-format
-msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: a „-W %s” kapcsoló nem enged meg argumentumot\n"
-
-#: lib/getopt.c:1043 lib/getopt.c:1061
-#, c-format
-msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: a „-W %s” kapcsolóhoz egy argumentum szükséges\n"
