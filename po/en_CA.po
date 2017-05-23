@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-16, 2017.
+#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-23 07:57+1000\n"
-"PO-Revision-Date: 2017-05-23 08:08+1000\n"
+"PO-Revision-Date: 2017-05-24 04:51+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (Canadian) <(nothing)>\n"
 "Language: en_CA\n"
