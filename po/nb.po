@@ -1,21 +1,21 @@
 # *************************************************************************
 # *                                                                       *
 # *            Norwegian Bokmål Translations for Star Traders             *
-# *                   Copyright (C) 2012, John Zaitseff                   *
+# *                 Copyright (C) 2012-17, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Johnny A. Solbu <johnny@solbu.net>, 2012-2017
+#   Johnny A. Solbu <johnny@solbu.net>, 2012-2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.10-pre1\n"
+"Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-20 12:28+1000\n"
-"PO-Revision-Date: 2017-05-23 18:28+0200\n"
+"POT-Creation-Date: 2017-05-23 09:01+1000\n"
+"PO-Revision-Date: 2017-05-23 23:07+0200\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -26,20 +26,30 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: data/trader.desktop.in:3 src/intf.c:610
+#. TRANSLATORS: The name of the game.  You may choose to translate it into
+#. your own language (recommended) or keep it the same as the English
+#. version.  Feel free to look through other translations to see how
+#. others have done this.
+#: data/trader.desktop.in:22 src/intf.c:610
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:4
+#: data/trader.desktop.in:23
 msgid "Play Star Traders, a simple game of interstellar trading"
-msgstr "Spill Star Traders, et enkelt spill med interstellar handel."
+msgstr "Spill Star Traders, et enkelt spill med interstellar handel"
 
-#: data/trader.desktop.in:5
+#. TRANSLATORS: A list of keywords describing Star Traders.  By all means
+#. add your own keywords!
+#: data/trader.desktop.in:26
 msgid "game;interstellar;trading;strategy;"
 msgstr "spill;interstellar;handel;strategi;"
 
-#: data/trader.desktop.in:6
+#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
+#. Entry Specification states it is translatable, but unless you provide a
+#. matching icon, please leave it as "trader": this will use trader.svg
+#. and the various trader.png files in the data source code directory.
+#: data/trader.desktop.in:31
 msgid "trader"
 msgstr "trader"
 
@@ -1351,7 +1361,7 @@ msgstr ""
 "avkastningen på hver del (i prosent) endres også. Spillere kan også låne fra\n"
 "Interstellar Handelsbank for å finansiere flere kjøp på børsen.\n"
 "\n"
-"Kartet  over galaksen  er representert  ved en  ^B~x^N x ^B~y^N  rutenett. En typisk\n"
+"Kartet  over galaksen  er representert  ved en  ^B~x^N × ^B~y^N  rutenett. En typisk\n"
 "seksjon kan være:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1714,18 +1724,3 @@ msgstr "%s: ugyldig valg -- «%c»\n"
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: valget krever et argument -- «%c»\n"
-
-#~ msgid "%s: option '--%s' doesn't allow an argument\n"
-#~ msgstr "%s: valget «--%s» tillater ikke et argument\n"
-
-#~ msgid "%s: unrecognized option '--%s'\n"
-#~ msgstr "%s: ukjent valg «--%s»\n"
-
-#~ msgid "%s: option '-W %s' is ambiguous\n"
-#~ msgstr "%s: valget «-W %s» er flertydig\n"
-
-#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
-
-#~ msgid "%s: option '-W %s' requires an argument\n"
-#~ msgstr "%s: valget «-W %s» krever et argument\n"
