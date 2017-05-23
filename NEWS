@@ -29,6 +29,8 @@ help text string  "Page N of M"  to allow  translations of the form  "Of M
 pages, this is page N".  In addition,  newer versions of lib/getopt.c have
 different strings.  All translations have been updated as a result.
 
+Removed the obsolete Gnulib gettext module.
+
 Migrated the source code repository  from Subversion  to Git.  Updated the
 documentation to suit,  and also listed  specific required version numbers
 for the Autoconf and Automake tools.
