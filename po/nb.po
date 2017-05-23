@@ -8,42 +8,59 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Johnny A. Solbu <johnny@solbu.net>, 2012-2015
+#   Johnny A. Solbu <johnny@solbu.net>, 2012-2017
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.8-pre1\n"
+"Project-Id-Version: trader 7.10-pre1\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2015-08-26 23:17+1000\n"
-"PO-Revision-Date: 2015-08-27 01:56+0100\n"
+"POT-Creation-Date: 2017-05-20 12:28+1000\n"
+"PO-Revision-Date: 2017-05-23 18:28+0200\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: data/trader.desktop.in:3 src/intf.c:610
+#, c-format
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: data/trader.desktop.in:4
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr "Spill Star Traders, et enkelt spill med interstellar handel."
+
+#: data/trader.desktop.in:5
+msgid "game;interstellar;trading;strategy;"
+msgstr "spill;interstellar;handel;strategi;"
+
+#: data/trader.desktop.in:6
+msgid "trader"
+msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: ugyldig verdi for --max-turn: «%s»\n"
 
 #: src/trader.c:251
 #, c-format
-msgid "%s: invalid operand `%s'\n"
+msgid "%s: invalid operand '%s'\n"
 msgstr "%s: ugyldig operand «%s»\n"
 
 #: src/trader.c:260
 #, c-format
-msgid "%s: invalid game number `%s'\n"
+msgid "%s: invalid game number '%s'\n"
 msgstr "%s: ugyldig spillnummer «%s»\n"
 
 #: src/trader.c:269
 #, c-format
-msgid "%s: extra operand `%s'\n"
+msgid "%s: extra operand '%s'\n"
 msgstr "%s: ekstra operand «%s»\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
@@ -79,7 +96,7 @@ msgstr ""
 
 #: src/trader.c:308
 #, c-format
-msgid "%s: Try `%s --help' for more information.\n"
+msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: Prøv «%s --help» for mer informasjon.\n"
 
 #: src/trader.c:311
@@ -443,10 +460,10 @@ msgstr "Ingen bedrifter på kartet"
 #, c-format
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
-"\n"
+" \n"
 "Firma"
 
 #. TRANSLATORS: "Ownership" is a two-line column label
@@ -1132,12 +1149,12 @@ msgstr "%s: ulovlig felt på linje %d"
 
 #: src/fileio.c:51
 #, c-format
-msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: ugyldig felt på linje %d: «%s»"
 
 #: src/fileio.c:55
 #, c-format
-msgid "%s: illegal value on line %d: `%s'"
+msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: ugyldig verdi på linje %d: «%s»"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
@@ -1539,19 +1556,18 @@ msgstr "@ Hjelpetekst, side 10\n"
 msgid "  How to Play  "
 msgstr "  Slik spiller man  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
 #, c-format
-msgid "Page %d of %d"
-msgstr "Side  %d av %d"
+msgid "Page %1$d of %2$d"
+msgstr "Side  %1$d av %2$d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Trykk <MELLOMROM> for å fortsette ] "
@@ -1563,30 +1579,25 @@ msgstr "[ Trykk <MELLOMROM> for å fortsette ] "
 #. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
 #. Note that the maximum label length is 76 characters,
 #. including the trailing space.
-#: src/help.c:495
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Trykk <MELLOMROM> for å fortsette eller <BACKSPACE> for forrige side ] "
 
 #: src/intf.c:110
 #, c-format
-msgid "%s: string has incorrect format: `%s'"
+msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: streng har feil format: «%s»"
 
 #: src/intf.c:126
 #, c-format
-msgid "%s: character has illegal width: `%lc'"
+msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: tegn har ugyldig bredde: «%lc»"
 
 #: src/intf.c:434
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "terminal størrelsen er for liten (%d x %d kreves)"
-
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Star Traders"
 
 #: src/intf.c:1265
 #, c-format
@@ -1595,7 +1606,7 @@ msgstr "mkchstr_conv: NUL"
 
 #: src/intf.c:1568
 #, c-format
-msgid "mkchstr: `%s'"
+msgid "mkchstr: '%s'"
 msgstr "mkchstr: «%s»"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
@@ -1610,7 +1621,7 @@ msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
-msgid "gettxline: illegal character in string: `%ls'"
+msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: ugyldig tegn i streng: «%ls»"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
@@ -1656,7 +1667,7 @@ msgstr "ikke mer minne"
 
 #: src/utils.c:1041
 #, c-format
-msgid "xmbstowcs: `%s'"
+msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: «%s»"
 
 #: src/utils.c:1081
@@ -1666,65 +1677,55 @@ msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
 #, c-format
-msgid "xwcrtomb: `%lc'"
+msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: «%lc»"
 
-#: lib/getopt.c:575 lib/getopt.c:604
+#: lib/getopt.c:278
 #, c-format
-msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: valget «%s» er flertydig; muligheter:"
+msgid "%s: option '%s%s' is ambiguous\n"
+msgstr "%s: valget «%s%s» er tvetydig\n"
 
-#: lib/getopt.c:619
+#: lib/getopt.c:284
 #, c-format
-msgid "%s: option '%s' is ambiguous\n"
-msgstr "%s: valget «%s» er flertydig\n"
+msgid "%s: option '%s%s' is ambiguous; possibilities:"
+msgstr "%s: valget «%s%s» er tvetydig; muligheter:"
 
-#: lib/getopt.c:654 lib/getopt.c:658
+#: lib/getopt.c:319
 #, c-format
-msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: valget «--%s» tillater ikke et argument\n"
+msgid "%s: unrecognized option '%s%s'\n"
+msgstr "%s: ukjent valg «%s%s»\n"
 
-#: lib/getopt.c:667 lib/getopt.c:672
+#: lib/getopt.c:345
 #, c-format
-msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: valget «%c%s» tillater ikke argumenter\n"
+msgid "%s: option '%s%s' doesn't allow an argument\n"
+msgstr "%s: valget «%s%s» tillater ikke argumenter\n"
 
-#: lib/getopt.c:715 lib/getopt.c:734
+#: lib/getopt.c:360
 #, c-format
-msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: valget «--%s» krever et argument\n"
+msgid "%s: option '%s%s' requires an argument\n"
+msgstr "%s: valget «%s%s» krever et argument\n"
 
-#: lib/getopt.c:772 lib/getopt.c:775
-#, c-format
-msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: ukjent valg «--%s»\n"
-
-#: lib/getopt.c:783 lib/getopt.c:786
-#, c-format
-msgid "%s: unrecognized option '%c%s'\n"
-msgstr "%s: ukjent valg «%c%s»\n"
-
-#: lib/getopt.c:835 lib/getopt.c:838
+#: lib/getopt.c:621
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ugyldig valg -- «%c»\n"
 
-#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
+#: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: valget krever et argument -- «%c»\n"
 
-#: lib/getopt.c:964 lib/getopt.c:980
-#, c-format
-msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: valget «-W %s» er flertydig\n"
+#~ msgid "%s: option '--%s' doesn't allow an argument\n"
+#~ msgstr "%s: valget «--%s» tillater ikke et argument\n"
 
-#: lib/getopt.c:1004 lib/getopt.c:1022
-#, c-format
-msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
+#~ msgid "%s: unrecognized option '--%s'\n"
+#~ msgstr "%s: ukjent valg «--%s»\n"
 
-#: lib/getopt.c:1043 lib/getopt.c:1061
-#, c-format
-msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: valget «-W %s» krever et argument\n"
+#~ msgid "%s: option '-W %s' is ambiguous\n"
+#~ msgstr "%s: valget «-W %s» er flertydig\n"
+
+#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
+#~ msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
+
+#~ msgid "%s: option '-W %s' requires an argument\n"
+#~ msgstr "%s: valget «-W %s» krever et argument\n"
