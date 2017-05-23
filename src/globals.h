@@ -67,30 +67,30 @@
 #define MERGE_BONUS_RATE	10.0	// Multiplier for merger cash bonus
 #define MERGE_PRICE_ADJUST_MIN	0.40	// Minimum of old share price used as increment
 #define MERGE_PRICE_ADJUST_MAX	0.60	// Maximum of old share price used as increment
-#define COMPANY_BANKRUPTCY	0.03	// 3% chance of company bankruptcy (if return < 0)
+#define COMPANY_BANKRUPTCY	0.07	// 7% chance of company bankruptcy (if return < 0)
 #define ALL_ASSETS_TAKEN	0.20	// 20% chance of all assets taken in that case
 
-#define CHANGE_SHARE_PRICE	0.35	// Chance of changing a share price each move
+#define CHANGE_SHARE_PRICE	0.40	// Chance of changing a share price each move
 #define DEC_SHARE_PRICE		0.65	// Chance that change will be negative
 #define PRICE_CHANGE_RATE	0.25	// Up to 25% of share price is used to increment/decrement
 #define INITIAL_RETURN		0.05	// Initial return per share: 5%
 #define MIN_COMPANY_RETURN	-0.15	// Minimum return per share (yes, negative!)
 #define MAX_COMPANY_RETURN	0.25	// Maximum return per share
-#define CHANGE_COMPANY_RETURN	0.50	// Chance of randomly changing a return each move
-#define DEC_COMPANY_RETURN	0.50	// Chance such a change will decrease return
-#define RETURN_MAX_CHANGE	0.03	// Maximum that company return will change
-#define CHANGE_RETURN_GROWING	0.25	// Chance of changing return when the company grows
-#define DEC_RETURN_GROWING	0.35	// Chance such a change will decrement return
-#define GROWING_MAX_CHANGE	0.02	// Maximum that that return can change
+#define CHANGE_COMPANY_RETURN	0.60	// Chance of randomly changing a return each move
+#define DEC_COMPANY_RETURN	0.45	// Chance such a change will decrease return
+#define RETURN_MAX_CHANGE	0.04	// Maximum that company return will change
+#define CHANGE_RETURN_GROWING	0.35	// Chance of changing return when the company grows
+#define DEC_RETURN_GROWING	0.30	// Chance such a change will decrement return
+#define GROWING_MAX_CHANGE	0.03	// Maximum that that return can change
 
 #define OWNERSHIP_BONUS		2.00	// Bonus payment based on percentage ownership
 #define BID_CHANCE		0.70	// 70% chance of successful bidding
-#define MAX_SHARES_BIDDED	200	// Maximum number of shares issued
+#define MAX_SHARES_BIDDED	250	// Maximum number of shares issued
 
 #define INITIAL_INTEREST_RATE	0.10	// Initial bank interest rate: 10%
 #define MIN_INTEREST_RATE	0.02	// Minimum interest rate
 #define MAX_INTEREST_RATE	0.20	// Maximum interest rate
-#define CHANGE_INTEREST_RATE	0.40	// Chance of changing the interest rate each move
+#define CHANGE_INTEREST_RATE	0.35	// Chance of changing the interest rate each move
 #define DEC_INTEREST_RATE	0.45	// Chance that change will be a decrease
 #define INTEREST_MAX_CHANGE	0.03	// Maximum that interest rate will change
 #define CREDIT_LIMIT_RATE	2.00	// Multiplier for a player's credit limit
