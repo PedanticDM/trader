@@ -19,21 +19,31 @@ Version 7.10 (not yet released)
 -------------------------------
 
 Added a data directory that contains a desktop file and appropriate icons.
+Adjusted the game constants for more dynamic play:  allow the share prices
+and returns to change a bit more frequently and more rapidly.  Tweaked the
+colours in the example monochrome retro-computing command lines, including
+adding an amber monitor version.
 
-Added the Serbian translation, with thanks to Мирослав Николић.
+Added a Serbian translation, with thanks to Мирослав Николић.  Updated the
+Danish, French, Swedish, Hungarian  and Norwegian Bokmål translations,  in
+that order,  with thanks to  Joe Hansen, Frédéric Marchal, Anders Jonsson,
+Balázs Úr and Johnny A. Solbu respectively.
 
 Updated translatable strings  to overcome a limitation of  msgfmt(1): if a
 string starts or  ends with a new-line character,  its translation must do
 so as well.  This has an impact on labels in particular.  Also changed the
 help text string  "Page N of M"  to allow  translations of the form  "Of M
-pages, this is page N".  In addition,  newer versions of lib/getopt.c have
+pages, this is page N", and all quoted strings using the obsolete GNU form
+`like this' to 'this'.  In addition,  newer versions of  lib/getopt.c have
 different strings.  All translations have been updated as a result.
 
-Removed the obsolete Gnulib gettext module.
+Removed the obsolete  Gnulib gettext module  and updated to the latest Git
+snapshot of Gnulib.  Updated the dependency version numbers  for Autoconf,
+Automake and Gettext.  Also updated all macros from the Autoconf Archive.
 
 Migrated the source code repository  from Subversion  to Git.  Updated the
 documentation to suit,  and also listed  specific required version numbers
-for the Autoconf and Automake tools.
+for the Autoconf and Automake tools in the INSTALL file.
 
 
 Version 7.9 (5th January, 2016)
