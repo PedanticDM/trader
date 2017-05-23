@@ -36,64 +36,64 @@
 *                            Game constants                             *
 ************************************************************************/
 
-#define MAX_X			38	// Map dimensions MAX_X x MAX_Y
+#define MAX_X			38	// Map dimensions MAX_X x MAX_Y (do not change!)
 #define MAX_Y			14
-#define STAR_RATIO		0.10	// 10% of map should be stars
+#define STAR_RATIO		0.10	// Approximately 10% of the map should be stars
 
-#define NUMBER_MOVES		20	// Number of choices on map per turn
+#define NUMBER_MOVES		20	// Number of choices on the galaxy map per turn
 #define DEFAULT_MAX_TURN	50	// Default number of turns per game
 #define MIN_MAX_TURN		10	// Minimum that can be specified for max_turn
 
-#define MAX_PLAYERS		8	// Maximum number of players
+#define MAX_PLAYERS		8	// Maximum number of players (do not change!)
 #define INITIAL_CASH		6000.00	// Initial cash per player
-#define MAX_OVERDRAFT		1000.00	// Max. value player can go negative
-#define MAKE_BANKRUPT		0.07	// If overdraft, 7% chance of bankruptcy
+#define MAX_OVERDRAFT		1000.00	// Maximum value any player can go negative
+#define MAKE_BANKRUPT		0.07	// If a player is overdraft, 7% chance of bankruptcy
 
-#define MAX_COMPANIES		8	// Max. number of companies (do not change!)
-#define INITIAL_STOCK_ISSUED	5	// Initial number of shares issued out
-#define INITIAL_MAX_STOCK	50	// Initial max. number of shares available
-#define INITIAL_SHARE_PRICE	60.00	// Initial share price
+#define MAX_COMPANIES		8	// Maximum number of companies (do not change!)
+#define INITIAL_STOCK_ISSUED	5	// Initial number of shares issued on company creation
+#define INITIAL_MAX_STOCK	50	// Initial maximum number of shares available
+#define INITIAL_SHARE_PRICE	60.00	// Initial share price (before increments)
 
-#define SHARE_PRICE_INC		60.00	// Share price incr. for increase in shipping
-#define SHARE_PRICE_INC_OUTPOST	75.00	// Incr. for adding an outpost
-#define SHARE_PRICE_INC_OUTSTAR	150.00	// Extra incr. for adding outpost next to star
-#define SHARE_PRICE_INC_STAR	300.00	// Incr. for adding next to star
-#define PRICE_INC_ADJUST_MIN	0.75	// Actual incr. may be as low as 75% of nominal
-#define PRICE_INC_ADJUST_MAX	1.25	// Actual incr. may be as high as 125%
-#define MAX_STOCK_RATIO_MIN	0.10	// Min. multiplier to increment available shares
-#define MAX_STOCK_RATIO_MAX	0.25	// Max. multiplier, using share price incr.
+#define SHARE_PRICE_INC		60.00	// Share price increment for increase in shipping
+#define SHARE_PRICE_INC_OUTPOST	75.00	// Increment for adding an outpost
+#define SHARE_PRICE_INC_OUTSTAR	150.00	// Extra increment for adding an outpost next to a star
+#define SHARE_PRICE_INC_STAR	300.00	// Increment for expanding directly next to a star
+#define PRICE_INC_ADJUST_MIN	0.75	// Actual increment may be as low as 75% of nominal
+#define PRICE_INC_ADJUST_MAX	1.25	// Actual increment may be as high as 125%
+#define MAX_STOCK_RATIO_MIN	0.10	// Minimum multiplier to increment available shares
+#define MAX_STOCK_RATIO_MAX	0.25	// Maximum multiplier, using share price increment
 
 #define MERGE_STOCK_RATIO	0.50	// 50% of old shares are credited to new company
 #define MERGE_BONUS_RATE	10.0	// Multiplier for merger cash bonus
 #define MERGE_PRICE_ADJUST_MIN	0.40	// Minimum of old share price used as increment
 #define MERGE_PRICE_ADJUST_MAX	0.60	// Maximum of old share price used as increment
 #define COMPANY_BANKRUPTCY	0.03	// 3% chance of company bankruptcy (if return < 0)
-#define ALL_ASSETS_TAKEN	0.20	// 20% chance of assets taken of same
+#define ALL_ASSETS_TAKEN	0.20	// 20% chance of all assets taken in that case
 
-#define CHANGE_SHARE_PRICE	0.35	// 35% chance for changing share price
-#define DEC_SHARE_PRICE		0.65	// 65% x 35% chance of decrementing same
-#define PRICE_CHANGE_RATE	0.25	// Up to 25% of share price is used to incr./decr.
+#define CHANGE_SHARE_PRICE	0.35	// Chance of changing a share price each move
+#define DEC_SHARE_PRICE		0.65	// Chance that change will be negative
+#define PRICE_CHANGE_RATE	0.25	// Up to 25% of share price is used to increment/decrement
 #define INITIAL_RETURN		0.05	// Initial return per share: 5%
 #define MIN_COMPANY_RETURN	-0.15	// Minimum return per share (yes, negative!)
 #define MAX_COMPANY_RETURN	0.25	// Maximum return per share
-#define CHANGE_COMPANY_RETURN	0.50	// Chance of randomly changing return
-#define DEC_COMPANY_RETURN	0.50	// Chance such change will decrease return
+#define CHANGE_COMPANY_RETURN	0.50	// Chance of randomly changing a return each move
+#define DEC_COMPANY_RETURN	0.50	// Chance such a change will decrease return
 #define RETURN_MAX_CHANGE	0.03	// Maximum that company return will change
-#define CHANGE_RETURN_GROWING	0.25	// Chance of changing return when company grows
-#define DEC_RETURN_GROWING	0.35	// 35% chance such change will decrement return
+#define CHANGE_RETURN_GROWING	0.25	// Chance of changing return when the company grows
+#define DEC_RETURN_GROWING	0.35	// Chance such a change will decrement return
 #define GROWING_MAX_CHANGE	0.02	// Maximum that that return can change
 
-#define OWNERSHIP_BONUS		2.00	// Bonus amount based on percentage ownership
-#define BID_CHANCE		0.75	// 75% chance of successful bidding
-#define MAX_SHARES_BIDDED	200	// Max. number of shares issued
+#define OWNERSHIP_BONUS		2.00	// Bonus payment based on percentage ownership
+#define BID_CHANCE		0.70	// 70% chance of successful bidding
+#define MAX_SHARES_BIDDED	200	// Maximum number of shares issued
 
 #define INITIAL_INTEREST_RATE	0.10	// Initial bank interest rate: 10%
 #define MIN_INTEREST_RATE	0.02	// Minimum interest rate
 #define MAX_INTEREST_RATE	0.20	// Maximum interest rate
-#define CHANGE_INTEREST_RATE	0.40	// 40% chance of changing interest rate
-#define DEC_INTEREST_RATE	0.45	// 40% x 45% chance of decrease the same
+#define CHANGE_INTEREST_RATE	0.40	// Chance of changing the interest rate each move
+#define DEC_INTEREST_RATE	0.45	// Chance that change will be a decrease
 #define INTEREST_MAX_CHANGE	0.03	// Maximum that interest rate will change
-#define CREDIT_LIMIT_RATE	2.00	// Multiplier for credit limit
+#define CREDIT_LIMIT_RATE	2.00	// Multiplier for a player's credit limit
 
 #define ROUNDING_AMOUNT		0.01	// Round off smaller amounts to zero
 
