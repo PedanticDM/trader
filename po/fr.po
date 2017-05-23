@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-23 07:57+1000\n"
-"PO-Revision-Date: 2017-05-23 08:20+1000\n"
+"PO-Revision-Date: 2017-05-24 05:45+1000\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -62,22 +62,22 @@ msgstr "trader"
 #: src/trader.c:235
 #, c-format
 msgid "%s: invalid value for --max-turn: '%s'\n"
-msgstr "%s: valeur invalide pour --max-turn: « %s »\n"
+msgstr "%s: valeur invalide pour --max-turn: « %s »\n"
 
 #: src/trader.c:251
 #, c-format
 msgid "%s: invalid operand '%s'\n"
-msgstr "%s: opérande invalide « %s »\n"
+msgstr "%s: opérande invalide « %s »\n"
 
 #: src/trader.c:260
 #, c-format
 msgid "%s: invalid game number '%s'\n"
-msgstr "%s: numéro de jeu invalide « %s »\n"
+msgstr "%s: numéro de jeu invalide « %s »\n"
 
 #: src/trader.c:269
 #, c-format
 msgid "%s: extra operand '%s'\n"
-msgstr "%s: opérande surnuméraire « %s »\n"
+msgstr "%s: opérande surnuméraire « %s »\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
 #. name of the author.  The IPA pronunciation in this comment is in
@@ -114,7 +114,7 @@ msgstr ""
 #: src/trader.c:308
 #, c-format
 msgid "%s: Try '%s --help' for more information.\n"
-msgstr "%s: Essayez « %s --help » pour plus d'informations.\n"
+msgstr "%s: Essayez « %s --help » pour plus d'informations.\n"
 
 #: src/trader.c:311
 #, c-format
@@ -1166,12 +1166,12 @@ msgstr "%s: champ illégal à la ligne %d"
 #: src/fileio.c:51
 #, c-format
 msgid "%s: illegal field on line %d: '%s'"
-msgstr "%s: champ illégal à la ligne %d: « %s »"
+msgstr "%s: champ illégal à la ligne %d: « %s »"
 
 #: src/fileio.c:55
 #, c-format
 msgid "%s: illegal value on line %d: '%s'"
-msgstr "%s: valeur illégale à la ligne %d: « %s »"
+msgstr "%s: valeur illégale à la ligne %d: « %s »"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
 #, c-format
@@ -1615,12 +1615,12 @@ msgstr "[ Appuyez <ESPACE> pour continuer ou <RetArr> pour la page précédente 
 #: src/intf.c:110
 #, c-format
 msgid "%s: string has incorrect format: '%s'"
-msgstr "%s: la chaîne a un format incorrect: « %s »"
+msgstr "%s: la chaîne a un format incorrect: « %s »"
 
 #: src/intf.c:126
 #, c-format
 msgid "%s: character has illegal width: '%lc'"
-msgstr "%s: caractère avec une largeur illégale: « %lc »"
+msgstr "%s: caractère avec une largeur illégale: « %lc »"
 
 #: src/intf.c:434
 #, c-format
@@ -1635,7 +1635,7 @@ msgstr "mkchstr_conv: NUL"
 #: src/intf.c:1568
 #, c-format
 msgid "mkchstr: '%s'"
-msgstr "mkchstr: « %s »"
+msgstr "mkchstr: « %s »"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
 #. default value into the input string, if entered as the very first
@@ -1650,7 +1650,7 @@ msgstr "=;"
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
-msgstr "gettxline: caractère illégal dans la chaîne: « %ls »"
+msgstr "gettxline: caractère illégal dans la chaîne: « %ls »"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
 #. "input|No" contain the keycodes used to determine whether a
@@ -1696,7 +1696,7 @@ msgstr "pas assez de mémoire"
 #: src/utils.c:1041
 #, c-format
 msgid "xmbstowcs: '%s'"
-msgstr "xmbstowcs: « %s »"
+msgstr "xmbstowcs: « %s »"
 
 #: src/utils.c:1081
 #, c-format
@@ -1706,39 +1706,39 @@ msgstr "xwcrtomb: NUL"
 #: src/utils.c:1086
 #, c-format
 msgid "xwcrtomb: '%lc'"
-msgstr "xwcrtomb: « %lc »"
+msgstr "xwcrtomb: « %lc »"
 
 #: lib/getopt.c:278
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
-msgstr "%s: l'option « %s%s » est ambiguë\n"
+msgstr "%s: l'option « %s%s » est ambiguë\n"
 
 #: lib/getopt.c:284
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
-msgstr "%s: l'option « %s%s » est ambiguë; les possibilités sont:"
+msgstr "%s: l'option « %s%s » est ambiguë; les possibilités sont:"
 
 #: lib/getopt.c:319
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
-msgstr "%s: option « %s%s » non reconnue\n"
+msgstr "%s: option « %s%s » non reconnue\n"
 
 #: lib/getopt.c:345
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
-msgstr "%s: l'option « %s%s » n'accepte pas d'argument\n"
+msgstr "%s: l'option « %s%s » n'accepte pas d'argument\n"
 
 #: lib/getopt.c:360
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
-msgstr "%s: l'option « %s%s » exige un argument\n"
+msgstr "%s: l'option « %s%s » exige un argument\n"
 
 #: lib/getopt.c:621
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
-msgstr "%s: option invalide -- « %c »\n"
+msgstr "%s: option invalide -- « %c »\n"
 
 #: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr "%s: l'option exige un argument -- « %c »\n"
+msgstr "%s: l'option exige un argument -- « %c »\n"
