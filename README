@@ -41,8 +41,8 @@ options, as well as some  suggestions for running a retro-computing green-
 screen nostalgia-tour  version of the game...  Try  running the following,
 for example (all on one line):
 
-    xterm -g 80x24 -fa Mono -fs 18 -bg black -fg '#009911' -bc +sb +bdc \
-        +fbx -xrm 'XTerm*colorBD: #00FF00' -e trader --no-colour &
+    xterm -g 80x24 -fa Mono -fs 18 -bg '#181818' -fg '#2CAB00' -bc +sb \
+        +bdc +fbx -xrm 'XTerm*colorBD: #41FF00' -e trader --no-colour &
 
 To read the manual page, type "man trader" from the command line.
 
