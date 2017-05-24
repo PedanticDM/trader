@@ -1,6 +1,8 @@
 # *************************************************************************
-# * * * German Translations for Star Traders * * Copyright (C) 2012-15, John
-# Zaitseff * * *
+# *                                                                       *
+# *                 German Translations for Star Traders                  *
+# *                 Copyright © 2012-17, John Zaitseff                  *
+# *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
@@ -13,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-23 09:01+1000\n"
-"PO-Revision-Date: 2017-05-24 11:25+0200\n"
+"PO-Revision-Date: 2017-05-24 16:18+0200\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -48,7 +50,7 @@ msgstr "spiel;universum;galaxie;handel;strategie;"
 #. and the various trader.png files in the data source code directory.
 #: data/trader.desktop.in:31
 msgid "trader"
-msgstr "Star Traders"
+msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
@@ -1368,7 +1370,7 @@ msgstr ""
 "der  Interstellaren  Handelsbank  leihen,  um  weitere Akteinkäufe zu finan-\n"
 "zieren.\n"
 "\n"
-"Die Karte der Galaxie  wird dargetellt durch ein  ^B~x^N x ^B~y^N  Raster. Ein typi-\n"
+"Die Karte der Galaxie  wird dargetellt durch ein  ^B~x^N × ^B~y^N  Raster. Ein typi-\n"
 "scher Teil von ihr könnte so aussehen:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1537,7 +1539,7 @@ msgstr ""
 "Wenn Sie Ihren Zug gewählt haben, betreten Sie die ^BInterstellare Börse^N. Hier\n"
 "können Sie Aktien kaufen oder  verkaufen, sich von der Handelsbank Geld lei-\n"
 "hen  oder einen Teil  ihrer Schulden  (so vorhanden)  zurückzahlen. Beachten\n"
-"Sie, daß jede  Firma eine beschränkte Zahl von Aktien  ausgibt -- Sie können\n"
+"Sie, daß jede  Firma eine  beschränkte Zahl von Aktien  ausgibt — Sie können\n"
 "nicht endlos kaufen! Sie können aber die  Firma  bitten, weitere Aktien aus-\n"
 "zugeben. Je größer ihr Anteil an  der Firma, desdo höher die Chance, das dem\n"
 "statt gegeben wird.\n"
@@ -1731,18 +1733,3 @@ msgstr "%s: ungültige Option -- „%c“\n"
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: die Option erfordert ein Argument -- „%c“\n"
-
-#~ msgid "%s: option '--%s' doesn't allow an argument\n"
-#~ msgstr "%s: Option „--%s“ akzeptiert keine Argumente\n"
-
-#~ msgid "%s: unrecognized option '--%s'\n"
-#~ msgstr "%s: unbekannte Option „--%s“\n"
-
-#~ msgid "%s: option '-W %s' is ambiguous\n"
-#~ msgstr "%s: Option „-W %s“ ist mehrdeutig\n"
-
-#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: Option „-W %s“ akzeptiert keine Argumente\n"
-
-#~ msgid "%s: option '-W %s' requires an argument\n"
-#~ msgstr "%s: Option „-W %s“ erfordert ein Argument\n"
