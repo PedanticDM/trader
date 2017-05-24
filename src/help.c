@@ -78,7 +78,7 @@ static const char *help_text[HELP_TEXT_PAGES] = {
     ~y       - Print the height of the galaxy map (MAX_Y) [**]
     ~m       - Print the number of moves available (NUMBER_MOVES) [**]
     ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
-    ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+    ~t       - Print the default number of turns in the game (DEFAULT_MAX_TURN) [**]
     ~1 to ~9 - Print the keycode for the N-th choice of move [***]
     ~M       - Print the keycode for the last choice of move [***]
     ~A to ~H - Print the character used to represent the company on the galaxy map [***]

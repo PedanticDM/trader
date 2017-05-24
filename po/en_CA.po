@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-23 07:57+1000\n"
+"POT-Creation-Date: 2017-05-24 20:36+1000\n"
 "PO-Revision-Date: 2017-05-24 04:51+1000\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (Canadian) <(nothing)>\n"
@@ -28,18 +28,18 @@ msgstr ""
 #. your own language (recommended) or keep it the same as the English
 #. version.  Feel free to look through other translations to see how
 #. others have done this.
-#: data/trader.desktop.in:22 src/intf.c:610
+#: data/trader.desktop.in:23 src/intf.c:610
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:23
+#: data/trader.desktop.in:24
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "Play Star Traders, a simple game of interstellar trading"
 
 #. TRANSLATORS: A list of keywords describing Star Traders.  By all means
 #. add your own keywords!
-#: data/trader.desktop.in:26
+#: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
 msgstr "game;interstellar;trading;strategy;"
 
@@ -47,7 +47,7 @@ msgstr "game;interstellar;trading;strategy;"
 #. Entry Specification states it is translatable, but unless you provide a
 #. matching icon, please leave it as "trader": this will use trader.svg
 #. and the various trader.png files in the data source code directory.
-#: data/trader.desktop.in:31
+#: data/trader.desktop.in:32
 msgid "trader"
 msgstr "trader"
 
@@ -1295,7 +1295,7 @@ msgstr ""
 #. ~y       - Print the height of the galaxy map (MAX_Y) [**]
 #. ~m       - Print the number of moves available (NUMBER_MOVES) [**]
 #. ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
-#. ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+#. ~t       - Print the default number of turns in the game (DEFAULT_MAX_TURN) [**]
 #. ~1 to ~9 - Print the keycode for the N-th choice of move [***]
 #. ~M       - Print the keycode for the last choice of move [***]
 #. ~A to ~H - Print the character used to represent the company on the galaxy map [***]
