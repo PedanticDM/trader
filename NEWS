@@ -25,9 +25,9 @@ colours in the example monochrome retro-computing command lines, including
 adding an amber monitor version.
 
 Added a Serbian translation, with thanks to Мирослав Николић.  Updated the
-Danish, French, Swedish, Hungarian  and Norwegian Bokmål translations,  in
-that order,  with thanks to  Joe Hansen, Frédéric Marchal, Anders Jonsson,
-Balázs Úr and Johnny A. Solbu respectively.
+Danish, French, Swedish, Hungarian, Norwegian Bokmål  and  German transla-
+tions, in that order,  with thanks to Joe Hansen, Frédéric Marchal, Anders
+Jonsson, Balázs Úr, Johnny A. Solbu and Philipp Thomas respectively.
 
 Updated translatable strings  to overcome a limitation of  msgfmt(1): if a
 string starts or  ends with a new-line character,  its translation must do
