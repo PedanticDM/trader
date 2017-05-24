@@ -1,48 +1,73 @@
 # *************************************************************************
-# *                                                                       *
-# *                 German Translations for Star Traders                  *
-# *                 Copyright (C) 2012-15, John Zaitseff                  *
-# *                                                                       *
+# * * * German Translations for Star Traders * * Copyright (C) 2012-15, John
+# Zaitseff * * *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Philipp Thomas <pth@suse.de>, 2012, 2015.
+#   Philipp Thomas <pth@suse.de>, 2012, 2015, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.7\n"
+"Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2015-08-18 09:44+1000\n"
-"PO-Revision-Date: 2015-08-24 11:45+0200\n"
+"POT-Creation-Date: 2017-05-23 09:01+1000\n"
+"PO-Revision-Date: 2017-05-24 11:25+0200\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. TRANSLATORS: The name of the game.  You may choose to translate it into
+#. your own language (recommended) or keep it the same as the English
+#. version.  Feel free to look through other translations to see how
+#. others have done this.
+#: data/trader.desktop.in:22 src/intf.c:610
+#, c-format
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: data/trader.desktop.in:23
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr "Spielen Sie Star Trader, ein einfaches Spiel um interstellaren Handel"
+
+#. TRANSLATORS: A list of keywords describing Star Traders.  By all means
+#. add your own keywords!
+#: data/trader.desktop.in:26
+msgid "game;interstellar;trading;strategy;"
+msgstr "spiel;universum;galaxie;handel;strategie;"
+
+#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
+#. Entry Specification states it is translatable, but unless you provide a
+#. matching icon, please leave it as "trader": this will use trader.svg
+#. and the various trader.png files in the data source code directory.
+#: data/trader.desktop.in:31
+msgid "trader"
+msgstr "Star Traders"
 
 #: src/trader.c:235
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: ungültiger Wert für --max-turn: „%s“\n"
 
 #: src/trader.c:251
 #, c-format
-msgid "%s: invalid operand `%s'\n"
+msgid "%s: invalid operand '%s'\n"
 msgstr "%s: ungültiger Operand „%s“\n"
 
 #: src/trader.c:260
 #, c-format
-msgid "%s: invalid game number `%s'\n"
+msgid "%s: invalid game number '%s'\n"
 msgstr "%s: ungültige Spielnummer „%s“\n"
 
 #: src/trader.c:269
 #, c-format
-msgid "%s: extra operand `%s'\n"
+msgid "%s: extra operand '%s'\n"
 msgstr "%s: zusätzlicher Operand „%s“\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
@@ -79,7 +104,7 @@ msgstr ""
 
 #: src/trader.c:308
 #, c-format
-msgid "%s: Try `%s --help' for more information.\n"
+msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: Versuchen Sie „%s --help“ für ausführlichere Informationen.\n"
 
 #: src/trader.c:311
@@ -195,7 +220,7 @@ msgid "Fornax Express"
 msgstr "Fornax Express"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
+msgid "Gemini Inc"
 msgstr "Gemini OHG"
 
 #: src/globals.c:54
@@ -450,10 +475,10 @@ msgstr "Keine Firmen auf der Karte"
 #, c-format
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
-"\n"
+" \n"
 "Firma"
 
 #. TRANSLATORS: "Ownership" is a two-line column label
@@ -977,8 +1002,8 @@ msgctxt "label|Stock A"
 msgid "Return:          "
 msgstr "Rendite:             "
 
-#. TRANSLATORS: "Current holdings" is the number of shares the
-#. current player owns in this particular company.
+#. TRANSLATORS: "Current holdings" is the number of shares
+#. the current player owns in this particular company.
 #.
 #. Note that the labels "Current holdings", "Percentage owned"
 #. and "Current cash" MUST all be the same length and contain at
@@ -993,13 +1018,13 @@ msgstr "Akt. Anteil:     "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
-#: src/exch.c:633
+#: src/exch.c:636
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
 msgstr "Prozent. Anteil: "
 
-#: src/exch.c:638
+#: src/exch.c:641
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
@@ -1007,47 +1032,47 @@ msgstr "Akt. Bargeld:    "
 
 #. TRANSLATORS: Each label may be up to 35 characters wide
 #. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
-#: src/exch.c:651
+#: src/exch.c:654
 #, c-format
 msgid "^{<1>^} Buy stock from company"
 msgstr "^{<1>^} Aktien der Firma erwerben"
 
-#: src/exch.c:653
+#: src/exch.c:656
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Aktien der Firma verkaufen"
 
-#: src/exch.c:655
+#: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
 msgstr "^{<3>^} Ausgabe weiterer Aktien erbitten"
 
-#: src/exch.c:657
+#: src/exch.c:660
 #, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
 msgstr "^{<4>^} Die Börse verlassen"
 
-#: src/exch.c:660
+#: src/exch.c:663
 #, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
 msgstr "Ihre Wahl [^{1^}-^{4^}]: "
 
-#: src/exch.c:716
+#: src/exch.c:719
 #, c-format
 msgid "  No Shares Available  "
 msgstr "  Keine Aktien verfügbar  "
 
-#: src/exch.c:717
+#: src/exch.c:720
 #, c-format
 msgid "No more shares are available for purchase."
 msgstr "Keine erwerbbaren Aktien vorhanden."
 
-#: src/exch.c:721
+#: src/exch.c:724
 #, c-format
 msgid "  Insufficient Cash  "
 msgstr "  Unzureichnedes Bargeld  "
 
-#: src/exch.c:722
+#: src/exch.c:725
 #, c-format
 msgid ""
 "You do not have enough cash\n"
@@ -1056,47 +1081,47 @@ msgstr ""
 "Sie haben nicht genug Bargeld,\n"
 "um zusätzliche Aktien zu erwerben."
 
-#: src/exch.c:733
+#: src/exch.c:736
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
 msgstr[0] "Sie können ^{eine^} Aktie erwerben."
 msgstr[1] "Sie können bis zu ^{%'ld^} Aktien erwerben."
 
-#: src/exch.c:739
+#: src/exch.c:742
 #, c-format
 msgid "How many shares do you wish to purchase? "
 msgstr "Wieviele Aktien wollen Sie erwerben? "
 
-#: src/exch.c:760
+#: src/exch.c:763
 #, c-format
 msgid "  No Shares  "
 msgstr "  Keine Aktien  "
 
-#: src/exch.c:761
+#: src/exch.c:764
 #, c-format
 msgid "You do not have any shares to sell."
 msgstr "Sie haben keine Aktien zu verkaufen."
 
-#: src/exch.c:768
+#: src/exch.c:771
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
 msgstr[0] "Sie können ^{eine^} Aktie verkaufen."
 msgstr[1] "Sie können bis zu ^{%'ld^} Aktien verkaufen."
 
-#: src/exch.c:774
+#: src/exch.c:777
 #, c-format
 msgid "How many shares do you wish to sell? "
 msgstr "Wieviele Aktien wollen Sie verkaufen? "
 
-#: src/exch.c:802
+#: src/exch.c:805
 #, c-format
 msgid "  No Shares Issued  "
 msgstr "  Keine Aktien Ausgegeben  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:804
+#: src/exch.c:807
 #, c-format
 msgid ""
 "%ls has refused\n"
@@ -1105,13 +1130,13 @@ msgstr ""
 "%ls hat sich geweigert,\n"
 "weitere Aktien auszugeben."
 
-#: src/exch.c:809
+#: src/exch.c:812
 #, c-format
 msgid "  Shares Issued  "
 msgstr "  Ausgegeben Aktien  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:811
+#: src/exch.c:814
 #, c-format
 msgid ""
 "%ls has issued\n"
@@ -1139,12 +1164,12 @@ msgstr "%s: unzulässiges Feld in Zeile %d"
 
 #: src/fileio.c:51
 #, c-format
-msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: unzulässiges Feld in Zeile %d: „%s“"
 
 #: src/fileio.c:55
 #, c-format
-msgid "%s: illegal value on line %d: `%s'"
+msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: unzulässiger Wert in Zeile %d: „%s“"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
@@ -1548,19 +1573,18 @@ msgstr "@ Hilfe, Seite 10\n"
 msgid "  How to Play  "
 msgstr "  Spielanleitung  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
 #, c-format
-msgid "Page %d of %d"
-msgstr "Seite %d von %d"
+msgid "Page %1$d of %2$d"
+msgstr "Seite %1$d von %2$d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ <LEERTASTE> drücken um fortzufahren ] "
@@ -1572,30 +1596,25 @@ msgstr "[ <LEERTASTE> drücken um fortzufahren ] "
 #. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
 #. Note that the maximum label length is 76 characters,
 #. including the trailing space.
-#: src/help.c:495
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ <LEERTASTE> für nächste, <RÜCKSCHRITT> für vorherige Seite ] "
 
 #: src/intf.c:110
 #, c-format
-msgid "%s: string has incorrect format: `%s'"
+msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: Die Zeichenkette hat ein falsches Format: „%s“"
 
 #: src/intf.c:126
 #, c-format
-msgid "%s: character has illegal width: `%lc'"
+msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: Das Zeichen hat eine unzulässige Breite: „%lc“"
 
 #: src/intf.c:434
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "Das Terminal ist zu klein (Mindestgröße ist %d x %d)"
-
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Star Traders"
 
 #: src/intf.c:1265
 #, c-format
@@ -1604,7 +1623,7 @@ msgstr "mkchstr_conv: NULL"
 
 #: src/intf.c:1568
 #, c-format
-msgid "mkchstr: `%s'"
+msgid "mkchstr: '%s'"
 msgstr "mkchstr: „%s“"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
@@ -1619,8 +1638,8 @@ msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
 #, c-format
-msgid "gettxline: illegal character in string: `%ls'"
-msgstr "gettxline: unzulässiges Zeichen in Zeichenkette „%ls“"
+msgid "gettxline: illegal character in string: '%ls'"
+msgstr "gettxline: unzulässiges Zeichen in der Zeichenkette „%ls“"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
 #. "input|No" contain the keycodes used to determine whether a
@@ -1665,7 +1684,7 @@ msgstr "Kein frier Speicer mehr vorhanden"
 
 #: src/utils.c:1041
 #, c-format
-msgid "xmbstowcs: `%s'"
+msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s“"
 
 #: src/utils.c:1081
@@ -1675,65 +1694,55 @@ msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
 #, c-format
-msgid "xwcrtomb: `%lc'"
+msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc“"
 
-#: lib/getopt.c:575 lib/getopt.c:604
+#: lib/getopt.c:278
 #, c-format
-msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: Option „%s“ ist mehrdeutig; möglich wären:"
+msgid "%s: option '%s%s' is ambiguous\n"
+msgstr "%s: Option „%s%s“ ist mehrdeutig\n"
 
-#: lib/getopt.c:619
+#: lib/getopt.c:284
 #, c-format
-msgid "%s: option '%s' is ambiguous\n"
-msgstr "%s: Option „%s“ ist mehrdeutig\n"
+msgid "%s: option '%s%s' is ambiguous; possibilities:"
+msgstr "%s: Option „%s%s“ ist mehrdeutig; möglich wären:"
 
-#: lib/getopt.c:654 lib/getopt.c:658
+#: lib/getopt.c:319
 #, c-format
-msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: Option „--%s“ akzeptiert keine Argumente\n"
+msgid "%s: unrecognized option '%s%s'\n"
+msgstr "%s: unbekannte Option „%s%s“\n"
 
-#: lib/getopt.c:667 lib/getopt.c:672
+#: lib/getopt.c:345
 #, c-format
-msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: Option „%c%s“ akzeptiert keine Argumente\n"
+msgid "%s: option '%s%s' doesn't allow an argument\n"
+msgstr "%s: Option „%s%s“ akzeptiert keine Argumente\n"
 
-#: lib/getopt.c:715 lib/getopt.c:734
+#: lib/getopt.c:360
 #, c-format
-msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: Option „--%s“ erfordert ein Argumente\n"
+msgid "%s: option '%s%s' requires an argument\n"
+msgstr "%s: Option „%s%s“ erfordert ein Argumente\n"
 
-#: lib/getopt.c:772 lib/getopt.c:775
-#, c-format
-msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: unbekannte Option „--%s“\n"
-
-#: lib/getopt.c:783 lib/getopt.c:786
-#, c-format
-msgid "%s: unrecognized option '%c%s'\n"
-msgstr "%s: unbekannte Option „%c%s“\n"
-
-#: lib/getopt.c:835 lib/getopt.c:838
+#: lib/getopt.c:621
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ungültige Option -- „%c“\n"
 
-#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
+#: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: die Option erfordert ein Argument -- „%c“\n"
 
-#: lib/getopt.c:964 lib/getopt.c:980
-#, c-format
-msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: Option „-W %s“ ist mehrdeutig\n"
+#~ msgid "%s: option '--%s' doesn't allow an argument\n"
+#~ msgstr "%s: Option „--%s“ akzeptiert keine Argumente\n"
 
-#: lib/getopt.c:1004 lib/getopt.c:1022
-#, c-format
-msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: Option „-W %s“ akzeptiert keine Argumente\n"
+#~ msgid "%s: unrecognized option '--%s'\n"
+#~ msgstr "%s: unbekannte Option „--%s“\n"
 
-#: lib/getopt.c:1043 lib/getopt.c:1061
-#, c-format
-msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: Option „-W %s“ erfordert ein Argument\n"
+#~ msgid "%s: option '-W %s' is ambiguous\n"
+#~ msgstr "%s: Option „-W %s“ ist mehrdeutig\n"
+
+#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
+#~ msgstr "%s: Option „-W %s“ akzeptiert keine Argumente\n"
+
+#~ msgid "%s: option '-W %s' requires an argument\n"
+#~ msgstr "%s: Option „-W %s“ erfordert ein Argument\n"
