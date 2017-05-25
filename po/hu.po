@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#
 #   Balázs Úr <urbalazs@gmail.com>, 2014, 2015, 2017.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.10-pre1\n"
+"Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-20 12:28+1000\n"
-"PO-Revision-Date: 2017-05-22 21:04+0200\n"
+"POT-Creation-Date: 2017-05-23 09:01+1000\n"
+"PO-Revision-Date: 2017-05-25 23:32+1000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -24,24 +24,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
 
-#: data/trader.desktop.in:3 src/intf.c:610
+#. TRANSLATORS: The name of the game.  You may choose to translate it into
+#. your own language (recommended) or keep it the same as the English
+#. version.  Feel free to look through other translations to see how
+#. others have done this.
+#: data/trader.desktop.in:22 src/intf.c:610
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:4
+#: data/trader.desktop.in:23
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "A Star Traders, egy egyszerű csillagközi kereskedelmi játék indítása"
 
-#: data/trader.desktop.in:5
+#. TRANSLATORS: A list of keywords describing Star Traders.  By all means
+#. add your own keywords!
+#: data/trader.desktop.in:26
 msgid "game;interstellar;trading;strategy;"
 msgstr "játék;csillagközi;kereskedés;stratégia;"
 
-#: data/trader.desktop.in:6
+#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
+#. Entry Specification states it is translatable, but unless you provide a
+#. matching icon, please leave it as "trader": this will use trader.svg
+#. and the various trader.png files in the data source code directory.
+#: data/trader.desktop.in:31
 msgid "trader"
-msgstr "kereskedő"
+msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
@@ -1351,7 +1360,7 @@ msgstr ""
 "Banktól  is  kérhetnek  kölcsön  az  Értéktőzsdén  való  további  vásárlások\n"
 "finanszírozásához.\n"
 "\n"
-"A galaxis térképét egy ^B~x^N x ^B~y^N méretű rács ábrázolja.  Egy tipikus szelvénye\n"
+"A galaxis térképét egy ^B~x^N × ^B~y^N méretű rács ábrázolja.  Egy tipikus szelvénye\n"
 "az alábbi lehet:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
