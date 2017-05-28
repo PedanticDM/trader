@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: trader 7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-24 20:36+1000\n"
-"PO-Revision-Date: 2017-05-24 05:45+1000\n"
+"PO-Revision-Date: 2017-05-29 06:00+1000\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -1373,8 +1373,8 @@ msgstr ""
 "section typique pourrait être:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
-"        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N represente un ^Bespace vide^N,\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N represente une ^Bétoile^N.\n"
+"        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N représente un ^Bespace vide^N,\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ~. ~. ~. ^N        ^s ~* ^N représente une ^Bétoile^N.\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 
 #: src/help.c:132
@@ -1625,7 +1625,7 @@ msgstr "%s: caractère avec une largeur illégale: « %lc »"
 #: src/intf.c:434
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
-msgstr "la taille du terminal est trop petite (%d x %d requis)"
+msgstr "la taille du terminal est trop petite (%d × %d requis)"
 
 #: src/intf.c:1265
 #, c-format
