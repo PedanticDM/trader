@@ -15,8 +15,8 @@ browse  the Git repository on  The ZAP Group  web server  at the following
 location: http://www.zap.org.au/gitweb/trader.git
 
 
-Version 7.10 (not yet released)
--------------------------------
+Version 7.10 (2nd June, 2017)
+-----------------------------
 
 Added a data directory that contains a desktop file and appropriate icons.
 Adjusted the game constants for more dynamic play:  allow the share prices
