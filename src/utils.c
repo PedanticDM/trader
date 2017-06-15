@@ -873,7 +873,7 @@ ssize_t b64decode (const void *restrict in, size_t inlen,
     n = 1;
 
     for (size_t i = 0; i < inlen && *u_in != '\0'; i++, u_in++) {
-	char c = *u_in > UNSCRAMBLE_TABLE_SIZE ?
+	signed char c = *u_in > UNSCRAMBLE_TABLE_SIZE ?
 	    UNSCRAMBLE_INVALID : unscramble_table[*u_in];
 
 	switch (c) {

@@ -15,6 +15,13 @@ browse  the Git repository on  The ZAP Group  web server  at the following
 location: http://www.zap.org.au/gitweb/trader.git
 
 
+Version 7.11 (not yet released)
+-------------------------------
+
+Minor bug fix:  some architectures  treat "char"  as "unsigned char",  and
+this caused b64decode() to fail.
+
+
 Version 7.10 (2nd June, 2017)
 -----------------------------
 
