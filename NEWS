@@ -18,8 +18,9 @@ location: http://www.zap.org.au/gitweb/trader.git
 Version 7.11 (not yet released)
 -------------------------------
 
-Minor bug fix:  some architectures  treat "char"  as "unsigned char",  and
-this caused b64decode() to fail.
+Bug fix:  some architectures (such as ARM, PowerPC and S390)  treat "char"
+as "unsigned char",  and this caused  b64decode()  to fail while loading a
+saved game.  Changed the relevant type from "char" to "int" to fix this.
 
 
 Version 7.10 (2nd June, 2017)
