@@ -873,10 +873,10 @@ ssize_t b64decode (const void *restrict in, size_t inlen,
     n = 1;
 
     for (size_t i = 0; i < inlen && *u_in != '\0'; i++, u_in++) {
-	signed char c = *u_in > UNSCRAMBLE_TABLE_SIZE ?
+	int v = *u_in > UNSCRAMBLE_TABLE_SIZE ?
 	    UNSCRAMBLE_INVALID : unscramble_table[*u_in];
 
-	switch (c) {
+	switch (v) {
 	case UNSCRAMBLE_INVALID:
 	    return -1;
 
@@ -889,7 +889,7 @@ ssize_t b64decode (const void *restrict in, size_t inlen,
 	    continue;
 
 	default:
-	    n = n << 6 | c;			// c is 0 .. 63
+	    n = n << 6 | v;			// v is 0 .. 63
 
 	    if (n & 0x1000000) {
 		// Convert 24-bit number into three output bytes
