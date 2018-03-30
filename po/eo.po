@@ -15,36 +15,75 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.9\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2016-01-05 10:52+1100\n"
+"POT-Creation-Date: 2017-05-23 09:01+1000\n"
 "PO-Revision-Date: 2016-02-14 22:32-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Poedit 1.6.10\n"
 
-#: src/trader.c:235
+#. TRANSLATORS: The name of the game.  You may choose to translate it into
+#. your own language (recommended) or keep it the same as the English
+#. version.  Feel free to look through other translations to see how
+#. others have done this.
+#: data/trader.desktop.in:22 src/intf.c:610
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: data/trader.desktop.in:23
+#, fuzzy
+#| msgid ""
+#| "Play Star Traders, a simple game of interstellar trading.\n"
+#| "\n"
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr ""
+"Ludi Star Traders, simpla ludo pri interstelara komerco.\n"
+"\n"
+
+#. TRANSLATORS: A list of keywords describing Star Traders.  By all means
+#. add your own keywords!
+#: data/trader.desktop.in:26
+msgid "game;interstellar;trading;strategy;"
+msgstr ""
+
+#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
+#. Entry Specification states it is translatable, but unless you provide a
+#. matching icon, please leave it as "trader": this will use trader.svg
+#. and the various trader.png files in the data source code directory.
+#: data/trader.desktop.in:31
+#, fuzzy
+#| msgid "Star Traders"
+msgid "trader"
+msgstr "Star Traders"
+
+#: src/trader.c:235
+#, fuzzy, c-format
+#| msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: malvalida valoro por --max-turn: '%s'\n"
 
 #: src/trader.c:251
-#, c-format
-msgid "%s: invalid operand `%s'\n"
+#, fuzzy, c-format
+#| msgid "%s: invalid operand `%s'\n"
+msgid "%s: invalid operand '%s'\n"
 msgstr "%s: malvalida argumento '%s'\n"
 
 #: src/trader.c:260
-#, c-format
-msgid "%s: invalid game number `%s'\n"
+#, fuzzy, c-format
+#| msgid "%s: invalid game number `%s'\n"
+msgid "%s: invalid game number '%s'\n"
 msgstr "%s: malvalida seanc-numero '%s'\n"
 
 #: src/trader.c:269
-#, c-format
-msgid "%s: extra operand `%s'\n"
+#, fuzzy, c-format
+#| msgid "%s: extra operand `%s'\n"
+msgid "%s: extra operand '%s'\n"
 msgstr "%s: troa argumento: '%s'\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
@@ -79,8 +118,9 @@ msgstr ""
 "por pli da detaloj.\n"
 
 #: src/trader.c:308
-#, c-format
-msgid "%s: Try `%s --help' for more information.\n"
+#, fuzzy, c-format
+#| msgid "%s: Try `%s --help' for more information.\n"
+msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: Provu '%s --help' por pli da informoj.\n"
 
 #: src/trader.c:311
@@ -441,10 +481,14 @@ msgstr "Neniu kompanio sur la mapo"
 #. TRANSLATORS: "Company" is a two-line column label in
 #. a table containing a list of companies.
 #: src/game.c:725 src/exch.c:120
-#, c-format
+#, fuzzy, c-format
+#| msgctxt "subtitle"
+#| msgid ""
+#| "\n"
+#| "Company"
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
 "\n"
@@ -1132,13 +1176,15 @@ msgid "%s: illegal field on line %d"
 msgstr "%s: malpermesata kampo en linio %d"
 
 #: src/fileio.c:51
-#, c-format
-msgid "%s: illegal field on line %d: `%s'"
+#, fuzzy, c-format
+#| msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: malpermesata kampo en linio %d: '%s'"
 
 #: src/fileio.c:55
-#, c-format
-msgid "%s: illegal value on line %d: `%s'"
+#, fuzzy, c-format
+#| msgid "%s: illegal value on line %d: `%s'"
+msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: malpermesata valoro en linio %d: '%s'"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
@@ -1540,19 +1586,19 @@ msgstr "@\n"
 msgid "  How to Play  "
 msgstr "  Kiel ludi  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
-#, c-format
-msgid "Page %d of %d"
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
+#, fuzzy, c-format
+#| msgid "Page %d of %d"
+msgid "Page %1$d of %2$d"
 msgstr "Paĝo %d el %d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Premu <SPACOn> por daŭrigi ] "
@@ -1564,19 +1610,21 @@ msgstr "[ Premu <SPACOn> por daŭrigi ] "
 #. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
 #. Note that the maximum label length is 76 characters,
 #. including the trailing space.
-#: src/help.c:495
+#: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Premu <SPACOn> por daŭrigi aŭ <RETROPAŜOn> por la antaŭa paĝo ] "
 
 #: src/intf.c:110
-#, c-format
-msgid "%s: string has incorrect format: `%s'"
+#, fuzzy, c-format
+#| msgid "%s: string has incorrect format: `%s'"
+msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: ĉeno havas malĝustan formon: '%s'"
 
 #: src/intf.c:126
-#, c-format
-msgid "%s: character has illegal width: `%lc'"
+#, fuzzy, c-format
+#| msgid "%s: character has illegal width: `%lc'"
+msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: signo havas malpermesatan larĝon: '%lc'"
 
 #: src/intf.c:434
@@ -1584,19 +1632,15 @@ msgstr "%s: signo havas malpermesatan larĝon: '%lc'"
 msgid "terminal size is too small (%d x %d required)"
 msgstr "terminal-grando tro malgrandas (necesas %d x %d)"
 
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Star Traders"
-
 #: src/intf.c:1265
 #, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
 #: src/intf.c:1568
-#, c-format
-msgid "mkchstr: `%s'"
+#, fuzzy, c-format
+#| msgid "mkchstr: `%s'"
+msgid "mkchstr: '%s'"
 msgstr "mkchstr: '%s'"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
@@ -1610,8 +1654,9 @@ msgid "=;"
 msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
-#, c-format
-msgid "gettxline: illegal character in string: `%ls'"
+#, fuzzy, c-format
+#| msgid "gettxline: illegal character in string: `%ls'"
+msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: malpermesata signo en ĉeno: '%ls'"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
@@ -1656,8 +1701,9 @@ msgid "out of memory"
 msgstr "memoro plenpleniĝas"
 
 #: src/utils.c:1041
-#, c-format
-msgid "xmbstowcs: `%s'"
+#, fuzzy, c-format
+#| msgid "xmbstowcs: `%s'"
+msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: '%s'"
 
 #: src/utils.c:1081
@@ -1666,66 +1712,62 @@ msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
-#, c-format
-msgid "xwcrtomb: `%lc'"
+#, fuzzy, c-format
+#| msgid "xwcrtomb: `%lc'"
+msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: '%lc'"
 
-#: lib/getopt.c:575 lib/getopt.c:604
-#, c-format
-msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: la modifilo '%s' estas plursenca; eblecoj:"
-
-#: lib/getopt.c:619
-#, c-format
-msgid "%s: option '%s' is ambiguous\n"
+#: lib/getopt.c:278
+#, fuzzy, c-format
+#| msgid "%s: option '%s' is ambiguous\n"
+msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: la modifilo '%s' estas plursenca\n"
 
-#: lib/getopt.c:654 lib/getopt.c:658
-#, c-format
-msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: la modifilo '--%s' ne permesas argumenton\n"
+#: lib/getopt.c:284
+#, fuzzy, c-format
+#| msgid "%s: option '%s' is ambiguous; possibilities:"
+msgid "%s: option '%s%s' is ambiguous; possibilities:"
+msgstr "%s: la modifilo '%s' estas plursenca; eblecoj:"
 
-#: lib/getopt.c:667 lib/getopt.c:672
-#, c-format
-msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: la modifilo '%c%s' ne permesas argumenton\n"
-
-#: lib/getopt.c:715 lib/getopt.c:734
-#, c-format
-msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: la modifilo '--%s' postulas argumenton\n"
-
-#: lib/getopt.c:772 lib/getopt.c:775
-#, c-format
-msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: nerekonata modifilo '--%s'\n"
-
-#: lib/getopt.c:783 lib/getopt.c:786
-#, c-format
-msgid "%s: unrecognized option '%c%s'\n"
+#: lib/getopt.c:319
+#, fuzzy, c-format
+#| msgid "%s: unrecognized option '%c%s'\n"
+msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: nerekonata modifilo '%c%s'\n"
 
-#: lib/getopt.c:835 lib/getopt.c:838
+#: lib/getopt.c:345
+#, fuzzy, c-format
+#| msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgid "%s: option '%s%s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '%c%s' ne permesas argumenton\n"
+
+#: lib/getopt.c:360
+#, fuzzy, c-format
+#| msgid "%s: option '--%s' requires an argument\n"
+msgid "%s: option '%s%s' requires an argument\n"
+msgstr "%s: la modifilo '--%s' postulas argumenton\n"
+
+#: lib/getopt.c:621
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: malvalida modifilo -- '%c'\n"
 
-#: lib/getopt.c:891 lib/getopt.c:908 lib/getopt.c:1118 lib/getopt.c:1136
+#: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: la modifilo postulas argumenton -- '%c'\n"
 
-#: lib/getopt.c:964 lib/getopt.c:980
-#, c-format
-msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: la modifilo '-W %s' estas plursenca\n"
+#~ msgid "%s: option '--%s' doesn't allow an argument\n"
+#~ msgstr "%s: la modifilo '--%s' ne permesas argumenton\n"
 
-#: lib/getopt.c:1004 lib/getopt.c:1022
-#, c-format
-msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: la modifilo '-W %s' ne permesas argumenton\n"
+#~ msgid "%s: unrecognized option '--%s'\n"
+#~ msgstr "%s: nerekonata modifilo '--%s'\n"
 
-#: lib/getopt.c:1043 lib/getopt.c:1061
-#, c-format
-msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: la modifilo '-W %s' postulas argumenton\n"
+#~ msgid "%s: option '-W %s' is ambiguous\n"
+#~ msgstr "%s: la modifilo '-W %s' estas plursenca\n"
+
+#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
+#~ msgstr "%s: la modifilo '-W %s' ne permesas argumenton\n"
+
+#~ msgid "%s: option '-W %s' requires an argument\n"
+#~ msgstr "%s: la modifilo '-W %s' postulas argumenton\n"

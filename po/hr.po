@@ -14,35 +14,74 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.4-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2012-04-14 14:31+1000\n"
+"POT-Creation-Date: 2017-05-23 09:01+1000\n"
 "PO-Revision-Date: 2012-04-19 09:21+1000\n"
 "Last-Translator: Tomislav Krznar <tomislav.krznar@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: src/trader.c:235
+#. TRANSLATORS: The name of the game.  You may choose to translate it into
+#. your own language (recommended) or keep it the same as the English
+#. version.  Feel free to look through other translations to see how
+#. others have done this.
+#: data/trader.desktop.in:22 src/intf.c:610
 #, c-format
-msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "Star Traders"
+msgstr "Star Traders"
+
+#: data/trader.desktop.in:23
+#, fuzzy
+#| msgid ""
+#| "Play Star Traders, a simple game of interstellar trading.\n"
+#| "\n"
+msgid "Play Star Traders, a simple game of interstellar trading"
+msgstr ""
+"Igrajte Star Traders, jednostavnu igru međuzvjezdanog trgovanja.\n"
+"\n"
+
+#. TRANSLATORS: A list of keywords describing Star Traders.  By all means
+#. add your own keywords!
+#: data/trader.desktop.in:26
+msgid "game;interstellar;trading;strategy;"
+msgstr ""
+
+#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
+#. Entry Specification states it is translatable, but unless you provide a
+#. matching icon, please leave it as "trader": this will use trader.svg
+#. and the various trader.png files in the data source code directory.
+#: data/trader.desktop.in:31
+#, fuzzy
+#| msgid "Star Traders"
+msgid "trader"
+msgstr "Star Traders"
+
+#: src/trader.c:235
+#, fuzzy, c-format
+#| msgid "%s: invalid value for --max-turn: `%s'\n"
+msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: neispravna vrijednost za --max-turn: „%s”\n"
 
 #: src/trader.c:251
-#, c-format
-msgid "%s: invalid operand `%s'\n"
+#, fuzzy, c-format
+#| msgid "%s: invalid operand `%s'\n"
+msgid "%s: invalid operand '%s'\n"
 msgstr "%s: neispravan operand „%s”\n"
 
 #: src/trader.c:260
-#, c-format
-msgid "%s: invalid game number `%s'\n"
+#, fuzzy, c-format
+#| msgid "%s: invalid game number `%s'\n"
+msgid "%s: invalid game number '%s'\n"
 msgstr "%s: neispravan broj igre „%s”\n"
 
 #: src/trader.c:269
-#, c-format
-msgid "%s: extra operand `%s'\n"
+#, fuzzy, c-format
+#| msgid "%s: extra operand `%s'\n"
+msgid "%s: extra operand '%s'\n"
 msgstr "%s: operand viška „%s”\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
@@ -76,8 +115,9 @@ msgstr ""
 "dozvoljene zakonom; pogledajte Licencu za pojedinosti.\n"
 
 #: src/trader.c:308
-#, c-format
-msgid "%s: Try `%s --help' for more information.\n"
+#, fuzzy, c-format
+#| msgid "%s: Try `%s --help' for more information.\n"
+msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: Pokušajte „%s --help” za više informacija.\n"
 
 #: src/trader.c:311
@@ -190,7 +230,9 @@ msgid "Fornax Express"
 msgstr "Fornax express"
 
 #: src/globals.c:53
-msgid "Gemeni Inc"
+#, fuzzy
+#| msgid "Gemeni Inc"
+msgid "Gemini Inc"
 msgstr "Gemeni d.d."
 
 #: src/globals.c:54
@@ -311,7 +353,7 @@ msgctxt "input|ContinueGame"
 msgid "Cc"
 msgstr "Nn"
 
-#: src/game.c:341 src/move.c:399
+#: src/game.c:341 src/move.c:413
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr "Unesite broj igre [^{1^}-^{9^}] ili ^{<CTRL><C>^} za otkazivanje: "
@@ -389,7 +431,7 @@ msgstr "  Pobjednik igre  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:868
+#: src/game.c:606 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -439,10 +481,14 @@ msgstr "Nema tvrtki na mapi"
 #. TRANSLATORS: "Company" is a two-line column label in
 #. a table containing a list of companies.
 #: src/game.c:725 src/exch.c:120
-#, c-format
+#, fuzzy, c-format
+#| msgctxt "subtitle"
+#| msgid ""
+#| "\n"
+#| "Company"
 msgctxt "subtitle"
 msgid ""
-"\n"
+" \n"
 "Company"
 msgstr ""
 "\n"
@@ -545,32 +591,34 @@ msgstr "Kamatna stopa:        "
 #. (for <1> and <2>) or 38 characters wide (for <3> and
 #. <CTRL><C>).  The sequences "^{" and "^}" change the
 #. character rendition (attributes) and take up no space.
-#: src/move.c:243 src/exch.c:182
+#: src/move.c:246 src/exch.c:182
 #, c-format
 msgid "^{<1>^} Display stock portfolio"
 msgstr "^{<1>^} Prikaži portfelj dionica"
 
-#: src/move.c:245
+#: src/move.c:248
 #, c-format
 msgid "^{<2>^} Declare bankruptcy"
 msgstr "^{<2>^} Objavi bankrot"
 
-#: src/move.c:247
+#: src/move.c:250
 #, c-format
 msgid "^{<3>^} Save and end the game"
 msgstr "^{<3>^} Spremi i završi igru"
 
-#: src/move.c:249
+#: src/move.c:252
 #, c-format
 msgid "^{<CTRL><C>^} Quit the game"
 msgstr "^{<CTRL><C>^} Izađi iz igre"
 
-#. TRANSLATORS: The maximum column width is 38 characters,
-#. including the trailing space.  The sequences "^{", "^}",
+#. TRANSLATORS: The maximum column width is either 38
+#. characters (including the trailing space), or 76
+#. characters minus the length of the longest of the four
+#. strings above this one.  The sequences "^{", "^}",
 #. "^[" and "^]" do not take up any room.  "%lc" takes up
 #. either one or two columns, depending on the appropriate
 #. "output|GameMoves" string in the current PO file.
-#: src/move.c:258
+#: src/move.c:263
 #, c-format
 msgid "Select move [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 msgstr "Odaberite potez [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
@@ -582,59 +630,59 @@ msgstr "Odaberite potez [^[%lc^]-^[%lc^]/^{1^}-^{3^}/^{<CTRL><C>^}]: "
 #. map); each player selects just one move
 #. per turn.  "Move" refers to the player's
 #. choice.
-#: src/move.c:295
+#: src/move.c:309
 #, c-format
 msgid "Move ^{%lc^}"
 msgstr "Potez ^{%lc^}"
 
-#: src/move.c:316
+#: src/move.c:330
 #, c-format
 msgid "^{<2>^} (Declare bankruptcy)"
 msgstr "^{<2>^} (Objavi bankrot)"
 
-#: src/move.c:325
+#: src/move.c:339
 #, c-format
 msgid "^{<3>^} (Save and end the game)"
 msgstr "^{<3>^} (Spremi i završi igru)"
 
-#: src/move.c:346
+#: src/move.c:360
 #, c-format
 msgid "^{<CTRL><C>^} (Quit the game)"
 msgstr "^{<CTRL><C>^} (Izađi iz igre)"
 
-#: src/move.c:361
+#: src/move.c:375
 #, c-format
 msgid "Are you sure? [^{Y^}/^{N^}] "
 msgstr "Jeste li sigurni? [^{D^}/^{N^}] "
 
-#: src/move.c:378 src/move.c:456
+#: src/move.c:392 src/move.c:470
 #, c-format
 msgid "Saving game %d... "
 msgstr "Spremam igru %d... "
 
-#: src/move.c:686 src/move.c:694 src/move.c:1052 src/move.c:1089
+#: src/move.c:700 src/move.c:708 src/move.c:1066 src/move.c:1103
 #, c-format
 msgid "  Bankruptcy Court  "
 msgstr "  Stečajni upravitelj  "
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:688
+#: src/move.c:702
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
 msgstr "Međuzvjezdana trgovačka banka je proglasila bankrot igrača %ls."
 
 #. TRANSLATORS: %ls is the player's name.
-#: src/move.c:696
+#: src/move.c:710
 #, c-format
 msgid "%ls has declared bankruptcy."
 msgstr "%ls je objavio bankrot."
 
-#: src/move.c:764
+#: src/move.c:778
 #, c-format
 msgid "  New Company  "
 msgstr "  Nova tvrtka  "
 
-#: src/move.c:765
+#: src/move.c:779
 #, c-format
 msgid ""
 "A new company has been formed!\n"
@@ -643,7 +691,7 @@ msgstr ""
 "Osnovana je nova tvrtka!\n"
 "Njezino ime je ^{%ls^}."
 
-#: src/move.c:824
+#: src/move.c:838
 #, c-format
 msgid ""
 "^{%ls^} has just merged into ^{%ls^}.\n"
@@ -652,7 +700,7 @@ msgstr ""
 "Tvrtku ^{%ls^} je upravo preuzela tvrtka ^{%ls^}.\n"
 "Molim obratite pažnju na sljedeće transakcije:\n"
 
-#: src/move.c:830
+#: src/move.c:844
 #, c-format
 msgid "  Company Merger  "
 msgstr "  Udruživanje tvrtki  "
@@ -664,7 +712,7 @@ msgstr "  Udruživanje tvrtki  "
 #. the same length and must contain a trailing space for the
 #. display routines to work correctly.  The maximum length of
 #. each label is 36 characters.
-#: src/move.c:850
+#: src/move.c:864
 #, c-format
 msgctxt "label"
 msgid "Old stock: "
@@ -672,7 +720,7 @@ msgstr "Stare dionice: "
 
 #. TRANSLATORS: "New stock" refers to the company that has
 #. absorbed the other due to a merger.
-#: src/move.c:861
+#: src/move.c:875
 #, c-format
 msgctxt "label"
 msgid "New Stock: "
@@ -683,7 +731,7 @@ msgstr "Nove dionice:  "
 #. symbol in the current locale.  The maximum column width is
 #. 12 characters INCLUDING the currency symbol (see
 #. MERGE_BONUS_COLS in src/intf.h).
-#: src/move.c:875
+#: src/move.c:889
 #, c-format
 msgctxt "subtitle"
 msgid "Bonus (%ls)"
@@ -692,7 +740,7 @@ msgstr "Bonus (%ls)"
 #. TRANSLATORS: "Total" refers to the total number of shares in
 #. the new company after a merger.  The maximum column width is
 #. 8 characters (see MERGE_TOTAL_STOCK_COLS in src/intf.h).
-#: src/move.c:880
+#: src/move.c:894
 #, c-format
 msgctxt "subtitle"
 msgid "Total"
@@ -702,7 +750,7 @@ msgstr "Ukupno"
 #. player receives in the surviving company after a merger.
 #. The maximum column width is 8 characters (see
 #. MERGE_NEW_STOCK_COLS in src/intf.h).
-#: src/move.c:887
+#: src/move.c:901
 #, c-format
 msgctxt "subtitle"
 msgid "New"
@@ -711,14 +759,14 @@ msgstr "Nove"
 #. TRANSLATORS: "Old" refers to how many shares each player had
 #. in the company ceasing existence.  The maximum column width
 #. is 8 characters (see MERGE_OLD_STOCK_COLS in src/intf.h).
-#: src/move.c:893
+#: src/move.c:907
 #, c-format
 msgctxt "subtitle"
 msgid "Old"
 msgstr "Stare"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1054
+#: src/move.c:1068
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -730,7 +778,7 @@ msgstr ""
 "^{Sva imovina je oduzeta zbog otplate tekućih pozajmica.^}"
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/move.c:1078
+#: src/move.c:1092
 #, c-format
 msgid ""
 "%ls has been declared bankrupt by the Interstellar Trading Bank.\n"
@@ -749,7 +797,7 @@ msgstr ""
 #. least one trailing space for the display
 #. routines to work correctly.  The maximum
 #. length is 28 characters.
-#: src/move.c:1106
+#: src/move.c:1120
 #, c-format
 msgctxt "label"
 msgid "Amount paid per share: "
@@ -759,18 +807,18 @@ msgstr "Isplata po dionici:       "
 #. share price of a company before it was forced
 #. into bankruptcy by the Bank.  This label must be
 #. the same width as "Amount paid per share".
-#: src/move.c:1114
+#: src/move.c:1128
 #, c-format
 msgctxt "label"
 msgid "Old share value:       "
 msgstr "Stara vrijednost dionice: "
 
-#: src/move.c:1197 src/move.c:1232 src/exch.c:321
+#: src/move.c:1211 src/move.c:1246 src/exch.c:321
 #, c-format
 msgid "  Interstellar Trading Bank  "
 msgstr "  Međuzvjezdana trgovačka banka  "
 
-#: src/move.c:1199
+#: src/move.c:1213
 #, c-format
 msgid ""
 "You were forced to borrow %N\n"
@@ -779,7 +827,7 @@ msgstr ""
 "Prisiljeni ste posuditi %N\n"
 "za pokrivanje gubitaka dionica tvrtke."
 
-#: src/move.c:1234
+#: src/move.c:1248
 #, c-format
 msgid ""
 "Your debt has amounted to %N!\n"
@@ -967,8 +1015,8 @@ msgctxt "label|Stock A"
 msgid "Return:          "
 msgstr "Dobit:             "
 
-#. TRANSLATORS: "Current holdings" is the number of shares the
-#. current player owns in this particular company.
+#. TRANSLATORS: "Current holdings" is the number of shares
+#. the current player owns in this particular company.
 #.
 #. Note that the labels "Current holdings", "Percentage owned"
 #. and "Current cash" MUST all be the same length and contain at
@@ -983,13 +1031,13 @@ msgstr "Trenutni udjeli: "
 
 #. TRANSLATORS: "Percentage owned" is the current player's
 #. percentage ownership in this particular company.
-#: src/exch.c:633
+#: src/exch.c:636
 #, c-format
 msgctxt "label|Stock B"
 msgid "Percentage owned: "
 msgstr "Vlasništvo (%%):  "
 
-#: src/exch.c:638
+#: src/exch.c:641
 #, c-format
 msgctxt "label|Stock B"
 msgid "Current cash:     "
@@ -997,47 +1045,47 @@ msgstr "Gotovina:        "
 
 #. TRANSLATORS: Each label may be up to 35 characters wide
 #. (for <1> and <2>) or 36 characters wide (for <3> and <4>).
-#: src/exch.c:651
+#: src/exch.c:654
 #, c-format
 msgid "^{<1>^} Buy stock from company"
 msgstr "^{<1>^} Kupite dionicu od tvrtke"
 
-#: src/exch.c:653
+#: src/exch.c:656
 #, c-format
 msgid "^{<2>^} Sell stock back to company"
 msgstr "^{<2>^} Prodajte dionicu natrag tvrtci"
 
-#: src/exch.c:655
+#: src/exch.c:658
 #, c-format
 msgid "^{<3>^} Bid company to issue more shares"
 msgstr "^{<3>^} Zatražite izdavanje dionica"
 
-#: src/exch.c:657
+#: src/exch.c:660
 #, c-format
 msgid "^{<4>^} Exit to the Stock Exchange"
 msgstr "^{<4>^} Izađite u Burzu"
 
-#: src/exch.c:660
+#: src/exch.c:663
 #, c-format
 msgid "Enter selection [^{1^}-^{4^}]: "
 msgstr "Unesite odabir [^{1^}-^{4^}]: "
 
-#: src/exch.c:716
+#: src/exch.c:719
 #, c-format
 msgid "  No Shares Available  "
 msgstr "  Nema dostupnih dionica  "
 
-#: src/exch.c:717
+#: src/exch.c:720
 #, c-format
 msgid "No more shares are available for purchase."
 msgstr "Nema više dionica dostupnih za kupovinu."
 
-#: src/exch.c:721
+#: src/exch.c:724
 #, c-format
 msgid "  Insufficient Cash  "
 msgstr "  Nedovoljno gotovine  "
 
-#: src/exch.c:722
+#: src/exch.c:725
 #, c-format
 msgid ""
 "You do not have enough cash\n"
@@ -1046,7 +1094,7 @@ msgstr ""
 "Nemate dovoljno gotovine\n"
 "za kupovinu dodatnih dionica."
 
-#: src/exch.c:733
+#: src/exch.c:736
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
@@ -1054,22 +1102,22 @@ msgstr[0] "Možete kupiti ^{%'ld^} dionicu."
 msgstr[1] "Možete kupiti ^{%'ld^} dionice."
 msgstr[2] "Možete kupiti ^{%'ld^} dionica."
 
-#: src/exch.c:739
+#: src/exch.c:742
 #, c-format
 msgid "How many shares do you wish to purchase? "
 msgstr "Koliko dionica želite kupiti? "
 
-#: src/exch.c:760
+#: src/exch.c:763
 #, c-format
 msgid "  No Shares  "
 msgstr "  Nema dionica  "
 
-#: src/exch.c:761
+#: src/exch.c:764
 #, c-format
 msgid "You do not have any shares to sell."
 msgstr "Nemate nijednu dionicu za prodaju."
 
-#: src/exch.c:768
+#: src/exch.c:771
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
@@ -1077,18 +1125,18 @@ msgstr[0] "Možete prodati ^{%'ld^} dionicu."
 msgstr[1] "Možete prodati ^{%'ld^} dionice."
 msgstr[2] "Možete prodati ^{%'ld^} dionica."
 
-#: src/exch.c:774
+#: src/exch.c:777
 #, c-format
 msgid "How many shares do you wish to sell? "
 msgstr "Koliko dionica želite prodati? "
 
-#: src/exch.c:802
+#: src/exch.c:805
 #, c-format
 msgid "  No Shares Issued  "
 msgstr "  Nema izdanih dionica  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:804
+#: src/exch.c:807
 #, c-format
 msgid ""
 "%ls has refused\n"
@@ -1097,13 +1145,13 @@ msgstr ""
 "Tvrtka %ls je odbila\n"
 "izdati nove dionice."
 
-#: src/exch.c:809
+#: src/exch.c:812
 #, c-format
 msgid "  Shares Issued  "
 msgstr "  Izdano dionica  "
 
 #. TRANSLATORS: %ls represents the company name.
-#: src/exch.c:811
+#: src/exch.c:814
 #, c-format
 msgid ""
 "%ls has issued\n"
@@ -1121,52 +1169,60 @@ msgstr[2] ""
 "Tvrtka %ls je izdala\n"
 "^{%'ld^} novih dionica."
 
-#: src/fileio.c:55 src/fileio.c:92 src/fileio.c:131 src/fileio.c:381
+#: src/fileio.c:43 src/fileio.c:83 src/fileio.c:126 src/fileio.c:387
 #, c-format
 msgid "%s: missing field on line %d"
 msgstr "%s: nedostaje polje u retku %d"
 
-#: src/fileio.c:60
+#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390
+#: src/fileio.c:393
 #, c-format
-msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d"
+msgstr "%s: nedozvoljeno polje u retku %d"
+
+#: src/fileio.c:51
+#, fuzzy, c-format
+#| msgid "%s: illegal field on line %d: `%s'"
+msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: nedozvoljeno polje u retku %d: „%s”"
 
-#: src/fileio.c:64
-#, c-format
-msgid "%s: illegal value on line %d: `%s'"
+#: src/fileio.c:55
+#, fuzzy, c-format
+#| msgid "%s: illegal value on line %d: `%s'"
+msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: nedozvoljena vrijednost u retku %d: „%s”"
 
-#: src/fileio.c:96 src/fileio.c:135 src/fileio.c:393
+#: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
 #, c-format
 msgid "%s: illegal value on line %d"
 msgstr "%s: nedozvoljena vrijednost u retku %d"
 
-#: src/fileio.c:103
+#: src/fileio.c:98
 #, c-format
 msgid "%s: illegal characters on line %d"
 msgstr "%s: nedozvoljeni znak u retku %d"
 
-#: src/fileio.c:184
+#: src/fileio.c:183
 #, c-format
 msgid "%s: could not convert string"
 msgstr "%s: ne mogu pretvoriti niz znakova"
 
-#: src/fileio.c:255
+#: src/fileio.c:257
 #, c-format
 msgid "  Game Not Found  "
 msgstr "  Igra nije pronađena  "
 
-#: src/fileio.c:256
+#: src/fileio.c:258
 #, c-format
 msgid "Game %d has not been saved to disk."
 msgstr "Igra %d nije spremljena na disk."
 
-#: src/fileio.c:263
+#: src/fileio.c:265
 #, c-format
 msgid "  Game Not Loaded  "
 msgstr "  Igra nije učitana  "
 
-#: src/fileio.c:264
+#: src/fileio.c:266
 #, c-format
 msgid ""
 "Game %d could not be loaded from disk.\n"
@@ -1177,47 +1233,42 @@ msgstr ""
 "\n"
 "^{Datoteka %s: %s^}"
 
-#: src/fileio.c:316
+#: src/fileio.c:319
 #, c-format
 msgid "%s: missing header in game file"
 msgstr "%s: nedostaje zaglavlje u datoteci igre"
 
-#: src/fileio.c:319
+#: src/fileio.c:322
 #, c-format
 msgid "%s: not a valid game file"
 msgstr "%s: nije ispravna datoteka igre"
 
-#: src/fileio.c:322 src/fileio.c:329
+#: src/fileio.c:325 src/fileio.c:332
 #, c-format
 msgid "%s: missing subheader in game file"
 msgstr "%s: nedostaje podzaglavlje u datoteci igre"
 
-#: src/fileio.c:325
+#: src/fileio.c:328
 #, c-format
 msgid "%s: saved under a different version of Star Traders"
 msgstr "%s: spremljena različitom inačicom igre Star Traders"
 
-#: src/fileio.c:332
+#: src/fileio.c:335
 #, c-format
 msgid "%s: saved under an incompatible character encoding"
 msgstr "%s: spremljena s nekompatibilnim kodiranjem znakova"
 
-#: src/fileio.c:340
+#: src/fileio.c:343
 #, c-format
 msgid "%s: illegal or missing field on line %d"
 msgstr "%s: nedozvoljeno ili nedostaje polje u retku %d"
 
-#: src/fileio.c:384
-#, c-format
-msgid "%s: illegal field on line %d"
-msgstr "%s: nedozvoljeno polje u retku %d"
-
-#: src/fileio.c:466 src/fileio.c:487
+#: src/fileio.c:479 src/fileio.c:501
 #, c-format
 msgid "  Game Not Saved  "
 msgstr "  Igra nije spremljena  "
 
-#: src/fileio.c:467
+#: src/fileio.c:480
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1228,7 +1279,7 @@ msgstr ""
 "\n"
 "^{Direktorij %s: %s^}"
 
-#: src/fileio.c:488
+#: src/fileio.c:502
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1540,42 +1591,45 @@ msgstr "@ Tekst pomoći, stranica 10\n"
 msgid "  How to Play  "
 msgstr "  Upute za igranje  "
 
-#. TRANSLATORS: The first %d is the current page number,
-#. the second is the number of pages your help text takes
-#. (6, in English).  You can replace the second %d with a
-#. fixed word, if you like.
-#: src/help.c:286
-#, c-format
-msgid "Page %d of %d"
+#. TRANSLATORS: The parameter %1$d is the current page
+#. number, %2$d is the number of pages your help text
+#. takes (6, in English).
+#: src/help.c:285
+#, fuzzy, c-format
+#| msgid "Page %d of %d"
+msgid "Page %1$d of %2$d"
 msgstr "Stranica %d od %d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:487 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3035
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Pritisnite <RAZMAKNICU> za nastavak ] "
 
-#. TRANSLATORS: The specific use of <SPACE> and
-#. <BACKSPACE> is not essential: you can use <DEL>,
-#. <PAGE-UP>, <UP>, <LEFT> or <BACK-TAB> instead of
-#. <BACKSPACE>, and almost any other key instead of
-#. <SPACE> (other than <ESC>, <CANCEL>, <EXIT>, <CTRL><C>,
-#. <CTRL><G> or <CTRL><\>).
+#. TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
+#. is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
+#. <LEFT> or <BACK-TAB> instead of <BACKSPACE>, and almost
+#. any other key instead of <SPACE> (other than <ESC>,
+#. <CANCEL>, <EXIT>, <CTRL><C>, <CTRL><G> or <CTRL><\>).
+#. Note that the maximum label length is 76 characters,
+#. including the trailing space.
 #: src/help.c:494
 #, c-format
 msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Pritisnite <RAZMAKNICU> za nastavak ili <BACKSPACE> za povratak ] "
 
 #: src/intf.c:110
-#, c-format
-msgid "%s: string has incorrect format: `%s'"
+#, fuzzy, c-format
+#| msgid "%s: string has incorrect format: `%s'"
+msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: niz znakova ima nepravilan oblik: „%s”"
 
 #: src/intf.c:126
-#, c-format
-msgid "%s: character has illegal width: `%lc'"
+#, fuzzy, c-format
+#| msgid "%s: character has illegal width: `%lc'"
+msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: znak ima nedozvoljenu širinu: „%lc”"
 
 #: src/intf.c:434
@@ -1583,19 +1637,15 @@ msgstr "%s: znak ima nedozvoljenu širinu: „%lc”"
 msgid "terminal size is too small (%d x %d required)"
 msgstr "veličina terminala je premalena (potrebno je %d x %d)"
 
-#: src/intf.c:610
-#, c-format
-msgid "Star Traders"
-msgstr "Star Traders"
-
 #: src/intf.c:1265
 #, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
 #: src/intf.c:1568
-#, c-format
-msgid "mkchstr: `%s'"
+#, fuzzy, c-format
+#| msgid "mkchstr: `%s'"
+msgid "mkchstr: '%s'"
 msgstr "mkchstr: „%s”"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
@@ -1609,8 +1659,9 @@ msgid "=;"
 msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
-#, c-format
-msgid "gettxline: illegal character in string: `%ls'"
+#, fuzzy, c-format
+#| msgid "gettxline: illegal character in string: `%ls'"
+msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: nedozvoljen znak u nizu: „%ls”"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
@@ -1640,86 +1691,85 @@ msgctxt "answer"
 msgid "No"
 msgstr "Ne"
 
-#: src/utils.c:199 src/utils.c:220
+#: src/utils.c:378 src/utils.c:399
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:225
+#: src/utils.c:404
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:238
+#: src/utils.c:417
 #, c-format
 msgid "out of memory"
 msgstr "nema dovoljno memorije"
 
-#: src/utils.c:571
-#, c-format
-msgid "xmbstowcs: `%s'"
+#: src/utils.c:1041
+#, fuzzy, c-format
+#| msgid "xmbstowcs: `%s'"
+msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s”"
 
-#: src/utils.c:611
+#: src/utils.c:1081
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:616
-#, c-format
-msgid "xwcrtomb: `%lc'"
+#: src/utils.c:1086
+#, fuzzy, c-format
+#| msgid "xwcrtomb: `%lc'"
+msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc”"
 
-#: lib/getopt.c:547 lib/getopt.c:576
-#, c-format
-msgid "%s: option '%s' is ambiguous; possibilities:"
+#: lib/getopt.c:278
+#, fuzzy, c-format
+#| msgid "%s: option '-W %s' is ambiguous\n"
+msgid "%s: option '%s%s' is ambiguous\n"
+msgstr "%s: opcija „-W %s” je višeznačna\n"
+
+#: lib/getopt.c:284
+#, fuzzy, c-format
+#| msgid "%s: option '%s' is ambiguous; possibilities:"
+msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: opcija „%s” je višeznačna; mogućnosti:"
 
-#: lib/getopt.c:624 lib/getopt.c:628
-#, c-format
-msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: opcija „--%s” ne dozvoljava argument\n"
-
-#: lib/getopt.c:637 lib/getopt.c:642
-#, c-format
-msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: opcija „%c%s” ne dozvoljava argument\n"
-
-#: lib/getopt.c:685 lib/getopt.c:704
-#, c-format
-msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: opcija „--%s” zahtijeva argument\n"
-
-#: lib/getopt.c:742 lib/getopt.c:745
-#, c-format
-msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: neprepoznata opcija „--%s”\n"
-
-#: lib/getopt.c:753 lib/getopt.c:756
-#, c-format
-msgid "%s: unrecognized option '%c%s'\n"
+#: lib/getopt.c:319
+#, fuzzy, c-format
+#| msgid "%s: unrecognized option '%c%s'\n"
+msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: neprepoznata opcija „%c%s”\n"
 
-#: lib/getopt.c:805 lib/getopt.c:808
+#: lib/getopt.c:345
+#, fuzzy, c-format
+#| msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgid "%s: option '%s%s' doesn't allow an argument\n"
+msgstr "%s: opcija „%c%s” ne dozvoljava argument\n"
+
+#: lib/getopt.c:360
+#, fuzzy, c-format
+#| msgid "%s: option '--%s' requires an argument\n"
+msgid "%s: option '%s%s' requires an argument\n"
+msgstr "%s: opcija „--%s” zahtijeva argument\n"
+
+#: lib/getopt.c:621
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: neispravna opcija -- „%c”\n"
 
-#: lib/getopt.c:861 lib/getopt.c:878 lib/getopt.c:1088 lib/getopt.c:1106
+#: lib/getopt.c:636 lib/getopt.c:682
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: opcija zahtijeva argument -- „%c”\n"
 
-#: lib/getopt.c:934 lib/getopt.c:950
-#, c-format
-msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: opcija „-W %s” je višeznačna\n"
+#~ msgid "%s: option '--%s' doesn't allow an argument\n"
+#~ msgstr "%s: opcija „--%s” ne dozvoljava argument\n"
 
-#: lib/getopt.c:974 lib/getopt.c:992
-#, c-format
-msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: opcija „-W %s” ne dozvoljava argument\n"
+#~ msgid "%s: unrecognized option '--%s'\n"
+#~ msgstr "%s: neprepoznata opcija „--%s”\n"
 
-#: lib/getopt.c:1013 lib/getopt.c:1031
-#, c-format
-msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: opcija „-W %s” zahtijeva argument\n"
+#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
+#~ msgstr "%s: opcija „-W %s” ne dozvoljava argument\n"
+
+#~ msgid "%s: option '-W %s' requires an argument\n"
+#~ msgstr "%s: opcija „-W %s” zahtijeva argument\n"
