@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                Esperanto Translations for Star Traders                *
-# *                 Copyright (C) 2013-17, John Zaitseff                  *
+# *                 Copyright (C) 2013-18, John Zaitseff                  *
 # *         Copyright (C) 2013-16, Free Software Foundation, Inc.         *
 # *                                                                       *
 # *************************************************************************
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: trader 7.12\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-08-24 15:17+1000\n"
-"PO-Revision-Date: 2017-08-24 15:18+1000\n"
+"PO-Revision-Date: 2018-03-30 11:30+1100\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
