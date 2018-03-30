@@ -872,7 +872,7 @@ void merge_companies (map_val_t a, map_val_t b)
     right(curwin, lines + 4, x, attr_normal, 0, 0, 1,
 	  /* TRANSLATORS: "New stock" refers to the company that has
 	     absorbed the other due to a merger. */
-	  pgettext("label", "New Stock: "));
+	  pgettext("label", "New stock: "));
     leftch(curwin, lines + 4, x, chbuf_aa, 1, &width_aa);
 
     mvwhline(curwin, lines + 6, 2, ' ' | attr_subtitle, w - 4);

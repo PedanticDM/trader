@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-08-24 15:17+1000\n"
+"POT-Creation-Date: 2018-03-30 14:46+1100\n"
 "PO-Revision-Date: 2018-03-30 11:42+1100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -705,7 +705,7 @@ msgstr "Gammel aktie: "
 #: src/move.c:875
 #, c-format
 msgctxt "label"
-msgid "New Stock: "
+msgid "New stock: "
 msgstr "Ny aktie:     "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
