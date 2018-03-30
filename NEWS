@@ -19,7 +19,9 @@ Version 7.13 (not yet released)
 -------------------------------
 
 Added the Spanish translation,  with thanks to  Francisco Javier Serrador.
-Updated to the latest Git snapshot of the Gnulib GNU Portability Library.
+Updated one string in the game for consistency with other labels;  updated
+all PO translations to suit.  Updated to the latest snapshot of the Gnulib
+GNU Portability Library.
 
 
 Version 7.12 (24th August, 2017)
