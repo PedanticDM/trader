@@ -64,7 +64,7 @@ of the Star Traders source  tree.  The configure script understands all of
 the usual Autoconf options; these  are explained in detail in the Autoconf
 manual:
 
-    http://www.gnu.org/software/autoconf/manual/autoconf.html#Running-configure-Scripts
+    https://www.gnu.org/software/autoconf/manual/autoconf.html#Running-configure-Scripts
 
 This version of the  configure script understands the following additional
 command line options:
@@ -111,7 +111,7 @@ something like:
 
 Once again, the Autoconf manual describes these options (and many others):
 
-    http://www.gnu.org/software/autoconf/manual/autoconf.html#Running-configure-Scripts
+    https://www.gnu.org/software/autoconf/manual/autoconf.html#Running-configure-Scripts
 
 Once the package  has been configured, you can type  "make" to compile it,
 then "make install" to install  it.  You can specify the following command
@@ -168,9 +168,9 @@ installation.  If you are cloning the source code from the Git repository,
 however,  you will need to update these files yourself.  You will need the
 following additional tools installed on your system to do so:
 
-1.  Autoconf v2.69 or later (http://www.gnu.org/software/autoconf/)
-2.  Automake v1.15 or later (http://www.gnu.org/software/automake/)
-3.  GNU Portability Library (http://www.gnu.org/software/gnulib/)
+1.  Autoconf v2.69 or later (https://www.gnu.org/software/autoconf/)
+2.  Automake v1.15 or later (https://www.gnu.org/software/automake/)
+3.  GNU Portability Library (https://www.gnu.org/software/gnulib/)
 
 The  GNU Portability Library  may  be installed  by retrieving  the latest
 Gnulib source code from the Git repository:
@@ -232,11 +232,11 @@ repeat as needed.
 Once you have finished your translation, please submit the PO file to the
 Translation Project.  The relevant web page for Star Traders is:
 
-    http://translationproject.org/domain/trader.html
+    https://translationproject.org/domain/trader.html
 
 More information for translators is available at:
 
-    http://translationproject.org/html/translators.html
+    https://translationproject.org/html/translators.html
 
 To clean up your install directory, simply run:
 

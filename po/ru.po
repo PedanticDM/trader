@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-08-24 15:17+1000\n"
-"PO-Revision-Date: 2018-03-30 11:43+1100\n"
+"PO-Revision-Date: 2018-03-30 11:53+1100\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@mx.ru>\n"
 "Language: ru\n"
@@ -103,7 +103,7 @@ msgstr ""
 "General Public License версии 3 или новее.  Вы можете модифицировать и/или\n"
 "распространять его на этих условиях.  На программу не предоставляется НИКАКИХ\n"
 "ГАРАНТИЙ до степени, разрешённой законом.  Для получения более подробной\n"
-"информации, обратитесь к веб-странице <http://www.gnu.org/licenses/gpl.html>.\n"
+"информации, обратитесь к веб-странице <https://www.gnu.org/licenses/gpl.html>.\n"
 
 #: src/trader.c:308
 #, c-format

@@ -23,11 +23,11 @@ dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 dnl General Public License for more details.
 dnl
 dnl You should have received a copy of the GNU General Public License
-dnl along with this program.  If not, see http://www.gnu.org/licenses/.
+dnl along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
 AC_INIT([Star Traders], [7.13], [J.Zaitseff@zap.org.au], [trader],
-        [http://www.zap.org.au/software/trader/])
+        [https://www.zap.org.au/software/trader/])
 AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 
 AC_PREREQ([2.69])
