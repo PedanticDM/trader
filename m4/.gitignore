@@ -1,5 +1,6 @@
 /00gnulib.m4
 /absolute-header.m4
+/asm-underscore.m4
 /assert.m4
 /btowc.m4
 /builtin-expect.m4
@@ -18,6 +19,7 @@
 /gnulib-comp.m4
 /gnulib-tool.m4
 /hard-locale.m4
+/host-cpu-c-abi.m4
 /iconv.m4
 /iconv_h.m4
 /iconv_open.m4
