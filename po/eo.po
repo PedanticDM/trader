@@ -1,22 +1,22 @@
 # *************************************************************************
 # *                                                                       *
-# *                Esperanto Translations for Star Traders                *
-# *                   Copyright (C) 2013, 2016 John Zaitseff              *
-# *          Copyright (C) 2013, 2016 Free Software Foundation, Inc.      *
+# *             Esperanto Translations for Star Traders                   *
+# *                Copyright (C) 2013, 2016 John Zaitseff                 *
+# *       Copyright (C) 2013, 2016, 2018 Free Software Foundation, Inc.   *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Felipe Castro <fefcas@gmail.com>, 2013, 2016.
+#   Felipe Castro <fefcas@gmail.com>, 2013, 2016, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.9\n"
+"Project-Id-Version: trader-7.10-pre2\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2017-05-23 09:01+1000\n"
-"PO-Revision-Date: 2016-02-14 22:32-0300\n"
+"PO-Revision-Date: 2018-05-14 21:59-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. TRANSLATORS: The name of the game.  You may choose to translate it into
 #. your own language (recommended) or keep it the same as the English
@@ -37,52 +37,40 @@ msgid "Star Traders"
 msgstr "Star Traders"
 
 #: data/trader.desktop.in:23
-#, fuzzy
-#| msgid ""
-#| "Play Star Traders, a simple game of interstellar trading.\n"
-#| "\n"
 msgid "Play Star Traders, a simple game of interstellar trading"
-msgstr ""
-"Ludi Star Traders, simpla ludo pri interstelara komerco.\n"
-"\n"
+msgstr "Ludi Star Traders, simpla ludo pri interstelara komerco"
 
 #. TRANSLATORS: A list of keywords describing Star Traders.  By all means
 #. add your own keywords!
 #: data/trader.desktop.in:26
 msgid "game;interstellar;trading;strategy;"
-msgstr ""
+msgstr "ludo;kosmo;negoco;strategio;"
 
 #. TRANSLATORS: This string is the name of the icon to use.  The Desktop
 #. Entry Specification states it is translatable, but unless you provide a
 #. matching icon, please leave it as "trader": this will use trader.svg
 #. and the various trader.png files in the data source code directory.
 #: data/trader.desktop.in:31
-#, fuzzy
-#| msgid "Star Traders"
 msgid "trader"
-msgstr "Star Traders"
+msgstr "trader"
 
 #: src/trader.c:235
-#, fuzzy, c-format
-#| msgid "%s: invalid value for --max-turn: `%s'\n"
+#, c-format
 msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: malvalida valoro por --max-turn: '%s'\n"
 
 #: src/trader.c:251
-#, fuzzy, c-format
-#| msgid "%s: invalid operand `%s'\n"
+#, c-format
 msgid "%s: invalid operand '%s'\n"
 msgstr "%s: malvalida argumento '%s'\n"
 
 #: src/trader.c:260
-#, fuzzy, c-format
-#| msgid "%s: invalid game number `%s'\n"
+#, c-format
 msgid "%s: invalid game number '%s'\n"
 msgstr "%s: malvalida seanc-numero '%s'\n"
 
 #: src/trader.c:269
-#, fuzzy, c-format
-#| msgid "%s: extra operand `%s'\n"
+#, c-format
 msgid "%s: extra operand '%s'\n"
 msgstr "%s: troa argumento: '%s'\n"
 
@@ -118,8 +106,7 @@ msgstr ""
 "por pli da detaloj.\n"
 
 #: src/trader.c:308
-#, fuzzy, c-format
-#| msgid "%s: Try `%s --help' for more information.\n"
+#, c-format
 msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: Provu '%s --help' por pli da informoj.\n"
 
@@ -481,17 +468,13 @@ msgstr "Neniu kompanio sur la mapo"
 #. TRANSLATORS: "Company" is a two-line column label in
 #. a table containing a list of companies.
 #: src/game.c:725 src/exch.c:120
-#, fuzzy, c-format
-#| msgctxt "subtitle"
-#| msgid ""
-#| "\n"
-#| "Company"
+#, c-format
 msgctxt "subtitle"
 msgid ""
 " \n"
 "Company"
 msgstr ""
-"\n"
+" \n"
 "Kompanio"
 
 #. TRANSLATORS: "Ownership" is a two-line column label
@@ -1176,14 +1159,12 @@ msgid "%s: illegal field on line %d"
 msgstr "%s: malpermesata kampo en linio %d"
 
 #: src/fileio.c:51
-#, fuzzy, c-format
-#| msgid "%s: illegal field on line %d: `%s'"
+#, c-format
 msgid "%s: illegal field on line %d: '%s'"
 msgstr "%s: malpermesata kampo en linio %d: '%s'"
 
 #: src/fileio.c:55
-#, fuzzy, c-format
-#| msgid "%s: illegal value on line %d: `%s'"
+#, c-format
 msgid "%s: illegal value on line %d: '%s'"
 msgstr "%s: malpermesata valoro en linio %d: '%s'"
 
@@ -1590,10 +1571,9 @@ msgstr "  Kiel ludi  "
 #. number, %2$d is the number of pages your help text
 #. takes (6, in English).
 #: src/help.c:285
-#, fuzzy, c-format
-#| msgid "Page %d of %d"
+#, c-format
 msgid "Page %1$d of %2$d"
-msgstr "Paĝo %d el %d"
+msgstr "Paĝo %1$d el %2$d"
 
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
@@ -1616,14 +1596,12 @@ msgid "[ Press <SPACE> to continue or <BACKSPACE> for the previous page ] "
 msgstr "[ Premu <SPACOn> por daŭrigi aŭ <RETROPAŜOn> por la antaŭa paĝo ] "
 
 #: src/intf.c:110
-#, fuzzy, c-format
-#| msgid "%s: string has incorrect format: `%s'"
+#, c-format
 msgid "%s: string has incorrect format: '%s'"
 msgstr "%s: ĉeno havas malĝustan formon: '%s'"
 
 #: src/intf.c:126
-#, fuzzy, c-format
-#| msgid "%s: character has illegal width: `%lc'"
+#, c-format
 msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: signo havas malpermesatan larĝon: '%lc'"
 
@@ -1638,8 +1616,7 @@ msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
 #: src/intf.c:1568
-#, fuzzy, c-format
-#| msgid "mkchstr: `%s'"
+#, c-format
 msgid "mkchstr: '%s'"
 msgstr "mkchstr: '%s'"
 
@@ -1654,8 +1631,7 @@ msgid "=;"
 msgstr "=;"
 
 #: src/intf.c:2034 src/intf.c:2079
-#, fuzzy, c-format
-#| msgid "gettxline: illegal character in string: `%ls'"
+#, c-format
 msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: malpermesata signo en ĉeno: '%ls'"
 
@@ -1701,8 +1677,7 @@ msgid "out of memory"
 msgstr "memoro plenpleniĝas"
 
 #: src/utils.c:1041
-#, fuzzy, c-format
-#| msgid "xmbstowcs: `%s'"
+#, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: '%s'"
 
@@ -1712,40 +1687,34 @@ msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
 #: src/utils.c:1086
-#, fuzzy, c-format
-#| msgid "xwcrtomb: `%lc'"
+#, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: '%lc'"
 
 #: lib/getopt.c:278
-#, fuzzy, c-format
-#| msgid "%s: option '%s' is ambiguous\n"
+#, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
-msgstr "%s: la modifilo '%s' estas plursenca\n"
+msgstr "%s: la modifilo '%s%s' estas plursenca\n"
 
 #: lib/getopt.c:284
-#, fuzzy, c-format
-#| msgid "%s: option '%s' is ambiguous; possibilities:"
+#, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
-msgstr "%s: la modifilo '%s' estas plursenca; eblecoj:"
+msgstr "%s: la modifilo '%s%s' estas plursenca; eblecoj:"
 
 #: lib/getopt.c:319
-#, fuzzy, c-format
-#| msgid "%s: unrecognized option '%c%s'\n"
+#, c-format
 msgid "%s: unrecognized option '%s%s'\n"
-msgstr "%s: nerekonata modifilo '%c%s'\n"
+msgstr "%s: nerekonata modifilo '%s%s'\n"
 
 #: lib/getopt.c:345
-#, fuzzy, c-format
-#| msgid "%s: option '%c%s' doesn't allow an argument\n"
+#, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
-msgstr "%s: la modifilo '%c%s' ne permesas argumenton\n"
+msgstr "%s: la modifilo '%s%s' ne permesas argumenton\n"
 
 #: lib/getopt.c:360
-#, fuzzy, c-format
-#| msgid "%s: option '--%s' requires an argument\n"
+#, c-format
 msgid "%s: option '%s%s' requires an argument\n"
-msgstr "%s: la modifilo '--%s' postulas argumenton\n"
+msgstr "%s: la modifilo '%s%s' postulas argumenton\n"
 
 #: lib/getopt.c:621
 #, c-format
