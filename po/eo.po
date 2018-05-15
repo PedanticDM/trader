@@ -2,21 +2,21 @@
 # *                                                                       *
 # *                Esperanto Translations for Star Traders                *
 # *                 Copyright (C) 2013-18, John Zaitseff                  *
-# *         Copyright (C) 2013-16, Free Software Foundation, Inc.         *
+# *         Copyright (C) 2013-18, Free Software Foundation, Inc.         *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Felipe Castro <fefcas@gmail.com>, 2013, 2016.
+#   Felipe Castro <fefcas@gmail.com>, 2013, 2016, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2018-03-30 14:46+1100\n"
-"PO-Revision-Date: 2018-04-04 20:04+1000\n"
+"PO-Revision-Date: 2018-05-15 21:26+1000\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -43,7 +43,7 @@ msgstr "Ludi Star Traders, simpla ludo pri interstelara komerco"
 #. add your own keywords!
 #: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
-msgstr ""
+msgstr "ludo;kosmo;negoco;strategio;"
 
 #. TRANSLATORS: This string is the name of the icon to use.  The Desktop
 #. Entry Specification states it is translatable, but unless you provide a
