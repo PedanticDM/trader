@@ -550,7 +550,7 @@ ssize_t l_strfmon (char *restrict buf, size_t maxsize,
 	if (strstr(format, "!") == NULL) {
 	    /* Insert lconvinfo.currency_symbol to s.
 
-	       NB: add_currecy_symbol == true assumes a POSIX locale and
+	       NB: add_currency_symbol == true assumes a POSIX locale and
 	       that the character encoding is ASCII-safe (such as by
 	       being ASCII itself, or UTF-8). */
 	    const char *sym = lconvinfo.currency_symbol;
