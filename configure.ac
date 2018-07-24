@@ -53,7 +53,7 @@ AX_C___ATTRIBUTE__
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 
-AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT([external], [need-ngettext])
 AM_GNU_GETTEXT_VERSION([0.19.8])
 
 gl_INIT
