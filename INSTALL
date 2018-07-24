@@ -73,19 +73,51 @@ manual:
 
     https://www.gnu.org/software/autoconf/manual/autoconf.html#Running-configure-Scripts
 
-This version of the  configure script understands the following additional
+This version of the configure script  understands the following additional
 command line options:
 
-    --disable-nls       Do not use Native Language Support
-    --disable-assert    Turn off all debugging assert() statements
-    --with-ncurses      Force the use of Ncurses  over the system's Curses
-                        library
-    --with-ncursesw     Force the use of  the NcursesW library  with wide-
-                        character support
-    --without-ncursesw  Don't use the NcursesW library with wide-character
-                        support
-    --without-ncurses   Don't use  the Ncurses  library:  use the system's
-                        normal Curses library
+    --disable-nls
+                Don't use Native Language Support.  Star Traders will only
+                show untranslated US English text and only accept US ASCII
+                keyboard input.
+
+    --with-libintl-prefix=DIR
+                Find the GNU Gettext library  installed in the DIR/lib and
+                DIR/include  directories.  This option  is needed  if your
+                library is not installed in /usr/lib and /usr/include (or,
+                more precisely, if the C compiler  cannot find the library
+                ".so" or ".a" archive file using the standard "-l" command
+                line parameter or the relevant header files using standard
+                "#include" directives).
+
+    --with-libiconv-prefix=DIR
+                Find the GNU libiconv library installed in the DIR/lib and
+                DIR/include directories.  This option is needed if the GNU
+                Gettext library requires libiconv on your system, and that
+                library is not installed in /usr/lib and /usr/include.
+
+    --with-ncurses
+                Force the use of Ncurses over the system's Curses library.
+                In other words, do not search for  a native Curses library
+                at all.
+
+    --with-ncursesw
+                Force the use of the NcursesW library  with wide-character
+                support.  If NcursesW cannot be found, abort the configure
+                script.
+
+    --without-ncursesw
+                Don't use  the NcursesW library.  This will prevent non-8-
+                bit character encodings  like UTF-8 from working correctly
+                and is thus not recommended.
+
+    --without-ncurses
+                Don't use the Ncurses library: use either NcursesW (unless
+                "--without-ncursesw"  is also specified)  or  the system's
+                normal Curses library.  This option is not recommended.
+
+    --disable-assert
+                Turn off all debugging assert() statements.
 
 By default, configure uses  "/usr/local" as the top-level (prefix) install
 directory.  You  can change this  by specifying "--prefix=DIR" to  use DIR
