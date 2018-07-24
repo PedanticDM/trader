@@ -27,7 +27,39 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --lib=libgnu --source-base=lib --m4-base=m4 --doc-base=doc --tests-base=tests --aux-dir=build-aux --conditional-dependencies --no-libtool --macro-prefix=gl assert btowc config-h crc getopt-gnu gettext-h gettimeofday locale mbrtowc mbsrtowcs stdbool stdio striconv string strstr sys_stat sys_time unistd wchar wcrtomb wcsdup wctob wctype-h
+# gnulib-tool --import \
+#  --lib=libgnu \
+#  --source-base=lib \
+#  --m4-base=m4 \
+#  --doc-base=doc \
+#  --tests-base=tests \
+#  --aux-dir=build-aux \
+#  --conditional-dependencies \
+#  --no-libtool \
+#  --macro-prefix=gl \
+#  assert \
+#  btowc \
+#  config-h \
+#  crc \
+#  getopt-gnu \
+#  gettext-h \
+#  gettimeofday \
+#  locale \
+#  mbrtowc \
+#  mbsrtowcs \
+#  stdbool \
+#  stdio \
+#  striconv \
+#  string \
+#  strstr \
+#  sys_stat \
+#  sys_time \
+#  unistd \
+#  wchar \
+#  wcrtomb \
+#  wcsdup \
+#  wctob \
+#  wctype-h
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([])
