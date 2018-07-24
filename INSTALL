@@ -24,13 +24,15 @@ Prerequisites
 Star Traders requires the  following components for successful compilation
 and installation:
 
-1.  A  working C compiler conforming  to ISO/IEC 9899:1999  (also known as
-    C99).  Any recent version of the GNU Compiler Collection (GCC) is more
-    than adequate.
+1.  A working C compiler  conforming to  ISO/IEC 9899:1999  (also known as
+    C99).  Any recent version  of the GNU Compiler Collection (GCC) or the
+    Clang LLVM Compiler is more than adequate.
 
-2.  An operating system  ideally conforming to ISO/IEC 9945-1:2001 (POSIX)
-    or to the X/Open Single Unix Specification v3 or later.  In short, any
-    modern Unix or Unix-like system like Linux almost certainly qualifies.
+2.  An operating system ideally conforming to  ISO/IEC 9945-1:2008 (POSIX)
+    or to the Open Group Single UNIX Specification version 4 or later.  In
+    short, any modern Unix or Unix-like system like Linux almost certainly
+    qualifies.
+
     In actual fact, Star Traders uses the GNU Portability Library, so many
     older systems may also work without modification.
 
@@ -44,10 +46,15 @@ and installation:
     Support.  If you do not have  this library (and do not wish to install
     it), you may pass "--disable-nls" to the configure script.
 
-5.  Development libraries and header files  for all of the above.  On many
+5.  The GNU libiconv library  for supporting multiple character encodings,
+    if required by the GNU Gettext library.  This is not needed on systems
+    with the  GNU C Library (glibc)  version 2.2 or later,  or on Mac OS X
+    (now called macOS) 10.3 or newer.
+
+6.  Development libraries and header files  for all of the above.  On many
     systems, these files are part of XXX-dev or XXX-devel packages.
 
-6.  The GNU Perfect Hash Function  Generator, gperf.  This utility program
+7.  The GNU Perfect Hash Function Generator,  gperf.  This utility program
     may be required for parts of the GNU Portability Library.
 
 
