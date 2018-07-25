@@ -62,7 +62,8 @@ AX_WITH_CURSES
 AS_IF([test "x$ax_cv_curses" != xyes || test "x$ax_cv_curses_color" != xyes], [
 	AC_MSG_ERROR([requires an X/Open-compatible Curses library with colour])
 ])
-AS_IF([test "x$ax_cv_curses_enhanced" != xyes], [
+AS_IF([test "x$ax_cv_curses_enhanced" = xyes], [],
+      [test "x$USE_NLS" = xyes], [
 	AC_MSG_WARN([no X/Open-compatible Enhanced Curses library found
 
 *****************    Locales with multibyte character sequences (such as
