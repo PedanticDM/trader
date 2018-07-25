@@ -85,3 +85,13 @@ AC_CONFIG_FILES([
 	m4/Makefile
 ])
 AC_OUTPUT
+
+AC_MSG_NOTICE([
+
+  Configuration summary for AC_PACKAGE_NAME (AC_PACKAGE_TARNAME) AC_PACKAGE_VERSION:
+
+  Building for host:                $host
+  Installation prefix:              $prefix
+  Native Language Support enabled:  $USE_NLS
+  Curses library selected:          $ax_cv_curses_which
+])
