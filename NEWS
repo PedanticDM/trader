@@ -19,9 +19,11 @@ Version 7.13 (not yet released)
 -------------------------------
 
 Added the Spanish translation,  with thanks to  Francisco Javier Serrador.
-Updated the Esperanto translation, with thanks to Felipe Castro.   Updated
-one string in the game for  consistency with other labels;  updated all PO
-translations to suit.
+Updated the Esperanto translation, with thanks to Felipe Castro.
+
+Updated one string in the game for consistency with other labels;  updated
+all PO translations to suit.  Also added strings from obsolete versions of
+the GNU C Library so that Star Trader can provide translations for them.
 
 Updated to the latest snapshot of the  Gnulib GNU Portability Library.  In
 addition, updated the list of prerequisites in the INSTALL file and listed

@@ -8,3 +8,8 @@
 This directory, lib,  contains source code as generated  by the Gnulib GNU
 Portability  Library "gnulib-tool" script.   See the  project web  site at
 https://www.gnu.org/software/gnulib/ for more information.
+
+The following file provides translatable strings  for obsolete versions of
+various libraries.  It is not part of the GNU Portability Library:
+
+    obsolete-strings.c
