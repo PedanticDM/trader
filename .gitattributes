@@ -5,6 +5,7 @@ Makefile.am			ident
 /data/trader.desktop.in		ident
 /data/trader.svg		ident
 /doc/trader.*			ident
+/lib/obsolete-strings.c		ident
 /po/LINGUAS			ident
 /po/Makevars			ident
 /po/POTFILES.in			ident

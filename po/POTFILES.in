@@ -42,3 +42,6 @@ src/utils.c
 
 # Source files from the Gnulib GNU Portability Library
 lib/getopt.c
+
+# Strings from obsolete versions of various libraries
+lib/obsolete-strings.c
