@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2018-03-30 14:46+1100\n"
-"PO-Revision-Date: 2018-03-30 11:43+1100\n"
+"POT-Creation-Date: 2018-07-27 06:24+1000\n"
+"PO-Revision-Date: 2018-07-27 06:35+1000\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -1688,37 +1688,175 @@ msgstr "xwcrtomb: NUL"
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: «%lc»"
 
-#: lib/getopt.c:278
+#: lib/getopt.c:278 lib/obsolete-strings.c:45
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: valget «%s%s» er tvetydig\n"
 
-#: lib/getopt.c:284
+#: lib/getopt.c:284 lib/obsolete-strings.c:47
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: valget «%s%s» er tvetydig; muligheter:"
 
-#: lib/getopt.c:319
+#: lib/getopt.c:319 lib/obsolete-strings.c:49
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: ukjent valg «%s%s»\n"
 
-#: lib/getopt.c:345
+#: lib/getopt.c:345 lib/obsolete-strings.c:51
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
 msgstr "%s: valget «%s%s» tillater ikke argumenter\n"
 
-#: lib/getopt.c:360
+#: lib/getopt.c:360 lib/obsolete-strings.c:53
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
 msgstr "%s: valget «%s%s» krever et argument\n"
 
-#: lib/getopt.c:621
+#: lib/getopt.c:621 lib/obsolete-strings.c:55
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ugyldig valg -- «%c»\n"
 
-#: lib/getopt.c:636 lib/getopt.c:682
+#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: valget krever et argument -- «%c»\n"
+
+#. TRANSLATORS: These strings are used in older versions of various
+#. libraries, such as the GNU C Library as released with various
+#. Linux distributions.
+#: lib/obsolete-strings.c:44
+#, c-format
+msgid "%s: option `%s%s' is ambiguous\n"
+msgstr "%s: valget «%s%s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:46
+#, c-format
+msgid "%s: option `%s%s' is ambiguous; possibilities:"
+msgstr "%s: valget «%s%s» er tvetydig; muligheter:"
+
+#: lib/obsolete-strings.c:48
+#, c-format
+msgid "%s: unrecognized option `%s%s'\n"
+msgstr "%s: ukjent valg «%s%s»\n"
+
+#: lib/obsolete-strings.c:50
+#, c-format
+msgid "%s: option `%s%s' doesn't allow an argument\n"
+msgstr "%s: valget «%s%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:52
+#, c-format
+msgid "%s: option `%s%s' requires an argument\n"
+msgstr "%s: valget «%s%s» krever et argument\n"
+
+#: lib/obsolete-strings.c:54
+#, c-format
+msgid "%s: invalid option -- `%c'\n"
+msgstr "%s: ugyldig valg -- «%c»\n"
+
+#: lib/obsolete-strings.c:56
+#, c-format
+msgid "%s: option requires an argument -- `%c'\n"
+msgstr "%s: valget krever et argument -- «%c»\n"
+
+#: lib/obsolete-strings.c:59
+#, c-format
+msgid "%s: option `%s' is ambiguous; possibilities:"
+msgstr "%s: valget «%s» er tvetydig; muligheter:"
+
+#: lib/obsolete-strings.c:60
+#, c-format
+msgid "%s: option '%s' is ambiguous; possibilities:"
+msgstr "%s: valget «%s» er tvetydig; muligheter:"
+
+#: lib/obsolete-strings.c:61
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: valget «%s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:62
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: valget «%s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:63
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: valget «--%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:64
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: valget «--%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:65
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: valget «%c%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:66
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: valget «%c%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:67
+#, c-format
+msgid "%s: option `--%s' requires an argument\n"
+msgstr "%s: valget «--%s» krever et argument\n"
+
+#: lib/obsolete-strings.c:68
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: valget «--%s» krever et argument\n"
+
+#: lib/obsolete-strings.c:69
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: ukjent valg «--%s»\n"
+
+#: lib/obsolete-strings.c:70
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: ukjent valg «--%s»\n"
+
+#: lib/obsolete-strings.c:71
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: ukjent valg «%c%s»\n"
+
+#: lib/obsolete-strings.c:72
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: ukjent valg «%c%s»\n"
+
+#: lib/obsolete-strings.c:73
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: valget «-W %s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:74
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: valget «-W %s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:75
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:76
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:77
+#, c-format
+msgid "%s: option `-W %s' requires an argument\n"
+msgstr "%s: valget «-W %s» krever et argument\n"
+
+#: lib/obsolete-strings.c:78
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: valget «-W %s» krever et argument\n"

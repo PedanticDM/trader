@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2018-03-30 14:46+1100\n"
-"PO-Revision-Date: 2018-04-04 20:13+1000\n"
+"POT-Creation-Date: 2018-07-27 06:24+1000\n"
+"PO-Revision-Date: 2018-07-27 06:35+1000\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
 "Language: ru\n"
@@ -1699,37 +1699,175 @@ msgstr "xwcrtomb: NUL"
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: «%lc»"
 
-#: lib/getopt.c:278
+#: lib/getopt.c:278 lib/obsolete-strings.c:45
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: неоднозначный ключ «%s%s»\n"
 
-#: lib/getopt.c:284
+#: lib/getopt.c:284 lib/obsolete-strings.c:47
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: неоднозначный ключ «%s%s»; возможности:"
 
-#: lib/getopt.c:319
+#: lib/getopt.c:319 lib/obsolete-strings.c:49
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: неизвестный ключ «%s%s»\n"
 
-#: lib/getopt.c:345
+#: lib/getopt.c:345 lib/obsolete-strings.c:51
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
 msgstr "%s: ключ «%s%s» должен использоваться без аргумента\n"
 
-#: lib/getopt.c:360
+#: lib/getopt.c:360 lib/obsolete-strings.c:53
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
 msgstr "%s: ключ «%s%s» должен использоваться с аргументом\n"
 
-#: lib/getopt.c:621
+#: lib/getopt.c:621 lib/obsolete-strings.c:55
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: неверный ключ «%c»\n"
 
-#: lib/getopt.c:636 lib/getopt.c:682
+#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: ключ «%c» должен использоваться с аргументом\n"
+
+#. TRANSLATORS: These strings are used in older versions of various
+#. libraries, such as the GNU C Library as released with various
+#. Linux distributions.
+#: lib/obsolete-strings.c:44
+#, c-format
+msgid "%s: option `%s%s' is ambiguous\n"
+msgstr "%s: неоднозначный ключ «%s%s»\n"
+
+#: lib/obsolete-strings.c:46
+#, c-format
+msgid "%s: option `%s%s' is ambiguous; possibilities:"
+msgstr "%s: неоднозначный ключ «%s%s»; возможности:"
+
+#: lib/obsolete-strings.c:48
+#, c-format
+msgid "%s: unrecognized option `%s%s'\n"
+msgstr "%s: неизвестный ключ «%s%s»\n"
+
+#: lib/obsolete-strings.c:50
+#, c-format
+msgid "%s: option `%s%s' doesn't allow an argument\n"
+msgstr "%s: ключ «%s%s» должен использоваться без аргумента\n"
+
+#: lib/obsolete-strings.c:52
+#, c-format
+msgid "%s: option `%s%s' requires an argument\n"
+msgstr "%s: ключ «%s%s» должен использоваться с аргументом\n"
+
+#: lib/obsolete-strings.c:54
+#, c-format
+msgid "%s: invalid option -- `%c'\n"
+msgstr "%s: неверный ключ «%c»\n"
+
+#: lib/obsolete-strings.c:56
+#, c-format
+msgid "%s: option requires an argument -- `%c'\n"
+msgstr "%s: ключ «%c» должен использоваться с аргументом\n"
+
+#: lib/obsolete-strings.c:59
+#, c-format
+msgid "%s: option `%s' is ambiguous; possibilities:"
+msgstr "%s: неоднозначный ключ «%s»; возможности:"
+
+#: lib/obsolete-strings.c:60
+#, c-format
+msgid "%s: option '%s' is ambiguous; possibilities:"
+msgstr "%s: неоднозначный ключ «%s»; возможности:"
+
+#: lib/obsolete-strings.c:61
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: неоднозначный ключ «%s»\n"
+
+#: lib/obsolete-strings.c:62
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: неоднозначный ключ «%s»\n"
+
+#: lib/obsolete-strings.c:63
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: ключ «--%s» должен использоваться без аргумента\n"
+
+#: lib/obsolete-strings.c:64
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: ключ «--%s» должен использоваться без аргумента\n"
+
+#: lib/obsolete-strings.c:65
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: ключ «%c%s» должен использоваться без аргумента\n"
+
+#: lib/obsolete-strings.c:66
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: ключ «%c%s» должен использоваться без аргумента\n"
+
+#: lib/obsolete-strings.c:67
+#, c-format
+msgid "%s: option `--%s' requires an argument\n"
+msgstr "%s: ключ «--%s» должен использоваться с аргументом\n"
+
+#: lib/obsolete-strings.c:68
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: ключ «--%s» должен использоваться с аргументом\n"
+
+#: lib/obsolete-strings.c:69
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: неизвестный ключ «--%s»\n"
+
+#: lib/obsolete-strings.c:70
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: неизвестный ключ «--%s»\n"
+
+#: lib/obsolete-strings.c:71
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: неизвестный ключ «%c%s»\n"
+
+#: lib/obsolete-strings.c:72
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: неизвестный ключ «%c%s»\n"
+
+#: lib/obsolete-strings.c:73
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: неоднозначный ключ «-W %s»\n"
+
+#: lib/obsolete-strings.c:74
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: неоднозначный ключ «-W %s»\n"
+
+#: lib/obsolete-strings.c:75
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: ключ «-W %s» должен использоваться без аргумента\n"
+
+#: lib/obsolete-strings.c:76
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: ключ «-W %s» должен использоваться без аргумента\n"
+
+#: lib/obsolete-strings.c:77
+#, c-format
+msgid "%s: option `-W %s' requires an argument\n"
+msgstr "%s: ключ «-W %s» должен использоваться с аргументом\n"
+
+#: lib/obsolete-strings.c:78
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: ключ «-W %s» должен использоваться с аргументом\n"
