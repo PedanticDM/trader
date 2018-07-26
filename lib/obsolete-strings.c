@@ -70,20 +70,12 @@ const char *glibc_posix_getopt_strings[] = {
     N_("%s: unrecognized option '--%s'\n"),
     N_("%s: unrecognized option `%c%s'\n"),
     N_("%s: unrecognized option '%c%s'\n"),
-    N_("%s: invalid option -- `%c'\n"),
-    N_("%s: invalid option -- '%c'\n"),
-    N_("%s: invalid option -- `%c'\n"),
-    N_("%s: invalid option -- '%c'\n"),
-    N_("%s: option requires an argument -- `%c'\n"),
-    N_("%s: option requires an argument -- '%c'\n"),
     N_("%s: option `-W %s' is ambiguous\n"),
     N_("%s: option '-W %s' is ambiguous\n"),
     N_("%s: option `-W %s' doesn't allow an argument\n"),
     N_("%s: option '-W %s' doesn't allow an argument\n"),
     N_("%s: option `-W %s' requires an argument\n"),
     N_("%s: option '-W %s' requires an argument\n"),
-    N_("%s: option requires an argument -- `%c'\n"),
-    N_("%s: option requires an argument -- '%c'\n"),
 
     ""
 };
