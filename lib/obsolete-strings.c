@@ -58,6 +58,8 @@ const char *glibc_posix_getopt_strings[] = {
 
     N_("%s: option `%s' is ambiguous; possibilities:"),
     N_("%s: option '%s' is ambiguous; possibilities:"),
+    N_("%s: option `%s' is ambiguous\n"),
+    N_("%s: option '%s' is ambiguous\n"),
     N_("%s: option `--%s' doesn't allow an argument\n"),
     N_("%s: option '--%s' doesn't allow an argument\n"),
     N_("%s: option `%c%s' doesn't allow an argument\n"),
