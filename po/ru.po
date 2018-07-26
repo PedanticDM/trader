@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2018-07-27 06:24+1000\n"
-"PO-Revision-Date: 2018-07-27 06:35+1000\n"
+"PO-Revision-Date: 2018-07-27 06:54+1000\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
 "Language: ru\n"
@@ -58,7 +58,7 @@ msgstr "trader"
 #: src/trader.c:235
 #, c-format
 msgid "%s: invalid value for --max-turn: '%s'\n"
-msgstr "%s: неверное значение аргумента для --maxturn: «%s»\n"
+msgstr "%s: неверное значение аргумента для --max-turn: «%s»\n"
 
 #: src/trader.c:251
 #, c-format
