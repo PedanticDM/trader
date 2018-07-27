@@ -747,7 +747,7 @@ char *unscramble (char *restrict dest, const char *restrict src,
 	apply_xor(dest, midxor, xorlen - SCRAMBLE_CRC_LEN, key);
 
 	// Convert the output to a C string
-	assert(size >= xorlen - SCRAMBLE_CRC_LEN + 1);
+	assert(size >= (size_t) xorlen - SCRAMBLE_CRC_LEN + 1);
 	dest[xorlen - SCRAMBLE_CRC_LEN] = '\0';
 
 	free(xorbuf);

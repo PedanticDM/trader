@@ -210,7 +210,7 @@ void exchange_stock (void)
 		}
 
 		for (i = 0, found = false; keycode_company[i] != L'\0'; i++) {
-		    if (keycode_company[i] == key) {
+		    if (keycode_company[i] == (wchar_t) key) {
 			found = true;
 			if (company[i].on_map) {
 			    selection = i;

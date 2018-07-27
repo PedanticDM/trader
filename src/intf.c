@@ -1268,7 +1268,7 @@ void mkchstr_conv (chtype *restrict chbuf, int chbufsize,
 	// Yes, we want to convert a wide NUL, too!
 	n = xwcrtomb(convbuf, *wcbuf, &mbstate);
 
-	if (chbufsize > endsize + n) {
+	if (chbufsize > (int) endsize + (int) n) {
 	    for (p = convbuf; n > 0; n--, p++, chbuf++, chbufsize--) {
 		if (*p == '\0' || *p == '\n') {
 		    /* This code assumes '\n' can never appear in a

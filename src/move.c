@@ -292,7 +292,7 @@ selection_t get_move (void)
 		}
 
 		for (i = 0, found = false; keycode_game_move[i] != L'\0'; i++) {
-		    if (keycode_game_move[i] == key) {
+		    if (keycode_game_move[i] == (wchar_t) key) {
 			found = true;
 			selection = i;
 
