@@ -43,7 +43,11 @@
 *                          System header files                          *
 ************************************************************************/
 
-#define _XOPEN_SOURCE	700		// Use SUSv4 where possible
+#if ! defined(_XOPEN_SOURCE) || _XOPEN_SOURCE < 700
+#  undef  _XOPEN_SOURCE
+#  define _XOPEN_SOURCE	700		// Use SUSv4 where possible
+#endif
+
 #define _GNU_SOURCE	1		// Use GNU extensions as well
 
 
