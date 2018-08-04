@@ -206,7 +206,7 @@ static bool add_currency_symbol = false;	// Do we need to add "$"?
   apply_xor(apply_xor(buffer)) == buffer.  It is used by both scramble()
   and unscramble().
 */
-static void apply_xor (void *restrict dest, const void *restrict src,
+static void apply_xor (char *restrict dest, const char *restrict src,
 		       size_t n, unsigned int *restrict key);
 
 
@@ -760,7 +760,7 @@ char *unscramble (char *restrict dest, const char *restrict src,
 /***********************************************************************/
 // apply_xor: Scramble a buffer using xor_table
 
-void apply_xor (void *restrict dest, const void *restrict src,
+void apply_xor (char *restrict dest, const char *restrict src,
 		size_t n, unsigned int *restrict key)
 {
     assert(dest != NULL);
