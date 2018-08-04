@@ -44,11 +44,16 @@
 ************************************************************************/
 
 #if ! defined(_XOPEN_SOURCE) || _XOPEN_SOURCE < 700
-#  undef  _XOPEN_SOURCE
-#  define _XOPEN_SOURCE	700		// Use SUSv4 where possible
+#  undef _XOPEN_SOURCE
+#  if ! defined(__sun__)
+#      define _XOPEN_SOURCE	700	// Use SUSv4 where possible
+#  else
+#      define _XOPEN_SOURCE	600	// Except on SunOS 5.x
+#      define __EXTENSIONS__	1	// ... but use Solaris extensions
+#  endif
 #endif
 
-#define _GNU_SOURCE	1		// Use GNU extensions as well
+#define _GNU_SOURCE		1	// Use GNU extensions as well
 
 
 // Headers defined by ISO/IEC 9899:1999 (C99)
