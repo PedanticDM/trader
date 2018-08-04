@@ -46,10 +46,10 @@
 #if ! defined(_XOPEN_SOURCE) || _XOPEN_SOURCE < 700
 #  undef _XOPEN_SOURCE
 #  if defined(__sun) && defined(__SVR4)
-#      define _XOPEN_SOURCE	600	// Use SUSv3 on SunOS 5.x
-#      define __EXTENSIONS__	1	// ... with Solaris extensions
+#    define _XOPEN_SOURCE	600	// Use SUSv3 on SunOS 5.x
+#    define __EXTENSIONS__	1	// ... with Solaris extensions
 #  else
-#      define _XOPEN_SOURCE	700	// Use SUSv4 everywhere else
+#    define _XOPEN_SOURCE	700	// Use SUSv4 everywhere else
 #  endif
 #endif
 
