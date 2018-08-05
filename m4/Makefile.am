@@ -31,6 +31,7 @@ EXTRA_DIST = \
 	README			\
 	ax_append_flag.m4	\
 	ax_cflags_warn_all.m4	\
+	ax_compiler_vendor.m4	\
 	ax_c___attribute__.m4	\
 	ax_require_defined.m4	\
 	ax_with_curses.m4	\
