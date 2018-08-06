@@ -87,9 +87,9 @@ extern void init_program_name (const char *argv0);
   Returns:    const char *   - Pointer to home directory
 
   This function returns the full pathname to the user's home directory,
-  using the HOME environment variable.  Note that the existance or
-  writability of this pathname is NOT checked by this function.  NULL is
-  returned if the home directory cannot be determined.
+  using the HOME environment variable.  Note that the existence of or
+  ability to write to this pathname is NOT checked by this function.
+  NULL is returned if the home directory cannot be determined.
 */
 extern const char *home_directory (void);
 
@@ -102,8 +102,9 @@ extern const char *home_directory (void);
   This function returns the full pathname to a potentially-writable
   subdirectory within the user's home directory.  Essentially, this
   function returns home_directory() + "/."  + program_name.  Note that
-  this path is NOT created by this function, nor is the writability of
-  this path checked.  NULL is returned if this path cannot be determined.
+  this path is NOT created by this function, nor is the ability to write
+  to this path checked.  NULL is returned if this path cannot be
+  determined.
 */
 extern const char *data_directory (void);
 

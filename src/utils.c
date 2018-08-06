@@ -202,7 +202,7 @@ static bool add_currency_symbol = false;	// Do we need to add "$"?
   Returns:    (nothing)
 
   This function copies n bytes from *src into *dest, applying a XOR with
-  the contents of xor_table in the process.  It is a reversable function:
+  the contents of xor_table in the process.  It is a reversible function:
   apply_xor(apply_xor(buffer)) == buffer.  It is used by both scramble()
   and unscramble().
 */
@@ -743,7 +743,7 @@ char *unscramble (char *restrict dest, const char *restrict src,
 	    return NULL;
 	}
 
-	// Descramble xorbuf using *key, ignoring CRC32 in front
+	// Unscramble xorbuf using *key, ignoring CRC32 in front
 	apply_xor(dest, midxor, xorlen - SCRAMBLE_CRC_LEN, key);
 
 	// Convert the output to a C string

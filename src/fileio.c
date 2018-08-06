@@ -406,7 +406,7 @@ bool load_game (int num)
 	lineno++;
     }
 
-    // Read in a dummy sentinal value
+    // Read in a dummy sentinel value
     load_game_read_int(n, n == GAME_FILE_SENTINEL);
 
     if (fclose(file) == EOF) {
@@ -587,7 +587,7 @@ bool save_game (int num)
 	fprintf(file, "%s", encbuf);
     }
 
-    // Write out a dummy sentinal value
+    // Write out a dummy sentinel value
     save_game_write_int(GAME_FILE_SENTINEL);
 
     if (fclose(file) == EOF) {

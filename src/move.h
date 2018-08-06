@@ -57,7 +57,7 @@ extern void select_moves (void);
   This function displays the galaxy map and the current moves, then waits
   for the player to select one of the moves.  On entry, current_player
   contains the current player number; quit_selected and/or abort_game may
-  be true (if so, get_move() justs returns SEL_QUIT without waiting for
+  be true (if so, get_move() just returns SEL_QUIT without waiting for
   the player to select a move).  The return value is the choice made by
   the player.
 
