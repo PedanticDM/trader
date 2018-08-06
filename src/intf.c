@@ -1763,7 +1763,7 @@ int getwch (WINDOW *win, wint_t *restrict wch)
     int ret = wget_wch(win, wch);
 
     if (ret == OK) {
-	char c = wctob(*wch);
+	int c = wctob(*wch);
 	if ((c >= 0 && c < ' ') || c == 0x7F) {
 	    /* Make control characters (and DEL) appear to be similar to
 	       function keys.  This assumes the KEY_xxx definitions do
@@ -1771,7 +1771,7 @@ int getwch (WINDOW *win, wint_t *restrict wch)
 	       (due to the same codes being returned by getch()).  We do
 	       not use iswcntrl() as certain additional Unicode
 	       characters are also control characters (eg, U+2028) */
-	    *wch = (unsigned char) c;
+	    *wch = (wint_t) c;
 	    ret = KEY_CODE_YES;
 	}
     }
@@ -1835,11 +1835,11 @@ int getwch (WINDOW *win, wint_t *restrict wch)
 		// A valid multibyte sequence
 		memcpy(mbstate, &mbcopy, sizeof(mbstate_t));
 
-		char c = wctob(val);
+		int c = wctob(val);
 		if ((c >= 0 && c < ' ') || c == 0x7F) {
 		    /* Make control characters (and DEL) appear to be
 		       similar to function keys. */
-		    val = (unsigned char) c;
+		    val = (wchar_t) c;
 		    ret = KEY_CODE_YES;
 		} else {
 		    // An ordinary key
