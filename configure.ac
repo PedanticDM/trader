@@ -88,9 +88,10 @@ AC_OUTPUT
 
 AC_MSG_NOTICE([
 
-  Configuration summary for AC_PACKAGE_NAME (AC_PACKAGE_TARNAME) AC_PACKAGE_VERSION:
+  Configuration summary for AC_PACKAGE_NAME AC_PACKAGE_VERSION:
 
   Building for host:                $host
+  Using C compiler with options:    $CC $CFLAGS
   Installation prefix:              $prefix
   Native Language Support enabled:  $USE_NLS
   Curses library selected:          $ax_cv_curses_which
