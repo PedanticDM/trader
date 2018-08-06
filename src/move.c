@@ -294,7 +294,7 @@ selection_t get_move (void)
 		for (i = 0, found = false; keycode_game_move[i] != L'\0'; i++) {
 		    if (keycode_game_move[i] == (wchar_t) key) {
 			found = true;
-			selection = i;
+			selection = (selection_t) i;
 
 			curs_set(CURS_OFF);
 			left(curwin, 1, promptend, attr_normal, attr_choice,
@@ -780,7 +780,7 @@ void try_start_new_company (int x, int y)
 		 company[i].name);
 	txrefresh();
 
-	galaxy_map[x][y] = COMPANY_TO_MAP(i);
+	galaxy_map[x][y] = (map_val_t) COMPANY_TO_MAP(i);
 
 	company[i].share_price  = INITIAL_SHARE_PRICE;
 	company[i].share_return = INITIAL_RETURN;
@@ -986,7 +986,7 @@ void include_outpost (int num, int x, int y)
 
     assign_vals(x, y, left, right, up, down);
 
-    galaxy_map[x][y] = COMPANY_TO_MAP(num);
+    galaxy_map[x][y] = (map_val_t) COMPANY_TO_MAP(num);
     inc_share_price(num, SHARE_PRICE_INC_OUTPOST);
 
     // Outposts next to stars are more valuable: increment again

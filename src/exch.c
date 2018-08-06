@@ -213,7 +213,7 @@ void exchange_stock (void)
 		    if (keycode_company[i] == (wchar_t) key) {
 			found = true;
 			if (company[i].on_map) {
-			    selection = i;
+			    selection = (selection_t) i;
 			} else {
 			    beep();
 			}
