@@ -47,6 +47,7 @@ Makefile.am
 /mbtowc.c
 /memchr.c
 /memchr.valgrind
+/monetary.in.h
 /ref-add.sin
 /ref-del.sin
 /stdbool.in.h
@@ -96,6 +97,7 @@ Makefile.am
 /iconv_open-solaris.h
 /limits.h
 /locale.h
+/monetary.h
 /ref-add.sed
 /ref-del.sed
 /stddef.h

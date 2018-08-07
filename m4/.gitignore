@@ -53,6 +53,7 @@
 /mbtowc.m4
 /memchr.m4
 /mmap-anon.m4
+/monetary_h.m4
 /multiarch.m4
 /nls.m4
 /nocrash.m4

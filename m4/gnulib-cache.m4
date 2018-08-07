@@ -47,6 +47,7 @@
 #  locale \
 #  mbrtowc \
 #  mbsrtowcs \
+#  monetary \
 #  stdbool \
 #  stdio \
 #  striconv \
@@ -74,6 +75,7 @@ gl_MODULES([
   locale
   mbrtowc
   mbsrtowcs
+  monetary
   stdbool
   stdio
   striconv
