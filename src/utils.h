@@ -243,7 +243,7 @@ extern void init_locale (void);
   Parameters: buf       - Buffer to receive result
               maxsize   - Maximum size of buffer
               format    - strfmon() format to use
-	      val       - Monetary value to convert
+              val       - Monetary value to convert
   Returns:    ssize_t   - Size of returned string
 
   This function calls strfmon() to convert val to a suitable monetary

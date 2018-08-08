@@ -27,7 +27,7 @@ dnl along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
 AC_INIT([Star Traders], [7.13], [J.Zaitseff@zap.org.au], [trader],
-        [https://www.zap.org.au/software/trader/])
+	[https://www.zap.org.au/software/trader/])
 AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 
 AC_PREREQ([2.69])
