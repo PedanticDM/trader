@@ -868,13 +868,13 @@ ssize_t b64decode (const void *restrict in, size_t inlen,
     assert(u_in != NULL);
     assert(u_out != NULL);
     assert(outlen > 0);
+    assert(UNSCRAMBLE_TABLE_SIZE == UCHAR_MAX + 1);
 
     count = 0;
     n = 1;
 
     for (size_t i = 0; i < inlen && *u_in != '\0'; i++, u_in++) {
-	int v = *u_in > UNSCRAMBLE_TABLE_SIZE ?
-	    UNSCRAMBLE_INVALID : unscramble_table[*u_in];
+	int v = unscramble_table[*u_in];
 
 	switch (v) {
 	case UNSCRAMBLE_INVALID:
