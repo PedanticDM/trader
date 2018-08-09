@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2018-07-27 06:24+1000\n"
+"POT-Creation-Date: 2018-08-09 18:58+1000\n"
 "PO-Revision-Date: 2018-07-27 06:28+1000\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -29,7 +29,7 @@ msgstr ""
 #. your own language (recommended) or keep it the same as the English
 #. version.  Feel free to look through other translations to see how
 #. others have done this.
-#: data/trader.desktop.in:23 src/intf.c:610
+#: data/trader.desktop.in:23 src/intf.c:611
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
@@ -1585,7 +1585,7 @@ msgstr "Seite %1$d von %2$d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:486 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3037
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ <LEERTASTE> drücken um fortzufahren ] "
@@ -1612,17 +1612,17 @@ msgstr "%s: Die Zeichenkette hat ein falsches Format: „%s“"
 msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: Das Zeichen hat eine unzulässige Breite: „%lc“"
 
-#: src/intf.c:434
+#: src/intf.c:435
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "Das Terminal ist zu klein (Mindestgröße ist %d x %d)"
 
-#: src/intf.c:1265
+#: src/intf.c:1267
 #, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NULL"
 
-#: src/intf.c:1568
+#: src/intf.c:1570
 #, c-format
 msgid "mkchstr: '%s'"
 msgstr "mkchstr: „%s“"
@@ -1632,12 +1632,12 @@ msgstr "mkchstr: „%s“"
 #. character.  Ideally, it should contain an easily-accessible
 #. keycode that would NOT be used in ordinary input.  Digits, ".",
 #. ",", "+" and "-" are definitely NOT acceptable.
-#: src/intf.c:2020
+#: src/intf.c:2022
 msgctxt "input|DefaultValue"
 msgid "=;"
 msgstr "=;"
 
-#: src/intf.c:2034 src/intf.c:2079
+#: src/intf.c:2036 src/intf.c:2081
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: unzulässiges Zeichen in der Zeichenkette „%ls“"
@@ -1646,12 +1646,12 @@ msgstr "gettxline: unzulässiges Zeichen in der Zeichenkette „%ls“"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2952
+#: src/intf.c:2954
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "Jj"
 
-#: src/intf.c:2954
+#: src/intf.c:2956
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1659,12 +1659,12 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:3005
+#: src/intf.c:3007
 msgctxt "answer"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/intf.c:3007
+#: src/intf.c:3009
 msgctxt "answer"
 msgid "No"
 msgstr "Nein"
