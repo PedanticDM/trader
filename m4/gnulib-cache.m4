@@ -41,6 +41,7 @@
 #  btowc \
 #  config-h \
 #  crc \
+#  extensions \
 #  getopt-gnu \
 #  gettext-h \
 #  gettimeofday \
@@ -69,6 +70,7 @@ gl_MODULES([
   btowc
   config-h
   crc
+  extensions
   getopt-gnu
   gettext-h
   gettimeofday
