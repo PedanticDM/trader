@@ -290,7 +290,8 @@ static int mkchstr_add (wchar_t *restrict *restrict outbuf,
 			wchar_t *restrict *restrict lastspc,
 			chtype *restrict *restrict spcattr,
 			int *restrict widthspc, int *restrict widthbuf,
-			int widthbufsize, const wchar_t *restrict *restrict str);
+			int widthbufsize,
+			const wchar_t *restrict *restrict str);
 
 
 /*
@@ -1139,7 +1140,8 @@ int mkchstr_add (wchar_t *restrict *restrict outbuf,
 		 chtype attr, int maxlines, int maxwidth, int *restrict line,
 		 int *restrict width, wchar_t *restrict *restrict lastspc,
 		 chtype *restrict *restrict spcattr, int *restrict widthspc,
-		 int *restrict widthbuf, int widthbufsize,
+		 int *restrict widthbuf,
+		 int widthbufsize __attribute__((unused)),
 		 const wchar_t *restrict *restrict str)
 {
     int w, wspc;
@@ -1938,7 +1940,7 @@ void cpos_end (const wchar_t *restrict buf, int *restrict cpos,
 // cpos_dec: Adjust cpos and st: scroll to the left by w columns
 
 void cpos_dec (const wchar_t *restrict buf, int *restrict cpos,
-	       int *restrict st, int w, int width)
+	       int *restrict st, int w, int width __attribute__((unused)))
 {
     if (*cpos - w >= 0) {
 	// Cursor position is not yet in first column
