@@ -45,7 +45,7 @@ AC_DEFUN([USE_LATEST_XOPEN_SOURCE], [dnl
     AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
     AH_BOTTOM([
 /* Redefine _XOPEN_SOURCE as required */
-@%:@include <lib/xopen_source.h>
+@%:@include <xopen_source.h>
 ])
     AC_CACHE_CHECK([the latest supported version of _XOPEN_SOURCE],
 	[x_cv_latest_xopen_source], [
