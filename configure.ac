@@ -62,6 +62,11 @@ AS_IF([test "x$ac_cv_header_monetary_h" != xyes], [
 	AC_MSG_ERROR([requires <monetary.h> to exist in the C library])
 ])
 
+USE_LATEST_XOPEN_SOURCE
+AS_IF([test "x$x_cv_latest_xopen_source" = xunknown], [
+	AC_MSG_ERROR([requires X/Open SUSv4/XPG7 or SUSv3/XPG6])
+])
+
 AX_WITH_CURSES
 AS_IF([test "x$ax_cv_curses" != xyes || test "x$ax_cv_curses_color" != xyes], [
 	AC_MSG_ERROR([requires an X/Open-compatible Curses library with colour])

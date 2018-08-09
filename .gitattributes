@@ -6,6 +6,8 @@ Makefile.am			ident
 /data/trader.svg		ident
 /doc/trader.*			ident
 /lib/obsolete-strings.c		ident
+/lib/xopen_source.h		ident
+/m4/xopen_source.m4		ident
 /po/LINGUAS			ident
 /po/Makevars			ident
 /po/POTFILES.in			ident

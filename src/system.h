@@ -43,14 +43,10 @@
 *                          System header files                          *
 ************************************************************************/
 
-#if ! defined(_XOPEN_SOURCE) || _XOPEN_SOURCE < 700
-#  undef _XOPEN_SOURCE
-#  if defined(__sun) && defined(__SVR4)
-#    define _XOPEN_SOURCE	600	// Use SUSv3 on SunOS 5.x
-#  else
-#    define _XOPEN_SOURCE	700	// Use SUSv4 everywhere else
-#  endif
-#endif
+/* Note that the configure-generated "config.h" defines feature test
+   macros as required by the compiler or operating system C library.  In
+   particular, it defines _XOPEN_SOURCE, _GNU_SOURCE, __EXTENSIONS__ and
+   similar symbols to appropriate values. */
 
 
 // Headers defined by ISO/IEC 9899:1999 (C99)
