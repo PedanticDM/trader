@@ -12,7 +12,7 @@
 # latest version of _XOPEN_SOURCE supported by the C library.  It does
 # this by compiling code with various values of that symbol.  Once a
 # particular value compiles without error, it redefines _XOPEN_SOURCE to
-# that value using the auxiliary file <lib/xopen-source.h> and sets
+# that value using the auxiliary file ../lib/xopen-source.h and sets
 # $x_cv_latest_xopen_source to one of the following values:
 #
 #   700       - _XOPEN_SOURCE=700 (for SUSv4 / XPG7) was accepted
