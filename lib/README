@@ -9,10 +9,10 @@ This directory, lib,  contains source code as generated  by the Gnulib GNU
 Portability  Library "gnulib-tool" script.   See the  project web  site at
 https://www.gnu.org/software/gnulib/ for more information.
 
-The following file is used by  xopen_source.m4  to redefine  _XOPEN_SOURCE
+The following file is used by  xopen-source.m4  to redefine  _XOPEN_SOURCE
 appropriately.  It is not part of the GNU Portability Library:
 
-    xopen_source.h
+    xopen-source.h
 
 The following file provides translatable strings  for obsolete versions of
 various libraries.  It is not part of the GNU Portability Library:

@@ -36,4 +36,4 @@ EXTRA_DIST = \
 	ax_require_defined.m4	\
 	ax_with_curses.m4	\
 	gnulib-cache.m4		\
-	xopen_source.m4
+	xopen-source.m4

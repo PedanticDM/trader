@@ -12,7 +12,7 @@
 # latest version of _XOPEN_SOURCE supported by the C library.  It does
 # this by compiling code with various values of that symbol.  Once a
 # particular value compiles without error, it redefines _XOPEN_SOURCE to
-# that value using the auxiliary file <lib/xopen_source.h> and sets
+# that value using the auxiliary file <lib/xopen-source.h> and sets
 # $x_cv_latest_xopen_source to one of the following values:
 #
 #   700       - _XOPEN_SOURCE=700 (for SUSv4 / XPG7) was accepted
@@ -45,7 +45,7 @@ AC_DEFUN([USE_LATEST_XOPEN_SOURCE], [dnl
     AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
     AH_BOTTOM([
 /* Redefine _XOPEN_SOURCE as required */
-@%:@include <xopen_source.h>
+@%:@include <xopen-source.h>
 ])
     AC_CACHE_CHECK([the latest supported version of _XOPEN_SOURCE],
 	[x_cv_latest_xopen_source], [

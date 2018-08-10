@@ -9,9 +9,9 @@
   Author: John Zaitseff <J.Zaitseff@zap.org.au>
   $Id$
 
-  This file, xopen_source.h, redefines _XOPEN_SOURCE to be the latest
+  This file, xopen-source.h, redefines _XOPEN_SOURCE to be the latest
   version that is supported by the operating system's C library.  It is
-  used by the Autoconf macro in m4/xopen_source.m4.
+  used by the Autoconf macro in m4/xopen-source.m4.
 
 
   This program is free software: you can redistribute it and/or modify it

@@ -35,4 +35,4 @@ EXTRA_DIST = \
 	build-aux/bootstrap		\
 	build-aux/msgfmt-desktop	\
 	lib/obsolete-strings.c		\
-	lib/xopen_source.h
+	lib/xopen-source.h
