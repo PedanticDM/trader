@@ -7,7 +7,7 @@
 
 This directory, m4, contains M4 macros used by Autoconf.
 
-The following macros are custom-defined for Star Traders:
+The following macro is custom-defined for Star Traders:
 
     xopen-source.m4
 
