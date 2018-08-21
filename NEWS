@@ -39,7 +39,7 @@ make this work more robustly.  In particular, successfully tested at least
 the following combinations:
 
 +-------------------------+--------+-------+-------------------------+---+
-| Operating system        | Arch   | Glibc | Compiler                | N |
+| Linux distribution      | Arch   | Glibc | Compiler                | N |
 +-------------------------+--------+-------+-------------------------+---+
 | Debian GNU/Linux Sid    | x86_64 | 2.27  | GNU C Compiler 8.2.0    |   |
 | Debian GNU/Linux Sid    | i686   | 2.27  | GNU C Compiler 8.2.0    |   |
@@ -53,13 +53,18 @@ the following combinations:
 | CentOS 6.10             | x86_64 | 2.12  | Portland PGI C/C++ 18.3 |   |
 | CentOS 6.9              | x86_64 | 2.12  | Intel C/C++ 18.0.3      |   |
 | OpenSUSE 15.0           | x86_64 | 2.26  | GNU C Compiler 7.3.1    |   |
-| FreeBSD 11.2            | x86_64 |  +----+ Clang (LLVM) 6.0.0      | 1 |
-| Solaris 11.3 (x86_64)   | i386   |  | GNU C Compiler 4.8.2         |   |
-| Solaris 11.3 (x86_64)   | x86_64 |  | GNU C Compiler 4.8.2         | 2 |
-| Solaris 11.3 (x86_64)   | i386   |  | Oracle Developer Studio 12.6 | 3 |
-| Solaris 11.3 (x86_64)   | x86_64 |  | Oracle Developer Studio 12.6 | 4 |
-| Cygwin 2.10.0 (Win7SP1) | i686   |  | GNU C Compiler 7.3.0         |   |
-+-------------------------+--------+--+------------------------------+---+
++-------------------------+--------+-------+-------------------------+---+
+
++-------------------------+--------+---------------------------------+---+
+| Operating system        | Arch   | Compiler                        | N |
++-------------------------+--------+---------------------------------+---+
+| FreeBSD 11.2            | x86_64 | Clang (LLVM) 6.0.0              | 1 |
+| Solaris 11.3 (x86_64)   | i386   | GNU C Compiler 4.8.2            |   |
+| Solaris 11.3 (x86_64)   | x86_64 | GNU C Compiler 4.8.2            | 2 |
+| Solaris 11.3 (x86_64)   | i386   | Oracle Developer Studio 12.6    | 3 |
+| Solaris 11.3 (x86_64)   | x86_64 | Oracle Developer Studio 12.6    | 4 |
+| Cygwin 2.10.0 (Win7SP1) | i686   | GNU C Compiler 7.3.0            |   |
++-------------------------+--------+---------------------------------+---+
 
 Notes:
 
