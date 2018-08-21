@@ -239,21 +239,19 @@ extern void init_locale (void);
 
 
 /*
-  Function:   l_strfmon - Convert monetary value to a string
-  Parameters: buf       - Buffer to receive result
-              maxsize   - Maximum size of buffer
-              format    - strfmon() format to use
-              val       - Monetary value to convert
-  Returns:    ssize_t   - Size of returned string
+  Function:   xstrfmon - Convert monetary value to a string
+  Parameters: buf      - Buffer to receive result
+              maxsize  - Maximum size of buffer
+              format   - strfmon() format to use
+              val      - Monetary value to convert
+  Returns:    ssize_t  - Size of returned string
 
   This function calls strfmon() to convert val to a suitable monetary
-  value string.  If the POSIX or C locale is in effect, and "!" does NOT
-  appear in the format, "$" is inserted into the resulting string.  This
-  function overcomes the limitation that the POSIX locale does not define
-  anything for localeconv()->currency_symbol.
+  value string, making appropriate adjustments if the POSIX locale is in
+  effect.
 */
-extern ssize_t l_strfmon (char *restrict buf, size_t maxsize,
-			  const char *restrict format, double val);
+extern ssize_t xstrfmon (char *restrict buf, size_t maxsize,
+			 const char *restrict format, double val);
 
 
 /************************************************************************

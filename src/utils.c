@@ -56,11 +56,50 @@ wchar_t *mon_thousands_sep;		// Local monetary thousands separator
 #define GAME_FILENAME_PROTO	"game%d"
 #define GAME_FILENAME_BUFSIZE	16
 
-// Default values used to override POSIX locale
-#define MOD_POSIX_CURRENCY_SYMBOL	"$"
-#define MOD_POSIX_FRAC_DIGITS		2
-#define MOD_POSIX_P_CS_PRECEDES		1
-#define MOD_POSIX_P_SEP_BY_SPACE	0
+// Values used to override the standard POSIX locale
+#define MOD_POSIX_DECIMAL_POINT		"."
+#define MOD_POSIX_THOUSANDS_SEP		""
+#define MOD_POSIX_GROUPING		""
+#define MOD_POSIX_INT_CURR_SYMBOL	""
+#define MOD_POSIX_CURRENCY_SYMBOL	"$"	// Standard: ""
+#define MOD_POSIX_MON_DECIMAL_POINT	"."	// Standard: ""
+#define MOD_POSIX_MON_THOUSANDS_SEP	""
+#define MOD_POSIX_MON_GROUPING		""
+#define MOD_POSIX_POSITIVE_SIGN		""
+#define MOD_POSIX_NEGATIVE_SIGN		"-"	// Standard: ""
+#define MOD_POSIX_INT_FRAC_DIGITS	2	// Standard: CHAR_MAX
+#define MOD_POSIX_FRAC_DIGITS		2	// Standard: CHAR_MAX
+#define MOD_POSIX_P_CS_PRECEDES		1	// Standard: CHAR_MAX
+#define MOD_POSIX_P_SEP_BY_SPACE	0	// Standard: CHAR_MAX
+#define MOD_POSIX_N_CS_PRECEDES		1	// Standard: CHAR_MAX
+#define MOD_POSIX_N_SEP_BY_SPACE	0	// Standard: CHAR_MAX
+#define MOD_POSIX_P_SIGN_POSN		1	// Standard: CHAR_MAX
+#define MOD_POSIX_N_SIGN_POSN		1	// Standard: CHAR_MAX
+
+static const struct lconv mod_posix_lconv =
+    {
+	.decimal_point		= MOD_POSIX_DECIMAL_POINT,
+	.thousands_sep		= MOD_POSIX_THOUSANDS_SEP,
+	.grouping		= MOD_POSIX_GROUPING,
+	.int_curr_symbol	= MOD_POSIX_INT_CURR_SYMBOL,
+	.currency_symbol	= MOD_POSIX_CURRENCY_SYMBOL,
+	.mon_decimal_point	= MOD_POSIX_MON_DECIMAL_POINT,
+	.mon_thousands_sep	= MOD_POSIX_MON_THOUSANDS_SEP,
+	.mon_grouping		= MOD_POSIX_MON_GROUPING,
+	.positive_sign		= MOD_POSIX_POSITIVE_SIGN,
+	.negative_sign		= MOD_POSIX_NEGATIVE_SIGN,
+	.int_frac_digits	= MOD_POSIX_INT_FRAC_DIGITS,
+	.frac_digits		= MOD_POSIX_FRAC_DIGITS,
+	.p_cs_precedes		= MOD_POSIX_P_CS_PRECEDES,
+	.p_sep_by_space		= MOD_POSIX_P_SEP_BY_SPACE,
+	.n_cs_precedes		= MOD_POSIX_N_CS_PRECEDES,
+	.n_sep_by_space		= MOD_POSIX_N_SEP_BY_SPACE,
+	.p_sign_posn		= MOD_POSIX_P_SIGN_POSN,
+	.n_sign_posn		= MOD_POSIX_N_SIGN_POSN
+
+	// ISO/IEC 9945-1:2008 (SUSv4) defines additional fields, but
+	// this program does not use them.
+    };
 
 // Constants used for scrambling and unscrambling game data
 #define SCRAMBLE_CRC_LEN	8	// Length of CRC in ASCII (excl NUL)
@@ -186,7 +225,7 @@ static const unsigned char xor_table[] = {
 static char *home_directory_str = NULL;		// Full pathname to home
 static char *data_directory_str = NULL;		// Writable data dir pathname
 
-static bool add_currency_symbol = false;	// Do we need to add "$"?
+static bool is_posix_locale = false;		// Override strfmon()?
 
 
 /************************************************************************
@@ -486,22 +525,23 @@ void init_locale (void)
 
     lconvinfo = *lc;
 
-    add_currency_symbol = false;
+    is_posix_locale = false;
 
     /* Are we in the POSIX locale?  The string returned by setlocale() is
        supposed to be opaque, but in practise is not.  To be on the safe
        side, we explicitly set the locale to "C", then test the returned
        value of that, too. */
     cloc = setlocale(LC_MONETARY, "C");
-    if (   strcmp(cur, cloc)      == 0
-	|| strcmp(cur, "POSIX")   == 0 || strcmp(cur, "C")      == 0
-	|| strcmp(cur, "C.UTF-8") == 0 || strcmp(cur, "C.utf8") == 0) {
+    if (   strcmp(cur, cloc)          == 0
+	|| strcmp(cur, "POSIX")       == 0
+	|| strcmp(cur, "POSIX.UTF-8") == 0
+	|| strcmp(cur, "POSIX.utf8")  == 0
+	|| strcmp(cur, "C")           == 0
+	|| strcmp(cur, "C.UTF-8")     == 0
+	|| strcmp(cur, "C.utf8")      == 0) {
 
-	add_currency_symbol = true;
-	lconvinfo.currency_symbol = MOD_POSIX_CURRENCY_SYMBOL;
-	lconvinfo.frac_digits     = MOD_POSIX_FRAC_DIGITS;
-	lconvinfo.p_cs_precedes   = MOD_POSIX_P_CS_PRECEDES;
-	lconvinfo.p_sep_by_space  = MOD_POSIX_P_SEP_BY_SPACE;
+	is_posix_locale = true;
+	lconvinfo = mod_posix_lconv;
     }
 
     // Convert localeconv() information to wide strings
@@ -531,62 +571,61 @@ void init_locale (void)
 
 
 /***********************************************************************/
-// l_strfmon: Convert monetary value to a string
+// xstrfmon: Convert monetary value to a string
 
-ssize_t l_strfmon (char *restrict buf, size_t maxsize,
-		   const char *restrict format, double val)
+ssize_t xstrfmon (char *restrict buf, size_t maxsize,
+		  const char *restrict format, double val)
 {
-    /* The current implementation assumes MOD_POSIX_P_CS_PRECEDES is 1
-       (currency symbol precedes value) and that MOD_POSIX_P_SEP_BY_SPACE
-       is 0 (no space separates currency symbol and value).  It does,
-       however, handle currency symbols of length > 1. */
+    /* Current and previous versions of ISO/IEC 9945-1 (POSIX), particularly
+       SUSv3 (2001) and SUSv4 (2008), require strfmon() to return rather
+       meaningless strings when used with the POSIX "C" locale.  In
+       particular, the standard POSIX locale does not define a currency
+       symbol, a monetary radix symbol (decimal point) or a negative
+       sign.  This means strfmon(..., "%n", -123.45) is supposed to
+       produce "12345" instead of something like "$-123.45"!  This
+       function overcomes these limitations by using snprintf(). */
 
-    assert(MOD_POSIX_P_CS_PRECEDES  == 1);
-    assert(MOD_POSIX_P_SEP_BY_SPACE == 0);
+    if (! is_posix_locale) {
+	return strfmon(buf, maxsize, format, val);
+    } else {
+	/* The current implementation assumes the monetary decimal point
+	   is overridden to "." (ie, MOD_POSIX_MON_DECIMAL_POINT == "."),
+	   the currency symbol is to precede the value, no spaces are to
+	   separate currency symbol and value, and sign is to precede
+	   both currency symbol and value. */
+	assert(MOD_POSIX_P_CS_PRECEDES  == 1);
+	assert(MOD_POSIX_P_SEP_BY_SPACE == 0);
+	assert(MOD_POSIX_N_CS_PRECEDES  == 1);
+	assert(MOD_POSIX_N_SEP_BY_SPACE == 0);
+	assert(MOD_POSIX_P_SIGN_POSN    == 1);
+	assert(MOD_POSIX_N_SIGN_POSN    == 1);
 
-    ssize_t ret = strfmon(buf, maxsize, format, val);
+#	define MOD_POSIX_q(s)		MOD_POSIX_qq(s)
+#	define MOD_POSIX_qq(s)		#s
 
-    if (ret > 0 && add_currency_symbol) {
-	if (strstr(format, "!") == NULL) {
-	    /* Insert lconvinfo.currency_symbol to s.
+#	define MOD_POSIX_FMT_POS	MOD_POSIX_POSITIVE_SIGN MOD_POSIX_CURRENCY_SYMBOL "%." MOD_POSIX_q(MOD_POSIX_FRAC_DIGITS) "f"
+#	define MOD_POSIX_FMT_NEG	MOD_POSIX_NEGATIVE_SIGN MOD_POSIX_CURRENCY_SYMBOL "%." MOD_POSIX_q(MOD_POSIX_FRAC_DIGITS) "f"
+#	define MOD_POSIX_FMT_POS_NOSYM	MOD_POSIX_POSITIVE_SIGN "%." MOD_POSIX_q(MOD_POSIX_FRAC_DIGITS) "f"
+#	define MOD_POSIX_FMT_NEG_NOSYM	MOD_POSIX_NEGATIVE_SIGN "%." MOD_POSIX_q(MOD_POSIX_FRAC_DIGITS) "f"
 
-	       NB: add_currency_symbol == true assumes a POSIX locale and
-	       that the character encoding is ASCII-safe (such as by
-	       being ASCII itself, or UTF-8). */
-	    const char *sym = lconvinfo.currency_symbol;
-	    int symlen = strlen(sym);
-	    char *p;
-	    int spc;
-
-	    assert(maxsize > (unsigned int) symlen);
-
-	    // Count number of leading spaces
-	    for (p = buf, spc = 0; *p == ' '; p++, spc++)
-		;
-
-	    if (symlen <= spc) {
-		/* Enough space for currency symbol: copy it WITHOUT
-		   copying terminating NUL character */
-		for (p -= symlen; *sym != '\0'; p++, sym++) {
-		    *p = *sym;
-		}
+	if (strcmp(format, "%n") == 0) {
+	    if (val >= 0.0) {
+		return snprintf(buf, maxsize, MOD_POSIX_FMT_POS, val);
 	    } else {
-		// Make space for currency symbol, then copy it
-
-		memmove(buf + symlen - spc, buf, maxsize - (symlen - spc));
-		buf[maxsize - 1] = '\0';
-
-		for ( ; *sym != '\0'; sym++, buf++) {
-		    // Make sure terminating NUL character is NOT copied!
-		    *buf = *sym;
-		}
-
-		ret = MIN((unsigned int) ret + symlen - spc, maxsize - 1);
+		return snprintf(buf, maxsize, MOD_POSIX_FMT_NEG, -val);
 	    }
+	} else if (strcmp(format, "%!n") == 0) {
+	    if (val >= 0.0) {
+		return snprintf(buf, maxsize, MOD_POSIX_FMT_POS_NOSYM, val);
+	    } else {
+		return snprintf(buf, maxsize, MOD_POSIX_FMT_NEG_NOSYM, -val);
+	    }
+	} else {
+	    // Other strfmon() formats are not supported
+	    errno = EINVAL;
+	    return -1;
 	}
     }
-
-    return ret;
 }
 
 

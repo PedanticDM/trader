@@ -1472,8 +1472,8 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 			   version, so we need a multibyte char buffer */
 			char *buf = xmalloc(BUFSIZE);
 
-			if (l_strfmon(buf, BUFSIZE, spec->flag_nosym ? "%!n" : "%n",
-				      format_arg[spec->arg_num].a.a_double) < 0) {
+			if (xstrfmon(buf, BUFSIZE, spec->flag_nosym ? "%!n" : "%n",
+				     format_arg[spec->arg_num].a.a_double) < 0) {
 			    saved_errno = errno;
 			    free(buf);
 			    errno = saved_errno;

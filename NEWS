@@ -18,6 +18,10 @@ location: https://www.zap.org.au/gitweb/trader.git
 Version 7.13 (not yet released)
 -------------------------------
 
+Modified the code to work more reliably on non-Glibc (GNU C Library) plat-
+forms,  particularly FreeBSD, Solaris and Cygwin,  when using the standard
+POSIX locale.
+
 Added the Spanish translation,  with thanks to  Francisco Javier Serrador.
 Updated the Esperanto translation, with thanks to Felipe Castro.
 
