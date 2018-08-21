@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2018-08-09 18:58+1000\n"
+"POT-Creation-Date: 2018-08-21 22:13+1000\n"
 "PO-Revision-Date: 2018-07-27 06:28+1000\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -1669,31 +1669,31 @@ msgctxt "answer"
 msgid "No"
 msgstr "Nein"
 
-#: src/utils.c:378 src/utils.c:399
+#: src/utils.c:417 src/utils.c:438
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:404
+#: src/utils.c:443
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:417
+#: src/utils.c:456
 #, c-format
 msgid "out of memory"
 msgstr "Kein frier Speicer mehr vorhanden"
 
-#: src/utils.c:1041
+#: src/utils.c:1080
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s“"
 
-#: src/utils.c:1081
+#: src/utils.c:1120
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1086
+#: src/utils.c:1125
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc“"
