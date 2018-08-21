@@ -53,7 +53,6 @@
 #  stdio \
 #  striconv \
 #  string \
-#  strstr \
 #  sys_stat \
 #  sys_time \
 #  unistd \
@@ -82,7 +81,6 @@ gl_MODULES([
   stdio
   striconv
   string
-  strstr
   sys_stat
   sys_time
   unistd
