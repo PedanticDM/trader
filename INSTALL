@@ -194,8 +194,8 @@ to  remove the  Makefiles that  know the  path to  which those  files were
 installed!
 
 
-Supported Systems
-=================
+Tested Systems
+==============
 
 The following operating systems and compilers have been successfully test-
 ed with this version of Star Traders:
