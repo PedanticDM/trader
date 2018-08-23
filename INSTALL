@@ -269,7 +269,7 @@ This process of  editing and testing the PO file  can be done iteratively,
 of course:  make a change, recompile, run the program  to see the changes,
 repeat as needed.
 
-Once you have finished your translation, please submit the PO file to the
+Once you have finished your translation,  please submit the PO file to the
 Translation Project.  The relevant web page for Star Traders is:
 
     https://translationproject.org/domain/trader.html
