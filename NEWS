@@ -18,9 +18,12 @@ location: https://www.zap.org.au/gitweb/trader.git
 Version 7.13 (not yet released)
 -------------------------------
 
-Modified the code to work more reliably on non-Glibc (GNU C Library) plat-
+Modified the code to work more reliably on non-GNU C Library (glibc) plat-
 forms,  particularly FreeBSD, Solaris and Cygwin,  when using the standard
-POSIX locale.
+POSIX locale.  Extensively tested the build procedure  on multiple operat-
+ing systems  and compilers,  and submitted code  upstream to  the Autoconf
+Archive project  to make this work more robustly.  Listed tested operating
+system and compiler combinations in the INSTALL file.
 
 Added the Spanish translation,  with thanks to  Francisco Javier Serrador.
 Updated the Esperanto translation, with thanks to Felipe Castro.
@@ -32,66 +35,6 @@ the GNU C Library so that Star Traders can provide translations for them.
 Updated to the latest snapshot of the  Gnulib GNU Portability Library.  In
 addition, updated the list of prerequisites in the INSTALL file and listed
 some more command line options for the configure script.
-
-Extensively tested  the build procedure on multiple  operating systems and
-compilers,  and submitted code upstream to the Autoconf Archive project to
-make this work more robustly.  In particular, successfully tested at least
-the following combinations:
-
-+-------------------------+--------+-------+-------------------------+---+
-| Linux distribution      | Arch   | Glibc | Compiler                | N |
-+-------------------------+--------+-------+-------------------------+---+
-| Debian GNU/Linux Sid    | x86_64 | 2.27  | GNU C Compiler 8.2.0    |   |
-| Debian GNU/Linux Sid    | i686   | 2.27  | GNU C Compiler 8.2.0    |   |
-| Debian GNU/Linux 9.5    | x86_64 | 2.24  | GNU C Compiler 6.3.0    |   |
-| Ubuntu 18.04            | x86_64 | 2.27  | GNU C Compiler 7.3.0    |   |
-| Ubuntu 18.04            | x86_64 | 2.27  | Clang (LLVM) 6.0.0      |   |
-| Ubuntu 18.04            | x86_64 | 2.27  | Portland PGI C/C++ 18.5 |   |
-| Fedora 28               | x86_64 | 2.27  | GNU C Compiler 8.1.1    |   |
-| CentOS 7.5              | x86_64 | 2.17  | GNU C Compiler 4.8.5    |   |
-| CentOS 6.10             | x86_64 | 2.12  | GNU C Compiler 4.4.7    |   |
-| CentOS 6.10             | x86_64 | 2.12  | Portland PGI C/C++ 18.3 |   |
-| CentOS 6.9              | x86_64 | 2.12  | Intel C/C++ 18.0.3      |   |
-| OpenSUSE 15.0           | x86_64 | 2.26  | GNU C Compiler 7.3.1    |   |
-+-------------------------+--------+-------+-------------------------+---+
-
-+-------------------------+--------+---------------------------------+---+
-| Operating system        | Arch   | Compiler                        | N |
-+-------------------------+--------+---------------------------------+---+
-| FreeBSD 11.2            | x86_64 | Clang (LLVM) 6.0.0              | 1 |
-| Solaris 11.3 (x86_64)   | i386   | GNU C Compiler 4.8.2            |   |
-| Solaris 11.3 (x86_64)   | x86_64 | GNU C Compiler 4.8.2            | 2 |
-| Solaris 11.3 (x86_64)   | i386   | Oracle Developer Studio 12.6    | 3 |
-| Solaris 11.3 (x86_64)   | x86_64 | Oracle Developer Studio 12.6    | 4 |
-| Cygwin 2.10.0 (Win7SP1) | i686   | GNU C Compiler 7.3.0            |   |
-+-------------------------+--------+---------------------------------+---+
-
-Notes:
-
-1.  FreeBSD with the  gettext, gettext-runtime, gettext-tools and libiconv
-    binary packages installed with "pkg", using:
-
-        ./configure --with-libiconv-prefix=/usr/local \
-                    --with-libintl-prefix=/usr/local
-
-2.  Using "./configure CC='gcc -m64'" for 64-bit user-space.
-3.  Using "./configure CC='/opt/developerstudio12.6/bin/cc'".
-4.  Using "./configure CC='/opt/developerstudio12.6/bin/cc -m64'".
-
-The following systems are known not to work at the current time; this list
-is almost certainly not exhaustive:
-
-+-------------------------+--------+---------------------------------+---+
-| Operating system        | Arch   | Compiler                        | N |
-+-------------------------+--------+---------------------------------+---+
-| OpenBSD 6.3             | x86_64 | GNU C Compiler 4.2.1            | 1 |
-| OpenBSD 6.3             | x86_64 | Clang (LLVM) 5.0.1              | 1 |
-+-------------------------+--------+---------------------------------+---+
-
-Notes:
-
-1.  The OpenBSD C library does not include <monetary.h> nor its associated
-    functions, particularly strfmon().
 
 
 Version 7.12 (24th August, 2017)
