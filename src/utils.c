@@ -575,7 +575,7 @@ void init_locale (void)
 ssize_t xwcsfmon (wchar_t *restrict buf, size_t maxsize,
 		  const char *restrict format, double val)
 {
-    ssize_t ret;
+    ssize_t n;
     char *s = xmalloc(BUFSIZE);
 
 
@@ -589,7 +589,7 @@ ssize_t xwcsfmon (wchar_t *restrict buf, size_t maxsize,
        following code overcomes these limitations by using snprintf(). */
 
     if (! is_posix_locale) {
-	ret = strfmon(s, BUFSIZE, format, val);
+	n = strfmon(s, BUFSIZE, format, val);
     } else {
 	/* The current implementation assumes the monetary decimal point
 	   is overridden to "." (ie, MOD_POSIX_MON_DECIMAL_POINT == "."),
@@ -613,29 +613,29 @@ ssize_t xwcsfmon (wchar_t *restrict buf, size_t maxsize,
 
 	if (strcmp(format, "%n") == 0) {
 	    if (val >= 0.0) {
-		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_POS, val);
+		n = snprintf(s, BUFSIZE, MOD_POSIX_FMT_POS, val);
 	    } else {
-		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_NEG, -val);
+		n = snprintf(s, BUFSIZE, MOD_POSIX_FMT_NEG, -val);
 	    }
 	} else if (strcmp(format, "%!n") == 0) {
 	    if (val >= 0.0) {
-		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_POS_NOSYM, val);
+		n = snprintf(s, BUFSIZE, MOD_POSIX_FMT_POS_NOSYM, val);
 	    } else {
-		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_NEG_NOSYM, -val);
+		n = snprintf(s, BUFSIZE, MOD_POSIX_FMT_NEG_NOSYM, -val);
 	    }
 	} else {
 	    // Other strfmon() formats are not supported
 	    errno = EINVAL;
-	    ret = -1;
+	    n = -1;
 	}
     }
 
-    if (ret >= BUFSIZE) {
+    if (n >= BUFSIZE) {
 	// Truncate the too-long output with a terminating NUL
 	s[BUFSIZE - 1] = '\0';
     }
 
-    if (ret >= 0) {
+    if (n >= 0) {
 	xmbstowcs(buf, s, maxsize);
 
 	/* Some buggy implementations of strfmon(), such as that on
@@ -655,7 +655,7 @@ ssize_t xwcsfmon (wchar_t *restrict buf, size_t maxsize,
     }
 
     free(s);
-    return ret;
+    return n;
 }
 
 
