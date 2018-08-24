@@ -44,9 +44,9 @@ struct lconv lconvinfo;
 // localeconv() information, converted to wide strings
 wchar_t *decimal_point;			// Locale's radix character
 wchar_t *thousands_sep;			// Locale's thousands separator
-wchar_t *currency_symbol;		// Local currency symbol
-wchar_t *mon_decimal_point;		// Local monetary radix character
-wchar_t *mon_thousands_sep;		// Local monetary thousands separator
+wchar_t *currency_symbol;		// Locale's currency symbol
+wchar_t *mon_decimal_point;		// Locale's monetary radix character
+wchar_t *mon_thousands_sep;		// Locale's monetary thousands separator
 
 
 /************************************************************************
