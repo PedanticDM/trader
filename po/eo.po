@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2018-08-21 22:13+1000\n"
+"POT-Creation-Date: 2018-08-24 16:18+1000\n"
 "PO-Revision-Date: 2018-07-27 06:35+1000\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
@@ -1576,7 +1576,7 @@ msgstr "Paĝo %1$d el %2$d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:486 src/intf.c:3037
+#: src/help.c:486 src/intf.c:3026
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Premu <SPACOn> por daŭrigi ] "
@@ -1613,7 +1613,7 @@ msgstr "terminal-grando tro malgrandas (necesas %d x %d)"
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
-#: src/intf.c:1570
+#: src/intf.c:1559
 #, c-format
 msgid "mkchstr: '%s'"
 msgstr "mkchstr: '%s'"
@@ -1623,12 +1623,12 @@ msgstr "mkchstr: '%s'"
 #. character.  Ideally, it should contain an easily-accessible
 #. keycode that would NOT be used in ordinary input.  Digits, ".",
 #. ",", "+" and "-" are definitely NOT acceptable.
-#: src/intf.c:2022
+#: src/intf.c:2011
 msgctxt "input|DefaultValue"
 msgid "=;"
 msgstr "=;"
 
-#: src/intf.c:2036 src/intf.c:2081
+#: src/intf.c:2025 src/intf.c:2070
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: malpermesata signo en ĉeno: '%ls'"
@@ -1637,12 +1637,12 @@ msgstr "gettxline: malpermesata signo en ĉeno: '%ls'"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2954
+#: src/intf.c:2943
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "JjYy"
 
-#: src/intf.c:2956
+#: src/intf.c:2945
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1650,12 +1650,12 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:3007
+#: src/intf.c:2996
 msgctxt "answer"
 msgid "Yes"
 msgstr "Jes"
 
-#: src/intf.c:3009
+#: src/intf.c:2998
 msgctxt "answer"
 msgid "No"
 msgstr "Ne"
@@ -1674,17 +1674,17 @@ msgstr ": "
 msgid "out of memory"
 msgstr "memoro plenpleniĝas"
 
-#: src/utils.c:1080
+#: src/utils.c:1110
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: '%s'"
 
-#: src/utils.c:1120
+#: src/utils.c:1150
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1125
+#: src/utils.c:1155
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: '%lc'"
