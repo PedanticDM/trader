@@ -1149,8 +1149,8 @@ size_t xwcrtomb (char *restrict dest, wchar_t wc, mbstate_t *restrict mbstate)
 	    if ((n = wcrtomb(dest, L'\0', &mbcopy)) == (size_t) -1) {
 		errno_exit(_("xwcrtomb: NUL"));
 	    }
-	    dest[n] = EILSEQ_REPL;
-	    dest[++n] = '\0';
+	    dest[n++] = EILSEQ_REPL;
+	    dest[n] = '\0';
 	} else {
 	    errno_exit(_("xwcrtomb: '%lc'"), (wint_t) wc);
 	}
