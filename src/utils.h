@@ -239,18 +239,19 @@ extern void init_locale (void);
 
 
 /*
-  Function:   xstrfmon - Convert monetary value to a string
+  Function:   xwcsfmon - Convert monetary value to a wide-character string
   Parameters: buf      - Buffer to receive result
-              maxsize  - Maximum size of buffer
+              maxsize  - Maximum size of buffer, in multiples of wchar_t
               format   - strfmon() format to use
               val      - Monetary value to convert
   Returns:    ssize_t  - Size of returned string
 
   This function calls strfmon() to convert val to a suitable monetary
-  value string, making appropriate adjustments if the POSIX locale is in
-  effect.
+  value string, then converts the result to a wide-character string and
+  places it in buf.  It makes appropriate adjustments to the output if
+  the POSIX locale is in effect or if the locale uses no-break spaces.
 */
-extern ssize_t xstrfmon (char *restrict buf, size_t maxsize,
+extern ssize_t xwcsfmon (wchar_t *restrict buf, size_t maxsize,
 			 const char *restrict format, double val);
 
 

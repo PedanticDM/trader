@@ -570,22 +570,26 @@ void init_locale (void)
 
 
 /***********************************************************************/
-// xstrfmon: Convert monetary value to a string
+// xwcsfmon: Convert monetary value to a wide-character string
 
-ssize_t xstrfmon (char *restrict buf, size_t maxsize,
+ssize_t xwcsfmon (wchar_t *restrict buf, size_t maxsize,
 		  const char *restrict format, double val)
 {
-    /* Current and previous versions of ISO/IEC 9945-1 (POSIX), particularly
+    ssize_t ret;
+    char *s = xmalloc(BUFSIZE);
+
+
+    /* Current and previous versions of ISO/IEC 9945-1 (POSIX), namely
        SUSv3 (2001) and SUSv4 (2008), require strfmon() to return rather
        meaningless strings when used with the POSIX "C" locale.  In
        particular, the standard POSIX locale does not define a currency
        symbol, a monetary radix symbol (decimal point) or a negative
        sign.  This means strfmon(..., "%n", -123.45) is supposed to
-       produce "12345" instead of something like "$-123.45"!  This
-       function overcomes these limitations by using snprintf(). */
+       produce "12345" instead of something like "-$123.45"!  The
+       following code overcomes these limitations by using snprintf(). */
 
     if (! is_posix_locale) {
-	return strfmon(buf, maxsize, format, val);
+	ret = strfmon(s, BUFSIZE, format, val);
     } else {
 	/* The current implementation assumes the monetary decimal point
 	   is overridden to "." (ie, MOD_POSIX_MON_DECIMAL_POINT == "."),
@@ -609,22 +613,49 @@ ssize_t xstrfmon (char *restrict buf, size_t maxsize,
 
 	if (strcmp(format, "%n") == 0) {
 	    if (val >= 0.0) {
-		return snprintf(buf, maxsize, MOD_POSIX_FMT_POS, val);
+		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_POS, val);
 	    } else {
-		return snprintf(buf, maxsize, MOD_POSIX_FMT_NEG, -val);
+		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_NEG, -val);
 	    }
 	} else if (strcmp(format, "%!n") == 0) {
 	    if (val >= 0.0) {
-		return snprintf(buf, maxsize, MOD_POSIX_FMT_POS_NOSYM, val);
+		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_POS_NOSYM, val);
 	    } else {
-		return snprintf(buf, maxsize, MOD_POSIX_FMT_NEG_NOSYM, -val);
+		ret = snprintf(s, BUFSIZE, MOD_POSIX_FMT_NEG_NOSYM, -val);
 	    }
 	} else {
 	    // Other strfmon() formats are not supported
 	    errno = EINVAL;
-	    return -1;
+	    ret = -1;
 	}
     }
+
+    if (ret >= BUFSIZE) {
+	// Truncate the too-long output with a terminating NUL
+	s[BUFSIZE - 1] = '\0';
+    }
+
+    if (ret >= 0) {
+	xmbstowcs(buf, s, maxsize);
+
+	/* Some buggy implementations of strfmon(), such as that on
+	   FreeBSD and Cygwin, assume localeconv.mon_thousands_sep and
+	   similar strings contain either a single char or NUL instead of
+	   a multibyte character string.  However, this assumption fails
+	   on locales such as ru_RU.UTF-8 which use U+00A0 NO-BREAK SPACE
+	   for mon_thousands_sep (stored in UTF-8 as 0xC2 0xA0.  As a
+	   result, incomplete character sequences are copied, which are
+	   translated to EILSEQ_REPL characters by xmbstowcs() above.
+	   Fix such characters by replacing them with a space. */
+	for (wchar_t *p = buf; *p != L'\0'; p++) {
+	    if (*p == EILSEQ_REPL) {
+		*p = L' ';
+	    }
+	}
+    }
+
+    free(s);
+    return ret;
 }
 
 

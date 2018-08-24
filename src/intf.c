@@ -1467,21 +1467,10 @@ int vmkchstr (chtype *restrict chbuf, int chbufsize, chtype attr_norm,
 
 		case L'N':
 		    // Insert a monetary amount (double) into the output
-		    {
-			/* strfmon() is not available in a wide-char
-			   version, so we need a multibyte char buffer */
-			char *buf = xmalloc(BUFSIZE);
-
-			if (xstrfmon(buf, BUFSIZE, spec->flag_nosym ? "%!n" : "%n",
-				     format_arg[spec->arg_num].a.a_double) < 0) {
-			    saved_errno = errno;
-			    free(buf);
-			    errno = saved_errno;
-			    goto error;
-			}
-
-			xmbstowcs(fmtbuf, buf, BUFSIZE);
-			free(buf);
+		    if (xwcsfmon(fmtbuf, BUFSIZE, spec->flag_nosym ?
+				 "%!n" : "%n",
+				 format_arg[spec->arg_num].a.a_double) < 0) {
+			goto error;
 		    }
 
 		    str = fmtbuf;
