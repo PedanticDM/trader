@@ -1120,7 +1120,7 @@ size_t xwcrtomb (char *restrict dest, wchar_t wc, mbstate_t *restrict mbstate)
 		errno_exit(_("xwcrtomb: NUL"));
 	    }
 	    dest[n] = EILSEQ_REPL;
-	    dest[n++] = '\0';
+	    dest[++n] = '\0';
 	} else {
 	    errno_exit(_("xwcrtomb: '%lc'"), (wint_t) wc);
 	}
