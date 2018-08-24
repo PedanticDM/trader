@@ -645,10 +645,10 @@ ssize_t xwcsfmon (wchar_t *restrict buf, size_t maxsize,
 	   on locales such as ru_RU.UTF-8 which use U+00A0 NO-BREAK SPACE
 	   for mon_thousands_sep (stored in UTF-8 as 0xC2 0xA0.  As a
 	   result, incomplete character sequences are copied, which are
-	   translated to EILSEQ_REPL characters by xmbstowcs() above.
+	   translated to EILSEQ_REPL_WC characters by xmbstowcs() above.
 	   Fix such characters by replacing them with a space. */
 	for (wchar_t *p = buf; *p != L'\0'; p++) {
-	    if (*p == EILSEQ_REPL) {
+	    if (*p == EILSEQ_REPL_WC) {
 		*p = L' ';
 	    }
 	}
