@@ -523,9 +523,8 @@ void init_locale (void)
     lc = localeconv();
     assert(lc != NULL);
 
-    lconvinfo = *lc;
-
     is_posix_locale = false;
+    lconvinfo = *lc;
 
     /* Are we in the POSIX locale?  The string returned by setlocale() is
        supposed to be opaque, but in practise is not.  To be on the safe
