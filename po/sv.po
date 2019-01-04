@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 Swedish Translations for Star Traders                 *
-# *                 Copyright (C) 2015-18, John Zaitseff                  *
+# *                 Copyright (C) 2015-19, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2018-08-24 16:18+1000\n"
-"PO-Revision-Date: 2018-07-27 06:35+1000\n"
+"PO-Revision-Date: 2019-01-05 07:38+1100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
