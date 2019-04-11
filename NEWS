@@ -1,40 +1,50 @@
-**************************************************************************
-*                                                                        *
-*              Star Traders: A Game of Interstellar Trading              *
-*                 Copyright (C) 1990-2019, John Zaitseff                 *
-*                                                                        *
-**************************************************************************
+.. -*- mode: rst; coding: utf-8 -*-
 
-Star Traders is a simple game of interstellar trading, where the objective
-is to  create companies, buy and  sell shares, borrow and  repay money, in
-order to become the wealthiest player (the winner).
+============================================
+Star Traders: A Game of Interstellar Trading
+============================================
 
-The following history is presented in reverse chronological order.  If you
-would like to see  a list of detailed changes to this project,  you should
-browse  the Git repository on  The ZAP Group  web server  at the following
-location: https://www.zap.org.au/cgit/trader.git
+Star Traders is a simple game of interstellar trading, where the
+objective is to create companies, buy and sell shares, borrow and repay
+money, in order to become the wealthiest player (the winner).
+
+The following history is presented in reverse chronological order.  If
+you would like to see a list of detailed changes to this project, you
+should browse the `Star Traders Git repository`__ on `The ZAP Group web
+server`__.
+
+__ https://www.zap.org.au/cgit/trader.git
+__ https://www.zap.org.au/
+
+
+.. contents::
 
 
 Version 7.13 (not yet released)
 -------------------------------
 
-Modified the code to work more reliably on non-GNU C Library (glibc) plat-
-forms,  particularly FreeBSD, Solaris and Cygwin,  when using the standard
-POSIX locale.  Extensively tested the build procedure  on multiple operat-
-ing systems  and compilers,  and submitted code  upstream to  the Autoconf
-Archive project  to make this work more robustly.  Listed tested operating
-system and compiler combinations in the INSTALL file.
+Converted all text files to reStructuredText (ReST) format.  This format
+is still quite readable as raw text, and is much more capable than the
+myriad all-slightly-incompatible variants of Markdown.
 
-Added the Spanish translation,  with thanks to  Francisco Javier Serrador.
+Modified the source code to work more reliably on non-GNU C Library
+(``glibc``) platforms, particularly FreeBSD, Solaris and Cygwin, when
+using the standard POSIX locale.  Extensively tested the build procedure
+on multiple operating systems and compilers, and submitted code upstream
+to the Autoconf Archive project to make this work more robustly.  Listed
+tested operating system and compiler combinations in the `INSTALL` file.
+
+Added the Spanish translation, with thanks to Francisco Javier Serrador.
 Updated the Esperanto translation, with thanks to Felipe Castro.
 
-Updated one string in the game for consistency with other labels;  updated
-all PO translations to suit.  Also added strings from obsolete versions of
-the GNU C Library so that Star Traders can provide translations for them.
+Updated one string in the game for consistency with other labels; updated
+all PO translations to suit.  Also added strings from obsolete versions
+of the GNU C Library so that Star Traders can provide translations for
+them.
 
-Updated to the latest snapshot of the  Gnulib GNU Portability Library.  In
-addition, updated the list of prerequisites in the INSTALL file and listed
-some more command line options for the configure script.
+Updated to the latest snapshot of the Gnulib GNU Portability Library.  In
+addition, updated the list of prerequisites in the `INSTALL` file and
+listed some more command line options for the ``configure`` script.
 
 
 Version 7.12 (24th August, 2017)
@@ -46,40 +56,44 @@ Updated the Serbian translation, with thanks to Мирослав Николић.
 Version 7.11 (18th June, 2017)
 ------------------------------
 
-Bug fix:  some architectures (such as ARM, PowerPC and S390)  treat "char"
-as "unsigned char",  and this caused  b64decode()  to fail while loading a
-saved game.  Changed the relevant type from "char" to "int" to fix this.
+Bug fix: some architectures (such as ARM, PowerPC and S390) treat
+:code:`char` as :code:`unsigned char`, and this caused
+:code:`b64decode()` to fail while loading a saved game.  Changed the
+relevant type from :code:`char` to :code:`int` to fix this.
 
 
 Version 7.10 (2nd June, 2017)
 -----------------------------
 
-Added a data directory that contains a desktop file and appropriate icons.
-Adjusted the game constants for more dynamic play:  allow the share prices
-and returns to change a bit more frequently and more rapidly.  Tweaked the
-colours in the example monochrome retro-computing command lines, including
-adding an amber monitor version.
+Added a `data` directory that contains a desktop file and appropriate
+icons.  Adjusted the game constants for more dynamic play: allow the
+share prices and returns to change a bit more frequently and more
+rapidly.  Tweaked the colours in the example monochrome retro-computing
+command lines, including adding an amber monitor version.
 
-Added a Serbian translation, with thanks to Мирослав Николић.  Updated the
-Danish, French, Swedish, Hungarian, Norwegian Bokmål  and  German transla-
-tions, in that order,  with thanks to Joe Hansen, Frédéric Marchal, Anders
-Jonsson, Balázs Úr, Johnny A. Solbu and Philipp Thomas respectively.
+Added a Serbian translation, with thanks to Мирослав Николић.  Updated
+the Danish, French, Swedish, Hungarian, Norwegian Bokmål and German
+translations, in that order, with thanks to Joe Hansen, Frédéric Marchal,
+Anders Jonsson, Balázs Úr, Johnny A. Solbu and Philipp Thomas
+respectively.
 
-Updated translatable strings  to overcome a limitation of  msgfmt(1): if a
-string starts or  ends with a new-line character,  its translation must do
-so as well.  This has an impact on labels in particular.  Also changed the
-help text string  "Page N of M"  to allow  translations of the form  "Of M
-pages, this is page N", and all quoted strings using the obsolete GNU form
-`like this' to 'this'.  In addition,  newer versions of  lib/getopt.c have
-different strings.  All translations have been updated as a result.
+Updated translatable strings to overcome a limitation of ``msgfmt``\(1):
+if a string starts or ends with a new-line character, its translation
+must do so as well.  This has an impact on labels in particular.  Also
+changed the help text string “Page *N* of *M*” to allow translations of
+the form “Of *M* pages, this is page *N*”, and all quoted strings using
+the obsolete GNU form ```like this'`` to ``'this'``.  In addition, newer
+versions of `lib/getopt.c` have different strings.  All translations have
+been updated as a result.
 
-Removed the obsolete  Gnulib gettext module  and updated to the latest Git
-snapshot of Gnulib.  Updated the dependency version numbers  for Autoconf,
-Automake and Gettext.  Also updated all macros from the Autoconf Archive.
+Removed the obsolete Gnulib ``gettext`` module and updated to the latest
+Git snapshot of Gnulib.  Updated the dependency version numbers for
+Autoconf, Automake and Gettext.  Also updated all macros from the
+Autoconf Archive.
 
-Migrated the source code repository  from Subversion  to Git.  Updated the
-documentation to suit,  and also listed  specific required version numbers
-for the Autoconf and Automake tools in the INSTALL file.
+Migrated the source code repository from Subversion to Git.  Updated the
+documentation to suit, and also listed specific required version numbers
+for the Autoconf and Automake tools in the `INSTALL` file.
 
 
 Version 7.9 (5th January, 2016)
@@ -91,169 +105,171 @@ Updated the Danish translation, with thanks to Joe Hansen.
 Version 7.8 (10th September, 2015)
 ----------------------------------
 
-Changed the name of the seventh company from "Gemeni Inc" to "Gemini Inc":
-a spelling mistake  that has been present  since 1990!   Special thanks to
-Anders Jonsson for pointing this out.
+Changed the name of the seventh company from “Gemeni Inc” to “Gemini
+Inc”: a spelling mistake that has been present since 1990!  Special
+thanks to Anders Jonsson for pointing this out.
 
-Added the Swedish translation,  with thanks to Anders Jonsson.  Minor code
-changes were made to accommodate this language.  Incorporated changes made
-by the translators for German, French and Norwegian Bokmål, in that order,
-with thanks to Philipp Thomas, Frédéric Marchal and Johnny A. Solbu.  Also
-updated all references to GNU Gettext to version 0.19.5.
+Added the Swedish translation, with thanks to Anders Jonsson.  Minor code
+changes were made to accommodate this language.  Incorporated changes
+made by the translators for German, French and Norwegian Bokmål, in that
+order, with thanks to Philipp Thomas, Frédéric Marchal and
+Johnny A. Solbu.  Also updated all references to GNU Gettext to version
+0.19.5.
 
 
 Version 7.7 (18th August, 2015)
 -------------------------------
 
-Added the  Hungarian translation, with  thanks to  Balázs Úr.   Minor code
-changes were made  to accommodate this language.  Also added documentation
-in the file INSTALL to translate Star Traders into another language.
+Added the Hungarian translation, with thanks to Balázs Úr.  Minor code
+changes were made to accommodate this language.  Also added documentation
+in the file `INSTALL` to translate Star Traders into another language.
 
 
 Version 7.6 (13th August, 2014)
 -------------------------------
 
-A minor release to fix compilation bugs under Cygwin: the libiconv library
-must be listed AFTER the GNU Portability Library on that platform.
+A minor release to fix compilation bugs under Cygwin: the ``libiconv``
+library must be listed *after* the GNU Portability Library on that
+platform.
 
-In addition, the minimum and maximum share return values were changed from
--10% to -15%  and 20% to 25%  respectively.   This gives more incentive to
-borrow money from the  Interstellar Trading Bank,  whose interest rate can
-reach a maximum of 20%.
+In addition, the minimum and maximum share return values were changed
+from -10% to -15% and 20% to 25% respectively.  This gives more incentive
+to borrow money from the Interstellar Trading Bank, whose interest rate
+can reach a maximum of 20%.
 
 
 Version 7.5 (24th May, 2014)
 ----------------------------
 
-Rewrote the  file input and output  routines  so that saved games  are now
-stored  in a much more reliable  (scrambled) ASCII format.  However, saved
-games from older versions will no longer load:  the workaround is to start
-the older version of  Star Traders with the "--dont-encrypt"  command line
-option, load the relevant game and save it again straight away, change the
-second line in the game file  from "File API 7.2"  to "File API 7.5", then
-run the new version of Star Traders.
+Rewrote the file input and output routines so that saved games are now
+stored in a much more reliable (scrambled) ASCII format.  However, saved
+games from older versions will no longer load: the workaround is to start
+the older version of Star Traders with the ``--dont-encrypt`` command
+line option, load the relevant game and save it again straight away,
+change the second line in the game file from “``File API 7.2``” to
+“``File API 7.5``”, then run the new version of Star Traders.
 
-Added translations  for Norwegian Bokmål,  Danish  and  Esperanto (in that
-order),  with thanks to  Johnny A. Solbu,  Joe Hansen  and  Felipe Castro.
-Updated auxiliary files  to the latest versions  available from the Gnulib
+Added translations for Norwegian Bokmål, Danish and Esperanto (in that
+order), with thanks to Johnny A. Solbu, Joe Hansen and Felipe Castro.
+Updated auxiliary files to the latest versions available from the Gnulib
 GNU Portability Library and the GNU Autoconf project.
 
 
 Version 7.4 (9th May, 2012)
 ---------------------------
 
-For the  first time since  the CP/M-80 version  of Star Traders,  the game
-algorithms  have  been carefully  reviewed  and  revised.  In  particular,
-companies may now have negative returns, making players lose money on such
-shares.  This  may encourage  players to use  the "Sell shares"  option at
-appropriate times...   In addition, changes  in share prices,  returns and
-bank interest  rates have  been made much  "smoother", less prone  to wild
-variations.  These  new algorithms were  first modelled using  Gnuplot and
+For the first time since the CP/M-80 version of Star Traders, the game
+algorithms have been carefully reviewed and revised.  In particular,
+companies may now have negative returns, making players lose money on
+such shares.  This may encourage players to use the “Sell shares” option
+at appropriate times…  In addition, changes in share prices, returns and
+bank interest rates have been made much “smoother”, less prone to wild
+variations.  These new algorithms were first modelled using Gnuplot and
 Perl before being implemented in C.
 
-The "configure" script now prints  a prominent warning if a wide-character
-version of Curses,  such as NcursesW, is not  available when compiling the
-game.  It  is a warning and not  an error as single-byte  locales (such as
-US-ASCII and ISO8859-1)  do not require NcursesW, even  if the compilation
-environment itself is a multibyte one (such as UTF-8).
+The ``configure`` script now prints a prominent warning if a
+wide-character version of Curses, such as NcursesW, is not available when
+compiling the game.  It is a warning and not an error as single-byte
+locales (such as US-ASCII and ISO8859-1) do not require NcursesW, even if
+the compilation environment itself is a multibyte one (such as UTF-8).
 
-The Russian translation has been  updated, with thanks to Vladimir Tsarkov
-and Pavel Maryanov.  Translations for French, German, Finnish and Croatian
-have been added (in that  order), with thanks to Frédéric Marchal, Philipp
-Thomas,  Jorma Karvonen and  Tomislav Krznar.  Special thanks also  to the
-Translation Project,  which brings free  (open-source) software developers
-and translators together.
+The Russian translation has been updated, with thanks to Vladimir Tsarkov
+and Pavel Maryanov.  Translations for French, German, Finnish and
+Croatian have been added (in that order), with thanks to Frédéric
+Marchal, Philipp Thomas, Jorma Karvonen and Tomislav Krznar.  Special
+thanks also to the Translation Project, which brings free (open-source)
+software developers and translators together.
 
 
 Version 7.3 (16th March, 2012)
 ------------------------------
 
-Star Traders has been  translated into Russian.  In addition,  a number of
-bugs with internationalisation  have been fixed.  The  "default value" key
-(originally "=" or ";" as the first key-press in any input field) has been
-incorporated into the language translation files.
+Star Traders has been translated into Russian.  In addition, a number of
+bugs with internationalisation have been fixed.  The “default value” key
+(originally “``=``” or “``;``” as the first key-press in any input field)
+has been incorporated into the language translation files.
 
 
 Version 7.2 (29th August, 2011)
 -------------------------------
 
-Star  Traders has  been internationalised!   As part  of this  update, all
-input and output routines have been rewritten to handle multibyte strings.
-English  (Australian, British,  Canadian  and US)  translations have  been
-included.  Translations  for other languages (and  corrections to existing
-languages) are more than welcome!
+Star Traders has been internationalised!  As part of this update, all
+input and output routines have been rewritten to handle multibyte
+strings.  English (Australian, British, Canadian and US) translations
+have been included.  Translations for other languages (and corrections to
+existing languages) are more than welcome!
 
-Game files  are now stored  in UTF-8 format  (once decrypted!) and  can be
-loaded under  any locale with  automatic character set  translation.  This
-does mean,  however, that  game files  from versions 7.0  and 7.1  of Star
+Game files are now stored in UTF-8 format (once decrypted!) and can be
+loaded under any locale with automatic character set translation.  This
+does mean, however, that game files from versions 7.0 and 7.1 of Star
 Traders will not load under this release.
 
-The program now  better handles terminal resizing events  (for versions of
-Curses supporting  such events).   It also tries  to restore  the terminal
+The program now better handles terminal resizing events (for versions of
+Curses supporting such events).  It also tries to restore the terminal
 environment correctly when receiving a terminating signal.
 
 
 Version 7.1 (29th July, 2011)
 -----------------------------
 
-A minor updated  release to fix configuration problems  on some platforms.
-In particular, some systems could  not find the Curses libraries or header
-files, so the  Autoconf macro that performed the  search was rewritten and
+A minor updated release to fix configuration problems on some platforms.
+In particular, some systems could not find the Curses libraries or header
+files, so the Autoconf macro that performed the search was rewritten and
 extended.
 
 
 Version 7.0 (25th July, 2011)
 -----------------------------
 
-Released the first version of Star Traders for Unix-like operating systems
-such as Linux.  It requires a text  console or window of at least 80x24 in
-size.  The code is written  in the C99 programming  language as a learning
-exercise for a  number of software tools and  libraries; the algorithms in
-the  original Pascal and  Visual Basic  versions are  reused for  the game
-logic.
+Released the first version of Star Traders for Unix-like operating
+systems such as Linux.  It requires a text console or window of at least
+80×24 in size.  The code is written in the C99 programming language as a
+learning exercise for a number of software tools and libraries; the
+algorithms in the original Pascal and Visual Basic versions are reused
+for the game logic.
 
-Note that versions 7.0 and 7.1 of Star Traders did NOT handle locales with
-multibyte character sequences  (such as UTF-8) correctly.  Each  byte in a
-such a  sequence was treated  as a separate character.   Eight-bit locales
-(such as US-ASCII, ISO8859-1, etc.) worked correctly.
+Note that versions 7.0 and 7.1 of Star Traders did *not* handle locales
+with multibyte character sequences (such as UTF-8) correctly.  Each byte
+in a such a sequence was treated as a separate character.  Eight-bit
+locales (such as US-ASCII, ISO8859-1, etc.) worked correctly.
 
 
 Early history
 -------------
 
-The original (and very primitive) Star Traders game  was written  by S. J.
-Singer in 1984 using Altair  Basic.  This was modified for Microsoft Basic
-(MBASIC) running under  the CP/M-80 operating system by  John Zaitseff and
+The original (and very primitive) Star Traders game was written by S. J.
+Singer in 1984 using Altair Basic.  This was modified for Microsoft Basic
+(MBASIC) running under the CP/M-80 operating system by John Zaitseff and
 released on 7th March, 1988.
 
-Star Traders  was then  completely rewritten in  1990 for  the Australian-
-designed 8-bit MicroBee computer running CP/M-80 on a Zilog Z80 processor,
-using Turbo Pascal 3.01a.  Essentially, only the name of the game and some
-of the ideas  were retained in this version.  Version 4.1  of Star Traders
-was released on 1st August, 1991.
+Star Traders was then completely rewritten in 1990 for the
+Australian-designed 8-bit MicroBee computer running CP/M-80 on a Zilog
+Z80 processor, using Turbo Pascal 3.01a.  Essentially, only the name of
+the game and some of the ideas were retained in this version.  Version
+4.1 of Star Traders was released on 1st August, 1991.
 
-In 1992,  it was recompiled for  the NEC Advanced  Personal Computer (with
-8-inch floppy drives!)  running CP/M-86  on an 8086 processor, using Turbo
-Pascal  2.0.  This version  had colour  added to  it in  the form  of ANSI
+In 1992, it was recompiled for the NEC Advanced Personal Computer (with
+8-inch floppy drives!)  running CP/M-86 on an 8086 processor, using Turbo
+Pascal 2.0.  This version had colour added to it in the form of ANSI
 escape sequences; version 4.4 was released on 2nd August, 1993.
 
-The next version  came in 1993, when the program was  recompiled to run on
-IBM-compatible machines running MS-DOS and ANSI.SYS.  Turbo Pascal 6.0 was
-used for  this.  The ANSI  escape sequences were slightly  different under
-MS-DOS than  under the NEC,  in that the  NEC supported a number  of extra
-character  attributes.  In other  words, the  MS-DOS version  looked worse
-than the one running under CP/M-86!
+The next version came in 1993, when the program was recompiled to run on
+IBM-compatible machines running MS-DOS and ANSI.SYS.  Turbo Pascal 6.0
+was used for this.  The ANSI escape sequences were slightly different
+under MS-DOS than under the NEC, in that the NEC supported a number of
+extra character attributes.  In other words, the MS-DOS version looked
+worse than the one running under CP/M-86!
 
-Star Traders was recompiled again in 1994 for IBM-compatible machines with
-VGA/EGA/CGA video graphics adapters.   The output routines were recoded to
-use  a "windowed" look.   Borland Pascal  7.0 was  used for  this purpose,
-along with a number of  text window manipulation modules.  Version 5.4 was
-released on 1st June, 1994.
+Star Traders was recompiled again in 1994 for IBM-compatible machines
+with VGA/EGA/CGA video graphics adapters.  The output routines were
+recoded to use a “windowed” look.  Borland Pascal 7.0 was used for this
+purpose, along with a number of text window manipulation modules.
+Version 5.4 was released on 1st June, 1994.
 
-In 1995,  Star Traders was  completely rewritten for the  16-bit Microsoft
-Windows 3.1  graphical environment.  Microsoft  Visual Basic 3.0  was used
-for this purpose.  Although  completely rewritten, the original algorithms
-were reused from previous versions.   Version 6.0 of the game was released
+In 1995, Star Traders was completely rewritten for the 16-bit Microsoft
+Windows 3.1 graphical environment.  Microsoft Visual Basic 3.0 was used
+for this purpose.  Although completely rewritten, the original algorithms
+were reused from previous versions.  Version 6.0 of the game was released
 on 15th September, 1995.
 
-Star Traders was then to languish until almost 16 years later...
+Star Traders was then to languish until almost 16 years later…
