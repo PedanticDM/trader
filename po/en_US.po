@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2018-08-24 16:18+1000\n"
+"POT-Creation-Date: 2019-04-12 05:12+1000\n"
 "PO-Revision-Date: 2019-01-05 07:35+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (US) <(nothing)>\n"
@@ -150,19 +150,19 @@ msgstr ""
 
 #. TRANSLATORS: The first %s is the proper name of the package
 #. author, John Zaitseff [IPA d͡ʒɒn ˈzaɪ̯t͡səf]; the second %s is
-#. the e-mail address for reporting bugs.  Please add ANOTHER
-#. line with the (translated) text "Report translation bugs to
-#. <ADDRESS>\n", with ADDRESS replaced with either an e-mail
+#. the email address for reporting bugs.  Please add ANOTHER line
+#. with the (translated) text "Report translation bugs to
+#. <ADDRESS>\n", with ADDRESS replaced with either an email
 #. address or web URL for reporting bugs in your translation.
 #: src/trader.c:334
 #, c-format
 msgid "Report bugs to %s <%s>.\n"
 msgstr "Report bugs to %s <%s>.\n"
 
-#. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
+#. TRANSLATORS: %s is the email address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
 #. (translated) text "Report translation bugs to <ADDRESS>\n",
-#. with ADDRESS replaced with either an e-mail address or web URL
+#. with ADDRESS replaced with either an email address or web URL
 #. for reporting bugs in your translation.
 #: src/trader.c:341
 #, c-format
