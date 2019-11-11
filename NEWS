@@ -34,7 +34,6 @@ on multiple operating systems and compilers, and submitted code upstream
 to the Autoconf Archive project to make this work more robustly.  Listed
 tested operating system and compiler combinations in the `INSTALL` file.
 
-Added the Spanish translation, with thanks to Francisco Javier Serrador.
 Updated the Esperanto translation, with thanks to Felipe Castro.
 
 Updated one string in the game for consistency with other labels; updated
