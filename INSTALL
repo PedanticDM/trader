@@ -207,8 +207,8 @@ tested with this version of Star Traders:
 ====================  ======  =====  =======================  =====
 Linux distribution     Arch   Glibc  Compiler                 Notes
 ====================  ======  =====  =======================  =====
-Debian GNU/Linux Sid  x86_64  2.27   GNU C Compiler 8.2.0
-Debian GNU/Linux Sid  i686    2.27   GNU C Compiler 8.2.0
+Debian GNU/Linux Sid  x86_64  2.29   GNU C Compiler 9.2.1
+Debian GNU/Linux Sid  i686    2.29   GNU C Compiler 9.2.1
 Debian GNU/Linux 9.5  x86_64  2.24   GNU C Compiler 6.3.0
 Ubuntu 18.04          x86_64  2.27   GNU C Compiler 7.3.0
 Ubuntu 18.04          x86_64  2.27   Clang (LLVM) 6.0.0
