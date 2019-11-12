@@ -221,8 +221,7 @@ Ubuntu 18.04.3 LTS     x86_64  2.27   Clang (LLVM) 6.0.0
 Fedora 28              x86_64  2.27   GNU C Compiler 8.1.1
 CentOS 7.5             x86_64  2.17   GNU C Compiler 4.8.5
 CentOS 6.10            x86_64  2.12   GNU C Compiler 4.4.7
-CentOS 6.10            x86_64  2.12   Portland PGI C/C++ 18.3
-CentOS 6.9             x86_64  2.12   Intel C/C++ 18.0.3
+CentOS 6.10            x86_64  2.12   Intel C/C++ 19.0.3.199
 OpenSUSE Leap 15.0     x86_64  2.26   GNU C Compiler 7.3.1
 =====================  ======  =====  =======================  =====
 
