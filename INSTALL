@@ -269,13 +269,13 @@ Notes:
         ./configure --with-libintl-prefix=/usr/local/opt/gettext \
                     PKG_CONFIG_PATH=/usr/local/opt/ncurses/lib/pkgconfig
 
-.. [#solaris1] Using ``./configure CURSES_CFLAGS=-I/usr/include/ncurses``.
+.. [#solaris1] Using ``./configure CURSES_CFLAGS=-I/usr/include/ncurses``
 
 .. [#solaris2] Using ``./configure CURSES_CFLAGS=-I/usr/include/ncurses
-   CC='/opt/developerstudio12.6/bin/cc'``.
+   CC='/opt/developerstudio12.6/bin/cc'``
 
 .. [#solaris3] Using ``./configure CURSES_CFLAGS=-I/usr/include/ncurses
-   CC='/opt/developerstudio12.6/bin/cc -m64'``.
+   CC='/opt/developerstudio12.6/bin/cc -m64'``
 
 The following systems are known *not* to work at the current time; this
 list is almost certainly not exhaustive:
