@@ -205,7 +205,7 @@ The following operating systems and compilers have been successfully
 tested with this version of Star Traders:
 
 =====================  ======  =====  ========================
-Linux distribution      Arch   Glibc  Compiler
+Linux distribution     Arch    Glibc  Compiler
 =====================  ======  =====  ========================
 Debian GNU/Linux Sid   x86_64  2.29   GNU C Compiler 9.2.1
 Debian GNU/Linux Sid   x86_64  2.29   Clang (LLVM) 8.0.1
@@ -227,7 +227,7 @@ OpenSUSE Leap 15.1     x86_64  2.26   GNU C Compiler 7.4.1
 =====================  ======  =====  ========================
 
 =======================  ======  ============================  ============
-Operating system          Arch   Compiler                         Notes
+Operating system         Arch    Compiler                      Notes
 =======================  ======  ============================  ============
 FreeBSD 12.1             x86_64  Clang (LLVM) 8.0.1            [#freebsd1]_
 NetBSD 8.1               x86_64  GNU C Compiler 5.5.0          [#netbsd1]_
