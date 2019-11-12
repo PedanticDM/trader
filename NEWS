@@ -20,8 +20,8 @@ __ https://www.zap.org.au/
 .. contents::
 
 
-Version 7.13 (not yet released)
--------------------------------
+Version 7.13 (13th November, 2019)
+----------------------------------
 
 Converted all text files to reStructuredText (ReST) format.  This format
 is still quite readable as raw text, and is much more capable than the
