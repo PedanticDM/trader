@@ -1,21 +1,21 @@
 # *************************************************************************
 # *                                                                       *
 # *            Norwegian Bokmål Translations for Star Traders             *
-# *                 Copyright (C) 2012-17, John Zaitseff                  *
+# *                 Copyright (C) 2012-2019, John Zaitseff                *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Johnny A. Solbu <johnny@solbu.net>, 2012-2017.
+#   Johnny A. Solbu <johnny@solbu.net>, 2012-2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.10-pre2\n"
+"Project-Id-Version: trader 7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-23 09:01+1000\n"
-"PO-Revision-Date: 2017-05-23 23:07+0200\n"
+"POT-Creation-Date: 2019-11-13 08:14+1100\n"
+"PO-Revision-Date: 2019-11-13 21:11+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -30,18 +30,18 @@ msgstr ""
 #. your own language (recommended) or keep it the same as the English
 #. version.  Feel free to look through other translations to see how
 #. others have done this.
-#: data/trader.desktop.in:22 src/intf.c:610
+#: data/trader.desktop.in:23 src/intf.c:611
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:23
+#: data/trader.desktop.in:24
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "Spill Star Traders, et enkelt spill med interstellar handel"
 
 #. TRANSLATORS: A list of keywords describing Star Traders.  By all means
 #. add your own keywords!
-#: data/trader.desktop.in:26
+#: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
 msgstr "spill;interstellar;handel;strategi;"
 
@@ -49,7 +49,7 @@ msgstr "spill;interstellar;handel;strategi;"
 #. Entry Specification states it is translatable, but unless you provide a
 #. matching icon, please leave it as "trader": this will use trader.svg
 #. and the various trader.png files in the data source code directory.
-#: data/trader.desktop.in:31
+#: data/trader.desktop.in:32
 msgid "trader"
 msgstr "trader"
 
@@ -153,9 +153,9 @@ msgstr ""
 
 #. TRANSLATORS: The first %s is the proper name of the package
 #. author, John Zaitseff [IPA d͡ʒɒn ˈzaɪ̯t͡səf]; the second %s is
-#. the e-mail address for reporting bugs.  Please add ANOTHER
-#. line with the (translated) text "Report translation bugs to
-#. <ADDRESS>\n", with ADDRESS replaced with either an e-mail
+#. the email address for reporting bugs.  Please add ANOTHER line
+#. with the (translated) text "Report translation bugs to
+#. <ADDRESS>\n", with ADDRESS replaced with either an email
 #. address or web URL for reporting bugs in your translation.
 #: src/trader.c:334
 #, c-format
@@ -164,10 +164,10 @@ msgstr ""
 "Rapporter feil, på engelsk, til %s <%s>.\n"
 "Oversettelsesfeil kan rapporteres til <i18n-nb@lister.ping.uio.no>.\n"
 
-#. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
+#. TRANSLATORS: %s is the email address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
 #. (translated) text "Report translation bugs to <ADDRESS>\n",
-#. with ADDRESS replaced with either an e-mail address or web URL
+#. with ADDRESS replaced with either an email address or web URL
 #. for reporting bugs in your translation.
 #: src/trader.c:341
 #, c-format
@@ -705,7 +705,7 @@ msgstr "Gamle aksjer: "
 #: src/move.c:875
 #, c-format
 msgctxt "label"
-msgid "New Stock: "
+msgid "New stock: "
 msgstr "Nye aksjer:   "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
@@ -1303,7 +1303,7 @@ msgstr ""
 #. ~y       - Print the height of the galaxy map (MAX_Y) [**]
 #. ~m       - Print the number of moves available (NUMBER_MOVES) [**]
 #. ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
-#. ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+#. ~t       - Print the default number of turns in the game (DEFAULT_MAX_TURN) [**]
 #. ~1 to ~9 - Print the keycode for the N-th choice of move [***]
 #. ~M       - Print the keycode for the last choice of move [***]
 #. ~A to ~H - Print the character used to represent the company on the galaxy map [***]
@@ -1577,7 +1577,7 @@ msgstr "Side  %1$d av %2$d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:486 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3026
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Trykk <MELLOMROM> for å fortsette ] "
@@ -1604,17 +1604,17 @@ msgstr "%s: streng har feil format: «%s»"
 msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: tegn har ugyldig bredde: «%lc»"
 
-#: src/intf.c:434
+#: src/intf.c:435
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "terminal størrelsen er for liten (%d x %d kreves)"
 
-#: src/intf.c:1265
+#: src/intf.c:1267
 #, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
-#: src/intf.c:1568
+#: src/intf.c:1559
 #, c-format
 msgid "mkchstr: '%s'"
 msgstr "mkchstr: «%s»"
@@ -1624,12 +1624,12 @@ msgstr "mkchstr: «%s»"
 #. character.  Ideally, it should contain an easily-accessible
 #. keycode that would NOT be used in ordinary input.  Digits, ".",
 #. ",", "+" and "-" are definitely NOT acceptable.
-#: src/intf.c:2020
+#: src/intf.c:2011
 msgctxt "input|DefaultValue"
 msgid "=;"
 msgstr "=;"
 
-#: src/intf.c:2034 src/intf.c:2079
+#: src/intf.c:2025 src/intf.c:2070
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: ugyldig tegn i streng: «%ls»"
@@ -1638,12 +1638,12 @@ msgstr "gettxline: ugyldig tegn i streng: «%ls»"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2952
+#: src/intf.c:2943
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "Jj"
 
-#: src/intf.c:2954
+#: src/intf.c:2945
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1651,76 +1651,214 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:3005
+#: src/intf.c:2996
 msgctxt "answer"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/intf.c:3007
+#: src/intf.c:2998
 msgctxt "answer"
 msgid "No"
 msgstr "Nei"
 
-#: src/utils.c:378 src/utils.c:399
+#: src/utils.c:417 src/utils.c:438
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:404
+#: src/utils.c:443
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:417
+#: src/utils.c:456
 #, c-format
 msgid "out of memory"
 msgstr "ikke mer minne"
 
-#: src/utils.c:1041
+#: src/utils.c:1110
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: «%s»"
 
-#: src/utils.c:1081
+#: src/utils.c:1150
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1086
+#: src/utils.c:1155
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: «%lc»"
 
-#: lib/getopt.c:278
+#: lib/getopt.c:278 lib/obsolete-strings.c:45
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: valget «%s%s» er tvetydig\n"
 
-#: lib/getopt.c:284
+#: lib/getopt.c:284 lib/obsolete-strings.c:47
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: valget «%s%s» er tvetydig; muligheter:"
 
-#: lib/getopt.c:319
+#: lib/getopt.c:319 lib/obsolete-strings.c:49
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: ukjent valg «%s%s»\n"
 
-#: lib/getopt.c:345
+#: lib/getopt.c:345 lib/obsolete-strings.c:51
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
 msgstr "%s: valget «%s%s» tillater ikke argumenter\n"
 
-#: lib/getopt.c:360
+#: lib/getopt.c:360 lib/obsolete-strings.c:53
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
 msgstr "%s: valget «%s%s» krever et argument\n"
 
-#: lib/getopt.c:621
+#: lib/getopt.c:621 lib/obsolete-strings.c:55
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ugyldig valg -- «%c»\n"
 
-#: lib/getopt.c:636 lib/getopt.c:682
+#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: valget krever et argument -- «%c»\n"
+
+#. TRANSLATORS: These strings are used in older versions of various
+#. libraries, such as the GNU C Library as released with various
+#. Linux distributions.
+#: lib/obsolete-strings.c:44
+#, c-format
+msgid "%s: option `%s%s' is ambiguous\n"
+msgstr "%s: valget «%s%s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:46
+#, c-format
+msgid "%s: option `%s%s' is ambiguous; possibilities:"
+msgstr "%s: valget «%s%s» er tvetydig: muligheter:"
+
+#: lib/obsolete-strings.c:48
+#, c-format
+msgid "%s: unrecognized option `%s%s'\n"
+msgstr "%s: ukjent valg «%s%s»\n"
+
+#: lib/obsolete-strings.c:50
+#, c-format
+msgid "%s: option `%s%s' doesn't allow an argument\n"
+msgstr "%s: valget «%s%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:52
+#, c-format
+msgid "%s: option `%s%s' requires an argument\n"
+msgstr "%s: valget «%s%s» krever et argument\n"
+
+#: lib/obsolete-strings.c:54
+#, c-format
+msgid "%s: invalid option -- `%c'\n"
+msgstr "%s: ugyldig alternativ -- «%c»\n"
+
+#: lib/obsolete-strings.c:56
+#, c-format
+msgid "%s: option requires an argument -- `%c'\n"
+msgstr "%s: valget krever et argument -- «%c»\n"
+
+#: lib/obsolete-strings.c:59
+#, c-format
+msgid "%s: option `%s' is ambiguous; possibilities:"
+msgstr "%s: valget «%s» er tvetydig; muligheter:"
+
+#: lib/obsolete-strings.c:60
+#, c-format
+msgid "%s: option '%s' is ambiguous; possibilities:"
+msgstr "%s: valget «%s» er tvetydig; muligheter:"
+
+#: lib/obsolete-strings.c:61
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: valget «%s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:62
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: valget «%s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:63
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: valget «--%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:64
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: valget «--%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:65
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: valget «%c%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:66
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: valget «%c%s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:67
+#, c-format
+msgid "%s: option `--%s' requires an argument\n"
+msgstr "%s: valget «--%s» krever et argument\n"
+
+#: lib/obsolete-strings.c:68
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: valget «--%s» krever et argument\n"
+
+#: lib/obsolete-strings.c:69
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: ukjent valg «--%s»\n"
+
+#: lib/obsolete-strings.c:70
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: ukjent valg «--%s»\n"
+
+#: lib/obsolete-strings.c:71
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: ukjent valg «%c%s»\n"
+
+#: lib/obsolete-strings.c:72
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: ukjent valg «%c%s»\n"
+
+#: lib/obsolete-strings.c:73
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: valget «-W %s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:74
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: valget «-W %s» er tvetydig\n"
+
+#: lib/obsolete-strings.c:75
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:76
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
+
+#: lib/obsolete-strings.c:77
+#, c-format
+msgid "%s: option `-W %s' requires an argument\n"
+msgstr "%s: valg «-W %s» trenger et argument\n"
+
+#: lib/obsolete-strings.c:78
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: valg «-W %s» trenger et argument\n"
