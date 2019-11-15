@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Johnny A. Solbu <johnny@solbu.net>, 2012, 2015, 2017.
+#   Johnny A. Solbu <johnny@solbu.net>, 2012-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2019-11-13 08:14+1100\n"
-"PO-Revision-Date: 2019-11-13 09:30+1100\n"
+"PO-Revision-Date: 2019-11-13 21:11+0100\n"
 "Last-Translator: Johnny A. Solbu <johnny@solbu.net>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -1754,7 +1754,7 @@ msgstr "%s: valget «%s%s» krever et argument\n"
 #: lib/obsolete-strings.c:54
 #, c-format
 msgid "%s: invalid option -- `%c'\n"
-msgstr "%s: ugyldig valg -- «%c»\n"
+msgstr "%s: ugyldig alternativ -- «%c»\n"
 
 #: lib/obsolete-strings.c:56
 #, c-format
@@ -1854,9 +1854,9 @@ msgstr "%s: valget «-W %s» tillater ikke argumenter\n"
 #: lib/obsolete-strings.c:77
 #, c-format
 msgid "%s: option `-W %s' requires an argument\n"
-msgstr "%s: valget «-W %s» krever et argument\n"
+msgstr "%s: valg «-W %s» trenger et argument\n"
 
 #: lib/obsolete-strings.c:78
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: valget «-W %s» krever et argument\n"
+msgstr "%s: valg «-W %s» trenger et argument\n"
