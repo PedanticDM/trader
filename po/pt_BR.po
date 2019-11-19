@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2019-11-19 21:45+1100\n"
-"PO-Revision-Date: 2019-11-19 21:14+1100\n"
+"PO-Revision-Date: 2019-11-20 05:48+1100\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge.net>\n"
 "Language: pt_BR\n"
@@ -56,22 +56,22 @@ msgstr "trader"
 #: src/trader.c:235
 #, c-format
 msgid "%s: invalid value for --max-turn: '%s'\n"
-msgstr "%s: valor inválido para --max-turn: \"%s\"\n"
+msgstr "%s: valor inválido para --max-turn: “%s”\n"
 
 #: src/trader.c:251
 #, c-format
 msgid "%s: invalid operand '%s'\n"
-msgstr "%s: operando inválido \"%s\"\n"
+msgstr "%s: operando inválido “%s”\n"
 
 #: src/trader.c:260
 #, c-format
 msgid "%s: invalid game number '%s'\n"
-msgstr "%s: número de jogo inválido \"%s\"\n"
+msgstr "%s: número de jogo inválido “%s”\n"
 
 #: src/trader.c:269
 #, c-format
 msgid "%s: extra operand '%s'\n"
-msgstr "%s: operando extra \"%s\"\n"
+msgstr "%s: operando extra “%s”\n"
 
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
 #. name of the author.  The IPA pronunciation in this comment is in
@@ -106,7 +106,7 @@ msgstr ""
 #: src/trader.c:308
 #, c-format
 msgid "%s: Try '%s --help' for more information.\n"
-msgstr "%s: Tente \"%s --help\" para mais informações.\n"
+msgstr "%s: Tente “%s --help” para mais informações.\n"
 
 #: src/trader.c:311
 #, c-format
@@ -276,35 +276,35 @@ msgstr "abcdefghijklmnopqrst|output|GameMoves"
 #. (see ORDINAL_COLS in src/intf.h).
 #: src/globals.c:114
 msgid "1st"
-msgstr "1º"
+msgstr "Nº. 1"
 
 #: src/globals.c:115
 msgid "2nd"
-msgstr "2º"
+msgstr "Nº. 2"
 
 #: src/globals.c:116
 msgid "3rd"
-msgstr "3º"
+msgstr "Nº. 3"
 
 #: src/globals.c:117
 msgid "4th"
-msgstr "4º"
+msgstr "Nº. 4"
 
 #: src/globals.c:118
 msgid "5th"
-msgstr "5º"
+msgstr "Nº. 5"
 
 #: src/globals.c:119
 msgid "6th"
-msgstr "6º"
+msgstr "Nº. 6"
 
 #: src/globals.c:120
 msgid "7th"
-msgstr "7º"
+msgstr "Nº. 7"
 
 #: src/globals.c:121
 msgid "8th"
-msgstr "8º"
+msgstr "Nº. 8"
 
 #: src/game.c:117 src/game.c:152
 #, c-format
@@ -1084,7 +1084,7 @@ msgstr ""
 #, c-format
 msgid "You can purchase ^{one^} share."
 msgid_plural "You can purchase up to ^{%'ld^} shares."
-msgstr[0] "Você pode comprar ^{one^} ação."
+msgstr[0] "Você pode comprar ^{uma^} ação."
 msgstr[1] "Você pode comprar até ^{%'ld^} ações."
 
 #: src/exch.c:742
@@ -1106,7 +1106,7 @@ msgstr "Você não possui ações para vender."
 #, c-format
 msgid "You can sell ^{one^} share."
 msgid_plural "You can sell up to ^{%'ld^} shares."
-msgstr[0] "Você pode vender ^{one^} ação."
+msgstr[0] "Você pode vender ^{uma^} ação."
 msgstr[1] "Você pode vender até ^{%'ld^} ações."
 
 #: src/exch.c:777
@@ -1163,12 +1163,12 @@ msgstr "%s: campo ilegal na linha %d"
 #: src/fileio.c:51
 #, c-format
 msgid "%s: illegal field on line %d: '%s'"
-msgstr "%s: campo ilegal na linha %d: \"%s\""
+msgstr "%s: campo ilegal na linha %d: “%s”"
 
 #: src/fileio.c:55
 #, c-format
 msgid "%s: illegal value on line %d: '%s'"
-msgstr "%s: valor ilegal na linha %d: \"%s\""
+msgstr "%s: valor ilegal na linha %d: “%s”"
 
 #: src/fileio.c:91 src/fileio.c:134 src/fileio.c:402
 #, c-format
@@ -1601,12 +1601,12 @@ msgstr "[ Pressione <ESPAÇO> para continuar ou <BACKSPACE> para página anterio
 #: src/intf.c:110
 #, c-format
 msgid "%s: string has incorrect format: '%s'"
-msgstr "%s: a string possui um formato incorreto: \"%s\""
+msgstr "%s: a string possui um formato incorreto: “%s”"
 
 #: src/intf.c:126
 #, c-format
 msgid "%s: character has illegal width: '%lc'"
-msgstr "%s: o caractere possui largura ilegal: \"%lc\""
+msgstr "%s: o caractere possui largura ilegal: “%lc”"
 
 #: src/intf.c:435
 #, c-format
@@ -1621,7 +1621,7 @@ msgstr "mkchstr_conv: NULO"
 #: src/intf.c:1559
 #, c-format
 msgid "mkchstr: '%s'"
-msgstr "mkchstr: \"%s\""
+msgstr "mkchstr: “%s”"
 
 #. TRANSLATORS: This string specifies the keycodes used to insert the
 #. default value into the input string, if entered as the very first
@@ -1636,7 +1636,7 @@ msgstr "=;"
 #: src/intf.c:2025 src/intf.c:2070
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
-msgstr "gettxline: caractere ilegal na string: \"%ls\""
+msgstr "gettxline: caractere ilegal na string: “%ls”"
 
 #. TRANSLATORS: The strings with msgctxt "input|Yes" and
 #. "input|No" contain the keycodes used to determine whether a
@@ -1682,7 +1682,7 @@ msgstr "memória esgotada"
 #: src/utils.c:1110
 #, c-format
 msgid "xmbstowcs: '%s'"
-msgstr "xmbstowcs: \"%s\""
+msgstr "xmbstowcs: “%s”"
 
 #: src/utils.c:1150
 #, c-format
@@ -1692,42 +1692,42 @@ msgstr "xwcrtomb: NULO"
 #: src/utils.c:1155
 #, c-format
 msgid "xwcrtomb: '%lc'"
-msgstr "xwcrtomb: \"%lc\""
+msgstr "xwcrtomb: “%lc”"
 
 #: lib/getopt.c:278 lib/obsolete-strings.c:45
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
-msgstr "%s: a opção \"%s%s\" é ambígua\n"
+msgstr "%s: a opção “%s%s” é ambígua\n"
 
 #: lib/getopt.c:284 lib/obsolete-strings.c:47
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
-msgstr "%s: a opção \"%s%s\" é ambígua; possibilidades:"
+msgstr "%s: a opção “%s%s” é ambígua; possibilidades:"
 
 #: lib/getopt.c:319 lib/obsolete-strings.c:49
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
-msgstr "%s: opção desconhecida \"%s%s\"\n"
+msgstr "%s: opção desconhecida “%s%s”\n"
 
 #: lib/getopt.c:345 lib/obsolete-strings.c:51
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
-msgstr "%s: a opção \"%s%s\" não permite um argumento\n"
+msgstr "%s: a opção “%s%s” não permite um argumento\n"
 
 #: lib/getopt.c:360 lib/obsolete-strings.c:53
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
-msgstr "%s: a opção \"%s%s\" exige um argumento\n"
+msgstr "%s: a opção “%s%s” exige um argumento\n"
 
 #: lib/getopt.c:621 lib/obsolete-strings.c:55
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
-msgstr "%s: opção inválida -- \"%c\"\n"
+msgstr "%s: opção inválida -- “%c”\n"
 
 #: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr "%s: a opção exige um argumento -- \"%c\"\n"
+msgstr "%s: a opção exige um argumento -- “%c”\n"
 
 #. TRANSLATORS: These strings are used in older versions of various
 #. libraries, such as the GNU C Library as released with various
@@ -1735,134 +1735,134 @@ msgstr "%s: a opção exige um argumento -- \"%c\"\n"
 #: lib/obsolete-strings.c:44
 #, c-format
 msgid "%s: option `%s%s' is ambiguous\n"
-msgstr "%s: a opção \"%s%s\" é ambígua\n"
+msgstr "%s: a opção “%s%s” é ambígua\n"
 
 #: lib/obsolete-strings.c:46
 #, c-format
 msgid "%s: option `%s%s' is ambiguous; possibilities:"
-msgstr "%s: a opção \"%s%s\" é ambígua; possibilidades:"
+msgstr "%s: a opção “%s%s” é ambígua; possibilidades:"
 
 #: lib/obsolete-strings.c:48
 #, c-format
 msgid "%s: unrecognized option `%s%s'\n"
-msgstr "%s: opção desconhecida \"%s%s\"\n"
+msgstr "%s: opção desconhecida “%s%s”\n"
 
 #: lib/obsolete-strings.c:50
 #, c-format
 msgid "%s: option `%s%s' doesn't allow an argument\n"
-msgstr "%s: a opção \"%s%s\" não permite um argumento\n"
+msgstr "%s: a opção “%s%s” não permite um argumento\n"
 
 #: lib/obsolete-strings.c:52
 #, c-format
 msgid "%s: option `%s%s' requires an argument\n"
-msgstr "%s: a opção \"%s%s\" exige um argumento\n"
+msgstr "%s: a opção “%s%s” exige um argumento\n"
 
 #: lib/obsolete-strings.c:54
 #, c-format
 msgid "%s: invalid option -- `%c'\n"
-msgstr "%s: opção inválida -- \"%c\"\n"
+msgstr "%s: opção inválida -- “%c”\n"
 
 #: lib/obsolete-strings.c:56
 #, c-format
 msgid "%s: option requires an argument -- `%c'\n"
-msgstr "%s: a opção exige um argumento -- \"%c\"\n"
+msgstr "%s: a opção exige um argumento -- “%c”\n"
 
 #: lib/obsolete-strings.c:59
 #, c-format
 msgid "%s: option `%s' is ambiguous; possibilities:"
-msgstr "%s: a opção \"%s\" é ambígua; possibilidades:"
+msgstr "%s: a opção “%s” é ambígua; possibilidades:"
 
 #: lib/obsolete-strings.c:60
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: a opção \"%s\" é ambígua; possibilidades:"
+msgstr "%s: a opção “%s” é ambígua; possibilidades:"
 
 #: lib/obsolete-strings.c:61
 #, c-format
 msgid "%s: option `%s' is ambiguous\n"
-msgstr "%s: a opção \"%s\" é ambígua\n"
+msgstr "%s: a opção “%s” é ambígua\n"
 
 #: lib/obsolete-strings.c:62
 #, c-format
 msgid "%s: option '%s' is ambiguous\n"
-msgstr "%s: a opção \"%s\" é ambígua\n"
+msgstr "%s: a opção “%s” é ambígua\n"
 
 #: lib/obsolete-strings.c:63
 #, c-format
 msgid "%s: option `--%s' doesn't allow an argument\n"
-msgstr "%s: a opção \"--%s\" não permite um argumento\n"
+msgstr "%s: a opção “--%s” não permite um argumento\n"
 
 #: lib/obsolete-strings.c:64
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
-msgstr "%s: a opção \"--%s\" não permite um argumento\n"
+msgstr "%s: a opção “--%s” não permite um argumento\n"
 
 #: lib/obsolete-strings.c:65
 #, c-format
 msgid "%s: option `%c%s' doesn't allow an argument\n"
-msgstr "%s: a opção \"%c%s\" não permite um argumento\n"
+msgstr "%s: a opção “%c%s” não permite um argumento\n"
 
 #: lib/obsolete-strings.c:66
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
-msgstr "%s: a opção \"%c%s\" não permite um argumento\n"
+msgstr "%s: a opção “%c%s” não permite um argumento\n"
 
 #: lib/obsolete-strings.c:67
 #, c-format
 msgid "%s: option `--%s' requires an argument\n"
-msgstr "%s: a opção \"--%s\" exige um argumento\n"
+msgstr "%s: a opção “--%s” exige um argumento\n"
 
 #: lib/obsolete-strings.c:68
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
-msgstr "%s: a opção \"--%s\" requer um argumento\n"
+msgstr "%s: a opção “--%s” requer um argumento\n"
 
 #: lib/obsolete-strings.c:69
 #, c-format
 msgid "%s: unrecognized option `--%s'\n"
-msgstr "%s: opção desconhecida \"--%s\"\n"
+msgstr "%s: opção desconhecida “--%s”\n"
 
 #: lib/obsolete-strings.c:70
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
-msgstr "%s: opção desconhecida \"--%s\"\n"
+msgstr "%s: opção desconhecida “--%s”\n"
 
 #: lib/obsolete-strings.c:71
 #, c-format
 msgid "%s: unrecognized option `%c%s'\n"
-msgstr "%s: opção desconhecida \"%c%s\"\n"
+msgstr "%s: opção desconhecida “%c%s”\n"
 
 #: lib/obsolete-strings.c:72
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
-msgstr "%s: opção desconhecida \"%c%s\"\n"
+msgstr "%s: opção desconhecida “%c%s”\n"
 
 #: lib/obsolete-strings.c:73
 #, c-format
 msgid "%s: option `-W %s' is ambiguous\n"
-msgstr "%s: a opção \"-W %s\" é ambígua\n"
+msgstr "%s: a opção “-W %s” é ambígua\n"
 
 #: lib/obsolete-strings.c:74
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: a opção \"-W %s\" é ambígua\n"
+msgstr "%s: a opção “-W %s” é ambígua\n"
 
 #: lib/obsolete-strings.c:75
 #, c-format
 msgid "%s: option `-W %s' doesn't allow an argument\n"
-msgstr "%s: a opção \"-W %s\" não permite um argumento\n"
+msgstr "%s: a opção “-W %s” não permite um argumento\n"
 
 #: lib/obsolete-strings.c:76
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: a opção \"-W %s\" não permite um argumento\n"
+msgstr "%s: a opção “-W %s” não permite um argumento\n"
 
 #: lib/obsolete-strings.c:77
 #, c-format
 msgid "%s: option `-W %s' requires an argument\n"
-msgstr "%s: a opção \"-W %s\" exige um argumento\n"
+msgstr "%s: a opção “-W %s” exige um argumento\n"
 
 #: lib/obsolete-strings.c:78
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: a opção \"-W %s\" exige um argumento\n"
+msgstr "%s: a opção “-W %s” exige um argumento\n"
