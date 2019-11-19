@@ -422,6 +422,11 @@ void ask_player_names (void)
 
 	mkchstr(chbuf, BUFSIZE, attr_normal, attr_keycode, 0, 1,
 		WIN_COLS - YESNO_COLS - 6, &width, 1,
+		/* TRANSLATORS: Note that you should replace "Y" and "N"
+		   with the localised upper-case characters used in the
+		   "input|Yes" and "input|No" strings.  There are other
+		   strings in this game, each with "[^{Y^}/^{N^}]", that
+		   need the same replacement. */
 		_("Do you need any instructions? [^{Y^}/^{N^}] "));
 	newtxwin(5, width + YESNO_COLS + 4, 6, WCENTER, true,
 		 attr_normal_window);
