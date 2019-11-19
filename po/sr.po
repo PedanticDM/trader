@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2019-11-13 08:14+1100\n"
+"POT-Creation-Date: 2019-11-19 21:45+1100\n"
 "PO-Revision-Date: 2019-11-13 09:30+1100\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
@@ -345,32 +345,37 @@ msgstr "Упишите број игара [^{1^}-^{9^}] или ^{<КТРЛ><Ц>
 msgid "Please enter your name: "
 msgstr "Упишите ваше име: "
 
-#: src/game.c:425
+#. TRANSLATORS: Note that you should replace "Y" and "N"
+#. with the localised upper-case characters used in the
+#. "input|Yes" and "input|No" strings.  There are other
+#. strings in this game, each with "[^{Y^}/^{N^}]", that
+#. need the same replacement.
+#: src/game.c:430
 #, c-format
 msgid "Do you need any instructions? [^{Y^}/^{N^}] "
 msgstr "Да ли су вам потребна упутства? [^{Д^}/^{Н^}] "
 
-#: src/game.c:443
+#: src/game.c:448
 #, c-format
 msgid "  Enter Player Names  "
 msgstr "  Упишите имена играча  "
 
-#: src/game.c:451
+#: src/game.c:456
 #, c-format, range: 1..8
 msgid "Player %d: "
 msgstr "%d. играч: "
 
-#: src/game.c:529
+#: src/game.c:534
 #, c-format
 msgid "Does any player need instructions? [^{Y^}/^{N^}] "
 msgstr "Да ли су неком играчу потребна упутства? [^{Д^}/^{Н^}] "
 
-#: src/game.c:563
+#: src/game.c:568
 #, c-format
 msgid "  Game Over  "
 msgstr "  Крај игре  "
 
-#: src/game.c:564
+#: src/game.c:569
 #, c-format
 msgid "The game is over after one turn."
 msgid_plural "The game is over after %d turns."
@@ -378,17 +383,17 @@ msgstr[0] "Игра је завршена након %d круга."
 msgstr[1] "Игра је завршена након %d круга."
 msgstr[2] "Игра је завршена након %d кругова."
 
-#: src/game.c:575
+#: src/game.c:580
 #, c-format
 msgid "  Total Value  "
 msgstr "  Укупан износ  "
 
-#: src/game.c:577
+#: src/game.c:582
 #, c-format
 msgid "Your total value was ^{%N^}."
 msgstr "Ваш укупан износ је ^{%N^}."
 
-#: src/game.c:588
+#: src/game.c:593
 #, c-format
 msgid ""
 "The winner is ^{%ls^}\n"
@@ -397,7 +402,7 @@ msgstr ""
 "Победник је ^{%ls^}\n"
 "који је под ^[*** СТЕЧАЈЕМ ***^]"
 
-#: src/game.c:591
+#: src/game.c:596
 #, c-format
 msgid ""
 "The winner is ^{%ls^}\n"
@@ -406,14 +411,14 @@ msgstr ""
 "Победник је ^{%ls^}\n"
 "са износом од ^{%N^}."
 
-#: src/game.c:597
+#: src/game.c:602
 #, c-format
 msgid "  Game Winner  "
 msgstr "  Победник игре  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:882
+#: src/game.c:611 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -422,47 +427,47 @@ msgstr "Играч"
 #. TRANSLATORS: "Total Value" refers to the total worth
 #. (shares, cash and debt) of any given player.  %ls is the
 #. currency symbol of the current locale.
-#: src/game.c:611
+#: src/game.c:616
 #, c-format
 msgctxt "subtitle"
 msgid "Total Value (%ls)"
 msgstr "Укупан износ (%ls)"
 
-#: src/game.c:645 src/game.c:695 src/exch.c:100
+#: src/game.c:650 src/game.c:700 src/exch.c:100
 #, c-format
 msgid "Player: ^{%ls^}"
 msgstr "Играч: ^{%ls^}"
 
-#: src/game.c:648
+#: src/game.c:653
 #, c-format
 msgid "  Turn: ^{%d^}  "
 msgstr "  Круг: ^{%d^}  "
 
-#: src/game.c:649
+#: src/game.c:654
 #, c-format
 msgid "  ^[*** Last Turn ***^]  "
 msgstr "  ^[*** Последњи круг ***^]  "
 
-#: src/game.c:693
+#: src/game.c:698
 #, c-format
 msgid "  Stock Portfolio  "
 msgstr "  Портфељ удела  "
 
 #. TRANSLATORS: The current player is bankrupt (has no
 #. shares or cash, ie, whose total value is zero)
-#: src/game.c:702
+#: src/game.c:707
 #, c-format
 msgid "^[* * *   B A N K R U P T   * * *^]"
 msgstr "^[* * *   С Т Е Ч А Ј   * * *^]"
 
-#: src/game.c:717 src/exch.c:112
+#: src/game.c:722 src/exch.c:112
 #, c-format
 msgid "No companies on the map"
 msgstr "Нема предузећа на карти"
 
 #. TRANSLATORS: "Company" is a two-line column label in
 #. a table containing a list of companies.
-#: src/game.c:725 src/exch.c:120
+#: src/game.c:730 src/exch.c:120
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -477,7 +482,7 @@ msgstr ""
 #. percentage ownership in any given company.  The
 #. maximum column width is 10 characters (see
 #. OWNERSHIP_COLS in src/intf.h).
-#: src/game.c:732
+#: src/game.c:737
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -492,7 +497,7 @@ msgstr ""
 #. current player owns in any given company.  The
 #. maximum column width is 10 characters (see
 #. STOCK_OWNED_COLS in src/intf.h).
-#: src/game.c:739
+#: src/game.c:744
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -506,7 +511,7 @@ msgstr ""
 #. a table containing the share return as a percentage
 #. in any given company.  The maximum column width is
 #. 10 characters (see SHARE_RETURN_COLS in src/intf.h).
-#: src/game.c:746 src/exch.c:141
+#: src/game.c:751 src/exch.c:141
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -522,7 +527,7 @@ msgstr ""
 #. the current locale.  The maximum column width is 12
 #. characters INCLUDING the currency symbol (see
 #. SHARE_PRICE_COLS in src/intf.h).
-#: src/game.c:755 src/exch.c:150
+#: src/game.c:760 src/exch.c:150
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -541,25 +546,25 @@ msgstr ""
 #.
 #. Note that some of these labels are used for both the
 #. Player Status window and the Trading Bank window.
-#: src/game.c:796
+#: src/game.c:801
 #, c-format
 msgctxt "label"
 msgid "Total value:   "
 msgstr "Укупан износ:       "
 
-#: src/game.c:800 src/exch.c:324
+#: src/game.c:805 src/exch.c:324
 #, c-format
 msgctxt "label"
 msgid "Current cash:  "
 msgstr "Текућа готовина:    "
 
-#: src/game.c:807 src/exch.c:332
+#: src/game.c:812 src/exch.c:332
 #, c-format
 msgctxt "label"
 msgid "Current debt:  "
 msgstr "Текући дуг:         "
 
-#: src/game.c:813 src/exch.c:337
+#: src/game.c:818 src/exch.c:337
 #, c-format
 msgctxt "label"
 msgid "Interest rate: "
