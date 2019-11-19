@@ -1,23 +1,30 @@
-# Portuguese translations for trader package
-# Traduções em português brasileiro para o pacote trader.
-# Copyright (C) 2019 John Zaitseff
+# *************************************************************************
+# *                                                                       *
+# *          Brazilian Portuguese Translations for Star Traders           *
+# *        Traduções em português brasileiro para o pacote trader         *
+# *                   Copyright (C) 2019, John Zaitseff                   *
+# *                                                                       *
+# *************************************************************************
+#
 # This file is distributed under the same license as the trader package.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2019.
+#
+# Contributors:
+#   Rafael Fontenelle <rafaelff@gnome.org>, 2019.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.13\n"
+"Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2019-11-13 08:14+1100\n"
-"PO-Revision-Date: 2019-11-18 13:10-0300\n"
+"POT-Creation-Date: 2019-11-19 13:31+1100\n"
+"PO-Revision-Date: 2019-11-19 21:14+1100\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge.net>\n"
 "Language: pt_BR\n"
-"X-Bugs: Report translation errors to the Language-Team address.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 1.0.0-beta1\n"
 
 #. TRANSLATORS: The name of the game.  You may choose to translate it into
 #. your own language (recommended) or keep it the same as the English
@@ -36,7 +43,7 @@ msgstr "Jogue Comerciantes Estelares, um jogo simples de comércio interestelar"
 #. add your own keywords!
 #: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
-msgstr "jogo;game;interestelar;interstellar;comércio;trading;estratégia;strategy;"
+msgstr "jogo;interestelar;comércio;estratégia;"
 
 #. TRANSLATORS: This string is the name of the icon to use.  The Desktop
 #. Entry Specification states it is translatable, but unless you provide a
@@ -112,7 +119,7 @@ msgid ""
 "Play Star Traders, a simple game of interstellar trading.\n"
 "\n"
 msgstr ""
-"Jogue Comerciantes Estelares, um jogo simples de comércio interstelar.\n"
+"Jogue Comerciantes Estelares, um jogo simples de comércio interestelar.\n"
 "\n"
 
 #: src/trader.c:315
@@ -139,9 +146,8 @@ msgid ""
 "playing that game.  If GAME is not specified, start a new game.\n"
 "\n"
 msgstr ""
-"Se JOGO for especificado como um número entre 1 e 9, carrega\n"
-"e continua jogando esse jogo. Se JOGO não for especificado,\n"
-"inicia um novo jogo.\n"
+"Se JOGO for especificado como um número entre 1 e 9, carrega e continua\n"
+"jogando esse jogo. Se JOGO não for especificado, inicia um novo jogo.\n"
 "\n"
 
 #. TRANSLATORS: The first %s is the proper name of the package
@@ -401,7 +407,7 @@ msgid ""
 "with a value of ^{%N^}."
 msgstr ""
 "O ganhador é ^{%ls^}\n"
-"Com um valor de ^{%N^}."
+"com um valor de ^{%N^}."
 
 #: src/game.c:597
 #, c-format
@@ -542,25 +548,25 @@ msgstr ""
 #, c-format
 msgctxt "label"
 msgid "Total value:   "
-msgstr "Valor total:     "
+msgstr "Valor total:       "
 
 #: src/game.c:800 src/exch.c:324
 #, c-format
 msgctxt "label"
 msgid "Current cash:  "
-msgstr "Dinheiro atual:  "
+msgstr "Dinheiro atual:    "
 
 #: src/game.c:807 src/exch.c:332
 #, c-format
 msgctxt "label"
 msgid "Current debt:  "
-msgstr "Dívida atual:    "
+msgstr "Dívida atual:      "
 
 #: src/game.c:813 src/exch.c:337
 #, c-format
 msgctxt "label"
 msgid "Interest rate: "
-msgstr "Taxa de juro:    "
+msgstr "Taxa de juro:      "
 
 #. TRANSLATORS: Each label may be up to 37 characters wide
 #. (for <1> and <2>) or 38 characters wide (for <3> and
@@ -644,7 +650,7 @@ msgstr "  Tribunal de Falências  "
 #: src/move.c:702
 #, c-format
 msgid "%ls has been declared bankrupt by the Interstellar Trading Bank."
-msgstr "%ls teve sua falência declarada pelo Banco de Comércio Interstelar."
+msgstr "%ls teve sua falência declarada pelo Banco de Comércio Interestelar."
 
 #. TRANSLATORS: %ls is the player's name.
 #: src/move.c:710
@@ -699,7 +705,7 @@ msgstr "Ações antigas: "
 #, c-format
 msgctxt "label"
 msgid "New stock: "
-msgstr "Novas ações: "
+msgstr "Novas ações:   "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
 #. each player after two companies merge.  %ls is the currency
@@ -829,7 +835,7 @@ msgid ""
 "left"
 msgstr ""
 "Ações\n"
-"Restantes"
+"restantes"
 
 #. TRANSLATORS: "Shares issued" is a two-line column
 #. label in a table containing the number of shares
@@ -881,7 +887,7 @@ msgstr "Insira uma seleção [^[Letra da empresa^]/^{1^}-^{4^}]: "
 #, c-format
 msgctxt "label"
 msgid "Credit limit:  "
-msgstr "Limite de crédito:  "
+msgstr "Limite de crédito: "
 
 #. TRANSLATORS: The "Borrow money", "Repay debt" and "Exit
 #. from the Bank" menu options must all be the same length
@@ -890,17 +896,17 @@ msgstr "Limite de crédito:  "
 #: src/exch.c:366
 #, c-format
 msgid "^{<1>^} Borrow money      "
-msgstr "^{<1>^} Pegar dinheiro    "
+msgstr "^{<1>^} Pegar dinheiro"
 
 #: src/exch.c:368
 #, c-format
 msgid "^{<2>^} Repay debt        "
-msgstr "^{<2>^} Pagar dívida      "
+msgstr "^{<2>^} Pagar dívida  "
 
 #: src/exch.c:370
 #, c-format
 msgid "^{<3>^} Exit from the Bank"
-msgstr "^{<3>^} Sair do Banco     "
+msgstr "^{<3>^} Sair do Banco "
 
 #: src/exch.c:373
 #, c-format
@@ -920,7 +926,7 @@ msgstr "O Banco não vai lhe emprestar mais dinheiro."
 #: src/exch.c:447
 #, c-format
 msgid "How much do you wish to borrow? "
-msgstr "Quanto você deseja pegar empresado? "
+msgstr "Quanto você deseja pegar emprestado? "
 
 #: src/exch.c:479
 #, c-format
@@ -1144,8 +1150,7 @@ msgstr[1] ""
 msgid "%s: missing field on line %d"
 msgstr "%s: faltando campo na linha %d"
 
-#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390
-#: src/fileio.c:393
+#: src/fileio.c:47 src/fileio.c:87 src/fileio.c:130 src/fileio.c:390 src/fileio.c:393
 #, c-format
 msgid "%s: illegal field on line %d"
 msgstr "%s: campo ilegal na linha %d"
@@ -1355,7 +1360,7 @@ msgstr ""
 "porcentagem) também muda.  Jogadores também podem  pedir emprestado ao Banco\n"
 "de Comércio Interestelar  para financiar outras compras na Bolsa de Valores.\n"
 "\n"
-"O mapa da galáxia  é representado  por uma grade  ^B~x^N x ^B~y^N.  Uma seção típica\n"
+"O mapa da galáxia  é representado  por uma grade  ^B~x^N × ^B~y^N.  Uma seção típica\n"
 "disso pode ser:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1382,7 +1387,7 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
-"O computador seleciona  ^B~m^N movimentos (rotulados de ^k~1^N até ^k~M^N) aleatoriamente\n"
+"O computador seleciona ^B~m^N movimentos  (rotulados de ^k~1^N até ^k~M^N)  aleatoriamente\n"
 "e os coloca no mapa.  Para selecionar qualquer uma  das posições destacadas,\n"
 "pressione essa letra.  Por exemplo, alguns dos movimentos no mapa podem ser:\n"
 "\n"
@@ -1525,7 +1530,7 @@ msgstr ""
 "Selecionado  o seu movimento,  você entra na  ^BBolsa de Valores Interestelar^N.\n"
 "Aqui você pode comprar ações, vender, pedir emprestado ao  Banco de Comércio\n"
 "ou pagar parte de sua dívida (se aplicável).  Observe que cada empresa emite\n"
-"um número limitado de ações - você não pode continuar comprando para sempre!\n"
+"um número limitado de ações — você não pode continuar comprando para sempre!\n"
 "Você pode,  no entanto,  requisitar que mais ações sejam emitidas.  Você tem\n"
 "melhores chances de ter sucesso se tiver uma proporção maior da empresa.\n"
 "\n"
