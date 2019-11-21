@@ -2,14 +2,14 @@
 # *                                                                       *
 # *                 French Translations for Star Traders                  *
 # *                 Copyright (C) 2012-19, John Zaitseff                  *
-# *         Copyright (C) 2012-17, Free Software Foundation, Inc.         *
+# *         Copyright (C) 2012-19, Free Software Foundation, Inc.         *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Frédéric Marchal <fmarchal@perso.be>, 2012, 2015, 2017.
+#   Frédéric Marchal <fmarchal@perso.be>, 2012, 2015, 2017, 2019.
 #
 # Attention: ce fichier ne doit pas contenir d'espace insécable car le
 # programme est compilé avec Ncurses qui n'affiche pas correctement
@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2019-11-19 21:45+1100\n"
-"PO-Revision-Date: 2019-11-13 09:30+1100\n"
+"PO-Revision-Date: 2019-11-22 04:59+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n >= 2);\n"
 
 #. TRANSLATORS: The name of the game.  You may choose to translate it into
 #. your own language (recommended) or keep it the same as the English
