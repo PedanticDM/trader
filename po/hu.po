@@ -8,15 +8,15 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Balázs Úr <urbalazs@gmail.com>, 2014, 2015, 2017.
+#   Balázs Úr <ur.balazs@fsf.hu>, 2014, 2015, 2017, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2019-11-19 21:45+1100\n"
-"PO-Revision-Date: 2019-11-13 09:30+1100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"PO-Revision-Date: 2019-11-24 20:17+1100\n"
+"Last-Translator: Balázs Úr <ur.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -1725,7 +1725,7 @@ msgstr "%s: érvénytelen kapcsoló -- „%c”\n"
 #: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
-msgstr "%s: a kapcsoló egy argumentumot igényel -- „%c”\n"
+msgstr "%s: a kapcsolóhoz egy argumentum szükséges -- „%c”\n"
 
 #. TRANSLATORS: These strings are used in older versions of various
 #. libraries, such as the GNU C Library as released with various
@@ -1763,7 +1763,7 @@ msgstr "%s: érvénytelen kapcsoló -- „%c”\n"
 #: lib/obsolete-strings.c:56
 #, c-format
 msgid "%s: option requires an argument -- `%c'\n"
-msgstr "%s: a kapcsoló egy argumentumot igényel -- „%c”\n"
+msgstr "%s: a kapcsolóhoz egy argumentum szükséges -- „%c”\n"
 
 #: lib/obsolete-strings.c:59
 #, c-format
@@ -1838,29 +1838,29 @@ msgstr "%s: ismeretlen „%c%s” kapcsoló\n"
 #: lib/obsolete-strings.c:73
 #, c-format
 msgid "%s: option `-W %s' is ambiguous\n"
-msgstr "%s: a(z) „-W %s” kapcsoló nem egyértelmű\n"
+msgstr "%s: a „-W %s” kapcsoló nem egyértelmű\n"
 
 #: lib/obsolete-strings.c:74
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
-msgstr "%s: a(z) „-W %s” kapcsoló nem egyértelmű\n"
+msgstr "%s: a „-W %s” kapcsoló nem egyértelmű\n"
 
 #: lib/obsolete-strings.c:75
 #, c-format
 msgid "%s: option `-W %s' doesn't allow an argument\n"
-msgstr "%s: a(z) „-W %s” kapcsoló nem enged meg argumentumot\n"
+msgstr "%s: a „-W %s” kapcsoló nem enged meg argumentumot\n"
 
 #: lib/obsolete-strings.c:76
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
-msgstr "%s: a(z) „-W %s” kapcsoló nem enged meg argumentumot\n"
+msgstr "%s: a „-W %s” kapcsoló nem enged meg argumentumot\n"
 
 #: lib/obsolete-strings.c:77
 #, c-format
 msgid "%s: option `-W %s' requires an argument\n"
-msgstr "%s: a(z) „-W %s” kapcsolóhoz egy argumentum szükséges\n"
+msgstr "%s: a „-W %s” kapcsolóhoz egy argumentum szükséges\n"
 
 #: lib/obsolete-strings.c:78
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
-msgstr "%s: a(z) „-W %s” kapcsolóhoz egy argumentum szükséges\n"
+msgstr "%s: a „-W %s” kapcsolóhoz egy argumentum szükséges\n"
