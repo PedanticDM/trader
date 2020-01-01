@@ -31,6 +31,7 @@ Makefile.am
 /iconv_open-irix.gperf
 /iconv_open-osf.gperf
 /iconv_open-solaris.gperf
+/iconv_open-zos.gperf
 /iconv_open.c
 /limits.in.h
 /localcharset.c
@@ -50,6 +51,9 @@ Makefile.am
 /monetary.in.h
 /ref-add.sin
 /ref-del.sin
+/setlocale-lock.c
+/setlocale_null.c
+/setlocale_null.h
 /stdbool.in.h
 /stddef.in.h
 /stdint.in.h

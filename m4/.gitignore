@@ -62,6 +62,7 @@
 /printf-posix.m4
 /progtest.m4
 /pthread_rwlock_rdlock.m4
+/setlocale_null.m4
 /size_max.m4
 /ssize_t.m4
 /stdbool.m4
