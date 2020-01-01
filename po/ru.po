@@ -2,14 +2,14 @@
 # *                                                                       *
 # *                 Russian Translations for Star Traders                 *
 # *             Русский перевод для игры «Звёздные торговцы»              *
-# *                Copyright (C) 1990-2019, John Zaitseff                 *
+# *                Copyright (C) 1990-2020, John Zaitseff                 *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-2019.
+#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-2020.
 #   Vladimir B. Tsarkov <lipetsk-gnu-lug@bk.ru>, 2012.
 #   Pavel Maryanov <acid@jack.kiev.ua>, 2012.
 #
@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2019-11-19 21:45+1100\n"
-"PO-Revision-Date: 2019-11-13 09:30+1100\n"
+"POT-Creation-Date: 2020-01-02 08:18+1100\n"
+"PO-Revision-Date: 2020-01-02 08:36+1100\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
 "Language: ru\n"
