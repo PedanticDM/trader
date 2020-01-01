@@ -2,21 +2,21 @@
 # *                                                                       *
 # *             Esperanto Translations for Star Traders                   *
 # *                Copyright (C) 2013, 2016 John Zaitseff                 *
-# *       Copyright (C) 2013, 2016, 2018 Free Software Foundation, Inc.   *
+# * Copyright (C) 2013, 2016, 2018, 2019 Free Software Foundation, Inc.   *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Felipe Castro <fefcas@gmail.com>, 2013, 2016, 2018.
+#   Felipe Castro <fefcas@gmail.com>, 2013, 2016, 2018, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader-7.10-pre2\n"
+"Project-Id-Version: trader-7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-23 09:01+1000\n"
-"PO-Revision-Date: 2018-05-14 21:59-0300\n"
+"POT-Creation-Date: 2019-11-13 08:14+1100\n"
+"PO-Revision-Date: 2019-12-29 08:31-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -25,24 +25,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #. TRANSLATORS: The name of the game.  You may choose to translate it into
 #. your own language (recommended) or keep it the same as the English
 #. version.  Feel free to look through other translations to see how
 #. others have done this.
-#: data/trader.desktop.in:22 src/intf.c:610
+#: data/trader.desktop.in:23 src/intf.c:611
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:23
+#: data/trader.desktop.in:24
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "Ludi Star Traders, simpla ludo pri interstelara komerco"
 
 #. TRANSLATORS: A list of keywords describing Star Traders.  By all means
 #. add your own keywords!
-#: data/trader.desktop.in:26
+#: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
 msgstr "ludo;kosmo;negoco;strategio;"
 
@@ -50,7 +50,7 @@ msgstr "ludo;kosmo;negoco;strategio;"
 #. Entry Specification states it is translatable, but unless you provide a
 #. matching icon, please leave it as "trader": this will use trader.svg
 #. and the various trader.png files in the data source code directory.
-#: data/trader.desktop.in:31
+#: data/trader.desktop.in:32
 msgid "trader"
 msgstr "trader"
 
@@ -154,9 +154,9 @@ msgstr ""
 
 #. TRANSLATORS: The first %s is the proper name of the package
 #. author, John Zaitseff [IPA d͡ʒɒn ˈzaɪ̯t͡səf]; the second %s is
-#. the e-mail address for reporting bugs.  Please add ANOTHER
-#. line with the (translated) text "Report translation bugs to
-#. <ADDRESS>\n", with ADDRESS replaced with either an e-mail
+#. the email address for reporting bugs.  Please add ANOTHER line
+#. with the (translated) text "Report translation bugs to
+#. <ADDRESS>\n", with ADDRESS replaced with either an email
 #. address or web URL for reporting bugs in your translation.
 #: src/trader.c:334
 #, c-format
@@ -165,10 +165,10 @@ msgstr ""
 "Raportu program-misojn al: %s <%s>.\n"
 "Raportu traduk-misojn al: <translation-team-eo@lists.sourceforge.net>.\n"
 
-#. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
+#. TRANSLATORS: %s is the email address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
 #. (translated) text "Report translation bugs to <ADDRESS>\n",
-#. with ADDRESS replaced with either an e-mail address or web URL
+#. with ADDRESS replaced with either an email address or web URL
 #. for reporting bugs in your translation.
 #: src/trader.c:341
 #, c-format
@@ -706,8 +706,8 @@ msgstr "Malnova akcio: "
 #: src/move.c:875
 #, c-format
 msgctxt "label"
-msgid "New Stock: "
-msgstr "Nova akcio:    "
+msgid "New stock: "
+msgstr "Nova akcio: "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
 #. each player after two companies merge.  %ls is the currency
@@ -1304,7 +1304,7 @@ msgstr ""
 #. ~y       - Print the height of the galaxy map (MAX_Y) [**]
 #. ~m       - Print the number of moves available (NUMBER_MOVES) [**]
 #. ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
-#. ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+#. ~t       - Print the default number of turns in the game (DEFAULT_MAX_TURN) [**]
 #. ~1 to ~9 - Print the keycode for the N-th choice of move [***]
 #. ~M       - Print the keycode for the last choice of move [***]
 #. ~A to ~H - Print the character used to represent the company on the galaxy map [***]
@@ -1578,7 +1578,7 @@ msgstr "Paĝo %1$d el %2$d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:486 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3026
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Premu <SPACOn> por daŭrigi ] "
@@ -1605,17 +1605,17 @@ msgstr "%s: ĉeno havas malĝustan formon: '%s'"
 msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: signo havas malpermesatan larĝon: '%lc'"
 
-#: src/intf.c:434
+#: src/intf.c:435
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "terminal-grando tro malgrandas (necesas %d x %d)"
 
-#: src/intf.c:1265
+#: src/intf.c:1267
 #, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
-#: src/intf.c:1568
+#: src/intf.c:1559
 #, c-format
 msgid "mkchstr: '%s'"
 msgstr "mkchstr: '%s'"
@@ -1625,12 +1625,12 @@ msgstr "mkchstr: '%s'"
 #. character.  Ideally, it should contain an easily-accessible
 #. keycode that would NOT be used in ordinary input.  Digits, ".",
 #. ",", "+" and "-" are definitely NOT acceptable.
-#: src/intf.c:2020
+#: src/intf.c:2011
 msgctxt "input|DefaultValue"
 msgid "=;"
 msgstr "=;"
 
-#: src/intf.c:2034 src/intf.c:2079
+#: src/intf.c:2025 src/intf.c:2070
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: malpermesata signo en ĉeno: '%ls'"
@@ -1639,12 +1639,12 @@ msgstr "gettxline: malpermesata signo en ĉeno: '%ls'"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2952
+#: src/intf.c:2943
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "JjYy"
 
-#: src/intf.c:2954
+#: src/intf.c:2945
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1652,91 +1652,214 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:3005
+#: src/intf.c:2996
 msgctxt "answer"
 msgid "Yes"
 msgstr "Jes"
 
-#: src/intf.c:3007
+#: src/intf.c:2998
 msgctxt "answer"
 msgid "No"
 msgstr "Ne"
 
-#: src/utils.c:378 src/utils.c:399
+#: src/utils.c:417 src/utils.c:438
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:404
+#: src/utils.c:443
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:417
+#: src/utils.c:456
 #, c-format
 msgid "out of memory"
 msgstr "memoro plenpleniĝas"
 
-#: src/utils.c:1041
+#: src/utils.c:1110
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: '%s'"
 
-#: src/utils.c:1081
+#: src/utils.c:1150
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1086
+#: src/utils.c:1155
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: '%lc'"
 
-#: lib/getopt.c:278
+#: lib/getopt.c:278 lib/obsolete-strings.c:45
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: la modifilo '%s%s' estas plursenca\n"
 
-#: lib/getopt.c:284
+#: lib/getopt.c:284 lib/obsolete-strings.c:47
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: la modifilo '%s%s' estas plursenca; eblecoj:"
 
-#: lib/getopt.c:319
+#: lib/getopt.c:319 lib/obsolete-strings.c:49
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: nerekonata modifilo '%s%s'\n"
 
-#: lib/getopt.c:345
+#: lib/getopt.c:345 lib/obsolete-strings.c:51
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
 msgstr "%s: la modifilo '%s%s' ne permesas argumenton\n"
 
-#: lib/getopt.c:360
+#: lib/getopt.c:360 lib/obsolete-strings.c:53
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
 msgstr "%s: la modifilo '%s%s' postulas argumenton\n"
 
-#: lib/getopt.c:621
+#: lib/getopt.c:621 lib/obsolete-strings.c:55
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: malvalida modifilo -- '%c'\n"
 
-#: lib/getopt.c:636 lib/getopt.c:682
+#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: la modifilo postulas argumenton -- '%c'\n"
 
-#~ msgid "%s: option '--%s' doesn't allow an argument\n"
-#~ msgstr "%s: la modifilo '--%s' ne permesas argumenton\n"
+#. TRANSLATORS: These strings are used in older versions of various
+#. libraries, such as the GNU C Library as released with various
+#. Linux distributions.
+#: lib/obsolete-strings.c:44
+#, c-format
+msgid "%s: option `%s%s' is ambiguous\n"
+msgstr "%s: la modifilo '%s%s' estas plursenca\n"
 
-#~ msgid "%s: unrecognized option '--%s'\n"
-#~ msgstr "%s: nerekonata modifilo '--%s'\n"
+#: lib/obsolete-strings.c:46
+#, c-format
+msgid "%s: option `%s%s' is ambiguous; possibilities:"
+msgstr "%s: la modifilo '%s%s' estas plursenca; eblecoj:"
 
-#~ msgid "%s: option '-W %s' is ambiguous\n"
-#~ msgstr "%s: la modifilo '-W %s' estas plursenca\n"
+#: lib/obsolete-strings.c:48
+#, c-format
+msgid "%s: unrecognized option `%s%s'\n"
+msgstr "%s: nerekonata modifilo '%s%s'\n"
 
-#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: la modifilo '-W %s' ne permesas argumenton\n"
+#: lib/obsolete-strings.c:50
+#, c-format
+msgid "%s: option `%s%s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '%s%s' ne permesas argumenton\n"
 
-#~ msgid "%s: option '-W %s' requires an argument\n"
-#~ msgstr "%s: la modifilo '-W %s' postulas argumenton\n"
+#: lib/obsolete-strings.c:52
+#, c-format
+msgid "%s: option `%s%s' requires an argument\n"
+msgstr "%s: la modifilo '%s%s' postulas argumenton\n"
+
+#: lib/obsolete-strings.c:54
+#, c-format
+msgid "%s: invalid option -- `%c'\n"
+msgstr "%s: malvalida modifilo -- '%c'\n"
+
+#: lib/obsolete-strings.c:56
+#, c-format
+msgid "%s: option requires an argument -- `%c'\n"
+msgstr "%s: la modifilo postulas argumenton -- '%c'\n"
+
+#: lib/obsolete-strings.c:59
+#, c-format
+msgid "%s: option `%s' is ambiguous; possibilities:"
+msgstr "%s: la modifilo '%s' estas plursenca; eblecoj:"
+
+#: lib/obsolete-strings.c:60
+#, c-format
+msgid "%s: option '%s' is ambiguous; possibilities:"
+msgstr "%s: la modifilo '%s' estas plursenca; eblecoj:"
+
+#: lib/obsolete-strings.c:61
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: la modifilo '%s' estas plursenca\n"
+
+#: lib/obsolete-strings.c:62
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: la modifilo '%s' estas plursenca\n"
+
+#: lib/obsolete-strings.c:63
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '--%s' ne permesas argumenton\n"
+
+#: lib/obsolete-strings.c:64
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '--%s' ne permesas argumenton\n"
+
+#: lib/obsolete-strings.c:65
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '%c%s' ne permesas argumenton\n"
+
+#: lib/obsolete-strings.c:66
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '%c%s' ne permesas argumenton\n"
+
+#: lib/obsolete-strings.c:67
+#, c-format
+msgid "%s: option `--%s' requires an argument\n"
+msgstr "%s: la modifilo '--%s' postulas argumenton\n"
+
+#: lib/obsolete-strings.c:68
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: la modifilo '--%s' postulas argumenton\n"
+
+#: lib/obsolete-strings.c:69
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: nerekonata modifilo '--%s'\n"
+
+#: lib/obsolete-strings.c:70
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: nerekonata modifilo '--%s'\n"
+
+#: lib/obsolete-strings.c:71
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: nerekonata modifilo '%c%s'\n"
+
+#: lib/obsolete-strings.c:72
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: nerekonata modifilo '%c%s'\n"
+
+#: lib/obsolete-strings.c:73
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: la modifilo '-W %s' estas plursenca\n"
+
+#: lib/obsolete-strings.c:74
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: la modifilo '-W %s' estas plursenca\n"
+
+#: lib/obsolete-strings.c:75
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '-W %s' ne permesas argumenton\n"
+
+#: lib/obsolete-strings.c:76
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: la modifilo '-W %s' ne permesas argumenton\n"
+
+#: lib/obsolete-strings.c:77
+#, c-format
+msgid "%s: option `-W %s' requires an argument\n"
+msgstr "%s: la modifilo '-W %s' postulas argumenton\n"
+
+#: lib/obsolete-strings.c:78
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: la modifilo '-W %s' postulas argumenton\n"
