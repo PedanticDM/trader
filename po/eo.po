@@ -1,22 +1,22 @@
 # *************************************************************************
 # *                                                                       *
-# *             Esperanto Translations for Star Traders                   *
-# *                Copyright (C) 2013, 2016 John Zaitseff                 *
-# * Copyright (C) 2013, 2016, 2018, 2019 Free Software Foundation, Inc.   *
+# *                Esperanto Translations for Star Traders                *
+# *                 Copyright (C) 2013-20, John Zaitseff                  *
+# *         Copyright (C) 2013-20, Free Software Foundation, Inc.         *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Felipe Castro <fefcas@gmail.com>, 2013, 2016, 2018, 2019.
+#   Felipe Castro <fefcas@gmail.com>, 2013, 2016, 2018, 2019, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader-7.13\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2019-11-13 08:14+1100\n"
-"PO-Revision-Date: 2019-12-29 08:31-0300\n"
+"PO-Revision-Date: 2020-07-01 10:55-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -24,8 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: The name of the game.  You may choose to translate it into
 #. your own language (recommended) or keep it the same as the English
@@ -707,7 +706,7 @@ msgstr "Malnova akcio: "
 #, c-format
 msgctxt "label"
 msgid "New stock: "
-msgstr "Nova akcio: "
+msgstr "Nova akcio:    "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
 #. each player after two companies merge.  %ls is the currency
@@ -1363,7 +1362,7 @@ msgstr ""
 "ankaŭ ŝanĝas.  Ludantoj povas  ankaŭ pruntepreni  el la Interstelara Komerca\n"
 "Banko por financi aldonajn aĉetojn en la akci-interŝanĝejo.\n"
 "\n"
-"La galaksi-mapo estas reprezentata  per krado  ^B~x^N x ^B~y^N.  Ordinara areo de ĝi\n"
+"La galaksi-mapo estas reprezentata  per krado  ^B~x^N × ^B~y^N.  Ordinara areo de ĝi\n"
 "povas esti:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1532,9 +1531,9 @@ msgstr ""
 "Tuj post  kiam vi  elektas  vian movon,  vi eniras la  ^BInterstelaran  akcian\n"
 "interŝanĝejon^N.  Tie vi  povas aĉeti akciojn,  vendi ilin,  pruntepreni el la\n"
 "Komerca Banko  aŭ repagi  iom el via ŝuldo  (se ekzistanta).  Rimarku ke ĉiu\n"
-"kompanio  disponigas limigitan  nombron da akcioj -- vi ne  povas aĉeti sen-\n"
-"fine!  Tamen, vi povas  peti ke pli da akcioj  estu vendataj.  Vi pli ŝancas\n"
-"sukcesi se vi posedas pli grandan proporcion de la kompanio.\n"
+"kompanio disponigas limigitan nombron da akcioj — vi ne povas aĉeti senfine!\n"
+"Tamen, vi povas  peti ke pli da akcioj estu vendataj.  Vi pli ŝancas sukcesi\n"
+"se vi posedas pli grandan proporcion de la kompanio.\n"
 "\n"
 "La ludo  ordinare finas  post ^B~t^N cikloj.  Tamen, vi povas fini  la ludon pli\n"
 "frue premante  ^K<CTRL><C>^N  kiam aldemandita elekti movon.  Krome,  individuaj\n"
