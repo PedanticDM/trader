@@ -27,6 +27,11 @@ Added the Brazilian Portuguese translation, with thanks to Rafael
 Fontenelle.  Updated the French, Hungarian and Esperanto translations, in
 that order, with thanks to Frédéric Marchal, Balázs Úr and Felipe Castro.
 
+Updated to the latest snapshot of the Gnulib GNU Portability Library.
+Also updated the `INSTALL` file to list macOS 10.15 (Catalina) and the
+64-bit version of Cygwin under Microsoft Windows 10 as being tested
+platforms.
+
 
 Version 7.13 (13th November, 2019)
 ----------------------------------
