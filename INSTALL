@@ -231,8 +231,8 @@ Operating system         Arch    Compiler                      Notes
 =======================  ======  ============================  ============
 FreeBSD 12.1             x86_64  Clang (LLVM) 8.0.1            [#freebsd1]_
 NetBSD 8.1               x86_64  GNU C Compiler 5.5.0          [#netbsd1]_
-macOS 10.14              x86_64  Apple Clang (LLVM) 11.0.0     [#macos1]_
-macOS 10.14              x86_64  Apple Clang (LLVM) 11.0.0     [#macos2]_
+macOS 10.15              x86_64  Apple Clang (LLVM) 11.0.0     [#macos1]_
+macOS 10.15              x86_64  Apple Clang (LLVM) 11.0.0     [#macos2]_
 Solaris 11.4 (x86_64)    x86_64  GNU C Compiler 7.3.0          [#solaris1]_
 Solaris 11.4 (x86_64)    i386    Oracle Developer Studio 12.6  [#solaris2]_
 Solaris 11.4 (x86_64)    x86_64  Oracle Developer Studio 12.6  [#solaris3]_
