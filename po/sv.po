@@ -8,14 +8,14 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2017.
+#   Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2017, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.10-pre1\n"
+"Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-23 09:01+1000\n"
-"PO-Revision-Date: 2017-05-22 07:17+1000\n"
+"POT-Creation-Date: 2020-01-09 08:05+1100\n"
+"PO-Revision-Date: 2020-01-09 13:09+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -24,23 +24,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #. TRANSLATORS: The name of the game.  You may choose to translate it into
 #. your own language (recommended) or keep it the same as the English
 #. version.  Feel free to look through other translations to see how
 #. others have done this.
-#: data/trader.desktop.in:22 src/intf.c:610
+#: data/trader.desktop.in:23 src/intf.c:611
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:23
+#: data/trader.desktop.in:24
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "Spela Star Traders, ett enkelt spel om interstellär handel"
 
 #. TRANSLATORS: A list of keywords describing Star Traders.  By all means
 #. add your own keywords!
-#: data/trader.desktop.in:26
+#: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
 msgstr "spel;interstellär;handel;strategi;"
 
@@ -48,7 +49,7 @@ msgstr "spel;interstellär;handel;strategi;"
 #. Entry Specification states it is translatable, but unless you provide a
 #. matching icon, please leave it as "trader": this will use trader.svg
 #. and the various trader.png files in the data source code directory.
-#: data/trader.desktop.in:31
+#: data/trader.desktop.in:32
 msgid "trader"
 msgstr "trader"
 
@@ -151,9 +152,9 @@ msgstr ""
 
 #. TRANSLATORS: The first %s is the proper name of the package
 #. author, John Zaitseff [IPA d͡ʒɒn ˈzaɪ̯t͡səf]; the second %s is
-#. the e-mail address for reporting bugs.  Please add ANOTHER
-#. line with the (translated) text "Report translation bugs to
-#. <ADDRESS>\n", with ADDRESS replaced with either an e-mail
+#. the email address for reporting bugs.  Please add ANOTHER line
+#. with the (translated) text "Report translation bugs to
+#. <ADDRESS>\n", with ADDRESS replaced with either an email
 #. address or web URL for reporting bugs in your translation.
 #: src/trader.c:334
 #, c-format
@@ -162,10 +163,10 @@ msgstr ""
 "Rapportera fel till %s <%s>.\n"
 "Rapportera synpunkter på översättningen till <tp-sv@listor.tp-sv.se>\n"
 
-#. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
+#. TRANSLATORS: %s is the email address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
 #. (translated) text "Report translation bugs to <ADDRESS>\n",
-#. with ADDRESS replaced with either an e-mail address or web URL
+#. with ADDRESS replaced with either an email address or web URL
 #. for reporting bugs in your translation.
 #: src/trader.c:341
 #, c-format
@@ -348,49 +349,54 @@ msgstr "Ange spelnummer [^{1^}-^{9^}] eller ^{<CTRL><C>^} för att avbryta: "
 msgid "Please enter your name: "
 msgstr "Ange ditt namn: "
 
-#: src/game.c:425
+#. TRANSLATORS: Note that you should replace "Y" and "N"
+#. with the localised upper-case characters used in the
+#. "input|Yes" and "input|No" strings.  There are other
+#. strings in this game, each with "[^{Y^}/^{N^}]", that
+#. need the same replacement.
+#: src/game.c:430
 #, c-format
 msgid "Do you need any instructions? [^{Y^}/^{N^}] "
 msgstr "Behöver du instruktioner? [^{J^}/^{N^}] "
 
-#: src/game.c:443
+#: src/game.c:448
 #, c-format
 msgid "  Enter Player Names  "
 msgstr "  Ange spelarnamn  "
 
-#: src/game.c:451
+#: src/game.c:456
 #, c-format, range: 1..8
 msgid "Player %d: "
 msgstr "Spelare %d: "
 
-#: src/game.c:529
+#: src/game.c:534
 #, c-format
 msgid "Does any player need instructions? [^{Y^}/^{N^}] "
 msgstr "Behöver någon spelare instruktioner? [^{J^}/^{N^}] "
 
-#: src/game.c:563
+#: src/game.c:568
 #, c-format
 msgid "  Game Over  "
 msgstr "  Spelet är slut  "
 
-#: src/game.c:564
+#: src/game.c:569
 #, c-format
 msgid "The game is over after one turn."
 msgid_plural "The game is over after %d turns."
 msgstr[0] "Spelet är slut efter en omgång."
 msgstr[1] "Spelet är slut efter %d omgångar."
 
-#: src/game.c:575
+#: src/game.c:580
 #, c-format
 msgid "  Total Value  "
 msgstr "  Totalt värde  "
 
-#: src/game.c:577
+#: src/game.c:582
 #, c-format
 msgid "Your total value was ^{%N^}."
 msgstr "Ditt totala värde var ^{%N^}."
 
-#: src/game.c:588
+#: src/game.c:593
 #, c-format
 msgid ""
 "The winner is ^{%ls^}\n"
@@ -399,7 +405,7 @@ msgstr ""
 "Vinnaren är ^{%ls^}\n"
 "som är ^[*** BANKRUTT ***^]"
 
-#: src/game.c:591
+#: src/game.c:596
 #, c-format
 msgid ""
 "The winner is ^{%ls^}\n"
@@ -408,14 +414,14 @@ msgstr ""
 "Vinnaren är ^{%ls^}\n"
 "med ett värde på ^{%N^}."
 
-#: src/game.c:597
+#: src/game.c:602
 #, c-format
 msgid "  Game Winner  "
 msgstr "  Vinnare av spelet  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:882
+#: src/game.c:611 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -424,48 +430,48 @@ msgstr "Spelare"
 #. TRANSLATORS: "Total Value" refers to the total worth
 #. (shares, cash and debt) of any given player.  %ls is the
 #. currency symbol of the current locale.
-#: src/game.c:611
+#: src/game.c:616
 #, c-format
 msgctxt "subtitle"
 msgid "Total Value (%ls)"
 msgstr "Totalt värde (%ls)"
 
-#: src/game.c:645 src/game.c:695 src/exch.c:100
+#: src/game.c:650 src/game.c:700 src/exch.c:100
 #, c-format
 msgid "Player: ^{%ls^}"
 msgstr "Spelare: ^{%ls^}"
 
-#: src/game.c:648
+#: src/game.c:653
 #, c-format
 msgid "  Turn: ^{%d^}  "
 msgstr "  Omgång: ^{%d^}  "
 
 # Turn vs move
-#: src/game.c:649
+#: src/game.c:654
 #, c-format
 msgid "  ^[*** Last Turn ***^]  "
 msgstr "  ^[*** Sista omgången ***^]  "
 
-#: src/game.c:693
+#: src/game.c:698
 #, c-format
 msgid "  Stock Portfolio  "
 msgstr "  Aktieportfölj  "
 
 #. TRANSLATORS: The current player is bankrupt (has no
 #. shares or cash, ie, whose total value is zero)
-#: src/game.c:702
+#: src/game.c:707
 #, c-format
 msgid "^[* * *   B A N K R U P T   * * *^]"
 msgstr "^[* * *   B A N K R U T T   * * *^]"
 
-#: src/game.c:717 src/exch.c:112
+#: src/game.c:722 src/exch.c:112
 #, c-format
 msgid "No companies on the map"
 msgstr "Inga företag på kartan"
 
 #. TRANSLATORS: "Company" is a two-line column label in
 #. a table containing a list of companies.
-#: src/game.c:725 src/exch.c:120
+#: src/game.c:730 src/exch.c:120
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -480,7 +486,7 @@ msgstr ""
 #. percentage ownership in any given company.  The
 #. maximum column width is 10 characters (see
 #. OWNERSHIP_COLS in src/intf.h).
-#: src/game.c:732
+#: src/game.c:737
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -495,7 +501,7 @@ msgstr ""
 #. current player owns in any given company.  The
 #. maximum column width is 10 characters (see
 #. STOCK_OWNED_COLS in src/intf.h).
-#: src/game.c:739
+#: src/game.c:744
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -509,7 +515,7 @@ msgstr ""
 #. a table containing the share return as a percentage
 #. in any given company.  The maximum column width is
 #. 10 characters (see SHARE_RETURN_COLS in src/intf.h).
-#: src/game.c:746 src/exch.c:141
+#: src/game.c:751 src/exch.c:141
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -525,7 +531,7 @@ msgstr ""
 #. the current locale.  The maximum column width is 12
 #. characters INCLUDING the currency symbol (see
 #. SHARE_PRICE_COLS in src/intf.h).
-#: src/game.c:755 src/exch.c:150
+#: src/game.c:760 src/exch.c:150
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -544,25 +550,25 @@ msgstr ""
 #.
 #. Note that some of these labels are used for both the
 #. Player Status window and the Trading Bank window.
-#: src/game.c:796
+#: src/game.c:801
 #, c-format
 msgctxt "label"
 msgid "Total value:   "
 msgstr "Totalt värde:       "
 
-#: src/game.c:800 src/exch.c:324
+#: src/game.c:805 src/exch.c:324
 #, c-format
 msgctxt "label"
 msgid "Current cash:  "
 msgstr "Aktuella kontanter: "
 
-#: src/game.c:807 src/exch.c:332
+#: src/game.c:812 src/exch.c:332
 #, c-format
 msgctxt "label"
 msgid "Current debt:  "
 msgstr "Aktuell skuld:      "
 
-#: src/game.c:813 src/exch.c:337
+#: src/game.c:818 src/exch.c:337
 #, c-format
 msgctxt "label"
 msgid "Interest rate: "
@@ -705,8 +711,8 @@ msgstr "Gammal aktie: "
 #: src/move.c:875
 #, c-format
 msgctxt "label"
-msgid "New Stock: "
-msgstr "Ny aktie:     "
+msgid "New stock: "
+msgstr "Ny aktie: "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
 #. each player after two companies merge.  %ls is the currency
@@ -1306,7 +1312,7 @@ msgstr ""
 #. ~y       - Print the height of the galaxy map (MAX_Y) [**]
 #. ~m       - Print the number of moves available (NUMBER_MOVES) [**]
 #. ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
-#. ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+#. ~t       - Print the default number of turns in the game (DEFAULT_MAX_TURN) [**]
 #. ~1 to ~9 - Print the keycode for the N-th choice of move [***]
 #. ~M       - Print the keycode for the last choice of move [***]
 #. ~A to ~H - Print the character used to represent the company on the galaxy map [***]
@@ -1580,7 +1586,7 @@ msgstr "Sida %1$d av %2$d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:486 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3026
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
 msgstr "[ Tryck <RETUR> för att fortsätta ] "
@@ -1608,17 +1614,17 @@ msgstr "%s: sträng har felaktigt format: ”%s”"
 msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: tecken har ogiltig bredd: ”%lc”"
 
-#: src/intf.c:434
+#: src/intf.c:435
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "terminalstorlek är för liten (%d x %d krävs)"
 
-#: src/intf.c:1265
+#: src/intf.c:1267
 #, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NUL"
 
-#: src/intf.c:1568
+#: src/intf.c:1559
 #, c-format
 msgid "mkchstr: '%s'"
 msgstr "mkchstr: ”%s”"
@@ -1628,12 +1634,12 @@ msgstr "mkchstr: ”%s”"
 #. character.  Ideally, it should contain an easily-accessible
 #. keycode that would NOT be used in ordinary input.  Digits, ".",
 #. ",", "+" and "-" are definitely NOT acceptable.
-#: src/intf.c:2020
+#: src/intf.c:2011
 msgctxt "input|DefaultValue"
 msgid "=;"
 msgstr "=;"
 
-#: src/intf.c:2034 src/intf.c:2079
+#: src/intf.c:2025 src/intf.c:2070
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: ogiltigt tecken i sträng: ”%ls”"
@@ -1642,12 +1648,12 @@ msgstr "gettxline: ogiltigt tecken i sträng: ”%ls”"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2952
+#: src/intf.c:2943
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "JjYy"
 
-#: src/intf.c:2954
+#: src/intf.c:2945
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1655,76 +1661,214 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:3005
+#: src/intf.c:2996
 msgctxt "answer"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/intf.c:3007
+#: src/intf.c:2998
 msgctxt "answer"
 msgid "No"
 msgstr "Nej"
 
-#: src/utils.c:378 src/utils.c:399
+#: src/utils.c:417 src/utils.c:438
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:404
+#: src/utils.c:443
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:417
+#: src/utils.c:456
 #, c-format
 msgid "out of memory"
 msgstr "slut på minne"
 
-#: src/utils.c:1041
+#: src/utils.c:1110
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: ”%s”"
 
-#: src/utils.c:1081
+#: src/utils.c:1150
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1086
+#: src/utils.c:1155
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: ”%lc”"
 
-#: lib/getopt.c:278
+#: lib/getopt.c:278 lib/obsolete-strings.c:45
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: flaggan ”%s%s” är tvetydig\n"
 
-#: lib/getopt.c:284
+#: lib/getopt.c:284 lib/obsolete-strings.c:47
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: flaggan ”%s%s” är tvetydig; möjligheter:"
 
-#: lib/getopt.c:319
+#: lib/getopt.c:319 lib/obsolete-strings.c:49
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: okänd flagga ”%s%s”\n"
 
-#: lib/getopt.c:345
+#: lib/getopt.c:345 lib/obsolete-strings.c:51
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
 msgstr "%s: flaggan ”%s%s” tar inget argument\n"
 
-#: lib/getopt.c:360
+#: lib/getopt.c:360 lib/obsolete-strings.c:53
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
 msgstr "%s: flaggan ”%s%s” kräver ett argument\n"
 
-#: lib/getopt.c:621
+#: lib/getopt.c:621 lib/obsolete-strings.c:55
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ogiltig flagga -- ”%c”\n"
 
-#: lib/getopt.c:636 lib/getopt.c:682
+#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: flaggan kräver ett argument -- ”%c”\n"
+
+#. TRANSLATORS: These strings are used in older versions of various
+#. libraries, such as the GNU C Library as released with various
+#. Linux distributions.
+#: lib/obsolete-strings.c:44
+#, c-format
+msgid "%s: option `%s%s' is ambiguous\n"
+msgstr "%s: flaggan ”%s%s” är tvetydig\n"
+
+#: lib/obsolete-strings.c:46
+#, c-format
+msgid "%s: option `%s%s' is ambiguous; possibilities:"
+msgstr "%s: flaggan ”%s%s” är tvetydig; möjligheter:"
+
+#: lib/obsolete-strings.c:48
+#, c-format
+msgid "%s: unrecognized option `%s%s'\n"
+msgstr "%s: okänd flagga ”%s%s”\n"
+
+#: lib/obsolete-strings.c:50
+#, c-format
+msgid "%s: option `%s%s' doesn't allow an argument\n"
+msgstr "%s: flaggan ”%s%s” tar inget argument\n"
+
+#: lib/obsolete-strings.c:52
+#, c-format
+msgid "%s: option `%s%s' requires an argument\n"
+msgstr "%s: flaggan ”%s%s” kräver ett argument\n"
+
+#: lib/obsolete-strings.c:54
+#, c-format
+msgid "%s: invalid option -- `%c'\n"
+msgstr "%s: ogiltig flagga -- ”%c”\n"
+
+#: lib/obsolete-strings.c:56
+#, c-format
+msgid "%s: option requires an argument -- `%c'\n"
+msgstr "%s: flaggan kräver ett argument -- ”%c”\n"
+
+#: lib/obsolete-strings.c:59
+#, c-format
+msgid "%s: option `%s' is ambiguous; possibilities:"
+msgstr "%s: flaggan ”%s” är tvetydig; möjligheter:"
+
+#: lib/obsolete-strings.c:60
+#, c-format
+msgid "%s: option '%s' is ambiguous; possibilities:"
+msgstr "%s: flaggan ”%s” är tvetydig; möjligheter:"
+
+#: lib/obsolete-strings.c:61
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: flaggan ”%s” är tvetydig\n"
+
+#: lib/obsolete-strings.c:62
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: flaggan ”%s” är tvetydig\n"
+
+#: lib/obsolete-strings.c:63
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: flaggan ”--%s” tar inget argument\n"
+
+#: lib/obsolete-strings.c:64
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: flaggan ”--%s” tar inget argument\n"
+
+#: lib/obsolete-strings.c:65
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: flaggan ”%c%s” tar inget argument\n"
+
+#: lib/obsolete-strings.c:66
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: flaggan ”%c%s” tar inget argument\n"
+
+#: lib/obsolete-strings.c:67
+#, c-format
+msgid "%s: option `--%s' requires an argument\n"
+msgstr "%s: flaggan ”--%s” kräver ett argument\n"
+
+#: lib/obsolete-strings.c:68
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: flaggan ”--%s” kräver ett argument\n"
+
+#: lib/obsolete-strings.c:69
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: okänd flagga ”--%s”\n"
+
+#: lib/obsolete-strings.c:70
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: okänd flagga ”--%s”\n"
+
+#: lib/obsolete-strings.c:71
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: okänd flagga ”%c%s”\n"
+
+#: lib/obsolete-strings.c:72
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: okänd flagga ”%c%s”\n"
+
+#: lib/obsolete-strings.c:73
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: flaggan ”-W %s” är tvetydig\n"
+
+#: lib/obsolete-strings.c:74
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: flaggan ”-W %s” är tvetydig\n"
+
+#: lib/obsolete-strings.c:75
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: flaggan ”-W %s” tar inget argument\n"
+
+#: lib/obsolete-strings.c:76
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: flaggan ”-W %s” tar inget argument\n"
+
+#: lib/obsolete-strings.c:77
+#, c-format
+msgid "%s: option `-W %s' requires an argument\n"
+msgstr "%s: flaggan ”-W %s” kräver ett argument\n"
+
+#: lib/obsolete-strings.c:78
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: flaggan ”-W %s” kräver ett argument\n"
