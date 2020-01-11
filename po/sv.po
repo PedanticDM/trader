@@ -1,7 +1,7 @@
 # *************************************************************************
 # *                                                                       *
 # *                 Swedish Translations for Star Traders                 *
-# *                 Copyright (C) 2015-17, John Zaitseff                  *
+# *                 Copyright (C) 2015-20, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: trader 7.14\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2020-01-09 08:05+1100\n"
-"PO-Revision-Date: 2020-01-09 13:09+0100\n"
+"PO-Revision-Date: 2020-01-11 21:06+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -712,7 +712,7 @@ msgstr "Gammal aktie: "
 #, c-format
 msgctxt "label"
 msgid "New stock: "
-msgstr "Ny aktie: "
+msgstr "Ny aktie:     "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
 #. each player after two companies merge.  %ls is the currency
