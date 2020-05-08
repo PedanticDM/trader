@@ -1,6 +1,7 @@
 Makefile.am
 
 /_Noreturn.h
+/attribute.h
 /btowc.c
 /c-ctype.c
 /c-ctype.h
