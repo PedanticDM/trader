@@ -59,6 +59,7 @@
 /nls.m4
 /nocrash.m4
 /off_t.m4
+/pid_t.m4
 /po.m4
 /printf-posix.m4
 /progtest.m4
@@ -66,6 +67,7 @@
 /setlocale_null.m4
 /size_max.m4
 /ssize_t.m4
+/std-gnu11.m4
 /stdbool.m4
 /stddef_h.m4
 /stdint.m4
