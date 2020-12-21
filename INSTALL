@@ -234,6 +234,7 @@ macOS 10.15              x86_64  Apple Clang (LLVM) 11.0.0     [#macos2]_
 Solaris 11.4 (x86_64)    x86_64  GNU C Compiler 7.3.0          [#solaris1]_
 Solaris 11.4 (x86_64)    i386    Oracle Developer Studio 12.6  [#solaris2]_
 Solaris 11.4 (x86_64)    x86_64  Oracle Developer Studio 12.6  [#solaris3]_
+Haiku R1/beta2           x86_64  GNU C Compiler 8.3.0
 Cygwin 3.1.2 (Win7 SP1)  i686    GNU C Compiler 7.4.0
 Cygwin 3.1.2 (Win10)     x86_64  GNU C Compiler 7.4.0
 =======================  ======  ============================  ============
