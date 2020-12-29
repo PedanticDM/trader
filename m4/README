@@ -1,4 +1,6 @@
 .. -*- mode: rst; coding: utf-8 -*-
+.. role:: filename(literal)
+.. default-role:: filename
 
 ============================================
 Star Traders: A Game of Interstellar Trading
