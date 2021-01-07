@@ -33,6 +33,9 @@ present, it will continue to be used.  Updated the manual page to suit.
 
 __ https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
+Updated the Russian translation to use the uppercase polite singular
+forms «Вы» and «Ваш», as is customary in written documents.
+
 Updated to GNU Gettext 0.20 or later.  Updated to the latest snapshot of
 the Gnulib GNU Portability Library.  Also updated the `INSTALL` file to
 list the latest tested versions of operating systems, including a new
