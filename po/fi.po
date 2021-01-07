@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.15\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2021-01-07 18:59+1100\n"
+"POT-Creation-Date: 2021-01-07 23:30+1100\n"
 "PO-Revision-Date: 2021-01-07 16:57+1100\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -1661,31 +1661,31 @@ msgctxt "answer"
 msgid "No"
 msgstr "Ei"
 
-#: src/utils.c:417 src/utils.c:438
+#: src/utils.c:481 src/utils.c:502
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:443
+#: src/utils.c:507
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:456
+#: src/utils.c:520
 #, c-format
 msgid "out of memory"
 msgstr "muisti loppui"
 
-#: src/utils.c:1110
+#: src/utils.c:1174
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: ”%s”"
 
-#: src/utils.c:1150
+#: src/utils.c:1214
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1155
+#: src/utils.c:1219
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: ”%lc”"
