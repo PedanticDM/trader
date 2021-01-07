@@ -53,6 +53,10 @@ wchar_t *mon_thousands_sep;		// Locale's monetary thousands separator
 *                 Module-specific constants and macros                  *
 ************************************************************************/
 
+#define DIRSEP			"/"		// Directory separator
+#define HIDDEN_PATH		"."		// Hidden file start char
+#define XDG_DATA_DEFAULT	".local" DIRSEP "share"
+
 #define GAME_FILENAME_PROTO	"game%d"
 #define GAME_FILENAME_BUFSIZE	16
 
@@ -306,10 +310,15 @@ void init_program_name (const char *argv0)
     /* This implementation assumes a POSIX environment with an ASCII-safe
        character encoding (such as ASCII or UTF-8). */
 
+    const char *dirsep = DIRSEP;
+
+
+    assert(strlen(dirsep) == 1);
+
     if (argv0 == NULL || *argv0 == '\0') {
 	program_name = PACKAGE;
     } else {
-	char *p = strrchr(argv0, '/');
+	char *p = strrchr(argv0, dirsep[0]);
 
 	if (p != NULL && *++p != '\0') {
 	    program_name = xstrdup(p);
@@ -343,21 +352,74 @@ const char *home_directory (void)
 
 const char *data_directory (void)
 {
-    /* This implementation assumes a POSIX environment by using "/" as
+    /* This implementation assumes a POSIX environment by using DIRSEP as
        the directory separator.  It also assumes a dot-starting directory
        name is permissible (again, true on POSIX systems) and that the
        character encoding is ASCII-safe. */
 
+    const char *dirsep            = DIRSEP;
+    const char *dirsep_hiddenpath = DIRSEP HIDDEN_PATH;
+    const char *datahome_part     = DIRSEP XDG_DATA_DEFAULT DIRSEP;
+
+    struct stat statbuf;
+
+
+    assert(strlen(dirsep) == 1);
+
     if (data_directory_str == NULL) {
 	const char *home = home_directory();
+	const char *xdg_data_home = getenv("XDG_DATA_HOME");
 
-	if (program_name != NULL && home != NULL) {
-	    char *p = xmalloc(strlen(home) + strlen(program_name) + 3);
+	if (program_name != NULL) {
+	    int len_program_name = strlen(program_name);
 
-	    strcpy(p, home);
-	    strcat(p, "/.");
-	    strcat(p, program_name);
-	    data_directory_str = p;
+	    if (home != NULL) {
+		char *p = xmalloc(strlen(home) + strlen(dirsep_hiddenpath)
+				  + len_program_name + 1);
+
+		strcpy(p, home);
+		strcat(p, dirsep_hiddenpath);
+		strcat(p, program_name);
+
+		if (stat(p, &statbuf) == 0 && S_ISDIR(statbuf.st_mode)) {
+		    // Directory "$HOME/.trader" exists: use that
+		    data_directory_str = p;
+		} else {
+		    free(p);
+		}
+	    }
+
+	    if (data_directory_str == NULL && xdg_data_home != NULL
+		&& *xdg_data_home != '\0' && *xdg_data_home == dirsep[0]) {
+		// Use directory "$XDG_DATA_HOME/trader"
+
+		/* Note that the XDG Base Directory Specification v0.7
+		   requires XDG_DATA_HOME to contain an absolute path:
+		   the variable must be ignored if it does not start with
+		   the directory separator DIRSEP ("/") */
+
+		char *p = xmalloc(strlen(xdg_data_home) + strlen(DIRSEP)
+				  + len_program_name + 1);
+
+		strcpy(p, xdg_data_home);
+		strcat(p, dirsep);
+		strcat(p, program_name);
+
+		data_directory_str = p;
+	    }
+
+	    if (data_directory_str == NULL && home != NULL) {
+		// Use directory "$HOME/.local/share/trader"
+
+		char *p = xmalloc(strlen(home) + strlen(datahome_part)
+				  + len_program_name + 1);
+
+		strcpy(p, home);
+		strcat(p, datahome_part);
+		strcat(p, program_name);
+
+		data_directory_str = p;
+	    }
 	}
     }
 
@@ -373,6 +435,8 @@ char *game_filename (int gamenum)
     /* This implementation assumes a POSIX environment and an ASCII-safe
        character encoding. */
 
+    const char *dirsep = DIRSEP;
+
     char buf[GAME_FILENAME_BUFSIZE];	// Buffer for part of filename
     const char *dd;			// Data directory
 
@@ -387,10 +451,10 @@ char *game_filename (int gamenum)
     if (dd == NULL) {
 	return xstrdup(buf);
     } else {
-	char *p = xmalloc(strlen(dd) + strlen(buf) + 2);
+	char *p = xmalloc(strlen(dd) + strlen(dirsep) + strlen(buf) + 1);
 
 	strcpy(p, dd);
-	strcat(p, "/");
+	strcat(p, dirsep);
 	strcat(p, buf);
 	return p;
     }

@@ -99,12 +99,18 @@ extern const char *home_directory (void);
   Parameters: (none)
   Returns:    const char *   - Pointer to data directory
 
-  This function returns the full pathname to a potentially-writable
-  subdirectory within the user's home directory.  Essentially, this
-  function returns home_directory() + "/."  + program_name.  Note that
-  this path is NOT created by this function, nor is the ability to write
-  to this path checked.  NULL is returned if this path cannot be
-  determined.
+  This function returns the full pathname to a potentially-writable data
+  directory, usually within the user's home directory.
+
+  Assuming program_name is set to "trader", if "$HOME/.trader" exists,
+  that directory is returned as the data directory.  Otherwise, if the
+  environment variable XDG_DATA_HOME is set and contains an absolute
+  pathname, "$XDG_DATA_HOME/trader" is returned.  Otherwise,
+  "$HOME/.local/share/trader" is returned.
+
+  Note that the returned path is NOT created by this function, nor is the
+  ability to read from or write to this path checked.  NULL is returned
+  if the path cannot be determined.
 */
 extern const char *data_directory (void);
 
