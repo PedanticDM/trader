@@ -9,7 +9,7 @@
 # $Id$
 
 # This file provides a translated desktop entry for Star Traders and
-# conforms to the Desktop Entry Specification v1.1.
+# conforms to the Desktop Entry Specification v1.5.
 #
 # This file is distributed under the same licence as Star Traders itself:
 # the GNU General Public License, version 3 or later.
@@ -24,10 +24,6 @@ Comment=Play Star Traders, a simple game of interstellar trading
 # TRANSLATORS: A list of keywords describing Star Traders.  By all means
 # add your own keywords!
 Keywords=game;interstellar;trading;strategy;
-# TRANSLATORS: This string is the name of the icon to use.  The Desktop
-# Entry Specification states it is translatable, but unless you provide a
-# matching icon, please leave it as "trader": this will use trader.svg
-# and the various trader.png files in the data source code directory.
 Icon=trader
 Exec=trader
 TryExec=trader

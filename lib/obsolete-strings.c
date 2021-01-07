@@ -34,6 +34,24 @@
 
 
 /************************************************************************
+*                      From data/trader.desktop.in                      *
+************************************************************************/
+
+const char *trader_desktop_strings[] = {
+    /* TRANSLATORS: Older versions of the GNU Gettext library utilities
+       treat the Icon value in data/trader.desktop.in as a translatable
+       string.  That string, the name of the icon to use, is defined here
+       for those older versions of xgettext(1).  Unless you provide a
+       matching icon, please leave it as "trader": this will use
+       trader.svg and the various trader.png files in the data source
+       code directory. */
+    N_("trader"),
+
+    ""
+};
+
+
+/************************************************************************
 *                   From GNU C Library posix/getopt.c                   *
 ************************************************************************/
 
