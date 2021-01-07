@@ -57,15 +57,15 @@ trader \- a game of interstellar trading
 .RB [ \-V | \-\-version ]
 .\" *********************************************************************
 .SH DESCRIPTION
-\fBStar Traders\fR is a simple game of interstellar trading, where the
+\fBStar Traders\fP is a simple game of interstellar trading, where the
 objective is to create companies, buy and sell shares, borrow and repay
 money, in order to become the wealthiest player (the winner).
 .\" *********************************************************************
 .SH OPTIONS
 .TP
 .I GAME
-If \fIGAME\fR is specified as a number between \fB1\fR and \fB9\fR
-(inclusive), load and continue playing that game.  If \fIGAME\fR is not
+If \fIGAME\fP is specified as a number between \fB1\fP and \fB9\fP
+(inclusive), load and continue playing that game.  If \fIGAME\fP is not
 specified, start a new game.
 .TP
 .BR \-\-no\-color ", " \-\-no\-colour
@@ -75,8 +75,8 @@ for a \*(lqretro-computing\*(rq look (as shown in the
 below).
 .TP
 .BI \-\-max\-turn= NUM
-Set the number of turns in the game to \fINUM\fR.  In this version of
-Star Traders, \fINUM\fR must be greater or equal to 10.  If this option
+Set the number of turns in the game to \fINUM\fP.  In this version of
+Star Traders, \fINUM\fP must be greater or equal to 10.  If this option
 is not specified, the default is 50 turns.
 .TP
 .BR \-h ", " \-\-help
@@ -155,18 +155,18 @@ Or, if you prefer the old amber screens of yesteryear:
 .SH ENVIRONMENT
 .TP
 .BR XDG_DATA_HOME ", " HOME
-If \fBXDG_DATA_HOME\fR is set to an absolute pathname (that is, a path
-that starts with \*(lq\fI/\fR\*(rq), Star Traders will use that
-directory, with a subdirectory \fItrader\fR, to store game files.  If
+If \fBXDG_DATA_HOME\fP is set to an absolute pathname (that is, a path
+that starts with \*(lq\fI/\fP\*(rq), Star Traders will use that
+directory, with a subdirectory \fItrader\fP, to store game files.  If
 this environment variable is not set or does not start with
-\*(lq\fI/\fR\*(rq, \fI\(ti/.local/share/trader\fR will be used instead,
-where \*(lq\fI\(ti\fR\*(rq represents your home directory, as contained
-in the \fBHOME\fR environment variable.
+\*(lq\fI/\fP\*(rq, \fI\(ti/.local/share/trader\fP will be used instead,
+where \*(lq\fI\(ti\fP\*(rq represents your home directory, as contained
+in the \fBHOME\fP environment variable.
 .TP
 .BR LINES ", " COLUMNS
 Star Traders uses the Curses library for displaying text on the screen.
 As such, it will access these two environment variables if the underlying
-Curses library does so (see, for example, the \fBENVIRONMENT\fR section
+Curses library does so (see, for example, the \fBENVIRONMENT\fP section
 in the
 .BR ncurses (3)
 manual page for in-depth details).  It requires a text console or window
@@ -175,10 +175,10 @@ of at least 80\(mu24 in size.
 .BR LANG ", " LC_ALL ", etc."
 This version of Star Traders has full support for locales and will use
 appropriate settings.  In particular, messages will be displayed using
-\fBLC_MESSAGES\fR and \fBLANGUAGE\fR (if Star Traders has been translated
+\fBLC_MESSAGES\fP and \fBLANGUAGE\fP (if Star Traders has been translated
 into that language).  In addition, numeric quantities will be displayed
-using \fBLC_NUMERIC\fR and monetary quantities will use
-\fBLC_MONETARY\fR.  See the
+using \fBLC_NUMERIC\fP and monetary quantities will use
+\fBLC_MONETARY\fP.  See the
 .BR locale (7)
 or
 .BR setlocale (3)
@@ -187,14 +187,14 @@ manual pages for more details on locale settings.
 .SH FILES
 .TP
 .IB \(ti/.local/share/trader/game N
-Star Traders stores saved game files in the \fI.local/share/trader\fR
+Star Traders stores saved game files in the \fI.local/share/trader\fP
 subdirectory in your home directory (unless overriden by the
-\fBXDG_DATA_HOME\fR environment variable).  \fIN\fR is a number between
-\fB1\fR and \fB9\fR inclusive.  The game file is scrambled to prevent you
+\fBXDG_DATA_HOME\fP environment variable).  \fIN\fP is a number between
+\fB1\fP and \fB9\fP inclusive.  The game file is scrambled to prevent you
 or others from casually cheating!
 .TP
 .IB \(ti/.trader/game N
-If the \fI\(ti/.trader\fR directory exists, game files will be read from
+If the \fI\(ti/.trader\fP directory exists, game files will be read from
 and saved to this location instead.  This is for compatibility with
 versions of Star Traders prior to version 7.15.
 .\" *********************************************************************
@@ -205,7 +205,7 @@ None yet known...
 Your comments, suggestions, corrections and enhancements are always
 warmly welcomed!  Please send these to:
 .IP Postal: 10n
-\fBJohn Zaitseff\fR,
+\fBJohn Zaitseff\fP,
 .br
 The ZAP Group,
 .br
@@ -236,7 +236,7 @@ Australia
 .SH COPYRIGHT
 Copyright \(co 1990\-2021, John Zaitseff.
 .PP
-\fBStar Traders\fR is free software that is distributed under the terms
+\fBStar Traders\fP is free software that is distributed under the terms
 of the GNU General Public License.  You can redistribute it and/or modify
 it under the terms of that License as published by the Free Software
 Foundation, either version 3 or (at your option) any later version.
@@ -250,7 +250,7 @@ You should have received a copy of the GNU General Public License along
 with this program.  If not, see the
 .URL https://www.gnu.org/licenses/ "GNU licenses web page" .
 .PP
-Even though the GNU General Public License does \fInot\fR require you to
+Even though the GNU General Public License does \fInot\fP require you to
 send your modifications back to the author, it is considered \*(lqgood
 form\*(rq to do so, as this allows your modifications to be incorporated
 into future versions of the program, allowing others to benefit from
