@@ -25,10 +25,10 @@ __ https://www.zap.org.au/
 Version 7.15 (not yet released)
 -------------------------------
 
-Updated all references to GNU Gettext to version 0.20.  Updated to the
-latest snapshot of the Gnulib GNU Portability Library.  Also updated the
-`INSTALL` file to list the latest tested versions of operating systems,
-including a new listing for Haiku R1/beta2.
+Updated to GNU Gettext 0.20 or later.  Updated to the latest snapshot of
+the Gnulib GNU Portability Library.  Also updated the `INSTALL` file to
+list the latest tested versions of operating systems, including a new
+listing for Haiku R1/beta2.
 
 
 Version 7.14 (9th January, 2020)
