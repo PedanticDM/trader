@@ -2,7 +2,7 @@
 # *                                                                       *
 # *          Brazilian Portuguese Translations for Star Traders           *
 # *        Traduções em português brasileiro para o pacote trader         *
-# *                 Copyright (C) 2019-20, John Zaitseff                  *
+# *                 Copyright (C) 2019-21, John Zaitseff                  *
 # *                                                                       *
 # *************************************************************************
 #
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.15\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2020-01-09 08:05+1100\n"
-"PO-Revision-Date: 2020-01-09 10:21+1100\n"
+"POT-Creation-Date: 2021-01-07 17:06+1100\n"
+"PO-Revision-Date: 2021-01-07 16:58+1100\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldpbr-translation@lists.sourceforge.net>\n"
 "Language: pt_BR\n"

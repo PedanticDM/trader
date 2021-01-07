@@ -1,21 +1,21 @@
 # *************************************************************************
 # *                                                                       *
 # *              English (US) Translations for Star Traders               *
-# *                Copyright (C) 1990-2020, John Zaitseff                 *
+# *                Copyright (C) 1990-2021, John Zaitseff                 *
 # *                                                                       *
 # *************************************************************************
 #
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-2020.
+#   John Zaitseff <J.Zaitseff@zap.org.au>, 2011-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.15\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2020-01-09 08:05+1100\n"
-"PO-Revision-Date: 2020-01-09 10:21+1100\n"
+"POT-Creation-Date: 2021-01-07 17:06+1100\n"
+"PO-Revision-Date: 2021-01-07 16:56+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (US) <(nothing)>\n"
 "Language: en_US\n"
