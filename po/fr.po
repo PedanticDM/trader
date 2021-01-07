@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.15\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2021-01-07 17:06+1100\n"
+"POT-Creation-Date: 2021-01-07 18:59+1100\n"
 "PO-Revision-Date: 2021-01-07 16:57+1100\n"
 "Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -50,14 +50,6 @@ msgstr "Jouer à Star Traders, un simple jeu de commerce interstellaire"
 #: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
 msgstr "jeu;interstellaire;commerce;stratégie;"
-
-#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
-#. Entry Specification states it is translatable, but unless you provide a
-#. matching icon, please leave it as "trader": this will use trader.svg
-#. and the various trader.png files in the data source code directory.
-#: data/trader.desktop.in:32
-msgid "trader"
-msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
@@ -1713,175 +1705,186 @@ msgstr "xwcrtomb: NUL"
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: « %lc »"
 
-#: lib/getopt.c:278 lib/obsolete-strings.c:45
+#: lib/getopt.c:278 lib/obsolete-strings.c:63
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: l'option « %s%s » est ambiguë\n"
 
-#: lib/getopt.c:284 lib/obsolete-strings.c:47
+#: lib/getopt.c:284 lib/obsolete-strings.c:65
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: l'option « %s%s » est ambiguë; les possibilités sont:"
 
-#: lib/getopt.c:319 lib/obsolete-strings.c:49
+#: lib/getopt.c:319 lib/obsolete-strings.c:67
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: option « %s%s » non reconnue\n"
 
-#: lib/getopt.c:345 lib/obsolete-strings.c:51
+#: lib/getopt.c:345 lib/obsolete-strings.c:69
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
 msgstr "%s: l'option « %s%s » n'accepte pas d'argument\n"
 
-#: lib/getopt.c:360 lib/obsolete-strings.c:53
+#: lib/getopt.c:360 lib/obsolete-strings.c:71
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
 msgstr "%s: l'option « %s%s » exige un argument\n"
 
-#: lib/getopt.c:621 lib/obsolete-strings.c:55
+#: lib/getopt.c:621 lib/obsolete-strings.c:73
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: option invalide -- « %c »\n"
 
-#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:57
+#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:75
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: l'option exige un argument -- « %c »\n"
 
+#. TRANSLATORS: Older versions of the GNU Gettext library utilities
+#. treat the Icon value in data/trader.desktop.in as a translatable
+#. string.  That string, the name of the icon to use, is defined here
+#. for those older versions of xgettext(1).  Unless you provide a
+#. matching icon, please leave it as "trader": this will use
+#. trader.svg and the various trader.png files in the data source
+#. code directory.
+#: lib/obsolete-strings.c:48
+msgid "trader"
+msgstr "trader"
+
 #. TRANSLATORS: These strings are used in older versions of various
 #. libraries, such as the GNU C Library as released with various
 #. Linux distributions.
-#: lib/obsolete-strings.c:44
+#: lib/obsolete-strings.c:62
 #, c-format
 msgid "%s: option `%s%s' is ambiguous\n"
 msgstr "%s: l'option « %s%s » est ambiguë\n"
 
-#: lib/obsolete-strings.c:46
+#: lib/obsolete-strings.c:64
 #, c-format
 msgid "%s: option `%s%s' is ambiguous; possibilities:"
 msgstr "%s: l'option « %s%s » est ambiguë; les possibilités sont:"
 
-#: lib/obsolete-strings.c:48
+#: lib/obsolete-strings.c:66
 #, c-format
 msgid "%s: unrecognized option `%s%s'\n"
 msgstr "%s: option « %s%s » non reconnue\n"
 
-#: lib/obsolete-strings.c:50
+#: lib/obsolete-strings.c:68
 #, c-format
 msgid "%s: option `%s%s' doesn't allow an argument\n"
 msgstr "%s: l'option « %s%s » n'accepte pas d'argument\n"
 
-#: lib/obsolete-strings.c:52
+#: lib/obsolete-strings.c:70
 #, c-format
 msgid "%s: option `%s%s' requires an argument\n"
 msgstr "%s: l'option « %s%s » exige un argument\n"
 
-#: lib/obsolete-strings.c:54
+#: lib/obsolete-strings.c:72
 #, c-format
 msgid "%s: invalid option -- `%c'\n"
 msgstr "%s: option invalide -- « %c »\n"
 
-#: lib/obsolete-strings.c:56
+#: lib/obsolete-strings.c:74
 #, c-format
 msgid "%s: option requires an argument -- `%c'\n"
 msgstr "%s: l'option exige un argument -- « %c »\n"
 
-#: lib/obsolete-strings.c:59
+#: lib/obsolete-strings.c:77
 #, c-format
 msgid "%s: option `%s' is ambiguous; possibilities:"
 msgstr "%s: l'option « %s » est ambiguë; les possibilités sont:"
 
-#: lib/obsolete-strings.c:60
+#: lib/obsolete-strings.c:78
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: l'option « %s » est ambiguë; les possibilités sont:"
 
-#: lib/obsolete-strings.c:61
+#: lib/obsolete-strings.c:79
 #, c-format
 msgid "%s: option `%s' is ambiguous\n"
 msgstr "%s: l'option « %s » est ambiguë\n"
 
-#: lib/obsolete-strings.c:62
+#: lib/obsolete-strings.c:80
 #, c-format
 msgid "%s: option '%s' is ambiguous\n"
 msgstr "%s: l'option « %s » est ambiguë\n"
 
-#: lib/obsolete-strings.c:63
+#: lib/obsolete-strings.c:81
 #, c-format
 msgid "%s: option `--%s' doesn't allow an argument\n"
 msgstr "%s: l'option « --%s » n'accepte pas d'argument\n"
 
-#: lib/obsolete-strings.c:64
+#: lib/obsolete-strings.c:82
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: l'option « --%s » n'accepte pas d'argument\n"
 
-#: lib/obsolete-strings.c:65
+#: lib/obsolete-strings.c:83
 #, c-format
 msgid "%s: option `%c%s' doesn't allow an argument\n"
 msgstr "%s: l'option « %c%s » n'accepte pas d'argument\n"
 
-#: lib/obsolete-strings.c:66
+#: lib/obsolete-strings.c:84
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: l'option « %c%s » n'accepte pas d'argument\n"
 
-#: lib/obsolete-strings.c:67
+#: lib/obsolete-strings.c:85
 #, c-format
 msgid "%s: option `--%s' requires an argument\n"
 msgstr "%s: l'option « --%s » exige un argument\n"
 
-#: lib/obsolete-strings.c:68
+#: lib/obsolete-strings.c:86
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
 msgstr "%s: l'option « --%s » exige un argument\n"
 
-#: lib/obsolete-strings.c:69
+#: lib/obsolete-strings.c:87
 #, c-format
 msgid "%s: unrecognized option `--%s'\n"
 msgstr "%s: option « --%s » non reconnue\n"
 
-#: lib/obsolete-strings.c:70
+#: lib/obsolete-strings.c:88
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: option « --%s » non reconnue\n"
 
-#: lib/obsolete-strings.c:71
+#: lib/obsolete-strings.c:89
 #, c-format
 msgid "%s: unrecognized option `%c%s'\n"
 msgstr "%s: option « %c%s » non reconnue\n"
 
-#: lib/obsolete-strings.c:72
+#: lib/obsolete-strings.c:90
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: option « %c%s » non reconnue\n"
 
-#: lib/obsolete-strings.c:73
+#: lib/obsolete-strings.c:91
 #, c-format
 msgid "%s: option `-W %s' is ambiguous\n"
 msgstr "%s: l'option « -W %s » est ambiguë\n"
 
-#: lib/obsolete-strings.c:74
+#: lib/obsolete-strings.c:92
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: l'option « -W %s » est ambiguë\n"
 
-#: lib/obsolete-strings.c:75
+#: lib/obsolete-strings.c:93
 #, c-format
 msgid "%s: option `-W %s' doesn't allow an argument\n"
 msgstr "%s: l'option « -W %s » n'accepte pas d'argument\n"
 
-#: lib/obsolete-strings.c:76
+#: lib/obsolete-strings.c:94
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: l'option « -W %s » n'accepte pas d'argument\n"
 
-#: lib/obsolete-strings.c:77
+#: lib/obsolete-strings.c:95
 #, c-format
 msgid "%s: option `-W %s' requires an argument\n"
 msgstr "%s: l'option « -W %s » exige un argument\n"
 
-#: lib/obsolete-strings.c:78
+#: lib/obsolete-strings.c:96
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: l'option « -W %s » exige un argument\n"
