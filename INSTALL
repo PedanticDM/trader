@@ -208,36 +208,37 @@ tested with this version of Star Traders:
 =====================  ======  =====  ========================
 Linux distribution     Arch    Glibc  Compiler
 =====================  ======  =====  ========================
-Debian GNU/Linux Sid   x86_64  2.30   GNU C Compiler 9.3.0
-Debian GNU/Linux Sid   x86_64  2.30   Clang (LLVM) 9.0.1
-Debian GNU/Linux Sid   i686    2.30   GNU C Compiler 9.3.0
-Debian GNU/Linux Sid   i686    2.30   Clang (LLVM) 9.0.1
+Debian GNU/Linux Sid   x86_64  2.31   GNU C Compiler 10.2.1
+Debian GNU/Linux Sid   x86_64  2.31   Clang (LLVM) 11.0.1
+Debian GNU/Linux Sid   i686    2.31   GNU C Compiler 10.2.1
+Debian GNU/Linux Sid   i686    2.31   Clang (LLVM) 11.0.1
 Debian GNU/Linux 10.3  x86_64  2.28   GNU C Compiler 8.3.0
 Debian GNU/Linux 10.3  x86_64  2.28   Clang (LLVM) 7.0.1
+Ubuntu 20.10           x86_64  2.32   GNU C Compiler 10.2.0
+Ubuntu 20.10           x86_64  2.32   Clang (LLVM) 11.0.0
+Ubuntu 20.10           x86_64  2.32   NVIDIA HPC SDK 20.11
 Ubuntu 20.04 LTS       x86_64  2.31   GNU C Compiler 9.3.0
 Ubuntu 20.04 LTS       x86_64  2.31   Clang (LLVM) 10.0.0
-Ubuntu 20.04 LTS       x86_64  2.31   Portland PGI C/C++ 19.10
-Fedora 32              x86_64  2.31   GNU C Compiler 10.0.1
-CentOS 8.1             x86_64  2.28   GNU C Compiler 8.3.1
-CentOS 7.8             x86_64  2.17   GNU C Compiler 4.8.5
-CentOS 6.10            x86_64  2.12   GNU C Compiler 4.4.7
-CentOS 6.10            x86_64  2.12   Intel C/C++ 19.0.3.199
-OpenSUSE Leap 15.1     x86_64  2.26   GNU C Compiler 7.4.1
+Fedora 33              x86_64  2.32   GNU C Compiler 10.2.1
+CentOS 8.3             x86_64  2.28   GNU C Compiler 8.3.1
+CentOS 8.3             x86_64  2.28   Intel C/C++ 19.1.2.254
+CentOS 7.9             x86_64  2.17   GNU C Compiler 4.8.5
+OpenSUSE Leap 15.2     x86_64  2.26   GNU C Compiler 7.5.0
 =====================  ======  =====  ========================
 
 =======================  ======  ============================  ============
 Operating system         Arch    Compiler                      Notes
 =======================  ======  ============================  ============
-FreeBSD 12.1             x86_64  Clang (LLVM) 8.0.1            [#freebsd1]_
-NetBSD 9.0               x86_64  GNU C Compiler 7.4.0          [#netbsd1]_
-macOS 10.15              x86_64  Apple Clang (LLVM) 11.0.0     [#macos1]_
-macOS 10.15              x86_64  Apple Clang (LLVM) 11.0.0     [#macos2]_
+FreeBSD 12.2             x86_64  Clang (LLVM) 10.0.1           [#freebsd1]_
+NetBSD 9.1               x86_64  GNU C Compiler 7.5.0          [#netbsd1]_
+macOS 11.0               x86_64  Apple Clang (LLVM) 11.0.0     [#macos1]_
+macOS 11.0               x86_64  Apple Clang (LLVM) 11.0.0     [#macos2]_
 Solaris 11.4 (x86_64)    x86_64  GNU C Compiler 7.3.0          [#solaris1]_
 Solaris 11.4 (x86_64)    i386    Oracle Developer Studio 12.6  [#solaris2]_
 Solaris 11.4 (x86_64)    x86_64  Oracle Developer Studio 12.6  [#solaris3]_
 Haiku R1/beta2           x86_64  GNU C Compiler 8.3.0
-Cygwin 3.1.2 (Win7 SP1)  i686    GNU C Compiler 7.4.0
-Cygwin 3.1.2 (Win10)     x86_64  GNU C Compiler 7.4.0
+Cygwin 3.1.7 (Win10)     x86_64  GNU C Compiler 10.2.0
+Cygwin 3.1.7 (Win7 SP1)  i686    GNU C Compiler 10.2.0
 =======================  ======  ============================  ============
 
 Notes:
@@ -285,8 +286,8 @@ list is almost certainly not exhaustive:
 ================  ======  ====================  ============
 Operating system   Arch   Compiler              Notes
 ================  ======  ====================  ============
-OpenBSD 6.6       x86_64  GNU C Compiler 4.2.1  [#openbsd1]_
-OpenBSD 6.6       x86_64  Clang (LLVM) 8.0.1    [#openbsd1]_
+OpenBSD 6.8       x86_64  GNU C Compiler 4.2.1  [#openbsd1]_
+OpenBSD 6.8       x86_64  Clang (LLVM) 10.0.1   [#openbsd1]_
 ================  ======  ====================  ============
 
 Notes:
