@@ -41,8 +41,10 @@ trader_SOURCES	= \
 	utils.c		utils.h		\
 			system.h
 
-trader_CPPFLAGS	= -I$(top_builddir)/lib -I$(top_srcdir)/lib	\
+trader_CPPFLAGS	= -I$(top_builddir)/lib -I$(top_srcdir)/lib		\
 		  @CURSES_CFLAGS@ -DLOCALEDIR=\"$(localedir)\"
-trader_LDADD	= @CURSES_LIBS@ $(top_builddir)/lib/libgnu.a @LIBICONV@ @LIBINTL@
+trader_LDADD	= @CURSES_LIBS@ $(top_builddir)/lib/libgnu.a		\
+		  @LIB_HARD_LOCALE@ @LIB_MBRTOWC@ @LIB_SETLOCALE_NULL@	\
+		  @LIBICONV@ @LIBINTL@
 
 EXTRA_DIST	= README
