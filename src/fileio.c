@@ -444,7 +444,6 @@ bool save_game (int num)
     char *codeset;
     int saved_errno;
     char *prev_locale;
-    struct stat statbuf;
     int i, j, x, y;
     unsigned int crypt_key;
     unsigned int *crypt_key_p;
@@ -466,25 +465,19 @@ bool save_game (int num)
     // Create the data directory, if needed
     data_dir = data_directory();
     if (data_dir != NULL) {
-	if (mkdir(data_dir, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
+	if (xmkdir(data_dir, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
+	    // Data directory could not be created
 	    saved_errno = errno;
-	    if (saved_errno == EEXIST && stat(data_dir, &statbuf) == 0
-		&& S_ISDIR(statbuf.st_mode)) {
-		;	// Do nothing: directory already exists
-	    } else {
-		// Data directory could not be created
-		txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
-			 attr_error_title, attr_error_highlight,
-			 attr_error_normal, 0, attr_error_waitforkey,
-			 _("  Game Not Saved  "),
-			 _("Game %d could not be saved to disk.\n\n"
-			   "^{Directory %s: %s^}"), num, data_dir,
-			 strerror(saved_errno));
+	    txdlgbox(MAX_DLG_LINES, 60, 7, WCENTER, attr_error_window,
+		     attr_error_title, attr_error_highlight, attr_error_normal,
+		     0, attr_error_waitforkey, _("  Game Not Saved  "),
+		     _("Game %d could not be saved to disk.\n\n"
+		       "^{Directory %s: %s^}"), num, data_dir,
+		     strerror(saved_errno));
 
-		free(buf);
-		free(encbuf);
-		return false;
-	    }
+	    free(buf);
+	    free(encbuf);
+	    return false;
 	}
     }
 

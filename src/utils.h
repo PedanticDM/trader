@@ -325,6 +325,20 @@ extern char *unscramble (char *restrict dest, const char *restrict src,
 ************************************************************************/
 
 /*
+  Function:   xmkdir   - Check and create directory with its parents
+  Parameters: pathname - Directory to create
+              mode     - Mode for any new directories
+  Returns:    int      - 0 on success, -1 if an error occurred
+
+  This function checks whether pathname exists and is a directory: if so,
+  0 is returned.  Otherwise, it creates the directory and any parents
+  that do not already exist.  If an error occurs, -1 is returned and
+  errno is set appropriately.
+*/
+extern int xmkdir (const char *pathname, mode_t mode);
+
+
+/*
   Function:   xmalloc - Allocate a new block of memory, with checking
   Parameters: size    - Size of new block of memory in bytes
   Returns:    void *  - Pointer to new block of memory

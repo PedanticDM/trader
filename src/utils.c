@@ -967,7 +967,7 @@ size_t b64encode (const void *restrict in, size_t inlen,
 
     if (padding > 0) {
 	assert(count + 2 < outlen);
-	for (; padding < 3; padding++) {
+	for ( ; padding < 3; padding++) {
 	    *u_out++ = SCRAMBLE_PAD_CHAR;
 	    count++;
 	}
@@ -1065,6 +1065,67 @@ ssize_t b64decode (const void *restrict in, size_t inlen,
 ************************************************************************/
 
 // These functions are documented in the file "utils.h"
+
+
+/***********************************************************************/
+// xmkdir: Check and create directory with its parents
+
+int xmkdir (const char *pathname, mode_t mode)
+{
+    const char *dirsep = DIRSEP;
+    struct stat statbuf;
+    char *pathcopy;
+    char *pcomp, *pend;
+    int ret;
+
+
+    assert(strlen(dirsep) == 1);
+
+    if (pathname == NULL || *pathname == '\0') {
+	errno = ENOENT;				// As documented by POSIX
+	return -1;
+    }
+
+    // Check that pathname already exists and is a directory
+    if (stat(pathname, &statbuf) == 0) {
+	if (S_ISDIR(statbuf.st_mode)) {
+	    return 0;
+	} else {
+	    errno = ENOTDIR;
+	    return -1;
+	}
+    }
+
+    // Try creating the directory
+    ret = mkdir(pathname, mode);
+    if (ret == 0 || (errno != ENOENT && errno != ENOTDIR)) {
+	return ret;
+    }
+
+    // Try creating directory components, except the last, one by one
+    pathcopy = xstrdup(pathname);
+    pcomp = pend = pathcopy;
+    for ( ; *pend != '\0'; pend++) {
+	if (*pend == dirsep[0] && pcomp != pend) {
+	    *pend = '\0';
+
+	    ret = mkdir(pathcopy, mode);
+	    if (ret != 0 && errno != EEXIST) {
+		free(pathcopy);
+		return ret;
+	    }
+
+	    *pend = dirsep[0];
+	    pcomp = pend + 1;
+	}
+    }
+
+    // Try creating the last directory component
+    ret = mkdir(pathcopy, mode);
+
+    free(pathcopy);
+    return ret;
+}
 
 
 /***********************************************************************/
