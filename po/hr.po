@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.15\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2021-01-07 23:30+1100\n"
+"POT-Creation-Date: 2021-01-12 09:50+1100\n"
 "PO-Revision-Date: 2021-01-07 16:57+1100\n"
 "Last-Translator: Tomislav Krznar <tomislav.krznar@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -1238,12 +1238,12 @@ msgstr "%s: spremljena s nekompatibilnim kodiranjem znakova"
 msgid "%s: illegal or missing field on line %d"
 msgstr "%s: nedozvoljeno ili nedostaje polje u retku %d"
 
-#: src/fileio.c:479 src/fileio.c:501
+#: src/fileio.c:473 src/fileio.c:494
 #, c-format
 msgid "  Game Not Saved  "
 msgstr "  Igra nije spremljena  "
 
-#: src/fileio.c:480
+#: src/fileio.c:474
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1254,7 +1254,7 @@ msgstr ""
 "\n"
 "^{Direktorij %s: %s^}"
 
-#: src/fileio.c:502
+#: src/fileio.c:495
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1675,17 +1675,17 @@ msgstr ": "
 msgid "out of memory"
 msgstr "nema dovoljno memorije"
 
-#: src/utils.c:1174
+#: src/utils.c:1235
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s”"
 
-#: src/utils.c:1214
+#: src/utils.c:1275
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1219
+#: src/utils.c:1280
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc”"
