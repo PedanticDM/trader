@@ -27,9 +27,10 @@ Version 7.15 (not yet released)
 
 Changed the default location where game files are saved from `~/.trader`
 to `~/.local/share/trader`, so as to follow the `XDG Base Directory
-Specification`__.  If set, the ``XDG_DATA_HOME`` environment variable
-will override this location.  If the `~/.trader` directory is already
-present, it will continue to be used.  Updated the manual page to suit.
+Specification`__.  If set to an absolute path, the ``XDG_DATA_HOME``
+environment variable will override this location.  If the `~/.trader`
+directory is already present, it will continue to be used.  Updated the
+manual page to suit.
 
 __ https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
