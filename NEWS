@@ -22,8 +22,8 @@ __ https://www.zap.org.au/
 .. contents::
 
 
-Version 7.15 (not yet released)
--------------------------------
+Version 7.15 (12th January, 2021)
+---------------------------------
 
 Changed the default location where game files are saved from `~/.trader`
 to `~/.local/share/trader`, so as to follow the `XDG Base Directory
