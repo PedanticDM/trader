@@ -254,11 +254,7 @@ Notes:
    packages installed with ``pkgin``\(1) (or ``pkg_add``\(1) in older
    versions of NetBSD), using::
 
-        ./configure --with-libiconv-prefix=/usr/pkg  \
-                    --with-libintl-prefix=/usr/pkg   \
-                    --with-ncursesw --with-ncurses   \
-                    CURSES_CFLAGS=-I/usr/pkg/include \
-                    LDFLAGS=-L/usr/pkg/lib
+        ./configure LDFLAGS=-L/usr/pkg/lib
 
 .. [#macos1] macOS with Xcode command line tools, with the ``gettext``
    package installed with Homebrew, using::
