@@ -28,6 +28,7 @@
 
 
 dist_desktop_DATA       = trader.desktop
+dist_appdata_DATA       = trader.appdata.xml
 
 icons16dir              = ${iconsdir}/16x16/apps
 icons22dir              = ${iconsdir}/22x22/apps
@@ -55,8 +56,12 @@ dist_iconsscalable_DATA = trader.svg
 
 EXTRA_DIST = \
 	README			\
-	trader.desktop.in
+	trader.desktop.in	\
+	trader.appdata.xml.in
 
 
 trader.desktop: trader.desktop.in
 	$(top_srcdir)/build-aux/msgfmt-desktop -d $(top_srcdir)/po $< $@
+
+trader.appdata.xml: trader.appdata.xml.in
+	$(top_srcdir)/build-aux/msgfmt-appdata -d $(top_srcdir)/po $< $@

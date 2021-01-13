@@ -25,7 +25,9 @@ __ https://www.zap.org.au/
 Version 7.16 (not yet released)
 -------------------------------
 
-(No changes yet)
+Added an application metadata file that conforms to the AppStream 0.12
+specification.  Updated all translations to suit, using parts of existing
+strings.
 
 
 Version 7.15 (12th January, 2021)

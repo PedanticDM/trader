@@ -33,6 +33,7 @@ SUBDIRS = lib src po data doc m4
 # Additional files to distribute
 EXTRA_DIST = \
 	build-aux/bootstrap		\
+	build-aux/msgfmt-appdata	\
 	build-aux/msgfmt-desktop	\
 	lib/obsolete-strings.c		\
 	lib/xopen-source.h

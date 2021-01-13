@@ -1,7 +1,9 @@
 Makefile.am			ident
 /configure.ac			ident
 /build-aux/bootstrap		ident
+/build-aux/msgfmt-appdata	ident
 /build-aux/msgfmt-desktop	ident
+/data/trader.appdata.xml.in	ident
 /data/trader.desktop.in		ident
 /data/trader.svg		ident
 /doc/trader.*			ident

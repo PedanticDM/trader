@@ -28,6 +28,7 @@
 
 # Data files from Star Traders
 data/trader.desktop.in
+data/trader.appdata.xml.in
 
 # Source files from Star Traders
 src/trader.c
