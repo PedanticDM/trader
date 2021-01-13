@@ -241,8 +241,6 @@ Cygwin 3.1.7 (Win10)     x86_64  GNU C Compiler 10.2.0
 Cygwin 3.1.7 (Win7 SP1)  i686    GNU C Compiler 10.2.0
 =======================  ======  ============================  ============
 
-Notes:
-
 .. [#freebsd1] FreeBSD with the ``gettext``, ``gettext-runtime``,
    ``gettext-tools`` and ``libiconv`` binary packages installed with
    ``pkg``\(1), using::
@@ -285,8 +283,6 @@ Operating system   Arch   Compiler              Notes
 OpenBSD 6.8       x86_64  GNU C Compiler 4.2.1  [#openbsd1]_
 OpenBSD 6.8       x86_64  Clang (LLVM) 10.0.1   [#openbsd1]_
 ================  ======  ====================  ============
-
-Notes:
 
 .. [#openbsd1] The OpenBSD C library does not include
    :code:`<monetary.h>` nor its associated functions, particularly
