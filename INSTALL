@@ -309,12 +309,13 @@ so:
 
 1.  `Autoconf`__ v2.69 or later
 2.  `Automake`__ v1.15 or later
-3.  `pkg-config`__ v0.9.0 or later
+3.  `pkgconf`__ v0.9.0 or later, or `pkg-config`__ v0.29 or later
 4.  `GNU Portability Library`__
 
 __ https://www.gnu.org/software/autoconf/
 __ https://www.gnu.org/software/automake/
-__ https://pkg-config.freedesktop.org/
+__ https://git.sr.ht/~kaniini/pkgconf
+__ https://www.freedesktop.org/wiki/Software/pkg-config/
 __ https://www.gnu.org/software/gnulib/
 
 The GNU Portability Library may be installed by retrieving the latest
