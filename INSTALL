@@ -143,11 +143,11 @@ This feature requires GNU Make and allows you to keep the source code
 tree from being modified by the compilation process.  To use this option,
 create a separate `build` directory, then run ``configure``.  For
 example, if you placed the Star Traders source code tree in
-`$HOME/src/trader-7.15`, you could run something like::
+`$HOME/src/trader-7.16`, you could run something like::
 
-    mkdir $HOME/build/trader-build-7.15
-    cd $HOME/build/trader-build-7.15
-    $HOME/src/trader-7.15/configure
+    mkdir $HOME/build/trader-build-7.16
+    cd $HOME/build/trader-build-7.16
+    $HOME/src/trader-7.16/configure
 
 Once again, the `Autoconf manual`__ describes these options (and many
 others).

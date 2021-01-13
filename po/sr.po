@@ -13,10 +13,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.15\n"
+"Project-Id-Version: trader 7.16\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
 "POT-Creation-Date: 2021-01-12 11:31+1100\n"
-"PO-Revision-Date: 2021-01-07 17:00+1100\n"
+"PO-Revision-Date: 2021-01-14 07:01+1100\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"

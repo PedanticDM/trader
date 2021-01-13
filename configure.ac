@@ -26,7 +26,7 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-AC_INIT([Star Traders], [7.15], [J.Zaitseff@zap.org.au], [trader],
+AC_INIT([Star Traders], [7.16], [J.Zaitseff@zap.org.au], [trader],
 	[https://www.zap.org.au/projects/trader/])
 AC_DEFINE([PACKAGE_AUTHOR], ["John Zaitseff"], [Package author])
 
