@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.16\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2021-01-12 11:31+1100\n"
-"PO-Revision-Date: 2021-01-14 07:00+1100\n"
+"POT-Creation-Date: 2021-01-14 08:36+1100\n"
+"PO-Revision-Date: 2021-01-14 08:43+1100\n"
 "Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -29,12 +29,12 @@ msgstr ""
 #. your own language (recommended) or keep it the same as the English
 #. version.  Feel free to look through other translations to see how
 #. others have done this.
-#: data/trader.desktop.in:23 src/intf.c:611
+#: data/trader.desktop.in:23 data/trader.appdata.xml.in:26 src/intf.c:611
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:24
+#: data/trader.desktop.in:24 data/trader.appdata.xml.in:27
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "Spielen Sie Star Trader, ein einfaches Spiel um interstellaren Handel"
 
@@ -43,6 +43,18 @@ msgstr "Spielen Sie Star Trader, ein einfaches Spiel um interstellaren Handel"
 #: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
 msgstr "spiel;universum;galaxie;handel;strategie;"
+
+#: data/trader.appdata.xml.in:29
+msgid ""
+"Star Traders is a simple game of interstellar trading, where the objective is to create companies, buy and sell shares, borrow "
+"and repay money, in order to become the wealthiest player (the winner)."
+msgstr ""
+"Star Traders ist ein einfaches Spiel um interstellaren Handel.  Das Ziel des Spiels ist es, Firmen zu gründen, Aktien zu kaufen "
+"und verkaufen und Geld zu leihen und zurück zu zahlen um der reichste Spieler und damit der Gewinner zu werden."
+
+#: data/trader.appdata.xml.in:48
+msgid "John Zaitseff"
+msgstr "John Zaitseff"
 
 #: src/trader.c:235
 #, c-format
