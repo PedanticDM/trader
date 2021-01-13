@@ -54,7 +54,7 @@ and installation:
 5.  The GNU ``libiconv`` library for supporting multiple character
     encodings, if required by the GNU Gettext library.  This is not
     needed on systems with the GNU C Library (``glibc``) version 2.2 or
-    later, or on Mac OS X (now called macOS) 10.3 or newer.
+    later, or on macOS 10.3 or newer.
 
 6.  Development libraries and header files for all of the above.  On many
     systems, these files are part of ``XXX-dev`` or ``XXX-devel``
