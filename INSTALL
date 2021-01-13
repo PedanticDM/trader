@@ -249,8 +249,7 @@ Cygwin 3.1.7 (Win7 SP1)  i686    GNU C Compiler 10.2.0
                     --with-libintl-prefix=/usr/local
 
 .. [#netbsd1] NetBSD with the ``gettext``, ``libiconv`` and ``ncursesw``
-   packages installed with ``pkgin``\(1) (or ``pkg_add``\(1) in older
-   versions of NetBSD), using::
+   packages installed with ``pkgin``\(1), using::
 
         ./configure LDFLAGS=-L/usr/pkg/lib
 
