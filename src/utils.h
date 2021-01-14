@@ -230,6 +230,20 @@ extern int randi (int limit);
 ************************************************************************/
 
 /*
+  Function:   init_locale - Initialise locale and message catalogs
+  Parameters: (none)
+  Returns:    (nothing)
+
+  This function initialises the locale and message catalog used by this
+  program.  The message catalog must reside in the location specified
+  during "./configure" via the "--localedir" option; this location is
+  passed to this source code file as PREFIXDIR.  This function must be
+  called before using any locale or Gettext functions.
+*/
+extern void init_locale (void);
+
+
+/*
   Function:   init_locale_vars - Initialise locale-specific variables
   Parameters: (none)
   Returns:    (nothing)

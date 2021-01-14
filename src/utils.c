@@ -582,6 +582,23 @@ extern int randi (int limit)
 
 
 /***********************************************************************/
+// init_locale: Initialise locale and message catalogs
+
+extern void init_locale (void)
+{
+    // Initialise the current locale
+    if (setlocale(LC_ALL, "") == NULL) {
+	err_exit("could not set locale "
+		 "(check LANG, LC_ALL and LANGUAGE in environment)");
+    }
+
+    // Use correct message catalogs for the locale
+    bindtextdomain(PACKAGE, LOCALEDIR);
+    textdomain(PACKAGE);
+}
+
+
+/***********************************************************************/
 // init_locale_vars: Initialise locale-specific variables
 
 void init_locale_vars (void)

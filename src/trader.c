@@ -373,14 +373,7 @@ void init_program_prelim (int argc, char *argv[])
     init_program_name(argv[0]);
 
     // Initialise the locale and message catalogs
-    if (setlocale(LC_ALL, "") == NULL) {
-	err_exit("could not set locale "
-		 "(check LANG, LC_ALL and LANGUAGE in environment)");
-    }
-
-    // Use correct message catalogs for the locale
-    bindtextdomain(PACKAGE, LOCALEDIR);
-    textdomain(PACKAGE);
+    init_locale();
 }
 
 
