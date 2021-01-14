@@ -8,15 +8,16 @@
 # This file is distributed under the same license as the trader package.
 #
 # Contributors:
-#   Philipp Thomas <pth@suse.de>, 2012, 2015, 2017.
 #
+# Philipp Thomas <pth@suse.de>, 2012, 2015, 2017.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"Project-Id-Version: trader 7.10-pre2\n"
+"Project-Id-Version: trader 7.15\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2017-05-23 09:01+1000\n"
-"PO-Revision-Date: 2017-05-24 16:18+0200\n"
-"Last-Translator: Philipp Thomas <pth@suse.de>\n"
+"POT-Creation-Date: 2021-01-12 11:31+1100\n"
+"PO-Revision-Date: 2021-01-13 18:06+0100\n"
+"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -24,33 +25,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 20.12.0\n"
 
 #. TRANSLATORS: The name of the game.  You may choose to translate it into
 #. your own language (recommended) or keep it the same as the English
 #. version.  Feel free to look through other translations to see how
 #. others have done this.
-#: data/trader.desktop.in:22 src/intf.c:610
+#: data/trader.desktop.in:23 src/intf.c:611
 #, c-format
 msgid "Star Traders"
 msgstr "Star Traders"
 
-#: data/trader.desktop.in:23
+#: data/trader.desktop.in:24
 msgid "Play Star Traders, a simple game of interstellar trading"
 msgstr "Spielen Sie Star Trader, ein einfaches Spiel um interstellaren Handel"
 
 #. TRANSLATORS: A list of keywords describing Star Traders.  By all means
 #. add your own keywords!
-#: data/trader.desktop.in:26
+#: data/trader.desktop.in:27
 msgid "game;interstellar;trading;strategy;"
 msgstr "spiel;universum;galaxie;handel;strategie;"
-
-#. TRANSLATORS: This string is the name of the icon to use.  The Desktop
-#. Entry Specification states it is translatable, but unless you provide a
-#. matching icon, please leave it as "trader": this will use trader.svg
-#. and the various trader.png files in the data source code directory.
-#: data/trader.desktop.in:31
-msgid "trader"
-msgstr "trader"
 
 #: src/trader.c:235
 #, c-format
@@ -94,8 +88,8 @@ msgstr ""
 "Copyright © %s, John Zaitseff.\n"
 "\n"
 "Star Traders ist ein einfaches Spiel um interstellaren Handel.  Das Ziel\n"
-"des Spiels ist es, Firmen zu gründen, Aktien zu kaufen und verkaufen und\n"
-"Geld zu leihen und zurück zu zahlen um der reichste Spieler und damit der\n"
+"des Spiels ist es, Firmen zu gründen, Aktien zu kaufen und zu verkaufen,\n"
+"Geld zu leihen und zurück zu zahlen, um der reichste Spieler und damit der\n"
 "Gewinner zu werden.\n"
 "\n"
 "Dieses Programm ist freie Software und wird unter den Bedingungen der GNU\n"
@@ -112,7 +106,7 @@ msgstr "%s: Versuchen Sie „%s --help“ für ausführlichere Informationen.\n"
 #: src/trader.c:311
 #, c-format
 msgid "Usage: %s [OPTION ...] [GAME]\n"
-msgstr "Aufruf: %s [OPTION ...] [SPIEL]\n"
+msgstr "Aufruf: %s [OPTION …] [SPIEL]\n"
 
 #: src/trader.c:312
 #, c-format
@@ -134,10 +128,10 @@ msgid ""
 "\n"
 msgstr ""
 "Options:\n"
-"  -V, --version        Ausgabe der Versionsnummer und beenden des Spiels\n"
+"  -V, --version        Ausgabe der Versionsnummer und Beenden des Spiels\n"
 "  -h, --help           diese Hilfe ausgeben und Programm beenden\n"
 "      --no-color       keine Farben für die Ausgabe von Texten verwenden\n"
-"      --max-turn=ZAHL  die maximale Anzahl von Runden auf ZAHL setzten\n"
+"      --max-turn=ZAHL  die maximale Anzahl von Runden auf ZAHL setzen\n"
 "\n"
 
 #: src/trader.c:322
@@ -148,35 +142,35 @@ msgid ""
 "\n"
 msgstr ""
 "Wenn SPIEL als Zahl zwischen 1 und 9 angegeben wird, wird dieses Spiel\n"
-"geladen und fort geführt.  Wird SPIEL nicht angegeben, wird ein neues\n"
+"geladen und fortgeführt.  Wird SPIEL nicht angegeben, wird ein neues\n"
 "Spiel gestartet.\n"
 "\n"
 
 #. TRANSLATORS: The first %s is the proper name of the package
 #. author, John Zaitseff [IPA d͡ʒɒn ˈzaɪ̯t͡səf]; the second %s is
-#. the e-mail address for reporting bugs.  Please add ANOTHER
-#. line with the (translated) text "Report translation bugs to
-#. <ADDRESS>\n", with ADDRESS replaced with either an e-mail
+#. the email address for reporting bugs.  Please add ANOTHER line
+#. with the (translated) text "Report translation bugs to
+#. <ADDRESS>\n", with ADDRESS replaced with either an email
 #. address or web URL for reporting bugs in your translation.
 #: src/trader.c:334
 #, c-format
 msgid "Report bugs to %s <%s>.\n"
 msgstr ""
-"Berichten Sie Fehler (in Englisch) an %s <%s>.\n"
-"Fehler in der Übersetzung berichten Sie bitte an\n"
+"Melden Sie Fehler (auf Englisch) an %s <%s>.\n"
+"Fehler in der Übersetzung melden Sie bitte an\n"
 "<translation-team-de@lists.sourceforge.net>.\n"
 
-#. TRANSLATORS: %s is the e-mail address for reporting bugs.  As
+#. TRANSLATORS: %s is the email address for reporting bugs.  As
 #. with the previous string, please add ANOTHER line with the
 #. (translated) text "Report translation bugs to <ADDRESS>\n",
-#. with ADDRESS replaced with either an e-mail address or web URL
+#. with ADDRESS replaced with either an email address or web URL
 #. for reporting bugs in your translation.
 #: src/trader.c:341
 #, c-format
 msgid "Report bugs to <%s>.\n"
 msgstr ""
-"Berichten Sie Fehler (in Englisch) an <%s>.\n"
-"Fehler in der Übersetzung berichten Sie bitte an\n"
+"Melden Sie Fehler (auf Englisch) an <%s>.\n"
+"Fehler in der Übersetzung melden Sie bitte an\n"
 "<translation-team-de@lists.sourceforge.net>.\n"
 
 #. TRANSLATORS: The first %s is for packagers and may be
@@ -184,12 +178,12 @@ msgstr ""
 #: src/trader.c:346
 #, c-format
 msgid "Report %s bugs to <%s>.\n"
-msgstr "Berichen Sie %s Fehler an <%s>.\n"
+msgstr "Melden Sie %s Fehler an <%s>.\n"
 
 #: src/trader.c:349
 #, c-format
 msgid "Star Traders home page: <%s>.\n"
-msgstr "Star Traders Homepage: <%s>.\n"
+msgstr "Homepage von Star Traders: <%s>.\n"
 
 #. TRANSLATORS: The eight company names do NOT have to be literal
 #. translations of the English names.  In fact, if possible, the
@@ -203,7 +197,7 @@ msgstr "Altair AG"
 
 #: src/globals.c:48
 msgid "Betelgeuse, Ltd"
-msgstr "Beteleuse GmbH"
+msgstr "Betelgeuse GmbH"
 
 #: src/globals.c:49
 msgid "Capella Freight Co"
@@ -313,7 +307,7 @@ msgstr "Nr. 8"
 #: src/game.c:117 src/game.c:152
 #, c-format
 msgid "Loading game %d... "
-msgstr "Spiel %d wird geladen... "
+msgstr "Spiel %d wird geladen … "
 
 #: src/game.c:226
 #, c-format
@@ -323,7 +317,7 @@ msgstr "  Erster Spieler  "
 #: src/game.c:227
 #, c-format
 msgid "The first player to go is ^{%ls^}."
-msgstr "Der Spieler der anfängt ist ^{%ls^}."
+msgstr "Der Spieler, der beginnt ist ^{%ls^}."
 
 #. TRANSLATORS: The keycode <C> should be modified to
 #. match that (or those) specified with msgctxt
@@ -332,8 +326,8 @@ msgstr "Der Spieler der anfängt ist ^{%ls^}."
 #, c-format
 msgid "Enter number of players [^{1^}-^{%d^}] or ^{<C>^} to continue a game: "
 msgstr ""
-"Geben Sie die Anzahl der Spieler [^{1^}-^{%d^}] ein\n"
-"oder ^{<W>^} um ein Spiel fortzusetzen: "
+"Geben Sie die Anzahl der Spieler [^{1^}-^{%d^}]\n"
+"oder ^{<W>^} ein, um ein Spiel fortzusetzen: "
 
 #. TRANSLATORS: This string specifies the keycodes used to continue a
 #. game; these must NOT contain any numeric digit from 1 to 9.  The
@@ -349,57 +343,62 @@ msgstr "Ww"
 #, c-format
 msgid "Enter game number [^{1^}-^{9^}] or ^{<CTRL><C>^} to cancel: "
 msgstr ""
-"Geben Sie die Spielnummer [^{1^}-^{9^}] ein\n"
-"oder ^{<STRG><C>^} um abzubrechen: "
+"Geben Sie die Spielnummer [^{1^}-^{9^}]\n"
+"oder ^{<STRG><C>^} ein, um abzubrechen: "
 
 #: src/game.c:406
 #, c-format
 msgid "Please enter your name: "
 msgstr "Bitte geben Sie Ihren Namen ein: "
 
-#: src/game.c:425
+#. TRANSLATORS: Note that you should replace "Y" and "N"
+#. with the localised upper-case characters used in the
+#. "input|Yes" and "input|No" strings.  There are other
+#. strings in this game, each with "[^{Y^}/^{N^}]", that
+#. need the same replacement.
+#: src/game.c:430
 #, c-format
 msgid "Do you need any instructions? [^{Y^}/^{N^}] "
 msgstr "Brauchen Sie Instruktionen? [^{J^}/^{N^}] "
 
-#: src/game.c:443
+#: src/game.c:448
 #, c-format
 msgid "  Enter Player Names  "
 msgstr "  Eingabe der Spielernamen  "
 
-#: src/game.c:451
+#: src/game.c:456
 #, c-format, range: 1..8
 msgid "Player %d: "
 msgstr "Spieler %d: "
 
-#: src/game.c:529
+#: src/game.c:534
 #, c-format
 msgid "Does any player need instructions? [^{Y^}/^{N^}] "
 msgstr "Braucht einer der Spieler Anweisungen? [^{J^}/^{N^}] "
 
-#: src/game.c:563
+#: src/game.c:568
 #, c-format
 msgid "  Game Over  "
 msgstr "  Spielende  "
 
-#: src/game.c:564
+#: src/game.c:569
 #, c-format
 msgid "The game is over after one turn."
 msgid_plural "The game is over after %d turns."
 msgstr[0] "Das Spiel ist nach einer Runde vorbei."
 msgstr[1] "Das Spiel ist nach %d Runden vorbei."
 
-#: src/game.c:575
+#: src/game.c:580
 #, c-format
 msgid "  Total Value  "
 msgstr "  Wert des Besitzes  "
 
-#: src/game.c:577
+#: src/game.c:582
 #, c-format
 msgid "Your total value was ^{%N^}."
 msgstr "Der Wert Ihres Besitzes ist ^{%N^}."
 
-#: src/game.c:588
+#: src/game.c:593
 #, c-format
 msgid ""
 "The winner is ^{%ls^}\n"
@@ -408,7 +407,7 @@ msgstr ""
 "Der Gewinner ist ^{%ls^}\n"
 "er ist ^[*** BANKROTT ***^]"
 
-#: src/game.c:591
+#: src/game.c:596
 #, c-format
 msgid ""
 "The winner is ^{%ls^}\n"
@@ -417,14 +416,14 @@ msgstr ""
 "Der Gewinner ist ^{%ls^}\n"
 "mit einem Besitzwert von ^{%N^}."
 
-#: src/game.c:597
+#: src/game.c:602
 #, c-format
 msgid "  Game Winner  "
 msgstr "  Gewinner des Spiels  "
 
 #. TRANSLATORS: "Player" is used as a column title in a
 #. table containing all player names.
-#: src/game.c:606 src/move.c:882
+#: src/game.c:611 src/move.c:882
 #, c-format
 msgctxt "subtitle"
 msgid "Player"
@@ -433,47 +432,47 @@ msgstr "Spieler"
 #. TRANSLATORS: "Total Value" refers to the total worth
 #. (shares, cash and debt) of any given player.  %ls is the
 #. currency symbol of the current locale.
-#: src/game.c:611
+#: src/game.c:616
 #, c-format
 msgctxt "subtitle"
 msgid "Total Value (%ls)"
 msgstr "Wert des Besitzes (%ls)"
 
-#: src/game.c:645 src/game.c:695 src/exch.c:100
+#: src/game.c:650 src/game.c:700 src/exch.c:100
 #, c-format
 msgid "Player: ^{%ls^}"
 msgstr "Spieler: ^{%ls^}"
 
-#: src/game.c:648
+#: src/game.c:653
 #, c-format
 msgid "  Turn: ^{%d^}  "
 msgstr "  Runde: ^{%d^}  "
 
-#: src/game.c:649
+#: src/game.c:654
 #, c-format
 msgid "  ^[*** Last Turn ***^]  "
 msgstr "  ^[*** Letzte Runde ***^]  "
 
-#: src/game.c:693
+#: src/game.c:698
 #, c-format
 msgid "  Stock Portfolio  "
 msgstr "  Aktienportfolio  "
 
 #. TRANSLATORS: The current player is bankrupt (has no
 #. shares or cash, ie, whose total value is zero)
-#: src/game.c:702
+#: src/game.c:707
 #, c-format
 msgid "^[* * *   B A N K R U P T   * * *^]"
 msgstr "^[* * *   B A N K R O T T  * * * ^]"
 
-#: src/game.c:717 src/exch.c:112
+#: src/game.c:722 src/exch.c:112
 #, c-format
 msgid "No companies on the map"
 msgstr "Keine Firmen auf der Karte"
 
 #. TRANSLATORS: "Company" is a two-line column label in
 #. a table containing a list of companies.
-#: src/game.c:725 src/exch.c:120
+#: src/game.c:730 src/exch.c:120
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -488,7 +487,7 @@ msgstr ""
 #. percentage ownership in any given company.  The
 #. maximum column width is 10 characters (see
 #. OWNERSHIP_COLS in src/intf.h).
-#: src/game.c:732
+#: src/game.c:737
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -503,7 +502,7 @@ msgstr ""
 #. current player owns in any given company.  The
 #. maximum column width is 10 characters (see
 #. STOCK_OWNED_COLS in src/intf.h).
-#: src/game.c:739
+#: src/game.c:744
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -517,7 +516,7 @@ msgstr ""
 #. a table containing the share return as a percentage
 #. in any given company.  The maximum column width is
 #. 10 characters (see SHARE_RETURN_COLS in src/intf.h).
-#: src/game.c:746 src/exch.c:141
+#: src/game.c:751 src/exch.c:141
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -533,7 +532,7 @@ msgstr ""
 #. the current locale.  The maximum column width is 12
 #. characters INCLUDING the currency symbol (see
 #. SHARE_PRICE_COLS in src/intf.h).
-#: src/game.c:755 src/exch.c:150
+#: src/game.c:760 src/exch.c:150
 #, c-format
 msgctxt "subtitle"
 msgid ""
@@ -552,25 +551,25 @@ msgstr ""
 #.
 #. Note that some of these labels are used for both the
 #. Player Status window and the Trading Bank window.
-#: src/game.c:796
+#: src/game.c:801
 #, c-format
 msgctxt "label"
 msgid "Total value:   "
 msgstr "Gesamtwert:  "
 
-#: src/game.c:800 src/exch.c:324
+#: src/game.c:805 src/exch.c:324
 #, c-format
 msgctxt "label"
 msgid "Current cash:  "
 msgstr "Bargeld:     "
 
-#: src/game.c:807 src/exch.c:332
+#: src/game.c:812 src/exch.c:332
 #, c-format
 msgctxt "label"
 msgid "Current debt:  "
 msgstr "Schulden:    "
 
-#: src/game.c:813 src/exch.c:337
+#: src/game.c:818 src/exch.c:337
 #, c-format
 msgctxt "label"
 msgid "Interest rate: "
@@ -647,7 +646,7 @@ msgstr "Sind Sie sicher? [^{J^}/^{N^}] "
 #: src/move.c:392 src/move.c:470
 #, c-format
 msgid "Saving game %d... "
-msgstr "Spiel %d wird gespeichert... "
+msgstr "Spiel %d wird gespeichert … "
 
 #: src/move.c:700 src/move.c:708 src/move.c:1066 src/move.c:1103
 #, c-format
@@ -712,7 +711,7 @@ msgstr "Alte Aktien: "
 #: src/move.c:875
 #, c-format
 msgctxt "label"
-msgid "New Stock: "
+msgid "New stock: "
 msgstr "Neue Aktien: "
 
 #. TRANSLATORS: "Bonus" refers to the bonus cash amount paid to
@@ -934,7 +933,7 @@ msgstr "Die Bank wird Ihnen kein weiteres Geld leihen."
 #: src/exch.c:447
 #, c-format
 msgid "How much do you wish to borrow? "
-msgstr "Wie viel wollen Sie borgen? "
+msgstr "Wie viel wollen Sie leihen? "
 
 #: src/exch.c:479
 #, c-format
@@ -954,7 +953,7 @@ msgstr "  Kein Bargeld  "
 #: src/exch.c:485
 #, c-format
 msgid "You have no cash with which to repay the debt!"
-msgstr "Sie haben kein Bargeld um Ihre Schulden zu begleichen!"
+msgstr "Sie haben kein Bargeld, um Ihre Schulden zu begleichen!"
 
 #: src/exch.c:505
 #, c-format
@@ -1072,7 +1071,7 @@ msgstr "Keine erwerbbaren Aktien vorhanden."
 #: src/exch.c:724
 #, c-format
 msgid "  Insufficient Cash  "
-msgstr "  Unzureichnedes Bargeld  "
+msgstr "  Unzureichendes Bargeld  "
 
 #: src/exch.c:725
 #, c-format
@@ -1120,7 +1119,7 @@ msgstr "Wieviele Aktien wollen Sie verkaufen? "
 #: src/exch.c:805
 #, c-format
 msgid "  No Shares Issued  "
-msgstr "  Keine Aktien Ausgegeben  "
+msgstr "  Keine Aktien ausgegeben  "
 
 #. TRANSLATORS: %ls represents the company name.
 #: src/exch.c:807
@@ -1135,7 +1134,7 @@ msgstr ""
 #: src/exch.c:812
 #, c-format
 msgid "  Shares Issued  "
-msgstr "  Ausgegeben Aktien  "
+msgstr "  Ausgegebene Aktien  "
 
 #. TRANSLATORS: %ls represents the company name.
 #: src/exch.c:814
@@ -1213,7 +1212,7 @@ msgid ""
 msgstr ""
 "Spiel %d konnte nicht geladen werden.\n"
 "\n"
-"^{Spiel %s: %s^}"
+"^{Datei %s: %s^}"
 
 #: src/fileio.c:319
 #, c-format
@@ -1245,12 +1244,12 @@ msgstr "%s: unter einer inkompatiblen Zeichenkodierung abgespeichert"
 msgid "%s: illegal or missing field on line %d"
 msgstr "%s: unzulässiges oder fehlendes Feld in Zeile %d"
 
-#: src/fileio.c:479 src/fileio.c:501
+#: src/fileio.c:473 src/fileio.c:494
 #, c-format
 msgid "  Game Not Saved  "
-msgstr "  Spiel Nicht Gespeichert  "
+msgstr "  Spiel nicht gespeichert  "
 
-#: src/fileio.c:480
+#: src/fileio.c:474
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1261,7 +1260,7 @@ msgstr ""
 "\n"
 "^{Verzeichnis %s: %s^}"
 
-#: src/fileio.c:502
+#: src/fileio.c:495
 #, c-format
 msgid ""
 "Game %d could not be saved to disk.\n"
@@ -1310,7 +1309,7 @@ msgstr ""
 #. ~y       - Print the height of the galaxy map (MAX_Y) [**]
 #. ~m       - Print the number of moves available (NUMBER_MOVES) [**]
 #. ~c       - Print the maximum number of companies that can be formed (MAX_COMPANIES) [*]
-#. ~t       - Prints the default number of turns in the game (DEFAULT_MAX_TURN) [**]
+#. ~t       - Print the default number of turns in the game (DEFAULT_MAX_TURN) [**]
 #. ~1 to ~9 - Print the keycode for the N-th choice of move [***]
 #. ~M       - Print the keycode for the last choice of move [***]
 #. ~A to ~H - Print the character used to represent the company on the galaxy map [***]
@@ -1361,17 +1360,16 @@ msgid ""
 "        ^e ~. ~. ~. ~. ~. ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 msgstr ""
-"^BStar Traders^N ist  ein  einfaches  Spiel um  instellaren Handel. Das Ziel des\n"
-"Spieles ist das Anhäufen des  grösstmöglichen  Reichtums. Dies wird erreicht\n"
-"durch  das Aufbauen interstellarer Handelsrouten,  ihrer Erweiterung und dem\n"
-"Kauf von Aktien  der Firmen, die sie kontrollieren. Aktien  steigen im Wert,\n"
-"wenn sich die Tätigkeit  der Firma  erweitert. Ausserdem  erhöht  sich damit\n"
-"auch die  prozentuale Dividende. Die Spieler können  sich ausserdem Geld von\n"
-"der  Interstellaren  Handelsbank  leihen,  um  weitere Akteinkäufe zu finan-\n"
-"zieren.\n"
+"^BStar Traders^N ist ein einfaches Spiel um interstellaren Handel. Das Ziel des\n"
+"Spieles ist das Anhäufen des größtmöglichen Reichtums. Dies wird erreicht\n"
+"durch das Aufbauen interstellarer Handelsrouten, ihrer Erweiterung und dem\n"
+"Kauf von Aktien  der Firmen, die sie kontrollieren. Aktien steigen im Wert,\n"
+"wenn sich die Tätigkeit der Firma erweitert. Außerdem erhöht sich damit\n"
+"auch die prozentuale Dividende. Die Spieler können sich außerdem Geld von\n"
+"der Interstellaren Handelsbank leihen, um weitere Aktienkäufe zu finanzieren.\n"
 "\n"
-"Die Karte der Galaxie  wird dargetellt durch ein  ^B~x^N × ^B~y^N  Raster. Ein typi-\n"
-"scher Teil von ihr könnte so aussehen:\n"
+"Die Karte der Galaxie  wird durch ein ^B~x^N × ^B~y^N-Raster dargestellt. Ein\n"
+"typischer Teil von ihr könnte so aussehen:\n"
 "\n"
 "        ^e ~. ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ~. ~. ~. ~. ~. ^N        ^e ~. ^N steht für ^Bleeren Raum^N,\n"
@@ -1396,9 +1394,9 @@ msgid ""
 "will set up  an ^Boutpost^N,  not belonging  to any company.  Thus, if move ^k~3^N is\n"
 "selected on the above map, a ^o ~+ ^N would be placed at that position.\n"
 msgstr ""
-"Der Computer wählt zufällig ^B~m^N Züge (bezeichnet mit ^k~1^N bis ^k~M^N)  trägt  sie auf\n"
-"der Karte  ein. Um eine der hervorgehobenen  Positionen auszuwählen, drücken\n"
-"Sie  den  entsprechenden  Buchstaben. Einige der Züge  auf der Karte könnten\n"
+"Der Computer wählt zufällig ^B~m^N Züge (bezeichnet mit ^k~1^N bis ^k~M^N) und trägt sie auf\n"
+"der Karte ein. Um eine der hervorgehobenen Positionen auszuwählen, drücken\n"
+"Sie den entsprechenden Buchstaben. Einige der Züge auf der Karte könnten\n"
 "z.B. so aussehen:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1407,9 +1405,9 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ~. ^N\n"
 "\n"
-"Die Wahl einer Position die ^Bnicht^N bei einem Stern ist (so wie Züge ^k~1^N, ^k~3^N oder\n"
-"^k~5^N), erstellt einen Aussenposten,  der zu keiner Firma gehört. Wenn daher auf\n"
-"der obigen Karte Zug ^k~3^N gewählt wird,  würde ein  ^o + ^N  an dieser Position er-\n"
+"Die Wahl einer Position, die ^Bnicht^N bei einem Stern ist (so wie Züge ^k~1^N, ^k~3^N oder\n"
+"^k~5^N), erstellt einen Außenposten,  der zu keiner Firma gehört. Wenn daher auf\n"
+"der obigen Karte Zug ^k~3^N gewählt wird, würde ein ^o + ^N  an dieser Position er-\n"
 "scheinen.\n"
 
 #: src/help.c:150
@@ -1431,18 +1429,18 @@ msgid ""
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 msgstr ""
 "Wird andererseits eine Position in der Nähe eines Sterns (oder eines anderen\n"
-"Handelspostens)  gewählt, wird  eine  ^BFirma^N  gegründet und ihr Buchstabe er-\n"
+"Handelspostens) gewählt, wird  eine ^BFirma^N  gegründet und ihr Buchstabe er-\n"
 "scheint auf der Karte. Als Belohnung für die Firmengründung erhalten Sie die\n"
 "ersten fünf Aktien. Bis zu ^B~c^N Firmen können so gegründet werden.\n"
 "\n"
 "Wird eine Position in der Nachbarschaft einer Firma gewählt, erweitert diese\n"
 "ihr Geschäft um ein Feld. Dies erhöht den Preis ihrer Aktien und damit Ihren\n"
-"Gewinnanteil. Wäre  die Konstellation also  wie unten, würde  die Wahl von ^k~6^N\n"
+"Gewinnanteil. Wäre  die Konstellation also  wie unten, würde die Wahl von ^k~6^N\n"
 "oder ^k~8^N die Frachtroute der Firma ^B~B^N's ausweiten:\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^o~+^e ~. ~. ^k~6^e ~. ~. ^N\n"
-"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Zug ^k~6^N oder ^k~8^N vergrössert Firma ^B~B^N.\n"
+"        ^e ~. ^s~*^e ~. ~. ~. ~. ^c~B^e ^c~B^e ^c~B^e ^N        Zug ^k~6^N oder ^k~8^N vergrößert Firma ^B~B^N.\n"
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 
@@ -1464,8 +1462,8 @@ msgid ""
 "more valuable:  the company's share price  will increase by a greater amount\n"
 "than it would for outposts not next to stars.\n"
 msgstr ""
-"Die Wahl  von Positionen neben  Sternen erhöht den Wert Ihrer Aktien um etwa\n"
-"das fünffache einer Position nicht neben einem Stern. Daher sollte Zug ^k~6^N den\n"
+"Die Wahl von Positionen neben Sternen erhöht den Wert Ihrer Aktien um etwa\n"
+"das Fünffache einer Position nicht neben einem Stern. Daher sollte Zug ^k~6^N den\n"
 "Vorzug vor Zug ^k~8^N erhalten.\n"
 "\n"
 "        ^e ^c~C^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
@@ -1474,11 +1472,11 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ^k~4^e ~. ~. ^s~*^e ^c~B^e ^N\n"
 "        ^e ~. ~. ~. ~. ^s~*^e ~. ~. ~. ^k~8^e ^N\n"
 "\n"
-"Sie  können auch  eine Firma erweitern  indem Sie eine Position neben eienm.\n"
-"Aussenposten wählen. Dieser Aussenposten wird dann von der Firma übernommen.\n"
-"Daher wird Zug ^k~1^N Firma ^B~C^N um ^Bzwei^N Felder erweitern. Ausserdem sind Aussenpos-\n"
-"ten neben einem Stern wertvoller: die  Aktien der Firma werden sich um einen\n"
-"größeren  Betrag  erhöhen als bei Aussenposten, die  nicht neben einem Stern\n"
+"Sie können auch eine Firma erweitern, indem Sie eine Position neben einem\n"
+"Außenposten wählen. Dieser Außenposten wird dann von der Firma übernommen.\n"
+"Daher wird Zug ^k~1^N Firma ^B~C^N um ^Bzwei^N Felder erweitern. Außerdem sind Außenpos-\n"
+"ten neben einem Stern wertvoller: die Aktien der Firma werden sich um einen\n"
+"größeren Betrag erhöhen als bei Außenposten, die  nicht neben einem Stern\n"
 "liegen.\n"
 
 #: src/help.c:186
@@ -1500,12 +1498,12 @@ msgid ""
 "proportional to the amount  owned in the old company.  As well, a cash bonus\n"
 "is also paid, proportional to the percentage of the old company owned.\n"
 msgstr ""
-"Wenn zwei Firmen nur durch ein  Feld auf der Karte getrennt sind, können sie\n"
+"Wenn zwei Firmen nur durch ein Feld auf der Karte getrennt sind, können sie\n"
 "zu einer Firma ^Bfusionieren^N, wenn man diese Position wählt (so verfügbar). So\n"
-"können z.B. auf der Karte unten  die Firmen ^B~A^N und ^B~B^N durch  Wahl von ^k~5^N fusio-\n"
-"niert  werden. Wenn  dies geschieht, übernimmt  die Firma,  deren Besitz den\n"
-"größeren  Wert hat  die andere. Hier  kann  Firma ^B~B^N die  Firma ^B~A^N übernehmen.\n"
-"Firma ^B~A^N hört auf zu  existieren, kann aber als neue Firma wieder auftauchen.\n"
+"können z.B. auf der Karte unten die Firmen ^B~A^N und ^B~B^N durch Wahl von ^k~5^N fusio-\n"
+"niert werden. Wenn dies geschieht, übernimmt die Firma, deren Besitz den\n"
+"größeren Wert von beiden hat. Hier kann Firma ^B~B^N die Firma ^B~A^N übernehmen.\n"
+"Firma ^B~A^N hört auf zu existieren, kann aber als neue Firma wieder auftauchen.\n"
 "\n"
 "        ^e ^k~1^e ~. ^s~*^e ~. ~. ~. ^s~*^e ^s~*^e ~. ^N\n"
 "        ^e ~. ~. ~. ^c~A^e ^c~A^e ^k~5^e ^c~B^e ~. ~. ^N        Zug ^k~5^N fusioniert Firmen ^B~A^N und ^B~B^N.\n"
@@ -1513,8 +1511,8 @@ msgstr ""
 "        ^e ~. ^k~2^e ~. ~. ~. ~. ~. ^s~*^e ^c~B^e ^N\n"
 "\n"
 "Wenn Firmen fusionieren, bekommen die Spieler Anteile an der dominanten Fir-\n"
-"ma proportional  zu ihrem  Anteil an der alten Firma. Ausserdem erhalten Sie\n"
-"sie einen  Bargeldbonus  proportional zum  prozentualen Anteil  an der alten\n"
+"ma proportional zu ihrem Anteil an der alten Firma. Außerdem erhalten Sie\n"
+"einen  Bargeldbonus  proportional zum  prozentualen Anteil  an der alten\n"
 "Firma.\n"
 
 #: src/help.c:205
@@ -1539,17 +1537,16 @@ msgstr ""
 "Wenn Sie Ihren Zug gewählt haben, betreten Sie die ^BInterstellare Börse^N. Hier\n"
 "können Sie Aktien kaufen oder  verkaufen, sich von der Handelsbank Geld lei-\n"
 "hen  oder einen Teil  ihrer Schulden  (so vorhanden)  zurückzahlen. Beachten\n"
-"Sie, daß jede  Firma eine  beschränkte Zahl von Aktien  ausgibt — Sie können\n"
+"Sie, dass jede  Firma eine  beschränkte Zahl von Aktien  ausgibt — Sie können\n"
 "nicht endlos kaufen! Sie können aber die  Firma  bitten, weitere Aktien aus-\n"
-"zugeben. Je größer ihr Anteil an  der Firma, desdo höher die Chance, das dem\n"
-"statt gegeben wird.\n"
+"zugeben. Je größer ihr Anteil an der Firma, desto höher die Chance, dass dem\n"
+"stattgegeben wird.\n"
 "\n"
-"\n"
-"Das  Spiel endet normalerweise  nach ^B~t^N  Runden. Sie  können aber  das Spiel\n"
+"Das  Spiel endet normalerweise  nach ^B~t^N  Runden. Sie können aber das Spiel\n"
 "vorzeitig  beenden, indem  Sie ^K<STRG><C>^N  drücken, wenn  Sie nach  Ihrem Zug\n"
-"gefragt  werden. Ausserdem  kann  ein Spieler  jederzeit Bankrott  erklären.\n"
-"Wenn Ihre  Schulden hoch genug sind,  macht das eventuell die  Bank für Sie!\n"
-"Reicht die  Zeit nicht aus,  um das Spiel  zu beenden, können Sie  es abspei\n"
+"gefragt  werden. Außerdem  kann  ein Spieler  jederzeit Bankrott erklären.\n"
+"Wenn Ihre Schulden hoch genug sind, macht das eventuell die Bank für Sie!\n"
+"Reicht die Zeit nicht aus, um das Spiel  zu beenden, können Sie es abspei-\n"
 "chern und später fortsetzen.\n"
 
 #: src/help.c:225
@@ -1586,10 +1583,10 @@ msgstr "Seite %1$d von %2$d"
 #. TRANSLATORS: The reason the user is not asked "Press any
 #. key to continue" is historical: many, many people used to
 #. ask "where is the <ANY> key?" :-)
-#: src/help.c:486 src/intf.c:3035
+#: src/help.c:486 src/intf.c:3026
 #, c-format
 msgid "[ Press <SPACE> to continue ] "
-msgstr "[ <LEERTASTE> drücken um fortzufahren ] "
+msgstr "[ <LEERTASTE> drücken, um fortzufahren ] "
 
 #. TRANSLATORS: The specific use of <SPACE> and <BACKSPACE>
 #. is not essential: you can use <DEL>, <PAGE-UP>, <UP>,
@@ -1613,17 +1610,17 @@ msgstr "%s: Die Zeichenkette hat ein falsches Format: „%s“"
 msgid "%s: character has illegal width: '%lc'"
 msgstr "%s: Das Zeichen hat eine unzulässige Breite: „%lc“"
 
-#: src/intf.c:434
+#: src/intf.c:435
 #, c-format
 msgid "terminal size is too small (%d x %d required)"
 msgstr "Das Terminal ist zu klein (Mindestgröße ist %d x %d)"
 
-#: src/intf.c:1265
+#: src/intf.c:1267
 #, c-format
 msgid "mkchstr_conv: NUL"
 msgstr "mkchstr_conv: NULL"
 
-#: src/intf.c:1568
+#: src/intf.c:1559
 #, c-format
 msgid "mkchstr: '%s'"
 msgstr "mkchstr: „%s“"
@@ -1633,12 +1630,12 @@ msgstr "mkchstr: „%s“"
 #. character.  Ideally, it should contain an easily-accessible
 #. keycode that would NOT be used in ordinary input.  Digits, ".",
 #. ",", "+" and "-" are definitely NOT acceptable.
-#: src/intf.c:2020
+#: src/intf.c:2011
 msgctxt "input|DefaultValue"
 msgid "=;"
 msgstr "=;"
 
-#: src/intf.c:2034 src/intf.c:2079
+#: src/intf.c:2025 src/intf.c:2070
 #, c-format
 msgid "gettxline: illegal character in string: '%ls'"
 msgstr "gettxline: unzulässiges Zeichen in der Zeichenkette „%ls“"
@@ -1647,12 +1644,12 @@ msgstr "gettxline: unzulässiges Zeichen in der Zeichenkette „%ls“"
 #. "input|No" contain the keycodes used to determine whether a
 #. user is answering "Yes" or "No" in response to some question.
 #. Both upper and lower-case versions should be present.
-#: src/intf.c:2952
+#: src/intf.c:2943
 msgctxt "input|Yes"
 msgid "Yy"
 msgstr "Jj"
 
-#: src/intf.c:2954
+#: src/intf.c:2945
 msgctxt "input|No"
 msgid "Nn"
 msgstr "Nn"
@@ -1660,76 +1657,225 @@ msgstr "Nn"
 #. TRANSLATORS: The strings "Yes" and "No" are printed as a
 #. response to user input in answer to questions like "Are you
 #. sure? [Y/N] "
-#: src/intf.c:3005
+#: src/intf.c:2996
 msgctxt "answer"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/intf.c:3007
+#: src/intf.c:2998
 msgctxt "answer"
 msgid "No"
 msgstr "Nein"
 
-#: src/utils.c:378 src/utils.c:399
+#: src/utils.c:481 src/utils.c:502
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:404
+#: src/utils.c:507
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:417
+#: src/utils.c:520
 #, c-format
 msgid "out of memory"
-msgstr "Kein frier Speicer mehr vorhanden"
+msgstr "Kein freier Speicher mehr vorhanden"
 
-#: src/utils.c:1041
+#: src/utils.c:1235
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: „%s“"
 
-#: src/utils.c:1081
+#: src/utils.c:1275
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1086
+#: src/utils.c:1280
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: „%lc“"
 
-#: lib/getopt.c:278
+#: lib/getopt.c:278 lib/obsolete-strings.c:63
 #, c-format
 msgid "%s: option '%s%s' is ambiguous\n"
 msgstr "%s: Option „%s%s“ ist mehrdeutig\n"
 
-#: lib/getopt.c:284
+#: lib/getopt.c:284 lib/obsolete-strings.c:65
 #, c-format
 msgid "%s: option '%s%s' is ambiguous; possibilities:"
 msgstr "%s: Option „%s%s“ ist mehrdeutig; möglich wären:"
 
-#: lib/getopt.c:319
+#: lib/getopt.c:319 lib/obsolete-strings.c:67
 #, c-format
 msgid "%s: unrecognized option '%s%s'\n"
 msgstr "%s: unbekannte Option „%s%s“\n"
 
-#: lib/getopt.c:345
+#: lib/getopt.c:345 lib/obsolete-strings.c:69
 #, c-format
 msgid "%s: option '%s%s' doesn't allow an argument\n"
 msgstr "%s: Option „%s%s“ akzeptiert keine Argumente\n"
 
-#: lib/getopt.c:360
+#: lib/getopt.c:360 lib/obsolete-strings.c:71
 #, c-format
 msgid "%s: option '%s%s' requires an argument\n"
 msgstr "%s: Option „%s%s“ erfordert ein Argumente\n"
 
-#: lib/getopt.c:621
+#: lib/getopt.c:621 lib/obsolete-strings.c:73
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ungültige Option -- „%c“\n"
 
-#: lib/getopt.c:636 lib/getopt.c:682
+#: lib/getopt.c:636 lib/getopt.c:682 lib/obsolete-strings.c:75
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: die Option erfordert ein Argument -- „%c“\n"
+
+#. TRANSLATORS: Older versions of the GNU Gettext library utilities
+#. treat the Icon value in data/trader.desktop.in as a translatable
+#. string.  That string, the name of the icon to use, is defined here
+#. for those older versions of xgettext(1).  Unless you provide a
+#. matching icon, please leave it as "trader": this will use
+#. trader.svg and the various trader.png files in the data source
+#. code directory.
+#: lib/obsolete-strings.c:48
+msgid "trader"
+msgstr "trader"
+
+#. TRANSLATORS: These strings are used in older versions of various
+#. libraries, such as the GNU C Library as released with various
+#. Linux distributions.
+#: lib/obsolete-strings.c:62
+#, c-format
+msgid "%s: option `%s%s' is ambiguous\n"
+msgstr "%s: Option „%s%s“ ist mehrdeutig\n"
+
+#: lib/obsolete-strings.c:64
+#, c-format
+msgid "%s: option `%s%s' is ambiguous; possibilities:"
+msgstr "%s: Option „%s%s“ ist mehrdeutig; möglich wären:"
+
+#: lib/obsolete-strings.c:66
+#, c-format
+msgid "%s: unrecognized option `%s%s'\n"
+msgstr "%s: unbekannte Option „%s%s“\n"
+
+#: lib/obsolete-strings.c:68
+#, c-format
+msgid "%s: option `%s%s' doesn't allow an argument\n"
+msgstr "%s: Option „%s%s“ akzeptiert keine Argumente\n"
+
+#: lib/obsolete-strings.c:70
+#, c-format
+msgid "%s: option `%s%s' requires an argument\n"
+msgstr "%s: Option „%s%s“ erfordert ein Argumente\n"
+
+#: lib/obsolete-strings.c:72
+#, c-format
+msgid "%s: invalid option -- `%c'\n"
+msgstr "%s: ungültige Option -- „%c“\n"
+
+#: lib/obsolete-strings.c:74
+#, c-format
+msgid "%s: option requires an argument -- `%c'\n"
+msgstr "%s: die Option erfordert ein Argument -- „%c“\n"
+
+#: lib/obsolete-strings.c:77
+#, c-format
+msgid "%s: option `%s' is ambiguous; possibilities:"
+msgstr "%s: Option „%s“ ist mehrdeutig; möglich wären:"
+
+#: lib/obsolete-strings.c:78
+#, c-format
+msgid "%s: option '%s' is ambiguous; possibilities:"
+msgstr "%s: Option „%s“ ist mehrdeutig; möglich wären:"
+
+#: lib/obsolete-strings.c:79
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: Option „%s“ ist mehrdeutig\n"
+
+#: lib/obsolete-strings.c:80
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: Option „%s“ ist mehrdeutig\n"
+
+#: lib/obsolete-strings.c:81
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: Option „--%s“ akzeptiert keine Argumente\n"
+
+#: lib/obsolete-strings.c:82
+#, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
+msgstr "%s: Option „--%s“ akzeptiert keine Argumente\n"
+
+#: lib/obsolete-strings.c:83
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: Option „%c%s“ akzeptiert keine Argumente\n"
+
+#: lib/obsolete-strings.c:84
+#, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
+msgstr "%s: Option „%c%s“ akzeptiert keine Argumente\n"
+
+#: lib/obsolete-strings.c:85
+#, c-format
+msgid "%s: option `--%s' requires an argument\n"
+msgstr "%s: Option „--%s“ erfordert ein Argumente\n"
+
+#: lib/obsolete-strings.c:86
+#, c-format
+msgid "%s: option '--%s' requires an argument\n"
+msgstr "%s: Option „--%s“ erfordert ein Argument\n"
+
+#: lib/obsolete-strings.c:87
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: unbekannte Option „--%s“\n"
+
+#: lib/obsolete-strings.c:88
+#, c-format
+msgid "%s: unrecognized option '--%s'\n"
+msgstr "%s: unbekannte Option „--%s“\n"
+
+#: lib/obsolete-strings.c:89
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: unbekannte Option „%c%s“\n"
+
+#: lib/obsolete-strings.c:90
+#, c-format
+msgid "%s: unrecognized option '%c%s'\n"
+msgstr "%s: unbekannte Option „%c%s“\n"
+
+#: lib/obsolete-strings.c:91
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: Option „-W %s“ ist mehrdeutig\n"
+
+#: lib/obsolete-strings.c:92
+#, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
+msgstr "%s: Option „-W %s“ ist mehrdeutig\n"
+
+#: lib/obsolete-strings.c:93
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: Option „-W %s“ akzeptiert keine Argumente\n"
+
+#: lib/obsolete-strings.c:94
+#, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "%s: Option „-W %s“ akzeptiert keine Argumente\n"
+
+#: lib/obsolete-strings.c:95
+#, c-format
+msgid "%s: option `-W %s' requires an argument\n"
+msgstr "%s: Option „-W %s“ erfordert ein Argument\n"
+
+#: lib/obsolete-strings.c:96
+#, c-format
+msgid "%s: option '-W %s' requires an argument\n"
+msgstr "%s: Option „-W %s“ erfordert ein Argument\n"
