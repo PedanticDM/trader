@@ -586,6 +586,9 @@ extern int randi (int limit)
 
 extern void init_locale (void)
 {
+    const char *podir = getenv("TEXTDOMAINDIR");
+
+
     // Initialise the current locale
     if (setlocale(LC_ALL, "") == NULL) {
 	err_exit("could not set locale "
@@ -593,7 +596,9 @@ extern void init_locale (void)
     }
 
     // Use correct message catalogs for the locale
-    bindtextdomain(PACKAGE, LOCALEDIR);
+    bindtextdomain(
+	PACKAGE,
+	(podir != NULL && *podir != '\0') ? podir : LOCALEDIR);
     textdomain(PACKAGE);
 }
 

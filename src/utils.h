@@ -235,10 +235,11 @@ extern int randi (int limit);
   Returns:    (nothing)
 
   This function initialises the locale and message catalog used by this
-  program.  The message catalog must reside in the location specified
-  during "./configure" via the "--localedir" option; this location is
-  passed to this source code file as PREFIXDIR.  This function must be
-  called before using any locale or Gettext functions.
+  program.  If the TEXTDOMAINDIR environment variable is set, the message
+  catalog must reside in that location, otherwise it must be in the
+  location specified during "./configure" via the "--localedir" option.
+  This function must be called before using any locale or Gettext
+  functions.
 */
 extern void init_locale (void);
 

@@ -41,7 +41,7 @@
 .if \n[.g] .mso www.tmac
 .\"
 .\" *********************************************************************
-.TH TRADER 6 "12th January, 2021" "Unix-like systems"
+.TH TRADER 6 "14th January, 2021" "Unix-like systems"
 .SH NAME
 trader \- a game of interstellar trading
 .\" *********************************************************************
@@ -183,6 +183,12 @@ using \fBLC_NUMERIC\fP and monetary quantities will use
 or
 .BR setlocale (3)
 manual pages for more details on locale settings.
+.TP
+.B TEXTDOMAINDIR
+If set, Star Traders will use this path as the base with which to locate
+its message catalogs instead of the compiled-in path; the relevant
+\fItrader.mo\fP files should be located in language-code subdirectories
+(such as \fIen_AU\fP), in \fILC_MESSAGES\fP sub-subdirectories.
 .\" *********************************************************************
 .SH FILES
 .TP

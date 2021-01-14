@@ -25,6 +25,10 @@ __ https://www.zap.org.au/
 Version 7.16 (not yet released)
 -------------------------------
 
+Added code to allow the ``TEXTDOMAINDIR`` environment variable to specify
+where compiled translations are located.  Updated the documentation to
+mention this new feature.
+
 Added an application metadata file that conforms to the AppStream 0.12
 specification.  Updated all translations to suit, using parts of existing
 strings.
