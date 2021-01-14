@@ -53,6 +53,8 @@ wchar_t *mon_thousands_sep;		// Locale's monetary thousands separator
 *                 Module-specific constants and macros                  *
 ************************************************************************/
 
+#define APPIMAGE_NAME		"AppRun.wrapped"
+
 #define DIRSEP			"/"		// Directory separator
 #define HIDDEN_PATH		"."		// Hidden file start char
 #define XDG_DATA_DEFAULT	".local" DIRSEP "share"
@@ -324,6 +326,12 @@ void init_program_name (const char *argv0)
 	    program_name = xstrdup(p);
 	} else {
 	    program_name = xstrdup(argv0);
+	}
+
+	// Prevent the AppImage internal name from leaking out
+	if (strcmp(program_name, APPIMAGE_NAME) == 0) {
+	    free((void *) program_name);
+	    program_name = PACKAGE;
 	}
     }
 }
