@@ -33,6 +33,8 @@ Added an application metadata file that conforms to the AppStream 0.12
 specification.  Updated all translations to suit, using parts of existing
 strings.
 
+Updated the German translation, with thanks to Mario Blättermann.
+
 
 Version 7.15 (12th January, 2021)
 ---------------------------------
