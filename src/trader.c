@@ -393,7 +393,7 @@ void init_program (void)
     init_rand();
 
     // Initialise locale-specific variables
-    init_locale();
+    init_locale_vars();
 
     // Initialise the terminal display
     init_screen();

@@ -574,9 +574,9 @@ extern int randi (int limit)
 
 
 /***********************************************************************/
-// init_locale: Initialise locale-specific variables
+// init_locale_vars: Initialise locale-specific variables
 
-void init_locale (void)
+void init_locale_vars (void)
 {
     char *cur, *cloc;
     struct lconv *lc;

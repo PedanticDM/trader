@@ -230,7 +230,7 @@ extern int randi (int limit);
 ************************************************************************/
 
 /*
-  Function:   init_locale - Initialise locale-specific variables
+  Function:   init_locale_vars - Initialise locale-specific variables
   Parameters: (none)
   Returns:    (nothing)
 
@@ -241,7 +241,7 @@ extern int randi (int limit);
   and frac_digits members of lconvinfo are updated to be something
   reasonable.  This function must be called before using localeconf_info.
 */
-extern void init_locale (void);
+extern void init_locale_vars (void);
 
 
 /*
