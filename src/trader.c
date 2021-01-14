@@ -118,6 +118,19 @@ static void show_usage (int status) __attribute__((noreturn));
 
 
 /*
+  Function:   init_program_prelim - Initialise program preliminaries
+  Parameters: argc                - Same as passed to main()
+              argv                - Same as passed to main()
+  Returns:    (nothing)
+
+  This function initialises the program name, locale and message
+  catalogs.  It must be called before command line arguments are
+  processed.
+*/
+static void init_program_prelim (int argc, char *argv[]);
+
+
+/*
   Function:   init_program - Initialise program-wide functions
   Parameters: (none)
   Returns:    (nothing)
@@ -146,18 +159,8 @@ static void end_program (void);
 
 int main (int argc, char *argv[])
 {
-    // Strip off leading pathname components from program name
-    init_program_name(argv[0]);
-
-    // Initialise the locale
-    if (setlocale(LC_ALL, "") == NULL) {
-	err_exit("could not set locale "
-		 "(check LANG, LC_ALL and LANGUAGE in environment)");
-    }
-
-    // Use correct message catalogs for the locale
-    bindtextdomain(PACKAGE, LOCALEDIR);
-    textdomain(PACKAGE);
+    // Initialise program name, locale and message catalogs
+    init_program_prelim(argc, argv);
 
     // Process command line arguments
     process_cmdline(argc, argv);
@@ -359,6 +362,26 @@ playing that game.  If GAME is not specified, start a new game.\n\n\
 ************************************************************************/
 
 // These functions are documented at the start of this file
+
+
+/***********************************************************************/
+// init_program_prelim: Initialise program preliminaries
+
+void init_program_prelim (int argc, char *argv[])
+{
+    // Strip off leading pathname components from program name
+    init_program_name(argv[0]);
+
+    // Initialise the locale and message catalogs
+    if (setlocale(LC_ALL, "") == NULL) {
+	err_exit("could not set locale "
+		 "(check LANG, LC_ALL and LANGUAGE in environment)");
+    }
+
+    // Use correct message catalogs for the locale
+    bindtextdomain(PACKAGE, LOCALEDIR);
+    textdomain(PACKAGE);
+}
 
 
 /***********************************************************************/
