@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trader 7.16\n"
 "Report-Msgid-Bugs-To: J.Zaitseff@zap.org.au\n"
-"POT-Creation-Date: 2021-01-14 08:36+1100\n"
+"POT-Creation-Date: 2021-01-14 17:21+1100\n"
 "PO-Revision-Date: 2021-01-14 08:47+1100\n"
 "Last-Translator: John Zaitseff <J.Zaitseff@zap.org.au>\n"
 "Language-Team: English (Canadian) <(nothing)>\n"
@@ -55,22 +55,22 @@ msgstr ""
 msgid "John Zaitseff"
 msgstr "John Zaitseff"
 
-#: src/trader.c:235
+#: src/trader.c:238
 #, c-format
 msgid "%s: invalid value for --max-turn: '%s'\n"
 msgstr "%s: invalid value for --max-turn: ‘%s’\n"
 
-#: src/trader.c:251
+#: src/trader.c:254
 #, c-format
 msgid "%s: invalid operand '%s'\n"
 msgstr "%s: invalid operand ‘%s’\n"
 
-#: src/trader.c:260
+#: src/trader.c:263
 #, c-format
 msgid "%s: invalid game number '%s'\n"
 msgstr "%s: invalid game number ‘%s’\n"
 
-#: src/trader.c:269
+#: src/trader.c:272
 #, c-format
 msgid "%s: extra operand '%s'\n"
 msgstr "%s: extra operand ‘%s’\n"
@@ -78,7 +78,7 @@ msgstr "%s: extra operand ‘%s’\n"
 #. TRANSLATORS: "John Zaitseff" [IPA d͡ʒɒn ˈzaɪ̯t͡səf] is the proper
 #. name of the author.  The IPA pronunciation in this comment is in
 #. UTF-8 encoding.
-#: src/trader.c:284
+#: src/trader.c:287
 #, c-format
 msgid ""
 "Star Traders (%s) %s\n"
@@ -105,17 +105,17 @@ msgstr ""
 "modify and/or distribute it under certain conditions.  This program has\n"
 "NO WARRANTY, to the extent permitted by law; see the License for details.\n"
 
-#: src/trader.c:308
+#: src/trader.c:311
 #, c-format
 msgid "%s: Try '%s --help' for more information.\n"
 msgstr "%s: Try ‘%s --help’ for more information.\n"
 
-#: src/trader.c:311
+#: src/trader.c:314
 #, c-format
 msgid "Usage: %s [OPTION ...] [GAME]\n"
 msgstr "Usage: %s [OPTION ...] [GAME]\n"
 
-#: src/trader.c:312
+#: src/trader.c:315
 #, c-format
 msgid ""
 "Play Star Traders, a simple game of interstellar trading.\n"
@@ -124,7 +124,7 @@ msgstr ""
 "Play Star Traders, a simple game of interstellar trading.\n"
 "\n"
 
-#: src/trader.c:315
+#: src/trader.c:318
 #, c-format
 msgid ""
 "Options:\n"
@@ -141,7 +141,7 @@ msgstr ""
 "      --max-turn=NUM   set the number of turns to NUM\n"
 "\n"
 
-#: src/trader.c:322
+#: src/trader.c:325
 #, c-format
 msgid ""
 "If GAME is specified as a number between 1 and 9, load and continue\n"
@@ -158,7 +158,7 @@ msgstr ""
 #. with the (translated) text "Report translation bugs to
 #. <ADDRESS>\n", with ADDRESS replaced with either an email
 #. address or web URL for reporting bugs in your translation.
-#: src/trader.c:334
+#: src/trader.c:337
 #, c-format
 msgid "Report bugs to %s <%s>.\n"
 msgstr "Report bugs to %s <%s>.\n"
@@ -168,19 +168,19 @@ msgstr "Report bugs to %s <%s>.\n"
 #. (translated) text "Report translation bugs to <ADDRESS>\n",
 #. with ADDRESS replaced with either an email address or web URL
 #. for reporting bugs in your translation.
-#: src/trader.c:341
+#: src/trader.c:344
 #, c-format
 msgid "Report bugs to <%s>.\n"
 msgstr "Report bugs to <%s>.\n"
 
 #. TRANSLATORS: The first %s is for packagers and may be
 #. something like "Debian".
-#: src/trader.c:346
+#: src/trader.c:349
 #, c-format
 msgid "Report %s bugs to <%s>.\n"
 msgstr "Report %s bugs to <%s>.\n"
 
-#: src/trader.c:349
+#: src/trader.c:352
 #, c-format
 msgid "Star Traders home page: <%s>.\n"
 msgstr "Star Traders home page: <%s>.\n"
@@ -1662,31 +1662,31 @@ msgctxt "answer"
 msgid "No"
 msgstr "No"
 
-#: src/utils.c:481 src/utils.c:502
+#: src/utils.c:489 src/utils.c:510
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/utils.c:507
+#: src/utils.c:515
 msgid ": "
 msgstr ": "
 
-#: src/utils.c:520
+#: src/utils.c:528
 #, c-format
 msgid "out of memory"
 msgstr "out of memory"
 
-#: src/utils.c:1235
+#: src/utils.c:1265
 #, c-format
 msgid "xmbstowcs: '%s'"
 msgstr "xmbstowcs: ‘%s’"
 
-#: src/utils.c:1275
+#: src/utils.c:1305
 #, c-format
 msgid "xwcrtomb: NUL"
 msgstr "xwcrtomb: NUL"
 
-#: src/utils.c:1280
+#: src/utils.c:1310
 #, c-format
 msgid "xwcrtomb: '%lc'"
 msgstr "xwcrtomb: ‘%lc’"
