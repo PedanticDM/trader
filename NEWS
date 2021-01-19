@@ -22,8 +22,8 @@ __ https://www.zap.org.au/
 .. contents::
 
 
-Version 7.16 (not yet released)
--------------------------------
+Version 7.16 (19th January, 2021)
+---------------------------------
 
 Added code to allow the ``TEXTDOMAINDIR`` environment variable to specify
 where compiled translations are located.  Updated the documentation to
