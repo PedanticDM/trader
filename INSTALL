@@ -254,6 +254,16 @@ Cygwin 3.1.7 (Win7 SP1)  i686    GNU C Compiler 10.2.0
 
         ./configure LDFLAGS=-L/usr/pkg/lib
 
+   Note that current versions of NetBSD have a known bug in their
+   :code:`strfmon()` function: if the locale is not ``C`` or ``C.UTF-8``,
+   amounts may be displayed incorrectly.  For example, under the
+   ``en_US.UTF-8`` locale, an amount of $6000 is displayed as
+   ``$6,000.0,000.00`` instead of ``$6,000.00``.
+
+   If the current locale is ``C``, game loads and saves may fail with the
+   error message ``trader: iconv_open: Invalid argument``.  The
+   ``C.UTF-8`` locale works correctly.
+
 .. [#macos1] macOS with Xcode command line tools, with the ``gettext``
    package installed with Homebrew, using::
 
